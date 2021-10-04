@@ -1,0 +1,13 @@
+/*** FONTS ***/
+@font-face {
+  font-family: muli_regular;
+  src: url(./assets/fonts/Muli.ttf);
+}
+@font-face {
+  font-family: muli_medium;
+  src: url(./assets/fonts/Muli-SemiBold.ttf);
+}
+@font-face {
+  font-family: muli_bold;
+  src: url(./assets/fonts/Muli-Bold.ttf);
+}
