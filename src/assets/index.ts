@@ -12,6 +12,9 @@ import team from "./icons/team.svg";
 import reports from "./icons/reports.svg";
 import settings from "./icons/settings.svg";
 import broadcast from "./icons/broadcast.svg";
+import logout from "./icons/logout.svg";
+import man from "./icons/man.svg";
+import profile from "./icons/profile.svg";
 
 export { quote, logo, loginBg, whiteLogo };
 
@@ -26,4 +29,7 @@ export let icons = {
   settings,
   clients,
   broadcast,
+  logout,
+  man,
+  profile,
 };

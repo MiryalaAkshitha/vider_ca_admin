@@ -3,7 +3,7 @@ import { clearError, updateError } from "redux/reducers/errorSlice";
 import store from "redux/store";
 
 export const http = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -24,6 +24,9 @@ http.interceptors.response.use(
       message.description = "Please check your internet connection";
     }
     if (err.response.status === 401) {
+      if (err.response.config.url == "/auth/login") {
+        return Promise.reject(err);
+      }
       message.heading = "Session Expired!";
       message.description =
         "Your session has been expired, Please login to continue";

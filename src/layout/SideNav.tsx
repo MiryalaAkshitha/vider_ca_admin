@@ -1,5 +1,3 @@
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import { ListItemButton, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';

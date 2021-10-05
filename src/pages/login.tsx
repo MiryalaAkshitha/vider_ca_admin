@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -7,12 +8,14 @@ import {
   Typography
 } from '@mui/material';
 import { whiteLogo } from 'assets';
-import React, { useState } from 'react';
 import ForgotPassword from 'views/login/ForgotPassword';
 import PasswordField from 'views/login/PasswordField';
 import { BackgroundImage, LogoContainer } from 'views/login/styles';
+import { http } from 'api/http';
+import { useSnackbar } from 'notistack';
 
 const Login = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = React.useState(false);
   const [btnLoader, setBtnLoader] = useState(false);
   const [data, setData] = useState({
@@ -25,7 +28,17 @@ const Login = () => {
   };
 
   const handleSubmit = (e: any) => {
+    setBtnLoader(true)
     e.preventDefault();
+    console.log(data)
+    http.post("/auth/login", data).then((res: any) => {
+      localStorage.setItem('token', res.data.access_token)
+      window.location.href = "/"
+    }).catch(err => {
+      enqueueSnackbar(err.response.data.message, { variant: "error" })
+    }).finally(() => {
+      setBtnLoader(false)
+    })
   };
 
   return (
@@ -63,6 +76,7 @@ const Login = () => {
                 onChange={handleChange}
               />
               <Button
+                disabled={btnLoader}
                 sx={{ mt: 4 }}
                 size="large"
                 fullWidth

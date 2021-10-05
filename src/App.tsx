@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useAppSelector } from 'redux/store';
 import './App.css';
 import routes from './routes';
+import { SnackbarProvider } from 'notistack';
 
 function App() {
   const errorState: any = useAppSelector(state => state.error)
@@ -21,27 +22,29 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Switch>
-          {routes.map((route, index) => {
-            if (route.routes) {
+      <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+        <BrowserRouter>
+          <Switch>
+            {routes.map((route, index) => {
+              if (route.routes) {
+                return (
+                  <Route path={route.path} exact={route.exact} key={index}>
+                    <route.component routes={route.routes} title={route.name} />
+                  </Route>
+                )
+              }
               return (
-                <Route path={route.path} exact={route.exact} key={index}>
-                  <route.component routes={route.routes} title={route.name} />
-                </Route>
+                <Route
+                  key={index}
+                  exact={route.exact}
+                  path={route.path}
+                  component={route.component}
+                />
               )
-            }
-            return (
-              <Route
-                key={index}
-                exact={route.exact}
-                path={route.path}
-                component={route.component}
-              />
-            )
-          })}
-        </Switch>
-      </BrowserRouter>
+            })}
+          </Switch>
+        </BrowserRouter>
+      </SnackbarProvider>
     </div>
   );
 }

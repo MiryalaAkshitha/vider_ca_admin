@@ -3,6 +3,7 @@ import loadable from "@loadable/component";
 const Login = loadable(() => import("pages/login"));
 const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout"));
+const Settings = loadable(() => import("pages/settings"));
 
 export interface IRoute {
   component: any;
@@ -26,15 +27,15 @@ const routes: Array<IRoute> = [
     exact: false,
     routes: [
       {
-        component: Dashboard,
+        component: Settings,
         exact: true,
-        name: "Dashboard",
-        path: "/dashboard",
+        name: "Settings",
+        path: "/settings",
       },
       {
         component: Dashboard,
         exact: true,
-        name: "Task Board",
+        name: "Dashboard",
         path: "/dashboard",
       },
     ],
