@@ -1,9 +1,9 @@
-import { VerifiedUserOutlined } from "@mui/icons-material"
+import { icons } from "assets";
 
 interface IMenuItem {
   title: string;
   path: string;
-  icon?: JSX.Element;
+  icon?: string;
   children?: Array<IMenuItem>;
 }
 
@@ -11,51 +11,51 @@ export const menuItems: Array<IMenuItem> = [
   {
     title: "Dashboard",
     path: "/dashboard",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.dashboard,
   },
   {
     title: "Task Board",
     path: "/task-board",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.taskboard
   },
   {
     title: "Calendar",
     path: "/calendar",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.calendar
   },
   {
     title: "Clients",
     path: "/clients",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.clients
   },
   {
     title: "Reports",
     path: "/reports",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.reports
   },
   {
     title: "Invoicing",
     path: "/invoicing",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.invoicing
   },
   {
     title: "My Team",
     path: "/my-team",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.team
   },
   {
     title: "Storage",
     path: "/storage",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.storage,
   },
   {
     title: "Broadcast",
     path: "/broadcast",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.broadcast
   },
   {
     title: "Settings",
     path: "/settings",
-    icon: <VerifiedUserOutlined />,
+    icon: icons.settings
   },
 ];

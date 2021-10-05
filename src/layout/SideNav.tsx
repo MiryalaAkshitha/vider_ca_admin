@@ -50,7 +50,7 @@ function SideNav() {
             <ListItemButton
               selected={true}
               sx={{
-                opacity: item.path == history.location.pathname ? 1 : 0.3,
+                opacity: item.path == history.location.pathname ? 1 : 0.4,
                 "&.Mui-selected": {
                   background: "rgba(0, 0, 0, 0.4)"
                 },
@@ -59,7 +59,7 @@ function SideNav() {
                 },
               }}>
               <ListItemIcon sx={{ color: "white" }}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <img src={item.icon} width={15} alt="" />
               </ListItemIcon>
               <ListItemText
                 color="white"
