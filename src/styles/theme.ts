@@ -8,9 +8,9 @@ export const theme: ThemeOptions = createTheme({
       dark: "rgb(16, 32, 58)",
     },
     secondary: {
-      main: "#F2353C",
-      light: "rgb(244, 93, 99)",
-      dark: "rgb(169, 37, 42)",
+      main: "#E44652",
+      light: "rgb(233, 107, 116)",
+      dark: "rgb(159, 49, 57)",
     },
     background: {
       default: "#ffffff",
@@ -57,9 +57,11 @@ export const theme: ThemeOptions = createTheme({
         },
         subtitle1: {
           fontFamily: "muli_medium",
+          fontSize: "20px",
         },
         subtitle2: {
           fontFamily: "muli_medium",
+          fontSize: "18px",
         },
         body1: {
           fontFamily: "muli_regular",

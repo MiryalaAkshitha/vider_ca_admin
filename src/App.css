@@ -1,3 +1,14 @@
+/* GLOBAL */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+
 /*** FONTS ***/
 @font-face {
   font-family: muli_regular;
