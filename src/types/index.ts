@@ -16,3 +16,8 @@ export interface PageProps {
   routes?: Array<IRoute>;
   title?: string;
 }
+
+export interface DialogProps {
+  open: boolean;
+  setOpen: (v: boolean) => void;
+}

@@ -4,6 +4,7 @@ const Login = loadable(() => import("pages/login"));
 const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout"));
 const Settings = loadable(() => import("pages/settings"));
+const Categories = loadable(() => import("pages/categories"));
 
 export interface IRoute {
   component: any;
@@ -37,6 +38,12 @@ const routes: Array<IRoute> = [
         exact: true,
         name: "Dashboard",
         path: "/dashboard",
+      },
+      {
+        component: Categories,
+        exact: true,
+        name: "Categories",
+        path: "/categories",
       },
     ],
   },

@@ -1,28 +1,31 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useAppSelector } from 'redux/store';
-import './App.css';
-import routes from './routes';
-import { SnackbarProvider } from 'notistack';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useAppSelector } from "redux/store";
+import "./App.css";
+import routes from "./routes";
+import { SnackbarProvider } from "notistack";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
-  const errorState: any = useAppSelector(state => state.error)
+  const errorState: any = useAppSelector((state) => state.error);
 
   if (errorState.error) {
     return (
       <div>
         <h1>Error</h1>
         <div>
-          <pre>
-            {JSON.stringify(errorState, null, 4)}
-          </pre>
+          <pre>{JSON.stringify(errorState, null, 4)}</pre>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="App">
-      <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+    <QueryClientProvider client={queryClient}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
         <BrowserRouter>
           <Switch>
             {routes.map((route, index) => {
@@ -31,7 +34,7 @@ function App() {
                   <Route path={route.path} exact={route.exact} key={index}>
                     <route.component routes={route.routes} title={route.name} />
                   </Route>
-                )
+                );
               }
               return (
                 <Route
@@ -40,12 +43,12 @@ function App() {
                   path={route.path}
                   component={route.component}
                 />
-              )
+              );
             })}
           </Switch>
         </BrowserRouter>
       </SnackbarProvider>
-    </div>
+    </QueryClientProvider>
   );
 }
 

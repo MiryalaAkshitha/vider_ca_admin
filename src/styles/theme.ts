@@ -29,6 +29,28 @@ export const theme: ThemeOptions = createTheme({
         root: {
           textTransform: "capitalize",
           fontFamily: "muli_regular",
+          minWidth: 100,
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontFamily: "muli_regular",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        outlined: {
+          fontFamily: "muli_regular",
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        formControl: {
+          fontFamily: "muli_regular",
         },
       },
     },

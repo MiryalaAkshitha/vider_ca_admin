@@ -1,0 +1,24 @@
+import { CircularProgress } from "@mui/material";
+import { Box } from "@mui/system";
+
+interface LoaderProps {
+  minHeight?: number;
+  color?: string;
+}
+
+function Loader(props: LoaderProps) {
+  const { minHeight = 300, color = "primary.main" } = props;
+  return (
+    <Box
+      sx={{
+        minHeight,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
+      <CircularProgress sx={{ color }} />
+    </Box>
+  );
+}
+
+export default Loader;

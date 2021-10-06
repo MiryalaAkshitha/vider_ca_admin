@@ -1,44 +1,40 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
-  Typography
-} from '@mui/material';
-import { whiteLogo } from 'assets';
-import ForgotPassword from 'views/login/ForgotPassword';
-import PasswordField from 'views/login/PasswordField';
-import { BackgroundImage, LogoContainer } from 'views/login/styles';
-import { http } from 'api/http';
-import { useSnackbar } from 'notistack';
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { http } from "api/http";
+import { whiteLogo } from "assets";
+import LoadingButton from "components/LoadingButton";
+import useSnack from "hooks/useSnack";
+import { useState } from "react";
+import ForgotPassword from "views/login/ForgotPassword";
+import PasswordField from "views/login/PasswordField";
+import { BackgroundImage, LogoContainer } from "views/login/styles";
+
+type DataType = { username: string; password: string };
 
 const Login = () => {
-  const { enqueueSnackbar } = useSnackbar()
-  const [open, setOpen] = React.useState(false);
-  const [btnLoader, setBtnLoader] = useState(false);
-  const [data, setData] = useState({
-    username: '',
-    password: '',
+  const snack = useSnack();
+  const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<DataType>({
+    username: "",
+    password: "",
   });
 
   const handleChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
-    setBtnLoader(true)
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(data)
-    http.post("/auth/login", data).then((res: any) => {
-      localStorage.setItem('token', res.data.access_token)
-      window.location.href = "/"
-    }).catch(err => {
-      enqueueSnackbar(err.response.data.message, { variant: "error" })
-    }).finally(() => {
-      setBtnLoader(false)
-    })
+    setLoading(true);
+    try {
+      let res: any = await http.post("/auth/login", data);
+      localStorage.setItem("token", res.data.access_token);
+      window.location.href = "/";
+    } catch (err: any) {
+      snack.error(err.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,7 +52,7 @@ const Login = () => {
           display='flex'
           alignItems='center'
           justifyContent='center'
-          textAlign="center"
+          textAlign='center'
           minHeight='100vh'>
           <Box maxWidth='400px' width='100%'>
             <Typography variant='subtitle1'>Sign in to your Account</Typography>
@@ -64,31 +60,28 @@ const Login = () => {
               <TextField
                 required
                 fullWidth
-                size="small"
+                size='small'
                 name='username'
                 label='Username'
                 sx={{ mt: 3 }}
                 onChange={handleChange}
               />
               <PasswordField
-                label="Password"
+                label='Password'
                 sx={{ mt: 3 }}
                 onChange={handleChange}
               />
-              <Button
-                disabled={btnLoader}
+              <LoadingButton
+                loading={loading}
                 sx={{ mt: 4 }}
-                size="large"
+                size='large'
                 fullWidth
                 type='submit'
-                variant='contained'
-                color='secondary'>
-                {btnLoader ? <CircularProgress color='secondary' /> : 'Login'}
-              </Button>
+                title='Submit'
+                color='secondary'
+              />
             </form>
-            <Button
-              sx={{ mt: 3 }}
-              onClick={() => setOpen(true)}>
+            <Button sx={{ mt: 3 }} onClick={() => setOpen(true)}>
               Forgot Password?
             </Button>
           </Box>
