@@ -22,3 +22,7 @@ body {
   font-family: muli_bold;
   src: url(./assets/fonts/Muli-Bold.ttf);
 }
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+  font-family: muli_regular !important;
+}

@@ -32,7 +32,7 @@ function App() {
               if (route.routes) {
                 return (
                   <Route path={route.path} exact={route.exact} key={index}>
-                    <route.component routes={route.routes} title={route.name} />
+                    <route.component routes={route.routes} />
                   </Route>
                 );
               }

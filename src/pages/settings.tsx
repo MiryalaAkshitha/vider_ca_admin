@@ -7,22 +7,27 @@ const settingsMenu = [
   {
     title: "Categories",
     img: icons.profile,
+    path: "/categories",
   },
   {
     title: "Services",
     img: icons.man,
+    path: "/services",
   },
   {
     title: "User Profile",
     img: icons.man,
+    path: "/",
   },
   {
     title: "Deleted Tasks and Clients",
     img: icons.profile,
+    path: "/",
   },
   {
     title: "Roles and Permissions",
     img: icons.man,
+    path: "/",
   },
 ];
 
@@ -44,7 +49,7 @@ function Settings() {
         {settingsMenu.map((item, index) => (
           <Grid item xs={3} key={index}>
             <Link
-              to='/categories'
+              to={item.path}
               style={{ textDecoration: "none", color: "initial" }}>
               <SettingsCard>
                 <img width={45} src={item.img} alt='' />

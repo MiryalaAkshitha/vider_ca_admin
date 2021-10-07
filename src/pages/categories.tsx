@@ -1,11 +1,14 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
-import AddCategory from "views/categories/AddCategory";
-import { useQuery, UseQueryResult } from "react-query";
 import { getCategories } from "api/categories";
+import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
+import useTitle from "hooks/useTitle";
+import { useState } from "react";
+import { useQuery, UseQueryResult } from "react-query";
+import AddCategory from "views/categories/AddCategory";
+import CategoryCard from "views/categories/CategoryCard";
 
 interface Category {
   name: string;
@@ -22,10 +25,13 @@ function Cateogries() {
   const { data, isLoading, error }: UseQueryResult<CategoryResponse, Error> =
     useQuery("categories", getCategories);
 
+  useTitle("Categories");
+
   if (isLoading) return <Loader />;
 
   return (
     <>
+      <BreadCrumbs page='categories' />
       <Box textAlign='right' mt={2}>
         <Button
           onClick={() => setOpen(true)}
@@ -35,22 +41,10 @@ function Cateogries() {
           Add Category
         </Button>
       </Box>
-      <Grid container spacing={2} sx={{ mt: 1 }}>
+      <Grid container spacing={2} sx={{ mt: 1, maxWidth: 1200 }}>
         {data?.data?.map((item: any, index: any) => (
-          <Grid item xs={6}>
-            <Box
-              key={index}
-              sx={{
-                boxShadow: "0px 3px 12px #0000001A",
-                borderRadius: 2,
-                p: 4,
-              }}>
-              <Box>
-                <Typography variant='subtitle2' color='primary'>
-                  {item?.name}
-                </Typography>
-              </Box>
-            </Box>
+          <Grid item xs={6} key={index}>
+            <CategoryCard data={item} />
           </Grid>
         ))}
       </Grid>

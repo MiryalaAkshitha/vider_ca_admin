@@ -4,8 +4,8 @@ export const theme: ThemeOptions = createTheme({
   palette: {
     primary: {
       main: "#182F53",
-      light: "rgb(70, 88, 117)",
-      dark: "rgb(16, 32, 58)",
+      light: "rgb(24, 47, 83, 0.1)",
+      dark: "rgb(24, 47, 83, 0.8)",
     },
     secondary: {
       main: "#E44652",
@@ -51,6 +51,21 @@ export const theme: ThemeOptions = createTheme({
       styleOverrides: {
         formControl: {
           fontFamily: "muli_regular",
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontFamily: "muli_regular",
+        },
+      },
+    },
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          boxShadow: "0px 5px 20px #0000001A",
+          borderRadius: "8px",
         },
       },
     },

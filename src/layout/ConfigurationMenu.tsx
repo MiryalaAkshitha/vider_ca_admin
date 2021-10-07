@@ -1,14 +1,13 @@
-import { Logout } from '@mui/icons-material';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-import { Divider, ListItemIcon, Menu, MenuItem } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
-type ElementType = HTMLElement | null
+type ElementType = HTMLElement | null;
 
 interface AccountMenuProps {
   anchorEl: ElementType;
-  setAnchorEl: (v: ElementType) => void
+  setAnchorEl: (v: ElementType) => void;
 }
 
 function ConfigurationMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
@@ -28,51 +27,48 @@ function ConfigurationMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
         elevation: 0,
         sx: {
           minWidth: 200,
-          boxShadow: "0px 5px 20px #0000001A",
-          borderRadius: "10px",
           minHeight: 150,
-          py: 1
+          py: 1,
         },
       }}
-      transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-      anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-    >
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
       <MenuItem sx={{ py: 1, m: 0 }}>
         <ListItemIcon>
-          <PermIdentityOutlinedIcon color="primary" fontSize="small" />
+          <PermIdentityOutlinedIcon color='primary' fontSize='small' />
         </ListItemIcon>
-        <Typography variant="body2">Services</Typography>
+        <Typography variant='body2'>Services</Typography>
       </MenuItem>
       <Divider sx={{ mx: 1, my: 0 }} />
       <MenuItem sx={{ py: 1, m: 0 }}>
         <ListItemIcon>
-          <HelpOutlineOutlinedIcon color="primary" fontSize="small" />
+          <HelpOutlineOutlinedIcon color='primary' fontSize='small' />
         </ListItemIcon>
-        <Typography variant="body2">Library</Typography>
+        <Typography variant='body2'>Library</Typography>
       </MenuItem>
       <Divider sx={{ mx: 1, my: 0 }} />
       <MenuItem sx={{ py: 1, m: 0 }}>
         <ListItemIcon>
-          <HelpOutlineOutlinedIcon color="primary" fontSize="small" />
+          <HelpOutlineOutlinedIcon color='primary' fontSize='small' />
         </ListItemIcon>
-        <Typography variant="body2">Drafting</Typography>
+        <Typography variant='body2'>Drafting</Typography>
       </MenuItem>
       <Divider sx={{ mx: 1, my: 0 }} />
       <MenuItem sx={{ py: 1, m: 0 }}>
         <ListItemIcon>
-          <HelpOutlineOutlinedIcon color="primary" fontSize="small" />
+          <HelpOutlineOutlinedIcon color='primary' fontSize='small' />
         </ListItemIcon>
-        <Typography variant="body2">Tools</Typography>
+        <Typography variant='body2'>Tools</Typography>
       </MenuItem>
       <Divider sx={{ mx: 1, my: 0 }} />
       <MenuItem sx={{ py: 1, m: 0 }}>
         <ListItemIcon>
-          <HelpOutlineOutlinedIcon color="primary" fontSize="small" />
+          <HelpOutlineOutlinedIcon color='primary' fontSize='small' />
         </ListItemIcon>
-        <Typography variant="body2">Notepad</Typography>
+        <Typography variant='body2'>Notepad</Typography>
       </MenuItem>
     </Menu>
-  )
+  );
 }
 
-export default ConfigurationMenu
+export default ConfigurationMenu;
