@@ -35,10 +35,6 @@ function AddService() {
       <Overview data={data} />
       <Divider sx={{ my: 5 }} />
       <ServiceType />
-      <Divider sx={{ my: 5 }} />
-      <Documents />
-      <Divider sx={{ my: 5 }} />
-      <Deliverables />
     </>
   );
 }

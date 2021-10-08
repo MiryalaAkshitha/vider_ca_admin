@@ -15,6 +15,7 @@ import broadcast from "./icons/broadcast.svg";
 import logout from "./icons/logout.svg";
 import man from "./icons/man.svg";
 import profile from "./icons/profile.svg";
+import date from "./icons/calendar.png";
 
 export { quote, logo, loginBg, whiteLogo };
 
@@ -32,4 +33,5 @@ export let icons = {
   logout,
   man,
   profile,
+  date,
 };

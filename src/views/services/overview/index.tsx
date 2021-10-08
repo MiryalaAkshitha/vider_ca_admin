@@ -50,10 +50,6 @@ function Overview({ data }: any) {
             Service Price
           </Typography>
           <TextField fullWidth placeholder='Enter Service Price' size='small' />
-          <FormControlLabel
-            control={<Checkbox color='warning' size='small' defaultChecked />}
-            label='Inclusive of government fee'
-          />
         </Box>
       </Container>
     </Box>
