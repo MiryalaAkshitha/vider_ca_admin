@@ -4,8 +4,7 @@ import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useQuery, UseQueryResult } from "react-query";
-import Deliverables from "views/services/Deliverables";
-import Documents from "views/services/Documents";
+import MileStones from "views/services/milestones";
 import Overview from "views/services/overview";
 import ServiceType from "views/services/servicetype";
 
@@ -35,6 +34,8 @@ function AddService() {
       <Overview data={data} />
       <Divider sx={{ my: 5 }} />
       <ServiceType />
+      <Divider sx={{ my: 5 }} />
+      <MileStones />
     </>
   );
 }

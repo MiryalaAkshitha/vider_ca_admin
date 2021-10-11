@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { CircularProgress, Typography, useTheme } from "@mui/material";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import { CircularProgress, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Box, SystemStyleObject } from "@mui/system";
 import { http } from "api/http";
 import { useSnackbar } from "notistack";
-import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
-import { styled } from "@mui/material/styles";
+import { useState } from "react";
 
 export const UploadContainer = styled("div")(() => ({
   border: "1px dotted grey",

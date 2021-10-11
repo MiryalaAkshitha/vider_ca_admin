@@ -18,7 +18,7 @@ function BreadCrumbs({ page }: { page: string }) {
   return (
     <Breadcrumbs aria-label='breadcrumb'>
       {routes.map((item, index) => {
-        if (index == routes.length - 1) {
+        if (index === routes.length - 1) {
           return <Typography color='text.primary'>{item.title}</Typography>;
         }
         return (
@@ -39,22 +39,18 @@ const getRoutes = (page: string) => {
         { title: "Services", path: "/services" },
         { title: "Add Service", path: "/" },
       ];
-      break;
     case "services":
       return [
         { title: "Settings", path: "/settings" },
         { title: "Services", path: "/" },
       ];
-      break;
     case "categories":
       return [
         { title: "Settings", path: "/settings" },
         { title: "Categories", path: "/" },
       ];
-      break;
     default:
       return [];
-      break;
   }
 };
 

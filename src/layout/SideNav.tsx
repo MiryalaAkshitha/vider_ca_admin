@@ -49,7 +49,7 @@ function SideNav() {
             <ListItemButton
               selected={true}
               sx={{
-                opacity: item.path == history.location.pathname ? 1 : 0.4,
+                opacity: item.path === history.location.pathname ? 1 : 0.4,
                 "&.Mui-selected": {
                   background: "rgba(0, 0, 0, 0.4)",
                 },

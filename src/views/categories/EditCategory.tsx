@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteCategory, updateCategory } from "api/categories";
+import { updateCategory } from "api/categories";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
 import useSnack from "hooks/useSnack";

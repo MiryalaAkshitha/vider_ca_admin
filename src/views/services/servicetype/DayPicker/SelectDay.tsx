@@ -4,13 +4,24 @@ import { useState } from "react";
 import { DialogProps } from "types";
 import { MONTHS } from "utils/constants";
 
-function SelectDay({ open, setOpen }: DialogProps) {
+interface SelectDayProps extends DialogProps {
+  onChange: (v: string) => void;
+}
+
+function SelectDay({ open, setOpen, onChange }: SelectDayProps) {
   let [days, setDays] = useState(0);
+  let [month, setMonth] = useState<number>(0);
 
   let year = new Date().getFullYear();
   const getDays = (e: any) => {
+    setMonth(e.target.value);
     let days = moment(`${year}-${e.target.value}`).daysInMonth();
     setDays(days);
+  };
+
+  const handleChange = (e: any) => {
+    onChange(`${e.target.value}, ${MONTHS[month - 1]}`);
+    setOpen(false);
   };
 
   return (
@@ -39,7 +50,12 @@ function SelectDay({ open, setOpen }: DialogProps) {
           </TextField>
         </Grid>
         <Grid item xs={6}>
-          <TextField fullWidth size='small' label='Select Day' select>
+          <TextField
+            onChange={handleChange}
+            fullWidth
+            size='small'
+            label='Select Day'
+            select>
             {Array.from(Array(days)).map((item, index) => (
               <MenuItem key={index} value={index + 1}>
                 {index + 1}

@@ -22,8 +22,10 @@ interface CategoryResponse {
 
 function Cateogries() {
   const [open, setOpen] = useState<boolean>(false);
-  const { data, isLoading, error }: UseQueryResult<CategoryResponse, Error> =
-    useQuery("categories", getCategories);
+  const { data, isLoading }: UseQueryResult<CategoryResponse, Error> = useQuery(
+    "categories",
+    getCategories
+  );
 
   useTitle("Categories");
 

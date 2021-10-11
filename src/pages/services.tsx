@@ -1,20 +1,10 @@
-import { Add, ArrowRightAltOutlined } from "@mui/icons-material";
-import {
-  Button,
-  Divider,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/categories";
 import BreadCrumbs from "components/BreadCrumbs";
-import CustomCard from "components/CustomCard";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { Link } from "react-router-dom";
 import ServiceCard from "views/services/ServiceCard";
