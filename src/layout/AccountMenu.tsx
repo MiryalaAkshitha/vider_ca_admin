@@ -18,6 +18,11 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <Menu
       anchorEl={anchorEl}
@@ -48,7 +53,7 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
         <Typography variant='body2'>Help/Support</Typography>
       </MenuItem>
       <Divider sx={{ mx: 1, my: 0 }} />
-      <MenuItem sx={{ py: 1, m: 0 }}>
+      <MenuItem sx={{ py: 1, m: 0 }} onClick={handleLogout}>
         <ListItemIcon>
           <Logout color='primary' fontSize='small' />
         </ListItemIcon>

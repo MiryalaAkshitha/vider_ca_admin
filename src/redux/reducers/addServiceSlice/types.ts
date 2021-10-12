@@ -12,6 +12,7 @@ export type Period = {
 export type MileStone = {
   name: string;
   checklist: Array<string>;
+  id: string;
 };
 
 export type UpdateFrequencyPayload = {
@@ -31,14 +32,21 @@ export type UpdateChecklistItem = {
   value: string;
 };
 
-type ContentItem = {
+export type Item = {
+  title: string;
+  description?: string;
+  items?: [];
+  id: string;
+};
+
+export type ContentItem = {
   type: string;
   description?: string;
   id: string;
-  items?: [];
+  items?: Array<Item>;
 };
 
-type DescriptionItem = {
+export type DescriptionItem = {
   title: string;
   id: string;
   items: Array<ContentItem>;
@@ -53,4 +61,16 @@ export interface IAddService {
   frequencyPeriods: Array<Period>;
   mileStones: Array<MileStone>;
   description: Array<DescriptionItem>;
+  repeated: boolean;
 }
+
+export type UpdateDate = {
+  index: number;
+  type: "startDate" | "endDate";
+  date: string;
+};
+
+export type AddAccordionContent = {
+  index: number;
+  data: { title: string; description: string };
+};

@@ -1,19 +1,22 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 import {
+  HPERIODS,
+  INITIAL_MILESTONES,
+  MONTHS,
+  QPERIODS,
+  YPERIODS,
+} from "utils/constants";
+import { v4 as uuidv4 } from "uuid";
+import {
+  AddAccordionContent,
   DeleteChecklistItem,
   IAddService,
   UpdateChecklistItem,
+  UpdateDate,
   UpdateFrequencyPayload,
   UpdateMileStoneName,
 } from "./types";
-import { RootState } from "redux/store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  MONTHS,
-  QPERIODS,
-  HPERIODS,
-  YPERIODS,
-  INITIAL_MILESTONES,
-} from "utils/constants";
 
 const initialState: IAddService = {
   serviceType: "",
@@ -24,6 +27,7 @@ const initialState: IAddService = {
   frequencyPeriods: [],
   mileStones: [...INITIAL_MILESTONES],
   description: [],
+  repeated: false,
 };
 
 export const addServiceSlice = createSlice({
@@ -42,6 +46,7 @@ export const addServiceSlice = createSlice({
     },
     updateFrequency(state, action) {
       state.frequency = action.payload;
+      state.repeated = false;
       if (action.payload === "Monthly") {
         state.frequencyPeriods = MONTHS.map((item) => ({
           period: item,
@@ -71,6 +76,46 @@ export const addServiceSlice = createSlice({
         }));
       }
     },
+    repeateStartAndEndDates(state) {
+      if (state.repeated) {
+        return;
+      }
+
+      let startDatesUpdated: boolean = false;
+      let endDatesUpdated: boolean = false;
+
+      let updateDatesForRemaining = ({ index, type, date }: UpdateDate) => {
+        for (let i = index; i <= state.frequencyPeriods.length - 1; i++) {
+          state.frequencyPeriods[i][type] =
+            date.split(",")[0] + ", " + state.frequencyPeriods[i].period;
+        }
+      };
+
+      for (let i = state.frequencyPeriods.length - 1; i >= 0; i--) {
+        let existingStartDate = state.frequencyPeriods[i].startDate;
+        let existingEndDate = state.frequencyPeriods[i].endDate;
+
+        if (existingStartDate && !startDatesUpdated) {
+          updateDatesForRemaining({
+            index: i,
+            type: "startDate",
+            date: existingStartDate,
+          });
+          startDatesUpdated = true;
+        }
+
+        if (existingEndDate && !endDatesUpdated) {
+          updateDatesForRemaining({
+            index: i,
+            type: "endDate",
+            date: existingEndDate,
+          });
+          endDatesUpdated = true;
+        }
+      }
+      state.repeated = true;
+    },
+
     updateFrequencyDate(state, action: PayloadAction<UpdateFrequencyPayload>) {
       const { index, name, value } = action.payload;
       state.frequencyPeriods[index][name] = value;
@@ -82,6 +127,7 @@ export const addServiceSlice = createSlice({
       state.mileStones.push({
         name: "",
         checklist: [],
+        id: uuidv4(),
       });
     },
     deleteMilestone(state, action: PayloadAction<number>) {
@@ -101,6 +147,40 @@ export const addServiceSlice = createSlice({
       let { mIndex, cIndex } = action.payload;
       state.mileStones[mIndex].checklist.splice(cIndex, 1);
     },
+    reArrangeMilestones(state, action) {
+      state.mileStones = action.payload;
+    },
+    addContentBlock(state, action: PayloadAction<string>) {
+      state.description.push({
+        title: action.payload,
+        id: uuidv4(),
+        items: [],
+      });
+    },
+    addTextContent(state, action: PayloadAction<{ index: number }>) {
+      let contentBlockIndex = action.payload.index;
+      state.description[contentBlockIndex].items.push({
+        type: "text",
+        id: uuidv4(),
+        description: "",
+        items: [],
+      });
+    },
+    addAccordionContent(state, action: PayloadAction<AddAccordionContent>) {
+      let contentBlockIndex = action.payload.index;
+      state.description[contentBlockIndex].items.push({
+        type: "accordion",
+        id: uuidv4(),
+        description: "",
+        items: [
+          {
+            ...action.payload.data,
+            id: uuidv4(),
+            items: [],
+          },
+        ],
+      });
+    },
   },
 });
 
@@ -117,6 +197,11 @@ export const {
   addMilestoneChecklistItem,
   deleteMilestoneChecklistItem,
   updateChecklistItemName,
+  repeateStartAndEndDates,
+  reArrangeMilestones,
+  addContentBlock,
+  addTextContent,
+  addAccordionContent,
 } = addServiceSlice.actions;
 
 export default addServiceSlice.reducer;

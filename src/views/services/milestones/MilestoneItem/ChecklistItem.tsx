@@ -5,7 +5,7 @@ import {
   deleteMilestoneChecklistItem,
   updateChecklistItemName,
 } from "redux/reducers/addServiceSlice";
-import { StyledChecklistItem } from "./styles";
+import { StyledChecklistItem } from "../styles";
 
 type CheckListItemProps = {
   item: string;

@@ -30,3 +30,17 @@ export const StyledChecklistItem = styled("div")<{ cIndex: number }>(
     };
   }
 );
+
+export const StyledDraggableMilestone = styled("div")<{ opacity: number }>(
+  ({ opacity }) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+    border: "1px dashed gray",
+    padding: "0.5rem 1rem",
+    marginBottom: "15px",
+    backgroundColor: "white",
+    cursor: "move",
+    opacity,
+  })
+);

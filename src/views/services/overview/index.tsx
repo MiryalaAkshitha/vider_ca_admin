@@ -7,11 +7,15 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Add from "@mui/icons-material/Add";
-import AddContentFieldModal from "./AddContentFieldModal";
+import AddContentBlock from "./AddContentBlock";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { addServiceState } from "redux/reducers/addServiceSlice";
+import ContentBlock from "./ContentBlock";
 
 function Overview({ data }: any) {
   const [open, setOpen] = useState(false);
+  const state = useSelector(addServiceState);
 
   return (
     <>
@@ -64,17 +68,24 @@ function Overview({ data }: any) {
               size='small'
             />
           </Box>
+          <Box>
+            {state.description.map((item, index) => (
+              <ContentBlock item={item} key={index} index={index} />
+            ))}
+          </Box>
           <Box textAlign='right' mt={3}>
             <Button
               onClick={() => setOpen(true)}
               color='secondary'
+              variant='outlined'
               startIcon={<Add />}>
               Add Content Block
             </Button>
           </Box>
         </Container>
       </Box>
-      <AddContentFieldModal open={open} setOpen={setOpen} />
+      {JSON.stringify(state.description)}
+      <AddContentBlock open={open} setOpen={setOpen} />
     </>
   );
 }

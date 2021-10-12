@@ -1,29 +1,19 @@
-import Quill from "quill";
-import { useEffect, memo, useRef } from "react";
+import { Typography } from "@mui/material";
 
-interface EditorProps {
-  onChange: (v: string) => void;
-  id: string;
+function Editor() {
+  return (
+    <div
+      contentEditable
+      style={{
+        border: "1px solid rgba(0,0,0,0.1)",
+        minHeight: 150,
+        borderRadius: 2,
+      }}>
+      <Typography color='gray' sx={{ p: 2, outline: "none" }}>
+        Editor
+      </Typography>
+    </div>
+  );
 }
 
-function Editor(props: EditorProps) {
-  let quill = useRef<Quill>();
-
-  useEffect(() => {
-    if (!props.id) return;
-    quill.current = new Quill(`#${props.id}`, { theme: "snow" });
-  }, []);
-
-  quill.current?.on("editor-change", (e: any) => {
-    console.log(quill.current?.root.innerHTML, "dfdfdfsd");
-  });
-
-  return <div id={props.id}></div>;
-}
-
-function compareFunction(prevProps: any, nextProps: any) {
-  if (prevProps?.id === nextProps?.id) return true;
-  return false;
-}
-
-export default memo(Editor, compareFunction);
+export default Editor;

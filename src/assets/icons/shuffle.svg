@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.889" height="15.66" viewBox="0 0 20.889 15.66">
+  <g id="Group_4360" data-name="Group 4360" transform="translate(-1864.427 -1172.17)">
+    <g id="Group_1719" data-name="Group 1719" transform="translate(-9047.944 11388.542)">
+      <g id="Group_4361" data-name="Group 4361">
+        <path id="Icon_ionic-ios-arrow-round-back" data-name="Icon ionic-ios-arrow-round-back" d="M5.673.2a.711.711,0,0,1,.005,1l-3.3,3.313H14.958a.707.707,0,0,1,0,1.414H2.377L5.684,9.24a.716.716,0,0,1-.005,1,.7.7,0,0,1-1-.005L.2,5.721h0A.794.794,0,0,1,.054,5.5.675.675,0,0,1,0,5.226a.709.709,0,0,1,.2-.495L4.683.216A.693.693,0,0,1,5.673.2Z" transform="translate(10922.815 -10216.372) rotate(90)" fill="#fff"/>
+        <path id="Icon_ionic-ios-arrow-round-back-2" data-name="Icon ionic-ios-arrow-round-back" d="M5.673,10.244a.711.711,0,0,0,.005-1l-3.3-3.313H14.958a.707.707,0,0,0,0-1.414H2.377L5.684,1.2a.716.716,0,0,0-.005-1,.7.7,0,0,0-1,.005L.2,4.723h0a.794.794,0,0,0-.147.223A.675.675,0,0,0,0,5.218a.709.709,0,0,0,.2.495l4.482,4.515A.693.693,0,0,0,5.673,10.244Z" transform="translate(10922.815 -10200.712) rotate(-90)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

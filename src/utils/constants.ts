@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 export const FREQUENCY_TEXTS = [
   "Monthly",
   "Quarterly",
@@ -33,15 +35,18 @@ export const YPERIODS = ["Y1"];
 
 export const INITIAL_MILESTONES = [
   {
-    name: "Documents",
+    name: "Checklist",
     checklist: [],
+    id: uuidv4(),
   },
   {
     name: "Stage of Work",
     checklist: [],
+    id: uuidv4(),
   },
   {
     name: "Deliverables",
     checklist: [],
+    id: uuidv4(),
   },
 ];

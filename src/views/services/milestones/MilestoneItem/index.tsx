@@ -26,14 +26,16 @@ function MilestoneItem(props: MilestoneProps) {
   };
 
   return (
-    <Box mt={3} key={index}>
+    <Box mt={index === 0 ? 0 : 3}>
       <Box alignItems='center' display='flex' justifyContent='space-between'>
         <Typography mb={1} variant='body2' color='primary'>
           {`Milestone ${index + 1}`}
         </Typography>
-        <IconButton onClick={() => dispatch(deleteMilestone(index))}>
-          <Delete />
-        </IconButton>
+        {![0, 1, 2].includes(index) && (
+          <IconButton onClick={() => dispatch(deleteMilestone(index))}>
+            <Delete />
+          </IconButton>
+        )}
       </Box>
       <TextField
         onChange={(e) => handleMilestoneName(index, e.target.value)}
