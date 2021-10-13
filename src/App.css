@@ -26,3 +26,7 @@ body {
 .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
   font-family: muli_regular !important;
 }
+.ql-container {
+  min-height: 150px;
+  font-family: muli_regular !important;
+}

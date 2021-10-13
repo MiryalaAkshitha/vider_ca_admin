@@ -35,7 +35,7 @@ export type UpdateChecklistItem = {
 export type Item = {
   title: string;
   description?: string;
-  items?: [];
+  items: Array<Item>;
   id: string;
 };
 
