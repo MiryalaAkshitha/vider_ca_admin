@@ -7,6 +7,7 @@ const Settings = loadable(() => import("pages/settings"));
 const Categories = loadable(() => import("pages/categories"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/addservice"));
+const Clients = loadable(() => import("pages/clients"));
 
 export interface IRoute {
   component: any;
@@ -50,6 +51,11 @@ const routes: Array<IRoute> = [
         component: Services,
         exact: true,
         path: "/services",
+      },
+      {
+        component: Clients,
+        exact: true,
+        path: "/clients",
       },
     ],
   },
