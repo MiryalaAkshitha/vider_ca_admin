@@ -30,3 +30,7 @@ body {
   min-height: 150px;
   font-family: muli_regular !important;
 }
+
+input::placeholder {
+  font-family: muli_regular !important;
+}

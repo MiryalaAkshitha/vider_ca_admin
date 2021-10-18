@@ -1,43 +1,92 @@
-import { Add } from "@mui/icons-material";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
-import { Box } from "@mui/system";
-import { getCategories } from "api/categories";
-import BreadCrumbs from "components/BreadCrumbs";
-import Loader from "components/Loader";
 import Table from "components/Table";
-import useTitle from "hooks/useTitle";
+import { Add } from "@mui/icons-material";
+import { Button, Grid, IconButton } from "@mui/material";
+import { Box } from "@mui/system";
+import { getClients } from "api/client";
+import { useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
-import { Link } from "react-router-dom";
-import ServiceCard from "views/services/ServiceCard";
+import AddClient from "views/clients/AddClient";
+import SearchContainer from "components/SearchContainer";
+import useTitle from "hooks/useTitle";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+import ClientFilter from "views/clients/Filter";
+import { useSelector } from "react-redux";
+import { selectClient } from "redux/reducers/clientSlice";
+
+let LIMIT = 5;
+
+const columns = [
+  { key: "displayName", title: "Display Name" },
+  { key: "clientType", title: "Client Type" },
+  { key: "companyType", title: "Company Type" },
+  { key: "mobileNumber", title: "Mobile Number" },
+  { key: "email", title: "Email" },
+];
+
+interface ClientResponse {
+  data: any[];
+}
 
 function Clients() {
+  const { appliedFilter } = useSelector(selectClient);
+  const [offset, setOffset] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
+  const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const { data, isLoading }: UseQueryResult<ClientResponse, Error> = useQuery(
+    [
+      "clients",
+      {
+        limit: LIMIT,
+        offset: offset > 0 ? (offset - 1) * LIMIT : offset,
+        query: appliedFilter,
+      },
+    ],
+    getClients
+  );
+
   useTitle("Clients");
 
   return (
-    <Box textAlign='right' mt={2}>
-      <Link to='/services/add' style={{ textDecoration: "none" }}>
-        <Button variant='outlined' startIcon={<Add />} color='secondary'>
-          Add Client
-        </Button>
-      </Link>
-      <Table sx={{ mt: 5 }} columns={["Name", "Mobile Number", "Email"]}>
-        <tr>
-          <td>Vinay Kumar</td>
-          <td>950533509</td>
-          <td>vinay@janaspandana.in</td>
-        </tr>
-        <tr>
-          <td>Vinay Kumar</td>
-          <td>950533509</td>
-          <td>vinay@janaspandana.in</td>
-        </tr>
-        <tr>
-          <td>Vinay Kumar</td>
-          <td>950533509</td>
-          <td>vinay@janaspandana.in</td>
-        </tr>
-      </Table>
-    </Box>
+    <>
+      <Grid container alignItems='center' justifyContent='space-between'>
+        <Grid item xs={5}>
+          <Box display='flex' gap={2} alignItems='center'>
+            <SearchContainer
+              onChange={(v) => console.log(v)}
+              placeHolder='Search by display name'
+            />
+            <IconButton
+              onClick={() => setOpenFilter(true)}
+              color='primary'
+              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}>
+              <FilterAltOutlinedIcon />
+            </IconButton>
+          </Box>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() => setOpen(true)}
+            variant='outlined'
+            startIcon={<Add />}
+            color='secondary'>
+            Add Client
+          </Button>
+        </Grid>
+      </Grid>
+      <Table
+        sx={{ mt: 3 }}
+        loading={isLoading}
+        data={data?.data[0] || []}
+        columns={columns}
+        pagination={{
+          totalCount: data?.data[1],
+          pageCount: 5,
+          onChange: (v) => setOffset(v),
+        }}
+      />
+      <AddClient open={open} setOpen={setOpen} />
+      <ClientFilter open={openFilter} setOpen={setOpenFilter} />
+    </>
   );
 }
 

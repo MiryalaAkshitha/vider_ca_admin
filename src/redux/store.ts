@@ -4,7 +4,8 @@ import logger from "redux-logger";
 import CounterReducer from "redux/reducers/counterSlice";
 import errorReducer from "redux/reducers/errorSlice";
 import GlobalReducer from "redux/reducers/globalSlice";
-import addService from "redux/reducers/addServiceSlice";
+import addServiceReducer from "redux/reducers/addServiceSlice";
+import clientReducer from "redux/reducers/clientSlice";
 
 let middleware = [logger];
 
@@ -13,7 +14,8 @@ const store = configureStore({
     counter: CounterReducer,
     error: errorReducer,
     global: GlobalReducer,
-    addservice: addService,
+    addservice: addServiceReducer,
+    client: clientReducer,
   },
   middleware,
 });

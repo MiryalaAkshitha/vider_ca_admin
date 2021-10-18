@@ -142,7 +142,7 @@ function AddCategory({ open, setOpen }: DialogProps) {
             loading={isLoading}
             fullWidth
             loadingColor='white'
-            title='Save'
+            title='Create Category'
             color='secondary'
           />
         </Box>

@@ -12,6 +12,7 @@ function Loader(props: LoaderProps) {
     <Box
       sx={{
         minHeight,
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

@@ -1,22 +1,78 @@
-import { SystemStyleObject } from "@mui/system";
-import { StyledTable } from "./styles";
+import { CircularProgress, Pagination, Typography } from "@mui/material";
+import { Box, SystemStyleObject } from "@mui/system";
+import _ from "lodash";
+import { useState } from "react";
+import { StyledTable, StyledTableLoader } from "./styles";
 
 interface TableProps {
-  columns: Array<string>;
-  children: any[];
+  columns: Array<{ key: string; title: string }>;
   sx?: SystemStyleObject;
+  data: any[];
+  loading: boolean;
+  pagination?: {
+    totalCount: number;
+    pageCount: number;
+    onChange: (v: number) => void;
+  };
 }
 
-function Table({ columns, children, sx }: TableProps) {
+function Table({ columns, data, sx, pagination, loading = false }: TableProps) {
+  const [page, setPage] = useState(1);
+
+  if (!data.length) return null;
+
   return (
-    <StyledTable sx={sx}>
-      <thead>
-        {columns.map((item, index) => (
-          <th key={index}>{item}</th>
-        ))}
-      </thead>
-      <tbody>{children}</tbody>
-    </StyledTable>
+    <Box
+      sx={{
+        position: "relative",
+        boxShadow: "0px 0px 15px rgb(0 0 0 / 10%)",
+        pb: 3,
+        minHeight: 350,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        ...sx,
+      }}>
+      <StyledTable>
+        <thead>
+          {columns.map((item, index) => (
+            <th key={index}>{item.title}</th>
+          ))}
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr key={index}>
+              {columns.map((col, colIndex) => (
+                <td key={colIndex}>
+                  <Typography variant='body2'>
+                    {_.get(item, col.key)}
+                  </Typography>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </StyledTable>
+      {pagination && (
+        <Box px={2} mt={2} justifyContent='flex-end' display='flex'>
+          <Pagination
+            color='secondary'
+            page={page}
+            count={Math.ceil(pagination.totalCount / pagination.pageCount)}
+            variant='outlined'
+            onChange={(v, page) => {
+              setPage(page);
+              pagination.onChange(page);
+            }}
+          />
+        </Box>
+      )}
+      {loading && (
+        <StyledTableLoader>
+          <CircularProgress color='primary' />
+        </StyledTableLoader>
+      )}
+    </Box>
   );
 }
 
