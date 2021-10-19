@@ -49,6 +49,11 @@ const getRoutes = (page: string) => {
         { title: "Settings", path: "/settings" },
         { title: "Categories", path: "/" },
       ];
+    case "fields":
+      return [
+        { title: "Forms", path: "/forms" },
+        { title: "Fields", path: "/" },
+      ];
     default:
       return [];
   }

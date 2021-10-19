@@ -50,3 +50,45 @@ export const INITIAL_MILESTONES = [
     id: uuidv4(),
   },
 ];
+
+export const FIELD_TYPES = [
+  {
+    label: "Text",
+    value: "text",
+  },
+  {
+    label: "Number",
+    value: "number",
+  },
+  {
+    label: "Date",
+    value: "date",
+  },
+  {
+    label: "Multiline",
+    value: "multiline",
+  },
+  {
+    label: "Multiselect",
+    value: "multiselect",
+  },
+  {
+    label: "Dropdown",
+    value: "dropdown",
+  },
+  {
+    label: "Radio",
+    value: "radio",
+  },
+  {
+    label: "Checkbox",
+    value: "checkbox",
+  },
+];
+const FORMATS = {
+  date: [
+    {
+      label: "",
+    },
+  ],
+};

@@ -8,6 +8,8 @@ const Categories = loadable(() => import("pages/categories"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/addservice"));
 const Clients = loadable(() => import("pages/clients"));
+const Forms = loadable(() => import("pages/forms"));
+const Fields = loadable(() => import("pages/fields"));
 
 export interface IRoute {
   component: any;
@@ -56,6 +58,16 @@ const routes: Array<IRoute> = [
         component: Clients,
         exact: true,
         path: "/clients",
+      },
+      {
+        component: Fields,
+        exact: true,
+        path: "/forms/:formId/fields",
+      },
+      {
+        component: Forms,
+        exact: true,
+        path: "/forms",
       },
     ],
   },

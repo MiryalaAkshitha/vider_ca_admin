@@ -29,6 +29,11 @@ const settingsMenu = [
     img: icons.man,
     path: "/",
   },
+  {
+    title: "Forms",
+    img: icons.man,
+    path: "/forms",
+  },
 ];
 
 const SettingsCard = styled("div")(() => ({

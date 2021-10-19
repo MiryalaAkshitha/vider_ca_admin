@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   applyFilters,
@@ -86,7 +85,7 @@ function ClientFilter({ open, setOpen }: DialogProps) {
           <MenuItem value='company'>Company</MenuItem>
           <MenuItem value='individual'>Individual</MenuItem>
         </TextField>
-        {filter.clientType == "company" && (
+        {filter.clientType === "company" && (
           <TextField
             sx={{ mt: 3 }}
             variant='outlined'

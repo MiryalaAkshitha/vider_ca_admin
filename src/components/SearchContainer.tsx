@@ -6,18 +6,22 @@ import _ from "lodash";
 interface SearchContainerProps {
   placeHolder: string;
   onChange: (v: string) => void;
+  maxWidth?: string;
 }
 
-function SearchContainer({ placeHolder, onChange }: SearchContainerProps) {
-  const handleChange = (e: any) => {
-    let debounceFunc = _.debounce(() => onChange(e.target.value), 1500);
-    debounceFunc();
-  };
+function SearchContainer({
+  placeHolder,
+  onChange,
+  maxWidth = "600px",
+}: SearchContainerProps) {
+  let handleChange = _.debounce(function (e) {
+    onChange(e.target.value);
+  }, 1000);
 
   return (
     <Box>
       <TextField
-        sx={{ maxWidth: 600, minWidth: 500, width: "100%" }}
+        sx={{ maxWidth, minWidth: 500, width: "100%" }}
         color='primary'
         onChange={handleChange}
         size='small'

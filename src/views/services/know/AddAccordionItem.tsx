@@ -8,20 +8,13 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addAccordionContent } from "redux/reducers/addServiceSlice";
 import { DialogProps } from "types";
 
 interface AddAccordionItemProps extends DialogProps {
   selectedAccordion: string;
 }
 
-function AddAccordionItem({
-  open,
-  setOpen,
-  selectedAccordion,
-}: AddAccordionItemProps) {
-  const dispatch = useDispatch();
+function AddAccordionItem({ open, setOpen }: AddAccordionItemProps) {
   const [nested, setNested] = useState<boolean>(false);
   const [data, setData] = useState<{ title: string; description: string }>({
     title: "",

@@ -1,8 +1,20 @@
-import { Box } from "@mui/system";
+import { Box, SystemStyleObject } from "@mui/system";
 
-function CustomCard({ children }: any) {
+interface CustomCardProps {
+  children: any;
+  sx?: SystemStyleObject;
+}
+
+function CustomCard(props: CustomCardProps) {
+  const { children, sx } = props;
   return (
-    <Box sx={{ boxShadow: "0px 5px 20px #0000001A", p: 2, borderRadius: 5 }}>
+    <Box
+      sx={{
+        boxShadow: "0px 5px 20px #0000001A",
+        p: 2,
+        borderRadius: 2,
+        ...sx,
+      }}>
       {children}
     </Box>
   );

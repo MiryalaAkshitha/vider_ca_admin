@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { createCategory } from "api/categories";
 import { createClient } from "api/client";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
@@ -92,7 +91,7 @@ function AddClient({ open, setOpen }: DialogProps) {
             <MenuItem value='company'>Company</MenuItem>
             <MenuItem value='individual'>Individual</MenuItem>
           </TextField>
-          {state.clientType == "company" && (
+          {state.clientType === "company" && (
             <TextField
               sx={{ mt: 3 }}
               variant='outlined'
