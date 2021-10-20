@@ -1,43 +1,42 @@
 import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { getForms } from "api/forms";
+import { getFields } from "api/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
-import CreateForm from "views/forms/AddForm";
-import FormCard from "views/forms/FormCard";
+import AddField from "views/forms/AddField";
+import FieldCard from "views/forms/FieldCard";
 
-export type FormItem = {
+export type FieldItem = {
   id: number;
   name: string;
-  tags: string[];
 };
 
-interface FormResponse {
-  data: Array<FormItem>;
+export interface FieldResponse {
+  data: Array<FieldItem>;
 }
 
-function Forms() {
+function Fields() {
   const [open, setOpen] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
-  const { data, isLoading }: UseQueryResult<FormResponse, Error> = useQuery(
-    ["forms"],
-    getForms
+  const { data, isLoading }: UseQueryResult<FieldResponse, Error> = useQuery(
+    ["fields"],
+    getFields
   );
 
-  useTitle("Forms");
+  useTitle("Fields Configuration");
 
   return (
     <div>
       <Grid container>
         <Grid item xs={6}>
           <SearchContainer
-            placeHolder='Search by form name or tags'
+            placeHolder='Search by fields'
             onChange={(v) => setSearch(v)}
           />
         </Grid>
@@ -48,7 +47,7 @@ function Forms() {
               variant='outlined'
               startIcon={<Add />}
               color='secondary'>
-              Create Form
+              Add Field
             </Button>
           </Box>
         </Grid>
@@ -67,7 +66,7 @@ function Forms() {
                 })
                 .map((item) => (
                   <Grid item xs={3} key={item.id}>
-                    <FormCard data={item} />
+                    <FieldCard data={item} />
                   </Grid>
                 ))}
             </Grid>
@@ -76,9 +75,9 @@ function Forms() {
           )}
         </>
       )}
-      <CreateForm open={open} setOpen={setOpen} />
+      <AddField open={open} setOpen={setOpen} />
     </div>
   );
 }
 
-export default Forms;
+export default Fields;

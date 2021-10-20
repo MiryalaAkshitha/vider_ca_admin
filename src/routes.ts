@@ -10,6 +10,9 @@ const AddService = loadable(() => import("pages/addservice"));
 const Clients = loadable(() => import("pages/clients"));
 const Forms = loadable(() => import("pages/forms"));
 const Fields = loadable(() => import("pages/fields"));
+const FieldsConfiguration = loadable(
+  () => import("pages/fields-configuration")
+);
 
 export interface IRoute {
   component: any;
@@ -68,6 +71,11 @@ const routes: Array<IRoute> = [
         component: Forms,
         exact: true,
         path: "/forms",
+      },
+      {
+        component: FieldsConfiguration,
+        exact: true,
+        path: "/fields-configuration",
       },
     ],
   },

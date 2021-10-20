@@ -19,7 +19,11 @@ import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { FIELD_TYPES } from "utils/constants";
 
-function AddField({ open, setOpen }: DialogProps) {
+interface EditFieldProps extends DialogProps {
+  data: any;
+}
+
+function EditField({ open, setOpen, data }: EditFieldProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState({
@@ -62,7 +66,7 @@ function AddField({ open, setOpen }: DialogProps) {
       onClose={setOpen}>
       <AppBar position='static'>
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Add Field</Typography>
+          <Typography variant='subtitle1'>Edit Field</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -135,7 +139,7 @@ function AddField({ open, setOpen }: DialogProps) {
               fullWidth
               type='submit'
               loadingColor='white'
-              title='Create Field'
+              title='Update Field'
               color='secondary'
             />
           </Box>
@@ -145,4 +149,4 @@ function AddField({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddField;
+export default EditField;

@@ -31,7 +31,7 @@ function Appbar() {
     <>
       <AppBar
         sx={{
-          width: { sm: `calc(100% - ${theme.spacing(9)} + 1px)` },
+          width: { sm: `calc(100% - ${theme.spacing(9)} + 1px)`, height: 60 },
           ml: { sm: `calc(${theme.spacing(9)} + 1px)` },
         }}
         color='default'

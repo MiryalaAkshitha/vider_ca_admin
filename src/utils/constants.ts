@@ -61,6 +61,10 @@ export const FIELD_TYPES = [
     value: "number",
   },
   {
+    label: "Mobile Number",
+    value: "mobile",
+  },
+  {
     label: "Date",
     value: "date",
   },
@@ -84,11 +88,8 @@ export const FIELD_TYPES = [
     label: "Checkbox",
     value: "checkbox",
   },
+  {
+    label: "Telephone",
+    value: "telephone",
+  },
 ];
-const FORMATS = {
-  date: [
-    {
-      label: "",
-    },
-  ],
-};
