@@ -2,6 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { getForms } from "api/forms";
+import BreadCrumbs from "components/BreadCrumbs";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
@@ -33,51 +34,54 @@ function Forms() {
   useTitle("Forms");
 
   return (
-    <div>
-      <Grid container>
-        <Grid item xs={6}>
-          <SearchContainer
-            placeHolder='Search by form name or tags'
-            onChange={(v) => setSearch(v)}
-          />
+    <>
+      <BreadCrumbs page='forms' />
+      <Box mt={3}>
+        <Grid container>
+          <Grid item xs={6}>
+            <SearchContainer
+              placeHolder='Search by form name or tags'
+              onChange={(v) => setSearch(v)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Box textAlign='right'>
+              <Button
+                onClick={() => setOpen(true)}
+                variant='outlined'
+                startIcon={<Add />}
+                color='secondary'>
+                Create Form
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Box textAlign='right'>
-            <Button
-              onClick={() => setOpen(true)}
-              variant='outlined'
-              startIcon={<Add />}
-              color='secondary'>
-              Create Form
-            </Button>
-          </Box>
-        </Grid>
-      </Grid>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          {data?.data.length ? (
-            <Grid container spacing={3} sx={{ mt: 2 }}>
-              {data?.data
-                ?.filter((item) => {
-                  return (
-                    item.name.toLowerCase().indexOf(search.toLowerCase()) > -1
-                  );
-                })
-                .map((item) => (
-                  <Grid item xs={3} key={item.id}>
-                    <FormCard data={item} />
-                  </Grid>
-                ))}
-            </Grid>
-          ) : (
-            <EmptyPage minHeight='70vh' />
-          )}
-        </>
-      )}
-      <CreateForm open={open} setOpen={setOpen} />
-    </div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            {data?.data.length ? (
+              <Grid container spacing={3} sx={{ mt: 2 }}>
+                {data?.data
+                  ?.filter((item) => {
+                    return (
+                      item.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+                    );
+                  })
+                  .map((item) => (
+                    <Grid item xs={3} key={item.id}>
+                      <FormCard data={item} />
+                    </Grid>
+                  ))}
+              </Grid>
+            ) : (
+              <EmptyPage minHeight='70vh' />
+            )}
+          </>
+        )}
+        <CreateForm open={open} setOpen={setOpen} />
+      </Box>
+    </>
   );
 }
 

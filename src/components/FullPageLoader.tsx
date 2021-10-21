@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { setLoading } from "redux/reducers/globalSlice";
 import store, { RootState } from "redux/store";
 

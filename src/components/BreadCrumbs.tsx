@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link, { LinkProps } from "@mui/material/Link";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useRouteMatch } from "react-router-dom";
 
 interface LinkRouterProps extends LinkProps {
   to: string;
@@ -13,16 +13,25 @@ const LinkRouter = (props: LinkRouterProps) => (
 );
 
 function BreadCrumbs({ page }: { page: string }) {
-  let routes = getRoutes(page);
+  const match: any = useRouteMatch();
+  let routes = getRoutes(page, match);
 
   return (
     <Breadcrumbs aria-label='breadcrumb'>
       {routes.map((item, index) => {
         if (index === routes.length - 1) {
-          return <Typography color='text.primary'>{item.title}</Typography>;
+          return (
+            <Typography key={index} color='text.primary'>
+              {item.title}
+            </Typography>
+          );
         }
         return (
-          <LinkRouter underline='hover' color='inherit' to={item.path}>
+          <LinkRouter
+            key={index}
+            underline='hover'
+            color='inherit'
+            to={item.path}>
             {item.title}
           </LinkRouter>
         );
@@ -31,7 +40,7 @@ function BreadCrumbs({ page }: { page: string }) {
   );
 }
 
-const getRoutes = (page: string) => {
+const getRoutes = (page: string, match: any) => {
   switch (page) {
     case "addService":
       return [
@@ -49,10 +58,21 @@ const getRoutes = (page: string) => {
         { title: "Settings", path: "/settings" },
         { title: "Categories", path: "/" },
       ];
+    case "forms":
+      return [
+        { title: "Settings", path: "/settings" },
+        { title: "Forms", path: "/" },
+      ];
     case "fields":
       return [
+        { title: "Settings", path: "/settings" },
         { title: "Forms", path: "/forms" },
         { title: "Fields", path: "/" },
+      ];
+    case "clientProfile":
+      return [
+        { title: "Clients", path: "/clients" },
+        { title: match.params?.clientId, path: "/" },
       ];
     default:
       return [];

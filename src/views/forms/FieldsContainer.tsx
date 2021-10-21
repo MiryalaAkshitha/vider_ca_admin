@@ -1,11 +1,13 @@
-import { Add } from "@mui/icons-material";
-import { Button, Divider, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getFields } from "api/forms";
+import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
+import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import AddField from "./AddField";
 import { useQuery, UseQueryResult } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { addField, selectForm } from "redux/reducers/formsSlice";
 
 export type FieldItem = {
   id: number;
@@ -16,13 +18,26 @@ export interface FieldResponse {
   data: Array<FieldItem>;
 }
 
-function FieldsContainer(props: any) {
-  const { addField } = props;
+function FieldsContainer() {
+  const { addedFields } = useSelector(selectForm);
+  const dispatch = useDispatch();
+  const snack = useSnack();
   const [search, setSearch] = useState<string>("");
   const { data, isLoading }: UseQueryResult<FieldResponse, Error> = useQuery(
     ["fields"],
     getFields
   );
+
+  const handleAddField = (v: any) => {
+    let existingField = addedFields.find((item: any) => item.field.id === v.id);
+    if (existingField) {
+      snack.error("Aready added.");
+      return;
+    }
+    dispatch(addField(v));
+  };
+
+  if (isLoading) return <Loader />;
 
   return (
     <Box p={2}>
@@ -49,7 +64,7 @@ function FieldsContainer(props: any) {
             <Box
               mt={2}
               sx={{ cursor: "pointer" }}
-              onClick={() => addField(item)}>
+              onClick={() => handleAddField(item)}>
               <Typography variant='body1'>{item.name}</Typography>
               <Divider sx={{ my: 1 }} />
             </Box>

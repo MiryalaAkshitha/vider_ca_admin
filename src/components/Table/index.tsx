@@ -9,6 +9,7 @@ interface TableProps {
   sx?: SystemStyleObject;
   data: any[];
   loading: boolean;
+  onRowClick?: (v: any) => void;
   pagination?: {
     totalCount: number;
     pageCount: number;
@@ -16,8 +17,20 @@ interface TableProps {
   };
 }
 
-function Table({ columns, data, sx, pagination, loading = false }: TableProps) {
+function Table({
+  columns,
+  data,
+  sx,
+  pagination,
+  loading = false,
+  onRowClick,
+}: TableProps) {
   const [page, setPage] = useState(1);
+
+  const handleRowClick = (item: any) => {
+    if (!onRowClick) return;
+    onRowClick(item);
+  };
 
   if (!data.length) return null;
 
@@ -41,7 +54,7 @@ function Table({ columns, data, sx, pagination, loading = false }: TableProps) {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={() => handleRowClick(item)}>
               {columns.map((col, colIndex) => (
                 <td key={colIndex}>
                   <Typography variant='body2'>

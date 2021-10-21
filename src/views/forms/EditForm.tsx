@@ -30,7 +30,7 @@ function EditForm({ open, setOpen, data }: EditFormProps) {
 
   useEffect(() => {
     setState(data);
-  }, []);
+  }, [data]);
 
   const { mutate, isLoading } = useMutation(updateForm, {
     onSuccess: () => {

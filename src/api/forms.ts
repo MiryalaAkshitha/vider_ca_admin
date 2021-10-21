@@ -9,7 +9,11 @@ const deleteForm = (id: any) => http.delete(`/forms/${id}`);
 const createField = (data: any) => http.post(`/forms/fields`, data);
 const getFields = () => http.get("/forms/fields");
 const deleteField = (id: any) => http.delete(`/forms/fields/${id}`);
+const updateField = ({ id, data }) => http.put(`/forms/fields/${id}`, data);
+
 const saveFormFields = (data: any) => http.post("/forms/form-fields", data);
+const getFormFields = ({ queryKey }) =>
+  http.get("/forms/form-fields", { params: { formId: queryKey[1] } });
 
 export {
   getForms,
@@ -20,4 +24,6 @@ export {
   getFields,
   deleteField,
   saveFormFields,
+  getFormFields,
+  updateField,
 };

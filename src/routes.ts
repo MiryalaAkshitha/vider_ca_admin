@@ -8,6 +8,7 @@ const Categories = loadable(() => import("pages/categories"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/addservice"));
 const Clients = loadable(() => import("pages/clients"));
+const ClientView = loadable(() => import("pages/client-view"));
 const Forms = loadable(() => import("pages/forms"));
 const Fields = loadable(() => import("pages/fields"));
 const FieldsConfiguration = loadable(
@@ -26,6 +27,11 @@ const routes: Array<IRoute> = [
     component: Login,
     path: "/login",
     exact: true,
+  },
+  {
+    component: ClientView,
+    exact: true,
+    path: "/clients/:clientId",
   },
   {
     component: Layout,
@@ -57,6 +63,7 @@ const routes: Array<IRoute> = [
         exact: true,
         path: "/services",
       },
+
       {
         component: Clients,
         exact: true,

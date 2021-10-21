@@ -1,6 +1,7 @@
-import { Close } from "@mui/icons-material";
+import { Add, Close, Delete } from "@mui/icons-material";
 import {
   AppBar,
+  Button,
   Drawer,
   Grid,
   IconButton,
@@ -10,11 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { createClient } from "api/client";
 import { createField } from "api/forms";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { FIELD_TYPES } from "utils/constants";
@@ -28,7 +28,7 @@ function AddField({ open, setOpen }: DialogProps) {
     minLength: null,
     maxLength: null,
     regexPattern: null,
-    options: [],
+    options: [""],
   });
 
   const { mutate, isLoading } = useMutation(createField, {
@@ -36,6 +36,14 @@ function AddField({ open, setOpen }: DialogProps) {
       snack.success("Field Created");
       setOpen(false);
       queryClient.invalidateQueries("fields");
+      setState({
+        name: "",
+        fieldType: null,
+        minLength: null,
+        maxLength: null,
+        regexPattern: null,
+        options: [""],
+      });
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -49,9 +57,42 @@ function AddField({ open, setOpen }: DialogProps) {
     });
   };
 
+  const handleAddOption = () => {
+    setState({
+      ...state,
+      options: [...state.options, ""],
+    });
+  };
+
+  const handleOptionChange = (e, i) => {
+    let options = [...state.options];
+    options[i] = e.target.value;
+    setState({
+      ...state,
+      options,
+    });
+  };
+
+  const handleOptionDelete = (i) => {
+    let options = state.options.filter((_, index) => index !== i);
+    setState({
+      ...state,
+      options,
+    });
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     mutate(state);
+  };
+
+  const showOptions = () => {
+    let { fieldType } = state;
+    return (
+      fieldType === "multiselect" ||
+      fieldType === "radio" ||
+      fieldType === "dropdown"
+    );
   };
 
   return (
@@ -96,6 +137,43 @@ function AddField({ open, setOpen }: DialogProps) {
               </MenuItem>
             ))}
           </TextField>
+          <Box>
+            {showOptions() && (
+              <>
+                {state.options.map((item, index) => (
+                  <Box display='flex' mt={2} gap={1} alignItems='center'>
+                    <TextField
+                      key={index}
+                      variant='outlined'
+                      onChange={(e) => handleOptionChange(e, index)}
+                      fullWidth
+                      value={item}
+                      size='small'
+                      placeholder={`Option ${index + 1}`}
+                      required
+                      name='name'
+                    />
+                    <div>
+                      <IconButton onClick={() => handleOptionDelete(index)}>
+                        <Delete />
+                      </IconButton>
+                    </div>
+                  </Box>
+                ))}
+                <Box mt={1}>
+                  <Button
+                    onClick={handleAddOption}
+                    sx={{ minWidth: 50 }}
+                    color='secondary'
+                    variant='outlined'
+                    size='small'
+                    startIcon={<Add />}>
+                    Add
+                  </Button>
+                </Box>
+              </>
+            )}
+          </Box>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField

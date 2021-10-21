@@ -1,6 +1,7 @@
-import { Close } from "@mui/icons-material";
+import { Add, Close, Delete } from "@mui/icons-material";
 import {
   AppBar,
+  Button,
   Drawer,
   Grid,
   IconButton,
@@ -10,11 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { createClient } from "api/client";
-import { createField } from "api/forms";
+import { updateField } from "api/forms";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { FIELD_TYPES } from "utils/constants";
@@ -32,12 +32,16 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
     minLength: null,
     maxLength: null,
     regexPattern: null,
-    options: [],
+    options: [""],
   });
 
-  const { mutate, isLoading } = useMutation(createField, {
+  useEffect(() => {
+    setState(data);
+  }, [data]);
+
+  const { mutate, isLoading } = useMutation(updateField, {
     onSuccess: () => {
-      snack.success("Field Created");
+      snack.success("Field Updated");
       setOpen(false);
       queryClient.invalidateQueries("fields");
     },
@@ -53,9 +57,42 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
     });
   };
 
+  const handleAddOption = () => {
+    setState({
+      ...state,
+      options: [...state.options, ""],
+    });
+  };
+
+  const handleOptionChange = (e, i) => {
+    let options = [...state.options];
+    options[i] = e.target.value;
+    setState({
+      ...state,
+      options,
+    });
+  };
+
+  const handleOptionDelete = (i) => {
+    let options = state.options.filter((_, index) => index !== i);
+    setState({
+      ...state,
+      options,
+    });
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate(state);
+    mutate({ id: data.id, data: state });
+  };
+
+  const showOptions = () => {
+    let { fieldType } = state;
+    return (
+      fieldType === "multiselect" ||
+      fieldType === "radio" ||
+      fieldType === "dropdown"
+    );
   };
 
   return (
@@ -78,6 +115,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
             onChange={handleChange}
             sx={{ mt: 2 }}
             variant='outlined'
+            value={state.name}
             fullWidth
             size='small'
             required
@@ -89,6 +127,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
             variant='outlined'
             fullWidth
             required
+            value={state.fieldType}
             onChange={handleChange}
             name='fieldType'
             size='small'
@@ -100,10 +139,48 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
               </MenuItem>
             ))}
           </TextField>
+          <Box>
+            {showOptions() && (
+              <>
+                {state.options.map((item, index) => (
+                  <Box display='flex' mt={2} gap={1} alignItems='center'>
+                    <TextField
+                      key={index}
+                      variant='outlined'
+                      onChange={(e) => handleOptionChange(e, index)}
+                      fullWidth
+                      value={item}
+                      size='small'
+                      placeholder={`Option ${index + 1}`}
+                      required
+                      name='name'
+                    />
+                    <div>
+                      <IconButton onClick={() => handleOptionDelete(index)}>
+                        <Delete />
+                      </IconButton>
+                    </div>
+                  </Box>
+                ))}
+                <Box mt={1}>
+                  <Button
+                    onClick={handleAddOption}
+                    sx={{ minWidth: 50 }}
+                    color='secondary'
+                    variant='outlined'
+                    size='small'
+                    startIcon={<Add />}>
+                    Add
+                  </Button>
+                </Box>
+              </>
+            )}
+          </Box>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
                 sx={{ mt: 3 }}
+                value={state.maxLength}
                 variant='outlined'
                 onChange={handleChange}
                 fullWidth
@@ -119,6 +196,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
                 fullWidth
                 size='small'
                 name='minLength'
+                value={state.minLength}
                 onChange={handleChange}
                 label='Max Length'
               />
@@ -130,6 +208,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
             fullWidth
             size='small'
             onChange={handleChange}
+            value={state.regexPattern}
             name='regexPattern'
             label='Regex Pattern'
           />

@@ -7,7 +7,7 @@ function useTitle(title: string) {
 
   useEffect(() => {
     dispatch(updateTitle(title));
-  }, []);
+  }, [dispatch, title]);
 }
 
 export default useTitle;

@@ -12,6 +12,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ClientFilter from "views/clients/Filter";
 import { useSelector } from "react-redux";
 import { selectClient } from "redux/reducers/clientSlice";
+import { useHistory } from "react-router";
 
 let LIMIT = 5;
 
@@ -28,6 +29,7 @@ interface ClientResponse {
 }
 
 function Clients() {
+  const router = useHistory();
   const { appliedFilter } = useSelector(selectClient);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -76,6 +78,7 @@ function Clients() {
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
+        onRowClick={(v) => router.push(`/clients/${v?.slug}`)}
         data={data?.data[0] || []}
         columns={columns}
         pagination={{

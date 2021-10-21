@@ -30,7 +30,7 @@ function RearrangeMilestones({ open, setOpen }: DialogProps) {
         )
       );
     },
-    [mileStones]
+    [dispatch, mileStones]
   );
 
   return (

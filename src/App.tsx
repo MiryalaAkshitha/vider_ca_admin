@@ -5,6 +5,7 @@ import routes from "./routes";
 import { SnackbarProvider } from "notistack";
 import { QueryClient, QueryClientProvider } from "react-query";
 import FullPageLoader from "components/FullPageLoader";
+import ConfirmDialogProvider from "components/ConfirmDialogProvider";
 
 const queryClient = new QueryClient();
 
@@ -24,33 +25,35 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <FullPageLoader>
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
-          <BrowserRouter>
-            <Switch>
-              {routes.map((route, index) => {
-                if (route.routes) {
+      <ConfirmDialogProvider>
+        <FullPageLoader>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+            <BrowserRouter>
+              <Switch>
+                {routes.map((route, index) => {
+                  if (route.routes) {
+                    return (
+                      <Route path={route.path} exact={route.exact} key={index}>
+                        <route.component routes={route.routes} />
+                      </Route>
+                    );
+                  }
                   return (
-                    <Route path={route.path} exact={route.exact} key={index}>
-                      <route.component routes={route.routes} />
-                    </Route>
+                    <Route
+                      key={index}
+                      exact={route.exact}
+                      path={route.path}
+                      component={route.component}
+                    />
                   );
-                }
-                return (
-                  <Route
-                    key={index}
-                    exact={route.exact}
-                    path={route.path}
-                    component={route.component}
-                  />
-                );
-              })}
-            </Switch>
-          </BrowserRouter>
-        </SnackbarProvider>
-      </FullPageLoader>
+                })}
+              </Switch>
+            </BrowserRouter>
+          </SnackbarProvider>
+        </FullPageLoader>
+      </ConfirmDialogProvider>
     </QueryClientProvider>
   );
 }

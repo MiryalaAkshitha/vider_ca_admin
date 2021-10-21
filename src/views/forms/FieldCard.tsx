@@ -1,23 +1,22 @@
 import MoreVertRounded from "@mui/icons-material/MoreVertRounded";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteField, deleteForm } from "api/forms";
+import { deleteField } from "api/forms";
+import { useConfirm } from "components/ConfirmDialogProvider";
 import CustomCard from "components/CustomCard";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useHistory } from "react-router";
 import EditField from "./EditField";
-import EditForm from "./EditForm";
 
 function FieldCard(props: any) {
   const { data } = props;
   const snack = useSnack();
-  const router = useHistory();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const confirm = useConfirm();
 
   const { mutate } = useMutation(deleteField, {
     onSuccess: () => {
@@ -26,6 +25,7 @@ function FieldCard(props: any) {
       queryClient.invalidateQueries("fields");
     },
     onError: (err: any) => {
+      console.log(err.response.data);
       snack.error(err.response.data.message);
       setAnchorEl(null);
     },
@@ -41,19 +41,28 @@ function FieldCard(props: any) {
   };
 
   const handleDelete = () => {
-    mutate(data.id);
+    confirm({
+      msg: "Are you sure you want to delete this field",
+      action: () => {
+        mutate(data.id);
+      },
+    });
   };
 
   return (
     <>
       <CustomCard sx={{ minHeight: 50 }}>
-        <Box display='flex' justifyContent='space-between'>
-          <Typography variant='subtitle2' color='primary'>
-            {data?.name}
-          </Typography>
-          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-            <MoreVertRounded />
-          </IconButton>
+        <Box display='flex' gap={1} justifyContent='space-between'>
+          <div>
+            <Typography variant='subtitle2' color='primary'>
+              {data?.name}
+            </Typography>
+          </div>
+          <div>
+            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+              <MoreVertRounded />
+            </IconButton>
+          </div>
         </Box>
       </CustomCard>
       <Menu
@@ -67,7 +76,7 @@ function FieldCard(props: any) {
         <MenuItem onClick={handleDelete}>Remove</MenuItem>
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
       </Menu>
-      <EditField open={editOpen} setOpen={setEditOpen} data={{}} />
+      <EditField open={editOpen} setOpen={setEditOpen} data={data} />
     </>
   );
 }
