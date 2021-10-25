@@ -182,6 +182,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
                 sx={{ mt: 3 }}
                 value={state.maxLength}
                 variant='outlined'
+                type='number'
                 onChange={handleChange}
                 fullWidth
                 size='small'
@@ -197,6 +198,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
                 size='small'
                 name='minLength'
                 value={state.minLength}
+                type='number'
                 onChange={handleChange}
                 label='Max Length'
               />

@@ -78,7 +78,7 @@ function Clients() {
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
-        onRowClick={(v) => router.push(`/clients/${v?.slug}`)}
+        onRowClick={(v) => router.push(`/clients/${v?.clientId}/profile`)}
         data={data?.data[0] || []}
         columns={columns}
         pagination={{

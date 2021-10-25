@@ -26,11 +26,9 @@ const routes: Array<IRoute> = [
   {
     component: Login,
     path: "/login",
-    exact: true,
   },
   {
     component: ClientView,
-    exact: true,
     path: "/clients/:clientId",
   },
   {

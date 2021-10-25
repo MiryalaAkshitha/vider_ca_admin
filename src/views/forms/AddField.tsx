@@ -182,6 +182,7 @@ function AddField({ open, setOpen }: DialogProps) {
                 onChange={handleChange}
                 fullWidth
                 size='small'
+                type='number'
                 name='maxLength'
                 label='Min Length'
               />
@@ -193,6 +194,7 @@ function AddField({ open, setOpen }: DialogProps) {
                 fullWidth
                 size='small'
                 name='minLength'
+                type='number'
                 onChange={handleChange}
                 label='Max Length'
               />

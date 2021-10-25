@@ -1,42 +1,52 @@
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import BreadCrumbs from "components/BreadCrumbs";
 import useTitle from "hooks/useTitle";
-
-const clientMenu = [
-  {
-    title: "Profile",
-    page: "/profile",
-  },
-];
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useRouteMatch,
+} from "react-router-dom";
+import { clientMenu } from "utils/constants";
+import KybInfo from "views/clients/KybInfo";
+import Passwords from "views/clients/Passwords";
+import ProfileDetails from "views/clients/ProfileDetails.tsx";
+import { ProfileNav, ProfileNavItem } from "views/clients/styles";
 
 function ClientProfile() {
   useTitle("Clients");
+  const { location } = useHistory();
+  let { path, url }: any = useRouteMatch();
 
   return (
     <div>
-      <BreadCrumbs page='clientProfile' />
-      <Box
-        sx={{
-          background: "#F5F5F5",
-          display: "flex",
-          justifyContent: "center",
-          gap: 5,
-          py: 2,
-        }}>
-        <Typography sx={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>
-          Profile
-        </Typography>
-        <Typography sx={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>
-          Passwords
-        </Typography>
-        <Typography sx={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>
-          KYB Info
-        </Typography>
-        <Typography sx={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>
-          Attachments
-        </Typography>
+      <Box p={2}>
+        <BreadCrumbs page='clientProfile' />
       </Box>
+      <ProfileNav>
+        {clientMenu.map((item, index) => (
+          <Link
+            to={url + item.path}
+            key={index}
+            style={{ textDecoration: "none" }}>
+            <ProfileNavItem active={location.pathname === url + item.path}>
+              {item.title}
+            </ProfileNavItem>
+          </Link>
+        ))}
+      </ProfileNav>
+      <Switch>
+        <Route path={`${path}/profile`}>
+          <ProfileDetails />
+        </Route>
+        <Route path={`${path}/kyb-info`}>
+          <KybInfo />
+        </Route>
+        <Route path={`${path}/passwords`}>
+          <Passwords />
+        </Route>
+      </Switch>
     </div>
   );
 }

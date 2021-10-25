@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import * as React from "react";
 
 interface StateProps {

@@ -25,7 +25,7 @@ export const formsSlice = createSlice({
       state.addedFields.push({ field: action.payload, isRequired: false });
     },
     removeField(state, action) {
-      state.addedFields.splice(action.payload.index, 1);
+      state.addedFields.splice(action.payload, 1);
     },
     toggleRequired(state, action: PayloadAction<ToggleRequiredPayload>) {
       state.addedFields[action.payload.index].isRequired = action.payload.value;

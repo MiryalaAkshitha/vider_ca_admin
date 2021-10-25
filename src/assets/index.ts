@@ -18,6 +18,7 @@ import profile from "./icons/profile.svg";
 import date from "./icons/calendar.png";
 import shuffle from "./icons/shuffle.svg";
 import empty from "./images/empty.svg";
+import user from "./icons/user.png";
 
 export { quote, logo, loginBg, whiteLogo, empty };
 
@@ -37,4 +38,5 @@ export let icons = {
   profile,
   date,
   shuffle,
+  user,
 };

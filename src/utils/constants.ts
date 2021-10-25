@@ -61,10 +61,6 @@ export const FIELD_TYPES = [
     value: "number",
   },
   {
-    label: "Mobile Number",
-    value: "mobile",
-  },
-  {
     label: "Date",
     value: "date",
   },
@@ -88,8 +84,23 @@ export const FIELD_TYPES = [
     label: "Checkbox",
     value: "checkbox",
   },
+];
+
+export const clientMenu = [
   {
-    label: "Telephone",
-    value: "telephone",
+    title: "Profile",
+    path: "/profile",
+  },
+  {
+    title: "Passwords",
+    path: "/passwords",
+  },
+  {
+    title: "KYB Info",
+    path: "/kyb-info",
+  },
+  {
+    title: "Attachments",
+    path: "/attachments",
   },
 ];

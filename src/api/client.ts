@@ -11,5 +11,8 @@ const getClients = ({ queryKey }) => {
     },
   });
 };
+const getOneClient = ({ queryKey }) => http.get(`/client/${queryKey[1]}`);
+const updateClient = ({ data, clientId }: any) =>
+  http.put(`/client/${clientId}`, data);
 
-export { createClient, getClients };
+export { createClient, getClients, getOneClient, updateClient };

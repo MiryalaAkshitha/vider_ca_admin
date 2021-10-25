@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from "@mui/material";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 export const theme: ThemeOptions = createTheme({
   palette: {
@@ -66,6 +66,14 @@ export const theme: ThemeOptions = createTheme({
         paper: {
           boxShadow: "0px 5px 20px #0000001A",
           borderRadius: "8px",
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontFamily: "muli_regular",
+          fontSize: "13px",
         },
       },
     },

@@ -21,3 +21,7 @@ export interface DialogProps {
   open: boolean;
   setOpen: (v: boolean) => void;
 }
+
+export interface DataResponse {
+  data: any[];
+}
