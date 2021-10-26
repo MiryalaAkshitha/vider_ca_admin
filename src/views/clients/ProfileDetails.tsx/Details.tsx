@@ -1,4 +1,4 @@
-import { Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
@@ -139,18 +139,7 @@ function Details({ data, setState }: any) {
             InputLabelProps={{ shrink: true }}
           />
         </Grid>
-        <Grid item xs={4}>
-          <TextField
-            label='Pan Number'
-            name='panNumber'
-            onChange={handleChange}
-            value={data?.panNumber}
-            fullWidth
-            variant='outlined'
-            size='small'
-            InputLabelProps={{ shrink: true }}
-          />
-        </Grid>
+
         <Grid item xs={4}>
           <TextField
             label='Date of birth'
@@ -183,6 +172,125 @@ function Details({ data, setState }: any) {
             <MenuItem value='active'>Active</MenuItem>
             <MenuItem value='inactive'>Inactive</MenuItem>
           </TextField>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            label='Local Directory Path'
+            name='localDirectoryPath'
+            onChange={handleChange}
+            value={data?.localDirectoryPath}
+            fullWidth
+            variant='outlined'
+            size='small'
+            InputLabelProps={{ shrink: true }}
+          />
+        </Grid>
+        <Grid item xs={12} sx={{ mt: 2 }}>
+          <Typography color='primary' variant='subtitle2' sx={{ mb: 3 }}>
+            Pan Details
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextFieldWithCopy
+                    label='Pan Number'
+                    name='panNumber'
+                    value={data?.panNumber}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item>
+                  <Button color='primary' variant='outlined'>
+                    Verify
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                label='First Name'
+                disabled
+                name='firstName'
+                value={data?.firstName}
+                fullWidth
+                variant='outlined'
+                size='small'
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                label='Middle Name'
+                disabled
+                name='middleName'
+                value={data?.middleName}
+                fullWidth
+                variant='outlined'
+                size='small'
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                label='Last Name'
+                disabled
+                name='lastName'
+                value={data?.lastName}
+                fullWidth
+                variant='outlined'
+                size='small'
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sx={{ mt: 2 }}>
+          <Typography color='primary' variant='subtitle2' sx={{ mb: 3 }}>
+            Accountant Details
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={4}>
+              <TextFieldWithCopy
+                label='Accountant Name'
+                name='accountantName'
+                value={data?.accountantName}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextFieldWithCopy
+                label='Accountant Mobile'
+                name='accountantMobile'
+                value={data?.accountantMobile}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextFieldWithCopy
+                label='Accountant Email'
+                name='accountantEmail'
+                value={data?.accountantEmail}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            label='Notes'
+            name='notes'
+            sx={{ mt: 2 }}
+            onChange={handleChange}
+            value={data?.notes}
+            fullWidth
+            placeholder='Write something here…'
+            multiline
+            rows={8}
+            variant='outlined'
+            size='small'
+            InputLabelProps={{ shrink: true }}
+          />
         </Grid>
       </Grid>
     </Box>

@@ -51,7 +51,7 @@ function ProfileDetails() {
   if (isLoading || updateProfileLoading) return <FullLoader />;
 
   return (
-    <Box px={4} py={2}>
+    <Box px={4} pt={2} pb={10}>
       <Profile data={state} setState={setState} onUpdate={handleUpdate} />
       <Details data={state} setState={setState} />
     </Box>
