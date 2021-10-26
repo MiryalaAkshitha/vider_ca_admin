@@ -1,5 +1,5 @@
-import { RootState } from "redux/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 
 export interface IGlobal {
   addedFields: Array<{ field: any; isRequired: boolean }>;

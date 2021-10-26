@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { getKybInfo, updateKybInfo } from "api/kyb";
+import { getClientInfo, updateClientInfo } from "api/client-info";
 import FullLoader from "components/FullLoader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
@@ -17,8 +17,8 @@ function KybInfo() {
   let clientId = match.params.clientId;
 
   const { isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
-    ["kyb", { clientId }],
-    getKybInfo,
+    ["client-info", { clientId, type: "kyb" }],
+    getClientInfo,
     {
       refetchOnWindowFocus: false,
       onSuccess: (res: any) => {
@@ -30,14 +30,17 @@ function KybInfo() {
     }
   );
 
-  const { mutate } = useMutation(updateKybInfo, {
-    onSuccess: () => {
-      snack.success("Kyb Info Updated");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
+  const { mutate, isLoading: updateKybLoading } = useMutation(
+    updateClientInfo,
+    {
+      onSuccess: () => {
+        snack.success("Kyb Info Updated");
+      },
+      onError: (err: any) => {
+        snack.error(err.response.data.message);
+      },
+    }
+  );
 
   const onUpdate = () => {
     mutate({
@@ -46,7 +49,7 @@ function KybInfo() {
     });
   };
 
-  if (isLoading) return <FullLoader />;
+  if (isLoading || updateKybLoading) return <FullLoader />;
 
   return (
     <Box px={4} py={2} display='flex' justifyContent='space-between' gap={4}>

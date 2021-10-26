@@ -9,7 +9,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { clientMenu } from "utils/constants";
-import KybInfo from "views/clients/KybInfo";
+import KybInfo from "views/clients/ClientInfo";
 import Passwords from "views/clients/Passwords";
 import ProfileDetails from "views/clients/ProfileDetails.tsx";
 import { ProfileNav, ProfileNavItem } from "views/clients/styles";

@@ -84,6 +84,14 @@ export const FIELD_TYPES = [
     label: "Checkbox",
     value: "checkbox",
   },
+  {
+    label: "URL",
+    value: "url",
+  },
+  {
+    label: "Password",
+    value: "password",
+  },
 ];
 
 export const clientMenu = [

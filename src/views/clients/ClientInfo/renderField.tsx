@@ -1,3 +1,4 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Checkbox,
   FormControl,
@@ -7,7 +8,9 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  IconButton,
 } from "@mui/material";
+import { useState } from "react";
 
 export default function renderField(field: any, onChange) {
   let type = field?.fieldType;
@@ -20,6 +23,34 @@ export default function renderField(field: any, onChange) {
           value={field?.value || ""}
           sx={{ mt: 1 }}
           type={type}
+          onChange={onChange}
+          variant='outlined'
+          size='small'
+          InputLabelProps={{ shrink: true }}
+        />
+      </FormControl>
+    );
+  }
+  if (type === "password") {
+    return (
+      <PasswordField
+        label={field?.name}
+        onChange={onChange}
+        value={field?.value}
+        name={field?.name}
+      />
+    );
+  }
+  if (type === "url") {
+    return (
+      <FormControl fullWidth component='fieldset'>
+        <FormLabel component='legend'>{field?.name}</FormLabel>
+        <TextField
+          name={field?.name}
+          value={field?.value || ""}
+          sx={{ mt: 1 }}
+          type={type}
+          placeholder='https://example.com'
           onChange={onChange}
           variant='outlined'
           size='small'
@@ -85,3 +116,38 @@ export default function renderField(field: any, onChange) {
     );
   }
 }
+
+const PasswordField = ({ label, value, onChange }: any) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordInputType = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <FormControl fullWidth component='fieldset'>
+      <FormLabel component='legend'>{label}</FormLabel>
+      <TextField
+        variant='outlined'
+        size='small'
+        value={value || ""}
+        sx={{ mt: 1 }}
+        onChange={onChange}
+        required
+        InputProps={{
+          endAdornment: !showPassword ? (
+            <IconButton size='small' onClick={togglePasswordInputType}>
+              <VisibilityOff />
+            </IconButton>
+          ) : (
+            <IconButton size='small' onClick={togglePasswordInputType}>
+              <Visibility />
+            </IconButton>
+          ),
+        }}
+        fullWidth
+        type={showPassword ? "text" : "password"}
+      />
+    </FormControl>
+  );
+};

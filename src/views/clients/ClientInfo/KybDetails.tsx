@@ -1,7 +1,7 @@
 import { Remove } from "@mui/icons-material";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteKybInfo } from "api/kyb";
+import { deleteClientInfo } from "api/client-info";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
@@ -26,10 +26,10 @@ function KybDetails({ state, forms, setState }: any) {
     setState(newFields);
   };
 
-  const { mutate } = useMutation(deleteKybInfo, {
+  const { mutate } = useMutation(deleteClientInfo, {
     onSuccess: () => {
       snack.success("Fields Deleted");
-      queryClient.invalidateQueries("kyb");
+      queryClient.invalidateQueries("client-info");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

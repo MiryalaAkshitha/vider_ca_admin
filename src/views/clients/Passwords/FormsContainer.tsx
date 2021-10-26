@@ -1,7 +1,8 @@
 import { Button, Divider, List, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { addToClientInfo } from "api/client-info";
 import { getForms } from "api/forms";
-import { addToKybInfo } from "api/kyb";
+import FullLoader from "components/FullLoader";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { Fragment } from "react";
@@ -20,14 +21,14 @@ function FormsContainer({ onUpdate }: any) {
   const queryClient = useQueryClient();
 
   const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
-    ["forms", { tags: "kyb" }],
+    ["forms", { tags: "passwords" }],
     getForms
   );
 
-  const { mutate } = useMutation(addToKybInfo, {
+  const { mutate, isLoading: updateKybLoading } = useMutation(addToClientInfo, {
     onSuccess: () => {
       snack.success("Added");
-      queryClient.invalidateQueries("kyb");
+      queryClient.invalidateQueries("client-info");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -38,8 +39,11 @@ function FormsContainer({ onUpdate }: any) {
     mutate({
       formId: item?.id,
       clientId: match.params.clientId,
+      type: "passwords",
     });
   };
+
+  if (updateKybLoading) return <FullLoader />;
 
   return (
     <Box>
