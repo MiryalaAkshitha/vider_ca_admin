@@ -19,10 +19,12 @@ import date from "./icons/calendar.png";
 import shuffle from "./icons/shuffle.svg";
 import empty from "./images/empty.svg";
 import user from "./icons/user.png";
+import folder from "./icons/folder.png";
 
 export { quote, logo, loginBg, whiteLogo, empty };
 
 export let icons = {
+  folder,
   dashboard,
   taskboard,
   calendar,

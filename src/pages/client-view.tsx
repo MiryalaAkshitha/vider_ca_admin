@@ -9,6 +9,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { clientMenu } from "utils/constants";
+import Attachments from "views/clients/Attachments";
 import KybInfo from "views/clients/ClientInfo";
 import Passwords from "views/clients/Passwords";
 import ProfileDetails from "views/clients/ProfileDetails.tsx";
@@ -45,6 +46,9 @@ function ClientProfile() {
         </Route>
         <Route path={`${path}/passwords`}>
           <Passwords />
+        </Route>
+        <Route path={`${path}/attachments`}>
+          <Attachments />
         </Route>
       </Switch>
     </div>
