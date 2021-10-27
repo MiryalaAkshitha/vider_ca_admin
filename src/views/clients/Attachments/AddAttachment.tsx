@@ -32,11 +32,12 @@ function AddAttachment() {
   return (
     <div>
       <Fab
-        size='medium'
+        size="medium"
         onClick={(e) => setAnchorEl(e.currentTarget)}
-        color='secondary'
+        color="secondary"
         sx={{ position: "fixed", bottom: 30, right: 30, borderRadius: "8px" }}
-        aria-label='add'>
+        aria-label="add"
+      >
         <Add />
       </Fab>
       <Menu
@@ -53,26 +54,28 @@ function AddAttachment() {
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "bottom" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}>
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+      >
         <MenuItem
           sx={{ py: 1, m: 0 }}
-          onClick={() => setOpenCreateDialog(true)}>
+          onClick={() => setOpenCreateDialog(true)}
+        >
           <ListItemIcon>
-            <Add color='primary' fontSize='small' />
+            <Add color="primary" fontSize="small" />
           </ListItemIcon>
-          <Typography variant='body2'>New Folder</Typography>
+          <Typography variant="body2">New Folder</Typography>
         </MenuItem>
         <MenuItem sx={{ py: 1, m: 0 }}>
           <ListItemIcon>
-            <UploadFileIcon color='primary' fontSize='small' />
+            <UploadFileIcon color="primary" fontSize="small" />
           </ListItemIcon>
-          <Typography variant='body2'>Upload File(s)</Typography>
+          <Typography variant="body2">Upload File(s)</Typography>
         </MenuItem>
         <MenuItem sx={{ py: 1, m: 0 }}>
           <ListItemIcon>
-            <DriveFolderUploadIcon color='primary' fontSize='small' />
+            <DriveFolderUploadIcon color="primary" fontSize="small" />
           </ListItemIcon>
-          <Typography variant='body2'>Upload Folder</Typography>
+          <Typography variant="body2">Upload Folder</Typography>
         </MenuItem>
       </Menu>
       <CreateFolderDialog
@@ -109,31 +112,30 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
       inputRef.current?.focus();
       return;
     }
-    let folderIds = params.get("folderId")?.split("|");
-    let folderId = folderIds?.length ? folderIds[folderIds.length - 1] : null;
+
     mutate({
       name,
       clientId,
-      folderId,
+      folderId: params.get("folderId"),
     });
   };
 
   return (
-    <Dialog open={open} maxWidth='xs' fullWidth PaperProps={{ sx: { p: 2 } }}>
-      <Typography variant='subtitle1' sx={{ mb: 3 }}>
+    <Dialog open={open} maxWidth="xs" fullWidth PaperProps={{ sx: { p: 2 } }}>
+      <Typography variant="subtitle1" sx={{ mb: 3 }}>
         New Folder
       </Typography>
       <TextField
         inputRef={inputRef}
         onChange={(e) => setName(e.target.value)}
-        size='small'
+        size="small"
         value={name}
       />
-      <Box mt={4} display='flex' gap={2} justifyContent='flex-end'>
-        <Button onClick={() => setOpen(false)} variant='outlined'>
+      <Box mt={4} display="flex" gap={2} justifyContent="flex-end">
+        <Button onClick={() => setOpen(false)} variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} variant='contained' color='secondary'>
+        <Button onClick={handleSubmit} variant="contained" color="secondary">
           Submit
         </Button>
       </Box>
