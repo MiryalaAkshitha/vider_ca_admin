@@ -7,6 +7,7 @@ import GlobalReducer from "redux/reducers/globalSlice";
 import addServiceReducer from "redux/reducers/addServiceSlice";
 import clientReducer from "redux/reducers/clientSlice";
 import formsReducer from "redux/reducers/formsSlice";
+import storageReducer from "redux/reducers/storageSlice";
 
 let middleware = [logger];
 
@@ -18,6 +19,7 @@ const store = configureStore({
     addservice: addServiceReducer,
     client: clientReducer,
     forms: formsReducer,
+    storage: storageReducer,
   },
   middleware,
 });

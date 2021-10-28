@@ -20,6 +20,14 @@ import shuffle from "./icons/shuffle.svg";
 import empty from "./images/empty.svg";
 import user from "./icons/user.png";
 import folder from "./icons/folder.png";
+import pdf from "./icons/filetypes/pdf.png";
+import doc from "./icons/filetypes/docs.png";
+import excel from "./icons/filetypes/excel.png";
+import csv from "./icons/filetypes/csv.png";
+import text from "./icons/filetypes/text.png";
+import ppt from "./icons/filetypes/ppt.png";
+import zip from "./icons/filetypes/zip.png";
+import video from "./icons/filetypes/video.png";
 
 export { quote, logo, loginBg, whiteLogo, empty };
 
@@ -41,4 +49,12 @@ export let icons = {
   date,
   shuffle,
   user,
+  pdf,
+  doc,
+  excel,
+  csv,
+  text,
+  ppt,
+  zip,
+  video,
 };

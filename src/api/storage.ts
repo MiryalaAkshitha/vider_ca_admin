@@ -20,4 +20,8 @@ const createFolder = (data: CreateFolder) => {
   return http.post("/storage/create-folder", data);
 };
 
-export { createFolder, getStorage };
+const uploadFile = (data: any) => {
+  return http.post("/storage/upload-file", data);
+};
+
+export { createFolder, getStorage, uploadFile };
