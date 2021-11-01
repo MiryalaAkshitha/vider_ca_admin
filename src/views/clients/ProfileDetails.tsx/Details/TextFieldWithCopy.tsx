@@ -35,15 +35,15 @@ function TextFieldWithCopy({
     <TextField
       label={label}
       fullWidth
-      variant='outlined'
-      size='small'
+      variant="outlined"
+      size="small"
       value={value}
       name={name}
       onChange={onChange}
       InputProps={{
         endAdornment: (
           <IconButton onClick={onCopy}>
-            <ContentCopyIcon fontSize='small' />
+            <ContentCopyIcon fontSize="small" />
           </IconButton>
         ),
       }}

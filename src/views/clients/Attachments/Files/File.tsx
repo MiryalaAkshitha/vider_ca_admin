@@ -1,55 +1,60 @@
 import { DeleteOutlineOutlined, DownloadOutlined } from "@mui/icons-material";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
+import { useState } from "react";
+import {
+  StyledFile,
+  StyledFileFooter,
+  StyledFileTitle,
+} from "views/clients/styles";
 import { renderFile } from "./renderFile";
 
 function File({ data }: any) {
+  const [dragging, setDragging] = useState(false);
+
+  const onDragStart = (e: any) => {
+    setDragging(true);
+    e.dataTransfer.setData("fileId", data.id);
+  };
+
+  const onDragEnd = () => {
+    setDragging(false);
+  };
+
   return (
-    <Box
-      sx={{
-        border: "1px solid #DDDDDD",
-        borderRadius: 4,
-        height: 220,
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}>
-      <Box flex={1}>{renderFile(data)}</Box>
+    <StyledFile
+      draggable={true}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      dragging={dragging}
+    >
       <Box
-        display='flex'
-        width='100%'
-        alignItems='center'
-        gap={1}
-        px={2}
-        py={1}
-        bgcolor='#FBF9F2'>
-        <Typography
-          variant='body2'
-          sx={{
-            flex: 1,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-          }}>
-          {data?.name}
-        </Typography>
-        <Box display='flex' gap={1}>
+        width="100%"
+        height="200px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {renderFile(data)}
+      </Box>
+      <StyledFileFooter>
+        <StyledFileTitle variant="body2">{data?.name}</StyledFileTitle>
+        <Box display="flex" gap={1}>
           <div>
-            <IconButton size='small'>
-              <DeleteOutlineOutlined fontSize='small' color='secondary' />
+            <IconButton size="small">
+              <DeleteOutlineOutlined fontSize="small" color="secondary" />
             </IconButton>
           </div>
           <div>
             <a href={data?.fileUrl}>
-              <IconButton size='small'>
-                <DownloadOutlined fontSize='small' color='secondary' />
+              <IconButton size="small">
+                <DownloadOutlined fontSize="small" color="secondary" />
               </IconButton>
             </a>
           </div>
         </Box>
-      </Box>
-    </Box>
+      </StyledFileFooter>
+    </StyledFile>
   );
 }
 

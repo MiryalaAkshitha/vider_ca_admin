@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 
-interface StorageState {
-  uploads: IUploads[];
-  count: number;
-}
-
 export interface IUploads {
   name: string;
   data: any;
   error: any;
   loading: boolean;
+}
+
+interface StorageState {
+  uploads: IUploads[];
+  count: number;
 }
 
 const initialState: StorageState = {

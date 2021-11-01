@@ -28,6 +28,7 @@ import text from "./icons/filetypes/text.png";
 import ppt from "./icons/filetypes/ppt.png";
 import zip from "./icons/filetypes/zip.png";
 import video from "./icons/filetypes/video.png";
+import audio from "./icons/filetypes/audio.png";
 
 export { quote, logo, loginBg, whiteLogo, empty };
 
@@ -57,4 +58,5 @@ export let icons = {
   ppt,
   zip,
   video,
+  audio,
 };

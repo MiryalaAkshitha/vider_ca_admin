@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Fab, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { uploadFile } from "api/storage";
@@ -42,7 +41,7 @@ function AddAttachment() {
     },
   });
 
-  const handleUploadFiles = (e) => {
+  const handleUploadFiles = (e: any) => {
     if (!e.target.files.length) return;
 
     dispatch(setInitialUploads(e.target.files));
@@ -59,11 +58,12 @@ function AddAttachment() {
   return (
     <div>
       <Fab
-        size='medium'
+        size="medium"
         onClick={(e) => setAnchorEl(e.currentTarget)}
-        color='secondary'
+        color="secondary"
         sx={{ position: "fixed", bottom: 30, right: 30, borderRadius: "8px" }}
-        aria-label='add'>
+        aria-label="add"
+      >
         <Add />
       </Fab>
       <Menu
@@ -80,35 +80,31 @@ function AddAttachment() {
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "bottom" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}>
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+      >
         <MenuItem
           sx={{ py: 1, m: 0 }}
-          onClick={() => setOpenCreateDialog(true)}>
+          onClick={() => setOpenCreateDialog(true)}
+        >
           <ListItemIcon>
-            <Add color='primary' fontSize='small' />
+            <Add color="primary" fontSize="small" />
           </ListItemIcon>
-          <Typography variant='body2'>New Folder</Typography>
+          <Typography variant="body2">New Folder</Typography>
         </MenuItem>
-        <label htmlFor='files'>
+        <label htmlFor="files">
           <MenuItem sx={{ py: 1, m: 0 }}>
             <ListItemIcon>
-              <UploadFileIcon color='primary' fontSize='small' />
+              <UploadFileIcon color="primary" fontSize="small" />
             </ListItemIcon>
-            <Typography variant='body2'>Upload File(s)</Typography>
+            <Typography variant="body2">Upload File(s)</Typography>
           </MenuItem>
         </label>
-        <MenuItem sx={{ py: 1, m: 0 }}>
-          <ListItemIcon>
-            <DriveFolderUploadIcon color='primary' fontSize='small' />
-          </ListItemIcon>
-          <Typography variant='body2'>Upload Folder</Typography>
-        </MenuItem>
       </Menu>
       <input
-        type='file'
+        type="file"
         multiple
         onChange={handleUploadFiles}
-        id='files'
+        id="files"
         style={{ display: "none" }}
       />
       <CreateFolderDialog

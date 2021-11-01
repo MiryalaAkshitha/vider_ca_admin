@@ -112,3 +112,75 @@ export const clientMenu = [
     path: "/attachments",
   },
 ];
+
+export const CLIENT_CATEGORIES = [
+  { label: "INDIVIDUAL", value: "individual" },
+  { label: "HUF", value: "huf" },
+  {
+    label: "PARTNERSHIP_FIRM",
+    value: "partnership_firm",
+  },
+  {
+    label: "LLP",
+    value: "llp",
+    subCategories: [
+      { label: "INDIAN", value: "indian" },
+      { label: "FOREIGN", value: "foreign" },
+    ],
+  },
+  {
+    label: "COMPNAY",
+    value: "company",
+    subCategories: [
+      { label: "PRIVATE", value: "private" },
+      { label: "PUBLIC", value: "public" },
+      { label: "GOVERNMENT", value: "government" },
+      { label: "OPC", value: "opc" },
+      { label: "SEC-8", value: "sec_8" },
+      { label: "FOREIGN", value: "foreign" },
+    ],
+  },
+  {
+    label: "TRUST",
+    value: "trust",
+    subCategories: [
+      { label: "TRUST", value: "trust" },
+      {
+        label: "PRIVATE DISCRETIONARY TRUST",
+        value: "private_discretionary_trust",
+      },
+    ],
+  },
+  {
+    label: "SOCIETY",
+    value: "society",
+    subCategories: [
+      { label: "SOCIETY", value: "society" },
+      { label: "CO-OPERATIVE SOCIETY", value: "cooperative_society" },
+    ],
+  },
+  {
+    label: "AOP",
+    value: "aop",
+  },
+  {
+    label: "BOI",
+    value: "boi",
+  },
+  {
+    label: "CORPORATIONS",
+    value: "corporations",
+  },
+  {
+    label: "GOVERNMENT",
+    value: "govermanment",
+    subCategories: [
+      { label: "STATE", value: "state" },
+      { label: "CENTRAL", value: "central" },
+    ],
+  },
+  {
+    label: "ARTIFICIAL JUDICIAL PERSON",
+    value: "artificial_judicial_person",
+  },
+];

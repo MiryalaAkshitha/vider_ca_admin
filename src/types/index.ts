@@ -34,6 +34,7 @@ export enum FILETYPES {
   TEXT = "text/plain",
   CSV = "text/csv",
   MP4 = "video/mp4",
+  AUDIO = "audio/mpeg",
   WEBM = "video/webm",
   PDF = "application/pdf",
   ZIP1 = "application/zip",

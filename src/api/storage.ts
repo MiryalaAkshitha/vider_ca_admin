@@ -24,4 +24,8 @@ const uploadFile = (data: any) => {
   return http.post("/storage/upload-file", data);
 };
 
-export { createFolder, getStorage, uploadFile };
+const moveFile = ({ fileId, folderId }: any) => {
+  return http.put(`/storage/move-file/${fileId}`, { folderId });
+};
+
+export { createFolder, getStorage, uploadFile, moveFile };

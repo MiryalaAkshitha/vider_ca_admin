@@ -14,5 +14,20 @@ const getClients = ({ queryKey }) => {
 const getOneClient = ({ queryKey }) => http.get(`/client/${queryKey[1]}`);
 const updateClient = ({ data, clientId }: any) =>
   http.put(`/client/${clientId}`, data);
+const createContactPerson = (data: any) => http.post("/contact-persons", data);
+const updateContactPerson = ({ id, data }: { data: any; id: any }) => {
+  return http.put(`/contact-persons/${id}`, data);
+};
+const deleteContactPerson = (id: any) => {
+  return http.delete(`/contact-persons/${id}`);
+};
 
-export { createClient, getClients, getOneClient, updateClient };
+export {
+  createClient,
+  getClients,
+  getOneClient,
+  updateClient,
+  createContactPerson,
+  updateContactPerson,
+  deleteContactPerson,
+};
