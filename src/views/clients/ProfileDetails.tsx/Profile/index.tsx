@@ -1,5 +1,6 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { StyledLabel } from "views/labels/styles";
 import ProfileImage from "./ProfileImage";
 
 function Profile({ data, setState, onUpdate }: any) {
@@ -27,12 +28,19 @@ function Profile({ data, setState, onUpdate }: any) {
                 onChange={(v) => setState({ ...data, image: v })}
               />
               <Box flex={1}>
-                <Typography variant="subtitle2" gutterBottom>
-                  {data?.displayName}
-                </Typography>
+                <Typography variant="subtitle2">{data?.displayName}</Typography>
                 <Typography variant="caption" color="textSecondary">
                   {data?.category}
                 </Typography>
+                <Box mt={1} display="flex" flexWrap="wrap" gap={1}>
+                  {data?.labels?.map((item, index) => (
+                    <StyledLabel key={index} color={"rgba(20, 158, 205,0.1)"}>
+                      <Typography color="black" variant="caption">
+                        {item?.name}
+                      </Typography>
+                    </StyledLabel>
+                  ))}
+                </Box>
               </Box>
             </Box>
             <div>

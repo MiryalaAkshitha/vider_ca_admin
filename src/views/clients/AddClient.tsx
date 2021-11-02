@@ -15,10 +15,11 @@ import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
+import { CLIENT_CATEGORIES } from "utils/constants";
 
 interface StateProps {
-  clientType: string;
-  companyType: string | null;
+  category: string;
+  subCategory: string | null;
   displayName: string;
   clientManager: string;
   mobileNumber: string;
@@ -29,8 +30,8 @@ function AddClient({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState<StateProps>({
-    clientType: "",
-    companyType: null,
+    category: "",
+    subCategory: null,
     displayName: "",
     clientManager: "",
     mobileNumber: "",
@@ -39,6 +40,14 @@ function AddClient({ open, setOpen }: DialogProps) {
   let formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: any) => {
+    if (e.target.name === "category") {
+      setState({
+        ...state,
+        category: e.target.value,
+        subCategory: null,
+      });
+      return;
+    }
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -62,15 +71,20 @@ function AddClient({ open, setOpen }: DialogProps) {
     mutate(state);
   };
 
+  let subCategories = CLIENT_CATEGORIES.find(
+    (item) => item.value === state.category
+  )?.subCategories;
+
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       PaperProps={{ sx: { width: 550 } }}
       open={open}
-      onClose={setOpen}>
-      <AppBar position='static'>
+      onClose={setOpen}
+    >
+      <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Add Client</Typography>
+          <Typography variant="subtitle1">Add Client</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -79,86 +93,90 @@ function AddClient({ open, setOpen }: DialogProps) {
       <form onSubmit={handleSubmit} ref={formRef}>
         <Box p={2}>
           <TextField
-            sx={{ mt: 2 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            onChange={handleChange}
-            size='small'
+            size="small"
+            sx={{ mt: 3 }}
             select
+            onChange={handleChange}
             required
-            name='clientType'
-            label='Client Type'>
-            <MenuItem value='company'>Company</MenuItem>
-            <MenuItem value='individual'>Individual</MenuItem>
+            name="category"
+            label="Category"
+          >
+            {CLIENT_CATEGORIES.map((item, index) => (
+              <MenuItem key={index} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
           </TextField>
-          {state.clientType === "company" && (
+          {subCategories && (
             <TextField
-              sx={{ mt: 3 }}
-              variant='outlined'
+              variant="outlined"
               fullWidth
               required
-              name='companyType'
+              sx={{ mt: 3 }}
+              name="subCategory"
               onChange={handleChange}
-              size='small'
+              size="small"
               select
-              label='Company Type'>
-              <MenuItem value='Private Limited Company'>
-                Private Limited Company
-              </MenuItem>
-              <MenuItem value='Public Limited Company'>
-                Public Limited Company
-              </MenuItem>
+              label="Sub Category"
+            >
+              {subCategories.map((item, index) => (
+                <MenuItem key={index} value={item.value}>
+                  {item.label}
+                </MenuItem>
+              ))}
             </TextField>
           )}
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            name='displayName'
+            name="displayName"
             required
             onChange={handleChange}
-            size='small'
-            label='Display Name'
+            size="small"
+            label="Display Name"
           />
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
             required
             onChange={handleChange}
-            name='clientManager'
-            size='small'
-            label='Client Manager'
+            name="clientManager"
+            size="small"
+            label="Client Manager"
           />
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
             required
             onChange={handleChange}
-            name='mobileNumber'
-            size='small'
-            label='Mobile Number'
+            name="mobileNumber"
+            size="small"
+            label="Mobile Number"
           />
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            name='email'
+            name="email"
             required
-            type='email'
+            type="email"
             onChange={handleChange}
-            size='small'
-            label='Email ID'
+            size="small"
+            label="Email ID"
           />
-          <Box display='flex' justifyContent='flex-end' mt={3} gap={2}>
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
               fullWidth
-              type='submit'
-              loadingColor='white'
-              title='Create Client'
-              color='secondary'
+              type="submit"
+              loadingColor="white"
+              title="Create Client"
+              color="secondary"
             />
           </Box>
         </Box>

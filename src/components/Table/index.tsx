@@ -1,11 +1,15 @@
 import { CircularProgress, Pagination, Typography } from "@mui/material";
 import { Box, SystemStyleObject } from "@mui/system";
 import _ from "lodash";
-import { useState } from "react";
+import React, { useState } from "react";
 import { StyledTable, StyledTableLoader } from "./styles";
 
 interface TableProps {
-  columns: Array<{ key: string; title: string }>;
+  columns: Array<{
+    key: string;
+    title: string;
+    render?: (item: any) => React.ReactElement;
+  }>;
   sx?: SystemStyleObject;
   data: any[];
   loading: boolean;
@@ -45,7 +49,8 @@ function Table({
         flexDirection: "column",
         justifyContent: "space-between",
         ...sx,
-      }}>
+      }}
+    >
       <StyledTable>
         <thead>
           {columns.map((item, index) => (
@@ -57,9 +62,13 @@ function Table({
             <tr key={index} onClick={() => handleRowClick(item)}>
               {columns.map((col, colIndex) => (
                 <td key={colIndex}>
-                  <Typography variant='body2'>
-                    {_.get(item, col.key)}
-                  </Typography>
+                  {col?.render ? (
+                    col.render(item)
+                  ) : (
+                    <Typography variant="body2">
+                      {_.get(item, col.key)}
+                    </Typography>
+                  )}
                 </td>
               ))}
             </tr>
@@ -67,12 +76,12 @@ function Table({
         </tbody>
       </StyledTable>
       {pagination && (
-        <Box px={2} mt={2} justifyContent='flex-end' display='flex'>
+        <Box px={2} mt={2} justifyContent="flex-end" display="flex">
           <Pagination
-            color='secondary'
+            color="secondary"
             page={page}
             count={Math.ceil(pagination.totalCount / pagination.pageCount)}
-            variant='outlined'
+            variant="outlined"
             onChange={(v, page) => {
               setPage(page);
               pagination.onChange(page);
@@ -82,7 +91,7 @@ function Table({
       )}
       {loading && (
         <StyledTableLoader>
-          <CircularProgress color='primary' />
+          <CircularProgress color="primary" />
         </StyledTableLoader>
       )}
     </Box>

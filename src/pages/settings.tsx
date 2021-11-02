@@ -10,24 +10,14 @@ const settingsMenu = [
     path: "/categories",
   },
   {
+    title: "Labels",
+    img: icons.man,
+    path: "/labels",
+  },
+  {
     title: "Services",
-    img: icons.man,
-    path: "/services",
-  },
-  {
-    title: "User Profile",
-    img: icons.man,
-    path: "/",
-  },
-  {
-    title: "Deleted Tasks and Clients",
     img: icons.profile,
-    path: "/",
-  },
-  {
-    title: "Roles and Permissions",
-    img: icons.man,
-    path: "/",
+    path: "/services",
   },
   {
     title: "Forms",
@@ -60,11 +50,12 @@ function Settings() {
           <Grid item xs={3} key={index}>
             <Link
               to={item.path}
-              style={{ textDecoration: "none", color: "initial" }}>
+              style={{ textDecoration: "none", color: "initial" }}
+            >
               <SettingsCard>
-                <img width={45} src={item.img} alt='' />
+                <img width={45} src={item.img} alt="" />
                 <Box maxWidth={150}>
-                  <Typography sx={{ lineHeight: "25px" }} variant='subtitle2'>
+                  <Typography sx={{ lineHeight: "25px" }} variant="subtitle2">
                     {item.title}
                   </Typography>
                 </Box>

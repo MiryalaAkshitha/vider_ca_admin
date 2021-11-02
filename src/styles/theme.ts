@@ -77,6 +77,17 @@ export const theme: ThemeOptions = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          fontFamily: "muli_regular",
+        },
+        option: {
+          fontFamily: "muli_regular",
+          fontSize: "14px",
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

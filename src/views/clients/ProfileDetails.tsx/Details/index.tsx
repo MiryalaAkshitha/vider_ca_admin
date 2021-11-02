@@ -1,10 +1,34 @@
-import { Button, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  Grid,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
+import { getLabels } from "api/labels";
+import moment from "moment";
+import { useQuery, UseQueryResult } from "react-query";
 import { CLIENT_CATEGORIES } from "utils/constants";
 import ContactPersonDetails from "../ContactPersonDetails";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
+interface Label {
+  name: string;
+  color: string;
+}
+
+interface LabelsResponse {
+  data: Label[];
+}
+
 function Details({ data, setState }: any) {
+  const { data: labels }: UseQueryResult<LabelsResponse, Error> = useQuery(
+    "labels",
+    getLabels
+  );
+
   const handleChange = (e: any) => {
     setState({
       ...data,
@@ -209,6 +233,25 @@ function Details({ data, setState }: any) {
           />
         </Grid>
         <Grid item xs={4}>
+          <Autocomplete
+            multiple
+            id="tags-standard"
+            onChange={(_, value) => setState({ ...data, labels: value })}
+            value={data?.labels || []}
+            options={labels?.data || []}
+            getOptionLabel={(option: any) => option?.name}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Labels"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={4}>
           <TextField
             label="Status"
             name="active"
@@ -228,6 +271,14 @@ function Details({ data, setState }: any) {
             <MenuItem value="active">Active</MenuItem>
             <MenuItem value="inactive">Inactive</MenuItem>
           </TextField>
+          {!data?.active && (
+            <Box mt={1}>
+              <Typography variant="caption" color="secondary">
+                Inactive from{" "}
+                {moment(data?.lastActive).format("DD MMM YYYY - hh:mm a")}
+              </Typography>
+            </Box>
+          )}
         </Grid>
         <Grid item xs={4}>
           <TextField

@@ -18,8 +18,8 @@ let LIMIT = 5;
 
 const columns = [
   { key: "displayName", title: "Display Name" },
-  { key: "clientType", title: "Client Type" },
-  { key: "companyType", title: "Company Type" },
+  { key: "category", title: "Cateogory" },
+  { key: "subCategory", title: "Sub Category" },
   { key: "mobileNumber", title: "Mobile Number" },
   { key: "email", title: "Email" },
 ];
@@ -34,13 +34,15 @@ function Clients() {
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
+
   const { data, isLoading }: UseQueryResult<ClientResponse, Error> = useQuery(
     [
       "clients",
       {
         limit: LIMIT,
         offset: offset > 0 ? (offset - 1) * LIMIT : offset,
-        query: appliedFilter,
+        query: { ...appliedFilter, search },
       },
     ],
     getClients
@@ -50,17 +52,19 @@ function Clients() {
 
   return (
     <>
-      <Grid container alignItems='center' justifyContent='space-between'>
+      <Grid container alignItems="center" justifyContent="space-between">
         <Grid item xs={5}>
-          <Box display='flex' gap={2} alignItems='center'>
+          <Box display="flex" gap={2} alignItems="center">
             <SearchContainer
-              onChange={(v) => console.log(v)}
-              placeHolder='Search by display name'
+              debounced
+              onChange={(v) => setSearch(v)}
+              placeHolder="Search by display name"
             />
             <IconButton
               onClick={() => setOpenFilter(true)}
-              color='primary'
-              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}>
+              color="primary"
+              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
+            >
               <FilterAltOutlinedIcon />
             </IconButton>
           </Box>
@@ -68,9 +72,10 @@ function Clients() {
         <Grid item>
           <Button
             onClick={() => setOpen(true)}
-            variant='outlined'
+            variant="outlined"
             startIcon={<Add />}
-            color='secondary'>
+            color="secondary"
+          >
             Add Client
           </Button>
         </Grid>

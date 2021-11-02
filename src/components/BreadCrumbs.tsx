@@ -17,11 +17,11 @@ function BreadCrumbs({ page }: { page: string }) {
   let routes = getRoutes(page, match);
 
   return (
-    <Breadcrumbs aria-label='breadcrumb'>
+    <Breadcrumbs aria-label="breadcrumb">
       {routes.map((item, index) => {
         if (index === routes.length - 1) {
           return (
-            <Typography key={index} color='text.primary'>
+            <Typography key={index} color="text.primary">
               {item.title}
             </Typography>
           );
@@ -29,9 +29,10 @@ function BreadCrumbs({ page }: { page: string }) {
         return (
           <LinkRouter
             key={index}
-            underline='hover'
-            color='inherit'
-            to={item.path}>
+            underline="hover"
+            color="inherit"
+            to={item.path}
+          >
             {item.title}
           </LinkRouter>
         );
@@ -57,6 +58,11 @@ const getRoutes = (page: string, match: any) => {
       return [
         { title: "Settings", path: "/settings" },
         { title: "Categories", path: "/" },
+      ];
+    case "labels":
+      return [
+        { title: "Settings", path: "/labels" },
+        { title: "Labels", path: "/" },
       ];
     case "forms":
       return [

@@ -7,18 +7,19 @@ function MainContent({ routes }: any) {
   const theme = useTheme();
   return (
     <Box
-      component='main'
+      component="main"
       sx={{
         flexGrow: 1,
         p: 3,
         ml: { sm: `calc(${theme.spacing(9)} + 1px)` },
-      }}>
+      }}
+    >
       <Toolbar />
       <Switch>
         {routes.map((item: any, index: number) => (
           <Route key={index} path={item.path} component={item.component} />
         ))}
-        <Redirect exact path='/' to={routes[0]?.path} />
+        <Redirect exact path="/" to={routes[0]?.path} />
       </Switch>
     </Box>
   );

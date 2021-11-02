@@ -34,3 +34,18 @@ body {
 input::placeholder {
   font-family: muli_regular !important;
 }
+
+/* CUSTOM  SCROLLBAR */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: lightgrey;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: lightgrey;
+}

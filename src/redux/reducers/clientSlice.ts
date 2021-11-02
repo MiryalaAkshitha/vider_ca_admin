@@ -8,26 +8,26 @@ type FilterProps = {
 
 interface ClientState {
   filter: {
-    clientType: string;
-    companyType: string | null;
+    category: string;
+    subCategory: string | null;
     monthAdded: string;
   };
   appliedFilter: {
-    clientType: string;
-    companyType: string | null;
+    category: string;
+    subCategory: string | null;
     monthAdded: string;
   };
 }
 
 const initialState: ClientState = {
   filter: {
-    clientType: "",
-    companyType: null,
+    category: "",
+    subCategory: null,
     monthAdded: "",
   },
   appliedFilter: {
-    clientType: "",
-    companyType: null,
+    category: "",
+    subCategory: null,
     monthAdded: "",
   },
 };
@@ -41,23 +41,23 @@ export const clientSlice = createSlice({
     },
     resetFilters: (state) => {
       state.filter = {
-        clientType: "",
-        companyType: null,
+        category: "",
+        subCategory: null,
         monthAdded: "",
       };
       state.appliedFilter = {
-        clientType: "",
-        companyType: null,
+        category: "",
+        subCategory: null,
         monthAdded: "",
       };
     },
     handleFilter: (state, action: PayloadAction<FilterProps>) => {
       let { key, value } = action.payload;
-      if (key === "clientType") {
+      if (key === "category") {
         state.filter = {
           ...state.filter,
-          companyType: null,
-          [key]: value,
+          category: value,
+          subCategory: null,
         };
         return;
       }

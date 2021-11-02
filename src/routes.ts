@@ -4,7 +4,9 @@ const Login = loadable(() => import("pages/login"));
 const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout"));
 const Settings = loadable(() => import("pages/settings"));
+const TaskBoard = loadable(() => import("pages/taskboard"));
 const Categories = loadable(() => import("pages/categories"));
+const Labels = loadable(() => import("pages/labels"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/addservice"));
 const Clients = loadable(() => import("pages/clients"));
@@ -37,6 +39,11 @@ const routes: Array<IRoute> = [
     exact: false,
     routes: [
       {
+        component: TaskBoard,
+        exact: true,
+        path: "/task-board",
+      },
+      {
         component: Settings,
         exact: true,
         path: "/settings",
@@ -50,6 +57,11 @@ const routes: Array<IRoute> = [
         component: Categories,
         exact: true,
         path: "/categories",
+      },
+      {
+        component: Labels,
+        exact: true,
+        path: "/labels",
       },
       {
         component: AddService,

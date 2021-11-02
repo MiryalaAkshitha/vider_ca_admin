@@ -18,6 +18,7 @@ import {
   selectClient,
 } from "redux/reducers/clientSlice";
 import { DialogProps } from "types";
+import { CLIENT_CATEGORIES } from "utils/constants";
 
 function ClientFilter({ open, setOpen }: DialogProps) {
   const dispatch = useDispatch();
@@ -33,25 +34,30 @@ function ClientFilter({ open, setOpen }: DialogProps) {
   };
 
   const handleResetFilters = () => {
-    setOpen(false);
     dispatch(resetFilters());
+    setOpen(false);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setOpen(false);
     dispatch(applyFilters());
+    setOpen(false);
   };
+
+  let subCategories = CLIENT_CATEGORIES.find(
+    (item) => item.value === filter.category
+  )?.subCategories;
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       PaperProps={{ sx: { width: 450 } }}
       open={open}
-      onClose={setOpen}>
-      <AppBar position='static'>
+      onClose={setOpen}
+    >
+      <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Filters</Typography>
+          <Typography variant="subtitle1">Filters</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -60,66 +66,72 @@ function ClientFilter({ open, setOpen }: DialogProps) {
       <Box p={2}>
         <TextField
           sx={{ mt: 3 }}
-          variant='outlined'
+          variant="outlined"
           fullWidth
           onChange={handleChange}
           value={filter.monthAdded}
-          name='monthAdded'
+          name="monthAdded"
           required
           InputLabelProps={{ shrink: true }}
-          size='small'
-          label='Month Added'
-          type='month'
+          size="small"
+          label="Month Added"
+          type="month"
         />
         <TextField
-          sx={{ mt: 2 }}
-          variant='outlined'
+          variant="outlined"
           fullWidth
-          onChange={handleChange}
-          value={filter.clientType}
-          size='small'
+          size="small"
+          sx={{ mt: 3 }}
           select
+          onChange={handleChange}
+          value={filter?.category ?? ""}
           required
-          name='clientType'
-          label='Client Type'>
-          <MenuItem value='company'>Company</MenuItem>
-          <MenuItem value='individual'>Individual</MenuItem>
+          name="category"
+          label="Category"
+        >
+          {CLIENT_CATEGORIES.map((item, index) => (
+            <MenuItem key={index} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
         </TextField>
-        {filter.clientType === "company" && (
+        {subCategories && (
           <TextField
-            sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            value={filter.companyType}
-            onChange={handleChange}
             required
-            name='companyType'
-            size='small'
+            sx={{ mt: 3 }}
+            name="subCategory"
+            onChange={handleChange}
+            size="small"
+            value={filter?.subCategory || ""}
             select
-            label='Company Type'>
-            <MenuItem value='Private Limited Company'>
-              Private Limited Company
-            </MenuItem>
-            <MenuItem value='Public Limited Company'>
-              Public Limited Company
-            </MenuItem>
+            label="Sub Category"
+          >
+            {subCategories.map((item, index) => (
+              <MenuItem key={index} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
           </TextField>
         )}
-        <Box display='flex' gap={2} justifyContent='flex-end'>
+        <Box display="flex" gap={2} justifyContent="flex-end">
           <Button
             onClick={handleResetFilters}
             sx={{ mt: 3 }}
-            variant='outlined'
-            color='secondary'
-            type='submit'>
+            variant="outlined"
+            color="secondary"
+            type="submit"
+          >
             Reset
           </Button>
           <Button
             sx={{ mt: 3 }}
-            variant='contained'
+            variant="contained"
             onClick={handleSubmit}
-            color='secondary'
-            type='submit'>
+            color="secondary"
+            type="submit"
+          >
             Apply
           </Button>
         </Box>
