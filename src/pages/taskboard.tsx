@@ -10,7 +10,8 @@ import { Box } from "@mui/system";
 function TaskBoard() {
   const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
     "categories",
-    getTasks
+    getTasks,
+    { refetchOnWindowFocus: false }
   );
 
   if (isLoading) return <Loader />;

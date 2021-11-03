@@ -1,3 +1,11 @@
+export enum TaskStatus {
+  TODO = "todo",
+  IN_PROGRESS = "in_progress",
+  ON_HOLD = "on_hold",
+  UNDER_REVIEW = "under_review",
+  DONE = "done",
+}
+
 export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -29,4 +37,11 @@ export const colors = ["#149ECD", "#F7964F", "#F2353C", "#673AB7", "#8BC34A"];
 export const getContainerHeight = (item: HTMLElement | null) => {
   let height = item ? item.getBoundingClientRect().y + 24 : 0;
   return `calc(100vh - ${height + "px"}) `;
+};
+
+export const getTitle = (key: string) => {
+  return key
+    .split("_")
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+    .join(" ");
 };

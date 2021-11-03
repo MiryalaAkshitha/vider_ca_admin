@@ -113,6 +113,8 @@ export const clientMenu = [
   },
 ];
 
+export const taskViewMenu = ["Details", "Comments", "Sub Tasks", "Attachments"];
+
 export const CLIENT_CATEGORIES = [
   { label: "INDIVIDUAL", value: "individual" },
   { label: "HUF", value: "huf" },

@@ -30,7 +30,8 @@ function App() {
           <SnackbarProvider
             maxSnack={3}
             autoHideDuration={1500}
-            anchorOrigin={{ horizontal: "right", vertical: "top" }}>
+            anchorOrigin={{ horizontal: "right", vertical: "top" }}
+          >
             <BrowserRouter>
               <Switch>
                 {routes.map((route, index) => {

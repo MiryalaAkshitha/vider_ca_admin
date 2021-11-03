@@ -2,10 +2,14 @@ import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
+import { Link } from "react-router-dom";
 
 function TaskItem({ data }: any) {
   return (
-    <>
+    <Link
+      to={`/task-details/${data?.uid}`}
+      style={{ textDecoration: "none", color: "initial" }}
+    >
       <Box px={2} py={1} sx={{ cursor: "pointer" }}>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="body2" color="gray">
@@ -45,7 +49,7 @@ function TaskItem({ data }: any) {
           </Typography>
         </Box>
       </Box>
-    </>
+    </Link>
   );
 }
 

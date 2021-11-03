@@ -11,6 +11,7 @@ const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/addservice"));
 const Clients = loadable(() => import("pages/clients"));
 const ClientView = loadable(() => import("pages/client-view"));
+const TasksView = loadable(() => import("pages/task-view"));
 const Forms = loadable(() => import("pages/forms"));
 const Fields = loadable(() => import("pages/fields"));
 const FieldsConfiguration = loadable(
@@ -32,6 +33,10 @@ const routes: Array<IRoute> = [
   {
     component: ClientView,
     path: "/clients/:clientId",
+  },
+  {
+    component: TasksView,
+    path: "/task-details/:taskId",
   },
   {
     component: Layout,

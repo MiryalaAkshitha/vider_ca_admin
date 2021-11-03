@@ -1,29 +1,39 @@
 import { styled } from "@mui/material/styles";
 
 export const StyledDraggableList = styled("div")<{
-  isDraggingOver: boolean;
-}>(({ isDraggingOver }) => ({
+  isdraggingover: boolean;
+  height: string;
+}>(({ isdraggingover, height }) => ({
   width: "100%",
-  border: isDraggingOver
+  border: isdraggingover
     ? "1px dashed rgba(0,0,0,0.2)"
     : "1px dashed transparent",
   padding: "10px",
-  height: "100%",
+  height: height || "auto",
+  overflowY: "auto",
 }));
 
 export const StyledDraggableItem = styled("div")<{
-  isDragging: boolean;
-  draggableStyle: any;
-}>(({ isDragging, theme, draggableStyle }) => ({
+  isdragging: boolean;
+  draggablestyle: any;
+}>(({ isdragging, theme, draggablestyle }) => ({
   userSelect: "none",
   marginBottom: "15px",
   minHeight: "100px",
   border: `1px solid ${
-    isDragging ? theme.palette.primary.main : "rgba(0,0,0,0.1)"
+    isdragging ? theme.palette.primary.main : "rgba(0,0,0,0.1)"
   }`,
   borderRadius: "10px",
-  background: isDragging ? theme.palette.primary.light : "rgba(0,0,0,0.03)",
+  background: isdragging ? theme.palette.primary.light : "rgba(0,0,0,0.03)",
   cursor: "pointer",
   boxShadow: "0px 3px 15px #273b8014",
-  ...draggableStyle,
+  ...draggablestyle,
+}));
+
+export const StyledScrollTarget = styled("span")(() => ({
+  display: "block",
+  position: "absolute",
+  marginTop: "-140px",
+  paddingTop: "140px",
+  visibility: "hidden",
 }));

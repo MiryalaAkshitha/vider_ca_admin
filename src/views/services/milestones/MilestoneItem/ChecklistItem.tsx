@@ -35,9 +35,9 @@ const CheckListItem = ({ item, index, cIndex }: CheckListItemProps) => {
         onChange={(e) => handleChecklistItemName(e.target.value)}
         fullWidth
         sx={{ marginLeft: "40px" }}
-        placeholder='Checklist item name'
+        placeholder="Checklist item name"
         value={item}
-        size='small'
+        size="small"
       />
       <IconButton onClick={handleDeleteChecklistItem}>
         <Delete />

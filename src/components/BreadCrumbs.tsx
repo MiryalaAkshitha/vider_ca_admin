@@ -80,6 +80,11 @@ const getRoutes = (page: string, match: any) => {
         { title: "Clients", path: "/clients" },
         { title: match.params?.clientId, path: "/" },
       ];
+    case "taskView":
+      return [
+        { title: "Tasks", path: "/task-board" },
+        { title: "Task Details", path: "/" },
+      ];
     default:
       return [];
   }

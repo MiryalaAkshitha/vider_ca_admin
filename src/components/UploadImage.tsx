@@ -80,31 +80,32 @@ function UploadImage({ onChange, name, sx }: UploadProps) {
   return (
     <>
       <input
-        type='file'
+        type="file"
         onChange={handleChange}
-        name='upload'
-        id='file'
+        name="upload"
+        id="file"
         style={{ display: "none" }}
       />
-      <label htmlFor='file'>
+      <label htmlFor="file">
         <UploadContainer
           sx={sx}
           onDrop={(e) => handleDrop(e)}
           onDragOver={(e) => handleDragOver(e)}
           onDragEnter={(e) => handleDragEnter(e)}
-          onDragLeave={(e) => handleDragLeave(e)}>
+          onDragLeave={(e) => handleDragLeave(e)}
+        >
           <div>
             {loading ? (
               <CircularProgress />
             ) : (
               <>
-                <CloudUploadOutlinedIcon color='disabled' fontSize='large' />
-                <Typography color='GrayText' sx={{ textAlign: "center" }}>
+                <CloudUploadOutlinedIcon color="disabled" fontSize="large" />
+                <Typography color="GrayText" sx={{ textAlign: "center" }}>
                   Drag and drop or Browse
                 </Typography>
                 {file && (
-                  <Box mt={1} width='100%' borderRadius={8}>
-                    <Typography variant='body1'>{fileName}</Typography>
+                  <Box mt={1} width="100%" borderRadius={8}>
+                    <Typography variant="body1">{fileName}</Typography>
                   </Box>
                 )}
               </>

@@ -10,7 +10,7 @@ function Fields() {
 
   return (
     <>
-      <BreadCrumbs page='fields' />
+      <BreadCrumbs page="fields" />
       <Box>
         <Grid container>
           <Grid item xs={7}>
