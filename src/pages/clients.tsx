@@ -24,7 +24,7 @@ const columns = [
   { key: "email", title: "Email" },
 ];
 
-interface ClientResponse {
+export interface ClientResponse {
   data: any[];
 }
 

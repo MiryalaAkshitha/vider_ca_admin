@@ -40,9 +40,9 @@ function TaskDetails() {
         }
       });
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("wheel", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleScroll);
     };
   }, []);
 

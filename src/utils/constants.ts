@@ -1,13 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 
-export const FREQUENCY_TEXTS = [
-  "Monthly",
-  "Quarterly",
-  "Half-Yearly",
-  "Yearly",
-  "Custom",
-];
-
 export const MONTHS = [
   "January",
   "February",
@@ -186,3 +178,17 @@ export const CLIENT_CATEGORIES = [
     value: "artificial_judicial_person",
   },
 ];
+
+export enum RecurringFrequency {
+  MONTHLY = "monthly",
+  QUARTERLY = "quarterly",
+  HALF_YEARLY = "half_yearly",
+  YEARLY = "yearly",
+}
+
+export enum PriorityEnum {
+  NONE = "none",
+  LOW = "low",
+  MEDIUM = "medium",
+  HIGH = "high",
+}

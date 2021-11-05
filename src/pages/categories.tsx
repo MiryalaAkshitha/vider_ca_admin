@@ -10,13 +10,14 @@ import { useQuery, UseQueryResult } from "react-query";
 import AddCategory from "views/categories/AddCategory";
 import CategoryCard from "views/categories/CategoryCard";
 
-interface Category {
+export interface Category {
+  id: number;
   name: string;
   image: string;
   subCategories: [];
 }
 
-interface CategoryResponse {
+export interface CategoryResponse {
   data: Category[];
 }
 
@@ -33,13 +34,14 @@ function Cateogries() {
 
   return (
     <>
-      <BreadCrumbs page='categories' />
-      <Box textAlign='right' mt={2}>
+      <BreadCrumbs page="categories" />
+      <Box textAlign="right" mt={2}>
         <Button
           onClick={() => setOpen(true)}
-          variant='outlined'
+          variant="outlined"
           startIcon={<Add />}
-          color='secondary'>
+          color="secondary"
+        >
           Add Category
         </Button>
       </Box>

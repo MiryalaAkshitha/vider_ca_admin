@@ -8,6 +8,15 @@ type UpdateStatus = {
   destinationItemsOrder: number[];
 };
 
+type StartTimerData = {
+  taskId: number;
+  startTime: number;
+};
+
+const createTask = (data: any) => {
+  return http.post("/tasks", data);
+};
+
 const getTasks = () => http.get("/tasks");
 
 const reorderTasks = (items: number[]) => {
@@ -23,4 +32,15 @@ const updateTask = ({ id, data }: { id: number; data: any }) => {
   return http.put(`/tasks/${id}`, data);
 };
 
-export { getTasks, updateTask, reorderTasks, updateStatus };
+const startTimer = ({ taskId, startTime }: StartTimerData) => {
+  return http.post(`/tasks/${taskId}/start-timer`, { startTime });
+};
+
+export {
+  getTasks,
+  updateTask,
+  reorderTasks,
+  updateStatus,
+  createTask,
+  startTimer,
+};
