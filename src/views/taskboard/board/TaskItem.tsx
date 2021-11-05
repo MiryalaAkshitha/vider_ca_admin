@@ -2,23 +2,44 @@ import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { startTimer } from "api/tasks";
+import { endTimer, startTimer } from "api/tasks";
 import { icons } from "assets";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import Timer from "./timer";
+import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
 
 function TaskItem({ data }: any) {
   const snack = useSnack();
-  const [showTempTimer, setShowTempTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
+
+  useEffect(() => {
+    const existingTimer = data?.taskLogHours?.find(
+      (item: any) => item.status === "started"
+    );
+    if (existingTimer) {
+      setShowTimer(true);
+      setStartTime(existingTimer?.startTime);
+    }
+  }, [data, startTime]);
 
   const { mutate } = useMutation(startTimer, {
     onSuccess: () => {
       snack.success("Timer Started");
-      setShowTempTimer(true);
+      setShowTimer(true);
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const { mutate: endTaskTimer } = useMutation(endTimer, {
+    onSuccess: () => {
+      snack.success("Timer Ended");
+      setShowTimer(false);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -33,9 +54,12 @@ function TaskItem({ data }: any) {
     });
   };
 
-  const existingTimer = data?.taskLogHours?.find(
-    (item: any) => item.status === "started"
-  );
+  const handleEndTimer = () => {
+    endTaskTimer({
+      taskId: data.id,
+      endTime: new Date().getTime(),
+    });
+  };
 
   return (
     <>
@@ -83,13 +107,22 @@ function TaskItem({ data }: any) {
           </Box>
         )}
         <Box display="flex" alignItems="center" gap="5px">
-          <AccessAlarmRoundedIcon
-            onClick={handleStartTimer}
-            sx={{ fontSize: 16, cursor: "pointer", color: "GrayText" }}
-          />
-          {existingTimer || showTempTimer ? (
-            <Timer startTime={startTime || existingTimer?.startTime} />
-          ) : null}
+          {showTimer ? (
+            <>
+              <StopCircleOutlinedIcon
+                onClick={handleEndTimer}
+                titleAccess="End Timer"
+                sx={{ fontSize: 16, cursor: "pointer" }}
+              />
+              <Timer startTime={startTime} />
+            </>
+          ) : (
+            <AccessAlarmRoundedIcon
+              titleAccess="Start Timer"
+              onClick={handleStartTimer}
+              sx={{ fontSize: 16, cursor: "pointer" }}
+            />
+          )}
         </Box>
       </Box>
     </>

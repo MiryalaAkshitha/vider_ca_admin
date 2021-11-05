@@ -13,6 +13,11 @@ type StartTimerData = {
   startTime: number;
 };
 
+type EndTimerData = {
+  taskId: number;
+  endTime: number;
+};
+
 const createTask = (data: any) => {
   return http.post("/tasks", data);
 };
@@ -36,6 +41,10 @@ const startTimer = ({ taskId, startTime }: StartTimerData) => {
   return http.post(`/tasks/${taskId}/start-timer`, { startTime });
 };
 
+const endTimer = ({ taskId, endTime }: EndTimerData) => {
+  return http.post(`/tasks/${taskId}/end-timer`, { endTime });
+};
+
 export {
   getTasks,
   updateTask,
@@ -43,4 +52,5 @@ export {
   updateStatus,
   createTask,
   startTimer,
+  endTimer,
 };

@@ -9,7 +9,7 @@ function Timer({ startTime }: { startTime: number | null }) {
     setInterval(() => {
       setState(new Date().getTime() - startTime!);
     }, 1000);
-  }, []);
+  }, [startTime]);
 
   const formatTime = () => {
     let hours = moment.duration(state).hours();
