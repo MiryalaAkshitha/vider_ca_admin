@@ -53,25 +53,26 @@ function FormCard(props: any) {
   return (
     <>
       <CustomCard sx={{ minHeight: 120 }}>
-        <Box display='flex' justifyContent='space-between'>
-          <Typography variant='subtitle2' color='primary'>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle2" color="primary">
             {data?.name}
           </Typography>
           <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
             <MoreVertRounded />
           </IconButton>
         </Box>
-        <Box display='flex' gap={2} mt={1}>
+        <Box display="flex" gap={2} mt={1}>
           {data?.tags?.map((item, index) => (
             <Box
-              px='10px'
-              py='1px'
+              px="10px"
+              py="1px"
               minWidth={80}
-              textAlign='center'
+              textAlign="center"
               borderRadius={2}
               key={index}
-              border='1px solid rgb(24, 47, 83, 0.2)'>
-              <Typography color='primary' variant='caption'>
+              border="1px solid rgb(24, 47, 83, 0.2)"
+            >
+              <Typography color="primary" variant="caption">
                 {item}
               </Typography>
             </Box>
@@ -79,14 +80,17 @@ function FormCard(props: any) {
         </Box>
       </CustomCard>
       <Menu
-        id='long-menu'
+        id="long-menu"
         PaperProps={{
           sx: { minWidth: 120 },
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}>
-        <MenuItem onClick={() => router.push(`/forms/${data?.id}/fields`)}>
+        onClose={handleClose}
+      >
+        <MenuItem
+          onClick={() => router.push(`/settings/forms/${data?.id}/fields`)}
+        >
           Fields
         </MenuItem>
         <MenuItem onClick={handleDelete}>Remove</MenuItem>

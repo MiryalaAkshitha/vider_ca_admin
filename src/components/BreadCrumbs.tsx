@@ -71,8 +71,7 @@ const getRoutes = (page: string, match: any) => {
       ];
     case "fields":
       return [
-        { title: "Settings", path: "/settings" },
-        { title: "Forms", path: "/forms" },
+        { title: "Forms", path: "/settings/forms" },
         { title: "Fields", path: "/" },
       ];
     case "clientProfile":
@@ -84,6 +83,11 @@ const getRoutes = (page: string, match: any) => {
       return [
         { title: "Tasks", path: "/task-board" },
         { title: "Task Details", path: "/" },
+      ];
+    case "viewRole":
+      return [
+        { title: "Roles", path: "/settings/roles-permissions" },
+        { title: match.params?.role, path: "/" },
       ];
     default:
       return [];

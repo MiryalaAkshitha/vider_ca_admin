@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import { getClientInfo, updateClientInfo } from "api/client-info";
-import FullLoader from "components/FullLoader";
+import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
@@ -49,10 +49,10 @@ function Passwords() {
     });
   };
 
-  if (isLoading || updateKybLoading) return <FullLoader />;
+  if (isLoading || updateKybLoading) return <Loader />;
 
   return (
-    <Box px={4} py={2} display='flex' justifyContent='space-between' gap={4}>
+    <Box px={4} py={2} display="flex" justifyContent="space-between" gap={4}>
       <Box sx={{ maxWidth: 1000, width: "100%" }}>
         <KybDetails state={state} setState={setState} forms={forms} />
       </Box>

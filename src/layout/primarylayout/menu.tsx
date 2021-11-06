@@ -16,33 +16,29 @@ export const menuItems: Array<IMenuItem> = [
   {
     title: "Task Board",
     path: "/task-board",
-    icon: icons.taskboard
+    icon: icons.taskboard,
   },
   {
     title: "Calendar",
     path: "/calendar",
-    icon: icons.calendar
+    icon: icons.calendar,
   },
   {
     title: "Clients",
     path: "/clients",
-    icon: icons.clients
+    icon: icons.clients,
   },
   {
     title: "Reports",
     path: "/reports",
-    icon: icons.reports
+    icon: icons.reports,
   },
   {
     title: "Invoicing",
     path: "/invoicing",
-    icon: icons.invoicing
+    icon: icons.invoicing,
   },
-  {
-    title: "My Team",
-    path: "/my-team",
-    icon: icons.team
-  },
+
   {
     title: "Storage",
     path: "/storage",
@@ -51,11 +47,16 @@ export const menuItems: Array<IMenuItem> = [
   {
     title: "Broadcast",
     path: "/broadcast",
-    icon: icons.broadcast
+    icon: icons.broadcast,
   },
-  {
-    title: "Settings",
-    path: "/settings",
-    icon: icons.settings
-  },
+  // {
+  //   title: "Settings",
+  //   path: "/settings",
+  //   icon: icons.settings,
+  // },
+  // {
+  //   title: "My Team",
+  //   path: "/my-team",
+  //   icon: icons.team,
+  // },
 ];

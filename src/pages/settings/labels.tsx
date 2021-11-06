@@ -2,7 +2,6 @@ import { Add, Delete } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteLabel, getLabels } from "api/labels";
-import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
@@ -56,7 +55,6 @@ function Tags() {
 
   return (
     <>
-      <BreadCrumbs page="labels" />
       <Box textAlign="right" mt={2}>
         <Button
           onClick={() => setOpen(true)}
@@ -67,7 +65,7 @@ function Tags() {
           Add Label
         </Button>
       </Box>
-      <Box maxWidth={600}>
+      <Box maxWidth={800}>
         <Table
           columns={[
             {

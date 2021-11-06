@@ -17,7 +17,7 @@ import { createTask } from "api/tasks";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { CategoryResponse } from "pages/categories";
+import { CategoryResponse } from "pages/settings/categories";
 import React, { useState } from "react";
 import {
   useMutation,
@@ -110,7 +110,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
       anchor="right"
       PaperProps={{ sx: { width: 550 } }}
       open={open}
-      onClose={setOpen}
+      onClose={() => setOpen(false)}
     >
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>

@@ -2,7 +2,6 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { getForms } from "api/forms";
-import BreadCrumbs from "components/BreadCrumbs";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
@@ -35,22 +34,22 @@ function Forms() {
 
   return (
     <>
-      <BreadCrumbs page='forms' />
-      <Box mt={3}>
+      <Box>
         <Grid container>
           <Grid item xs={6}>
             <SearchContainer
-              placeHolder='Search by form name or tags'
+              placeHolder="Search by form name"
               onChange={(v) => setSearch(v)}
             />
           </Grid>
           <Grid item xs={6}>
-            <Box textAlign='right'>
+            <Box textAlign="right">
               <Button
                 onClick={() => setOpen(true)}
-                variant='outlined'
+                variant="outlined"
                 startIcon={<Add />}
-                color='secondary'>
+                color="secondary"
+              >
                 Create Form
               </Button>
             </Box>
@@ -75,7 +74,7 @@ function Forms() {
                   ))}
               </Grid>
             ) : (
-              <EmptyPage minHeight='70vh' />
+              <EmptyPage minHeight="70vh" />
             )}
           </>
         )}

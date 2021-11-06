@@ -11,6 +11,8 @@ import AccountMenu from "./AccountMenu";
 import ConfigurationMenu from "./ConfigurationMenu";
 import { useSelector } from "react-redux";
 import { selectTitle } from "redux/reducers/globalSlice";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { Link } from "react-router-dom";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: theme.transitions.create(["width", "margin"], {
@@ -34,18 +36,24 @@ function Appbar() {
           width: { sm: `calc(100% - ${theme.spacing(9)} + 1px)`, height: 60 },
           ml: { sm: `calc(${theme.spacing(9)} + 1px)` },
         }}
-        color='default'
-        position='fixed'>
+        color="default"
+        position="fixed"
+      >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant='h6' noWrap component='div'>
+          <Typography variant="h6" noWrap component="div">
             {title}
           </Typography>
-          <Box display='flex' gap={2}>
+          <Box display="flex" gap={2}>
             <IconButton onClick={(e) => setConfigAnchorEl(e.currentTarget)}>
-              <MenuOutlinedIcon />
+              <MenuOutlinedIcon color="primary" />
             </IconButton>
+            <Link to="/settings/categories">
+              <IconButton>
+                <SettingsOutlinedIcon color="primary" />
+              </IconButton>
+            </Link>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-              <AccountCircleOutlinedIcon />
+              <AccountCircleOutlinedIcon color="primary" />
             </IconButton>
           </Box>
         </Toolbar>

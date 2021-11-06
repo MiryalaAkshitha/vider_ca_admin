@@ -36,17 +36,18 @@ function Fields() {
       <Grid container>
         <Grid item xs={6}>
           <SearchContainer
-            placeHolder='Search by fields'
+            placeHolder="Search by field name"
             onChange={(v) => setSearch(v)}
           />
         </Grid>
         <Grid item xs={6}>
-          <Box textAlign='right'>
+          <Box textAlign="right">
             <Button
               onClick={() => setOpen(true)}
-              variant='outlined'
+              variant="outlined"
               startIcon={<Add />}
-              color='secondary'>
+              color="secondary"
+            >
               Add Field
             </Button>
           </Box>
@@ -71,7 +72,7 @@ function Fields() {
                 ))}
             </Grid>
           ) : (
-            <EmptyPage minHeight='70vh' />
+            <EmptyPage minHeight="70vh" />
           )}
         </>
       )}

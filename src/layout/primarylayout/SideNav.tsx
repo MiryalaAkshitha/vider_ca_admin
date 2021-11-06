@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { menuItems } from "./menu";
-import { Drawer, DrawerHeader } from "./styles";
+import { Drawer, DrawerHeader } from "../styles";
 
 function SideNav() {
   const history: any = useHistory();
@@ -24,18 +24,20 @@ function SideNav() {
 
   return (
     <Drawer
-      variant='permanent'
+      variant="permanent"
       open={open}
       onMouseLeave={handleDrawerClose}
-      onMouseOver={handleDrawerOpen}>
+      onMouseOver={handleDrawerOpen}
+    >
       <DrawerHeader>
-        <img src={logo} alt='' />
+        <img src={logo} alt="" />
         <Typography
-          variant='subtitle1'
+          variant="subtitle1"
           sx={{ opacity: open ? 1 : 0, transition: "0.4s" }}
           pt={1}
           pl={1}
-          color='white'>
+          color="white"
+        >
           Vider
         </Typography>
       </DrawerHeader>
@@ -45,7 +47,8 @@ function SideNav() {
           <Link
             to={item.path}
             key={index}
-            style={{ textDecoration: "none", color: "initial" }}>
+            style={{ textDecoration: "none", color: "initial" }}
+          >
             <ListItemButton
               selected={true}
               sx={{
@@ -56,14 +59,15 @@ function SideNav() {
                 "&.Mui-selected:hover": {
                   background: "rgba(0, 0, 0, 0.4)",
                 },
-              }}>
+              }}
+            >
               <ListItemIcon sx={{ color: "white" }}>
-                <img src={item.icon} width={15} alt='' />
+                <img src={item.icon} width={15} alt="" />
               </ListItemIcon>
               <ListItemText
-                color='white'
+                color="white"
                 primary={
-                  <Typography variant='body2' color='white'>
+                  <Typography variant="body2" color="white">
                     {item?.title}
                   </Typography>
                 }

@@ -6,10 +6,13 @@ function Timer({ startTime }: { startTime: number | null }) {
   const [state, setState] = useState<number | null>(null);
 
   useEffect(() => {
-    setInterval(() => {
+    const handleTimer = setTimeout(() => {
       setState(new Date().getTime() - startTime!);
     }, 1000);
-  }, [startTime]);
+    return () => {
+      clearTimeout(handleTimer);
+    };
+  }, [state, startTime]);
 
   const formatTime = () => {
     let hours = moment.duration(state).hours();

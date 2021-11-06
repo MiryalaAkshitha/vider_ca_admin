@@ -40,19 +40,20 @@ function FieldsContainer() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box p={2}>
+    <Box py={2}>
       <Box
-        display='flex'
+        display="flex"
         mb={2}
-        justifyContent='space-between'
-        alignItems='center'>
-        <Typography variant='subtitle1' color='primary'>
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography variant="subtitle1" color="primary">
           Add Fields
         </Typography>
       </Box>
       <SearchContainer
-        maxWidth='100%'
-        placeHolder='Search for a field'
+        maxWidth="100%"
+        placeHolder="Search for a field"
         onChange={(v) => setSearch(v)}
       />
       <Box>
@@ -64,8 +65,9 @@ function FieldsContainer() {
             <Box
               mt={2}
               sx={{ cursor: "pointer" }}
-              onClick={() => handleAddField(item)}>
-              <Typography variant='body1'>{item.name}</Typography>
+              onClick={() => handleAddField(item)}
+            >
+              <Typography variant="body1">{item.name}</Typography>
               <Divider sx={{ my: 1 }} />
             </Box>
           ))}

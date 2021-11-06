@@ -35,7 +35,7 @@ function Attachments() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box px={4} py={2} width='90%'>
+    <Box px={4} py={2} width="90%">
       {data?.data.breadCrumbs.length ? (
         <BreadCrumbs data={data?.data?.breadCrumbs} />
       ) : null}

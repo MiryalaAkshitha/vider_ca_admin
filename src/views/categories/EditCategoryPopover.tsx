@@ -1,7 +1,7 @@
 import { Menu, MenuItem } from "@mui/material";
 import { deleteCategory } from "api/categories";
 import useSnack from "hooks/useSnack";
-import { AccountMenuProps } from "layout/AccountMenu";
+import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Category } from "./CategoryCard";
@@ -46,10 +46,11 @@ function EditCategoryPopover(props: EditCategoryPopoverProps) {
   return (
     <>
       <Menu
-        id='long-menu'
+        id="long-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}>
+        onClose={handleClose}
+      >
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
         <MenuItem onClick={handleDelete}>Remove</MenuItem>
       </Menu>

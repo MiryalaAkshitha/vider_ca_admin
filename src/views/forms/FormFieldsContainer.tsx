@@ -53,34 +53,35 @@ function FormFieldsContainer() {
   if (isLoading || saveLoading) return <Loader />;
 
   return (
-    <Box p={2} maxWidth={600}>
-      <Box display='flex' alignItems='center' justifyContent='space-between'>
-        <Typography variant='subtitle1' color='primary'>
+    <Box py={2} maxWidth={600}>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Typography variant="subtitle1" color="primary">
           {data?.data?.name} - Fields
         </Typography>
         {addedFields.length > 0 && (
-          <Button onClick={handleSubmit} variant='outlined' color='secondary'>
+          <Button onClick={handleSubmit} variant="outlined" color="secondary">
             Save
           </Button>
         )}
       </Box>
       <Box mt={2}>
         {addedFields.map((item, index) => (
-          <Box mt={1} borderRadius={2} p={2} border='1px solid rgba(0,0,0,0.1)'>
-            <Box display='flex' gap={1}>
-              <Box display='flex' flex={1} gap={1}>
-                <Typography variant='body1' color='GrayText'>
+          <Box mt={1} borderRadius={2} p={2} border="1px solid rgba(0,0,0,0.1)">
+            <Box display="flex" gap={1}>
+              <Box display="flex" flex={1} gap={1}>
+                <Typography variant="body1" color="GrayText">
                   {index + 1}.
                 </Typography>
-                <Typography variant='body1' color='InactiveCaptionText'>
+                <Typography variant="body1" color="InactiveCaptionText">
                   {item?.field?.name}.
                 </Typography>
               </Box>
               <IconButton
                 onClick={() => dispatch(removeField(index))}
-                size='small'
-                color='secondary'
-                sx={{ alignSelf: "flex-start" }}>
+                size="small"
+                color="secondary"
+                sx={{ alignSelf: "flex-start" }}
+              >
                 <Delete />
               </IconButton>
             </Box>
@@ -93,12 +94,12 @@ function FormFieldsContainer() {
                         toggleRequired({ index, value: e.target.checked })
                       )
                     }
-                    size='small'
+                    size="small"
                     checked={item.isRequired}
-                    color='secondary'
+                    color="secondary"
                   />
                 }
-                label='Is required'
+                label="Is required"
               />
             </Box>
           </Box>

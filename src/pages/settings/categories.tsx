@@ -2,7 +2,6 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/categories";
-import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
@@ -34,7 +33,6 @@ function Cateogries() {
 
   return (
     <>
-      <BreadCrumbs page="categories" />
       <Box textAlign="right" mt={2}>
         <Button
           onClick={() => setOpen(true)}
@@ -45,7 +43,7 @@ function Cateogries() {
           Add Category
         </Button>
       </Box>
-      <Grid container spacing={2} sx={{ mt: 1, maxWidth: 1200 }}>
+      <Grid container spacing={2} sx={{ maxWidth: 1000 }}>
         {data?.data?.map((item: any, index: any) => (
           <Grid item xs={6} key={index}>
             <CategoryCard data={item} />

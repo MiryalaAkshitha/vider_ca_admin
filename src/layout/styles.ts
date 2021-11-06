@@ -1,5 +1,6 @@
 import { CSSObject, styled, Theme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
+import { ListItemButton } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -51,4 +52,26 @@ export const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
+}));
+
+export const SettingsDrawer = styled(MuiDrawer)(({ theme }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  position: "fixed",
+  boxSizing: "border-box",
+  "& .MuiDrawer-paper": {
+    background: theme.palette.primary.main,
+    width: drawerWidth,
+  },
+}));
+
+export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  opacity: 0.4,
+  "&.Mui-selected": {
+    background: "rgba(0, 0, 0, 0.4)",
+  },
+  "&.Mui-selected:hover": {
+    background: "rgba(0, 0, 0, 0.4)",
+  },
 }));

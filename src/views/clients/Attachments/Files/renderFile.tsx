@@ -55,8 +55,9 @@ const ImageFile = ({ url }: any) => (
     src={url}
     draggable={false}
     style={{
-      width: "100%",
-      objectFit: "cover",
+      width: "90%",
+      margin: "auto",
+      objectFit: "contain",
       height: "100%",
     }}
     alt=""

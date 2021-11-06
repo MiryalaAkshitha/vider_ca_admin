@@ -8,7 +8,7 @@ interface TableProps {
   columns: Array<{
     key: string;
     title: string;
-    render?: (item: any) => React.ReactElement;
+    render?: (item: any) => React.ReactElement | null;
   }>;
   sx?: SystemStyleObject;
   data: any[];
@@ -48,6 +48,8 @@ function Table({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        borderRadius: "6px",
+        overflow: "hidden",
         ...sx,
       }}
     >

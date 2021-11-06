@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import { getOneClient, updateClient } from "api/client";
-import FullLoader from "components/FullLoader";
+import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import {
@@ -49,7 +49,7 @@ function ProfileDetails() {
     mutate({ data, clientId: match.params.clientId });
   };
 
-  if (isLoading || updateProfileLoading) return <FullLoader />;
+  if (isLoading || updateProfileLoading) return <Loader />;
 
   return (
     <Box px={4} pt={2} pb={10}>
