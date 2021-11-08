@@ -1,9 +1,10 @@
 import { ExpandMore } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Switch from "@mui/material/Switch";
+import { Box } from "@mui/system";
 import { useState } from "react";
 
 interface IPermissionAccordion {
@@ -29,25 +30,26 @@ const PermissonsAccordion = (props: IPermissionAccordion) => {
       </AccordionSummary>
       <AccordionDetails>
         {item?.children?.map((item, index) => (
-          <Grid
+          <Box
             sx={{
               borderBottom: "1px dashed rgba(0,0,0,0.1)",
               marginBottom: "20px",
+              gap: 2,
+              display: "flex",
+              justifyContent: "space-between",
             }}
-            container
-            spacing={2}
             key={index}
           >
-            <Grid item xs={5}>
+            <Box flex={1}>
               <Typography variant="body2">{item?.name}</Typography>
-            </Grid>
-            <Grid item xs={5}>
+            </Box>
+            <Box>
               <Switch
                 onChange={() => handlePermissionChange(item.id)}
                 checked={permissions.includes(item?.id)}
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         ))}
       </AccordionDetails>
     </Accordion>

@@ -30,8 +30,9 @@ import zip from "./icons/filetypes/zip.png";
 import video from "./icons/filetypes/video.png";
 import audio from "./icons/filetypes/audio.png";
 import recurring from "./icons/recurring.svg";
+import profileImage from "./images/profile.jpg";
 
-export { quote, logo, loginBg, whiteLogo, empty };
+export { quote, logo, loginBg, whiteLogo, empty, profileImage };
 
 export let icons = {
   folder,

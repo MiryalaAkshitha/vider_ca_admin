@@ -20,19 +20,19 @@ import AddRole from "views/rolesandpermissions/AddRole";
 import EditRole from "views/rolesandpermissions/EditRole";
 
 function RolesAndPermissions() {
+  const snack = useSnack();
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const router = useHistory();
+  const [selectedData, setSelectedData] = useState<any>({});
   const { url }: any = useRouteMatch();
 
-  const snack = useSnack();
   const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
     "roles",
     getRoles
   );
-  const [selectedData, setSelectedData] = useState<any>({});
 
   const { mutate } = useMutation(deleteRole, {
     onSuccess: () => {
@@ -68,7 +68,7 @@ function RolesAndPermissions() {
           Create Role
         </Button>
       </Box>
-      <Box maxWidth={800}>
+      <Box maxWidth={1000} mt={2}>
         <Table
           columns={[
             {

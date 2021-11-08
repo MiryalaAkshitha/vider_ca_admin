@@ -1,16 +1,24 @@
+import ConfirmDialogProvider from "components/ConfirmDialogProvider";
+import FullPageLoader from "components/FullPageLoader";
+import { SnackbarProvider } from "notistack";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useAppSelector } from "redux/store";
 import "./App.css";
 import routes from "./routes";
-import { SnackbarProvider } from "notistack";
-import { QueryClient, QueryClientProvider } from "react-query";
-import FullPageLoader from "components/FullPageLoader";
-import ConfirmDialogProvider from "components/ConfirmDialogProvider";
 
 const queryClient = new QueryClient();
 
 function App() {
   const errorState: any = useAppSelector((state) => state.error);
+
+  if (
+    !localStorage.getItem("token") &&
+    window.location.pathname !== "/login" &&
+    window.location.pathname !== "/signup"
+  ) {
+    window.location.href = "/login";
+  }
 
   if (errorState.error) {
     return (

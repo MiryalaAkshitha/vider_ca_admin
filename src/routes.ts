@@ -6,6 +6,7 @@ const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/taskboard"));
 const Categories = loadable(() => import("pages/settings/categories"));
 const Labels = loadable(() => import("pages/settings/labels"));
+const Users = loadable(() => import("pages/settings/users"));
 const Services = loadable(() => import("pages/settings/services"));
 const AddService = loadable(() => import("pages/settings/addservice"));
 const Clients = loadable(() => import("pages/clients"));
@@ -20,6 +21,7 @@ const RolesAndPermissions = loadable(
   () => import("pages/settings/roles-permissions")
 );
 const ViewRole = loadable(() => import("pages/settings/view-role"));
+const SignUp = loadable(() => import("pages/signup"));
 
 export interface IRoute {
   component: any;
@@ -32,6 +34,10 @@ const routes: Array<IRoute> = [
   {
     component: Login,
     path: "/login",
+  },
+  {
+    component: SignUp,
+    path: "/signup",
   },
   {
     component: ClientView,
@@ -50,6 +56,11 @@ const routes: Array<IRoute> = [
         component: Categories,
         exact: true,
         path: "/settings/categories",
+      },
+      {
+        component: Users,
+        exact: true,
+        path: "/settings/users",
       },
       {
         component: Labels,

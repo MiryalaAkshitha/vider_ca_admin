@@ -111,7 +111,7 @@ function ViewRole() {
           </Button>
         </Box>
       </Box>
-      <Box mt={3}>
+      <Box mt={3} maxWidth={800}>
         <Typography sx={{ mb: 2 }} variant="body1">
           Permissions
         </Typography>
