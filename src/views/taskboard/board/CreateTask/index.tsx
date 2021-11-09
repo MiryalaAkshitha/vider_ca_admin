@@ -1,84 +1,25 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Autocomplete,
-  Drawer,
-  IconButton,
-  MenuItem,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { getCategories } from "api/categories";
-import { getClients } from "api/client";
-import { getLabels } from "api/labels";
 import { createTask } from "api/tasks";
+import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { CategoryResponse } from "pages/settings/categories";
 import React, { useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
-import { DataResponse, DialogProps } from "types";
+import { useMutation, useQueryClient } from "react-query";
+import { DialogProps } from "types";
+import { StateProps } from "types/createTask.types";
+import { getTitle } from "utils";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
-import { getTitle } from "./utils";
-
-type DataResponseType = UseQueryResult<CategoryResponse, Error>;
-type LabelsDataResponse = UseQueryResult<DataResponse, Error>;
-type ClientsDataResponse = UseQueryResult<DataResponse, Error>;
-
-interface StateProps {
-  name: string;
-  category: number | null;
-  labels: any[];
-  client: number | null;
-  recurring: boolean;
-  frequency: string | null;
-  feeAmount: string | null;
-  priority: string | null;
-  dueDate: string | null;
-}
-
-const initialState = {
-  name: "",
-  category: null,
-  labels: [],
-  client: null,
-  recurring: false,
-  frequency: null,
-  feeAmount: null,
-  priority: null,
-  dueDate: null,
-};
+import { initialState } from "./initialState";
+import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
 function CreateTask({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState<StateProps>(initialState);
-
-  const { data: categories, isLoading: categoriesLoading }: DataResponseType =
-    useQuery("categories", getCategories, {
-      refetchOnWindowFocus: false,
-      enabled: open,
-    });
-
-  const { data: clients, isLoading: clientsLoading }: ClientsDataResponse =
-    useQuery(["clients", {}], getClients, {
-      refetchOnWindowFocus: false,
-      enabled: open,
-    });
-
-  const { data: labels, isLoading: labelsLoading }: LabelsDataResponse =
-    useQuery("labels", getLabels, {
-      refetchOnWindowFocus: false,
-      enabled: open,
-    });
+  const { users, labels, categories, clients, loading } =
+    useCreateTaskInitialData({ enabled: open });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -98,7 +39,9 @@ function CreateTask({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate(state);
+    let { taskType, ...apiData } = state;
+    apiData.members = apiData.members.map((member: any) => member.id);
+    mutate(apiData);
   };
 
   let subCategories = categories?.data.find(
@@ -106,22 +49,9 @@ function CreateTask({ open, setOpen }: DialogProps) {
   )?.subCategories;
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={() => setOpen(false)}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Create Task</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
       <Box p={2}>
-        {categoriesLoading || clientsLoading || labelsLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <form onSubmit={handleSubmit}>
@@ -152,6 +82,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
               onChange={handleChange}
               select
               required
+              value={state.category || ""}
               name="category"
               label="Category"
             >
@@ -169,7 +100,9 @@ function CreateTask({ open, setOpen }: DialogProps) {
                 sx={{ mt: 3 }}
                 select
                 required
-                name="category"
+                value={state.subCategory || ""}
+                onChange={handleChange}
+                name="subCategory"
                 label="Sub Category"
               >
                 {subCategories?.map((item: any, index) => (
@@ -190,28 +123,19 @@ function CreateTask({ open, setOpen }: DialogProps) {
               required
             />
             <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              onChange={handleChange}
-              size="small"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              label="Due Date"
-              name="dueDate"
-            />
-            <TextField
               variant="outlined"
               fullWidth
               size="small"
               sx={{ mt: 3 }}
               select
               required
+              value={state.taskType || ""}
               name="type"
               onChange={(e) => {
                 setState({
                   ...state,
                   recurring: e.target.value === "recurring",
+                  taskType: e.target.value,
                 });
               }}
               label="Task Type"
@@ -228,6 +152,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
                 select
                 required
                 name="frequency"
+                value={state.frequency || ""}
                 label="Frequency"
                 onChange={handleChange}
               >
@@ -238,6 +163,93 @@ function CreateTask({ open, setOpen }: DialogProps) {
                 ))}
               </TextField>
             )}
+            {state.taskType === "non_recurring" && (
+              <>
+                <TextField
+                  sx={{ mt: 3 }}
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleChange}
+                  size="small"
+                  type="date"
+                  value={state.startDate || ""}
+                  InputLabelProps={{ shrink: true }}
+                  label="Start Date"
+                  name="startDate"
+                />
+                <TextField
+                  sx={{ mt: 3 }}
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleChange}
+                  size="small"
+                  type="date"
+                  value={state.dueDate || ""}
+                  InputLabelProps={{ shrink: true }}
+                  label="Due Date"
+                  name="dueDate"
+                />
+              </>
+            )}
+            {state.taskType === "recurring" && (
+              <>
+                <Autocomplete
+                  id="tags-standard"
+                  onChange={(_, value) => {
+                    setState({
+                      ...state,
+                      startDay: value,
+                    });
+                  }}
+                  options={Array.from(Array(31), (v, i) => i + 1)}
+                  sx={{ mt: 3 }}
+                  getOptionLabel={(option: any) => option.toString()}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      name="startDay"
+                      label="Start Day"
+                    />
+                  )}
+                />
+                <Autocomplete
+                  id="tags-standard"
+                  onChange={(_, value) => {
+                    setState({
+                      ...state,
+                      dueDay: value,
+                    });
+                  }}
+                  options={Array.from(Array(31), (v, i) => i + 1)}
+                  sx={{ mt: 3 }}
+                  getOptionLabel={(option: any) => option.toString()}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      name="dueDay"
+                      label="Due Day"
+                    />
+                  )}
+                />
+              </>
+            )}
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              onChange={handleChange}
+              size="small"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              label="Task End Date"
+              name="endDate"
+            />
             <Autocomplete
               multiple
               id="tags-standard"
@@ -256,6 +268,46 @@ function CreateTask({ open, setOpen }: DialogProps) {
                 />
               )}
             />
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              onChange={(_, value) => {
+                setState({ ...state, members: value });
+              }}
+              value={state.members || []}
+              options={users?.data || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => {
+                return option?.firstName + " " + option?.lastName;
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Members"
+                />
+              )}
+            />
+            <TextField
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ mt: 3 }}
+              select
+              required
+              value={state.taskLeader || ""}
+              onChange={handleChange}
+              name="taskLeader"
+              label="Task Leader"
+            >
+              {users?.data.map((item, index) => (
+                <MenuItem value={item?.id} key={index}>
+                  {item?.firstName + " " + item?.lastName}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               variant="outlined"
               fullWidth
@@ -264,6 +316,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
               select
               required
               name="priority"
+              value={state.priority || ""}
               label="Priority"
               onChange={handleChange}
             >
@@ -277,8 +330,8 @@ function CreateTask({ open, setOpen }: DialogProps) {
               sx={{ mt: 3 }}
               variant="outlined"
               fullWidth
-              onChange={handleChange}
               size="small"
+              onChange={handleChange}
               name="feeAmount"
               label="Fee Amount"
             />
@@ -286,8 +339,8 @@ function CreateTask({ open, setOpen }: DialogProps) {
               sx={{ mt: 3 }}
               variant="outlined"
               fullWidth
-              onChange={handleChange}
               size="small"
+              onChange={handleChange}
               name="description"
               multiline
               rows={4}
@@ -306,7 +359,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
           </form>
         )}
       </Box>
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

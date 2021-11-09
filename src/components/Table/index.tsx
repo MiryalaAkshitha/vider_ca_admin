@@ -21,22 +21,14 @@ interface TableProps {
   };
 }
 
-function Table({
-  columns,
-  data,
-  sx,
-  pagination,
-  loading = false,
-  onRowClick,
-}: TableProps) {
+function Table(props: TableProps) {
+  const { columns, data, sx, pagination, loading = false, onRowClick } = props;
   const [page, setPage] = useState(1);
 
   const handleRowClick = (item: any) => {
     if (!onRowClick) return;
     onRowClick(item);
   };
-
-  if (!data.length) return null;
 
   return (
     <Box
@@ -55,9 +47,11 @@ function Table({
     >
       <StyledTable>
         <thead>
-          {columns.map((item, index) => (
-            <th key={index}>{item.title}</th>
-          ))}
+          <tr>
+            {columns.map((item, index) => (
+              <th key={index}>{item.title}</th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           {data.map((item, index) => (
@@ -82,7 +76,7 @@ function Table({
           <Pagination
             color="secondary"
             page={page}
-            count={Math.ceil(pagination.totalCount / pagination.pageCount)}
+            count={Math.ceil(pagination.totalCount / pagination.pageCount) || 1}
             variant="outlined"
             onChange={(v, page) => {
               setPage(page);
@@ -96,6 +90,13 @@ function Table({
           <CircularProgress color="primary" />
         </StyledTableLoader>
       )}
+      {!loading && !data.length ? (
+        <StyledTableLoader>
+          <Typography variant="subtitle2" color="rgba(0,0,0,0.5)">
+            No data
+          </Typography>
+        </StyledTableLoader>
+      ) : null}
     </Box>
   );
 }

@@ -10,11 +10,18 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { createClient } from "api/client";
+import { getUsers } from "api/users";
+import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { DialogProps } from "types";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "react-query";
+import { DataResponse, DialogProps } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 
 interface StateProps {
@@ -38,6 +45,13 @@ function AddClient({ open, setOpen }: DialogProps) {
     email: "",
   });
   let formRef = useRef<HTMLFormElement>(null);
+
+  const {
+    data: users,
+    isLoading: userLoading,
+  }: UseQueryResult<DataResponse, Error> = useQuery("users", getUsers, {
+    enabled: open,
+  });
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {
@@ -90,97 +104,111 @@ function AddClient({ open, setOpen }: DialogProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <form onSubmit={handleSubmit} ref={formRef}>
-        <Box p={2}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            sx={{ mt: 3 }}
-            select
-            onChange={handleChange}
-            required
-            name="category"
-            label="Category"
-          >
-            {CLIENT_CATEGORIES.map((item, index) => (
-              <MenuItem key={index} value={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          {subCategories && (
+      {userLoading ? (
+        <Loader />
+      ) : (
+        <form onSubmit={handleSubmit} ref={formRef}>
+          <Box p={2}>
             <TextField
               variant="outlined"
               fullWidth
-              required
-              sx={{ mt: 3 }}
-              name="subCategory"
-              onChange={handleChange}
               size="small"
+              sx={{ mt: 3 }}
               select
-              label="Sub Category"
+              value={state.category || ""}
+              onChange={handleChange}
+              required
+              name="category"
+              label="Category"
             >
-              {subCategories.map((item, index) => (
+              {CLIENT_CATEGORIES.map((item, index) => (
                 <MenuItem key={index} value={item.value}>
                   {item.label}
                 </MenuItem>
               ))}
             </TextField>
-          )}
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="displayName"
-            required
-            onChange={handleChange}
-            size="small"
-            label="Display Name"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            name="clientManager"
-            size="small"
-            label="Client Manager"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            name="mobileNumber"
-            size="small"
-            label="Mobile Number"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="email"
-            required
-            type="email"
-            onChange={handleChange}
-            size="small"
-            label="Email ID"
-          />
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
+            {subCategories && (
+              <TextField
+                variant="outlined"
+                fullWidth
+                required
+                sx={{ mt: 3 }}
+                name="subCategory"
+                value={state.subCategory || ""}
+                onChange={handleChange}
+                size="small"
+                select
+                label="Sub Category"
+              >
+                {subCategories.map((item, index) => (
+                  <MenuItem key={index} value={item.value}>
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
               fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Create Client"
-              color="secondary"
+              name="displayName"
+              required
+              onChange={handleChange}
+              size="small"
+              label="Display Name"
             />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={state.clientManager || ""}
+              name="clientManager"
+              size="small"
+              label="Client Manager"
+              select
+            >
+              {users?.data?.map((item, index) => (
+                <MenuItem key={index} value={item?.id}>
+                  {item?.firstName + " " + item?.lastName}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              name="mobileNumber"
+              size="small"
+              label="Mobile Number"
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              name="email"
+              required
+              type="email"
+              onChange={handleChange}
+              size="small"
+              label="Email ID"
+            />
+            <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+              <LoadingButton
+                loading={isLoading}
+                fullWidth
+                type="submit"
+                loadingColor="white"
+                title="Create Client"
+                color="secondary"
+              />
+            </Box>
           </Box>
-        </Box>
-      </form>
+        </form>
+      )}
     </Drawer>
   );
 }

@@ -8,6 +8,8 @@ function useTitle(title: string) {
   useEffect(() => {
     dispatch(updateTitle(title));
   }, [dispatch, title]);
+
+  return "Title Updated";
 }
 
 export default useTitle;

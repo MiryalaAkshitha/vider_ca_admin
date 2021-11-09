@@ -1,6 +1,4 @@
 import axios from "axios";
-import { clearError } from "redux/reducers/errorSlice";
-import store from "redux/store";
 
 export const http = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -12,17 +10,18 @@ export const http = axios.create({
 
 http.interceptors.response.use(
   function (response) {
-    store.dispatch(clearError());
     return response;
   },
   function (err) {
-    const message = {
-      heading: "",
-      description: "",
-    };
     if (err.message === "Network Error") {
-      message.heading = err.message;
-      message.description = "Please check your internet connection";
+      alert("Please Check your internet connection");
+    }
+    if (err.response.data.statusCode === 401) {
+      if (err.response.config.url !== "/users/signin") {
+        localStorage.removeItem("token");
+        alert("Session Expired, Please Login Again");
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(err);
   }

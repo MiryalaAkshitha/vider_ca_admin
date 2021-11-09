@@ -34,11 +34,11 @@ const CollapsibleMenuItem = ({ item }: any) => {
         <List component="div" disablePadding>
           {item?.children?.map((item, index) => (
             <Link
+              key={index}
               to={item.path}
               style={{ textDecoration: "none", color: "initial" }}
             >
               <StyledListItemButton
-                key={index}
                 selected={false}
                 sx={{
                   paddingLeft: "30px",

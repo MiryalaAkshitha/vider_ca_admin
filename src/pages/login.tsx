@@ -27,6 +27,7 @@ const Login = () => {
 
   const { mutate, isLoading } = useMutation(signin, {
     onSuccess: (res: any) => {
+      console.log(res);
       localStorage.setItem("token", res.data.access_token);
       window.location.href = "/";
     },

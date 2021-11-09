@@ -3,7 +3,6 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteRole, getRoles } from "api/roles";
 import { useConfirm } from "components/ConfirmDialogProvider";
-import Loader from "components/Loader";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
@@ -53,8 +52,6 @@ function RolesAndPermissions() {
       },
     });
   };
-
-  if (isLoading) return <Loader />;
 
   return (
     <>

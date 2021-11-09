@@ -6,16 +6,10 @@ import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useMutation } from "react-query";
+import { getTitle } from "utils";
 import { StyledDraggableItem, StyledDraggableList } from "../styled";
 import TaskItem from "./TaskItem";
-import {
-  colors,
-  getContainerHeight,
-  getTitle,
-  move,
-  reorder,
-  TaskStatus,
-} from "./utils";
+import { colors, getContainerHeight, move, reorder, TaskStatus } from "./utils";
 
 const initialState = {
   [TaskStatus.TODO]: [],
@@ -170,7 +164,7 @@ function Board({ data }: any) {
                       provided.innerRef(ref);
                     }}
                     height={getContainerHeight(listContainerRef.current)}
-                    isdraggingover={snapshot.isDraggingOver}
+                    isdraggingover={snapshot.isDraggingOver?.toString()}
                   >
                     {state[key].map((item, index) => (
                       <Draggable
@@ -184,7 +178,7 @@ function Board({ data }: any) {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             draggablestyle={provided.draggableProps.style}
-                            isdragging={snapshot.isDragging}
+                            isdragging={snapshot.isDragging?.toString()}
                           >
                             <TaskItem data={item} />
                           </StyledDraggableItem>

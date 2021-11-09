@@ -38,10 +38,3 @@ export const getContainerHeight = (item: HTMLElement | null) => {
   let height = item ? item.getBoundingClientRect().y + 24 : 0;
   return `calc(100vh - ${height + "px"}) `;
 };
-
-export const getTitle = (key: string) => {
-  return key
-    .split("_")
-    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
-    .join(" ");
-};

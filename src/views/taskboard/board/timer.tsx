@@ -6,6 +6,7 @@ function Timer({ startTime }: { startTime: number | null }) {
   const [state, setState] = useState<number | null>(null);
 
   useEffect(() => {
+    setState(new Date().getTime() - startTime!);
     const handleTimer = setTimeout(() => {
       setState(new Date().getTime() - startTime!);
     }, 1000);

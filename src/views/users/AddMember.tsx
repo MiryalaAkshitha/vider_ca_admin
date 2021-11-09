@@ -1,16 +1,8 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Drawer,
-  IconButton,
-  MenuItem,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getRoles } from "api/roles";
 import { createUser } from "api/users";
+import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
@@ -30,6 +22,7 @@ type State = {
   email: string;
   mobile: string;
   password: string;
+  role: number | null;
 };
 
 function AddMember({ open, setOpen }: DialogProps) {
@@ -41,6 +34,7 @@ function AddMember({ open, setOpen }: DialogProps) {
     email: "",
     mobile: "",
     password: "",
+    role: null,
   });
 
   const { data, isLoading: dataLoading }: UseQueryResult<DataResponse, Error> =
@@ -67,20 +61,7 @@ function AddMember({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Create Role</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper title="Create Role" open={open} setOpen={setOpen}>
       {dataLoading ? (
         <Loader />
       ) : (
@@ -133,12 +114,15 @@ function AddMember({ open, setOpen }: DialogProps) {
               size="small"
               required
               label="Role"
+              value={state.role || ""}
               onChange={handleChange}
               name="role"
               select
             >
               {data?.data?.map((item: any) => (
-                <MenuItem value={item?.id}>{item?.name}</MenuItem>
+                <MenuItem value={item?.id} key={item?.id}>
+                  {item?.name}
+                </MenuItem>
               ))}
             </TextField>
             <PasswordField
@@ -159,7 +143,7 @@ function AddMember({ open, setOpen }: DialogProps) {
           </Box>
         </form>
       )}
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

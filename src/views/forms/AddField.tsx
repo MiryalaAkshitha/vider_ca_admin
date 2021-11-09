@@ -97,13 +97,14 @@ function AddField({ open, setOpen }: DialogProps) {
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       PaperProps={{ sx: { width: 550 } }}
       open={open}
-      onClose={setOpen}>
-      <AppBar position='static'>
+      onClose={setOpen}
+    >
+      <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Add Field</Typography>
+          <Typography variant="subtitle1">Add Field</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -114,23 +115,25 @@ function AddField({ open, setOpen }: DialogProps) {
           <TextField
             onChange={handleChange}
             sx={{ mt: 2 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            size='small'
+            size="small"
             required
-            name='name'
-            label='Name'
+            name="name"
+            label="Name"
           />
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
             required
             onChange={handleChange}
-            name='fieldType'
-            size='small'
+            name="fieldType"
+            size="small"
+            value={state.fieldType || ""}
             select
-            label='Field Type'>
+            label="Field Type"
+          >
             {FIELD_TYPES.map((item, index) => (
               <MenuItem value={item.value} key={index}>
                 {item.label}
@@ -141,17 +144,17 @@ function AddField({ open, setOpen }: DialogProps) {
             {showOptions() && (
               <>
                 {state.options.map((item, index) => (
-                  <Box display='flex' mt={2} gap={1} alignItems='center'>
+                  <Box display="flex" mt={2} gap={1} alignItems="center">
                     <TextField
                       key={index}
-                      variant='outlined'
+                      variant="outlined"
                       onChange={(e) => handleOptionChange(e, index)}
                       fullWidth
                       value={item}
-                      size='small'
+                      size="small"
                       placeholder={`Option ${index + 1}`}
                       required
-                      name='name'
+                      name="name"
                     />
                     <div>
                       <IconButton onClick={() => handleOptionDelete(index)}>
@@ -164,10 +167,11 @@ function AddField({ open, setOpen }: DialogProps) {
                   <Button
                     onClick={handleAddOption}
                     sx={{ minWidth: 50 }}
-                    color='secondary'
-                    variant='outlined'
-                    size='small'
-                    startIcon={<Add />}>
+                    color="secondary"
+                    variant="outlined"
+                    size="small"
+                    startIcon={<Add />}
+                  >
                     Add
                   </Button>
                 </Box>
@@ -178,45 +182,45 @@ function AddField({ open, setOpen }: DialogProps) {
             <Grid item xs={6}>
               <TextField
                 sx={{ mt: 3 }}
-                variant='outlined'
+                variant="outlined"
                 onChange={handleChange}
                 fullWidth
-                size='small'
-                type='number'
-                name='maxLength'
-                label='Min Length'
+                size="small"
+                type="number"
+                name="maxLength"
+                label="Min Length"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 sx={{ mt: 3 }}
-                variant='outlined'
+                variant="outlined"
                 fullWidth
-                size='small'
-                name='minLength'
-                type='number'
+                size="small"
+                name="minLength"
+                type="number"
                 onChange={handleChange}
-                label='Max Length'
+                label="Max Length"
               />
             </Grid>
           </Grid>
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            size='small'
+            size="small"
             onChange={handleChange}
-            name='regexPattern'
-            label='Regex Pattern'
+            name="regexPattern"
+            label="Regex Pattern"
           />
-          <Box display='flex' justifyContent='flex-end' mt={3} gap={2}>
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
               fullWidth
-              type='submit'
-              loadingColor='white'
-              title='Create Field'
-              color='secondary'
+              type="submit"
+              loadingColor="white"
+              title="Create Field"
+              color="secondary"
             />
           </Box>
         </Box>

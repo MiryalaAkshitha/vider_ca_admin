@@ -41,6 +41,7 @@ function Users() {
             select
             onChange={(e) => setRole(e.target.value)}
             label="Filter by role"
+            value={role}
             sx={{ minWidth: 300 }}
           >
             <MenuItem value="">None</MenuItem>

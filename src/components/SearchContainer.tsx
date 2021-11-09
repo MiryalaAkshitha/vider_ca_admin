@@ -10,12 +10,9 @@ interface SearchContainerProps {
   debounced?: boolean;
 }
 
-function SearchContainer({
-  placeHolder,
-  onChange,
-  maxWidth = "600px",
-  debounced,
-}: SearchContainerProps) {
+function SearchContainer(props: SearchContainerProps) {
+  const { placeHolder, onChange, maxWidth = "600px", debounced } = props;
+
   let handleChange = _.debounce(function (e) {
     onChange(e.target.value);
   }, 1000);
@@ -24,11 +21,11 @@ function SearchContainer({
     <Box>
       <TextField
         sx={{ maxWidth, minWidth: 500, width: "100%" }}
-        color='primary'
+        color="primary"
         onChange={(e) => {
           debounced ? handleChange(e) : onChange(e.target.value);
         }}
-        size='small'
+        size="small"
         placeholder={placeHolder}
         InputProps={{ endAdornment: <Search /> }}
       />
