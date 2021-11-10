@@ -1,32 +1,37 @@
 import { getCategories } from "api/categories";
-import { getClients } from "api/client";
 import { getLabels } from "api/labels";
+import { getTask } from "api/tasks";
 import { getUsers } from "api/users";
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
+import { useParams } from "react-router";
 import {
-  ClientsDataResponse,
   DataResponseType,
   LabelsDataResponse,
   UsersDataResponse,
 } from "types/createTask.types";
 
-function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
+function useTaskViewData() {
+  const params: any = useParams();
+
+  const {
+    data: task,
+    isLoading: taskLoading,
+  }: UseQueryResult<{ data: any }, Error> = useQuery(
+    ["task", params.taskId],
+    getTask,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+
   const { data: categories, isLoading: categoriesLoading }: DataResponseType =
     useQuery("categories", getCategories, {
       refetchOnWindowFocus: false,
-      enabled,
-    });
-
-  const { data: clients, isLoading: clientsLoading }: ClientsDataResponse =
-    useQuery(["clients", {}], getClients, {
-      refetchOnWindowFocus: false,
-      enabled,
     });
 
   const { data: labels, isLoading: labelsLoading }: LabelsDataResponse =
     useQuery("labels", getLabels, {
       refetchOnWindowFocus: false,
-      enabled,
     });
 
   const { data: users, isLoading: userLoading }: UsersDataResponse = useQuery(
@@ -34,18 +39,16 @@ function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
     getUsers,
     {
       refetchOnWindowFocus: false,
-      enabled,
     }
   );
 
   return {
     users,
     labels,
-    clients,
     categories,
-    loading:
-      categoriesLoading || clientsLoading || labelsLoading || userLoading,
+    task,
+    loading: taskLoading || categoriesLoading || labelsLoading || userLoading,
   };
 }
 
-export default useCreateTaskInitialData;
+export default useTaskViewData;

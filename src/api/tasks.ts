@@ -24,6 +24,10 @@ const createTask = (data: any) => {
 
 const getTasks = () => http.get("/tasks");
 
+const getTask = ({ queryKey }) => {
+  return http.get("/tasks/task-details", { params: { taskId: queryKey[1] } });
+};
+
 const reorderTasks = (items: number[]) => {
   return http.put("/tasks/reorder/", { items });
 };
@@ -53,4 +57,5 @@ export {
   createTask,
   startTimer,
   endTimer,
+  getTask,
 };

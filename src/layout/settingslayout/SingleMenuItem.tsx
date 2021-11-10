@@ -4,7 +4,7 @@ import { StyledListItemButton } from "layout/styles";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
-const MenuItem = ({ item }: any) => {
+const SingleMenuItem = ({ item }: any) => {
   const history = useHistory();
   return (
     <Link to={item.path} style={{ textDecoration: "none", color: "initial" }}>
@@ -27,4 +27,4 @@ const MenuItem = ({ item }: any) => {
   );
 };
 
-export default MenuItem;
+export default SingleMenuItem;

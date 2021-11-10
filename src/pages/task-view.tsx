@@ -14,6 +14,7 @@ const Attachments = loadable(
 
 function TaskDetails() {
   useTitle("Task Details");
+
   const headerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const elementsRef = useRef<HTMLElement[]>([]);
@@ -48,7 +49,7 @@ function TaskDetails() {
 
   return (
     <>
-      <Box position="sticky" top={0} ref={headerRef}>
+      <Box position="sticky" top={0} zIndex={2} ref={headerRef}>
         <Box p={2} bgcolor="white">
           <BreadCrumbs page="taskView" />
         </Box>

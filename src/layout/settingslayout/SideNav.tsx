@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DrawerHeader, SettingsDrawer } from "../styles";
 import CollapsibleMenuItem from "./CollapsibleMenuItem";
 import { menuItems } from "./menu";
-import MenuItem from "./MenuItem";
+import MenuItem from "./SingleMenuItem";
 
 function SideNav() {
   const [open, setOpen] = useState(false);

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import Timer from "./timer";
 import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
+import { Link } from "react-router-dom";
 
 function TaskItem({ data }: any) {
   const snack = useSnack();
@@ -62,7 +63,10 @@ function TaskItem({ data }: any) {
   };
 
   return (
-    <>
+    <Link
+      to={`/task-details/${data?.taskId}`}
+      style={{ textDecoration: "none", color: "initial" }}
+    >
       <Box px={2} py={1} sx={{ cursor: "pointer" }}>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="body2" color="gray">
@@ -125,7 +129,7 @@ function TaskItem({ data }: any) {
           )}
         </Box>
       </Box>
-    </>
+    </Link>
   );
 }
 
