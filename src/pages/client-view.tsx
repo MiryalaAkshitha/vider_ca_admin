@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import BreadCrumbs from "components/BreadCrumbs";
 import useTitle from "hooks/useTitle";
+import moment from "moment";
+import { useEffect } from "react";
 import {
   Link,
   Route,
@@ -20,17 +22,22 @@ function ClientProfile() {
   const { location } = useHistory();
   let { path, url }: any = useRouteMatch();
 
+  useEffect(() => {
+    console.log(moment("2021-11-11").isBefore("2021-12-11"));
+  }, []);
+
   return (
     <div>
       <Box p={2}>
-        <BreadCrumbs page='clientProfile' />
+        <BreadCrumbs page="clientProfile" />
       </Box>
       <ProfileNav>
         {clientMenu.map((item, index) => (
           <Link
             to={url + item.path}
             key={index}
-            style={{ textDecoration: "none" }}>
+            style={{ textDecoration: "none" }}
+          >
             <ProfileNavItem active={location.pathname === url + item.path}>
               {item.title}
             </ProfileNavItem>
