@@ -15,6 +15,7 @@ import Attachments from "views/clients/Attachments";
 import KybInfo from "views/clients/ClientInfo";
 import Passwords from "views/clients/Passwords";
 import ProfileDetails from "views/clients/ProfileDetails.tsx";
+import RecurringProfile from "views/clients/RecurringProfile";
 import { ProfileNav, ProfileNavItem } from "views/clients/styles";
 
 function ClientProfile() {
@@ -56,6 +57,9 @@ function ClientProfile() {
         </Route>
         <Route path={`${path}/attachments`}>
           <Attachments />
+        </Route>
+        <Route path={`${path}/recurring-profile`}>
+          <RecurringProfile />
         </Route>
       </Switch>
     </div>

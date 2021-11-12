@@ -124,3 +124,36 @@ export const StyledContactPerson = styled("div")(() => ({
   alignItems: "center",
   marginTop: "10px",
 }));
+
+export const StyledRecurProfileContainer = styled("div")(() => ({
+  display: "flex",
+  maxWidth: 1300,
+  margin: "auto",
+  width: "100%",
+  gap: 10,
+  marginTop: 30,
+  boxShadow: "0px 5px 15px #22222214",
+  borderRadius: 10,
+}));
+
+export const StyledRecurItemsContainer = styled("div")(() => ({
+  height: "80vh",
+  overflowY: "auto",
+  borderRight: "1px solid rgba(0,0,0,0.1)",
+}));
+
+export const StyledRecurTasksContainer = styled("div")(() => ({
+  padding: 10,
+  height: "80vh",
+  overflowY: "auto",
+}));
+
+export const StyledRecurProfileItem = styled("div")<{
+  active: boolean | undefined;
+  last: boolean | undefined;
+}>(({ active, last }) => ({
+  cursor: "pointer",
+  padding: "13px 10px",
+  backgroundColor: active ? "rgb(24, 47, 83, 0.08)" : "white",
+  borderBottom: last ? "none" : "1px solid rgba(0,0,0,0.1)",
+}));

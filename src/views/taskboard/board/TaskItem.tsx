@@ -1,5 +1,6 @@
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { endTimer, startTimer } from "api/tasks";
@@ -8,11 +9,11 @@ import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
+import { useHistory } from "react-router-dom";
 import Timer from "./timer";
-import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
-import { Link } from "react-router-dom";
 
 function TaskItem({ data }: any) {
+  const router = useHistory();
   const snack = useSnack();
   const [showTimer, setShowTimer] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -47,7 +48,8 @@ function TaskItem({ data }: any) {
     },
   });
 
-  const handleStartTimer = () => {
+  const handleStartTimer = (e: any) => {
+    e.stopPropagation();
     setStartTime(new Date().getTime());
     mutate({
       taskId: data.id,
@@ -55,7 +57,8 @@ function TaskItem({ data }: any) {
     });
   };
 
-  const handleEndTimer = () => {
+  const handleEndTimer = (e: any) => {
+    e.stopPropagation();
     endTaskTimer({
       taskId: data.id,
       endTime: new Date().getTime(),
@@ -63,11 +66,13 @@ function TaskItem({ data }: any) {
   };
 
   return (
-    <Link
-      to={`/task-details/${data?.taskId}`}
-      style={{ textDecoration: "none", color: "initial" }}
-    >
-      <Box px={2} py={1} sx={{ cursor: "pointer" }}>
+    <>
+      <Box
+        px={2}
+        onClick={() => router.push(`/task-details/${data?.taskId}`)}
+        py={1}
+        sx={{ cursor: "pointer" }}
+      >
         <Box display="flex" justifyContent="space-between">
           <Typography variant="body2" color="gray">
             {data?.taskId}
@@ -110,11 +115,15 @@ function TaskItem({ data }: any) {
             </Typography>
           </Box>
         )}
-        <Box display="flex" alignItems="center" gap="5px">
+        <Box
+          onClick={handleEndTimer}
+          display="flex"
+          alignItems="center"
+          gap="5px"
+        >
           {showTimer ? (
             <>
               <StopCircleOutlinedIcon
-                onClick={handleEndTimer}
                 titleAccess="End Timer"
                 sx={{ fontSize: 16, cursor: "pointer" }}
               />
@@ -129,7 +138,7 @@ function TaskItem({ data }: any) {
           )}
         </Box>
       </Box>
-    </Link>
+    </>
   );
 }
 

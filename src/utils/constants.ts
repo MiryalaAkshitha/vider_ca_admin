@@ -103,6 +103,10 @@ export const clientMenu = [
     title: "Attachments",
     path: "/attachments",
   },
+  {
+    title: "Recurring Profile",
+    path: "/recurring-profile",
+  },
 ];
 
 export const taskViewMenu = ["Details", "Comments", "Sub Tasks", "Attachments"];
@@ -180,6 +184,7 @@ export const CLIENT_CATEGORIES = [
 ];
 
 export enum RecurringFrequency {
+  CUSTOM = "custom",
   MONTHLY = "monthly",
   QUARTERLY = "quarterly",
   HALF_YEARLY = "half_yearly",
