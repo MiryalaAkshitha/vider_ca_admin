@@ -4,11 +4,7 @@ import { getTask } from "api/tasks";
 import { getUsers } from "api/users";
 import { useQuery, UseQueryResult } from "react-query";
 import { useParams } from "react-router";
-import {
-  DataResponseType,
-  LabelsDataResponse,
-  UsersDataResponse,
-} from "types/createTask.types";
+import { DataResponseType } from "types/createTask.types";
 
 function useTaskViewData() {
   const params: any = useParams();
@@ -29,12 +25,15 @@ function useTaskViewData() {
       refetchOnWindowFocus: false,
     });
 
-  const { data: labels, isLoading: labelsLoading }: LabelsDataResponse =
-    useQuery("labels", getLabels, {
+  const { data: labels, isLoading: labelsLoading }: DataResponseType = useQuery(
+    "labels",
+    getLabels,
+    {
       refetchOnWindowFocus: false,
-    });
+    }
+  );
 
-  const { data: users, isLoading: userLoading }: UsersDataResponse = useQuery(
+  const { data: users, isLoading: userLoading }: DataResponseType = useQuery(
     "users",
     getUsers,
     {

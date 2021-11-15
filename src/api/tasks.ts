@@ -22,6 +22,10 @@ const createTask = (data: any) => {
   return http.post("/tasks", data);
 };
 
+const createRecurringTask = (data: any) => {
+  return http.post("/tasks/recurring", data);
+};
+
 const getTasks = () => http.get("/tasks");
 
 const getTask = ({ queryKey }) => {
@@ -58,4 +62,5 @@ export {
   startTimer,
   endTimer,
   getTask,
+  createRecurringTask,
 };

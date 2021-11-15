@@ -10,8 +10,8 @@ import { Box } from "@mui/system";
 import Loader from "components/Loader";
 import useTaskViewData from "./useTaskViewData";
 
-function Details({ data }: any) {
-  const { users, task, labels, categories, loading } = useTaskViewData();
+function Details() {
+  const { users, task, loading } = useTaskViewData();
 
   if (loading) return <Loader minHeight="60vh" />;
 

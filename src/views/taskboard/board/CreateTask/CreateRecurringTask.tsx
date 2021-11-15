@@ -1,0 +1,196 @@
+import { Autocomplete, TextField } from "@mui/material";
+import { Box } from "@mui/system";
+import { createRecurringTask } from "api/tasks";
+import DrawerWrapper from "components/DrawerWrapper";
+import Loader from "components/Loader";
+import LoadingButton from "components/LoadingButton";
+import useSnack from "hooks/useSnack";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { DialogProps } from "types";
+import { RecurringStateProps } from "types/createTask.types";
+import { PriorityEnum, RecurringFrequency } from "utils/constants";
+import CustomDates from "./CustomDates";
+import CustomSelect from "./CustomSelect";
+import CustomTextField from "./CustomTextField";
+import FrequencyDates from "./FrequencyDates";
+import { RecurringInitialState } from "./initialState";
+import SelectCategory from "./SelectCategory";
+import useCreateTaskInitialData from "./useCreateTaskInitialData";
+
+function CreateRecurringTask({ open, setOpen }: DialogProps) {
+  const queryClient = useQueryClient();
+  const snack = useSnack();
+  const { users, labels, categories, clients, loading } =
+    useCreateTaskInitialData({ enabled: open });
+  const [state, setState] = useState<RecurringStateProps>(
+    RecurringInitialState
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const { mutate, isLoading } = useMutation(createRecurringTask, {
+    onSuccess: () => {
+      snack.success("Recurring Task Created");
+      setOpen(false);
+      setState(RecurringInitialState);
+      queryClient.invalidateQueries("tasks");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    let apiData = { ...state };
+    apiData.members = apiData.members.map((member: any) => member.id);
+    apiData.labels = apiData.labels.map((label: any) => label.id);
+    mutate(apiData);
+  };
+
+  return (
+    <DrawerWrapper open={open} setOpen={setOpen} title="Create Recurring Task">
+      <Box p={2}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <Autocomplete
+              id="tags-standard"
+              onChange={(_, value) => {
+                setState({ ...state, client: value?.id });
+              }}
+              options={clients?.data[0] || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => option?.displayName}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Client"
+                />
+              )}
+            />
+            <SelectCategory
+              state={state}
+              setState={setState}
+              categories={categories?.data}
+            />
+            <CustomTextField label="Name" name="name" onChange={handleChange} />
+            <CustomSelect
+              name="frequency"
+              options={Object.values(RecurringFrequency).map((item) => ({
+                label: item,
+                value: item,
+              }))}
+              value={state.frequency}
+              label="Frequency"
+              onChange={handleChange}
+            />
+            {state.frequency &&
+              state.frequency !== RecurringFrequency.CUSTOM && (
+                <FrequencyDates state={state} setState={setState} />
+              )}
+            {state.frequency &&
+              state.frequency === RecurringFrequency.CUSTOM && (
+                <CustomDates state={state} setState={setState} />
+              )}
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              onChange={(_, value) => setState({ ...state, labels: value })}
+              value={state?.labels || []}
+              options={labels?.data || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => option?.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Labels"
+                />
+              )}
+            />
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              onChange={(_, value) => {
+                setState({ ...state, members: value });
+              }}
+              value={state.members || []}
+              options={users?.data || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => {
+                return option?.firstName + " " + option?.lastName;
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Members"
+                />
+              )}
+            />
+            <CustomSelect
+              label="Task Leader"
+              name="taskLeader"
+              onChange={handleChange}
+              value={state.taskLeader}
+              options={
+                users?.data?.map((item) => ({
+                  label: item?.firstName + " " + item?.lastName,
+                  value: item?.id,
+                })) || []
+              }
+            />
+            <CustomSelect
+              label="Priority"
+              name="priority"
+              onChange={handleChange}
+              value={state.priority}
+              options={Object.values(PriorityEnum)?.map((item) => ({
+                label: item,
+                value: item,
+              }))}
+            />
+            <CustomTextField
+              name="feeAmount"
+              label="Fee Amount"
+              onChange={handleChange}
+            />
+            <CustomTextField
+              name="description"
+              label="Description"
+              onChange={handleChange}
+              rows={5}
+              required={false}
+              multiline
+            />
+            <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+              <LoadingButton
+                loading={isLoading}
+                fullWidth
+                type="submit"
+                loadingColor="white"
+                title="Create Task"
+                color="secondary"
+              />
+            </Box>
+          </form>
+        )}
+      </Box>
+    </DrawerWrapper>
+  );
+}
+
+export default CreateRecurringTask;

@@ -3,12 +3,7 @@ import { getClients } from "api/client";
 import { getLabels } from "api/labels";
 import { getUsers } from "api/users";
 import { useQuery } from "react-query";
-import {
-  ClientsDataResponse,
-  DataResponseType,
-  LabelsDataResponse,
-  UsersDataResponse,
-} from "types/createTask.types";
+import { DataResponseType } from "types/createTask.types";
 
 function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
   const { data: categories, isLoading: categoriesLoading }: DataResponseType =
@@ -17,19 +12,22 @@ function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
       enabled,
     });
 
-  const { data: clients, isLoading: clientsLoading }: ClientsDataResponse =
+  const { data: clients, isLoading: clientsLoading }: DataResponseType =
     useQuery(["clients", {}], getClients, {
       refetchOnWindowFocus: false,
       enabled,
     });
 
-  const { data: labels, isLoading: labelsLoading }: LabelsDataResponse =
-    useQuery("labels", getLabels, {
+  const { data: labels, isLoading: labelsLoading }: DataResponseType = useQuery(
+    "labels",
+    getLabels,
+    {
       refetchOnWindowFocus: false,
       enabled,
-    });
+    }
+  );
 
-  const { data: users, isLoading: userLoading }: UsersDataResponse = useQuery(
+  const { data: users, isLoading: userLoading }: DataResponseType = useQuery(
     "users",
     getUsers,
     {

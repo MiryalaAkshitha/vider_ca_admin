@@ -1,8 +1,14 @@
 import { AssignmentOutlined } from "@mui/icons-material";
 import { Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import moment from "moment";
+import { getTitle } from "utils";
 
-const RecurringTaskItem = () => {
+interface Props {
+  data: any;
+}
+
+const RecurringTaskItem = ({ data }: Props) => {
   return (
     <Box mb={3}>
       <Box display="flex" justifyContent="space-between" gap={3}>
@@ -12,17 +18,15 @@ const RecurringTaskItem = () => {
           </Box>
           <Box>
             <Typography variant="body1" color="primary">
-              Company Registration
+              {data?.name}
             </Typography>
-            <Typography variant="caption">
-              Completed on 02 Aug 2021, 01:37 PM
-            </Typography>
+            <Typography variant="caption">{getTitle(data?.status)}</Typography>
           </Box>
         </Box>
         <Box>
           <Typography variant="caption">Recurring Date</Typography>
           <Typography variant="body1" color="primary">
-            02 Aug 2021
+            {moment(data?.recurringDate).format("DD MMM YYYY")}
           </Typography>
         </Box>
       </Box>

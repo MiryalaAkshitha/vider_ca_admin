@@ -3,11 +3,23 @@ export const initialState = {
   category: null,
   subCategory: null,
   client: null,
-  recurring: false,
   frequency: null,
   feeAmount: null,
   priority: null,
   dueDate: null,
+  members: [],
+  labels: [],
+  taskLeader: null,
+};
+
+export const RecurringInitialState = {
+  name: "",
+  category: null,
+  subCategory: null,
+  client: null,
+  frequency: null,
+  feeAmount: null,
+  priority: null,
   recurringStartDate: null,
   recurringEndDate: null,
   dueDay: null,
@@ -15,5 +27,4 @@ export const initialState = {
   members: [],
   labels: [],
   taskLeader: null,
-  taskType: null,
 };

@@ -39,3 +39,29 @@ export const StyledScrollTarget = styled("span")(() => ({
   paddingTop: "140px",
   visibility: "hidden",
 }));
+
+export const StyledDates = styled("div")<{ index: number }>(({ index }) => {
+  return {
+    position: "relative",
+    padding: "15px 0px",
+    gap: 1,
+    "&:before": {
+      content: '""',
+      position: "absolute",
+      left: 0,
+      width: "30px",
+      height: "1px",
+      background: "lightgrey",
+      top: "50%",
+    },
+    "&:after": {
+      content: '""',
+      position: "absolute",
+      left: 0,
+      bottom: "50%",
+      width: "1px",
+      height: index === 0 ? "50%" : "100%",
+      background: "lightgrey",
+    },
+  };
+});

@@ -1,11 +1,4 @@
-import { Delete } from "@mui/icons-material";
-import {
-  Autocomplete,
-  Button,
-  IconButton,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createTask } from "api/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
@@ -17,7 +10,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { StateProps } from "types/createTask.types";
 import { getTitle } from "utils";
-import { PriorityEnum, RecurringFrequency } from "utils/constants";
+import { PriorityEnum } from "utils/constants";
 import { initialState } from "./initialState";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
@@ -27,16 +20,16 @@ function CreateTask({ open, setOpen }: DialogProps) {
   const { users, labels, categories, clients, loading } =
     useCreateTaskInitialData({ enabled: open });
   const [state, setState] = useState<StateProps>(initialState);
-  const [customDates, setCustomDates] = useState<{
-    startDate: string;
-    endDate: string;
-  }>({ startDate: "", endDate: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "category") {
+      setState({ ...state, category: +e.target.value, subCategory: null });
+      return;
+    }
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const { mutate } = useMutation(createTask, {
+  const { mutate, isLoading } = useMutation(createTask, {
     onSuccess: () => {
       snack.success("Task Created");
       setOpen(false);
@@ -48,37 +41,13 @@ function CreateTask({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleCustomDateChange = (e: any) => {
-    setCustomDates({
-      ...customDates,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const addCustomDate = () => {
-    const { startDate, endDate } = customDates;
-    if (!startDate || !endDate) {
-      snack.error("Please enter start date and end date");
-      return;
-    }
-    setState({
-      ...state,
-      customDates: [...state.customDates, customDates],
-    });
-  };
-
-  const deleteCustomDate = (index: number) => {
-    let filtered = state.customDates.filter((_, i) => i !== index);
-    setState({ ...state, customDates: filtered });
-  };
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    let { taskType, ...apiData } = state;
+    let apiData = { ...state };
+    const { category, subCategory } = apiData;
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
-    console.log(apiData);
-    // return;
+    apiData.category = subCategory || category;
     mutate(apiData);
   };
 
@@ -161,177 +130,17 @@ function CreateTask({ open, setOpen }: DialogProps) {
               required
             />
             <TextField
+              sx={{ mt: 3 }}
               variant="outlined"
               fullWidth
+              onChange={handleChange}
               size="small"
-              sx={{ mt: 3 }}
-              select
-              required
-              value={state.taskType || ""}
-              name="type"
-              onChange={(e) => {
-                setState({
-                  ...state,
-                  recurring: e.target.value === "recurring",
-                  taskType: e.target.value,
-                });
-              }}
-              label="Task Type"
-            >
-              <MenuItem value="non_recurring">None-recurring</MenuItem>
-              <MenuItem value="recurring">Recurring</MenuItem>
-            </TextField>
-            {state.taskType === "non_recurring" && (
-              <TextField
-                sx={{ mt: 3 }}
-                variant="outlined"
-                fullWidth
-                onChange={handleChange}
-                size="small"
-                type="date"
-                value={state.dueDate || ""}
-                InputLabelProps={{ shrink: true }}
-                label="Due Date"
-                name="dueDate"
-              />
-            )}
-            {state.taskType === "recurring" && (
-              <TextField
-                variant="outlined"
-                fullWidth
-                size="small"
-                sx={{ mt: 3 }}
-                select
-                required
-                name="frequency"
-                value={state.frequency || ""}
-                label="Frequency"
-                onChange={handleChange}
-              >
-                {Object.values(RecurringFrequency).map((item, index) => (
-                  <MenuItem key={index} value={item}>
-                    {getTitle(item)}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-            {state.recurring && state.frequency !== RecurringFrequency.CUSTOM && (
-              <>
-                <TextField
-                  sx={{ mt: 3 }}
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  size="small"
-                  type="date"
-                  value={state.recurringStartDate || ""}
-                  InputLabelProps={{ shrink: true }}
-                  label="Recurring Start Date"
-                  name="recurringStartDate"
-                />
-                <Autocomplete
-                  id="tags-standard"
-                  onChange={(_, value) => {
-                    setState({
-                      ...state,
-                      dueDay: value,
-                    });
-                  }}
-                  options={Array.from(Array(31), (v, i) => i + 1)}
-                  sx={{ mt: 3 }}
-                  getOptionLabel={(option: any) => option.toString()}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      label="Due Day"
-                    />
-                  )}
-                />
-                <TextField
-                  sx={{ mt: 3 }}
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  size="small"
-                  type="date"
-                  value={state.recurringEndDate || ""}
-                  InputLabelProps={{ shrink: true }}
-                  label="Recurring End Date"
-                  name="recurringEndDate"
-                />
-              </>
-            )}
-            {/* {state.frequency && state.frequency === RecurringFrequency.CUSTOM && (
-              <>
-                {state.customDates.map((item, index) => (
-                  <>
-                    <Box display="flex" gap={1} mt={2}>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        onChange={handleCustomDateChange}
-                        size="small"
-                        type="date"
-                        value={item.startDate || ""}
-                        InputLabelProps={{ shrink: true }}
-                        label="Start Date"
-                        name="startDate"
-                      />
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        onChange={handleCustomDateChange}
-                        size="small"
-                        type="date"
-                        value={item.endDate || ""}
-                        InputLabelProps={{ shrink: true }}
-                        label="End Date"
-                        name="endDate"
-                      />
-                      <div>
-                        <IconButton onClick={() => deleteCustomDate(index)}>
-                          <Delete />
-                        </IconButton>
-                      </div>
-                    </Box>
-                  </>
-                ))}
-                <Box display="flex" gap={1} mt={2}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleCustomDateChange}
-                    size="small"
-                    type="date"
-                    value={customDates.startDate || ""}
-                    InputLabelProps={{ shrink: true }}
-                    label="Start Date"
-                    name="startDate"
-                  />
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleCustomDateChange}
-                    size="small"
-                    type="date"
-                    value={customDates.endDate || ""}
-                    InputLabelProps={{ shrink: true }}
-                    label="End Date"
-                    name="endDate"
-                  />
-                  <Button
-                    sx={{ minWidth: 80 }}
-                    variant="outlined"
-                    onClick={addCustomDate}
-                  >
-                    Add
-                  </Button>
-                </Box>
-              </>
-            )} */}
+              type="date"
+              value={state.dueDate || ""}
+              InputLabelProps={{ shrink: true }}
+              label="Due Date"
+              name="dueDate"
+            />
             <Autocomplete
               multiple
               id="tags-standard"
@@ -430,7 +239,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
             />
             <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
               <LoadingButton
-                loading={false}
+                loading={isLoading}
                 fullWidth
                 type="submit"
                 loadingColor="white"
