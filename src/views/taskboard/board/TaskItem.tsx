@@ -7,12 +7,13 @@ import { endTimer, startTimer } from "api/tasks";
 import { icons } from "assets";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
-import { useEffect, useState } from "react";
-import { useMutation } from "react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import Timer from "./timer";
 
 function TaskItem({ data }: any) {
+  const queryClient = useQueryClient();
   const router = useHistory();
   const snack = useSnack();
   const [showTimer, setShowTimer] = useState(false);
@@ -31,6 +32,7 @@ function TaskItem({ data }: any) {
   const { mutate } = useMutation(startTimer, {
     onSuccess: () => {
       snack.success("Timer Started");
+      queryClient.invalidateQueries("tasks");
       setShowTimer(true);
     },
     onError: (err: any) => {
@@ -41,6 +43,7 @@ function TaskItem({ data }: any) {
   const { mutate: endTaskTimer } = useMutation(endTimer, {
     onSuccess: () => {
       snack.success("Timer Ended");
+      queryClient.invalidateQueries("tasks");
       setShowTimer(false);
     },
     onError: (err: any) => {

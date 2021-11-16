@@ -5,9 +5,10 @@ import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
 import { StyledDraggableItem, StyledDraggableList } from "../styled";
+import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, getContainerHeight, move, reorder, TaskStatus } from "./utils";
 
@@ -20,8 +21,15 @@ const initialState = {
 };
 
 function Board({ data }: any) {
-  const [state, setState] = useState(initialState);
+  const queryClient = useQueryClient();
   const snack = useSnack();
+  const [state, setState] = useState(initialState);
+  const [openRemarks, setOpenRemarks] = useState<boolean>(false);
+  const [remarksResolveReject, setRemarksResolveReject] = useState<Function[]>(
+    []
+  );
+  const [onHoldTaskId, setOnHoldTaskId] = useState<number | null>(null);
+
   let listContainerRef = useRef<HTMLElement | null>(null);
 
   const { mutateAsync: reorderItems } = useMutation(reorderTasks, {
@@ -36,6 +44,7 @@ function Board({ data }: any) {
   const { mutateAsync: updateTaskStatus } = useMutation(updateStatus, {
     onSuccess: () => {
       snack.success("Status has been updated successfully");
+      queryClient.invalidateQueries("tasks");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -65,6 +74,13 @@ function Board({ data }: any) {
     });
   }, [data]);
 
+  const remarksPromise = () => {
+    return new Promise((resolve, reject) => {
+      setOpenRemarks(true);
+      setRemarksResolveReject([resolve, reject]);
+    });
+  };
+
   const handleUpdateTaskStatus = async (source: any, destination: any) => {
     const prevState = state;
     try {
@@ -85,6 +101,12 @@ function Board({ data }: any) {
         ...state,
         ...result,
       });
+
+      if (destination.droppableId === TaskStatus.ON_HOLD) {
+        setOnHoldTaskId(sourceItem.id);
+        await remarksPromise();
+      }
+
       await updateTaskStatus({
         id: sourceItem.id,
         status: destination.droppableId,
@@ -134,66 +156,79 @@ function Board({ data }: any) {
   useTitle("Task Board");
 
   return (
-    <Box display="flex" gap={20}>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Grid
-          spacing={1}
-          container
-          flexWrap="nowrap"
-          justifyContent="space-between"
-        >
-          {Object.keys(state).map((key, index) => (
-            <Grid item style={{ width: "100%" }} key={index}>
-              <Box
-                sx={{
-                  display: "flex",
-                  padding: "10px",
-                }}
-              >
-                <Box bgcolor={colors[index]} px={2} py="4px" borderRadius={20}>
-                  <Typography variant="body2" color="white">
-                    {getTitle(key)}
-                  </Typography>
-                </Box>
-              </Box>
-              <Droppable droppableId={key}>
-                {(provided, snapshot) => (
-                  <StyledDraggableList
-                    ref={(ref) => {
-                      listContainerRef.current = ref;
-                      provided.innerRef(ref);
-                    }}
-                    height={getContainerHeight(listContainerRef.current)}
-                    isdraggingover={snapshot.isDraggingOver?.toString()}
+    <>
+      <Box display="flex" gap={20}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Grid
+            spacing={1}
+            container
+            flexWrap="nowrap"
+            justifyContent="space-between"
+          >
+            {Object.keys(state).map((key, index) => (
+              <Grid item style={{ width: "100%" }} key={index}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    padding: "10px",
+                  }}
+                >
+                  <Box
+                    bgcolor={colors[index]}
+                    px={2}
+                    py="4px"
+                    borderRadius={20}
                   >
-                    {state[key].map((item, index) => (
-                      <Draggable
-                        key={item?.uid}
-                        draggableId={item?.uid}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <StyledDraggableItem
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            draggablestyle={provided.draggableProps.style}
-                            isdragging={snapshot.isDragging?.toString()}
-                          >
-                            <TaskItem data={item} />
-                          </StyledDraggableItem>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </StyledDraggableList>
-                )}
-              </Droppable>
-            </Grid>
-          ))}
-        </Grid>
-      </DragDropContext>
-    </Box>
+                    <Typography variant="body2" color="white">
+                      {getTitle(key)}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Droppable droppableId={key}>
+                  {(provided, snapshot) => (
+                    <StyledDraggableList
+                      ref={(ref) => {
+                        listContainerRef.current = ref;
+                        provided.innerRef(ref);
+                      }}
+                      height={getContainerHeight(listContainerRef.current)}
+                      isdraggingover={snapshot.isDraggingOver?.toString()}
+                    >
+                      {state[key].map((item, index) => (
+                        <Draggable
+                          key={item?.uid}
+                          draggableId={item?.uid}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <StyledDraggableItem
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              draggablestyle={provided.draggableProps.style}
+                              isdragging={snapshot.isDragging?.toString()}
+                            >
+                              <TaskItem data={item} />
+                            </StyledDraggableItem>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </StyledDraggableList>
+                  )}
+                </Droppable>
+              </Grid>
+            ))}
+          </Grid>
+        </DragDropContext>
+      </Box>
+      <AddRemarks
+        onHoldTaskId={onHoldTaskId}
+        remarksResolveReject={remarksResolveReject}
+        open={openRemarks}
+        setOpen={setOpenRemarks}
+      />
+    </>
   );
 }
 

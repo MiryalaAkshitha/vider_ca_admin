@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface IGlobal {
   title: string;
   loading: boolean;
+  taskItemsLoaded: boolean;
 }
 
 const initialState: IGlobal = {
   title: "",
   loading: false,
+  taskItemsLoaded: false,
 };
 
 export const globalClice = createSlice({
@@ -21,11 +23,16 @@ export const globalClice = createSlice({
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
+    setTaskItemsLoaded(state, action: PayloadAction<boolean>) {
+      state.taskItemsLoaded = action.payload;
+    },
   },
 });
 
+export const selectGlobal = (state: RootState) => state.global;
 export const selectTitle = (state: RootState) => state.global.title;
 
-export const { updateTitle, setLoading } = globalClice.actions;
+export const { updateTitle, setLoading, setTaskItemsLoaded } =
+  globalClice.actions;
 
 export default globalClice.reducer;

@@ -65,7 +65,11 @@ function TaskDetails() {
           ))}
         </ProfileNav>
       </Box>
-      <Box data-index={0} ref={(ref) => getRef(ref, 0)}>
+      <Box
+        sx={{ borderBottom: "2px solid rgba(0,0,0,0.08)", pb: 5 }}
+        data-index={0}
+        ref={(ref) => getRef(ref, 0)}
+      >
         <Details />
       </Box>
       <Box data-index={1} ref={(ref) => getRef(ref, 1)}>

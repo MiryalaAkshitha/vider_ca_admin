@@ -1,6 +1,7 @@
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import {
   Autocomplete,
+  Button,
   Grid,
   MenuItem,
   TextField,
@@ -8,10 +9,48 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Loader from "components/Loader";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { getTitle } from "utils";
+import { TaskStatus } from "../board/utils";
 import useTaskViewData from "./useTaskViewData";
+import { PriorityEnum } from "utils/constants";
+import { updateTask } from "api/tasks";
+import useSnack from "hooks/useSnack";
+import { useMutation } from "react-query";
 
 function Details() {
-  const { users, task, loading } = useTaskViewData();
+  const { users, task, loading, categories, labels } = useTaskViewData();
+  const [state, setState] = useState<any>({});
+  const snack = useSnack();
+
+  useEffect(() => {
+    setState(task?.data);
+  }, [task]);
+
+  const { mutate } = useMutation(updateTask, {
+    onSuccess: () => {
+      snack.success("Task Details Updated");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleChange = (e: any) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdate = () => {
+    mutate({
+      id: task?.data?.id,
+      data: state,
+    });
+  };
+
+  let subCategories = categories?.data.find(
+    (item) => item?.id === state?.category?.id
+  )?.subCategories;
 
   if (loading) return <Loader minHeight="60vh" />;
 
@@ -29,10 +68,11 @@ function Details() {
           </Box>
           <div>
             <Typography variant="subtitle2" color="primary">
-              Company Registration
+              {state?.name}
             </Typography>
             <Typography variant="body2" color="gray">
-              Created by shashank Preetham on 02/Aug/2021, 01:37 PM
+              Created by {state?.user?.firstName + " " + state?.user?.lastName}{" "}
+              on {moment(task?.data?.createdAt).format("MMM Do YYYY, hh:mm a")}
             </Typography>
           </div>
         </Box>
@@ -41,7 +81,7 @@ function Details() {
             Task ID
           </Typography>
           <Typography variant="subtitle2" color="primary">
-            VD1234
+            {state?.taskId}
           </Typography>
         </Box>
       </Box>
@@ -51,6 +91,8 @@ function Details() {
             <Autocomplete
               multiple
               id="tags-standard"
+              value={state?.members || []}
+              onChange={(_, value) => setState({ ...state, members: value })}
               options={users?.data || []}
               getOptionLabel={(option) => {
                 return option?.firstName + " " + option?.lastName;
@@ -72,20 +114,26 @@ function Details() {
               size="medium"
               fullWidth
               label="Client"
-              value={task?.data?.client?.displayName}
+              value={state?.client?.displayName}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              sx={{ mt: 2 }}
-              size="medium"
+              variant="outlined"
               fullWidth
-              label="Status"
+              sx={{ mt: 2 }}
               select
+              required
+              name="status"
+              onChange={handleChange}
+              value={state?.status || ""}
+              label="Status"
             >
-              <MenuItem>Todo</MenuItem>
-              <MenuItem>Progress</MenuItem>
-              <MenuItem>Done</MenuItem>
+              {Object.values(TaskStatus).map((item, index) => (
+                <MenuItem key={index} value={item}>
+                  {getTitle(item)}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={6}>
@@ -94,64 +142,86 @@ function Details() {
               type="date"
               size="medium"
               fullWidth
+              name="dueDate"
+              onChange={handleChange}
+              value={state?.dueDate || ""}
               InputLabelProps={{ shrink: true }}
               label="Due Date"
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              placeholder="Priority"
-              sx={{ mt: 2 }}
-              size="medium"
+              variant="outlined"
               fullWidth
+              sx={{ mt: 2 }}
               select
+              required
+              name="priority"
+              onChange={handleChange}
+              value={state?.priority || ""}
               label="Priority"
             >
-              <MenuItem value="todo">Todo</MenuItem>
-              <MenuItem value="progress">Progress</MenuItem>
-              <MenuItem value="done">Done</MenuItem>
+              {Object.values(PriorityEnum).map((item, index) => (
+                <MenuItem key={index} value={item}>
+                  {getTitle(item)}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={6}>
             <TextField
-              placeholder="Category"
-              sx={{ mt: 2 }}
-              size="medium"
+              variant="outlined"
               fullWidth
+              sx={{ mt: 2 }}
               select
+              required
+              value={state?.category?.id || ""}
+              name="category"
               label="Category"
             >
-              <MenuItem value="todo">Todo</MenuItem>
-              <MenuItem value="progress">Progress</MenuItem>
-              <MenuItem value="done">Done</MenuItem>
+              {categories?.data.map((item, index) => (
+                <MenuItem value={item.id} key={index}>
+                  {item.name}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              placeholder="Sub Category"
-              sx={{ mt: 2 }}
-              size="medium"
-              fullWidth
-              select
-              label="Sub Category"
-            >
-              <MenuItem value="todo">Todo</MenuItem>
-              <MenuItem value="progress">Progress</MenuItem>
-              <MenuItem value="done">Done</MenuItem>
-            </TextField>
-          </Grid>
+          {subCategories?.length ? (
+            <Grid item xs={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                sx={{ mt: 2 }}
+                select
+                required
+                value={state.category || ""}
+                name="subCategory"
+                label="Sub Category"
+              >
+                {subCategories?.map((item: any, index) => (
+                  <MenuItem key={index} value={item?.id}>
+                    {item?.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          ) : null}
           <Grid item xs={6}>
             <Autocomplete
               id="tags-standard"
               sx={{ mt: 2 }}
-              options={["hello", "world"]}
-              getOptionLabel={(option) => option}
+              onChange={(_, value) => setState({ ...state, taskLeader: value })}
+              value={state?.taskLeader || {}}
+              options={users?.data || []}
+              getOptionLabel={(option) => {
+                return option?.firstName + " " + option?.lastName;
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   size="medium"
                   variant="outlined"
-                  label="Task Owner"
+                  label="Task Leader"
                 />
               )}
             />
@@ -160,15 +230,17 @@ function Details() {
             <Autocomplete
               multiple
               id="tags-standard"
-              options={["hello", "world"]}
+              onChange={(_, value) => setState({ ...state, labels: value })}
+              options={labels?.data || []}
+              value={state?.labels || []}
               sx={{ mt: 2 }}
-              getOptionLabel={(option) => option}
+              getOptionLabel={(option) => option?.name}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   size="medium"
                   variant="outlined"
-                  label="Tags"
+                  label="Labels"
                 />
               )}
             />
@@ -180,6 +252,9 @@ function Details() {
               fullWidth
               InputLabelProps={{ shrink: true }}
               label="Fee Amount"
+              name="feeAmount"
+              onChange={handleChange}
+              value={state?.feeAmount || ""}
             />
           </Grid>
           <Grid item xs={6}>
@@ -189,9 +264,23 @@ function Details() {
               fullWidth
               InputLabelProps={{ shrink: true }}
               label="Directory"
+              onChange={handleChange}
+              name="directory"
+              value={state?.directory || ""}
             />
           </Grid>
         </Grid>
+        <Box sx={{ mx: "auto" }} textAlign="center" maxWidth={200} mt={4}>
+          <Button
+            onClick={handleUpdate}
+            size="large"
+            fullWidth
+            variant="contained"
+            color="secondary"
+          >
+            Update
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

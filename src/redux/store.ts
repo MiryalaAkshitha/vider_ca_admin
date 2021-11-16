@@ -1,15 +1,14 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
-import CounterReducer from "redux/reducers/counterSlice";
-import errorReducer from "redux/reducers/errorSlice";
-import GlobalReducer from "redux/reducers/globalSlice";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import addServiceReducer from "redux/reducers/addServiceSlice";
 import clientReducer from "redux/reducers/clientSlice";
+import CounterReducer from "redux/reducers/counterSlice";
+import errorReducer from "redux/reducers/errorSlice";
 import formsReducer from "redux/reducers/formsSlice";
+import GlobalReducer from "redux/reducers/globalSlice";
 import storageReducer from "redux/reducers/storageSlice";
 
-let middleware = [logger];
+let middleware = [];
 
 const store = configureStore({
   reducer: {

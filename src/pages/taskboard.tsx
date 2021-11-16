@@ -16,8 +16,7 @@ function TaskBoard() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
     "tasks",
-    getTasks,
-    { refetchOnWindowFocus: false }
+    getTasks
   );
 
   if (isLoading) return <Loader />;

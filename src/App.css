@@ -50,3 +50,7 @@ input::placeholder {
 ::-webkit-scrollbar-thumb:hover {
   background: lightgrey;
 }
+
+.SnackbarItem-message {
+  font-family: muli_regular !important;
+}

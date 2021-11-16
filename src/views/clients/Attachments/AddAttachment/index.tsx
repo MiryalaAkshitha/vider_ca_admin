@@ -41,18 +41,21 @@ function AddAttachment() {
     },
   });
 
-  const handleUploadFiles = (e: any) => {
+  const handleUploadFiles = async (e: any) => {
     if (!e.target.files.length) return;
-
     dispatch(setInitialUploads(e.target.files));
 
-    Array.from(e.target.files).forEach(async (item: any) => {
-      let formData = new FormData();
-      formData.append("file", item);
-      formData.append("folderId", folderId);
-      formData.append("clientId", clientId);
-      await mutateAsync(formData);
-    });
+    try {
+      for (const file of e.target.files) {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("folderId", folderId);
+        formData.append("clientId", clientId);
+        await mutateAsync(formData);
+      }
+    } catch (err: any) {
+      snack.error(err.response.data.message);
+    }
   };
 
   return (
