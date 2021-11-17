@@ -31,8 +31,9 @@ import video from "./icons/filetypes/video.png";
 import audio from "./icons/filetypes/audio.png";
 import recurring from "./icons/recurring.svg";
 import profileImage from "./images/profile.jpg";
+import noAttachments from "./images/no_attachments.svg";
 
-export { quote, logo, loginBg, whiteLogo, empty, profileImage };
+export { quote, logo, loginBg, whiteLogo, empty, profileImage, noAttachments };
 
 export let icons = {
   folder,

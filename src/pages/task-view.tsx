@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { taskViewMenu } from "utils/constants";
 import { ProfileNav, ProfileNavItem } from "views/clients/styles";
 const Details = loadable(() => import("views/taskboard/taskview/Details"));
-const Comments = loadable(() => import("views/taskboard/taskview/Comments"));
+const Comments = loadable(() => import("views/taskboard/taskview/comments"));
 const SubTasks = loadable(() => import("views/taskboard/taskview/SubTasks"));
 const Attachments = loadable(
   () => import("views/taskboard/taskview/Attachments")
@@ -66,19 +66,43 @@ function TaskDetails() {
         </ProfileNav>
       </Box>
       <Box
-        sx={{ borderBottom: "2px solid rgba(0,0,0,0.08)", pb: 5 }}
+        sx={{
+          borderBottom: "4px solid rgba(0,0,0,0.05)",
+          pb: 5,
+        }}
         data-index={0}
         ref={(ref) => getRef(ref, 0)}
       >
         <Details />
       </Box>
-      <Box data-index={1} ref={(ref) => getRef(ref, 1)}>
+      <Box
+        sx={{
+          borderBottom: "4px solid rgba(0,0,0,0.05)",
+          pb: 5,
+        }}
+        data-index={1}
+        ref={(ref) => getRef(ref, 1)}
+      >
         <Comments />
       </Box>
-      <Box data-index={2} ref={(ref) => getRef(ref, 2)}>
+      <Box
+        sx={{
+          borderBottom: "4px solid rgba(0,0,0,0.05)",
+          pb: 5,
+        }}
+        data-index={2}
+        ref={(ref) => getRef(ref, 2)}
+      >
         <SubTasks />
       </Box>
-      <Box data-index={3} ref={(ref) => getRef(ref, 3)}>
+      <Box
+        sx={{
+          borderBottom: "4px solid rgba(0,0,0,0.05)",
+          pb: 5,
+        }}
+        data-index={3}
+        ref={(ref) => getRef(ref, 3)}
+      >
         <Attachments />
       </Box>
     </>

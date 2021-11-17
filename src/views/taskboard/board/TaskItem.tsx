@@ -72,7 +72,11 @@ function TaskItem({ data }: any) {
     <>
       <Box
         px={2}
-        onClick={() => router.push(`/task-details/${data?.taskId}`)}
+        onClick={() =>
+          router.push(
+            `/task-details/${data?.taskId}?clientId=${data?.client?.clientId}`
+          )
+        }
         py={1}
         sx={{ cursor: "pointer" }}
       >

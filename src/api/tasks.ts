@@ -18,6 +18,18 @@ type EndTimerData = {
   endTime: number;
 };
 
+type AddComment = {
+  taskId: string;
+  data: {
+    text: string;
+  };
+};
+
+type AddAttachment = {
+  taskId: string;
+  data: FormData;
+};
+
 const createTask = (data: any) => {
   return http.post("/tasks", data);
 };
@@ -53,6 +65,22 @@ const endTimer = ({ taskId, endTime }: EndTimerData) => {
   return http.post(`/tasks/${taskId}/end-timer`, { endTime });
 };
 
+const getTaskComments = ({ queryKey }) => {
+  return http.get(`/tasks/comments`, { params: { taskId: queryKey[1] } });
+};
+
+const addComment = ({ taskId, data }: AddComment) => {
+  return http.post(`/tasks/${taskId}/comments`, data);
+};
+
+const getTaskAttachments = ({ queryKey }) => {
+  return http.get(`/tasks/attachments`, { params: { taskId: queryKey[1] } });
+};
+
+const addAttachment = ({ taskId, data }: AddAttachment) => {
+  return http.post(`/tasks/${taskId}/attachments`, data);
+};
+
 export {
   getTasks,
   updateTask,
@@ -63,4 +91,8 @@ export {
   endTimer,
   getTask,
   createRecurringTask,
+  getTaskComments,
+  addComment,
+  addAttachment,
+  getTaskAttachments,
 };

@@ -9,7 +9,7 @@ import BreadCrumbs from "./BreadCrumbs";
 import Files from "./Files";
 import Folders from "./Folders";
 
-interface StorageResponse {
+export interface StorageResponse {
   data: {
     result: any[];
     breadCrumbs: [];
