@@ -11,7 +11,7 @@ import UploadAttachmentModal from "./attachments/UploadAttachmentModal";
 
 function Attachments() {
   const params: any = useParams();
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   const { data, isLoading }: DataResponseType = useQuery(
     ["task-attachments", params.taskId],
