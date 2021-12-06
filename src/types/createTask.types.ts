@@ -7,7 +7,7 @@ export interface StateProps {
   name: string;
   category: number | null;
   subCategory: number | null;
-  client: number | null;
+  client: number[];
   frequency: string | null;
   feeAmount: string | null;
   priority: string | null;
@@ -21,7 +21,7 @@ export interface RecurringStateProps {
   name: string;
   category: number | null;
   subCategory: number | null;
-  client: number | null;
+  client: number[];
   frequency: string | null;
   feeAmount: string | null;
   priority: string | null;

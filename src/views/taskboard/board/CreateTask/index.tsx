@@ -44,6 +44,12 @@ function CreateTask({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     let apiData = { ...state };
+
+    if (!apiData.client?.length) {
+      snack.error("Please select atleast one client");
+      return;
+    }
+
     const { category, subCategory } = apiData;
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
@@ -63,9 +69,10 @@ function CreateTask({ open, setOpen }: DialogProps) {
         ) : (
           <form onSubmit={handleSubmit}>
             <Autocomplete
+              multiple
               id="tags-standard"
               onChange={(_, value) => {
-                setState({ ...state, client: value?.id });
+                setState({ ...state, client: value?.map((item) => item?.id) });
               }}
               options={clients?.data[0] || []}
               sx={{ mt: 3 }}
@@ -73,7 +80,6 @@ function CreateTask({ open, setOpen }: DialogProps) {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  required
                   variant="outlined"
                   size="small"
                   fullWidth

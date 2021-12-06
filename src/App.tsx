@@ -1,12 +1,10 @@
+import "./App.css";
 import ConfirmDialogProvider from "components/ConfirmDialogProvider";
 import FullPageLoader from "components/FullPageLoader";
 import { SnackbarProvider } from "notistack";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useAppSelector } from "redux/store";
-import "./App.css";
 import RoutesContainer from "./RoutesContainer";
-import routes from "./RoutesContainer";
 
 const queryClient = new QueryClient();
 

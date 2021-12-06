@@ -24,7 +24,7 @@ function AddAttachment() {
   const snack = useSnack();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
 
   const clientId = params.clientId || "";
 

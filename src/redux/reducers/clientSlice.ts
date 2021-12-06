@@ -3,73 +3,46 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type FilterProps = {
   key: string;
-  value: string;
+  value: any;
 };
 
 interface ClientState {
-  filter: {
-    category: string;
-    subCategory: string | null;
-    monthAdded: string;
-  };
-  appliedFilter: {
-    category: string;
-    subCategory: string | null;
-    monthAdded: string;
-  };
+  category: string[];
+  subCategory: string[];
+  monthAdded: string;
+  labels: string[];
 }
 
 const initialState: ClientState = {
-  filter: {
-    category: "",
-    subCategory: null,
-    monthAdded: "",
-  },
-  appliedFilter: {
-    category: "",
-    subCategory: null,
-    monthAdded: "",
-  },
+  category: [],
+  subCategory: [],
+  monthAdded: "",
+  labels: [],
 };
 
 export const clientSlice = createSlice({
   name: "client",
   initialState,
   reducers: {
-    applyFilters: (state) => {
-      state.appliedFilter = state.filter;
-    },
     resetFilters: (state) => {
-      state.filter = {
-        category: "",
-        subCategory: null,
-        monthAdded: "",
-      };
-      state.appliedFilter = {
-        category: "",
-        subCategory: null,
-        monthAdded: "",
-      };
+      state.category = [];
+      state.subCategory = [];
+      state.monthAdded = "";
+      state.labels = [];
     },
     handleFilter: (state, action: PayloadAction<FilterProps>) => {
       let { key, value } = action.payload;
       if (key === "category") {
-        state.filter = {
-          ...state.filter,
-          category: value,
-          subCategory: null,
-        };
+        state.category = value;
+        state.subCategory = [];
         return;
       }
-      state.filter = {
-        ...state.filter,
-        [key]: value,
-      };
+      state[key] = value;
     },
   },
 });
 
-export const { handleFilter, applyFilters, resetFilters } = clientSlice.actions;
+export const { handleFilter, resetFilters } = clientSlice.actions;
 
 export const selectClient = (state: RootState) => state.client;
 

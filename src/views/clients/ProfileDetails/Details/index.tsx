@@ -54,8 +54,6 @@ function Details({ data, setState }: any) {
     (item) => item.value === data.category
   )?.subCategories;
 
-  let isActive = data?.active;
-
   if (isLoading || userLoading) return <Loader />;
 
   return (

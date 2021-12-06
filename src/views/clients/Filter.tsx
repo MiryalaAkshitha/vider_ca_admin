@@ -1,52 +1,76 @@
 import { Close } from "@mui/icons-material";
 import {
   AppBar,
+  Autocomplete,
   Button,
   Drawer,
   IconButton,
-  MenuItem,
   TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  applyFilters,
-  handleFilter,
-  resetFilters,
-  selectClient,
-} from "redux/reducers/clientSlice";
-import { DialogProps } from "types";
+import { getLabels } from "api/labels";
+import { useEffect, useState } from "react";
+import { useQuery, UseQueryResult } from "react-query";
+import { DataResponse, DialogProps } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 
-function ClientFilter({ open, setOpen }: DialogProps) {
-  const dispatch = useDispatch();
-  const { filter } = useSelector(selectClient);
+interface ClientFilterProps extends DialogProps {
+  filters: any;
+  setFilters: (v: any) => void;
+}
 
-  const handleChange = (e: any) => {
-    dispatch(
-      handleFilter({
-        key: e.target.name,
-        value: e.target.value,
-      })
-    );
-  };
+function ClientFilter(props: ClientFilterProps) {
+  const { open, setOpen, filters, setFilters } = props;
+
+  const { data: labels }: UseQueryResult<DataResponse, Error> = useQuery(
+    "labels",
+    getLabels
+  );
+
+  const [state, setState] = useState<any>({
+    category: [],
+    subCategory: [],
+    monthAdded: "",
+    labels: [],
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    setState({
+      ...filters,
+    });
+  }, [open]);
 
   const handleResetFilters = () => {
-    dispatch(resetFilters());
+    setFilters({
+      ...filters,
+      category: [],
+      subCategory: [],
+      monthAdded: "",
+      labels: [],
+    });
     setOpen(false);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(applyFilters());
     setOpen(false);
+    setFilters({
+      ...filters,
+      ...state,
+    });
   };
 
-  let subCategories = CLIENT_CATEGORIES.find(
-    (item) => item.value === filter.category
-  )?.subCategories;
+  let getSubCategories = () => {
+    let result = [];
+    state.category.forEach((item) => {
+      if (!item.subCategories) return;
+      result = result.concat(item.subCategories);
+    });
+    return result?.flat();
+  };
 
   return (
     <Drawer
@@ -68,8 +92,13 @@ function ClientFilter({ open, setOpen }: DialogProps) {
           sx={{ mt: 3 }}
           variant="outlined"
           fullWidth
-          onChange={handleChange}
-          value={filter.monthAdded}
+          onChange={(e) => {
+            setState({
+              ...state,
+              monthAdded: e.target.value,
+            });
+          }}
+          value={state.monthAdded}
           name="monthAdded"
           required
           InputLabelProps={{ shrink: true }}
@@ -77,44 +106,81 @@ function ClientFilter({ open, setOpen }: DialogProps) {
           label="Month Added"
           type="month"
         />
-        <TextField
-          variant="outlined"
-          fullWidth
-          size="small"
+        <Autocomplete
+          id="tags-standard"
+          multiple
+          onChange={(_, value) => {
+            setState({
+              ...state,
+              category: value,
+            });
+          }}
+          value={state.category || []}
+          options={CLIENT_CATEGORIES || []}
           sx={{ mt: 3 }}
-          select
-          onChange={handleChange}
-          value={filter?.category ?? ""}
-          required
-          name="category"
-          label="Category"
-        >
-          {CLIENT_CATEGORIES.map((item, index) => (
-            <MenuItem key={index} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        {subCategories && (
-          <TextField
-            variant="outlined"
-            fullWidth
-            required
+          getOptionLabel={(option: any) => option?.label}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              required
+              variant="outlined"
+              size="small"
+              fullWidth
+              label="Client Category"
+            />
+          )}
+        />
+        {getSubCategories()?.length !== 0 && (
+          <Autocomplete
+            id="tags-standard"
+            multiple
+            onChange={(_, value) => {
+              setState({
+                ...state,
+                subCategory: value,
+              });
+            }}
+            value={state.subCategory || []}
+            options={getSubCategories() || []}
             sx={{ mt: 3 }}
-            name="subCategory"
-            onChange={handleChange}
-            size="small"
-            value={filter?.subCategory || ""}
-            select
-            label="Sub Category"
-          >
-            {subCategories.map((item, index) => (
-              <MenuItem key={index} value={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            getOptionLabel={(option: any) => option?.label}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                required
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Client Sub Category"
+              />
+            )}
+          />
         )}
+        <Autocomplete
+          id="tags-standard"
+          multiple
+          onChange={(_, value) => {
+            setState({
+              ...state,
+              labels: value,
+            });
+          }}
+          value={state.labels || []}
+          options={labels?.data || []}
+          sx={{ mt: 3 }}
+          getOptionLabel={(option: any) => option?.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              required
+              variant="outlined"
+              size="small"
+              fullWidth
+              label="Labels"
+            />
+          )}
+        />
+
         <Box display="flex" gap={2} justifyContent="flex-end">
           <Button
             onClick={handleResetFilters}

@@ -1,18 +1,16 @@
-import Table from "components/Table";
 import { Add } from "@mui/icons-material";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Button, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/client";
+import SearchContainer from "components/SearchContainer";
+import Table from "components/Table";
+import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
-import AddClient from "views/clients/AddClient";
-import SearchContainer from "components/SearchContainer";
-import useTitle from "hooks/useTitle";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import ClientFilter from "views/clients/Filter";
-import { useSelector } from "react-redux";
-import { selectClient } from "redux/reducers/clientSlice";
 import { useNavigate } from "react-router-dom";
+import AddClient from "views/clients/AddClient";
+import ClientFilter from "views/clients/Filter";
 
 let LIMIT = 5;
 
@@ -30,11 +28,16 @@ export interface ClientResponse {
 
 function Clients() {
   const navigate = useNavigate();
-  const { appliedFilter } = useSelector(selectClient);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
+  const [filters, setFilters] = useState({
+    category: [],
+    subCategory: [],
+    monthAdded: "",
+    labels: [],
+    search: "",
+  });
 
   const { data, isLoading }: UseQueryResult<ClientResponse, Error> = useQuery(
     [
@@ -42,7 +45,12 @@ function Clients() {
       {
         limit: LIMIT,
         offset: offset > 0 ? (offset - 1) * LIMIT : offset,
-        query: { ...appliedFilter, search },
+        query: {
+          ...filters,
+          category: filters.category.map((c: any) => c?.value),
+          subCategory: filters.subCategory.map((c: any) => c?.value),
+          labels: filters.labels.map((c: any) => c?.id),
+        },
       },
     ],
     getClients
@@ -57,7 +65,12 @@ function Clients() {
           <Box display="flex" gap={2} alignItems="center">
             <SearchContainer
               debounced
-              onChange={(v) => setSearch(v)}
+              onChange={(v) => {
+                setFilters({
+                  ...filters,
+                  search: v,
+                });
+              }}
               placeHolder="Search by display name"
             />
             <IconButton
@@ -93,7 +106,12 @@ function Clients() {
         }}
       />
       <AddClient open={open} setOpen={setOpen} />
-      <ClientFilter open={openFilter} setOpen={setOpenFilter} />
+      <ClientFilter
+        filters={filters}
+        setFilters={setFilters}
+        open={openFilter}
+        setOpen={setOpenFilter}
+      />
     </Box>
   );
 }

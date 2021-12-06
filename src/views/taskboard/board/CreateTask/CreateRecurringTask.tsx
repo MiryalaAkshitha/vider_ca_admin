@@ -46,6 +46,12 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     let apiData = { ...state };
+
+    if (!apiData.client?.length) {
+      snack.error("Please select atleast one client");
+      return;
+    }
+
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
     mutate(apiData);
@@ -60,8 +66,9 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
           <form onSubmit={handleSubmit}>
             <Autocomplete
               id="tags-standard"
+              multiple
               onChange={(_, value) => {
-                setState({ ...state, client: value?.id });
+                setState({ ...state, client: value?.map((v: any) => v.id) });
               }}
               options={clients?.data[0] || []}
               sx={{ mt: 3 }}
@@ -69,7 +76,6 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  required
                   variant="outlined"
                   size="small"
                   fullWidth

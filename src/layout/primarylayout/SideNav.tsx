@@ -5,13 +5,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { logo } from "assets";
 import { useState } from "react";
-import { useNavigate, useMatch, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { menuItems } from "./menu";
+import { Link, useLocation } from "react-router-dom";
 import { Drawer, DrawerHeader } from "../styles";
+import { menuItems } from "./menu";
 
 function SideNav() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const [open, setOpen] = useState(false);
