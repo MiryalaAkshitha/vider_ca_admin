@@ -5,13 +5,13 @@ import { deleteClientInfo } from "api/client-info";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
-import { useRouteMatch } from "react-router";
+import { useParams } from "react-router";
 import renderField from "./renderField";
 
 function KybDetails({ state, forms, setState }: any) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const match: any = useRouteMatch();
+  const params = useParams();
   const confirm = useConfirm();
 
   const onChange = (field, e) => {
@@ -40,7 +40,7 @@ function KybDetails({ state, forms, setState }: any) {
     confirm({
       msg: "Are you sure you want to delete?",
       action: () => {
-        mutate({ form, clientId: match.params.clientId });
+        mutate({ form, clientId: params.clientId });
       },
     });
   };
@@ -49,12 +49,12 @@ function KybDetails({ state, forms, setState }: any) {
     <Box>
       {forms.map((form, formIndex) => (
         <Box key={formIndex} mb={8}>
-          <Box display='flex' mb={2} gap={1} alignItems='center'>
-            <Typography variant='subtitle2' color='primary'>
+          <Box display="flex" mb={2} gap={1} alignItems="center">
+            <Typography variant="subtitle2" color="primary">
               {form}
             </Typography>
-            <IconButton onClick={() => handleDelete(form)} size='small'>
-              <Remove color='secondary' fontSize='small' />
+            <IconButton onClick={() => handleDelete(form)} size="small">
+              <Remove color="secondary" fontSize="small" />
             </IconButton>
           </Box>
           <Grid container spacing={2}>

@@ -22,7 +22,7 @@ function TaskBoard() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box sx={{ overflowY: "hidden" }}>
+    <Box sx={{ overflowY: "hidden", p: 2 }}>
       {data?.data?.length ? (
         <Board data={data?.data} />
       ) : (

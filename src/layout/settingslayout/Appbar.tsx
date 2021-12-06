@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/system";
 import { logo } from "assets";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: theme.transitions.create(["width", "margin"], {
@@ -16,7 +16,7 @@ const AppBar = styled(MuiAppBar)(({ theme }) => ({
 }));
 
 function Appbar() {
-  const router = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -25,7 +25,7 @@ function Appbar() {
           <Box display="flex" alignItems="center" gap={3}>
             <img src={logo} alt="" />
             <Button
-              onClick={() => router.push("/")}
+              onClick={() => navigate("/")}
               color="primary"
               startIcon={<ArrowBack />}
             >

@@ -5,7 +5,7 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import ForgotPassword from "views/login/ForgotPassword";
 import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
@@ -13,7 +13,7 @@ import { BackgroundImage, LogoContainer } from "views/login/styles";
 type DataType = { username: string; password: string };
 
 const Login = () => {
-  const router = useHistory();
+  const navigate = useNavigate();
   const snack = useSnack();
   const [open, setOpen] = useState<boolean>(false);
   const [state, setState] = useState<DataType>({
@@ -92,7 +92,7 @@ const Login = () => {
               </Button>
             </div>
             <div>
-              <Button sx={{ mt: 1 }} onClick={() => router.push("/signup")}>
+              <Button sx={{ mt: 1 }} onClick={() => navigate("/signup")}>
                 Don't have an account - Create New Account
               </Button>
             </div>

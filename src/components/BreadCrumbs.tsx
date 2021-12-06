@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link, { LinkProps } from "@mui/material/Link";
-import { Link as RouterLink, useRouteMatch } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 
 interface LinkRouterProps extends LinkProps {
   to: string;
@@ -13,8 +13,8 @@ const LinkRouter = (props: LinkRouterProps) => (
 );
 
 function BreadCrumbs({ page }: { page: string }) {
-  const match: any = useRouteMatch();
-  let routes = getRoutes(page, match);
+  const params: any = useParams();
+  let routes = getRoutes(page, params);
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
@@ -41,7 +41,7 @@ function BreadCrumbs({ page }: { page: string }) {
   );
 }
 
-const getRoutes = (page: string, match: any) => {
+const getRoutes = (page: string, params: any) => {
   switch (page) {
     case "addService":
       return [
@@ -77,7 +77,7 @@ const getRoutes = (page: string, match: any) => {
     case "clientProfile":
       return [
         { title: "Clients", path: "/clients" },
-        { title: match.params?.clientId, path: "/" },
+        { title: params?.clientId, path: "/" },
       ];
     case "taskView":
       return [
@@ -87,7 +87,7 @@ const getRoutes = (page: string, match: any) => {
     case "viewRole":
       return [
         { title: "Roles", path: "/settings/roles-permissions" },
-        { title: match.params?.role, path: "/" },
+        { title: params?.role, path: "/" },
       ];
     default:
       return [];

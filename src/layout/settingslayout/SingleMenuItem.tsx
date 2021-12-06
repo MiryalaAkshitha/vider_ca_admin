@@ -1,17 +1,16 @@
 import { Typography } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import { StyledListItemButton } from "layout/styles";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SingleMenuItem = ({ item }: any) => {
-  const history = useHistory();
+  const location = useLocation();
   return (
     <Link to={item.path} style={{ textDecoration: "none", color: "initial" }}>
       <StyledListItemButton
         selected={false}
         sx={{
-          opacity: item.path === history.location.pathname ? 1 : 0.4,
+          opacity: item.path === location.pathname ? 1 : 0.4,
         }}
       >
         <ListItemText

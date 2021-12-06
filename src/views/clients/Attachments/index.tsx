@@ -1,9 +1,8 @@
 import { Box } from "@mui/system";
 import { getStorage } from "api/storage";
 import Loader from "components/Loader";
-import useParams from "hooks/useParams";
 import { useQuery, UseQueryResult } from "react-query";
-import { useRouteMatch } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import AddAttachment from "./AddAttachment";
 import BreadCrumbs from "./BreadCrumbs";
 import Files from "./Files";
@@ -17,12 +16,12 @@ export interface StorageResponse {
 }
 
 function Attachments() {
-  const match: any = useRouteMatch();
   const params = useParams();
+  const [searchParams] = useSearchParams();
 
   let query = {
-    clientId: match.params.clientId,
-    folderId: params.get("folderId"),
+    clientId: params.clientId || "",
+    folderId: searchParams.get("folderId"),
   };
   const { data, isLoading }: UseQueryResult<StorageResponse, Error> = useQuery(
     ["storage", query],

@@ -12,7 +12,7 @@ import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router";
+import { useParams } from "react-router-dom";
 import {
   removeField,
   selectForm,
@@ -26,12 +26,12 @@ export interface FormFieldResponse {
 
 function FormFieldsContainer() {
   const dispatch = useDispatch();
-  const match: any = useRouteMatch();
+  const params = useParams();
   const snack = useSnack();
   const { addedFields } = useSelector(selectForm);
 
   const { data, isLoading }: UseQueryResult<FormFieldResponse, Error> =
-    useQuery(["form-fields", match.params.formId], getFormFields, {
+    useQuery(["form-fields", params.formId], getFormFields, {
       onSuccess: (res) => {
         dispatch(setFields(res.data.formFields));
       },
@@ -47,7 +47,7 @@ function FormFieldsContainer() {
   });
 
   const handleSubmit = () => {
-    mutate({ formFields: addedFields, id: match.params.formId });
+    mutate({ formFields: addedFields, id: params.formId });
   };
 
   if (isLoading || saveLoading) return <Loader />;

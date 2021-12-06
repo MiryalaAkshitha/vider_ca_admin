@@ -12,7 +12,7 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
 
@@ -28,7 +28,7 @@ type State = {
 };
 
 const SignUp = () => {
-  const router = useHistory();
+  const navigate = useNavigate();
   const snack = useSnack();
   const [state, setState] = useState<State>({
     firstName: "",
@@ -47,7 +47,7 @@ const SignUp = () => {
 
   const { mutate, isLoading } = useMutation(signup, {
     onSuccess: () => {
-      router.push("/login");
+      navigate("/login");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -173,7 +173,7 @@ const SignUp = () => {
               />
             </form>
             <Box textAlign="center">
-              <Button sx={{ mt: 2 }} onClick={() => router.push("/login")}>
+              <Button sx={{ mt: 2 }} onClick={() => navigate("/login")}>
                 Already have an account - Sign in
               </Button>
             </Box>

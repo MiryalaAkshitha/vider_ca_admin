@@ -105,7 +105,7 @@ const CustomDates = ({ state, setState }: IProps) => {
             type="date"
             value={customDates.dueDate || ""}
             InputLabelProps={{ shrink: true }}
-            label="End Date"
+            label="Due Date"
             name="dueDate"
           />
           <IconButton onClick={addCustomDate}>

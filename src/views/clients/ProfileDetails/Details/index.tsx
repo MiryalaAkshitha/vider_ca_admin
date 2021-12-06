@@ -8,8 +8,11 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { getLabels } from "api/labels";
+import { getUsers } from "api/users";
+import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery, UseQueryResult } from "react-query";
+import { DataResponse } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 import ContactPersonDetails from "../ContactPersonDetails";
 import TextFieldWithCopy from "./TextFieldWithCopy";
@@ -24,10 +27,13 @@ interface LabelsResponse {
 }
 
 function Details({ data, setState }: any) {
-  const { data: labels }: UseQueryResult<LabelsResponse, Error> = useQuery(
-    "labels",
-    getLabels
-  );
+  const { data: labels, isLoading }: UseQueryResult<LabelsResponse, Error> =
+    useQuery("labels", getLabels);
+
+  const {
+    data: users,
+    isLoading: userLoading,
+  }: UseQueryResult<DataResponse, Error> = useQuery("users", getUsers);
 
   const handleChange = (e: any) => {
     setState({
@@ -47,6 +53,10 @@ function Details({ data, setState }: any) {
   let subCategories = CLIENT_CATEGORIES.find(
     (item) => item.value === data.category
   )?.subCategories;
+
+  let isActive = data?.active;
+
+  if (isLoading || userLoading) return <Loader />;
 
   return (
     <Box mt={5}>
@@ -130,17 +140,6 @@ function Details({ data, setState }: any) {
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
-            label="Role"
-            name="role"
-            onChange={handleChange}
-            fullWidth
-            variant="outlined"
-            size="small"
-            InputLabelProps={{ shrink: true }}
-          />
-        </Grid>
-        <Grid item xs={4}>
           <TextFieldWithCopy
             label="Mobile Number"
             name="mobileNumber"
@@ -212,12 +211,20 @@ function Details({ data, setState }: any) {
           <TextField
             label="Client Manager"
             name="clientManager"
-            value=""
             fullWidth
             variant="outlined"
+            value={data?.clientManager?.id || data?.clientManager}
             size="small"
+            onChange={handleChange}
+            select
             InputLabelProps={{ shrink: true }}
-          />
+          >
+            {users?.data?.map((item, index) => (
+              <MenuItem key={index} value={item?.id}>
+                {item?.firstName + " " + item?.lastName}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={4}>
           <TextField
@@ -275,7 +282,7 @@ function Details({ data, setState }: any) {
             <Box mt={1}>
               <Typography variant="caption" color="secondary">
                 Inactive from{" "}
-                {moment(data?.lastActive).format("DD MMM YYYY - hh:mm a")}
+                {moment(data?.inactiveAt).format("DD MMM YYYY - hh:mm a")}
               </Typography>
             </Box>
           )}

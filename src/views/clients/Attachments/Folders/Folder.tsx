@@ -4,12 +4,12 @@ import { moveFile } from "api/storage";
 import { icons } from "assets";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { StyledFolder } from "views/clients/styles";
 
 function Folder({ data }: any) {
   const queryClient = useQueryClient();
-  const match: any = useRouteMatch();
+  const location = useLocation();
   const snack = useSnack();
   const [dragging, setDragging] = useState(false);
   const [dropping, setDropping] = useState(false);
@@ -71,7 +71,7 @@ function Folder({ data }: any) {
   return (
     <Link
       style={{ textDecoration: "none", color: "initial" }}
-      to={`${match.url}?folderId=${data?.uid}`}
+      to={`${location.pathname}?folderId=${data?.uid}`}
     >
       <StyledFolder
         draggable={true}

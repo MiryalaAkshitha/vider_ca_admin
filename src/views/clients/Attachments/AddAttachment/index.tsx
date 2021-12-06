@@ -2,12 +2,11 @@ import { Add } from "@mui/icons-material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Fab, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { uploadFile } from "api/storage";
-import useParams from "hooks/useParams";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router";
+import { useParams, useSearchParams } from "react-router-dom";
 import {
   selectStorage,
   setInitialUploads,
@@ -21,14 +20,15 @@ function AddAttachment() {
   const queryClient = useQueryClient();
   const { uploads } = useSelector(selectStorage);
   const dispatch = useDispatch();
-  const match: any = useRouteMatch();
   const params = useParams();
   const snack = useSnack();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
+  let [searchParams, setSearchParams] = useSearchParams();
 
-  const clientId = match.params.clientId;
-  const folderId = params.get("folderId") || "";
+  const clientId = params.clientId || "";
+
+  const folderId = searchParams.get("folderId") || "";
 
   const { mutateAsync } = useMutation(uploadFile, {
     onSuccess: (res: any) => {

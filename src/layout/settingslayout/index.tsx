@@ -1,20 +1,21 @@
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import { withRouter } from "react-router";
-import { LayoutProps } from "types";
+import { Outlet } from "react-router-dom";
 import Appbar from "./Appbar";
-import SideNav from "./SideNav";
 import MainContent from "./MainContent";
+import SideNav from "./SideNav";
 
-function SettingsLayout(props: LayoutProps) {
+function SettingsLayout(props: any) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Appbar />
       <SideNav />
-      <MainContent routes={props.routes} />
+      <MainContent>
+        <Outlet />
+      </MainContent>
     </Box>
   );
 }
 
-export default withRouter(SettingsLayout);
+export default SettingsLayout;

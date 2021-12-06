@@ -39,8 +39,14 @@ function ContactPerson({ data }) {
         <div>
           <Typography variant="body2">{data?.name}</Typography>
           <Typography variant="caption" color="rgba(0,0,0,0.7)">
-            {data?.role} {data?.dscAvailable && "- DSC Available"}
-          </Typography>
+            {data?.role}
+          </Typography>{" "}
+          <br />
+          {data?.dscAvailable && (
+            <Typography variant="caption" color="rgba(0,0,0,0.7)">
+              DSC Available ({data?.dscExpiryDate})
+            </Typography>
+          )}
         </div>
       </Box>
       <Box>

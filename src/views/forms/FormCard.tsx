@@ -7,14 +7,14 @@ import CustomCard from "components/CustomCard";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import EditForm from "./EditForm";
 
 function FormCard(props: any) {
   const { data } = props;
   const confirm = useConfirm();
   const snack = useSnack();
-  const router = useHistory();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -89,7 +89,7 @@ function FormCard(props: any) {
         onClose={handleClose}
       >
         <MenuItem
-          onClick={() => router.push(`/settings/forms/${data?.id}/fields`)}
+          onClick={() => navigate(`/settings/forms/${data?.id}/fields`)}
         >
           Fields
         </MenuItem>

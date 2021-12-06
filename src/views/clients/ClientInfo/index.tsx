@@ -4,7 +4,7 @@ import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
 import FormsContainer from "./FormsContainer";
 import KybDetails from "./KybDetails";
@@ -13,8 +13,8 @@ function KybInfo() {
   const snack = useSnack();
   const [state, setState] = useState<any[]>([]);
   const [forms, setForms] = useState<any[]>([]);
-  const match: any = useRouteMatch();
-  let clientId = match.params.clientId;
+  const params = useParams();
+  let clientId = params.clientId || "";
 
   const { isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
     ["client-info", { clientId, type: "kyb" }],

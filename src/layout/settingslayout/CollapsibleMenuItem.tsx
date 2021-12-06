@@ -4,19 +4,18 @@ import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import { StyledListItemButton } from "layout/styles";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const CollapsibleMenuItem = ({ item }: any) => {
-  const history = useHistory();
+  const location = useLocation();
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     let hasPath = item?.children
       .map((item: any) => item?.path)
-      .includes(history.location.pathname);
+      .includes(location.pathname);
     setOpen(hasPath);
-  }, [item, history]);
+  }, [item, location]);
 
   return (
     <>
@@ -42,7 +41,7 @@ const CollapsibleMenuItem = ({ item }: any) => {
                 selected={false}
                 sx={{
                   paddingLeft: "30px",
-                  opacity: item.path === history.location.pathname ? 1 : 0.4,
+                  opacity: item.path === location.pathname ? 1 : 0.4,
                 }}
               >
                 <ListItemText

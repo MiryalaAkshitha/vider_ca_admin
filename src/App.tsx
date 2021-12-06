@@ -2,10 +2,11 @@ import ConfirmDialogProvider from "components/ConfirmDialogProvider";
 import FullPageLoader from "components/FullPageLoader";
 import { SnackbarProvider } from "notistack";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useAppSelector } from "redux/store";
 import "./App.css";
-import routes from "./routes";
+import RoutesContainer from "./RoutesContainer";
+import routes from "./RoutesContainer";
 
 const queryClient = new QueryClient();
 
@@ -40,27 +41,7 @@ function App() {
             autoHideDuration={1500}
             anchorOrigin={{ horizontal: "right", vertical: "top" }}
           >
-            <BrowserRouter>
-              <Switch>
-                {routes.map((route, index) => {
-                  if (route.routes) {
-                    return (
-                      <Route path={route.path} exact={route.exact} key={index}>
-                        <route.component routes={route.routes} />
-                      </Route>
-                    );
-                  }
-                  return (
-                    <Route
-                      key={index}
-                      exact={route.exact}
-                      path={route.path}
-                      component={route.component}
-                    />
-                  );
-                })}
-              </Switch>
-            </BrowserRouter>
+            <RoutesContainer />
           </SnackbarProvider>
         </FullPageLoader>
       </ConfirmDialogProvider>

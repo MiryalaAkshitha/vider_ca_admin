@@ -7,16 +7,16 @@ import { endTimer, startTimer } from "api/tasks";
 import { icons } from "assets";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Timer from "./timer";
 
 function TaskItem({ data }: any) {
   const queryClient = useQueryClient();
-  const router = useHistory();
+  const navigate = useNavigate();
   const snack = useSnack();
-  const [showTimer, setShowTimer] = useState(false);
+  const [showTimer, setShowTimer] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
 
   useEffect(() => {
@@ -73,8 +73,8 @@ function TaskItem({ data }: any) {
       <Box
         px={2}
         onClick={() =>
-          router.push(
-            `/task-details/${data?.taskId}?clientId=${data?.client?.clientId}`
+          navigate(
+            `/task-board/${data?.taskId}?clientId=${data?.client?.clientId}`
           )
         }
         py={1}

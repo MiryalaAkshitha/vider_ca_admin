@@ -9,19 +9,19 @@ import {
   useQueryClient,
   UseQueryResult,
 } from "react-query";
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
 import Details from "./Details";
 import Profile from "./Profile";
 
 function ProfileDetails() {
-  const match: any = useRouteMatch();
+  const params = useParams();
   const snack = useSnack();
   const [state, setState] = useState<any>({});
   const queryClient = useQueryClient();
 
   const { isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
-    ["client", match.params.clientId],
+    ["client", params.clientId],
     getOneClient,
     {
       onSuccess: (res: any) => {
@@ -46,7 +46,7 @@ function ProfileDetails() {
 
   const handleUpdate = () => {
     let { imageUrl, ...data } = state;
-    mutate({ data, clientId: match.params.clientId });
+    mutate({ data, clientId: params.clientId });
   };
 
   if (isLoading || updateProfileLoading) return <Loader />;

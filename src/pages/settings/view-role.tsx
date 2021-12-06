@@ -7,14 +7,14 @@ import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
-import { useRouteMatch } from "react-router";
+import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
 import PermissonsAccordion from "views/rolesandpermissions/PermissionAccordion";
 
 type PermissionsDataResponse = UseQueryResult<DataResponse, Error>;
 
 function ViewRole() {
-  const match: any = useRouteMatch();
+  const params: any = useParams();
   const [permissions, setPermissons] = useState<number[]>([]);
   const snack = useSnack();
 
@@ -26,7 +26,7 @@ function ViewRole() {
   });
 
   const { data, isLoading }: UseQueryResult<{ data: any }, Error> = useQuery(
-    ["role", match.params.role],
+    ["role", params.role],
     getRole,
     {
       onSuccess: (res: any) => {

@@ -5,13 +5,15 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { logo } from "assets";
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { menuItems } from "./menu";
 import { Drawer, DrawerHeader } from "../styles";
 
 function SideNav() {
-  const history: any = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -52,7 +54,7 @@ function SideNav() {
             <ListItemButton
               selected={true}
               sx={{
-                opacity: item.path === history.location.pathname ? 1 : 0.4,
+                opacity: item.path === location.pathname ? 1 : 0.4,
                 "&.Mui-selected": {
                   background: "rgba(0, 0, 0, 0.4)",
                 },

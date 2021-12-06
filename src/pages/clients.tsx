@@ -12,7 +12,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ClientFilter from "views/clients/Filter";
 import { useSelector } from "react-redux";
 import { selectClient } from "redux/reducers/clientSlice";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 let LIMIT = 5;
 
@@ -29,7 +29,7 @@ export interface ClientResponse {
 }
 
 function Clients() {
-  const router = useHistory();
+  const navigate = useNavigate();
   const { appliedFilter } = useSelector(selectClient);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -51,7 +51,7 @@ function Clients() {
   useTitle("Clients");
 
   return (
-    <>
+    <Box p={3}>
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item xs={5}>
           <Box display="flex" gap={2} alignItems="center">
@@ -83,7 +83,7 @@ function Clients() {
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
-        onRowClick={(v) => router.push(`/clients/${v?.clientId}/profile`)}
+        onRowClick={(v) => navigate(`/clients/${v?.clientId}/profile`)}
         data={data?.data[0] || []}
         columns={columns}
         pagination={{
@@ -94,7 +94,7 @@ function Clients() {
       />
       <AddClient open={open} setOpen={setOpen} />
       <ClientFilter open={openFilter} setOpen={setOpenFilter} />
-    </>
+    </Box>
   );
 }
 

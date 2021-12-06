@@ -70,7 +70,12 @@ function Profile({ data, setState, onUpdate }: any) {
                 Email
               </Typography>
               <Typography variant="body2" color="primary">
-                {data?.email}
+                <a
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  href={`mailto:${data?.email}`}
+                >
+                  {data?.email}
+                </a>
               </Typography>
             </div>
             <div>
@@ -78,7 +83,12 @@ function Profile({ data, setState, onUpdate }: any) {
                 Phone
               </Typography>
               <Typography variant="body2" color="primary">
-                {data?.mobileNumber}
+                <a
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  href={`tel:${data?.mobileNumber}`}
+                >
+                  {data?.mobileNumber}
+                </a>
               </Typography>
             </div>
           </Box>

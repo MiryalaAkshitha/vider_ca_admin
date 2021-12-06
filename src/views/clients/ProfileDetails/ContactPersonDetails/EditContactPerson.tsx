@@ -11,12 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { createContactPerson } from "api/client";
+import { updateContactPerson } from "api/client";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useRouteMatch } from "react-router";
+import { useParams } from "react-router";
 import { DialogProps } from "types";
 
 interface StateProps {
@@ -37,12 +37,20 @@ const initialState: StateProps = {
   dscExpiryDate: "",
 };
 
-function AddContactPerson({ open, setOpen }: DialogProps) {
+interface EditContactPersonProps extends DialogProps {
+  data: any;
+}
+
+function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const match: any = useRouteMatch();
   const [state, setState] = useState(initialState);
+  const params = useParams();
   let formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setState(data);
+  }, [data]);
 
   const handleChange = (e: any) => {
     setState({
@@ -51,9 +59,9 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
     });
   };
 
-  const { mutate, isLoading } = useMutation(createContactPerson, {
+  const { mutate, isLoading } = useMutation(updateContactPerson, {
     onSuccess: () => {
-      snack.success("Contact Person Created");
+      snack.success("Contact Person Updated");
       setOpen(false);
       formRef.current?.reset();
       setState(initialState);
@@ -73,7 +81,10 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate({ ...state, clientId: match.params.clientId });
+    mutate({
+      id: data?.id,
+      data: { ...state, clientId: params.clientId },
+    });
   };
 
   return (
@@ -85,7 +96,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
     >
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Add Contact Person</Typography>
+          <Typography variant="subtitle1">Update Contact Person</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -99,6 +110,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
             fullWidth
             name="name"
             required
+            value={state.name}
             onChange={handleChange}
             size="small"
             label="Name"
@@ -107,6 +119,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
             sx={{ mt: 2 }}
             variant="outlined"
             fullWidth
+            value={state.role}
             onChange={handleChange}
             size="small"
             select
@@ -123,6 +136,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
             variant="outlined"
             fullWidth
             required
+            value={state.email}
             type="email"
             onChange={handleChange}
             name="email"
@@ -133,6 +147,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
             sx={{ mt: 3 }}
             variant="outlined"
             fullWidth
+            value={state.mobile}
             required
             onChange={handleChange}
             name="mobile"
@@ -141,7 +156,12 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
           />
           <FormControlLabel
             sx={{ mt: 2 }}
-            control={<Checkbox onChange={handleDscAvailable} />}
+            control={
+              <Checkbox
+                checked={state.dscAvailable}
+                onChange={handleDscAvailable}
+              />
+            }
             label="DSC Available"
           />
           {state.dscAvailable && (
@@ -152,6 +172,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
               required
               onChange={handleChange}
               type="date"
+              value={state.dscExpiryDate}
               name="dscExpiryDate"
               size="small"
               InputLabelProps={{ shrink: true }}
@@ -164,7 +185,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
               fullWidth
               type="submit"
               loadingColor="white"
-              title="Add Contact Person"
+              title="Update Contact Person"
               color="secondary"
             />
           </Box>
@@ -174,4 +195,4 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddContactPerson;
+export default EditContactPerson;

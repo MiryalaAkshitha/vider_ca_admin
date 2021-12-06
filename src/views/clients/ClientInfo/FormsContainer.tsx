@@ -12,11 +12,11 @@ import {
   useQueryClient,
   UseQueryResult,
 } from "react-query";
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
 
 function FormsContainer({ onUpdate }: any) {
-  const match: any = useRouteMatch();
+  const params = useParams();
   const snack = useSnack();
   const queryClient = useQueryClient();
 
@@ -38,7 +38,7 @@ function FormsContainer({ onUpdate }: any) {
   const addForm = (item: any) => {
     mutate({
       formId: item?.id,
-      clientId: match.params.clientId,
+      clientId: params.clientId || "",
       type: "kyb",
     });
   };
@@ -47,15 +47,15 @@ function FormsContainer({ onUpdate }: any) {
 
   return (
     <Box>
-      <Box textAlign='right' mb={2}>
-        <Button onClick={onUpdate} variant='outlined' color='secondary'>
+      <Box textAlign="right" mb={2}>
+        <Button onClick={onUpdate} variant="outlined" color="secondary">
           Save Details
         </Button>
       </Box>
-      <Typography color='primary' variant='subtitle2'>
+      <Typography color="primary" variant="subtitle2">
         Add Fields
       </Typography>
-      <Box mt={2} bgcolor='rgba(24, 47, 83, 0.06)'>
+      <Box mt={2} bgcolor="rgba(24, 47, 83, 0.06)">
         {isLoading ? (
           <Loader />
         ) : (
@@ -65,8 +65,9 @@ function FormsContainer({ onUpdate }: any) {
                 <ListItem
                   onClick={() => addForm(item)}
                   sx={{ py: "12px" }}
-                  button>
-                  <Typography color='primary' variant='body1'>
+                  button
+                >
+                  <Typography color="primary" variant="body1">
                     + {item?.name}
                   </Typography>
                 </ListItem>

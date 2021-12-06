@@ -1,11 +1,10 @@
 import { Button, Dialog, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { createFolder } from "api/storage";
-import useParams from "hooks/useParams";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useRouteMatch } from "react-router";
+import { useParams, useSearchParams } from "react-router-dom";
 import { DialogProps } from "types";
 
 const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
@@ -13,9 +12,9 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const inputRef = useRef<HTMLInputElement>(null);
-  const match: any = useRouteMatch();
   const params = useParams();
-  const clientId = match.params.clientId;
+  const [searchParams] = useSearchParams();
+  const clientId = params.clientId || "";
 
   const { mutate } = useMutation(createFolder, {
     onSuccess: () => {
@@ -38,26 +37,26 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
     mutate({
       name,
       clientId,
-      folderId: params.get("folderId"),
+      folderId: searchParams.get("folderId"),
     });
   };
 
   return (
-    <Dialog open={open} maxWidth='xs' fullWidth PaperProps={{ sx: { p: 2 } }}>
-      <Typography variant='subtitle1' sx={{ mb: 3 }}>
+    <Dialog open={open} maxWidth="xs" fullWidth PaperProps={{ sx: { p: 2 } }}>
+      <Typography variant="subtitle1" sx={{ mb: 3 }}>
         New Folder
       </Typography>
       <TextField
         inputRef={inputRef}
         onChange={(e) => setName(e.target.value)}
-        size='small'
+        size="small"
         value={name}
       />
-      <Box mt={4} display='flex' gap={2} justifyContent='flex-end'>
-        <Button onClick={() => setOpen(false)} variant='outlined'>
+      <Box mt={4} display="flex" gap={2} justifyContent="flex-end">
+        <Button onClick={() => setOpen(false)} variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} variant='contained' color='secondary'>
+        <Button onClick={handleSubmit} variant="contained" color="secondary">
           Submit
         </Button>
       </Box>
