@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getTaskAttachments } from "api/tasks";
 import Loader from "components/Loader";
@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { DataResponseType } from "types/createTask.types";
-import NoAttachments from "./attachments/NoAttachments";
-import UploadAttachmentModal from "./attachments/UploadAttachmentModal";
+import NoAttachments from "./NoAttachments";
+import UploadAttachmentModal from "./UploadAttachmentModal";
 
 function Attachments() {
   const params: any = useParams();
@@ -24,9 +24,16 @@ function Attachments() {
   if (isLoading) return <Loader />;
   return (
     <Box p={2}>
-      <Typography variant="subtitle2" color="primary">
-        Attachments
-      </Typography>
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="subtitle1" color="primary">
+          Attachments
+        </Typography>
+        {data?.data?.length ? (
+          <Button color="secondary" variant="outlined">
+            Add Attachment
+          </Button>
+        ) : null}
+      </Box>
       <Box>
         {data?.data?.length ? (
           data?.data?.map((comment: any, index: number) => <h1>hello</h1>)

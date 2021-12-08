@@ -1,9 +1,8 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import TreeView from "@mui/lab/TreeView";
-import { getStorage, getStorageTree } from "api/storage";
+import { getStorageTree } from "api/storage";
 import Loader from "components/Loader";
 import useParams from "hooks/useParams";
+import _ from "lodash";
 import { useQuery, UseQueryResult } from "react-query";
 import { StorageResponse } from "views/clients/Attachments";
 import StyledTreeItem from "./StyledTreeItem";
@@ -17,6 +16,10 @@ function ClientLibrary() {
     getStorageTree
   );
 
+  let treeData: any = _.groupBy(data?.data, "parent");
+
+  let rootFolders = treeData["null"];
+
   if (isLoading) return <Loader />;
 
   return (
@@ -27,9 +30,14 @@ function ClientLibrary() {
         defaultEndIcon={<div style={{ width: 24 }} />}
         sx={{ flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
       >
-        {/* {data?.data?.result.map((item, index) => (
-          <StyledTreeItem nodeId={item?.uid} key={index} item={item} />
-        ))} */}
+        {rootFolders?.map((item, index) => (
+          <StyledTreeItem
+            nodeId={item?.id}
+            data={treeData}
+            key={index}
+            item={item}
+          />
+        ))}
       </TreeView>
     </>
   );

@@ -23,7 +23,7 @@ function Comments() {
 
   return (
     <Box p={2}>
-      <Typography variant="subtitle2" color="primary">
+      <Typography variant="subtitle1" color="primary">
         Comments
       </Typography>
       <CommentInput />

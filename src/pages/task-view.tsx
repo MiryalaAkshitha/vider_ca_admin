@@ -7,9 +7,9 @@ import { taskViewMenu } from "utils/constants";
 import { ProfileNav, ProfileNavItem } from "views/clients/styles";
 const Details = loadable(() => import("views/taskboard/taskview/Details"));
 const Comments = loadable(() => import("views/taskboard/taskview/comments"));
-const SubTasks = loadable(() => import("views/taskboard/taskview/SubTasks"));
+const SubTasks = loadable(() => import("views/taskboard/taskview/Subtasks"));
 const Attachments = loadable(
-  () => import("views/taskboard/taskview/Attachments")
+  () => import("views/taskboard/taskview/attachments")
 );
 
 function TaskDetails() {

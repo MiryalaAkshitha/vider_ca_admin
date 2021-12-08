@@ -81,6 +81,18 @@ const addAttachment = ({ taskId, data }: AddAttachment) => {
   return http.post(`/tasks/${taskId}/attachments`, data);
 };
 
+const createSubTask = ({ taskId, data }) => {
+  return http.post(`/tasks/${taskId}/subtasks`, data);
+};
+
+const getSubTasks = ({ queryKey }) => {
+  return http.get(`/tasks/subtasks`, { params: { taskId: queryKey[1] } });
+};
+
+const updateSubTask = ({ id, data }) => {
+  return http.put(`/tasks/${id}/subtasks`, data);
+};
+
 export {
   getTasks,
   updateTask,
@@ -95,4 +107,7 @@ export {
   addComment,
   addAttachment,
   getTaskAttachments,
+  createSubTask,
+  getSubTasks,
+  updateSubTask,
 };

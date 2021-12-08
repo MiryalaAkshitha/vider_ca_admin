@@ -42,6 +42,7 @@ function Table(props: TableProps) {
         justifyContent: "space-between",
         borderRadius: "6px",
         overflow: "hidden",
+        border: "1px solid rgba(0, 0, 0, 0.09)",
         ...sx,
       }}
     >

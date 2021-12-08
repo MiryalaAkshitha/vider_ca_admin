@@ -6,6 +6,12 @@ export enum TaskStatus {
   DONE = "done",
 }
 
+export enum SubTaskStatus {
+  TODO = "todo",
+  IN_PROGRESS = "in_progress",
+  DONE = "done",
+}
+
 export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);

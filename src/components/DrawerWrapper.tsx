@@ -6,15 +6,16 @@ interface IDrawerWrapperProps {
   setOpen: (open: boolean) => void;
   title: string;
   children: React.ReactNode;
+  width?: number;
 }
 
 function DrawerWrapper(props: IDrawerWrapperProps) {
-  const { open, setOpen, title, children } = props;
+  const { open, setOpen, title, children, width = 550 } = props;
 
   return (
     <Drawer
       anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
+      PaperProps={{ sx: { width } }}
       open={open}
       onClose={() => setOpen(false)}
     >

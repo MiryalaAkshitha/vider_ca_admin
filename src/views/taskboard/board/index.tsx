@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
-import { StyledDraggableItem, StyledDraggableList } from "../styled";
+import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, getContainerHeight, move, reorder, TaskStatus } from "./utils";

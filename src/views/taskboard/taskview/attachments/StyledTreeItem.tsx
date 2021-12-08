@@ -1,67 +1,45 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { StyledTreeItemRoot } from "views/taskboard/styled";
-import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { icons } from "assets";
-import { useMutation } from "react-query";
-import { getStorageMutation } from "api/storage";
-import useParams from "hooks/useParams";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import { Checkbox } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { icons } from "assets";
+import { StyledTreeItemRoot } from "views/taskboard/styles";
 
 function StyledTreeItem(props) {
-  const { item, nodeId } = props;
-  const [data, setData] = useState([]);
-  const params = useParams();
-
-  const { mutate } = useMutation(getStorageMutation, {
-    onSuccess: (res: any) => {
-      console.log(res.data);
-      setData(res.data?.result);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
-  const handleClick = () => {
-    console.log(params);
-    mutate({ clientId: params.get("clientId")!, folderId: item?.uid });
-  };
+  const { item, nodeId, data } = props;
 
   return (
     <StyledTreeItemRoot
       nodeId={nodeId}
       collapseIcon={item?.type === "folder" && <ArrowDropDownIcon />}
       expandIcon={<ArrowRightIcon />}
-      label={<TreeLabel item={item} onClick={handleClick} />}
-      children={
-        <>
-          {data.map((item: any) => (
-            <StyledTreeItem item={item} nodeId={item?.uid} />
-          ))}
-        </>
-      }
+      label={<TreeLabel item={item} />}
+      {...(data[item?.id] && {
+        children: (
+          <>
+            {data[item?.id]?.map((item: any) => (
+              <StyledTreeItem item={item} nodeId={item?.id} data={data} />
+            ))}
+          </>
+        ),
+      })}
     />
   );
 }
 
-const TreeLabel = ({ item, onClick }: { item: any; onClick: () => void }) => {
+const TreeLabel = ({ item }: any) => {
   return (
     <>
       {item?.type === "folder" ? (
-        <Box
-          onClick={onClick}
-          sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}
-        >
+        <Box sx={{ display: "flex", alignItems: "center", p: 1, pr: 0 }}>
           <img style={{ marginRight: 20 }} src={icons.folder} alt="" />
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
           >
             {item?.name}
+            {item?.parent}
           </Typography>
         </Box>
       ) : (

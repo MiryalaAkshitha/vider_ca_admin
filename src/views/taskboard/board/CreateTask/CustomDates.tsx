@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import useSnack from "hooks/useSnack";
 import { Dispatch, SetStateAction, useState } from "react";
 import { RecurringStateProps } from "types/createTask.types";
-import { StyledDates } from "views/taskboard/styled";
+import { StyledDates } from "views/taskboard/styles";
 
 interface IProps {
   state: RecurringStateProps;

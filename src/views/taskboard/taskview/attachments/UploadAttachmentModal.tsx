@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { DialogProps } from "types";
-import { GreyButton } from "views/taskboard/styled";
+import { GreyButton } from "views/taskboard/styles";
 import ClientLibrary from "./ClientLibrary";
 
 function UploadAttachmentModal({ open, setOpen }: DialogProps) {

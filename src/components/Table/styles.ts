@@ -6,14 +6,17 @@ export const StyledTable = styled("table")(({ theme }) => ({
   background: "#FFFFFF",
   fontFamily: "muli_regular",
   paddingBottom: "30px",
+  "& thead": {
+    background: "#182F53",
+  },
   "& tr": {
     cursor: "pointer",
   },
   "& th": {
-    color: "grey",
+    color: "white",
     fontFamily: "muli_regular",
     fontSize: 14,
-    padding: "20px",
+    padding: "15px 10px",
     textAlign: "left",
   },
   "& td": {

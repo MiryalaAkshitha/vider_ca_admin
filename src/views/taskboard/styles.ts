@@ -106,3 +106,26 @@ export const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     },
   },
 }));
+
+export const StyledSubTaskTable = styled("table")({
+  width: "100%",
+  borderCollapse: "collapse",
+  background: "#FFFFFF",
+  fontFamily: "muli_regular",
+  paddingBottom: "30px",
+  tableLayout: "fixed",
+  "& tr": {
+    cursor: "pointer",
+  },
+  "& th": {
+    padding: "15px 10px",
+    textAlign: "left",
+  },
+  "& td": {
+    textAlign: "left",
+    padding: "15px",
+  },
+  "& tbody tr:not(:last-child)": {
+    borderBottom: "1px solid #e0e0e0",
+  },
+});
