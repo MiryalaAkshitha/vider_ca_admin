@@ -41,7 +41,7 @@ function ClientFilter(props: ClientFilterProps) {
     setState({
       ...filters,
     });
-  }, [open]);
+  }, [open, filters]);
 
   const handleResetFilters = () => {
     setFilters({
@@ -63,9 +63,9 @@ function ClientFilter(props: ClientFilterProps) {
     });
   };
 
-  let getSubCategories = () => {
+  let getSubCategories = (): any[] => {
     let result = [];
-    state.category.forEach((item) => {
+    state.category.forEach((item: any) => {
       if (!item.subCategories) return;
       result = result.concat(item.subCategories);
     });
@@ -130,7 +130,7 @@ function ClientFilter(props: ClientFilterProps) {
             />
           )}
         />
-        {getSubCategories()?.length !== 0 && (
+        {getSubCategories().length !== 0 && (
           <Autocomplete
             id="tags-standard"
             multiple
@@ -180,7 +180,6 @@ function ClientFilter(props: ClientFilterProps) {
             />
           )}
         />
-
         <Box display="flex" gap={2} justifyContent="flex-end">
           <Button
             onClick={handleResetFilters}

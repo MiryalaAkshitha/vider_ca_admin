@@ -61,9 +61,9 @@ function SubTasksList({ data }: any) {
             </tr>
           </thead>
           <tbody>
-            {data.map((item: any) => {
+            {data.map((item: any, index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <td>
                     <Typography variant="body2">{item.name}</Typography>
                   </td>

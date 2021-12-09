@@ -1,3 +1,5 @@
+import { UseQueryResult } from "react-query";
+
 export interface DialogProps {
   open: boolean;
   setOpen: (v: boolean) => void;
@@ -6,6 +8,22 @@ export interface DialogProps {
 export interface DataResponse {
   data: any[];
 }
+
+export type StorageResponse = UseQueryResult<
+  {
+    data: {
+      result: any[];
+      breadCrumbs: [];
+    };
+  },
+  Error
+>;
+
+export type ResponseType = UseQueryResult<any, Error>;
+
+export type InputChangeType = React.ChangeEvent<HTMLInputElement>;
+
+export type SubmitType = React.FormEvent<HTMLFormElement>;
 
 export enum FILETYPES {
   JPEG = "image/jpeg",

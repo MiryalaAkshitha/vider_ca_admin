@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import { Box } from "@mui/material";
-import * as React from "react";
+import React from "react";
 
 interface StateProps {
   msg: string;
@@ -41,31 +41,33 @@ function ConfirmDialogProvider({ children }: any) {
   return (
     <ConfirmDialogContext.Provider value={confirm}>
       {children}
-      <Dialog maxWidth='xs' fullWidth open={open} onClose={handleClose}>
+      <Dialog maxWidth="xs" fullWidth open={open} onClose={handleClose}>
         <Box p={2}>
           <Box>
-            <Typography color='primary' gutterBottom variant='subtitle1'>
+            <Typography color="primary" gutterBottom variant="subtitle1">
               Warning
             </Typography>
-            <Typography variant='body1' color='textSecondary'>
+            <Typography variant="body1" color="textSecondary">
               {state.msg}
             </Typography>
           </Box>
-          <Box mt={3} display='flex' gap={2} justifyContent='flex-end'>
+          <Box mt={3} display="flex" gap={2} justifyContent="flex-end">
             <Button
-              variant='outlined'
+              variant="outlined"
               sx={{ minWidth: 70 }}
-              size='small'
-              color='secondary'
-              onClick={handleClose}>
+              size="small"
+              color="secondary"
+              onClick={handleClose}
+            >
               Cancel
             </Button>
             <Button
-              variant='outlined'
-              color='secondary'
+              variant="outlined"
+              color="secondary"
               sx={{ minWidth: 70 }}
-              size='small'
-              onClick={onOk}>
+              size="small"
+              onClick={onOk}
+            >
               Ok
             </Button>
           </Box>

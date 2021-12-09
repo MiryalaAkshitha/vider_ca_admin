@@ -6,28 +6,27 @@ import FullLoader from "components/FullLoader";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { Fragment } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DataResponse } from "types";
+import { ResponseType } from "types";
 
-function FormsContainer({ onUpdate }: any) {
+type Props = {
+  onUpdate: () => void;
+};
+
+function FormsContainer({ onUpdate }: Props) {
   const params = useParams();
   const snack = useSnack();
   const queryClient = useQueryClient();
 
-  const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     ["forms", { tags: "kyb" }],
     getForms
   );
 
   const { mutate, isLoading: updateKybLoading } = useMutation(addToClientInfo, {
     onSuccess: () => {
-      snack.success("Added");
+      snack.success("Form Added");
       queryClient.invalidateQueries("client-info");
     },
     onError: (err: any) => {

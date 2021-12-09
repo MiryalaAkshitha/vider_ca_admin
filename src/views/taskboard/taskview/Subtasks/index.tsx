@@ -25,7 +25,7 @@ function SubTasks() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box p={2}>
+    <>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
           Sub Tasks
@@ -48,7 +48,7 @@ function SubTasks() {
         )}
       </Box>
       <AddSubTask open={open} setOpen={setOpen} />
-    </Box>
+    </>
   );
 }
 

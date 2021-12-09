@@ -12,20 +12,20 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-export default function renderField(field: any, onChange) {
+export function renderField(field: any, onChange: (v: any) => void) {
   let type = field?.fieldType;
   if (type === "text" || type === "number" || type === "date") {
     return (
-      <FormControl fullWidth component='fieldset'>
-        <FormLabel component='legend'>{field?.name}</FormLabel>
+      <FormControl fullWidth component="fieldset">
+        <FormLabel component="legend">{field?.name}</FormLabel>
         <TextField
           name={field?.name}
           value={field?.value || ""}
           sx={{ mt: 1 }}
           type={type}
           onChange={onChange}
-          variant='outlined'
-          size='small'
+          variant="outlined"
+          size="small"
           InputLabelProps={{ shrink: true }}
         />
       </FormControl>
@@ -43,17 +43,17 @@ export default function renderField(field: any, onChange) {
   }
   if (type === "url") {
     return (
-      <FormControl fullWidth component='fieldset'>
-        <FormLabel component='legend'>{field?.name}</FormLabel>
+      <FormControl fullWidth component="fieldset">
+        <FormLabel component="legend">{field?.name}</FormLabel>
         <TextField
           name={field?.name}
           value={field?.value || ""}
           sx={{ mt: 1 }}
           type={type}
-          placeholder='https://example.com'
+          placeholder="https://example.com"
           onChange={onChange}
-          variant='outlined'
-          size='small'
+          variant="outlined"
+          size="small"
           InputLabelProps={{ shrink: true }}
         />
       </FormControl>
@@ -61,8 +61,8 @@ export default function renderField(field: any, onChange) {
   }
   if (type === "dropdown" || type === "multiselect") {
     return (
-      <FormControl fullWidth component='fieldset'>
-        <FormLabel component='legend'>{field?.name}</FormLabel>
+      <FormControl fullWidth component="fieldset">
+        <FormLabel component="legend">{field?.name}</FormLabel>
         <TextField
           name={field?.name}
           value={field?.value || ""}
@@ -70,9 +70,10 @@ export default function renderField(field: any, onChange) {
           sx={{ mt: 1 }}
           onChange={onChange}
           select
-          variant='outlined'
-          size='small'
-          InputLabelProps={{ shrink: true }}>
+          variant="outlined"
+          size="small"
+          InputLabelProps={{ shrink: true }}
+        >
           {field?.options?.map((item, index) => (
             <MenuItem value={item} key={index}>
               {item}
@@ -84,15 +85,16 @@ export default function renderField(field: any, onChange) {
   }
   if (type === "radio") {
     return (
-      <FormControl fullWidth component='fieldset'>
-        <FormLabel component='legend'>{field?.name}</FormLabel>
+      <FormControl fullWidth component="fieldset">
+        <FormLabel component="legend">{field?.name}</FormLabel>
         <RadioGroup
           row
-          aria-label='gender'
-          defaultValue='female'
+          aria-label="gender"
+          defaultValue="female"
           sx={{ mt: 1 }}
           onChange={onChange}
-          name='radio-buttons-group'>
+          name="radio-buttons-group"
+        >
           {field?.options?.map((item, index) => (
             <FormControlLabel
               key={index}
@@ -125,22 +127,22 @@ const PasswordField = ({ label, value, onChange }: any) => {
   };
 
   return (
-    <FormControl fullWidth component='fieldset'>
-      <FormLabel component='legend'>{label}</FormLabel>
+    <FormControl fullWidth component="fieldset">
+      <FormLabel component="legend">{label}</FormLabel>
       <TextField
-        variant='outlined'
-        size='small'
+        variant="outlined"
+        size="small"
         value={value || ""}
         sx={{ mt: 1 }}
         onChange={onChange}
         required
         InputProps={{
           endAdornment: !showPassword ? (
-            <IconButton size='small' onClick={togglePasswordInputType}>
+            <IconButton size="small" onClick={togglePasswordInputType}>
               <VisibilityOff />
             </IconButton>
           ) : (
-            <IconButton size='small' onClick={togglePasswordInputType}>
+            <IconButton size="small" onClick={togglePasswordInputType}>
               <Visibility />
             </IconButton>
           ),

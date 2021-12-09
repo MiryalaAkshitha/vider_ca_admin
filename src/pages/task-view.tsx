@@ -1,22 +1,23 @@
-import loadable from "@loadable/component";
 import { Box } from "@mui/material";
 import BreadCrumbs from "components/BreadCrumbs";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { taskViewMenu } from "utils/constants";
-import { ProfileNav, ProfileNavItem } from "views/clients/styles";
-const Details = loadable(() => import("views/taskboard/taskview/Details"));
-const Comments = loadable(() => import("views/taskboard/taskview/comments"));
-const SubTasks = loadable(() => import("views/taskboard/taskview/Subtasks"));
-const Attachments = loadable(
-  () => import("views/taskboard/taskview/attachments")
-);
+import {
+  StyledProfileNav,
+  StyledProfileNavItem,
+  StyledTaskSection,
+} from "views/clients/styles";
+import Attachments from "views/taskboard/taskview/attachments";
+import Comments from "views/taskboard/taskview/comments";
+import Details from "views/taskboard/taskview/Details";
+import SubTasks from "views/taskboard/taskview/Subtasks";
 
 function TaskDetails() {
   useTitle("Task Details");
 
-  const headerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const headerRef = useRef<HTMLDivElement | null>(null);
   const elementsRef = useRef<HTMLElement[]>([]);
 
   const getRef = (ref: any, index: number) => {
@@ -53,58 +54,30 @@ function TaskDetails() {
         <Box p={2} bgcolor="white">
           <BreadCrumbs page="taskView" />
         </Box>
-        <ProfileNav>
+        <StyledProfileNav>
           {taskViewMenu.map((item, index) => (
-            <ProfileNavItem
+            <StyledProfileNavItem
               onClick={() => handleActiveItem(index)}
               key={index}
               active={index === activeIndex}
             >
               {item}
-            </ProfileNavItem>
+            </StyledProfileNavItem>
           ))}
-        </ProfileNav>
+        </StyledProfileNav>
       </Box>
-      <Box
-        sx={{
-          borderBottom: "4px solid rgba(0,0,0,0.05)",
-          pb: 5,
-        }}
-        data-index={0}
-        ref={(ref) => getRef(ref, 0)}
-      >
+      <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 0)}>
         <Details />
-      </Box>
-      <Box
-        sx={{
-          borderBottom: "4px solid rgba(0,0,0,0.05)",
-          pb: 5,
-        }}
-        data-index={1}
-        ref={(ref) => getRef(ref, 1)}
-      >
+      </StyledTaskSection>
+      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 1)}>
         <Comments />
-      </Box>
-      <Box
-        sx={{
-          borderBottom: "4px solid rgba(0,0,0,0.05)",
-          pb: 5,
-        }}
-        data-index={2}
-        ref={(ref) => getRef(ref, 2)}
-      >
+      </StyledTaskSection>
+      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 2)}>
         <SubTasks />
-      </Box>
-      <Box
-        sx={{
-          borderBottom: "4px solid rgba(0,0,0,0.05)",
-          pb: 5,
-        }}
-        data-index={3}
-        ref={(ref) => getRef(ref, 3)}
-      >
+      </StyledTaskSection>
+      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 3)}>
         <Attachments />
-      </Box>
+      </StyledTaskSection>
     </>
   );
 }

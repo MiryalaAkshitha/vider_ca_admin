@@ -3,9 +3,9 @@ import { getClientInfo, updateClientInfo } from "api/client-info";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import { useMutation, useQuery, UseQueryResult } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { DataResponse } from "types";
+import { ResponseType } from "types";
 import FormsContainer from "./FormsContainer";
 import KybDetails from "./KybDetails";
 
@@ -16,7 +16,7 @@ function KybInfo() {
   const params = useParams();
   let clientId = params.clientId || "";
 
-  const { isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
+  const { isLoading }: ResponseType = useQuery(
     ["client-info", { clientId, type: "kyb" }],
     getClientInfo,
     {
@@ -24,7 +24,7 @@ function KybInfo() {
       onSuccess: (res: any) => {
         let data = res.data;
         setState(data);
-        let forms = new Set(data.map((item) => item?.form));
+        let forms = new Set(data.map((item: any) => item?.form));
         setForms(Array.from(forms));
       },
     }

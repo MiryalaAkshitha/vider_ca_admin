@@ -5,9 +5,9 @@ import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps } from "types";
+import { DialogProps, InputChangeType, SubmitType } from "types";
 import { RecurringStateProps } from "types/createTask.types";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
 import CustomDates from "./CustomDates";
@@ -27,7 +27,7 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
     RecurringInitialState
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
@@ -43,7 +43,7 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     let apiData = { ...state };
 

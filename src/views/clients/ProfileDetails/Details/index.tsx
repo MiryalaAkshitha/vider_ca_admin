@@ -11,29 +11,27 @@ import { getLabels } from "api/labels";
 import { getUsers } from "api/users";
 import Loader from "components/Loader";
 import moment from "moment";
-import { useQuery, UseQueryResult } from "react-query";
-import { DataResponse } from "types";
+import { useQuery } from "react-query";
+import { ResponseType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 import ContactPersonDetails from "../ContactPersonDetails";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
-interface Label {
-  name: string;
-  color: string;
+interface IDetailsProps {
+  data: any;
+  setState: (data: any) => void;
 }
 
-interface LabelsResponse {
-  data: Label[];
-}
+function Details({ data, setState }: IDetailsProps) {
+  const { data: labels, isLoading }: ResponseType = useQuery(
+    "labels",
+    getLabels
+  );
 
-function Details({ data, setState }: any) {
-  const { data: labels, isLoading }: UseQueryResult<LabelsResponse, Error> =
-    useQuery("labels", getLabels);
-
-  const {
-    data: users,
-    isLoading: userLoading,
-  }: UseQueryResult<DataResponse, Error> = useQuery("users", getUsers);
+  const { data: users, isLoading: userLoading }: ResponseType = useQuery(
+    "users",
+    getUsers
+  );
 
   const handleChange = (e: any) => {
     setState({

@@ -1,13 +1,18 @@
-import useSnack from "hooks/useSnack";
 import { Typography } from "@mui/material";
 import { moveFile } from "api/storage";
 import { icons } from "assets";
+import RouterLink from "components/RouterLink";
+import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { StyledFolder } from "views/clients/styles";
 
-function Folder({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function Folder({ data }: Props) {
   const queryClient = useQueryClient();
   const location = useLocation();
   const snack = useSnack();
@@ -69,10 +74,7 @@ function Folder({ data }: any) {
   };
 
   return (
-    <Link
-      style={{ textDecoration: "none", color: "initial" }}
-      to={`${location.pathname}?folderId=${data?.uid}`}
-    >
+    <RouterLink to={`${location.pathname}?folderId=${data?.uid}`}>
       <StyledFolder
         draggable={true}
         dragging={dragging}
@@ -87,7 +89,7 @@ function Folder({ data }: any) {
         <img src={icons.folder} alt="" />
         <Typography variant="body2">{data?.name}</Typography>
       </StyledFolder>
-    </Link>
+    </RouterLink>
   );
 }
 

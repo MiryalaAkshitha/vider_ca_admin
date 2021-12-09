@@ -30,6 +30,13 @@ type AddAttachment = {
   data: FormData;
 };
 
+type AddAttachmentFromStorage = {
+  taskId: string;
+  data: {
+    fileIds: number[];
+  };
+};
+
 const createTask = (data: any) => {
   return http.post("/tasks", data);
 };
@@ -81,6 +88,11 @@ const addAttachment = ({ taskId, data }: AddAttachment) => {
   return http.post(`/tasks/${taskId}/attachments`, data);
 };
 
+const addAttachmentsFromStorage = (args: AddAttachmentFromStorage) => {
+  let { taskId, data } = args;
+  return http.post(`/tasks/${taskId}/attachments/from-storage`, data);
+};
+
 const createSubTask = ({ taskId, data }) => {
   return http.post(`/tasks/${taskId}/subtasks`, data);
 };
@@ -110,4 +122,5 @@ export {
   createSubTask,
   getSubTasks,
   updateSubTask,
+  addAttachmentsFromStorage,
 };

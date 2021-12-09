@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-export const MONTHS = [
+export const MONTHS: string[] = [
   "January",
   "February",
   "March",
@@ -43,7 +43,7 @@ export const INITIAL_MILESTONES = [
   },
 ];
 
-export const FIELD_TYPES = [
+export const FIELD_TYPES: Array<{ label: string; value: string }> = [
   {
     label: "Text",
     value: "text",
@@ -86,7 +86,7 @@ export const FIELD_TYPES = [
   },
 ];
 
-export const clientMenu = [
+export const clientMenu: Array<{ title: string; path: string }> = [
   {
     title: "Profile",
     path: "/profile",
@@ -109,9 +109,18 @@ export const clientMenu = [
   },
 ];
 
-export const taskViewMenu = ["Details", "Comments", "Sub Tasks", "Attachments"];
+export const taskViewMenu: string[] = [
+  "Details",
+  "Comments",
+  "Sub Tasks",
+  "Attachments",
+];
 
-export const CLIENT_CATEGORIES = [
+export const CLIENT_CATEGORIES: Array<{
+  label: string;
+  value: string;
+  subCategories?: Array<{ label: string; value: string }>;
+}> = [
   { label: "INDIVIDUAL", value: "individual" },
   { label: "HUF", value: "huf" },
   {

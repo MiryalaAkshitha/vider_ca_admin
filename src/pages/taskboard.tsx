@@ -1,23 +1,21 @@
 import { Add } from "@mui/icons-material";
-import { Fab, Typography, Menu, MenuItem, ListItemIcon } from "@mui/material";
-import Board from "views/taskboard/board";
-import { useQuery, UseQueryResult } from "react-query";
+import { Fab, ListItemIcon, MenuItem, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { getTasks } from "api/tasks";
 import Loader from "components/Loader";
-import { DataResponse } from "types";
-import { Box } from "@mui/system";
-import CreateTask from "views/taskboard/board/CreateTask";
+import MenuWrapper from "components/MenuWrapper";
 import { useState } from "react";
+import { useQuery } from "react-query";
+import { ResponseType } from "types";
+import Board from "views/taskboard/board";
+import CreateTask from "views/taskboard/board/CreateTask";
 import CreateRecurringTask from "views/taskboard/board/CreateTask/CreateRecurringTask";
 
 function TaskBoard() {
   const [open, setOpen] = useState<boolean>(false);
   const [openRecurring, setOpenRecurring] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
-    "tasks",
-    getTasks
-  );
+  const { data, isLoading }: ResponseType = useQuery("tasks", getTasks);
 
   if (isLoading) return <Loader />;
 
@@ -41,21 +39,10 @@ function TaskBoard() {
       >
         <Add />
       </Fab>
-      <Menu
+      <MenuWrapper
         anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-        onClick={() => setAnchorEl(null)}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            transform: "translateY(-10px)",
-            minWidth: 200,
-            py: 1,
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "bottom" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        setAnchorEl={setAnchorEl}
+        type="bottom-right"
       >
         <MenuItem sx={{ py: 1, m: 0 }} onClick={() => setOpen(true)}>
           <ListItemIcon>
@@ -69,7 +56,7 @@ function TaskBoard() {
           </ListItemIcon>
           <Typography variant="body2">Create Recurring Task</Typography>
         </MenuItem>
-      </Menu>
+      </MenuWrapper>
       <CreateTask open={open} setOpen={setOpen} />
       <CreateRecurringTask open={openRecurring} setOpen={setOpenRecurring} />
     </Box>

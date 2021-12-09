@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 import BreadCrumbs from "components/BreadCrumbs";
+import RouterLink from "components/RouterLink";
 import useTitle from "hooks/useTitle";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { clientMenu } from "utils/constants";
-import { ProfileNav, ProfileNavItem } from "views/clients/styles";
+import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 
 function ClientProfile() {
   const params = useParams();
@@ -16,19 +17,20 @@ function ClientProfile() {
       <Box p={2}>
         <BreadCrumbs page="clientProfile" />
       </Box>
-      <ProfileNav>
+      <StyledProfileNav>
         {clientMenu.map((item, index) => (
-          <Link
+          <RouterLink
             to={`/clients/${params.clientId}${item.path}`}
             key={index}
-            style={{ textDecoration: "none" }}
           >
-            <ProfileNavItem active={location.pathname.includes(item.path)}>
+            <StyledProfileNavItem
+              active={location.pathname.includes(item.path)}
+            >
               {item.title}
-            </ProfileNavItem>
-          </Link>
+            </StyledProfileNavItem>
+          </RouterLink>
         ))}
-      </ProfileNav>
+      </StyledProfileNav>
       <Outlet />
     </div>
   );

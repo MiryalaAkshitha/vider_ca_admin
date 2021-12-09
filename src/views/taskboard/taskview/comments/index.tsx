@@ -22,7 +22,7 @@ function Comments() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box p={2}>
+    <>
       <Typography variant="subtitle1" color="primary">
         Comments
       </Typography>
@@ -32,7 +32,7 @@ function Comments() {
           <TaskComment data={comment} key={index} />
         ))}
       </Box>
-    </Box>
+    </>
   );
 }
 

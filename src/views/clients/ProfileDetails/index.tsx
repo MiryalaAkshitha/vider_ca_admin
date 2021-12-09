@@ -1,16 +1,11 @@
 import { Box } from "@mui/system";
-import { getOneClient, updateClient } from "api/client";
+import { getClient, updateClient } from "api/client";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DataResponse } from "types";
+import { ResponseType } from "types";
 import Details from "./Details";
 import Profile from "./Profile";
 
@@ -20,9 +15,9 @@ function ProfileDetails() {
   const [state, setState] = useState<any>({});
   const queryClient = useQueryClient();
 
-  const { isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
+  const { isLoading }: ResponseType = useQuery(
     ["client", params.clientId],
-    getOneClient,
+    getClient,
     {
       onSuccess: (res: any) => {
         setState(res.data);
@@ -34,7 +29,7 @@ function ProfileDetails() {
   const { mutate, isLoading: updateProfileLoading } = useMutation(
     updateClient,
     {
-      onSuccess: (res: any) => {
+      onSuccess: () => {
         queryClient.invalidateQueries("client");
         snack.success("Profile Updated");
       },

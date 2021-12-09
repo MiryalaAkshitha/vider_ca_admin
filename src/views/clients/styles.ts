@@ -1,14 +1,14 @@
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const ProfileNav = styled("div")(({ theme }) => ({
+export const StyledProfileNav = styled("div")(({ theme }) => ({
   background: "#F5F5F5",
   display: "flex",
   justifyContent: "center",
   gap: 30,
 }));
 
-export const ProfileNavItem = styled(Typography)<{ active: boolean }>(
+export const StyledProfileNavItem = styled(Typography)<{ active: boolean }>(
   ({ theme, active }) => ({
     padding: "15px 0px",
     position: "relative",
@@ -156,4 +156,10 @@ export const StyledRecurProfileItem = styled("div")<{
   padding: "13px 10px",
   backgroundColor: active ? "rgb(24, 47, 83, 0.08)" : "white",
   borderBottom: last ? "none" : "1px solid rgba(0,0,0,0.1)",
+}));
+
+export const StyledTaskSection = styled("div")(({ theme }) => ({
+  padding: 30,
+  paddingBottom: 50,
+  borderBottom: "4px solid rgba(0,0,0,0.05)",
 }));

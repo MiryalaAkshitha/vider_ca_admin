@@ -6,15 +6,21 @@ import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
-import renderField from "./renderField";
+import { renderField } from "views/clients/ClientInfo/renderField";
 
-function KybDetails({ state, forms, setState }: any) {
+interface IKybDetailsProps {
+  state: any[];
+  forms: any[];
+  setState: (state: any[]) => void;
+}
+
+function KybDetails({ state, forms, setState }: IKybDetailsProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const params = useParams();
   const confirm = useConfirm();
 
-  const onChange = (field, e) => {
+  const onChange = (field: any, e: any) => {
     let type = field?.fieldType;
     let newFields = [...state];
     let index = newFields.findIndex((item) => item.id === field?.id);
@@ -36,7 +42,7 @@ function KybDetails({ state, forms, setState }: any) {
     },
   });
 
-  const handleDelete = (form) => {
+  const handleDelete = (form: string) => {
     confirm({
       msg: "Are you sure you want to delete?",
       action: () => {
@@ -62,7 +68,7 @@ function KybDetails({ state, forms, setState }: any) {
               .filter((item) => item?.form === form)
               .map((field, index) => (
                 <Grid item xs={6} key={index}>
-                  {renderField(field, (e) => onChange(field, e))}
+                  {renderField(field, (e: any) => onChange(field, e))}
                 </Grid>
               ))}
           </Grid>

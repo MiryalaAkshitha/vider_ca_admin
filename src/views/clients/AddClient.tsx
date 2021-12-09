@@ -1,27 +1,14 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Drawer,
-  IconButton,
-  MenuItem,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createClient } from "api/client";
 import { getUsers } from "api/users";
+import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
-import { DataResponse, DialogProps } from "types";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { DialogProps, ResponseType, SubmitType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 
 interface StateProps {
@@ -46,12 +33,13 @@ function AddClient({ open, setOpen }: DialogProps) {
   });
   let formRef = useRef<HTMLFormElement>(null);
 
-  const {
-    data: users,
-    isLoading: userLoading,
-  }: UseQueryResult<DataResponse, Error> = useQuery("users", getUsers, {
-    enabled: open,
-  });
+  const { data: users, isLoading: userLoading }: ResponseType = useQuery(
+    "users",
+    getUsers,
+    {
+      enabled: open,
+    }
+  );
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {
@@ -80,7 +68,7 @@ function AddClient({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     mutate(state);
   };
@@ -90,20 +78,7 @@ function AddClient({ open, setOpen }: DialogProps) {
   )?.subCategories;
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Add Client</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add Client">
       {userLoading ? (
         <Loader />
       ) : (
@@ -169,7 +144,7 @@ function AddClient({ open, setOpen }: DialogProps) {
               label="Client Manager"
               select
             >
-              {users?.data?.map((item, index) => (
+              {users?.data?.map((item: any, index: number) => (
                 <MenuItem key={index} value={item?.id}>
                   {item?.firstName + " " + item?.lastName}
                 </MenuItem>
@@ -209,7 +184,7 @@ function AddClient({ open, setOpen }: DialogProps) {
           </Box>
         </form>
       )}
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

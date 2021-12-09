@@ -4,23 +4,32 @@ import { Checkbox } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { icons } from "assets";
+import _ from "lodash";
 import { StyledTreeItemRoot } from "views/taskboard/styles";
 
 function StyledTreeItem(props) {
-  const { item, nodeId, data } = props;
+  const { item, nodeId, data, onFileChange } = props;
 
   return (
     <StyledTreeItemRoot
       nodeId={nodeId}
       collapseIcon={item?.type === "folder" && <ArrowDropDownIcon />}
       expandIcon={<ArrowRightIcon />}
-      label={<TreeLabel item={item} />}
+      label={<TreeLabel item={item} onFileChange={onFileChange} />}
       {...(data[item?.id] && {
         children: (
           <>
-            {data[item?.id]?.map((item: any) => (
-              <StyledTreeItem item={item} nodeId={item?.id} data={data} />
-            ))}
+            {_.orderBy(data[item?.id], ["type"], ["desc"])?.map(
+              (item: any, index) => (
+                <StyledTreeItem
+                  item={item}
+                  nodeId={item?.id?.toString()}
+                  data={data}
+                  onFileChange={onFileChange}
+                  key={index}
+                />
+              )
+            )}
           </>
         ),
       })}
@@ -28,7 +37,7 @@ function StyledTreeItem(props) {
   );
 }
 
-const TreeLabel = ({ item }: any) => {
+const TreeLabel = ({ item, onFileChange }: any) => {
   return (
     <>
       {item?.type === "folder" ? (
@@ -44,7 +53,11 @@ const TreeLabel = ({ item }: any) => {
         </Box>
       ) : (
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Checkbox sx={{ ml: -1 }} size="small" />
+          <Checkbox
+            sx={{ ml: -1 }}
+            size="small"
+            onChange={(e) => onFileChange(item?.id)}
+          />
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}

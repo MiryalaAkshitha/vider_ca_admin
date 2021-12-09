@@ -69,16 +69,7 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ClientLibrary />
-        <Box sx={{ mt: 3, display: "flex", gap: 2, justifyContent: "center" }}>
-          <LoadingButton
-            title="Upload Files"
-            disableElevation
-            color="secondary"
-            loading={false}
-          />
-          <GreyButton onClick={() => setOpen(false)}>Cancel</GreyButton>
-        </Box>
+        <ClientLibrary setOpen={setOpen} />
       </TabPanel>
     </Dialog>
   );

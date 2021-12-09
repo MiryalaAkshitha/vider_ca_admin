@@ -1,23 +1,13 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Checkbox,
-  Drawer,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createContactPerson } from "api/client";
+import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
-import { DialogProps } from "types";
+import { DialogProps, InputChangeType } from "types";
 
 interface StateProps {
   name: string;
@@ -44,7 +34,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
   const [state, setState] = useState(initialState);
   let formRef = useRef<HTMLFormElement>(null);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: InputChangeType) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -77,20 +67,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Add Contact Person</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add Contact Person">
       <form onSubmit={handleSubmit} ref={formRef}>
         <Box p={2}>
           <TextField
@@ -170,7 +147,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
           </Box>
         </Box>
       </form>
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

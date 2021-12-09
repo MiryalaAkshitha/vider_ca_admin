@@ -3,7 +3,13 @@ import { Box } from "@mui/system";
 import { StyledLabel } from "views/labels/styles";
 import ProfileImage from "./ProfileImage";
 
-function Profile({ data, setState, onUpdate }: any) {
+interface IProfileProps {
+  data: any;
+  onUpdate: () => void;
+  setState: (state: any) => void;
+}
+
+function Profile({ data, setState, onUpdate }: IProfileProps) {
   return (
     <Box>
       <Grid
@@ -25,7 +31,7 @@ function Profile({ data, setState, onUpdate }: any) {
             <Box maxWidth={400} display="flex" gap={2} alignItems="center">
               <ProfileImage
                 src={data?.imageUrl}
-                onChange={(v) => setState({ ...data, image: v })}
+                onChange={(v: string) => setState({ ...data, image: v })}
               />
               <Box flex={1}>
                 <Typography variant="subtitle2">{data?.displayName}</Typography>

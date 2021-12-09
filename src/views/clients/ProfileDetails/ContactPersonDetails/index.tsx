@@ -5,7 +5,11 @@ import { useState } from "react";
 import AddContactPerson from "./AddContactPerson";
 import ContactPerson from "./ContactPerson";
 
-function ContactPersonDetails({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function ContactPersonDetails({ data }: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (

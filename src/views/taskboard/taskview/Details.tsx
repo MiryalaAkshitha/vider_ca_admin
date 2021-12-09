@@ -55,7 +55,7 @@ function Details() {
   if (loading) return <Loader minHeight="60vh" />;
 
   return (
-    <Box p={2}>
+    <>
       <Box
         display="flex"
         p={3}
@@ -282,7 +282,7 @@ function Details() {
           </Button>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 

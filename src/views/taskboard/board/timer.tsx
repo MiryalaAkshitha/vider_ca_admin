@@ -1,15 +1,21 @@
-import { Typography } from "@mui/material";
 import moment from "moment";
+import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
-function Timer({ startTime }: { startTime: number | null }) {
+type Props = {
+  startTime: number | null;
+};
+
+function Timer({ startTime }: Props) {
   const [state, setState] = useState<number | null>(null);
 
   useEffect(() => {
     setState(new Date().getTime() - startTime!);
+
     const handleTimer = setTimeout(() => {
       setState(new Date().getTime() - startTime!);
     }, 1000);
+
     return () => {
       clearTimeout(handleTimer);
     };

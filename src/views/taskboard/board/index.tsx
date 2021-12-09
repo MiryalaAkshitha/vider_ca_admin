@@ -12,6 +12,10 @@ import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, getContainerHeight, move, reorder, TaskStatus } from "./utils";
 
+type Props = {
+  data: any;
+};
+
 const initialState = {
   [TaskStatus.TODO]: [],
   [TaskStatus.IN_PROGRESS]: [],
@@ -20,17 +24,14 @@ const initialState = {
   [TaskStatus.DONE]: [],
 };
 
-function Board({ data }: any) {
+function Board({ data }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState(initialState);
   const [openRemarks, setOpenRemarks] = useState<boolean>(false);
-  const [remarksResolveReject, setRemarksResolveReject] = useState<Function[]>(
-    []
-  );
+  const [remarksPromise, setRemarksPromise] = useState<Function[]>([]);
   const [onHoldTaskId, setOnHoldTaskId] = useState<number | null>(null);
-
-  let listContainerRef = useRef<HTMLElement | null>(null);
+  const listContainerRef = useRef<HTMLElement | null>(null);
 
   const { mutateAsync: reorderItems } = useMutation(reorderTasks, {
     onSuccess: () => {
@@ -74,10 +75,10 @@ function Board({ data }: any) {
     });
   }, [data]);
 
-  const remarksPromise = () => {
+  const handleRemarks = () => {
     return new Promise((resolve, reject) => {
       setOpenRemarks(true);
-      setRemarksResolveReject([resolve, reject]);
+      setRemarksPromise([resolve, reject]);
     });
   };
 
@@ -104,7 +105,7 @@ function Board({ data }: any) {
 
       if (destination.droppableId === TaskStatus.ON_HOLD) {
         setOnHoldTaskId(sourceItem.id);
-        await remarksPromise();
+        await handleRemarks();
       }
 
       await updateTaskStatus({
@@ -185,7 +186,7 @@ function Board({ data }: any) {
                   </Box>
                 </Box>
                 <Droppable droppableId={key}>
-                  {(provided, snapshot) => (
+                  {(provided: any, snapshot: any) => (
                     <StyledDraggableList
                       ref={(ref) => {
                         listContainerRef.current = ref;
@@ -194,13 +195,13 @@ function Board({ data }: any) {
                       height={getContainerHeight(listContainerRef.current)}
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
-                      {state[key].map((item, index) => (
+                      {state[key].map((item: any, index: number) => (
                         <Draggable
                           key={item?.uid}
                           draggableId={item?.uid}
                           index={index}
                         >
-                          {(provided, snapshot) => (
+                          {(provided: any, snapshot: any) => (
                             <StyledDraggableItem
                               ref={provided.innerRef}
                               {...provided.draggableProps}
@@ -224,7 +225,7 @@ function Board({ data }: any) {
       </Box>
       <AddRemarks
         onHoldTaskId={onHoldTaskId}
-        remarksResolveReject={remarksResolveReject}
+        remarksPromise={remarksPromise}
         open={openRemarks}
         setOpen={setOpenRemarks}
       />

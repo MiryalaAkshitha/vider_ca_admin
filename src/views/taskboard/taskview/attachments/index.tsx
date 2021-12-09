@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getTaskAttachments } from "api/tasks";
 import Loader from "components/Loader";
@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 import { DataResponseType } from "types/createTask.types";
 import NoAttachments from "./NoAttachments";
 import UploadAttachmentModal from "./UploadAttachmentModal";
+import File from "views/clients/Attachments/Files/File";
 
 function Attachments() {
   const params: any = useParams();
@@ -22,27 +23,38 @@ function Attachments() {
   );
 
   if (isLoading) return <Loader />;
+
   return (
-    <Box p={2}>
+    <>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
           Attachments
         </Typography>
         {data?.data?.length ? (
-          <Button color="secondary" variant="outlined">
+          <Button
+            onClick={() => setOpen(true)}
+            color="secondary"
+            variant="outlined"
+          >
             Add Attachment
           </Button>
         ) : null}
       </Box>
-      <Box>
-        {data?.data?.length ? (
-          data?.data?.map((comment: any, index: number) => <h1>hello</h1>)
-        ) : (
-          <NoAttachments action={() => setOpen(true)} />
-        )}
+      <Box mt={3}>
+        <Grid container spacing={2}>
+          {data?.data?.length ? (
+            data?.data?.map((item: any, index: number) => (
+              <Grid item md={4} lg={3} xl={2}>
+                <File data={item} key={index} />
+              </Grid>
+            ))
+          ) : (
+            <NoAttachments action={() => setOpen(true)} />
+          )}
+        </Grid>
       </Box>
       <UploadAttachmentModal open={open} setOpen={setOpen} />
-    </Box>
+    </>
   );
 }
 

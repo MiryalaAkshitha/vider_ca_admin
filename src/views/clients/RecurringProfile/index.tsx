@@ -3,9 +3,9 @@ import { Box } from "@mui/system";
 import { getRecurringProfiles } from "api/recurring";
 import Loader from "components/Loader";
 import { useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { DataResponse } from "types";
+import { ResponseType } from "types";
 import {
   StyledRecurItemsContainer,
   StyledRecurProfileContainer,
@@ -18,7 +18,7 @@ function RecurringProfile() {
   const params: any = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     ["recurring-profiles", params.clientId],
     getRecurringProfiles
   );

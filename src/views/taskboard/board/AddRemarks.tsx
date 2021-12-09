@@ -16,19 +16,20 @@ import { useMutation } from "react-query";
 import { DialogProps } from "types";
 
 interface AddRemarksProps extends DialogProps {
-  remarksResolveReject: Function[];
+  remarksPromise: Function[];
   onHoldTaskId: number | null;
 }
 
 function AddRemarks(props: AddRemarksProps) {
-  const { open, setOpen, remarksResolveReject, onHoldTaskId } = props;
+  const { open, setOpen, remarksPromise, onHoldTaskId } = props;
   const snack = useSnack();
   const [remarks, setRemarks] = useState<string>("");
-  const [resolve, reject] = remarksResolveReject;
+  const [resolve, reject] = remarksPromise;
 
   const { mutate, isLoading } = useMutation(updateTask, {
     onSuccess: () => {
       setOpen(false);
+      setRemarks("");
       resolve();
     },
     onError: (err: any) => {
@@ -63,6 +64,7 @@ function AddRemarks(props: AddRemarksProps) {
           variant="outlined"
           fullWidth
           onChange={(e) => setRemarks(e.target.value)}
+          value={remarks}
           size="small"
           label="Remarks"
           InputLabelProps={{ shrink: true }}

@@ -4,21 +4,25 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { StyledTable, StyledTableLoader } from "./styles";
 
+export type ColumnType = {
+  key: string;
+  title: string;
+  render?: (item: any) => React.ReactElement | null;
+};
+
+type PaginationType = {
+  totalCount: number;
+  pageCount: number;
+  onChange: (v: number) => void;
+};
+
 interface TableProps {
-  columns: Array<{
-    key: string;
-    title: string;
-    render?: (item: any) => React.ReactElement | null;
-  }>;
+  columns: Array<ColumnType>;
   sx?: SystemStyleObject;
   data: any[];
   loading: boolean;
   onRowClick?: (v: any) => void;
-  pagination?: {
-    totalCount: number;
-    pageCount: number;
-    onChange: (v: number) => void;
-  };
+  pagination?: PaginationType;
 }
 
 function Table(props: TableProps) {

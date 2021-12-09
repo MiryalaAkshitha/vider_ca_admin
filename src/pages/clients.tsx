@@ -4,27 +4,16 @@ import { Button, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/client";
 import SearchContainer from "components/SearchContainer";
-import Table from "components/Table";
+import Table, { ColumnType } from "components/Table";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { ResponseType } from "types";
 import AddClient from "views/clients/AddClient";
 import ClientFilter from "views/clients/Filter";
 
 let LIMIT = 5;
-
-const columns = [
-  { key: "displayName", title: "Display Name" },
-  { key: "category", title: "Cateogory" },
-  { key: "subCategory", title: "Sub Category" },
-  { key: "mobileNumber", title: "Mobile Number" },
-  { key: "email", title: "Email" },
-];
-
-export interface ClientResponse {
-  data: any[];
-}
 
 function Clients() {
   const navigate = useNavigate();
@@ -39,7 +28,7 @@ function Clients() {
     search: "",
   });
 
-  const { data, isLoading }: UseQueryResult<ClientResponse, Error> = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     [
       "clients",
       {
@@ -115,5 +104,13 @@ function Clients() {
     </Box>
   );
 }
+
+const columns: Array<ColumnType> = [
+  { key: "displayName", title: "Display Name" },
+  { key: "category", title: "Cateogory" },
+  { key: "subCategory", title: "Sub Category" },
+  { key: "mobileNumber", title: "Mobile Number" },
+  { key: "email", title: "Email" },
+];
 
 export default Clients;

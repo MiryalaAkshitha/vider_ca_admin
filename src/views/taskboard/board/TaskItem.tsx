@@ -12,7 +12,11 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import Timer from "./timer";
 
-function TaskItem({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function TaskItem({ data }: Props) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const snack = useSnack();
@@ -23,6 +27,7 @@ function TaskItem({ data }: any) {
     const existingTimer = data?.taskLogHours?.find(
       (item: any) => item.status === "started"
     );
+
     if (existingTimer) {
       setShowTimer(true);
       setStartTime(existingTimer?.startTime);
@@ -72,11 +77,11 @@ function TaskItem({ data }: any) {
     <>
       <Box
         px={2}
-        onClick={() =>
+        onClick={() => {
           navigate(
             `/task-board/${data?.taskId}?clientId=${data?.client?.clientId}`
-          )
-        }
+          );
+        }}
         py={1}
         sx={{ cursor: "pointer" }}
       >

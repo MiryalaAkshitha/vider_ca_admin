@@ -5,9 +5,9 @@ import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps } from "types";
+import { DialogProps, InputChangeType, SubmitType } from "types";
 import { StateProps } from "types/createTask.types";
 import { getTitle } from "utils";
 import { PriorityEnum } from "utils/constants";
@@ -21,7 +21,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
     useCreateTaskInitialData({ enabled: open });
   const [state, setState] = useState<StateProps>(initialState);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: InputChangeType) => {
     if (e.target.name === "category") {
       setState({ ...state, category: +e.target.value, subCategory: null });
       return;
@@ -41,7 +41,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     let apiData = { ...state };
 

@@ -1,23 +1,13 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Checkbox,
-  Drawer,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { updateContactPerson } from "api/client";
+import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
-import { DialogProps } from "types";
+import { DialogProps, InputChangeType } from "types";
 
 interface StateProps {
   name: string;
@@ -52,7 +42,7 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
     setState(data);
   }, [data]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: InputChangeType) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -88,20 +78,7 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Update Contact Person</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Update Contact Person">
       <form onSubmit={handleSubmit} ref={formRef}>
         <Box p={2}>
           <TextField
@@ -191,7 +168,7 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
           </Box>
         </Box>
       </form>
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

@@ -6,6 +6,7 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
+import { InputChangeType, SubmitType } from "types";
 
 function CommentInput() {
   const snack = useSnack();
@@ -25,11 +26,11 @@ function CommentInput() {
     },
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: InputChangeType) => {
     setComment(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitType) => {
     event.preventDefault();
     if (!comment) return;
     mutate({ taskId: params.taskId, data: { text: comment } });

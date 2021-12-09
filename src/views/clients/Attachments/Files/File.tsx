@@ -9,7 +9,11 @@ import {
 } from "views/clients/styles";
 import { renderFile } from "./renderFile";
 
-function File({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function File({ data }: Props) {
   const [dragging, setDragging] = useState(false);
 
   const onDragStart = (e: any) => {

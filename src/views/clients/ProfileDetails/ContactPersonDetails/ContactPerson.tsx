@@ -9,7 +9,11 @@ import { useMutation, useQueryClient } from "react-query";
 import { StyledContactPerson } from "views/clients/styles";
 import EditContactPerson from "./EditContactPerson";
 
-function ContactPerson({ data }) {
+type Props = {
+  data: any;
+};
+
+function ContactPerson({ data }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [open, setOpen] = useState<boolean>(false);
@@ -27,7 +31,7 @@ function ContactPerson({ data }) {
   });
 
   const handleRemove = () => {
-    mutate(data.id);
+    mutate(data?.id);
   };
 
   return (
