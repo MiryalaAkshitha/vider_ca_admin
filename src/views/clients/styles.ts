@@ -78,6 +78,7 @@ export const StyledUploadStatusDrawer = styled("div")(() => ({
   position: "fixed",
   left: 20,
   bottom: 0,
+  zIndex: 500000,
 }));
 
 export const StyledProfileImageContainer = styled("div")(() => ({

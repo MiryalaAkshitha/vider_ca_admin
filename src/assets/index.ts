@@ -32,8 +32,18 @@ import audio from "./icons/filetypes/audio.png";
 import recurring from "./icons/recurring.svg";
 import profileImage from "./images/profile.jpg";
 import noAttachments from "./images/no_attachments.svg";
+import noSubTasks from "./images/noSubTasks.svg";
 
-export { quote, logo, loginBg, whiteLogo, empty, profileImage, noAttachments };
+export {
+  quote,
+  logo,
+  loginBg,
+  whiteLogo,
+  empty,
+  profileImage,
+  noAttachments,
+  noSubTasks,
+};
 
 export let icons = {
   folder,

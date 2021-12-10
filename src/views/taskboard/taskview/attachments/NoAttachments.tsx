@@ -14,7 +14,7 @@ function NoAttachments({ action }: Props) {
       maxWidth={500}
       mx="auto"
       display="flex"
-      gap={2}
+      gap={4}
       alignItems="center"
     >
       <div>

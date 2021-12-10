@@ -111,9 +111,11 @@ export const clientMenu: Array<{ title: string; path: string }> = [
 
 export const taskViewMenu: string[] = [
   "Details",
+  "Description",
   "Comments",
   "Sub Tasks",
   "Attachments",
+  "Log Hours",
 ];
 
 export const CLIENT_CATEGORIES: Array<{

@@ -1,11 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
-import { noAttachments } from "assets";
+import { noSubTasks } from "assets";
 
 type Props = {
   action: () => void;
 };
 
-function NoAttachments({ action }: Props) {
+function NoSubTasks({ action }: Props) {
   return (
     <Box
       px={2}
@@ -14,11 +14,11 @@ function NoAttachments({ action }: Props) {
       maxWidth={500}
       mx="auto"
       display="flex"
-      gap={2}
+      gap={4}
       alignItems="center"
     >
       <div>
-        <img src={noAttachments} alt="" />
+        <img src={noSubTasks} alt="" />
       </div>
       <div>
         <Typography variant="subtitle2" gutterBottom>
@@ -40,4 +40,4 @@ function NoAttachments({ action }: Props) {
   );
 }
 
-export default NoAttachments;
+export default NoSubTasks;

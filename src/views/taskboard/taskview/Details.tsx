@@ -10,42 +10,22 @@ import {
 import { Box } from "@mui/system";
 import Loader from "components/Loader";
 import moment from "moment";
-import { useEffect, useState } from "react";
 import { getTitle } from "utils";
-import { TaskStatus } from "../board/utils";
-import useTaskViewData from "./useTaskViewData";
 import { PriorityEnum } from "utils/constants";
-import { updateTask } from "api/services/tasks";
-import useSnack from "hooks/useSnack";
-import { useMutation } from "react-query";
+import { TaskStatus } from "../board/utils";
+import useTaskViewData from "./useTaskDetailsData";
 
-function Details() {
-  const { users, task, loading, categories, labels } = useTaskViewData();
-  const [state, setState] = useState<any>({});
-  const snack = useSnack();
+interface Props {
+  state: any;
+  setState: (state: any) => void;
+  handleUpdate: () => void;
+}
 
-  useEffect(() => {
-    setState(task?.data);
-  }, [task]);
-
-  const { mutate } = useMutation(updateTask, {
-    onSuccess: () => {
-      snack.success("Task Details Updated");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
+function Details({ state, setState, handleUpdate }: Props) {
+  const { users, loading, categories, labels } = useTaskViewData();
 
   const handleChange = (e: any) => {
     setState({ ...state, [e.target.name]: e.target.value });
-  };
-
-  const handleUpdate = () => {
-    mutate({
-      id: task?.data?.id,
-      data: state,
-    });
   };
 
   let subCategories = categories?.data.find(
@@ -72,7 +52,7 @@ function Details() {
             </Typography>
             <Typography variant="body2" color="gray">
               Created by {state?.user?.firstName + " " + state?.user?.lastName}{" "}
-              on {moment(task?.data?.createdAt).format("MMM Do YYYY, hh:mm a")}
+              on {moment(state?.createdAt).format("MMM Do YYYY, hh:mm a")}
             </Typography>
           </div>
         </Box>
