@@ -2,7 +2,11 @@ import { Avatar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import moment from "moment";
 
-function TaskComment({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function TaskComment({ data }: Props) {
   return (
     <Box mt={4} borderBottom="1px solid rgba(0,0,0,0.08)" pb={3}>
       <Box maxWidth={1000}>

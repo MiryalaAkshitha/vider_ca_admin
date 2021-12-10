@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { getStorage } from "api/storage";
+import { getStorage } from "api/services/storage";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";

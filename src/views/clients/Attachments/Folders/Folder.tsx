@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { moveFile } from "api/storage";
+import { moveFile } from "api/services/storage";
 import { icons } from "assets";
 import RouterLink from "components/RouterLink";
 import useSnack from "hooks/useSnack";

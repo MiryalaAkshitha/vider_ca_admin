@@ -2,7 +2,11 @@ import { Avatar, Typography } from "@mui/material";
 import { icons } from "assets";
 import { StyledUserCard } from "./styles";
 
-function UserCard({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function UserCard({ data }: Props) {
   return (
     <StyledUserCard>
       <Avatar

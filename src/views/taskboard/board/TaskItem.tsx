@@ -3,7 +3,7 @@ import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { endTimer, startTimer } from "api/tasks";
+import { endTimer, startTimer } from "api/services/tasks";
 import { icons } from "assets";
 import useSnack from "hooks/useSnack";
 import moment from "moment";

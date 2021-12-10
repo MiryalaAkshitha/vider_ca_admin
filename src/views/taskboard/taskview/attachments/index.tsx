@@ -1,20 +1,20 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getTaskAttachments } from "api/tasks";
+import { getTaskAttachments } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { DataResponseType } from "types/createTask.types";
+import { ResponseType } from "types";
+import File from "views/clients/Attachments/Files/File";
 import NoAttachments from "./NoAttachments";
 import UploadAttachmentModal from "./UploadAttachmentModal";
-import File from "views/clients/Attachments/Files/File";
 
 function Attachments() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: DataResponseType = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     ["task-attachments", params.taskId],
     getTaskAttachments,
     {

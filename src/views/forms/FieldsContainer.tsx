@@ -1,13 +1,14 @@
 import { Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getFields } from "api/forms";
+import { getFields } from "api/services/forms";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { addField, selectForm } from "redux/reducers/formsSlice";
+import { ResponseType } from "types";
 
 export type FieldItem = {
   id: number;
@@ -23,10 +24,7 @@ function FieldsContainer() {
   const dispatch = useDispatch();
   const snack = useSnack();
   const [search, setSearch] = useState<string>("");
-  const { data, isLoading }: UseQueryResult<FieldResponse, Error> = useQuery(
-    ["fields"],
-    getFields
-  );
+  const { data, isLoading }: ResponseType = useQuery(["fields"], getFields);
 
   const handleAddField = (v: any) => {
     let existingField = addedFields.find((item: any) => item.field.id === v.id);
@@ -58,11 +56,12 @@ function FieldsContainer() {
       />
       <Box>
         {data?.data
-          .filter((item) => {
-            return item.name.toLowerCase().indexOf(search.toLowerCase()) > -1;
+          .filter((item: any) => {
+            return item?.name?.toLowerCase().indexOf(search.toLowerCase()) > -1;
           })
-          ?.map((item, index) => (
+          ?.map((item: any, index: number) => (
             <Box
+              key={index}
               mt={2}
               sx={{ cursor: "pointer" }}
               onClick={() => handleAddField(item)}

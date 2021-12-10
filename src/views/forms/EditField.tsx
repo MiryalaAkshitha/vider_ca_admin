@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateField } from "api/forms";
+import { updateField } from "api/services/forms";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useEffect, useState } from "react";
@@ -97,13 +97,14 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       PaperProps={{ sx: { width: 550 } }}
       open={open}
-      onClose={setOpen}>
-      <AppBar position='static'>
+      onClose={setOpen}
+    >
+      <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Edit Field</Typography>
+          <Typography variant="subtitle1">Edit Field</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -114,25 +115,26 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
           <TextField
             onChange={handleChange}
             sx={{ mt: 2 }}
-            variant='outlined'
+            variant="outlined"
             value={state.name}
             fullWidth
-            size='small'
+            size="small"
             required
-            name='name'
-            label='Name'
+            name="name"
+            label="Name"
           />
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
             required
             value={state.fieldType}
             onChange={handleChange}
-            name='fieldType'
-            size='small'
+            name="fieldType"
+            size="small"
             select
-            label='Field Type'>
+            label="Field Type"
+          >
             {FIELD_TYPES.map((item, index) => (
               <MenuItem value={item.value} key={index}>
                 {item.label}
@@ -143,17 +145,17 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
             {showOptions() && (
               <>
                 {state.options.map((item, index) => (
-                  <Box display='flex' mt={2} gap={1} alignItems='center'>
+                  <Box display="flex" mt={2} gap={1} alignItems="center">
                     <TextField
                       key={index}
-                      variant='outlined'
+                      variant="outlined"
                       onChange={(e) => handleOptionChange(e, index)}
                       fullWidth
                       value={item}
-                      size='small'
+                      size="small"
                       placeholder={`Option ${index + 1}`}
                       required
-                      name='name'
+                      name="name"
                     />
                     <div>
                       <IconButton onClick={() => handleOptionDelete(index)}>
@@ -166,10 +168,11 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
                   <Button
                     onClick={handleAddOption}
                     sx={{ minWidth: 50 }}
-                    color='secondary'
-                    variant='outlined'
-                    size='small'
-                    startIcon={<Add />}>
+                    color="secondary"
+                    variant="outlined"
+                    size="small"
+                    startIcon={<Add />}
+                  >
                     Add
                   </Button>
                 </Box>
@@ -181,47 +184,47 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
               <TextField
                 sx={{ mt: 3 }}
                 value={state.maxLength}
-                variant='outlined'
-                type='number'
+                variant="outlined"
+                type="number"
                 onChange={handleChange}
                 fullWidth
-                size='small'
-                name='maxLength'
-                label='Min Length'
+                size="small"
+                name="maxLength"
+                label="Min Length"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 sx={{ mt: 3 }}
-                variant='outlined'
+                variant="outlined"
                 fullWidth
-                size='small'
-                name='minLength'
+                size="small"
+                name="minLength"
                 value={state.minLength}
-                type='number'
+                type="number"
                 onChange={handleChange}
-                label='Max Length'
+                label="Max Length"
               />
             </Grid>
           </Grid>
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             fullWidth
-            size='small'
+            size="small"
             onChange={handleChange}
             value={state.regexPattern}
-            name='regexPattern'
-            label='Regex Pattern'
+            name="regexPattern"
+            label="Regex Pattern"
           />
-          <Box display='flex' justifyContent='flex-end' mt={3} gap={2}>
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
               fullWidth
-              type='submit'
-              loadingColor='white'
-              title='Update Field'
-              color='secondary'
+              type="submit"
+              loadingColor="white"
+              title="Update Field"
+              color="secondary"
             />
           </Box>
         </Box>

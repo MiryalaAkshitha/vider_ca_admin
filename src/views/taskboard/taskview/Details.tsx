@@ -15,7 +15,7 @@ import { getTitle } from "utils";
 import { TaskStatus } from "../board/utils";
 import useTaskViewData from "./useTaskViewData";
 import { PriorityEnum } from "utils/constants";
-import { updateTask } from "api/tasks";
+import { updateTask } from "api/services/tasks";
 import useSnack from "hooks/useSnack";
 import { useMutation } from "react-query";
 
@@ -49,7 +49,7 @@ function Details() {
   };
 
   let subCategories = categories?.data.find(
-    (item) => item?.id === state?.category?.id
+    (item: any) => item?.id === state?.category?.id
   )?.subCategories;
 
   if (loading) return <Loader minHeight="60vh" />;

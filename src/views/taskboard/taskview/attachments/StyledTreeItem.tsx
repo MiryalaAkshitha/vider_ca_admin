@@ -7,7 +7,14 @@ import { icons } from "assets";
 import _ from "lodash";
 import { StyledTreeItemRoot } from "views/taskboard/styles";
 
-function StyledTreeItem(props) {
+interface Props {
+  item: any;
+  nodeId: string;
+  data: any;
+  onFileChange: (id: number) => void;
+}
+
+function StyledTreeItem(props: Props) {
   const { item, nodeId, data, onFileChange } = props;
 
   return (
@@ -37,7 +44,12 @@ function StyledTreeItem(props) {
   );
 }
 
-const TreeLabel = ({ item, onFileChange }: any) => {
+type TreeLabelProps = {
+  item: any;
+  onFileChange: (id: number) => void;
+};
+
+const TreeLabel = ({ item, onFileChange }: TreeLabelProps) => {
   return (
     <>
       {item?.type === "folder" ? (
@@ -56,7 +68,7 @@ const TreeLabel = ({ item, onFileChange }: any) => {
           <Checkbox
             sx={{ ml: -1 }}
             size="small"
-            onChange={(e) => onFileChange(item?.id)}
+            onChange={() => onFileChange(item?.id)}
           />
           <Typography
             variant="body2"

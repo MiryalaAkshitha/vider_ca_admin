@@ -1,20 +1,15 @@
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createSubTask } from "api/tasks";
-import { getUsers } from "api/users";
+import { createSubTask } from "api/services/tasks";
+import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DialogProps } from "types";
+import { DialogProps, ResponseType, SubmitType } from "types";
 import { getTitle } from "utils";
 import { PriorityEnum } from "utils/constants";
 
@@ -38,18 +33,10 @@ function AddSubTask({ open, setOpen }: DialogProps) {
     members: [],
   });
 
-  const { data, isLoading }: UseQueryResult<any, Error> = useQuery(
-    "users",
-    getUsers,
-    {
-      refetchOnWindowFocus: false,
-      enabled: open,
-    }
-  );
-
-  const handleChange = (e: any) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
+  const { data, isLoading }: ResponseType = useQuery("users", getUsers, {
+    refetchOnWindowFocus: false,
+    enabled: open,
+  });
 
   const { mutate, isLoading: createLoading } = useMutation(createSubTask, {
     onSuccess: () => {
@@ -62,9 +49,13 @@ function AddSubTask({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e: any) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    if (state.members.length === 0) {
+    if (!state.members.length) {
       snack.error("Please select atleast one member");
       return;
     }

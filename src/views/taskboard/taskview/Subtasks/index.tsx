@@ -1,11 +1,11 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getSubTasks } from "api/tasks";
+import { getSubTasks } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { DataResponseType } from "types/createTask.types";
+import { ResponseType } from "types";
 import AddSubTask from "./AddSubTask";
 import NoSubTasks from "./NoSubTasks";
 import SubTasksList from "./SubTasksList";
@@ -14,7 +14,7 @@ function SubTasks() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: DataResponseType = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     ["subtasks", params.taskId],
     getSubTasks,
     {

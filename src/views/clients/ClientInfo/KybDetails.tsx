@@ -1,7 +1,7 @@
 import { Remove } from "@mui/icons-material";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteClientInfo } from "api/client-info";
+import { deleteClientInfo } from "api/services/client-info";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";

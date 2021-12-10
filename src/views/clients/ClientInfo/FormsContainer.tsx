@@ -1,7 +1,7 @@
 import { Button, Divider, List, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { addToClientInfo } from "api/client-info";
-import { getForms } from "api/forms";
+import { addToClientInfo } from "api/services/client-info";
+import { getForms } from "api/services/forms";
 import FullLoader from "components/FullLoader";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";

@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { signup } from "api/users";
+import { signup } from "api/services/users";
 import { whiteLogo } from "assets";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";

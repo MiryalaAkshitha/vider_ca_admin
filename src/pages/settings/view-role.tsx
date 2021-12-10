@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getPermissions, getRole, updateRole } from "api/roles";
+import { getPermissions, getRole, updateRole } from "api/services/roles";
 import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";

@@ -1,21 +1,8 @@
-import { Close } from "@mui/icons-material";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import { Close } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { Box, SystemStyleObject } from "@mui/system";
-
-export const UploadContainer = styled("div")(() => ({
-  border: "1px dotted grey",
-  display: "flex",
-  borderRadius: "8px",
-  alignItems: "center",
-  justifyContent: "center",
-  position: "relative",
-  minHeight: 150,
-  textAlign: "center",
-  cursor: "pointer",
-  padding: 20,
-}));
+import { StyledFileChip, UploadContainer } from "./styles";
 
 interface UploadProps {
   sx?: SystemStyleObject;
@@ -85,23 +72,12 @@ function FileDrop({ sx, files, setFiles }: UploadProps) {
             {files.length !== 0 && (
               <Box px={4} display="flex" flexWrap="wrap" mt={5} gap={2}>
                 {[...files].map((file, index) => (
-                  <Box
-                    onClick={(e) => handleFileRemove(e, index)}
-                    sx={{
-                      background: "rgba(0,0,0,0.2)",
-                      borderRadius: "2px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      px: 2,
-                      py: "5px",
-                    }}
-                  >
+                  <StyledFileChip onClick={(e) => handleFileRemove(e, index)}>
                     <Typography variant="body2" key={index}>
                       {file.name}
                     </Typography>
                     <Close sx={{ fontSize: 14, mt: "3px" }} />
-                  </Box>
+                  </StyledFileChip>
                 ))}
               </Box>
             )}

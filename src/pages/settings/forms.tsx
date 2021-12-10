@@ -1,34 +1,22 @@
 import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { getForms } from "api/forms";
+import { getForms } from "api/services/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
+import { ResponseType } from "types";
 import CreateForm from "views/forms/AddForm";
 import FormCard from "views/forms/FormCard";
-
-export type FormItem = {
-  id: number;
-  name: string;
-  tags: string[];
-};
-
-interface FormResponse {
-  data: Array<FormItem>;
-}
 
 function Forms() {
   const [open, setOpen] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
-  const { data, isLoading }: UseQueryResult<FormResponse, Error> = useQuery(
-    ["forms"],
-    getForms
-  );
+  const { data, isLoading }: ResponseType = useQuery(["forms"], getForms);
 
   useTitle("Forms");
 
@@ -62,12 +50,13 @@ function Forms() {
             {data?.data.length ? (
               <Grid container spacing={3} sx={{ mt: 2 }}>
                 {data?.data
-                  ?.filter((item) => {
+                  ?.filter((item: any) => {
                     return (
-                      item.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+                      item?.name?.toLowerCase().indexOf(search.toLowerCase()) >
+                      -1
                     );
                   })
-                  .map((item) => (
+                  .map((item: any) => (
                     <Grid item xs={3} key={item.id}>
                       <FormCard data={item} />
                     </Grid>

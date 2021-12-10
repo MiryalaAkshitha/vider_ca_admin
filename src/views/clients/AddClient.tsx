@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createClient } from "api/client";
-import { getUsers } from "api/users";
+import { createClient } from "api/services/client";
+import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";

@@ -1,28 +1,18 @@
 import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { getCategories } from "api/categories";
+import { getCategories } from "api/services/categories";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
+import { ResponseType } from "types";
 import AddCategory from "views/categories/AddCategory";
 import CategoryCard from "views/categories/CategoryCard";
 
-export interface Category {
-  id: number;
-  name: string;
-  image: string;
-  subCategories: [];
-}
-
-export interface CategoryResponse {
-  data: Category[];
-}
-
 function Cateogries() {
   const [open, setOpen] = useState<boolean>(false);
-  const { data, isLoading }: UseQueryResult<CategoryResponse, Error> = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     "categories",
     getCategories
   );

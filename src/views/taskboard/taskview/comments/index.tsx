@@ -1,17 +1,17 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getTaskComments } from "api/tasks";
+import { getTaskComments } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { DataResponseType } from "types/createTask.types";
+import { ResponseType } from "types";
 import TaskComment from "./Comment";
 import CommentInput from "./CommentInput";
 
 function Comments() {
   const params: any = useParams();
 
-  const { data, isLoading }: DataResponseType = useQuery(
+  const { data, isLoading }: ResponseType = useQuery(
     ["task-comments", params.taskId],
     getTaskComments,
     {

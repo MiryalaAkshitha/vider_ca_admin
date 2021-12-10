@@ -1,8 +1,9 @@
+import useSnack from "hooks/useSnack";
 import { Add, Delete } from "@mui/icons-material";
 import { IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import useSnack from "hooks/useSnack";
 import { Dispatch, SetStateAction, useState } from "react";
+import { InputChangeType } from "types";
 import { RecurringStateProps } from "types/createTask.types";
 import { StyledDates } from "views/taskboard/styles";
 
@@ -23,7 +24,7 @@ const CustomDates = ({ state, setState }: IProps) => {
     dueDate: "",
   });
 
-  const handleCustomDateChange = (e: any) => {
+  const handleCustomDateChange = (e: InputChangeType) => {
     setCustomDates({
       ...customDates,
       [e.target.name]: e.target.value,
@@ -43,14 +44,15 @@ const CustomDates = ({ state, setState }: IProps) => {
   };
 
   const deleteCustomDate = (index: number) => {
-    let filtered = state.customDates.filter((_, i) => i !== index);
-    setState({ ...state, customDates: filtered });
+    let newCustomDates = [...state.customDates];
+    newCustomDates.splice(index, 1);
+    setState({ ...state, customDates: newCustomDates });
   };
 
   return (
     <>
       {state.customDates.map((item, index) => (
-        <StyledDates index={index}>
+        <StyledDates index={index} key={index}>
           <Box gap={1} display="flex" sx={{ paddingLeft: "30px" }}>
             <TextField
               variant="outlined"

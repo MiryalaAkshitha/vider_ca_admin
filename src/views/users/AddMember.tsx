@@ -1,19 +1,14 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { getRoles } from "api/roles";
-import { createUser } from "api/users";
+import { getRoles } from "api/services/roles";
+import { createUser } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
-import { DataResponse, DialogProps } from "types";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { DialogProps, InputChangeType, ResponseType, SubmitType } from "types";
 import PasswordField from "views/login/PasswordField";
 
 type State = {
@@ -37,8 +32,11 @@ function AddMember({ open, setOpen }: DialogProps) {
     role: null,
   });
 
-  const { data, isLoading: dataLoading }: UseQueryResult<DataResponse, Error> =
-    useQuery("roles", getRoles, { enabled: open });
+  const { data, isLoading: dataLoading }: ResponseType = useQuery(
+    "roles",
+    getRoles,
+    { enabled: open }
+  );
 
   const { mutate, isLoading } = useMutation(createUser, {
     onSuccess: () => {
@@ -51,11 +49,11 @@ function AddMember({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     mutate(state);
   };

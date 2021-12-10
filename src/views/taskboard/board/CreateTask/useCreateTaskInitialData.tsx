@@ -1,7 +1,7 @@
-import { getCategories } from "api/categories";
-import { getClients } from "api/client";
-import { getLabels } from "api/labels";
-import { getUsers } from "api/users";
+import { getCategories } from "api/services/categories";
+import { getClients } from "api/services/client";
+import { getLabels } from "api/services/labels";
+import { getUsers } from "api/services/users";
 import { useQuery } from "react-query";
 import { DataResponseType } from "types/createTask.types";
 

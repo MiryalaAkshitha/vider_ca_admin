@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { getLabels } from "api/labels";
+import { getLabels } from "api/services/labels";
 import { useEffect, useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { DataResponse, DialogProps } from "types";

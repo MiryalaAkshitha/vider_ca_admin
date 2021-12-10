@@ -10,6 +10,7 @@ const TaskBoard = loadable(() => import("pages/taskboard"));
 const Categories = loadable(() => import("pages/settings/categories"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
+const Teams = loadable(() => import("pages/settings/teams"));
 const Clients = loadable(() => import("pages/clients"));
 const ClientView = loadable(() => import("pages/client-view"));
 const TasksView = loadable(() => import("pages/task-view"));
@@ -56,6 +57,7 @@ function RoutesContainer() {
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="categories" element={<Categories />} />
           <Route path="users" element={<Users />} />
+          <Route path="teams" element={<Teams />} />
           <Route path="labels" element={<Labels />} />
           <Route path="roles-permissions">
             <Route index element={<RolesAndPermissions />} />

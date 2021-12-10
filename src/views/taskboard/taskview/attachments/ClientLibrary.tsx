@@ -1,7 +1,7 @@
 import TreeView from "@mui/lab/TreeView";
 import { Box } from "@mui/system";
-import { getStorageTree } from "api/storage";
-import { addAttachmentsFromStorage } from "api/tasks";
+import { getStorageTree } from "api/services/storage";
+import { addAttachmentsFromStorage } from "api/services/tasks";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";

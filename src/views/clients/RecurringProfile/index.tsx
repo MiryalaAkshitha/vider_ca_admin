@@ -1,6 +1,6 @@
 import { Divider, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getRecurringProfiles } from "api/recurring";
+import { getRecurringProfiles } from "api/services/recurring";
 import Loader from "components/Loader";
 import { useState } from "react";
 import { useQuery } from "react-query";

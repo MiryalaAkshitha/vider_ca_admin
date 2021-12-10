@@ -1,6 +1,6 @@
 import { MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateSubTask } from "api/tasks";
+import { updateSubTask } from "api/services/tasks";
 import FormattedDate from "components/FormattedDate";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
@@ -10,7 +10,11 @@ import { getTitle } from "utils";
 import { SubTaskStatus } from "views/taskboard/board/utils";
 import { StyledSubTaskTable } from "views/taskboard/styles";
 
-function SubTasksList({ data }: any) {
+type Props = {
+  data: any;
+};
+
+function SubTasksList({ data }: Props) {
   const snack = useSnack();
 
   const { mutate } = useMutation(updateSubTask, {
@@ -22,7 +26,7 @@ function SubTasksList({ data }: any) {
     },
   });
 
-  const handleChange = (e: any, item) => {
+  const handleChange = (e: any, item: any) => {
     const status = e.target.value;
     mutate({ id: item?.id, data: { ...item, status } });
   };
@@ -61,7 +65,7 @@ function SubTasksList({ data }: any) {
             </tr>
           </thead>
           <tbody>
-            {data.map((item: any, index) => {
+            {data.map((item: any, index: number) => {
               return (
                 <tr key={index}>
                   <td>

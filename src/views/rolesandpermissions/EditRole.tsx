@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateRole } from "api/roles";
+import { updateRole } from "api/services/roles";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";

@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { reorderTasks, updateStatus } from "api/tasks";
+import { reorderTasks, updateStatus } from "api/services/tasks";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";

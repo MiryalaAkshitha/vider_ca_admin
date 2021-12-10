@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { getFields } from "api/forms";
+import { getFields } from "api/services/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";

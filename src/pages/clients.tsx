@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Button, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
-import { getClients } from "api/client";
+import { getClients } from "api/services/client";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
 import useTitle from "hooks/useTitle";

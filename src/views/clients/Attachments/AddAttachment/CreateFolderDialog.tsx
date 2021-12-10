@@ -1,6 +1,6 @@
 import { Button, Dialog, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { createFolder } from "api/storage";
+import { createFolder } from "api/services/storage";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

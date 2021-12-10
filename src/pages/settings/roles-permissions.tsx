@@ -1,20 +1,15 @@
 import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteRole, getRoles } from "api/roles";
+import { deleteRole, getRoles } from "api/services/roles";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
-import { useNavigate, useLocation } from "react-router-dom";
-import { DataResponse } from "types";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ResponseType } from "types";
 import AddRole from "views/rolesandpermissions/AddRole";
 import EditRole from "views/rolesandpermissions/EditRole";
 
@@ -28,10 +23,7 @@ function RolesAndPermissions() {
   const navigate = useNavigate();
   const [selectedData, setSelectedData] = useState<any>({});
 
-  const { data, isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
-    "roles",
-    getRoles
-  );
+  const { data, isLoading }: ResponseType = useQuery("roles", getRoles);
 
   const { mutate } = useMutation(deleteRole, {
     onSuccess: () => {

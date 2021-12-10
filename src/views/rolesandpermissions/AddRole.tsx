@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { createRole } from "api/roles";
+import { createRole } from "api/services/roles";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
@@ -32,7 +32,6 @@ function AddRole({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     let name = e.target.elements.name.value;
-
     mutate({
       name,
     });

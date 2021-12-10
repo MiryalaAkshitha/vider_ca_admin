@@ -7,8 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { getLabels } from "api/labels";
-import { getUsers } from "api/users";
+import { getLabels } from "api/services/labels";
+import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";

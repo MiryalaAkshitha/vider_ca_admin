@@ -1,7 +1,7 @@
 import MoreVertRounded from "@mui/icons-material/MoreVertRounded";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteField } from "api/forms";
+import { deleteField } from "api/services/forms";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import CustomCard from "components/CustomCard";
 import useSnack from "hooks/useSnack";
@@ -9,14 +9,18 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditField from "./EditField";
 
-function FieldCard(props: any) {
+type Props = {
+  data: any;
+};
+
+function FieldCard(props: Props) {
   const { data } = props;
+  const confirm = useConfirm();
   const snack = useSnack();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const confirm = useConfirm();
 
   const { mutate } = useMutation(deleteField, {
     onSuccess: () => {
@@ -52,9 +56,9 @@ function FieldCard(props: any) {
   return (
     <>
       <CustomCard sx={{ minHeight: 50 }}>
-        <Box display='flex' gap={1} justifyContent='space-between'>
+        <Box display="flex" gap={1} justifyContent="space-between">
           <div>
-            <Typography variant='subtitle2' color='primary'>
+            <Typography variant="subtitle2" color="primary">
               {data?.name}
             </Typography>
           </div>
@@ -66,13 +70,14 @@ function FieldCard(props: any) {
         </Box>
       </CustomCard>
       <Menu
-        id='long-menu'
+        id="long-menu"
         PaperProps={{
           sx: { minWidth: 120 },
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}>
+        onClose={handleClose}
+      >
         <MenuItem onClick={handleDelete}>Remove</MenuItem>
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
       </Menu>

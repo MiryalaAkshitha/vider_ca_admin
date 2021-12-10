@@ -1,18 +1,15 @@
-import { getCategories } from "api/categories";
-import { getLabels } from "api/labels";
-import { getTask } from "api/tasks";
-import { getUsers } from "api/users";
-import { useQuery, UseQueryResult } from "react-query";
+import { getCategories } from "api/services/categories";
+import { getLabels } from "api/services/labels";
+import { getTask } from "api/services/tasks";
+import { getUsers } from "api/services/users";
+import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { DataResponseType } from "types/createTask.types";
+import { ResponseType } from "types";
 
 function useTaskViewData() {
   const params: any = useParams();
 
-  const {
-    data: task,
-    isLoading: taskLoading,
-  }: UseQueryResult<{ data: any }, Error> = useQuery(
+  const { data: task, isLoading: taskLoading }: ResponseType = useQuery(
     ["task", params.taskId],
     getTask,
     {
@@ -20,12 +17,12 @@ function useTaskViewData() {
     }
   );
 
-  const { data: categories, isLoading: categoriesLoading }: DataResponseType =
+  const { data: categories, isLoading: categoriesLoading }: ResponseType =
     useQuery("categories", getCategories, {
       refetchOnWindowFocus: false,
     });
 
-  const { data: labels, isLoading: labelsLoading }: DataResponseType = useQuery(
+  const { data: labels, isLoading: labelsLoading }: ResponseType = useQuery(
     "labels",
     getLabels,
     {
@@ -33,7 +30,7 @@ function useTaskViewData() {
     }
   );
 
-  const { data: users, isLoading: userLoading }: DataResponseType = useQuery(
+  const { data: users, isLoading: userLoading }: ResponseType = useQuery(
     "users",
     getUsers,
     {

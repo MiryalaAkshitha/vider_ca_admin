@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { getClientInfo, updateClientInfo } from "api/client-info";
+import { getClientInfo, updateClientInfo } from "api/services/client-info";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";

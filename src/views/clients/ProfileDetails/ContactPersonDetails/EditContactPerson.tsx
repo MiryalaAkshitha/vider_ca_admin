@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateContactPerson } from "api/client";
+import { updateContactPerson } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";

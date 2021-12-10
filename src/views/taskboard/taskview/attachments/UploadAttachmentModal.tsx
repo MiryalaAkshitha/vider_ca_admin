@@ -1,6 +1,6 @@
 import { Dialog, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { addAttachment } from "api/tasks";
+import { addAttachment } from "api/services/tasks";
 import FileDrop from "components/FileDrop";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
@@ -18,7 +18,7 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
   const [value, setValue] = useState(0);
   const params: any = useParams();
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (e: any, newValue: number) => {
     setValue(newValue);
   };
 
@@ -75,14 +75,14 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
   );
 }
 
-function a11yProps(index) {
+function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-function TabPanel(props) {
+function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
   return (

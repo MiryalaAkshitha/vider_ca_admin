@@ -7,10 +7,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { getFormFields, saveFormFields } from "api/forms";
+import { getFormFields, saveFormFields } from "api/services/forms";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
-import { useMutation, useQuery, UseQueryResult } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -19,10 +19,7 @@ import {
   setFields,
   toggleRequired,
 } from "redux/reducers/formsSlice";
-
-export interface FormFieldResponse {
-  data: any;
-}
+import { ResponseType } from "types";
 
 function FormFieldsContainer() {
   const dispatch = useDispatch();
@@ -30,12 +27,15 @@ function FormFieldsContainer() {
   const snack = useSnack();
   const { addedFields } = useSelector(selectForm);
 
-  const { data, isLoading }: UseQueryResult<FormFieldResponse, Error> =
-    useQuery(["form-fields", params.formId], getFormFields, {
+  const { data, isLoading }: ResponseType = useQuery(
+    ["form-fields", params.formId],
+    getFormFields,
+    {
       onSuccess: (res) => {
         dispatch(setFields(res.data.formFields));
       },
-    });
+    }
+  );
 
   const { mutate, isLoading: saveLoading } = useMutation(saveFormFields, {
     onSuccess: () => {
@@ -47,7 +47,10 @@ function FormFieldsContainer() {
   });
 
   const handleSubmit = () => {
-    mutate({ formFields: addedFields, id: params.formId });
+    mutate({
+      formFields: addedFields,
+      id: params.formId,
+    });
   };
 
   if (isLoading || saveLoading) return <Loader />;

@@ -1,14 +1,7 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Drawer,
-  IconButton,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createLabel } from "api/labels";
+import { createLabel } from "api/services/labels";
+import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
@@ -41,20 +34,7 @@ function AddLabel({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Add Label</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add Label">
       <form onSubmit={handleSubmit}>
         <Box p={2}>
           <TextField
@@ -88,7 +68,7 @@ function AddLabel({ open, setOpen }: DialogProps) {
           </Box>
         </Box>
       </form>
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

@@ -1,7 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import { noAttachments } from "assets";
 
-function NoAttachments({ action }: { action: () => void }) {
+type Props = {
+  action: () => void;
+};
+
+function NoAttachments({ action }: Props) {
   return (
     <Box
       px={2}

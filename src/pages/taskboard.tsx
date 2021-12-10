@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Fab, ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getTasks } from "api/tasks";
+import { getTasks } from "api/services/tasks";
 import Loader from "components/Loader";
 import MenuWrapper from "components/MenuWrapper";
 import { useState } from "react";

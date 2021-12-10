@@ -2,7 +2,7 @@ import { MoreVert } from "@mui/icons-material";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteContactPerson } from "api/client";
+import { deleteContactPerson } from "api/services/client";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

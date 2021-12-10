@@ -1,11 +1,12 @@
-import { Menu, MenuItem } from "@mui/material";
-import { deleteCategory } from "api/categories";
 import useSnack from "hooks/useSnack";
+import { Menu, MenuItem } from "@mui/material";
+import { deleteCategory } from "api/services/categories";
 import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Category } from "./CategoryCard";
 import EditCategory from "./EditCategory";
+import { useConfirm } from "components/ConfirmDialogProvider";
 
 interface EditCategoryPopoverProps extends AccountMenuProps {
   data: Category;
@@ -13,10 +14,11 @@ interface EditCategoryPopoverProps extends AccountMenuProps {
 
 function EditCategoryPopover(props: EditCategoryPopoverProps) {
   const { anchorEl, setAnchorEl, data } = props;
-  const open = Boolean(anchorEl);
   const snack = useSnack();
+  const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);
+  const open = Boolean(anchorEl);
 
   const { mutate } = useMutation(deleteCategory, {
     onSuccess: () => {
@@ -40,7 +42,13 @@ function EditCategoryPopover(props: EditCategoryPopoverProps) {
   };
 
   const handleDelete = () => {
-    mutate(data.id);
+    setAnchorEl(null);
+    confirm({
+      msg: "Are you sure you want to delete this category?",
+      action: () => {
+        mutate({ id: data.id });
+      },
+    });
   };
 
   return (

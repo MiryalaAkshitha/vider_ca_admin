@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createRecurringTask } from "api/tasks";
+import { createRecurringTask } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";

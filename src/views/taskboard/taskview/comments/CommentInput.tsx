@@ -1,7 +1,7 @@
 import { SendOutlined } from "@mui/icons-material";
 import { IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { addComment } from "api/tasks";
+import { addComment } from "api/services/tasks";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -18,7 +18,6 @@ function CommentInput() {
     onSuccess: () => {
       snack.success("Comment Added");
       setComment("");
-
       queryClient.invalidateQueries("task-comments");
     },
     onError: (err: any) => {

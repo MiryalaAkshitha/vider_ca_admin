@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateForm } from "api/forms";
+import { updateForm } from "api/services/forms";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useEffect, useState } from "react";
@@ -51,13 +51,14 @@ function EditForm({ open, setOpen, data }: EditFormProps) {
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       PaperProps={{ sx: { width: 450 } }}
       open={open}
-      onClose={setOpen}>
-      <AppBar position='static'>
+      onClose={setOpen}
+    >
+      <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Edit Form</Typography>
+          <Typography variant="subtitle1">Edit Form</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -67,19 +68,19 @@ function EditForm({ open, setOpen, data }: EditFormProps) {
         <Box p={2}>
           <TextField
             sx={{ mt: 3 }}
-            variant='outlined'
+            variant="outlined"
             value={state.name}
             fullWidth
-            name='name'
+            name="name"
             required
-            size='small'
-            label='Name'
+            size="small"
+            label="Name"
             onChange={(e) => setState({ ...state, name: e.target.value })}
-            type='text'
+            type="text"
           />
           <Autocomplete
             multiple
-            id='tags-standard'
+            id="tags-standard"
             sx={{ mt: 3 }}
             options={["kyb", "passwords"]}
             value={state.tags}
@@ -89,19 +90,19 @@ function EditForm({ open, setOpen, data }: EditFormProps) {
               <TextField
                 {...params}
                 fullWidth
-                variant='outlined'
-                size='small'
-                label='Tags'
+                variant="outlined"
+                size="small"
+                label="Tags"
               />
             )}
           />
-          <Box display='flex' justifyContent='flex-end' mt={3} gap={2}>
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
-              type='submit'
-              loadingColor='white'
-              title='Update Form'
-              color='secondary'
+              type="submit"
+              loadingColor="white"
+              title="Update Form"
+              color="secondary"
             />
           </Box>
         </Box>

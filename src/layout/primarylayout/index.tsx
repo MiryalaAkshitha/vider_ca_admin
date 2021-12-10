@@ -5,7 +5,7 @@ import MainContent from "./MainContent";
 import SideNav from "./SideNav";
 import { Outlet } from "react-router-dom";
 
-function Layout(props: any) {
+function Layout() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />

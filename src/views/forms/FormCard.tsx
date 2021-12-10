@@ -1,7 +1,7 @@
 import MoreVertRounded from "@mui/icons-material/MoreVertRounded";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteForm } from "api/forms";
+import { deleteForm } from "api/services/forms";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import CustomCard from "components/CustomCard";
 import useSnack from "hooks/useSnack";
@@ -10,7 +10,11 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import EditForm from "./EditForm";
 
-function FormCard(props: any) {
+type Props = {
+  data: any;
+};
+
+function FormCard(props: Props) {
   const { data } = props;
   const confirm = useConfirm();
   const snack = useSnack();
@@ -42,6 +46,7 @@ function FormCard(props: any) {
   };
 
   const handleDelete = () => {
+    setAnchorEl(null);
     confirm({
       msg: "Are you sure you want to delete this form",
       action: () => {

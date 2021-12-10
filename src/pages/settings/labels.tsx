@@ -1,38 +1,25 @@
 import { Add, Delete } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteLabel, getLabels } from "api/labels";
+import { deleteLabel, getLabels } from "api/services/labels";
+import { useConfirm } from "components/ConfirmDialogProvider";
 import Loader from "components/Loader";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { ResponseType } from "types";
 import AddLabel from "views/labels/AddLabel";
 import { StyledLabel } from "views/labels/styles";
-
-interface Label {
-  name: string;
-  color: string;
-}
-
-interface LabelsResponse {
-  data: Label[];
-}
 
 function Tags() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
   const snack = useSnack();
-  const { data, isLoading }: UseQueryResult<LabelsResponse, Error> = useQuery(
-    "labels",
-    getLabels
-  );
+  const confirm = useConfirm();
+
+  const { data, isLoading }: ResponseType = useQuery("labels", getLabels);
 
   useTitle("Labels");
 
@@ -48,7 +35,12 @@ function Tags() {
   });
 
   const handleRemove = (id: any) => {
-    mutate(id);
+    confirm({
+      msg: "Are you sure you want to delete this label?",
+      action: () => {
+        mutate(id);
+      },
+    });
   };
 
   if (isLoading) return <Loader />;

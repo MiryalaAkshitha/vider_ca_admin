@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { createCategory } from "api/categories";
+import { createCategory } from "api/services/categories";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
 import useSnack from "hooks/useSnack";
@@ -75,13 +75,14 @@ function AddCategory({ open, setOpen }: DialogProps) {
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       PaperProps={{ sx: { width: 550 } }}
       open={open}
-      onClose={setOpen}>
-      <AppBar position='static'>
+      onClose={setOpen}
+    >
+      <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant='subtitle1'>Add Category</Typography>
+          <Typography variant="subtitle1">Add Category</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
             <Close />
           </IconButton>
@@ -90,31 +91,32 @@ function AddCategory({ open, setOpen }: DialogProps) {
       <Box p={2}>
         <TextField
           sx={{ mt: 2 }}
-          variant='outlined'
+          variant="outlined"
           fullWidth
           onChange={(e) => handleChange("name", e.target.value)}
-          size='small'
-          label='Name'
+          size="small"
+          label="Name"
         />
         <UploadImage
           sx={{ mt: 2 }}
-          name='image'
+          name="image"
           onChange={(v) => handleChange("image", v)}
         />
-        <Box display='flex' gap={1} mt={3}>
+        <Box display="flex" gap={1} mt={3}>
           <TextField
-            variant='outlined'
+            variant="outlined"
             fullWidth
             value={subCategory}
             onChange={(e) => setSubCategory(e.target.value)}
-            size='small'
-            label='Add Subcategory'
+            size="small"
+            label="Add Subcategory"
           />
           <Button
             onClick={addSubCategory}
             sx={{ minWidth: 80 }}
-            variant='outlined'
-            color='primary'>
+            variant="outlined"
+            color="primary"
+          >
             + Add
           </Button>
         </Box>
@@ -122,28 +124,29 @@ function AddCategory({ open, setOpen }: DialogProps) {
           {state.subCategories.map((item, index) => (
             <Box
               key={index}
-              display='flex'
-              justifyContent='space-between'
-              alignItems='center'
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
               mt={1}
-              gap={1}>
-              <Typography variant='subtitle2'>
+              gap={1}
+            >
+              <Typography variant="subtitle2">
                 {index + 1}. {item.name}
               </Typography>
-              <IconButton size='small' onClick={() => deleteSubCategory(index)}>
-                <Delete color='info' />
+              <IconButton size="small" onClick={() => deleteSubCategory(index)}>
+                <Delete color="info" />
               </IconButton>
             </Box>
           ))}
         </Box>
-        <Box display='flex' justifyContent='flex-end' mt={3} gap={2}>
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             onClick={handleSubmit}
             loading={isLoading}
             fullWidth
-            loadingColor='white'
-            title='Create Category'
-            color='secondary'
+            loadingColor="white"
+            title="Create Category"
+            color="secondary"
           />
         </Box>
       </Box>
