@@ -14,7 +14,7 @@ type StartTimerData = {
 };
 
 type EndTimerData = {
-  taskId: number;
+  id: number;
   endTime: number;
 };
 
@@ -26,12 +26,12 @@ type AddComment = {
 };
 
 type AddAttachment = {
-  taskId: string;
+  taskId: number;
   data: FormData;
 };
 
 type AddAttachmentFromStorage = {
-  taskId: string;
+  taskId: number;
   data: {
     fileIds: number[];
   };
@@ -48,7 +48,7 @@ const createRecurringTask = (data: any) => {
 const getTasks = () => http.get("/tasks");
 
 const getTask = ({ queryKey }) => {
-  return http.get("/tasks/task-details", { params: { taskId: queryKey[1] } });
+  return http.get(`/tasks/task-details/${queryKey[1]}`);
 };
 
 const reorderTasks = (items: number[]) => {
@@ -62,14 +62,6 @@ const updateStatus = (data: UpdateStatus) => {
 
 const updateTask = ({ id, data }: { id: number; data: any }) => {
   return http.put(`/tasks/${id}`, data);
-};
-
-const startTimer = ({ taskId, startTime }: StartTimerData) => {
-  return http.post(`/tasks/${taskId}/start-timer`, { startTime });
-};
-
-const endTimer = ({ taskId, endTime }: EndTimerData) => {
-  return http.post(`/tasks/${taskId}/end-timer`, { endTime });
 };
 
 const getTaskComments = ({ queryKey }) => {
@@ -105,6 +97,22 @@ const updateSubTask = ({ id, data }) => {
   return http.put(`/tasks/${id}/subtasks`, data);
 };
 
+const startTimer = ({ taskId, startTime }: StartTimerData) => {
+  return http.post(`/tasks/${taskId}/loghours/start-timer`, { startTime });
+};
+
+const endTimer = ({ id, endTime }: EndTimerData) => {
+  return http.post(`/tasks/loghours/${id}/end-timer`, { endTime });
+};
+
+const getLogHours = ({ queryKey }) => {
+  return http.get(`/tasks/loghours`, { params: { taskId: queryKey[1] } });
+};
+
+const addLogHour = ({ taskId, data }) => {
+  return http.post(`/tasks/${taskId}/loghours/add`, data);
+};
+
 export {
   getTasks,
   updateTask,
@@ -123,4 +131,6 @@ export {
   getSubTasks,
   updateSubTask,
   addAttachmentsFromStorage,
+  getLogHours,
+  addLogHour,
 };

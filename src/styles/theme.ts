@@ -54,6 +54,7 @@ export const theme: ThemeOptions = createTheme({
         },
       },
     },
+
     MuiMenuItem: {
       styleOverrides: {
         root: {

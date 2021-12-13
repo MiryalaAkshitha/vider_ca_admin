@@ -22,6 +22,7 @@ function TaskItem({ data }: Props) {
   const snack = useSnack();
   const [showTimer, setShowTimer] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [timerId, setTimerId] = useState<number | null>(null);
 
   useEffect(() => {
     const existingTimer = data?.taskLogHours?.find(
@@ -30,6 +31,7 @@ function TaskItem({ data }: Props) {
 
     if (existingTimer) {
       setShowTimer(true);
+      setTimerId(existingTimer?.id);
       setStartTime(existingTimer?.startTime);
     }
   }, [data, startTime]);
@@ -68,7 +70,7 @@ function TaskItem({ data }: Props) {
   const handleEndTimer = (e: any) => {
     e.stopPropagation();
     endTaskTimer({
-      taskId: data.id,
+      id: timerId!,
       endTime: new Date().getTime(),
     });
   };
@@ -79,7 +81,7 @@ function TaskItem({ data }: Props) {
         px={2}
         onClick={() => {
           navigate(
-            `/task-board/${data?.taskId}?clientId=${data?.client?.clientId}`
+            `/task-board/${data?.id}?clientId=${data?.client?.clientId}`
           );
         }}
         py={1}
