@@ -1,4 +1,5 @@
 import loadable from "@loadable/component";
+import Calendar from "pages/calendar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const Login = loadable(() => import("pages/login"));
@@ -39,6 +40,7 @@ function RoutesContainer() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="calendar" element={<Calendar />} />
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />

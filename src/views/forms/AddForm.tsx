@@ -1,15 +1,7 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Autocomplete,
-  Drawer,
-  IconButton,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createForm } from "api/services/forms";
+import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
@@ -42,62 +34,46 @@ function CreateForm({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 450 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Create Form</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Create Form">
       <form onSubmit={handleSubmit}>
-        <Box p={2}>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="name"
-            required
-            size="small"
-            label="Name"
-            onChange={(e) => setState({ ...state, name: e.target.value })}
-            type="text"
-          />
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            sx={{ mt: 3 }}
-            options={["kyb", "passwords"]}
-            onChange={(_, v) => setState({ ...state, tags: v })}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                fullWidth
-                variant="outlined"
-                size="small"
-                label="Tags"
-              />
-            )}
-          />
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
-              type="submit"
-              loadingColor="white"
-              title="Create Form"
-              color="secondary"
+        <TextField
+          variant="outlined"
+          fullWidth
+          name="name"
+          required
+          size="small"
+          label="Name"
+          onChange={(e) => setState({ ...state, name: e.target.value })}
+          type="text"
+        />
+        <Autocomplete
+          multiple
+          id="tags-standard"
+          sx={{ mt: 3 }}
+          options={["kyb", "passwords"]}
+          onChange={(_, v) => setState({ ...state, tags: v })}
+          getOptionLabel={(option) => option}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              fullWidth
+              variant="outlined"
+              size="small"
+              label="Tags"
             />
-          </Box>
+          )}
+        />
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+          <LoadingButton
+            loading={isLoading}
+            type="submit"
+            loadingColor="white"
+            title="Create Form"
+            color="secondary"
+          />
         </Box>
       </form>
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

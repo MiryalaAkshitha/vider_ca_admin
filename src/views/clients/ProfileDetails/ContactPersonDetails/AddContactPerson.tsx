@@ -69,82 +69,79 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Add Contact Person">
       <form onSubmit={handleSubmit} ref={formRef}>
-        <Box p={2}>
+        <TextField
+          variant="outlined"
+          fullWidth
+          name="name"
+          required
+          onChange={handleChange}
+          size="small"
+          label="Name"
+        />
+        <TextField
+          sx={{ mt: 2 }}
+          variant="outlined"
+          fullWidth
+          onChange={handleChange}
+          size="small"
+          select
+          required
+          name="role"
+          label="Role"
+        >
+          <MenuItem value="accountant">Accountant</MenuItem>
+          <MenuItem value="admin">Admin</MenuItem>
+          <MenuItem value="staff">Staff</MenuItem>
+        </TextField>
+        <TextField
+          sx={{ mt: 3 }}
+          variant="outlined"
+          fullWidth
+          required
+          type="email"
+          onChange={handleChange}
+          name="email"
+          size="small"
+          label="Email"
+        />
+        <TextField
+          sx={{ mt: 3 }}
+          variant="outlined"
+          fullWidth
+          required
+          onChange={handleChange}
+          name="mobile"
+          size="small"
+          label="Mobile"
+        />
+        <FormControlLabel
+          sx={{ mt: 2 }}
+          control={<Checkbox onChange={handleDscAvailable} />}
+          label="DSC Available"
+        />
+        {state.dscAvailable && (
           <TextField
             sx={{ mt: 3 }}
             variant="outlined"
             fullWidth
-            name="name"
             required
             onChange={handleChange}
+            type="date"
+            name="dscExpiryDate"
             size="small"
-            label="Name"
+            InputLabelProps={{ shrink: true }}
+            label="DSC Expiry Date"
           />
-          <TextField
-            sx={{ mt: 2 }}
-            variant="outlined"
+        )}
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+          <LoadingButton
+            loading={isLoading}
             fullWidth
-            onChange={handleChange}
-            size="small"
-            select
-            required
-            name="role"
-            label="Role"
-          >
-            <MenuItem value="accountant">Accountant</MenuItem>
-            <MenuItem value="admin">Admin</MenuItem>
-            <MenuItem value="staff">Staff</MenuItem>
-          </TextField>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            type="email"
-            onChange={handleChange}
-            name="email"
-            size="small"
-            label="Email"
+            type="submit"
+            loadingColor="white"
+            title="Add Contact Person"
+            color="secondary"
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            name="mobile"
-            size="small"
-            label="Mobile"
-          />
-          <FormControlLabel
-            sx={{ mt: 2 }}
-            control={<Checkbox onChange={handleDscAvailable} />}
-            label="DSC Available"
-          />
-          {state.dscAvailable && (
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              required
-              onChange={handleChange}
-              type="date"
-              name="dscExpiryDate"
-              size="small"
-              InputLabelProps={{ shrink: true }}
-              label="DSC Expiry Date"
-            />
-          )}
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
-              fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Add Contact Person"
-              color="secondary"
-            />
-          </Box>
         </Box>
       </form>
     </DrawerWrapper>

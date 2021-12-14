@@ -54,3 +54,13 @@ input::placeholder {
 .SnackbarItem-message {
   font-family: muli_regular !important;
 }
+.fc-toolbar-title {
+  color: #182f53;
+  font-size: 25px !important;
+}
+.fc-button-group button {
+  text-transform: capitalize !important;
+}
+.fc-today-button {
+  text-transform: capitalize !important;
+}

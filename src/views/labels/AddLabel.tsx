@@ -36,36 +36,33 @@ function AddLabel({ open, setOpen }: DialogProps) {
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Add Label">
       <form onSubmit={handleSubmit}>
-        <Box p={2}>
-          <TextField
-            sx={{ mt: 2 }}
-            variant="outlined"
+        <TextField
+          variant="outlined"
+          fullWidth
+          size="small"
+          required
+          label="Name"
+          name="name"
+        />
+        <TextField
+          sx={{ mt: 4, minWidth: 100 }}
+          InputProps={{ sx: { padding: "0px" } }}
+          variant="outlined"
+          size="small"
+          label="Choose Color"
+          name="color"
+          type="color"
+          required
+        />
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+          <LoadingButton
+            loading={isLoading}
             fullWidth
-            size="small"
-            required
-            label="Name"
-            name="name"
+            type="submit"
+            loadingColor="white"
+            title="Create Label"
+            color="secondary"
           />
-          <TextField
-            sx={{ mt: 4, minWidth: 100 }}
-            InputProps={{ sx: { padding: "0px" } }}
-            variant="outlined"
-            size="small"
-            label="Choose Color"
-            name="color"
-            type="color"
-            required
-          />
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
-              fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Create Label"
-              color="secondary"
-            />
-          </Box>
         </Box>
       </form>
     </DrawerWrapper>

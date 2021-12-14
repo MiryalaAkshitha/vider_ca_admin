@@ -59,85 +59,82 @@ function AddMember({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper title="Create Role" open={open} setOpen={setOpen}>
+    <DrawerWrapper title="Add Member" open={open} setOpen={setOpen}>
       {dataLoading ? (
         <Loader />
       ) : (
         <form onSubmit={handleSubmit}>
-          <Box p={2}>
-            <TextField
-              sx={{ mt: 1 }}
-              variant="outlined"
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="small"
+            required
+            label="First Name"
+            name="firstName"
+            onChange={handleChange}
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            size="small"
+            required
+            label="Last Name"
+            name="lastName"
+            onChange={handleChange}
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            size="small"
+            required
+            label="Email"
+            name="email"
+            onChange={handleChange}
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            size="small"
+            required
+            label="Mobile"
+            name="mobile"
+            onChange={handleChange}
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            size="small"
+            required
+            label="Role"
+            value={state.role || ""}
+            onChange={handleChange}
+            name="role"
+            select
+          >
+            {data?.data?.map((item: any) => (
+              <MenuItem value={item?.id} key={item?.id}>
+                {item?.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <PasswordField
+            sx={{ mt: 3 }}
+            label="Password"
+            onChange={handleChange}
+          />
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+            <LoadingButton
+              loading={isLoading}
               fullWidth
-              size="small"
-              required
-              label="First Name"
-              name="firstName"
-              onChange={handleChange}
+              type="submit"
+              loadingColor="white"
+              title="Create Member"
+              color="secondary"
             />
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              size="small"
-              required
-              label="Last Name"
-              name="lastName"
-              onChange={handleChange}
-            />
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              size="small"
-              required
-              label="Email"
-              name="email"
-              onChange={handleChange}
-            />
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              size="small"
-              required
-              label="Mobile"
-              name="mobile"
-              onChange={handleChange}
-            />
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              size="small"
-              required
-              label="Role"
-              value={state.role || ""}
-              onChange={handleChange}
-              name="role"
-              select
-            >
-              {data?.data?.map((item: any) => (
-                <MenuItem value={item?.id} key={item?.id}>
-                  {item?.name}
-                </MenuItem>
-              ))}
-            </TextField>
-            <PasswordField
-              sx={{ mt: 3 }}
-              label="Password"
-              onChange={handleChange}
-            />
-            <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-              <LoadingButton
-                loading={isLoading}
-                fullWidth
-                type="submit"
-                loadingColor="white"
-                title="Create Member"
-                color="secondary"
-              />
-            </Box>
           </Box>
         </form>
       )}

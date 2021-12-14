@@ -1,15 +1,7 @@
-import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Drawer,
-  IconButton,
-  TextField,
-  Toolbar,
-  Typography,
-  MenuItem,
-} from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { updateRole } from "api/services/roles";
+import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
@@ -50,59 +42,43 @@ function EditRole({ open, setOpen, data }: EditRoleProps) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      PaperProps={{ sx: { width: 550 } }}
-      open={open}
-      onClose={setOpen}
-    >
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="subtitle1">Edit Role</Typography>
-          <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Edit Role">
       <form onSubmit={handleSubmit}>
-        <Box p={2}>
-          <TextField
-            sx={{ mt: 2 }}
-            variant="outlined"
+        <TextField
+          variant="outlined"
+          fullWidth
+          size="small"
+          defaultValue={data?.name}
+          required
+          label="Name"
+          name="name"
+        />
+        <TextField
+          sx={{ mt: 2 }}
+          variant="outlined"
+          fullWidth
+          size="small"
+          defaultValue={data?.active ? "active" : "inactive"}
+          required
+          label="status"
+          name="status"
+          select
+        >
+          <MenuItem value="active">Active</MenuItem>
+          <MenuItem value="inactive">Inactive</MenuItem>
+        </TextField>
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+          <LoadingButton
+            loading={isLoading}
             fullWidth
-            size="small"
-            defaultValue={data?.name}
-            required
-            label="Name"
-            name="name"
+            type="submit"
+            loadingColor="white"
+            title="Update Role"
+            color="secondary"
           />
-          <TextField
-            sx={{ mt: 2 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            defaultValue={data?.active ? "active" : "inactive"}
-            required
-            label="status"
-            name="status"
-            select
-          >
-            <MenuItem value="active">Active</MenuItem>
-            <MenuItem value="inactive">Inactive</MenuItem>
-          </TextField>
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
-              fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Update Role"
-              color="secondary"
-            />
-          </Box>
         </Box>
       </form>
-    </Drawer>
+    </DrawerWrapper>
   );
 }
 

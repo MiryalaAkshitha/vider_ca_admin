@@ -48,3 +48,10 @@ export enum FILETYPES {
   PRESENTATION2 = "application/vnd.openxmlformats-officedocument.presentationml.presentation",
   PRESENTATION3 = "application/vnd.ms-powerpoint",
 }
+
+export enum Reminders {
+  "30_MINUTES_BEFORE" = "30_minutes_before",
+  "1_HOUR_BEFORE" = "1_hour_before",
+  "2_HOUR_BEFORE" = "2_hours_before",
+  "1_DAY_BEFORE" = "1_day_before",
+}

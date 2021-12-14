@@ -47,6 +47,8 @@ const createRecurringTask = (data: any) => {
 
 const getTasks = () => http.get("/tasks");
 
+const getTasksAsOptions = () => http.get("/tasks/as-options");
+
 const getTask = ({ queryKey }) => {
   return http.get(`/tasks/task-details/${queryKey[1]}`);
 };
@@ -115,6 +117,7 @@ const addLogHour = ({ taskId, data }) => {
 
 export {
   getTasks,
+  getTasksAsOptions,
   updateTask,
   reorderTasks,
   updateStatus,

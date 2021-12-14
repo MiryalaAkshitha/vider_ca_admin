@@ -1,5 +1,12 @@
 import { Close } from "@mui/icons-material";
-import { AppBar, Drawer, IconButton, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 
 interface IDrawerWrapperProps {
   open: boolean;
@@ -27,7 +34,9 @@ function DrawerWrapper(props: IDrawerWrapperProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      {children}
+      <Box p={2} py={3}>
+        {children}
+      </Box>
     </Drawer>
   );
 }
