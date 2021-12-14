@@ -6,7 +6,13 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useAppSelector } from "redux/store";
 import RoutesContainer from "./RoutesContainer";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   const errorState: any = useAppSelector((state) => state.error);

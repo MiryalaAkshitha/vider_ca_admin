@@ -1,12 +1,12 @@
 import { Box } from "@mui/system";
 import ComingSoon from "components/ComingSoon";
 
-function Teams() {
+function DeletedTasks() {
   return (
     <Box p={2}>
-      <ComingSoon title="Teams" />
+      <ComingSoon title="DeletedTasks" />
     </Box>
   );
 }
 
-export default Teams;
+export default DeletedTasks;

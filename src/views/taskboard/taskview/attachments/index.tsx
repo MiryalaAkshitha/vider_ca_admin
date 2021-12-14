@@ -16,10 +16,7 @@ function Attachments() {
 
   const { data, isLoading }: ResponseType = useQuery(
     ["task-attachments", params.taskId],
-    getTaskAttachments,
-    {
-      refetchOnWindowFocus: false,
-    }
+    getTaskAttachments
   );
 
   if (isLoading) return <Loader />;

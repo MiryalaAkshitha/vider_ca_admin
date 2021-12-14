@@ -21,9 +21,7 @@ function ViewRole() {
   const {
     data: permissionsData,
     isLoading: permissionsLoading,
-  }: PermissionsDataResponse = useQuery("permissions", getPermissions, {
-    refetchOnWindowFocus: false,
-  });
+  }: PermissionsDataResponse = useQuery("permissions", getPermissions);
 
   const { data, isLoading }: UseQueryResult<{ data: any }, Error> = useQuery(
     ["role", params.role],
@@ -32,7 +30,6 @@ function ViewRole() {
       onSuccess: (res: any) => {
         setPermissons(res.data?.permissions?.map((item: any) => item?.id));
       },
-      refetchOnWindowFocus: false,
     }
   );
 

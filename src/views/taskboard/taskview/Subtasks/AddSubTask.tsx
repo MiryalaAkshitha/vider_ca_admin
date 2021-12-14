@@ -34,7 +34,6 @@ function AddSubTask({ open, setOpen }: DialogProps) {
   });
 
   const { data, isLoading }: ResponseType = useQuery("users", getUsers, {
-    refetchOnWindowFocus: false,
     enabled: open,
   });
 

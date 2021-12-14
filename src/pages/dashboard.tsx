@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import ComingSoon from "components/ComingSoon";
 
 function Dashboard() {
   return (
     <Box p={2}>
-      <Typography color="primary">Dashboard</Typography>
+      <ComingSoon title="Dashboard" />
     </Box>
   );
 }

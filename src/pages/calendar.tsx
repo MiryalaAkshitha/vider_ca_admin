@@ -1,40 +1,50 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import { Box } from "@mui/material";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import FloatingButton from "components/FloatingButton";
-import AddEvent from "views/calendar/AddEvent";
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { Box } from "@mui/material";
 import { getEvents } from "api/services/events";
-import { ResponseType } from "types";
+import { getTasksAsOptions } from "api/services/tasks";
+import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { ResponseType } from "types";
+import AddEvent from "views/calendar/AddEvent";
 
 function Calendar() {
   useTitle("Calendar");
   const [open, setOpen] = useState<boolean>(false);
 
-  console.log(moment().toISOString());
-
   const { data, isLoading }: ResponseType = useQuery(["events"], getEvents);
+  const { data: tasks, isLoading: tasksLoading }: ResponseType = useQuery(
+    ["task-options"],
+    getTasksAsOptions
+  );
 
-  if (isLoading) return <Loader />;
+  let eventsData =
+    data?.data?.map((item: any) => ({
+      title: item?.title,
+      start: `${item?.date}T${item?.startTime}`,
+      end: `${item?.date}T${item?.endTime}`,
+    })) || [];
+
+  let tasksData =
+    tasks?.data?.map((item) => ({
+      title: `${item?.name} - (${item?.clientName})`,
+      date: moment(item?.dueDate).format("YYYY-MM-DD"),
+    })) || [];
+
+  if (isLoading || tasksLoading) return <Loader />;
 
   return (
     <Box p={3} sx={{ fontFamily: "muli_regular" }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        events={
-          data?.data?.map((item: any) => ({
-            title: item?.title,
-            start: new Date().toUTCString(),
-            end: "2021-12-12T12:30:00",
-          })) || []
-        }
+        events={[...eventsData, ...tasksData]}
         headerToolbar={{
           right: "prev,next today",
           center: "title",
@@ -46,7 +56,6 @@ function Calendar() {
         displayEventTime={true}
         displayEventEnd={true}
         eventTextColor="black"
-        dateClick={(info) => alert(info.dateStr)}
       />
       <FloatingButton onClick={() => setOpen(true)} />
       <AddEvent open={open} setOpen={setOpen} />

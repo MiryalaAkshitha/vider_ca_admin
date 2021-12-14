@@ -7,33 +7,21 @@ import { DataResponseType } from "types/createTask.types";
 
 function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
   const { data: categories, isLoading: categoriesLoading }: DataResponseType =
-    useQuery("categories", getCategories, {
-      refetchOnWindowFocus: false,
-      enabled,
-    });
+    useQuery("categories", getCategories, { enabled });
 
   const { data: clients, isLoading: clientsLoading }: DataResponseType =
-    useQuery(["clients", {}], getClients, {
-      refetchOnWindowFocus: false,
-      enabled,
-    });
+    useQuery(["clients", {}], getClients, { enabled });
 
   const { data: labels, isLoading: labelsLoading }: DataResponseType = useQuery(
     "labels",
     getLabels,
-    {
-      refetchOnWindowFocus: false,
-      enabled,
-    }
+    { enabled }
   );
 
   const { data: users, isLoading: userLoading }: DataResponseType = useQuery(
     "users",
     getUsers,
-    {
-      refetchOnWindowFocus: false,
-      enabled,
-    }
+    { enabled }
   );
 
   return {

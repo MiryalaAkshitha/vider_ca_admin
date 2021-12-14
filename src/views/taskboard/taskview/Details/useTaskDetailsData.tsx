@@ -6,24 +6,16 @@ import { ResponseType } from "types";
 
 function useTaskViewData() {
   const { data: categories, isLoading: categoriesLoading }: ResponseType =
-    useQuery("categories", getCategories, {
-      refetchOnWindowFocus: false,
-    });
+    useQuery("categories", getCategories);
 
   const { data: labels, isLoading: labelsLoading }: ResponseType = useQuery(
     "labels",
-    getLabels,
-    {
-      refetchOnWindowFocus: false,
-    }
+    getLabels
   );
 
   const { data: users, isLoading: userLoading }: ResponseType = useQuery(
     "users",
-    getUsers,
-    {
-      refetchOnWindowFocus: false,
-    }
+    getUsers
   );
 
   return {

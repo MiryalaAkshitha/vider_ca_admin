@@ -51,7 +51,6 @@ function AddEvent({ open, setOpen }: DialogProps) {
     ["clients", {}],
     getClients,
     {
-      refetchOnWindowFocus: false,
       enabled: open,
     }
   );
@@ -60,7 +59,6 @@ function AddEvent({ open, setOpen }: DialogProps) {
     ["task-options", {}],
     getTasksAsOptions,
     {
-      refetchOnWindowFocus: false,
       enabled: open,
     }
   );

@@ -22,7 +22,6 @@ function ProfileDetails() {
       onSuccess: (res: any) => {
         setState(res.data);
       },
-      refetchOnWindowFocus: false,
     }
   );
 

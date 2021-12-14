@@ -13,10 +13,7 @@ function Comments() {
 
   const { data, isLoading }: ResponseType = useQuery(
     ["task-comments", params.taskId],
-    getTaskComments,
-    {
-      refetchOnWindowFocus: false,
-    }
+    getTaskComments
   );
 
   if (isLoading) return <Loader />;

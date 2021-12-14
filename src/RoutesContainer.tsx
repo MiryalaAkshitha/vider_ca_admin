@@ -1,5 +1,12 @@
 import loadable from "@loadable/component";
+import BroadCast from "pages/BroadCast";
 import Calendar from "pages/calendar";
+import Invoicing from "pages/invoicing";
+import Reports from "pages/reports";
+import DeletedClients from "pages/settings/deleted-clients";
+import DeletedTasks from "pages/settings/deleted-tasks";
+import StorageManagement from "pages/settings/storage-management";
+import Storage from "pages/storage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const Login = loadable(() => import("pages/login"));
@@ -41,6 +48,10 @@ function RoutesContainer() {
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="calendar" element={<Calendar />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="invoicing" element={<Invoicing />} />
+          <Route path="storage" element={<Storage />} />
+          <Route path="broadcast" element={<BroadCast />} />
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />
@@ -59,6 +70,9 @@ function RoutesContainer() {
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="categories" element={<Categories />} />
           <Route path="users" element={<Users />} />
+          <Route path="storage-management" element={<StorageManagement />} />
+          <Route path="deleted-tasks" element={<DeletedTasks />} />
+          <Route path="deleted-clients" element={<DeletedClients />} />
           <Route path="teams" element={<Teams />} />
           <Route path="labels" element={<Labels />} />
           <Route path="roles-permissions">

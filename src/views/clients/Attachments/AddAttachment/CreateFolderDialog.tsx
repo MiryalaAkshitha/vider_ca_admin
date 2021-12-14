@@ -51,6 +51,7 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
         onChange={(e) => setName(e.target.value)}
         size="small"
         value={name}
+        autoFocus
       />
       <Box mt={4} display="flex" gap={2} justifyContent="flex-end">
         <Button onClick={() => setOpen(false)} variant="outlined">

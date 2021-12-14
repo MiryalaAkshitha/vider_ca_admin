@@ -49,14 +49,4 @@ export const menuItems: Array<IMenuItem> = [
     path: "/broadcast",
     icon: icons.broadcast,
   },
-  // {
-  //   title: "Settings",
-  //   path: "/settings",
-  //   icon: icons.settings,
-  // },
-  // {
-  //   title: "My Team",
-  //   path: "/my-team",
-  //   icon: icons.team,
-  // },
 ];

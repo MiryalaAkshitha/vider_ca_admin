@@ -15,10 +15,7 @@ function LogHours() {
 
   const { data, isLoading }: ResponseType = useQuery(
     ["loghours", params.taskId],
-    getLogHours,
-    {
-      refetchOnWindowFocus: false,
-    }
+    getLogHours
   );
 
   if (isLoading) return <Loader />;

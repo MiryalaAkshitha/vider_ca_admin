@@ -34,7 +34,6 @@ function TaskDetails() {
     ["task", params.taskId],
     getTask,
     {
-      refetchOnWindowFocus: false,
       onSuccess: (res: any) => {
         setState(res?.data);
       },

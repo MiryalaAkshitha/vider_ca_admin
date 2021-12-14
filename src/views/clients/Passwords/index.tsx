@@ -20,7 +20,6 @@ function Passwords() {
     ["client-info", { clientId, type: "passwords" }],
     getClientInfo,
     {
-      refetchOnWindowFocus: false,
       onSuccess: (res: any) => {
         let data = res.data;
         setState(data);

@@ -1,12 +1,12 @@
 import { Box } from "@mui/system";
 import ComingSoon from "components/ComingSoon";
 
-function Teams() {
+function Reports() {
   return (
     <Box p={2}>
-      <ComingSoon title="Teams" />
+      <ComingSoon title="Reports" />
     </Box>
   );
 }
 
-export default Teams;
+export default Reports;

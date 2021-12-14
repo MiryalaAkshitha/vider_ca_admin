@@ -20,7 +20,6 @@ function KybInfo() {
     ["client-info", { clientId, type: "kyb" }],
     getClientInfo,
     {
-      refetchOnWindowFocus: false,
       onSuccess: (res: any) => {
         let data = res.data;
         setState(data);

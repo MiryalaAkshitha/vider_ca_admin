@@ -1,12 +1,12 @@
 import { Box } from "@mui/system";
 import ComingSoon from "components/ComingSoon";
 
-function Teams() {
+function BroadCast() {
   return (
     <Box p={2}>
-      <ComingSoon title="Teams" />
+      <ComingSoon title="BroadCast" />
     </Box>
   );
 }
 
-export default Teams;
+export default BroadCast;

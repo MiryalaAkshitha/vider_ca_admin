@@ -16,10 +16,7 @@ function SubTasks() {
 
   const { data, isLoading }: ResponseType = useQuery(
     ["subtasks", params.taskId],
-    getSubTasks,
-    {
-      refetchOnWindowFocus: false,
-    }
+    getSubTasks
   );
 
   if (isLoading) return <Loader />;
