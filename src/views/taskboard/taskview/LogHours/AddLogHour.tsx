@@ -72,62 +72,59 @@ function AddLogHour({ open, setOpen }: DialogProps) {
         <Loader />
       ) : (
         <form onSubmit={handleSubmit}>
-          <Box p={2}>
-            <Autocomplete
-              multiple
-              id="tags-standard"
-              onChange={(_, value) => {
-                setState({ ...state, users: value });
-              }}
-              value={state.users || []}
-              options={data?.data || []}
-              sx={{ mt: 3 }}
-              getOptionLabel={(option: any) => {
-                return option?.firstName + " " + option?.lastName;
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  label="Users"
-                />
-              )}
-            />
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              onChange={handleChange}
-              size="small"
-              name="date"
-              type="date"
-              label="Date"
-              InputLabelProps={{ shrink: true }}
-              required
-            />
-            <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              fullWidth
-              onChange={handleChange}
-              size="small"
-              label="Duration (HH:MM)"
-              value={state.duration}
-              name="duration"
-              required
-            />
-            <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-              <LoadingButton
-                loading={createLoading}
+          <Autocomplete
+            multiple
+            id="tags-standard"
+            onChange={(_, value) => {
+              setState({ ...state, users: value });
+            }}
+            value={state.users || []}
+            options={data?.data || []}
+            getOptionLabel={(option: any) => {
+              return option?.firstName + " " + option?.lastName;
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
                 fullWidth
-                loadingColor="white"
-                title="Add Log Hour"
-                color="secondary"
-                type="submit"
+                label="Users"
               />
-            </Box>
+            )}
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            name="date"
+            type="date"
+            label="Date"
+            InputLabelProps={{ shrink: true }}
+            required
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            label="Duration (HH:MM)"
+            value={state.duration}
+            name="duration"
+            required
+          />
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+            <LoadingButton
+              loading={createLoading}
+              fullWidth
+              loadingColor="white"
+              title="Add Log Hour"
+              color="secondary"
+              type="submit"
+            />
           </Box>
         </form>
       )}

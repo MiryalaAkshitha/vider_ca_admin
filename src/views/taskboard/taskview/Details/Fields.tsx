@@ -4,7 +4,7 @@ import { getTitle } from "utils";
 interface TextFieldProps {
   value: string;
   name?: string;
-  onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
+  onChange?: (event: React.ChangeEvent<{ value: unknown }>) => void;
   disabled?: boolean;
   type?: string;
 }

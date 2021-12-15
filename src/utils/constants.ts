@@ -112,6 +112,8 @@ export const clientMenu: Array<{ title: string; path: string }> = [
 export const taskViewMenu: string[] = [
   "Details",
   "Description",
+  "Checklists",
+  "Milestones",
   "Comments",
   "Sub Tasks",
   "Attachments",

@@ -33,6 +33,9 @@ import recurring from "./icons/recurring.svg";
 import profileImage from "./images/profile.jpg";
 import noAttachments from "./images/no_attachments.svg";
 import noSubTasks from "./images/noSubTasks.svg";
+import noChecklists from "./images/noChecklists.svg";
+import noMilestones from "./images/noMilestones.svg";
+import noDueDiligence from "./images/noDueDiligence.svg";
 
 export {
   quote,
@@ -43,6 +46,9 @@ export {
   profileImage,
   noAttachments,
   noSubTasks,
+  noChecklists,
+  noMilestones,
+  noDueDiligence,
 };
 
 export let icons = {

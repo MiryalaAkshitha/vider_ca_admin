@@ -1,13 +1,14 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getTaskAttachments } from "api/services/tasks";
+import { noAttachments } from "assets";
 import Loader from "components/Loader";
+import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { ResponseType } from "types";
 import File from "views/clients/Attachments/Files/File";
-import NoAttachments from "./NoAttachments";
 import UploadAttachmentModal from "./UploadAttachmentModal";
 
 function Attachments() {
@@ -46,7 +47,13 @@ function Attachments() {
               </Grid>
             ))
           ) : (
-            <NoAttachments action={() => setOpen(true)} />
+            <NoItems
+              img={noAttachments}
+              title="Have something to attach?"
+              desc="Attach task related files here for other members in the team to view or download"
+              btnTitle="Add Attachment"
+              btnAction={() => setOpen(true)}
+            />
           )}
         </Grid>
       </Box>

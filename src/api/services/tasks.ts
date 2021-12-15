@@ -115,6 +115,14 @@ const addLogHour = ({ taskId, data }) => {
   return http.post(`/tasks/${taskId}/loghours/add`, data);
 };
 
+const getChecklists = ({ queryKey }) => {
+  return http.get(`/tasks/checklists`, { params: { taskId: queryKey[1] } });
+};
+
+const addChecklist = ({ taskId, data }) => {
+  return http.post(`/tasks/${taskId}/checklists`, data);
+};
+
 export {
   getTasks,
   getTasksAsOptions,
@@ -136,4 +144,6 @@ export {
   addAttachmentsFromStorage,
   getLogHours,
   addLogHour,
+  getChecklists,
+  addChecklist,
 };

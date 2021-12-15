@@ -116,7 +116,7 @@ function Details({ state, setState, handleUpdate }: Props) {
           <Grid item xs={6}>
             <DetailSection label="Status">
               <CustomSelect
-                value={state?.status}
+                value={state?.status || ""}
                 onChange={handleChange}
                 options={Object.values(TaskStatus).map((item) => ({
                   label: item,
@@ -151,7 +151,7 @@ function Details({ state, setState, handleUpdate }: Props) {
           <Grid item xs={6}>
             <DetailSection label="Category">
               <CustomSelect
-                value={state?.category?.id || state?.category}
+                value={state?.category?.id || state?.category || ""}
                 onChange={handleChange}
                 options={categories?.data.map((item: any) => ({
                   label: item?.name,
@@ -165,7 +165,7 @@ function Details({ state, setState, handleUpdate }: Props) {
             <Grid item xs={6}>
               <DetailSection label="Sub Category">
                 <CustomSelect
-                  value={state?.subCategory?.id || state?.subCategory}
+                  value={state?.subCategory?.id || state?.subCategory || ""}
                   onChange={handleChange}
                   options={
                     subCategories?.map((item: any) => ({

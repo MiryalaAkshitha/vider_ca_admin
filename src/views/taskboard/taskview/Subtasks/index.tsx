@@ -1,13 +1,14 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getSubTasks } from "api/services/tasks";
+import { noSubTasks } from "assets";
 import Loader from "components/Loader";
+import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { ResponseType } from "types";
 import AddSubTask from "./AddSubTask";
-import NoSubTasks from "./NoSubTasks";
 import SubTasksList from "./SubTasksList";
 
 function SubTasks() {
@@ -41,7 +42,13 @@ function SubTasks() {
         {data?.data?.length ? (
           <SubTasksList data={data?.data} />
         ) : (
-          <NoSubTasks action={() => setOpen(true)} />
+          <NoItems
+            img={noSubTasks}
+            title="Add a Sub item in your task"
+            desc="Divide your task into smaller items and add them here"
+            btnTitle="Add Sub Task"
+            btnAction={() => setOpen(true)}
+          />
         )}
       </Box>
       <AddSubTask open={open} setOpen={setOpen} />

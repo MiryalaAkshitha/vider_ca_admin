@@ -1,22 +1,23 @@
+import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { getLogHours } from "api/services/tasks";
-import { noSubTasks } from "assets";
+import { getChecklists } from "api/services/tasks";
+import { noChecklists } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResponseType } from "types";
-import AddLogHour from "./AddLogHour";
-import LogHoursList from "./LogHoursList";
+import AddChecklist from "./AddChecklist";
+import CheckList from "./CheckList";
 
-function LogHours() {
+function Checklists() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
   const { data, isLoading }: ResponseType = useQuery(
-    ["loghours", params.taskId],
-    getLogHours
+    ["checklists", params.taskId],
+    getChecklists
   );
 
   if (isLoading) return <Loader />;
@@ -25,34 +26,37 @@ function LogHours() {
     <>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
-          Log Hours
+          Checklists
         </Typography>
         {data?.data?.length ? (
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
             variant="outlined"
+            startIcon={<Add />}
           >
-            Add Log Hour
+            Add checklist
           </Button>
         ) : null}
       </Box>
-      <Box mt={4}>
+      <Box mt={2}>
         {data?.data?.length ? (
-          <LogHoursList data={data?.data} />
+          data?.data?.map((item: any, index: number) => (
+            <CheckList data={item} key={index} />
+          ))
         ) : (
           <NoItems
-            img={noSubTasks}
-            title="Add log hour in your task"
-            desc="Divide your task into smaller items and add them here"
-            btnTitle="Add Log Hour"
+            img={noChecklists}
+            title="Add Checklist to you task"
+            desc="Create a Checklist and add checklist items to it."
+            btnTitle="Add Checklist"
             btnAction={() => setOpen(true)}
           />
         )}
       </Box>
-      <AddLogHour open={open} setOpen={setOpen} />
+      <AddChecklist open={open} setOpen={setOpen} />
     </>
   );
 }
 
-export default LogHours;
+export default Checklists;
