@@ -1,32 +1,40 @@
 import { Add, Delete } from "@mui/icons-material";
-import { Button, IconButton, TextField, Typography } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { addChecklist } from "api/services/tasks";
+import { addChecklistItems } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
 import { DialogProps, SubmitType } from "types";
 
 interface StateProps {
-  name: string;
   checklistItems: Array<{ name: string; description: string }>;
 }
 
-function AddChecklist({ open, setOpen }: DialogProps) {
-  const params = useParams();
+interface Props extends DialogProps {
+  selectedChecklist: number | null;
+}
+
+function AddChecklistItem({ open, setOpen, selectedChecklist }: Props) {
+  const initialState = {
+    checklistItems: [
+      {
+        name: "",
+        description: "",
+      },
+    ],
+  };
+
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const [state, setState] = useState<StateProps>({
-    checklistItems: [],
-    name: "",
-  });
+  const [state, setState] = useState<StateProps>(initialState);
 
-  const { mutate, isLoading } = useMutation(addChecklist, {
+  const { mutate, isLoading } = useMutation(addChecklistItems, {
     onSuccess: () => {
-      snack.success("Checklist Added");
+      snack.success("Checklist Items Added");
+      setState(initialState);
       setOpen(false);
       queryClient.invalidateQueries("checklists");
     },
@@ -60,44 +68,19 @@ function AddChecklist({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     mutate({
-      taskId: params.taskId,
+      checklistId: selectedChecklist,
       data: state,
     });
   };
 
   return (
-    <DrawerWrapper open={open} title="Add Checklist" setOpen={setOpen}>
+    <DrawerWrapper open={open} title="Add Checklist Items" setOpen={setOpen}>
       <form onSubmit={handleSubmit}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          onChange={(e) => {
-            setState({ ...state, name: e.target.value });
-          }}
-          size="small"
-          value={state.name}
-          name="name"
-          label="Checklist name"
-          required
-        />
-        <Box textAlign="right" mt={2} mb={1}>
-          <Button
-            onClick={addChecklistItem}
-            color="secondary"
-            startIcon={<Add />}
-          >
-            Add checklist item
-          </Button>
-        </Box>
         {state.checklistItems.map((item, index) => (
-          <Box display="flex" gap={2} mb={3}>
-            <div>
-              <Typography variant="subtitle2">{index + 1}.</Typography>
-            </div>
+          <Box display="flex" gap={2} mb={3} key={index}>
             <Box flex={1}>
               <TextField
                 variant="outlined"
-                key={index}
                 sx={{ mb: 2 }}
                 fullWidth
                 onChange={(e) => handleItemChange(e, index)}
@@ -128,12 +111,21 @@ function AddChecklist({ open, setOpen }: DialogProps) {
             </div>
           </Box>
         ))}
+        <Box textAlign="right" mt={2} mb={1}>
+          <Button
+            onClick={addChecklistItem}
+            color="secondary"
+            startIcon={<Add />}
+          >
+            Add More
+          </Button>
+        </Box>
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             loading={isLoading}
             fullWidth
             loadingColor="white"
-            title="Add Checklist"
+            title="Add Checklist Item(s)"
             color="secondary"
             type="submit"
           />
@@ -143,4 +135,4 @@ function AddChecklist({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddChecklist;
+export default AddChecklistItem;
