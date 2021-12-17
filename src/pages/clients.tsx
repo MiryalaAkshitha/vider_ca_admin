@@ -9,7 +9,7 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddClient from "views/clients/AddClient";
 import ClientFilter from "views/clients/Filter";
 
@@ -28,7 +28,7 @@ function Clients() {
     search: "",
   });
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     [
       "clients",
       {

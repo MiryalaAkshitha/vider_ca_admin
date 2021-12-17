@@ -1,3 +1,4 @@
+import { Add } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getSubTasks } from "api/services/tasks";
@@ -7,7 +8,7 @@ import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddSubTask from "./AddSubTask";
 import SubTasksList from "./SubTasksList";
 
@@ -15,7 +16,7 @@ function SubTasks() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["subtasks", params.taskId],
     getSubTasks
   );
@@ -32,7 +33,7 @@ function SubTasks() {
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
-            variant="outlined"
+            startIcon={<Add />}
           >
             Add Sub Task
           </Button>

@@ -143,6 +143,14 @@ const deleteChecklistItem = ({ id }) => {
   return http.delete(`/tasks/checklists/checklist-items/${id}`);
 };
 
+const getMilestones = ({ queryKey }) => {
+  return http.get(`/tasks/milestones`, { params: { taskId: queryKey[1] } });
+};
+
+const addMilestone = ({ taskId, data }) => {
+  return http.post(`/tasks/${taskId}/milestones`, data);
+};
+
 export {
   getTasks,
   getTasksAsOptions,
@@ -171,4 +179,6 @@ export {
   updateChecklist,
   deleteChecklist,
   deleteChecklistItem,
+  getMilestones,
+  addMilestone,
 };

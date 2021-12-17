@@ -8,7 +8,7 @@ import useSnack from "hooks/useSnack";
 import { Fragment } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 
 type Props = {
   onUpdate: () => void;
@@ -19,7 +19,7 @@ function FormsContainer({ onUpdate }: Props) {
   const snack = useSnack();
   const queryClient = useQueryClient();
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["forms", { tags: "kyb" }],
     getForms
   );

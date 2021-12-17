@@ -6,16 +6,13 @@ import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddCategory from "views/categories/AddCategory";
 import CategoryCard from "views/categories/CategoryCard";
 
 function Cateogries() {
   const [open, setOpen] = useState<boolean>(false);
-  const { data, isLoading }: ResponseType = useQuery(
-    "categories",
-    getCategories
-  );
+  const { data, isLoading }: ResType = useQuery("categories", getCategories);
 
   useTitle("Categories");
 

@@ -16,7 +16,7 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, Reminders, ResponseType, SubmitType } from "types";
+import { DialogProps, Reminders, ResType, SubmitType } from "types";
 import { getTitle } from "utils";
 
 interface StateProps {
@@ -47,7 +47,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
     task: null,
   });
 
-  const { data: clients, isLoading: clientsLoading }: ResponseType = useQuery(
+  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
     ["clients", {}],
     getClients,
     {
@@ -55,7 +55,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
     }
   );
 
-  const { data: tasks, isLoading: tasksLoading }: ResponseType = useQuery(
+  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
     ["task-options", {}],
     getTasksAsOptions,
     {

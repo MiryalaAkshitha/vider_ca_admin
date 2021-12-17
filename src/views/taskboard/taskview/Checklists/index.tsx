@@ -7,7 +7,7 @@ import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddChecklist from "./AddChecklist";
 import CheckList from "./CheckList";
 
@@ -15,7 +15,7 @@ function Checklists() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["checklists", params.taskId],
     getChecklists
   );
@@ -32,7 +32,6 @@ function Checklists() {
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
-            variant="outlined"
             startIcon={<Add />}
           >
             Add checklist

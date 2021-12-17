@@ -19,7 +19,7 @@ import {
   setFields,
   toggleRequired,
 } from "redux/reducers/formsSlice";
-import { ResponseType } from "types";
+import { ResType } from "types";
 
 function FormFieldsContainer() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function FormFieldsContainer() {
   const snack = useSnack();
   const { addedFields } = useSelector(selectForm);
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["form-fields", params.formId],
     getFormFields,
     {

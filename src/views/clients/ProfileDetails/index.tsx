@@ -5,7 +5,7 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import Details from "./Details";
 import Profile from "./Profile";
 
@@ -14,7 +14,7 @@ function ProfileDetails() {
   const snack = useSnack();
   const [state, setState] = useState<any>({});
 
-  const { isLoading }: ResponseType = useQuery(
+  const { isLoading }: ResType = useQuery(
     ["client", params.clientId],
     getClient,
     {

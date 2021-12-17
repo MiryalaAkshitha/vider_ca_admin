@@ -11,15 +11,15 @@ import useTitle from "hooks/useTitle";
 import moment from "moment";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddEvent from "views/calendar/AddEvent";
 
 function Calendar() {
   useTitle("Calendar");
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: ResponseType = useQuery(["events"], getEvents);
-  const { data: tasks, isLoading: tasksLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(["events"], getEvents);
+  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
     ["task-options"],
     getTasksAsOptions
   );

@@ -1,7 +1,7 @@
 import { UseQueryResult } from "react-query";
 import { DataResponse } from "types";
 
-export type DataResponseType = UseQueryResult<DataResponse, Error>;
+export type DataResType = UseQueryResult<DataResponse, Error>;
 
 export interface StateProps {
   name: string;

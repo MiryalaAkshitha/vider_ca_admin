@@ -8,7 +8,7 @@ import SearchContainer from "components/SearchContainer";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import CreateForm from "views/forms/AddForm";
 import FormCard from "views/forms/FormCard";
 
@@ -16,7 +16,7 @@ function Forms() {
   const [open, setOpen] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
-  const { data, isLoading }: ResponseType = useQuery(["forms"], getForms);
+  const { data, isLoading }: ResType = useQuery(["forms"], getForms);
 
   useTitle("Forms");
 

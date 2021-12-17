@@ -9,7 +9,7 @@ import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddLabel from "views/labels/AddLabel";
 import { StyledLabel } from "views/labels/styles";
 
@@ -19,7 +19,7 @@ function Tags() {
   const snack = useSnack();
   const confirm = useConfirm();
 
-  const { data, isLoading }: ResponseType = useQuery("labels", getLabels);
+  const { data, isLoading }: ResType = useQuery("labels", getLabels);
 
   useTitle("Labels");
 

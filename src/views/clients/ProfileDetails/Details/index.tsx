@@ -12,7 +12,7 @@ import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 import ContactPersonDetails from "../ContactPersonDetails";
 import TextFieldWithCopy from "./TextFieldWithCopy";
@@ -23,12 +23,9 @@ interface IDetailsProps {
 }
 
 function Details({ data, setState }: IDetailsProps) {
-  const { data: labels, isLoading }: ResponseType = useQuery(
-    "labels",
-    getLabels
-  );
+  const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
 
-  const { data: users, isLoading: userLoading }: ResponseType = useQuery(
+  const { data: users, isLoading: userLoading }: ResType = useQuery(
     "users",
     getUsers
   );

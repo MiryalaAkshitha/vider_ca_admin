@@ -7,7 +7,7 @@ import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddMember from "views/users/AddMember";
 import UserCard from "views/users/UserCard";
 
@@ -16,9 +16,9 @@ function Users() {
   const [search, setSearch] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
-  const { data, isLoading }: ResponseType = useQuery("users", getUsers);
+  const { data, isLoading }: ResType = useQuery("users", getUsers);
 
-  const { data: roles, isLoading: rolesLoading }: ResponseType = useQuery(
+  const { data: roles, isLoading: rolesLoading }: ResType = useQuery(
     "roles",
     getRoles
   );

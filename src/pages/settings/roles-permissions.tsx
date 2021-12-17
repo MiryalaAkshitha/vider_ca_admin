@@ -9,7 +9,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import AddRole from "views/rolesandpermissions/AddRole";
 import EditRole from "views/rolesandpermissions/EditRole";
 
@@ -23,7 +23,7 @@ function RolesAndPermissions() {
   const navigate = useNavigate();
   const [selectedData, setSelectedData] = useState<any>({});
 
-  const { data, isLoading }: ResponseType = useQuery("roles", getRoles);
+  const { data, isLoading }: ResType = useQuery("roles", getRoles);
 
   const { mutate } = useMutation(deleteRole, {
     onSuccess: () => {

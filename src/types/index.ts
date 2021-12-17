@@ -19,7 +19,7 @@ export type StorageResponse = UseQueryResult<
   Error
 >;
 
-export type ResponseType = UseQueryResult<any, Error>;
+export type ResType = UseQueryResult<any, Error>;
 
 export type InputChangeType = React.ChangeEvent<HTMLInputElement>;
 

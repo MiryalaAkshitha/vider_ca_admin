@@ -7,7 +7,7 @@ import useTitle from "hooks/useTitle";
 import { useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import { taskViewMenu } from "utils/constants";
 import {
   StyledProfileNav,
@@ -32,15 +32,11 @@ function TaskDetails() {
   const elementsRef = useRef<HTMLElement[]>([]);
   const [state, setState] = useState<any>({});
 
-  const { isLoading }: ResponseType = useQuery(
-    ["task", params.taskId],
-    getTask,
-    {
-      onSuccess: (res: any) => {
-        setState(res?.data);
-      },
-    }
-  );
+  const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
+    onSuccess: (res: any) => {
+      setState(res?.data);
+    },
+  });
 
   const getRef = (ref: any, index: number) => {
     elementsRef.current[index] = ref as HTMLElement;

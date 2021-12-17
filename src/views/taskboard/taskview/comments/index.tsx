@@ -4,14 +4,14 @@ import { getTaskComments } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import TaskComment from "./Comment";
 import CommentInput from "./CommentInput";
 
 function Comments() {
   const params: any = useParams();
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["task-comments", params.taskId],
     getTaskComments
   );

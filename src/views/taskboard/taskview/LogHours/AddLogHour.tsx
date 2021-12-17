@@ -10,7 +10,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DialogProps, ResponseType, SubmitType } from "types";
+import { DialogProps, ResType, SubmitType } from "types";
 
 interface StateProps {
   users: any[];
@@ -28,7 +28,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     duration: "",
   });
 
-  const { data, isLoading }: ResponseType = useQuery("users", getUsers, {
+  const { data, isLoading }: ResType = useQuery("users", getUsers, {
     enabled: open,
   });
 

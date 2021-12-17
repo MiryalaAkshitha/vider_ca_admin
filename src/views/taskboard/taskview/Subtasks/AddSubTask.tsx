@@ -9,7 +9,7 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DialogProps, ResponseType, SubmitType } from "types";
+import { DialogProps, ResType, SubmitType } from "types";
 import { getTitle } from "utils";
 import { PriorityEnum } from "utils/constants";
 
@@ -33,7 +33,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
     members: [],
   });
 
-  const { data, isLoading }: ResponseType = useQuery("users", getUsers, {
+  const { data, isLoading }: ResType = useQuery("users", getUsers, {
     enabled: open,
   });
 

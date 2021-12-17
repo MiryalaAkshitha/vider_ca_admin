@@ -35,6 +35,7 @@ const CheckListItem = ({ data, index }: Props) => {
   const { mutate } = useMutation(updateChecklistItem, {
     onSuccess: () => {
       snack.success("Checklist item udpated");
+      queryClient.invalidateQueries("milestones");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

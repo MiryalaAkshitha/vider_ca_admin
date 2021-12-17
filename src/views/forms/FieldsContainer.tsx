@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { addField, selectForm } from "redux/reducers/formsSlice";
-import { ResponseType } from "types";
+import { ResType } from "types";
 
 export type FieldItem = {
   id: number;
@@ -24,7 +24,7 @@ function FieldsContainer() {
   const dispatch = useDispatch();
   const snack = useSnack();
   const [search, setSearch] = useState<string>("");
-  const { data, isLoading }: ResponseType = useQuery(["fields"], getFields);
+  const { data, isLoading }: ResType = useQuery(["fields"], getFields);
 
   const handleAddField = (v: any) => {
     let existingField = addedFields.find((item: any) => item.field.id === v.id);

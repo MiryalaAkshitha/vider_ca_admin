@@ -8,7 +8,7 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, InputChangeType, ResponseType, SubmitType } from "types";
+import { DialogProps, InputChangeType, ResType, SubmitType } from "types";
 import PasswordField from "views/login/PasswordField";
 
 type State = {
@@ -32,7 +32,7 @@ function AddMember({ open, setOpen }: DialogProps) {
     role: null,
   });
 
-  const { data, isLoading: dataLoading }: ResponseType = useQuery(
+  const { data, isLoading: dataLoading }: ResType = useQuery(
     "roles",
     getRoles,
     { enabled: open }

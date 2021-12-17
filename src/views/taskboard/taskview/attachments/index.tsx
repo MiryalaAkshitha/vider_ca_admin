@@ -1,3 +1,4 @@
+import { Add } from "@mui/icons-material";
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getTaskAttachments } from "api/services/tasks";
@@ -7,7 +8,7 @@ import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import File from "views/clients/Attachments/Files/File";
 import UploadAttachmentModal from "./UploadAttachmentModal";
 
@@ -15,7 +16,7 @@ function Attachments() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["task-attachments", params.taskId],
     getTaskAttachments
   );
@@ -30,9 +31,9 @@ function Attachments() {
         </Typography>
         {data?.data?.length ? (
           <Button
+            startIcon={<Add />}
             onClick={() => setOpen(true)}
             color="secondary"
-            variant="outlined"
           >
             Add Attachment
           </Button>

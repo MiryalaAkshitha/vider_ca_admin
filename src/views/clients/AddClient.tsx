@@ -8,7 +8,7 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, ResponseType, SubmitType } from "types";
+import { DialogProps, ResType, SubmitType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 
 interface StateProps {
@@ -33,7 +33,7 @@ function AddClient({ open, setOpen }: DialogProps) {
   });
   let formRef = useRef<HTMLFormElement>(null);
 
-  const { data: users, isLoading: userLoading }: ResponseType = useQuery(
+  const { data: users, isLoading: userLoading }: ResType = useQuery(
     "users",
     getUsers,
     {

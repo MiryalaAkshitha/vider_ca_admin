@@ -5,7 +5,7 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import FormsContainer from "./FormsContainer";
 import KybDetails from "./KybDetails";
 
@@ -16,7 +16,7 @@ function KybInfo() {
   const params = useParams();
   let clientId = params.clientId || "";
 
-  const { isLoading }: ResponseType = useQuery(
+  const { isLoading }: ResType = useQuery(
     ["client-info", { clientId, type: "kyb" }],
     getClientInfo,
     {

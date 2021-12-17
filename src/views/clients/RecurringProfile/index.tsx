@@ -5,7 +5,7 @@ import Loader from "components/Loader";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import {
   StyledRecurItemsContainer,
   StyledRecurProfileContainer,
@@ -18,7 +18,7 @@ function RecurringProfile() {
   const params: any = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const { data, isLoading }: ResponseType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["recurring-profiles", params.clientId],
     getRecurringProfiles
   );

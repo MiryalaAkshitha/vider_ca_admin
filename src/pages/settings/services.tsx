@@ -7,14 +7,11 @@ import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import ServiceCard from "views/services/ServiceCard";
 
 function Services() {
-  const { data, isLoading }: ResponseType = useQuery(
-    "categories",
-    getCategories
-  );
+  const { data, isLoading }: ResType = useQuery("categories", getCategories);
 
   useTitle("Services");
 

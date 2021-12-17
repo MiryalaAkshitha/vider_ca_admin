@@ -6,7 +6,7 @@ import Loader from "components/Loader";
 import MenuWrapper from "components/MenuWrapper";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ResponseType } from "types";
+import { ResType } from "types";
 import Board from "views/taskboard/board";
 import CreateTask from "views/taskboard/board/CreateTask";
 import CreateRecurringTask from "views/taskboard/board/CreateTask/CreateRecurringTask";
@@ -15,7 +15,7 @@ function TaskBoard() {
   const [open, setOpen] = useState<boolean>(false);
   const [openRecurring, setOpenRecurring] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { data, isLoading }: ResponseType = useQuery("tasks", getTasks);
+  const { data, isLoading }: ResType = useQuery("tasks", getTasks);
 
   if (isLoading) return <Loader />;
 
