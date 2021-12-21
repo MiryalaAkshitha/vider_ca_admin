@@ -11,12 +11,12 @@ interface GetStorage {
   clientId: string;
 }
 
-const getStorage = ({ queryKey }) => {
+const getStorage = ({ queryKey }: any) => {
   const params: GetStorage = queryKey[1];
   return http.get("/storage", { params });
 };
 
-const getStorageTree = ({ queryKey }) => {
+const getStorageTree = ({ queryKey }: any) => {
   return http.get("/storage/tree", { params: { clientId: queryKey[1] } });
 };
 

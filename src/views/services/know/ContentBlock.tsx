@@ -31,7 +31,7 @@ function ContentBlock({ item, index }: ContentBlockProps) {
 
   return (
     <Box mt={10}>
-      <Typography mb={1} variant='body2' color='primary'>
+      <Typography mb={1} variant="body2" color="primary">
         {item.title}
       </Typography>
       <Box>
@@ -40,7 +40,7 @@ function ContentBlock({ item, index }: ContentBlockProps) {
             return (
               <Box mb={2}>
                 <ReactQuill
-                  onChange={(v) => console.log(v)}
+                  onChange={(v: string) => console.log(v)}
                   id={item.id}
                   key={index}
                 />
@@ -52,14 +52,15 @@ function ContentBlock({ item, index }: ContentBlockProps) {
               {content.items?.map((item) => (
                 <AccordionItem data={item} key={item.id} />
               ))}
-              <Box textAlign='right'>
+              <Box textAlign="right">
                 <Button
                   onClick={() => {
                     setSelectedAccordion(selectedAccordion);
                     setOpenAccordionItem(true);
                   }}
-                  color='primary'
-                  variant='outlined'>
+                  color="primary"
+                  variant="outlined"
+                >
                   Add Item
                 </Button>
               </Box>
@@ -67,17 +68,19 @@ function ContentBlock({ item, index }: ContentBlockProps) {
           );
         })}
       </Box>
-      <Box display='flex' gap={2}>
+      <Box display="flex" gap={2}>
         <Button
           onClick={handleAddTextField}
-          color='secondary'
-          startIcon={<Add />}>
+          color="secondary"
+          startIcon={<Add />}
+        >
           Add Text Content
         </Button>
         <Button
           onClick={() => setOpen(true)}
-          color='secondary'
-          startIcon={<Add />}>
+          color="secondary"
+          startIcon={<Add />}
+        >
           Add Accordion Content
         </Button>
       </Box>

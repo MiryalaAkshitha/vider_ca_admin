@@ -1,4 +1,5 @@
 import { http } from "api/http";
+import { QueryType } from "api/types";
 import { TaskStatus } from "views/taskboard/board/utils";
 
 type UpdateStatus = {
@@ -49,7 +50,7 @@ const getTasks = () => http.get("/tasks");
 
 const getTasksAsOptions = () => http.get("/tasks/as-options");
 
-const getTask = ({ queryKey }) => {
+const getTask = ({ queryKey }: any) => {
   return http.get(`/tasks/task-details/${queryKey[1]}`);
 };
 
@@ -66,7 +67,7 @@ const updateTask = ({ id, data }: { id: number; data: any }) => {
   return http.put(`/tasks/${id}`, data);
 };
 
-const getTaskComments = ({ queryKey }) => {
+const getTaskComments = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/comments`, { params: { taskId: queryKey[1] } });
 };
 
@@ -74,7 +75,7 @@ const addComment = ({ taskId, data }: AddComment) => {
   return http.post(`/tasks/${taskId}/comments`, data);
 };
 
-const getTaskAttachments = ({ queryKey }) => {
+const getTaskAttachments = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/attachments`, { params: { taskId: queryKey[1] } });
 };
 
@@ -87,15 +88,15 @@ const addAttachmentsFromStorage = (args: AddAttachmentFromStorage) => {
   return http.post(`/tasks/${taskId}/attachments/from-storage`, data);
 };
 
-const createSubTask = ({ taskId, data }) => {
+const createSubTask = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/subtasks`, data);
 };
 
-const getSubTasks = ({ queryKey }) => {
+const getSubTasks = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/subtasks`, { params: { taskId: queryKey[1] } });
 };
 
-const updateSubTask = ({ id, data }) => {
+const updateSubTask = ({ id, data }: any) => {
   return http.put(`/tasks/${id}/subtasks`, data);
 };
 
@@ -107,47 +108,47 @@ const endTimer = ({ id, endTime }: EndTimerData) => {
   return http.post(`/tasks/loghours/${id}/end-timer`, { endTime });
 };
 
-const getLogHours = ({ queryKey }) => {
+const getLogHours = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/loghours`, { params: { taskId: queryKey[1] } });
 };
 
-const addLogHour = ({ taskId, data }) => {
+const addLogHour = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/loghours/add`, data);
 };
 
-const getChecklists = ({ queryKey }) => {
+const getChecklists = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/checklists`, { params: { taskId: queryKey[1] } });
 };
 
-const addChecklist = ({ taskId, data }) => {
+const addChecklist = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/checklists`, data);
 };
 
-const updateChecklist = ({ data }) => {
+const updateChecklist = ({ data }: any) => {
   return http.put(`/tasks/checklists/update`, data);
 };
 
-const addChecklistItems = ({ checklistId, data }) => {
+const addChecklistItems = ({ checklistId, data }: any) => {
   return http.post(`/tasks/checklists/${checklistId}`, data);
 };
 
-const updateChecklistItem = ({ data }) => {
+const updateChecklistItem = ({ data }: any) => {
   return http.put(`/tasks/checklists/checklist-items/update`, data);
 };
 
-const deleteChecklist = ({ id }) => {
+const deleteChecklist = ({ id }: { id: number }) => {
   return http.delete(`/tasks/checklists/${id}`);
 };
 
-const deleteChecklistItem = ({ id }) => {
+const deleteChecklistItem = ({ id }: { id: number }) => {
   return http.delete(`/tasks/checklists/checklist-items/${id}`);
 };
 
-const getMilestones = ({ queryKey }) => {
+const getMilestones = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/milestones`, { params: { taskId: queryKey[1] } });
 };
 
-const addMilestone = ({ taskId, data }) => {
+const addMilestone = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/milestones`, data);
 };
 

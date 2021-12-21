@@ -3,17 +3,22 @@ import { Close } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { Box, SystemStyleObject } from "@mui/system";
 import { StyledFileChip, UploadContainer } from "./styles";
+import { useState } from "react";
 
 interface UploadProps {
   sx?: SystemStyleObject;
-  files: File[];
-  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  onChange: (files: File[]) => void;
+  multiple?: boolean;
+  accept?: string;
 }
 
-function FileDrop({ sx, files, setFiles }: UploadProps) {
+function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
+  const [files, setFiles] = useState<File[]>([]);
+
   const handleChange = (e: any) => {
     if (!e.target.files.length) return;
     setFiles([...files, ...e.target.files]);
+    onChange([...files, ...e.target.files]);
   };
 
   const handleFileRemove = (e: any, index: number) => {
@@ -21,6 +26,7 @@ function FileDrop({ sx, files, setFiles }: UploadProps) {
     const newFiles = [...files];
     newFiles.splice(index, 1);
     setFiles(newFiles);
+    onChange(newFiles);
   };
 
   const handleDragEnter = (e: any) => {
@@ -44,6 +50,7 @@ function FileDrop({ sx, files, setFiles }: UploadProps) {
     e.stopPropagation();
     if (!e.dataTransfer.files.length) return;
     setFiles([...files, ...e.dataTransfer.files]);
+    onChange([...files, ...e.dataTransfer.files]);
   };
 
   return (
@@ -52,9 +59,10 @@ function FileDrop({ sx, files, setFiles }: UploadProps) {
         type="file"
         onChange={handleChange}
         name="upload"
-        multiple
+        multiple={multiple}
         id="file"
         style={{ display: "none" }}
+        {...(accept && { accept })}
       />
       <label htmlFor="file">
         <UploadContainer

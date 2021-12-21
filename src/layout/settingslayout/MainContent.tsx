@@ -1,7 +1,11 @@
 import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
 
-function MainContent({ children }) {
+type Props = {
+  children: React.ReactNode;
+};
+
+function MainContent({ children }: Props) {
   return (
     <Box
       component="main"

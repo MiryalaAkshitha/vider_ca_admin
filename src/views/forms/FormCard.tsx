@@ -67,7 +67,7 @@ function FormCard(props: Props) {
           </IconButton>
         </Box>
         <Box display="flex" gap={2} mt={1}>
-          {data?.tags?.map((item, index) => (
+          {data?.tags?.map((item: string, index: number) => (
             <Box
               px="10px"
               py="1px"

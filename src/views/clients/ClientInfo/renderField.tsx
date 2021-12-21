@@ -74,7 +74,7 @@ export function renderField(field: any, onChange: (v: any) => void) {
           size="small"
           InputLabelProps={{ shrink: true }}
         >
-          {field?.options?.map((item, index) => (
+          {field?.options?.map((item: any, index: number) => (
             <MenuItem value={item} key={index}>
               {item}
             </MenuItem>
@@ -95,7 +95,7 @@ export function renderField(field: any, onChange: (v: any) => void) {
           onChange={onChange}
           name="radio-buttons-group"
         >
-          {field?.options?.map((item, index) => (
+          {field?.options?.map((item: any, index: number) => (
             <FormControlLabel
               key={index}
               value={item}

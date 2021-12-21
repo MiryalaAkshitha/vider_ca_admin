@@ -1,7 +1,7 @@
 import { icons } from "assets";
 import { FILETYPES } from "types";
 
-export const renderFile = (data) => {
+export const renderFile = (data: any) => {
   switch (data?.fileType) {
     case FILETYPES.JPEG:
       return <ImageFile url={data?.fileUrl} />;
@@ -64,6 +64,6 @@ const ImageFile = ({ url }: any) => (
   />
 );
 
-const PdfFile = ({ url, icon }) => (
+const PdfFile = ({ url, icon }: any) => (
   <img draggable={false} src={icon} width={80} alt="" />
 );

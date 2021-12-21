@@ -1,4 +1,4 @@
-interface IMenuItem {
+export interface IMenuItem {
   title: string;
   path: string;
   children?: Array<IMenuItem>;

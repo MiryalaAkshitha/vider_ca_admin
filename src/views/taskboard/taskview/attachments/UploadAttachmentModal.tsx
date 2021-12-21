@@ -55,7 +55,11 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <FileDrop sx={{ minHeight: 300 }} files={files} setFiles={setFiles} />
+        <FileDrop
+          multiple
+          sx={{ minHeight: 300 }}
+          onChange={(files: File[]) => setFiles(files)}
+        />
         <Box sx={{ mt: 3, display: "flex", gap: 2, justifyContent: "center" }}>
           <LoadingButton
             title="Upload Files"

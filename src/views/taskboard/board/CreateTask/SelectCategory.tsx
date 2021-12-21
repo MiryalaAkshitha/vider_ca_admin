@@ -31,7 +31,7 @@ function SelectCategory({ state, setState, categories }: IProps) {
         name="category"
         label="Category"
       >
-        {categories?.map((item, index) => (
+        {categories?.map((item: any, index: number) => (
           <MenuItem value={item.id} key={index}>
             {item.name}
           </MenuItem>
@@ -50,7 +50,7 @@ function SelectCategory({ state, setState, categories }: IProps) {
           name="subCategory"
           label="Sub Category"
         >
-          {subCategories?.map((item: any, index) => (
+          {subCategories?.map((item: any, index: number) => (
             <MenuItem key={index} value={item?.id}>
               {item?.name}
             </MenuItem>

@@ -24,18 +24,6 @@ body {
   src: url(./assets/fonts/Muli-Bold.ttf);
 }
 
-.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
-  font-family: muli_regular !important;
-}
-.ql-container {
-  min-height: 150px;
-  font-family: muli_regular !important;
-}
-
-input::placeholder {
-  font-family: muli_regular !important;
-}
-
 /* CUSTOM  SCROLLBAR */
 ::-webkit-scrollbar {
   width: 4px;
@@ -51,6 +39,17 @@ input::placeholder {
   background: lightgrey;
 }
 
+/*** OVERRIDES ***/
+input::placeholder {
+  font-family: muli_regular !important;
+}
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+  font-family: muli_regular !important;
+}
+.ql-container {
+  min-height: 150px;
+  font-family: muli_regular !important;
+}
 .SnackbarItem-message {
   font-family: muli_regular !important;
 }

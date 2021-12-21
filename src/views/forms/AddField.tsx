@@ -7,7 +7,7 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps } from "types";
+import { DialogProps, InputChangeType } from "types";
 import { FIELD_TYPES } from "utils/constants";
 
 function AddField({ open, setOpen }: DialogProps) {
@@ -41,7 +41,7 @@ function AddField({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: InputChangeType) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -55,7 +55,7 @@ function AddField({ open, setOpen }: DialogProps) {
     });
   };
 
-  const handleOptionChange = (e, i) => {
+  const handleOptionChange = (e: any, i: number) => {
     let options = [...state.options];
     options[i] = e.target.value;
     setState({
@@ -64,7 +64,7 @@ function AddField({ open, setOpen }: DialogProps) {
     });
   };
 
-  const handleOptionDelete = (i) => {
+  const handleOptionDelete = (i: number) => {
     let options = state.options.filter((_, index) => index !== i);
     setState({
       ...state,

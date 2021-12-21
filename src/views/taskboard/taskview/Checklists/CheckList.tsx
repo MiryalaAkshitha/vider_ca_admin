@@ -77,7 +77,11 @@ const CheckList = ({ data }: Props) => {
       <StyledChecklist>
         <header>
           <Typography variant="h6">
-            <div contentEditable onBlur={handleNameChange}>
+            <div
+              contentEditable
+              onBlur={handleNameChange}
+              suppressContentEditableWarning={true}
+            >
               {data?.name}
             </div>
           </Typography>
@@ -93,7 +97,7 @@ const CheckList = ({ data }: Props) => {
         {show && (
           <Box>
             {data?.checklistItems?.map((item: any, index: number) => (
-              <CheckListItem data={item} index={index} />
+              <CheckListItem data={item} index={index} key={index} />
             ))}
             <Box textAlign="right" pt={2} pb={1} pr={1}>
               <Button

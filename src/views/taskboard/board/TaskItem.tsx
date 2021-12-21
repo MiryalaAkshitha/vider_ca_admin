@@ -103,7 +103,6 @@ function TaskItem({ data }: Props) {
             <Typography variant="caption" color="gray">
               {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
             </Typography>
-            {console.log(new Date(data?.createdAt))}
             <Typography variant="caption" color="gray"></Typography>
             {data?.recurring && (
               <img

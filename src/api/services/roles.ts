@@ -15,7 +15,7 @@ interface IUpdateData {
 
 const getRoles = () => http.get("/roles");
 
-const getRole = ({ queryKey }) => http.get(`/roles/${queryKey[1]}`);
+const getRole = ({ queryKey }: any) => http.get(`/roles/${queryKey[1]}`);
 
 const getPermissions = () => http.get("/permissions/tree");
 

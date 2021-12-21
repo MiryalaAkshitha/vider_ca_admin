@@ -1,7 +1,10 @@
 import { http } from "api/http";
 
-const createClient = (data: any) => http.post("/client", data);
-const getClients = ({ queryKey }) => {
+const createClient = (data: any) => {
+  return http.post("/client", data);
+};
+
+const getClients = ({ queryKey }: any) => {
   let { limit, offset, query } = queryKey[1];
   return http.get("/client", {
     params: {
@@ -12,18 +15,28 @@ const getClients = ({ queryKey }) => {
   });
 };
 
-const getClient = ({ queryKey }) => {
+const getClient = ({ queryKey }: any) => {
   return http.get(`/client/${queryKey[1]}`);
 };
 
-const updateClient = ({ data, clientId }: any) =>
-  http.put(`/client/${clientId}`, data);
-const createContactPerson = (data: any) => http.post("/contact-persons", data);
+const updateClient = ({ data, clientId }: any) => {
+  return http.put(`/client/${clientId}`, data);
+};
+
+const createContactPerson = (data: any) => {
+  return http.post("/contact-persons", data);
+};
+
 const updateContactPerson = ({ id, data }: { data: any; id: any }) => {
   return http.put(`/contact-persons/${id}`, data);
 };
+
 const deleteContactPerson = (id: any) => {
   return http.delete(`/contact-persons/${id}`);
+};
+
+const importClients = (data: FormData) => {
+  return http.post(`/client/import`, data);
 };
 
 export {
@@ -34,4 +47,5 @@ export {
   createContactPerson,
   updateContactPerson,
   deleteContactPerson,
+  importClients,
 };

@@ -14,7 +14,7 @@ function BreadCrumbs({ data }: any) {
         >
           Home
         </Link>
-        {data.map((item: any, index) => (
+        {data.map((item: any, index: number) => (
           <Link
             key={index}
             to={`${location.pathname}?folderId=${item?.uid}`}

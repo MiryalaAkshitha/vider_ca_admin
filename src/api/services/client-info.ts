@@ -11,7 +11,7 @@ const deleteClientInfo = (data: any) => {
   return http.delete("/client-info", { params: data });
 };
 
-const getClientInfo = ({ queryKey }) => {
+const getClientInfo = ({ queryKey }: any) => {
   return http.get("/client-info", { params: { ...queryKey[1] } });
 };
 

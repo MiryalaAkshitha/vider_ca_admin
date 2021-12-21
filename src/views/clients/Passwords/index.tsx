@@ -23,7 +23,7 @@ function Passwords() {
       onSuccess: (res: any) => {
         let data = res.data;
         setState(data);
-        let forms = new Set(data.map((item) => item?.form));
+        let forms = new Set(data.map((item: any) => item?.form));
         setForms(Array.from(forms));
       },
     }

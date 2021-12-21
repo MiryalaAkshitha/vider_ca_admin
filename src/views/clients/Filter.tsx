@@ -55,7 +55,7 @@ function ClientFilter(props: ClientFilterProps) {
   };
 
   let getSubCategories = (): any[] => {
-    let result = [];
+    let result: any[] = [];
     state.category.forEach((item: any) => {
       if (!item.subCategories) return;
       result = result.concat(item.subCategories);

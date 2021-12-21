@@ -116,7 +116,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
               name="subCategory"
               label="Sub Category"
             >
-              {subCategories?.map((item: any, index) => (
+              {subCategories?.map((item: any, index: number) => (
                 <MenuItem key={index} value={item?.id}>
                   {item?.name}
                 </MenuItem>

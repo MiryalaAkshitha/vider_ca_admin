@@ -16,6 +16,10 @@ type Props = {
   data: any;
 };
 
+interface IState {
+  [key: string]: any[];
+}
+
 const initialState = {
   [TaskStatus.TODO]: [],
   [TaskStatus.IN_PROGRESS]: [],
@@ -27,7 +31,7 @@ const initialState = {
 function Board({ data }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState<IState>(initialState);
   const [openRemarks, setOpenRemarks] = useState<boolean>(false);
   const [remarksPromise, setRemarksPromise] = useState<Function[]>([]);
   const [onHoldTaskId, setOnHoldTaskId] = useState<number | null>(null);
@@ -85,7 +89,7 @@ function Board({ data }: Props) {
   const handleUpdateTaskStatus = async (source: any, destination: any) => {
     const prevState = state;
     try {
-      const result = move(
+      const result: any = move(
         state[source.droppableId],
         state[destination.droppableId],
         source,

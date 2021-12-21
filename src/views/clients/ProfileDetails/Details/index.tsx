@@ -212,7 +212,7 @@ function Details({ data, setState }: IDetailsProps) {
             select
             InputLabelProps={{ shrink: true }}
           >
-            {users?.data?.map((item, index) => (
+            {users?.data?.map((item: any, index: number) => (
               <MenuItem key={index} value={item?.id}>
                 {item?.firstName + " " + item?.lastName}
               </MenuItem>

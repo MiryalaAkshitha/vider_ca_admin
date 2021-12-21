@@ -24,15 +24,15 @@ function Calendar() {
     getTasksAsOptions
   );
 
-  let eventsData =
+  const eventsData =
     data?.data?.map((item: any) => ({
       title: item?.title,
       start: `${item?.date}T${item?.startTime}`,
       end: `${item?.date}T${item?.endTime}`,
     })) || [];
 
-  let tasksData =
-    tasks?.data?.map((item) => ({
+  const tasksData =
+    tasks?.data?.map((item: any) => ({
       title: `${item?.name} - (${item?.clientName})`,
       date: moment(item?.dueDate).format("YYYY-MM-DD"),
     })) || [];

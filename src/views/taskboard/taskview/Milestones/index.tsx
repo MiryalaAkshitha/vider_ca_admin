@@ -40,7 +40,7 @@ function Milestones() {
       </Box>
       <Box mt={2}>
         {data?.data?.length ? (
-          <Box display="flex" gap={2}>
+          <Box display="flex" gap={2} flexWrap="wrap">
             {data?.data?.map((item: any, index: number) => (
               <MileStone data={item} key={index} index={index} />
             ))}

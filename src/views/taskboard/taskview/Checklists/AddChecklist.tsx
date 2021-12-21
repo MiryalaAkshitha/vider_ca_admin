@@ -8,11 +8,13 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DialogProps, SubmitType } from "types";
+import { DialogProps, InputChangeType, SubmitType } from "types";
+
+type CheckListItems = Array<{ name: string; description: string }>;
 
 interface StateProps {
   name: string;
-  checklistItems: Array<{ name: string; description: string }>;
+  checklistItems: CheckListItems;
 }
 
 function AddChecklist({ open, setOpen }: DialogProps) {
@@ -35,8 +37,8 @@ function AddChecklist({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleItemChange = (e: any, index: number) => {
-    let newItems = [...state.checklistItems];
+  const handleItemChange = (e: InputChangeType, index: number) => {
+    let newItems: any = [...state.checklistItems];
     newItems[index][e.target.name] = e.target.value;
     setState({ ...state, checklistItems: newItems });
   };
@@ -100,7 +102,7 @@ function AddChecklist({ open, setOpen }: DialogProps) {
                 key={index}
                 sx={{ mb: 2 }}
                 fullWidth
-                onChange={(e) => handleItemChange(e, index)}
+                onChange={(e: InputChangeType) => handleItemChange(e, index)}
                 size="small"
                 name="name"
                 value={item.name}
@@ -112,7 +114,7 @@ function AddChecklist({ open, setOpen }: DialogProps) {
                 multiline
                 rows={3}
                 key={index}
-                onChange={(e) => handleItemChange(e, index)}
+                onChange={(e: InputChangeType) => handleItemChange(e, index)}
                 fullWidth
                 size="small"
                 value={item.description}

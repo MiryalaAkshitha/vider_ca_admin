@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import AddClient from "views/clients/AddClient";
 import ClientFilter from "views/clients/Filter";
+import ImportClients from "views/clients/ImportClients";
 
 let LIMIT = 5;
 
@@ -19,6 +20,7 @@ function Clients() {
   const navigate = useNavigate();
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
+  const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [filters, setFilters] = useState({
     category: [],
@@ -80,6 +82,15 @@ function Clients() {
           >
             Add Client
           </Button>
+          <Button
+            onClick={() => setOpenImportDialog(true)}
+            variant="outlined"
+            startIcon={<Add />}
+            color="secondary"
+            sx={{ ml: 2 }}
+          >
+            Import Clients
+          </Button>
         </Grid>
       </Grid>
       <Table
@@ -95,6 +106,7 @@ function Clients() {
         }}
       />
       <AddClient open={open} setOpen={setOpen} />
+      <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter
         filters={filters}
         setFilters={setFilters}

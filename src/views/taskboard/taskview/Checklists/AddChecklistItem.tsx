@@ -44,7 +44,7 @@ function AddChecklistItem({ open, setOpen, selectedChecklist }: Props) {
   });
 
   const handleItemChange = (e: any, index: number) => {
-    let newItems = [...state.checklistItems];
+    let newItems: any = [...state.checklistItems];
     newItems[index][e.target.name] = e.target.value;
     setState({ ...state, checklistItems: newItems });
   };

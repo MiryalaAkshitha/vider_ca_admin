@@ -17,11 +17,11 @@ import CreateFolderDialog from "./CreateFolderDialog";
 import UploadStatusDrawer from "./UploadStatusDrawer";
 
 function AddAttachment() {
+  const snack = useSnack();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const snack = useSnack();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { uploads } = useSelector(selectStorage);
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);

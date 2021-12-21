@@ -12,7 +12,11 @@ export enum SubTaskStatus {
   DONE = "done",
 }
 
-export const reorder = (list, startIndex, endIndex) => {
+export const reorder = (
+  list: any[],
+  startIndex: number,
+  endIndex: number
+): any[] => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -20,10 +24,10 @@ export const reorder = (list, startIndex, endIndex) => {
 };
 
 export const move = (
-  source,
-  destination,
-  droppableSource,
-  droppableDestination
+  source: any,
+  destination: any,
+  droppableSource: any,
+  droppableDestination: any
 ) => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
@@ -31,7 +35,7 @@ export const move = (
 
   destClone.splice(droppableDestination.index, 0, removed);
 
-  const result = {};
+  const result: any = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
 

@@ -22,8 +22,8 @@ export const storageSlice = createSlice({
   name: "storage",
   initialState,
   reducers: {
-    setInitialUploads: (state, action: PayloadAction<any[]>) => {
-      Array.from(action.payload).forEach((item: any) => {
+    setInitialUploads: (state, action: PayloadAction<File[]>) => {
+      Array.from(action.payload).forEach((item: File) => {
         state.uploads.push({
           name: item.name,
           data: null,

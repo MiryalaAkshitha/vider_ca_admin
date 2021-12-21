@@ -1,8 +1,9 @@
+import { Dispatch, SetStateAction } from "react";
 import { UseQueryResult } from "react-query";
 
 export interface DialogProps {
   open: boolean;
-  setOpen: (v: boolean) => void;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface DataResponse {

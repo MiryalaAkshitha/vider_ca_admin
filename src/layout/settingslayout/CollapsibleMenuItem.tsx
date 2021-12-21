@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { StyledListItemButton } from "layout/styles";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { IMenuItem } from "./menu";
 
 const CollapsibleMenuItem = ({ item }: any) => {
   const location = useLocation();
@@ -31,7 +32,7 @@ const CollapsibleMenuItem = ({ item }: any) => {
       </StyledListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {item?.children?.map((item, index) => (
+          {item?.children?.map((item: IMenuItem, index: number) => (
             <Link
               key={index}
               to={item.path}

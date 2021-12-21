@@ -2,7 +2,6 @@ import { Button, Divider, List, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { addToClientInfo } from "api/services/client-info";
 import { getForms } from "api/services/forms";
-import FullLoader from "components/FullLoader";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { Fragment } from "react";
@@ -42,7 +41,7 @@ function FormsContainer({ onUpdate }: Props) {
     });
   };
 
-  if (updateKybLoading) return <FullLoader />;
+  if (updateKybLoading) return <Loader />;
 
   return (
     <Box>
@@ -59,7 +58,7 @@ function FormsContainer({ onUpdate }: Props) {
           <Loader />
         ) : (
           <List sx={{ p: 2 }}>
-            {data?.data.map((item, index) => (
+            {data?.data.map((item: any, index: number) => (
               <Fragment key={index}>
                 <ListItem
                   onClick={() => addForm(item)}

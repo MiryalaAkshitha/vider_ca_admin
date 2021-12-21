@@ -1,6 +1,6 @@
 import { http } from "api/http";
 
-const getForms = ({ queryKey }) => {
+const getForms = ({ queryKey }: any) => {
   return http.get("/forms", { params: { ...queryKey[1] } });
 };
 const createForm = (data: any) => http.post("/forms", data);
@@ -9,10 +9,11 @@ const deleteForm = (id: any) => http.delete(`/forms/${id}`);
 const createField = (data: any) => http.post(`/forms/fields`, data);
 const getFields = () => http.get("/forms/fields");
 const deleteField = (id: any) => http.delete(`/forms/fields/${id}`);
-const updateField = ({ id, data }) => http.put(`/forms/fields/${id}`, data);
+const updateField = ({ id, data }: any) =>
+  http.put(`/forms/fields/${id}`, data);
 
 const saveFormFields = (data: any) => http.post("/forms/form-fields", data);
-const getFormFields = ({ queryKey }) =>
+const getFormFields = ({ queryKey }: any) =>
   http.get("/forms/form-fields", { params: { formId: queryKey[1] } });
 
 export {

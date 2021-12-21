@@ -1,9 +1,8 @@
-import "./App.css";
 import ConfirmDialogProvider from "components/ConfirmDialogProvider";
-import FullPageLoader from "components/FullPageLoader";
 import { SnackbarProvider } from "notistack";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useAppSelector } from "redux/store";
+import "./App.css";
 import RoutesContainer from "./RoutesContainer";
 
 const queryClient = new QueryClient({
@@ -39,15 +38,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ConfirmDialogProvider>
-        <FullPageLoader>
-          <SnackbarProvider
-            maxSnack={3}
-            autoHideDuration={1500}
-            anchorOrigin={{ horizontal: "right", vertical: "top" }}
-          >
-            <RoutesContainer />
-          </SnackbarProvider>
-        </FullPageLoader>
+        <SnackbarProvider
+          maxSnack={3}
+          autoHideDuration={1500}
+          anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        >
+          <RoutesContainer />
+        </SnackbarProvider>
       </ConfirmDialogProvider>
     </QueryClientProvider>
   );

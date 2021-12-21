@@ -29,7 +29,7 @@ const PermissonsAccordion = (props: IPermissionAccordion) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {item?.children?.map((item, index) => (
+        {item?.children?.map((item: any, index: number) => (
           <Box
             sx={{
               borderBottom: "1px dashed rgba(0,0,0,0.1)",

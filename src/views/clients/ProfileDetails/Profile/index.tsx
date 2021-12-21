@@ -39,7 +39,7 @@ function Profile({ data, setState, onUpdate }: IProfileProps) {
                   {data?.category}
                 </Typography>
                 <Box mt={1} display="flex" flexWrap="wrap" gap={1}>
-                  {data?.labels?.map((item, index) => (
+                  {data?.labels?.map((item: any, index: number) => (
                     <StyledLabel key={index} color={"rgba(20, 158, 205,0.1)"}>
                       <Typography color="black" variant="caption">
                         {item?.name}
