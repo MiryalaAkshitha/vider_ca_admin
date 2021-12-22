@@ -1,6 +1,7 @@
 import { Add } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { Button, Grid, IconButton } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/client";
 import SearchContainer from "components/SearchContainer";
@@ -11,17 +12,34 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import AddClient from "views/clients/AddClient";
+import CustomizeColumns from "views/clients/CustomizeColumns";
 import ClientFilter from "views/clients/Filter";
 import ImportClients from "views/clients/ImportClients";
 
-let LIMIT = 5;
+const LIMIT = 5;
 
 function Clients() {
+  const defaultColumns: Array<ColumnType> = [
+    { key: "displayName", title: "Display Name" },
+    { key: "clientId", title: "Client Id", hide: true },
+    { key: "category", title: "Cateogory" },
+    { key: "subCategory", title: "Sub Category" },
+    { key: "mobileNumber", title: "Mobile Number" },
+    { key: "email", title: "Email" },
+    { key: "panNumber", title: "Pan Number", hide: true },
+    { key: "authorizedPerson", title: "Authorized Person", hide: true },
+  ];
+
   const navigate = useNavigate();
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
+  const [openCustomizeColumns, setOpenCustomizeColumns] =
+    useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [columns, setColumns] = useState<Array<ColumnType>>([
+    ...defaultColumns,
+  ]);
   const [filters, setFilters] = useState({
     category: [],
     subCategory: [],
@@ -64,13 +82,22 @@ function Clients() {
               }}
               placeHolder="Search by display name"
             />
-            <IconButton
+            <Button
+              startIcon={<FilterAltOutlinedIcon />}
               onClick={() => setOpenFilter(true)}
               color="primary"
               sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
             >
-              <FilterAltOutlinedIcon />
-            </IconButton>
+              Filters
+            </Button>
+            <Button
+              startIcon={<SettingsIcon />}
+              onClick={() => setOpenCustomizeColumns(true)}
+              color="primary"
+              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
+            >
+              Columns
+            </Button>
           </Box>
         </Grid>
         <Grid item>
@@ -113,16 +140,15 @@ function Clients() {
         open={openFilter}
         setOpen={setOpenFilter}
       />
+      <CustomizeColumns
+        defaultColumns={defaultColumns}
+        columns={columns}
+        setColumns={setColumns}
+        open={openCustomizeColumns}
+        setOpen={setOpenCustomizeColumns}
+      />
     </Box>
   );
 }
-
-const columns: Array<ColumnType> = [
-  { key: "displayName", title: "Display Name" },
-  { key: "category", title: "Cateogory" },
-  { key: "subCategory", title: "Sub Category" },
-  { key: "mobileNumber", title: "Mobile Number" },
-  { key: "email", title: "Email" },
-];
 
 export default Clients;

@@ -8,6 +8,7 @@ export type ColumnType = {
   key: string;
   title: string;
   render?: (item: any) => React.ReactElement | null;
+  hide?: boolean;
 };
 
 type PaginationType = {
@@ -53,25 +54,31 @@ function Table(props: TableProps) {
       <StyledTable>
         <thead>
           <tr>
-            {columns.map((item, index) => (
-              <th key={index}>{item.title}</th>
-            ))}
+            {columns.map((item, index) => {
+              if (item.hide) return null;
+              return <th key={index}>{item.title}</th>;
+            })}
           </tr>
         </thead>
         <tbody>
           {data.map((item, index) => (
             <tr key={index} onClick={() => handleRowClick(item)}>
-              {columns.map((col, colIndex) => (
-                <td key={colIndex}>
-                  {col?.render ? (
-                    col.render(item)
-                  ) : (
-                    <Typography variant="body2">
-                      {_.get(item, col.key)}
-                    </Typography>
-                  )}
-                </td>
-              ))}
+              {columns.map((col, colIndex) => {
+                if (col.hide) {
+                  return null;
+                }
+                return (
+                  <td key={colIndex}>
+                    {col?.render ? (
+                      col.render(item)
+                    ) : (
+                      <Typography variant="body2">
+                        {_.get(item, col.key)}
+                      </Typography>
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
@@ -81,6 +88,7 @@ function Table(props: TableProps) {
           <Pagination
             color="secondary"
             page={page}
+            siblingCount={0}
             count={Math.ceil(pagination.totalCount / pagination.pageCount) || 1}
             variant="outlined"
             onChange={(v, page) => {

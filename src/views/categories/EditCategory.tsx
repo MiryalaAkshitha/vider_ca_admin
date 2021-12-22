@@ -14,6 +14,7 @@ import { Category } from "./CategoryCard";
 interface StateProps {
   name: string;
   image: string | undefined | null;
+  color: string | undefined;
   subCategories: Array<{ name: string }>;
 }
 
@@ -27,6 +28,7 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
   const [state, setState] = useState<StateProps>({
     name: "",
     image: "",
+    color: "",
     subCategories: [],
   });
   const [subCategory, setSubCategory] = useState<string>("");
@@ -35,6 +37,7 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
     setState({
       name: data.name,
       image: data.image,
+      color: data.color,
       subCategories: data.subCategories,
     });
   }, [data]);
@@ -135,6 +138,18 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
           </Box>
         ))}
       </Box>
+      <TextField
+        sx={{ mt: 2, minWidth: 200 }}
+        InputProps={{ sx: { padding: "0px" } }}
+        variant="outlined"
+        size="small"
+        value={state.color}
+        onChange={(e) => handleChange("color", e.target.value)}
+        label="Choose Color"
+        name="color"
+        type="color"
+        required
+      />
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton
           onClick={handleSubmit}

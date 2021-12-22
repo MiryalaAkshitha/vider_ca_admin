@@ -6,6 +6,7 @@ export const initialState = {
   frequency: null,
   feeAmount: null,
   priority: null,
+  startDate: null,
   dueDate: null,
   members: [],
   labels: [],

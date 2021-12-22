@@ -13,6 +13,7 @@ import { DialogProps } from "types";
 interface StateProps {
   name: string;
   image: string;
+  color: string;
   subCategories: Array<{ name: string }>;
 }
 
@@ -22,6 +23,7 @@ function AddCategory({ open, setOpen }: DialogProps) {
   const [state, setState] = useState<StateProps>({
     name: "",
     image: "",
+    color: "",
     subCategories: [],
   });
   const [subCategory, setSubCategory] = useState<string>("");
@@ -117,6 +119,17 @@ function AddCategory({ open, setOpen }: DialogProps) {
           </Box>
         ))}
       </Box>
+      <TextField
+        sx={{ mt: 2, minWidth: 200 }}
+        InputProps={{ sx: { padding: "0px" } }}
+        variant="outlined"
+        size="small"
+        onChange={(e) => handleChange("color", e.target.value)}
+        label="Choose Color"
+        name="color"
+        type="color"
+        required
+      />
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton
           onClick={handleSubmit}

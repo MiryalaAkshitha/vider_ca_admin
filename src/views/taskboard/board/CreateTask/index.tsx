@@ -140,6 +140,18 @@ function CreateTask({ open, setOpen }: DialogProps) {
             onChange={handleChange}
             size="small"
             type="date"
+            value={state.startDate || ""}
+            InputLabelProps={{ shrink: true }}
+            label="Start Date"
+            name="startDate"
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            type="date"
             value={state.dueDate || ""}
             InputLabelProps={{ shrink: true }}
             label="Due Date"

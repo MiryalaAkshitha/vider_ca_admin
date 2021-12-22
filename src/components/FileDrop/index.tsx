@@ -17,8 +17,13 @@ function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
 
   const handleChange = (e: any) => {
     if (!e.target.files.length) return;
-    setFiles([...files, ...e.target.files]);
-    onChange([...files, ...e.target.files]);
+    if (multiple) {
+      setFiles([...files, ...e.target.files]);
+      onChange([...files, ...e.target.files]);
+    } else {
+      setFiles([e.target.files[0]]);
+      onChange([e.target.files[0]]);
+    }
   };
 
   const handleFileRemove = (e: any, index: number) => {
@@ -49,8 +54,13 @@ function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
     e.preventDefault();
     e.stopPropagation();
     if (!e.dataTransfer.files.length) return;
-    setFiles([...files, ...e.dataTransfer.files]);
-    onChange([...files, ...e.dataTransfer.files]);
+    if (multiple) {
+      setFiles([...files, ...e.dataTransfer.files]);
+      onChange([...files, ...e.dataTransfer.files]);
+    } else {
+      setFiles([e.dataTransfer.files[0]]);
+      onChange([e.dataTransfer.files[0]]);
+    }
   };
 
   return (
@@ -78,13 +88,25 @@ function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
               Drag and drop or Browse
             </Typography>
             {files.length !== 0 && (
-              <Box px={4} display="flex" flexWrap="wrap" mt={5} gap={2}>
+              <Box
+                px={4}
+                display="flex"
+                justifyContent="center"
+                flexWrap="wrap"
+                mt={3}
+                gap={2}
+              >
                 {[...files].map((file, index) => (
-                  <StyledFileChip onClick={(e) => handleFileRemove(e, index)}>
+                  <StyledFileChip>
                     <Typography variant="body2" key={index}>
                       {file.name}
                     </Typography>
-                    <Close sx={{ fontSize: 14, mt: "3px" }} />
+                    {multiple && (
+                      <Close
+                        onClick={(e) => handleFileRemove(e, index)}
+                        sx={{ fontSize: 14, mt: "3px" }}
+                      />
+                    )}
                   </StyledFileChip>
                 ))}
               </Box>

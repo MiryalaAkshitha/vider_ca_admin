@@ -97,12 +97,24 @@ function TaskItem({ data }: Props) {
         </Box>
         <Box mt={2}>
           <Typography variant="body1" gutterBottom color="primary">
-            {data?.name}
+            {data?.name} -{" "}
+            <span style={{ color: data?.category?.color }}>
+              {data?.category?.name}
+            </span>
           </Typography>
           <Box display="flex" justifyContent="space-between">
-            <Typography variant="caption" color="gray">
-              {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
-            </Typography>
+            <div>
+              <Typography variant="caption" color="gray">
+                Start Date:{" "}
+                {data?.dueDate &&
+                  moment(data?.taskStartDate).format("DD MMM YYYY")}
+              </Typography>
+              <br />
+              <Typography variant="caption" color="gray">
+                Due Date:{" "}
+                {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
+              </Typography>
+            </div>
             <Typography variant="caption" color="gray"></Typography>
             {data?.recurring && (
               <img

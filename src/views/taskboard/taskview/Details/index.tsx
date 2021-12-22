@@ -127,11 +127,22 @@ function Details({ state, setState, handleUpdate }: Props) {
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
+            <DetailSection label="Start Date">
+              <CustomTextField
+                value={state?.startDate || ""}
+                onChange={handleChange}
+                type="date"
+                name="startDate"
+              />
+            </DetailSection>
+          </Grid>
+          <Grid item xs={6}>
             <DetailSection label="Due Date">
               <CustomTextField
                 value={state?.dueDate || ""}
                 onChange={handleChange}
                 type="date"
+                name="dueDate"
               />
             </DetailSection>
           </Grid>

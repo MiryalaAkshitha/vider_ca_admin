@@ -11,6 +11,7 @@ export interface StateProps {
   frequency: string | null;
   feeAmount: string | null;
   priority: string | null;
+  startDate: string | null;
   dueDate: string | null;
   labels: any[];
   members: any[];

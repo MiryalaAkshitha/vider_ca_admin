@@ -1,16 +1,12 @@
-import { Button, MenuItem, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { createClient, importClients } from "api/services/client";
-import { getUsers } from "api/services/users";
+import { Box, Typography } from "@mui/material";
+import { importClients } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import FileDrop from "components/FileDrop";
-import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useRef, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, FILETYPES, ResType, SubmitType } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { DialogProps, FILETYPES } from "types";
 
 function ImportClients({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
@@ -21,6 +17,7 @@ function ImportClients({ open, setOpen }: DialogProps) {
     onSuccess: () => {
       snack.success("Clients Import Successfully");
       setOpen(false);
+      setFiles([]);
       queryClient.invalidateQueries("clients");
     },
     onError: (err: any) => {
@@ -52,27 +49,35 @@ function ImportClients({ open, setOpen }: DialogProps) {
     }
 
     let formData = new FormData();
-
     formData.append("file", files[0]);
-
     mutate(formData);
   };
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Import Clients">
       <FileDrop onChange={handleFiles} />
-      <Typography variant="caption" color="rgba(0,0,0,0.7)">
-        *Only .xls or .xlsx files are accepted
-      </Typography>
-      <Button
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="caption" color="rgba(0,0,0,0.7)">
+          *Only .xls or .xlsx files are accepted
+        </Typography>
+        <a
+          style={{ textDecoration: "none" }}
+          href="https://jss-vider.s3.ap-south-1.amazonaws.com/bc478cc4-3e67-4414-830e-d57e0385ca38-sample_clients.xlsx"
+        >
+          <Typography variant="caption" color="secondary">
+            Download Sample File
+          </Typography>
+        </a>
+      </Box>
+      <LoadingButton
         onClick={handleSubmit}
         variant="contained"
+        loading={isLoading}
         sx={{ mt: 3 }}
         fullWidth
         color="secondary"
-      >
-        Import
-      </Button>
+        title="Import Clients"
+      />
     </DrawerWrapper>
   );
 }
