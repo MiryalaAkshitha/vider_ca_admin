@@ -46,7 +46,13 @@ const createRecurringTask = (data: any) => {
   return http.post("/tasks/recurring", data);
 };
 
-const getTasks = () => http.get("/tasks");
+const getTasks = ({ queryKey }) => {
+  return http.get("/tasks", {
+    params: {
+      ...queryKey[1],
+    },
+  });
+};
 
 const getTasksAsOptions = () => http.get("/tasks/as-options");
 

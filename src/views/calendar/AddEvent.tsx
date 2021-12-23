@@ -16,10 +16,16 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, Reminders, ResType, SubmitType } from "types";
+import {
+  DialogProps,
+  InputChangeType,
+  Reminders,
+  ResType,
+  SubmitType,
+} from "types";
 import { getTitle } from "utils";
 
-interface StateProps {
+interface IState {
   title: string;
   location: string;
   date: string;
@@ -35,7 +41,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [reminderChecked, setReminderChecked] = useState<boolean>(false);
-  const [state, setState] = useState<StateProps>({
+  const [state, setState] = useState<IState>({
     title: "",
     location: "",
     date: "",
@@ -74,7 +80,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: InputChangeType) => {
     setState({ ...state, [event.target.name]: event.target.value });
   };
 

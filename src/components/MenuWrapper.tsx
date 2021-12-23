@@ -39,6 +39,9 @@ const getTransForms = (type: PositionTypes): PopoverOrigin => {
   if (type === "bottom-right") {
     return { horizontal: "right", vertical: "bottom" };
   }
+  if (type === "top-right") {
+    return { horizontal: "right", vertical: "top" };
+  }
   return { horizontal: "right", vertical: "bottom" };
 };
 
