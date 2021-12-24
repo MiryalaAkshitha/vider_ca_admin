@@ -24,13 +24,13 @@ function ConfirmDialogProvider({ children }: any) {
     setOpen(false);
   };
 
-  let onOk = () => {
+  const onOk = () => {
     state.action();
     handleClose();
   };
 
-  let confirm = (args: StateProps) => {
-    let { msg, action } = args;
+  const confirm = (args: StateProps) => {
+    const { msg, action } = args;
     setOpen(true);
     setState({
       msg,

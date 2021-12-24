@@ -46,7 +46,7 @@ function AddAttachment() {
 
     try {
       for (const file of e.target.files) {
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append("file", file);
         formData.append("folderId", folderId);
         formData.append("clientId", clientId);

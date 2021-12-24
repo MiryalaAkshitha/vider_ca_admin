@@ -7,10 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
+import { TaskStatus } from "utils/constants";
 import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
-import { colors, getContainerHeight, move, reorder, TaskStatus } from "./utils";
+import { colors, getContainerHeight, move, reorder } from "./utils";
 
 type Props = {
   data: any;
@@ -58,17 +59,17 @@ function Board({ data }: Props) {
 
   useEffect(() => {
     const getTasks = (status: TaskStatus) => {
-      let result = data
+      const result = data
         ?.filter((item: any) => item.status === status)
         ?.sort((a: any, b: any) => a.order - b.order);
       return result;
     };
 
-    let todo = getTasks(TaskStatus.TODO);
-    let inProgress = getTasks(TaskStatus.IN_PROGRESS);
-    let onHold = getTasks(TaskStatus.ON_HOLD);
-    let underReview = getTasks(TaskStatus.UNDER_REVIEW);
-    let done = getTasks(TaskStatus.DONE);
+    const todo = getTasks(TaskStatus.TODO);
+    const inProgress = getTasks(TaskStatus.IN_PROGRESS);
+    const onHold = getTasks(TaskStatus.ON_HOLD);
+    const underReview = getTasks(TaskStatus.UNDER_REVIEW);
+    const done = getTasks(TaskStatus.DONE);
 
     setState({
       [TaskStatus.TODO]: todo,
@@ -162,7 +163,7 @@ function Board({ data }: Props) {
 
   return (
     <>
-      <Box display="flex" gap={20}>
+      <Box mt={2} display="flex" gap={20}>
         <DragDropContext onDragEnd={onDragEnd}>
           <Grid
             spacing={1}

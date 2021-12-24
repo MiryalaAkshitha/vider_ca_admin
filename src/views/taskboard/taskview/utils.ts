@@ -1,3 +1,3 @@
-export let getElemenetHeight = (element: HTMLElement | null) => {
+export const getElemenetHeight = (element: HTMLElement | null) => {
   return element ? element.offsetHeight : 0;
 };

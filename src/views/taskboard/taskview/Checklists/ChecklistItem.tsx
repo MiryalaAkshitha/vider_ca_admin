@@ -53,7 +53,7 @@ const CheckListItem = ({ data, index }: Props) => {
   });
 
   const handleClick = (e: any) => {
-    let status = e.target.checked ? "done" : "pending";
+    const status = e.target.checked ? "done" : "pending";
     mutate({
       data: {
         ...data,

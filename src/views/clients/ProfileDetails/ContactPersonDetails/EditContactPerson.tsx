@@ -36,7 +36,7 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
   const snack = useSnack();
   const [state, setState] = useState(initialState);
   const params = useParams();
-  let formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     setState(data);

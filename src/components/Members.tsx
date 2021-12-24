@@ -29,7 +29,7 @@ interface Props extends AvatarProps {
   src?: string;
 }
 
-let Member = function ({ title, src, ...props }: Props) {
+const Member = function ({ title, src, ...props }: Props) {
   return (
     <>
       {title ? (

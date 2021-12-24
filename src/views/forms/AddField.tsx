@@ -56,7 +56,7 @@ function AddField({ open, setOpen }: DialogProps) {
   };
 
   const handleOptionChange = (e: any, i: number) => {
-    let options = [...state.options];
+    const options = [...state.options];
     options[i] = e.target.value;
     setState({
       ...state,
@@ -65,7 +65,7 @@ function AddField({ open, setOpen }: DialogProps) {
   };
 
   const handleOptionDelete = (i: number) => {
-    let options = state.options.filter((_, index) => index !== i);
+    const options = state.options.filter((_, index) => index !== i);
     setState({
       ...state,
       options,
@@ -78,7 +78,7 @@ function AddField({ open, setOpen }: DialogProps) {
   };
 
   const showOptions = () => {
-    let { fieldType } = state;
+    const { fieldType } = state;
     return (
       fieldType === "multiselect" ||
       fieldType === "radio" ||

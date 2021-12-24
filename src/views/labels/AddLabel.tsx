@@ -24,8 +24,8 @@ function AddLabel({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    let name = e.target.elements.name.value;
-    let color = e.target.elements.color.value;
+    const name = e.target.elements.name.value;
+    const color = e.target.elements.color.value;
 
     mutate({
       name,

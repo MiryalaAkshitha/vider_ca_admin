@@ -4,8 +4,8 @@ import { IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { Dispatch, SetStateAction, useState } from "react";
 import { InputChangeType } from "types";
-import { RecurringStateProps } from "types/createTask.types";
 import { StyledDates } from "views/taskboard/styles";
+import { RecurringStateProps } from "./types";
 
 interface IProps {
   state: RecurringStateProps;
@@ -44,7 +44,7 @@ const CustomDates = ({ state, setState }: IProps) => {
   };
 
   const deleteCustomDate = (index: number) => {
-    let newCustomDates = [...state.customDates];
+    const newCustomDates = [...state.customDates];
     newCustomDates.splice(index, 1);
     setState({ ...state, customDates: newCustomDates });
   };

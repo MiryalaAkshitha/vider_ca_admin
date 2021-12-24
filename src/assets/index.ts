@@ -51,7 +51,7 @@ export {
   noDueDiligence,
 };
 
-export let icons = {
+export const icons = {
   folder,
   dashboard,
   taskboard,

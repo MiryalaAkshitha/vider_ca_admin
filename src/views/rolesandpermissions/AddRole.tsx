@@ -24,7 +24,7 @@ function AddRole({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    let name = e.target.elements.name.value;
+    const name = e.target.elements.name.value;
     mutate({
       name,
     });

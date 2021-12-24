@@ -14,16 +14,19 @@ export const MONTHS: string[] = [
   "December",
 ];
 
-export const QPERIODS = [
+export const QPERIODS: string[] = [
   "Q1 (April - June)",
   "Q1 (July - Sep)",
   "Q1 (October - December)",
   "Q1 (January - March)",
 ];
 
-export const HPERIODS = ["H1 (April - June)", "H2 (July - September)"];
+export const HPERIODS: string[] = [
+  "H1 (April - June)",
+  "H2 (July - September)",
+];
 
-export const YPERIODS = ["Y1"];
+export const YPERIODS: string[] = ["Y1"];
 
 export const INITIAL_MILESTONES = [
   {
@@ -209,4 +212,59 @@ export enum PriorityEnum {
   LOW = "low",
   MEDIUM = "medium",
   HIGH = "high",
+}
+
+export enum FILETYPES {
+  JPEG = "image/jpeg",
+  PNG = "image/png",
+  SVG = "image/svg+xml",
+  JPG = "image/jpg",
+  TEXT = "text/plain",
+  CSV = "text/csv",
+  MP4 = "video/mp4",
+  AUDIO = "audio/mpeg",
+  WEBM = "video/webm",
+  PDF = "application/pdf",
+  ZIP1 = "application/zip",
+  ZIP2 = "application/vnd.android.package-archive",
+  SHEET1 = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  SHEET2 = "application/vnd.oasis.opendocument.spreadsheet",
+  SHEET3 = "application/vnd.ms-excel",
+  DOC1 = "application/vnd.oasis.opendocument.text",
+  DOC2 = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  DOC3 = "application/msword",
+  PRESENTATION1 = "application/vnd.oasis.opendocument.presentation",
+  PRESENTATION2 = "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  PRESENTATION3 = "application/vnd.ms-powerpoint",
+}
+
+export enum Reminders {
+  "30_MINUTES_BEFORE" = "30_minutes_before",
+  "1_HOUR_BEFORE" = "1_hour_before",
+  "2_HOUR_BEFORE" = "2_hours_before",
+  "1_DAY_BEFORE" = "1_day_before",
+}
+
+export enum DateFilters {
+  TODAY = "today",
+  YESTERDAY = "yesterday",
+  THIS_WEEK = "this_week",
+  LAST_WEEK = "last_week",
+  THIS_MONTH = "this_month",
+  LAST_MONTH = "last_month",
+  CUSTOM = "custom",
+}
+
+export enum TaskStatus {
+  TODO = "todo",
+  IN_PROGRESS = "in_progress",
+  ON_HOLD = "on_hold",
+  UNDER_REVIEW = "under_review",
+  DONE = "done",
+}
+
+export enum SubTaskStatus {
+  TODO = "todo",
+  IN_PROGRESS = "in_progress",
+  DONE = "done",
 }

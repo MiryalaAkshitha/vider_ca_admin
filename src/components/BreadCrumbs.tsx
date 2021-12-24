@@ -14,7 +14,7 @@ const LinkRouter = (props: LinkRouterProps) => (
 
 function BreadCrumbs({ page }: { page: string }) {
   const params: any = useParams();
-  let routes = getRoutes(page, params);
+  const routes = getRoutes(page, params);
 
   return (
     <Breadcrumbs aria-label="breadcrumb">

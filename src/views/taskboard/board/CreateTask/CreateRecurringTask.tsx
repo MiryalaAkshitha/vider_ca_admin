@@ -8,7 +8,6 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
-import { RecurringStateProps } from "types/createTask.types";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
 import CustomDates from "./CustomDates";
 import CustomSelect from "./CustomSelect";
@@ -16,6 +15,7 @@ import CustomTextField from "./CustomTextField";
 import FrequencyDates from "./FrequencyDates";
 import { RecurringInitialState } from "./initialState";
 import SelectCategory from "./SelectCategory";
+import { RecurringStateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
 function CreateRecurringTask({ open, setOpen }: DialogProps) {

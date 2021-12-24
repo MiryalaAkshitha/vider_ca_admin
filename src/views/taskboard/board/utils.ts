@@ -1,17 +1,3 @@
-export enum TaskStatus {
-  TODO = "todo",
-  IN_PROGRESS = "in_progress",
-  ON_HOLD = "on_hold",
-  UNDER_REVIEW = "under_review",
-  DONE = "done",
-}
-
-export enum SubTaskStatus {
-  TODO = "todo",
-  IN_PROGRESS = "in_progress",
-  DONE = "done",
-}
-
 export const reorder = (
   list: any[],
   startIndex: number,
@@ -45,6 +31,6 @@ export const move = (
 export const colors = ["#149ECD", "#F7964F", "#F2353C", "#673AB7", "#8BC34A"];
 
 export const getContainerHeight = (item: HTMLElement | null) => {
-  let height = item ? item.getBoundingClientRect().y + 24 : 0;
+  const height = item ? item.getBoundingClientRect().y + 24 : 0;
   return `calc(100vh - ${height + "px"}) `;
 };

@@ -20,7 +20,7 @@ function SearchContainer(props: SearchContainerProps) {
     minWidth = "600px",
   } = props;
 
-  let handleChange = _.debounce(function (e) {
+  const handleChange = _.debounce(function (e) {
     onChange(e.target.value);
   }, 1000);
 

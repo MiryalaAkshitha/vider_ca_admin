@@ -3,25 +3,28 @@ import { getClients } from "api/services/client";
 import { getLabels } from "api/services/labels";
 import { getUsers } from "api/services/users";
 import { useQuery } from "react-query";
-import { DataResType } from "types/createTask.types";
+import { ResType } from "types";
 
 function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
-  const { data: categories, isLoading: categoriesLoading }: DataResType =
-    useQuery("categories", getCategories, { enabled });
+  const { data: categories, isLoading: categoriesLoading }: ResType = useQuery(
+    "categories",
+    getCategories,
+    { enabled }
+  );
 
-  const { data: clients, isLoading: clientsLoading }: DataResType = useQuery(
+  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
     ["clients", {}],
     getClients,
     { enabled }
   );
 
-  const { data: labels, isLoading: labelsLoading }: DataResType = useQuery(
+  const { data: labels, isLoading: labelsLoading }: ResType = useQuery(
     "labels",
     getLabels,
     { enabled }
   );
 
-  const { data: users, isLoading: userLoading }: DataResType = useQuery(
+  const { data: users, isLoading: userLoading }: ResType = useQuery(
     "users",
     getUsers,
     { enabled }

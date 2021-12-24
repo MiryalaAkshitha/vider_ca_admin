@@ -1,6 +1,6 @@
 import { MenuItem, TextField } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
-import { RecurringStateProps } from "types/createTask.types";
+import { RecurringStateProps } from "./types";
 
 interface IProps {
   state: RecurringStateProps;
@@ -13,7 +13,7 @@ function SelectCategory({ state, setState, categories }: IProps) {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  let subCategories = categories?.find(
+  const subCategories = categories?.find(
     (item: any) => item.id === state.category
   )?.subCategories;
 

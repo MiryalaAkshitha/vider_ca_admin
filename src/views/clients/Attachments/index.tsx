@@ -13,7 +13,7 @@ function Attachments() {
   const params = useParams();
   const [searchParams] = useSearchParams();
 
-  let query = {
+  const query = {
     clientId: params.clientId || "",
     folderId: searchParams.get("folderId"),
   };
@@ -22,8 +22,8 @@ function Attachments() {
     getStorage
   );
 
-  let folders = data?.data?.result?.filter((item) => item.type === "folder");
-  let files = data?.data?.result?.filter((item) => item.type === "file");
+  const folders = data?.data?.result?.filter((item) => item.type === "folder");
+  const files = data?.data?.result?.filter((item) => item.type === "file");
 
   if (isLoading) return <Loader />;
 

@@ -12,7 +12,7 @@ const CollapsibleMenuItem = ({ item }: any) => {
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    let hasPath = item?.children
+    const hasPath = item?.children
       .map((item: any) => item?.path)
       .includes(location.pathname);
     setOpen(hasPath);

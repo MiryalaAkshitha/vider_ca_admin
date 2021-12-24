@@ -16,7 +16,7 @@ function ProfileImage({ src, onChange }: any) {
 
   const uploadImage = (e: any) => {
     if (!e.target.files[0]) return;
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("file", e.target.files[0]);
     http
       .post("/common/upload", formData)

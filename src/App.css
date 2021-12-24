@@ -38,6 +38,14 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: lightgrey;
 }
+.filter_container::-webkit-scrollbar {
+  width: 4px;
+  background: lightgrey;
+}
+.filter_container::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
 
 /*** OVERRIDES ***/
 input::placeholder {

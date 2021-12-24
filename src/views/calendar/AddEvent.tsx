@@ -16,14 +16,9 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import {
-  DialogProps,
-  InputChangeType,
-  Reminders,
-  ResType,
-  SubmitType,
-} from "types";
+import { DialogProps, InputChangeType, ResType, SubmitType } from "types";
 import { getTitle } from "utils";
+import { Reminders } from "utils/constants";
 
 interface IState {
   title: string;

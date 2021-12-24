@@ -8,10 +8,10 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
-import { StateProps } from "types/createTask.types";
 import { getTitle } from "utils";
 import { PriorityEnum } from "utils/constants";
 import { initialState } from "./initialState";
+import { StateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
 function CreateTask({ open, setOpen }: DialogProps) {
@@ -43,7 +43,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    let apiData = { ...state };
+    const apiData = { ...state };
 
     if (!apiData.client?.length) {
       snack.error("Please select atleast one client");

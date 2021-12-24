@@ -57,7 +57,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       snack.error("Please enter duration in HH:MM format");
       return;
     }
-    let apiData: any = { ...state };
+    const apiData: any = { ...state };
     apiData.duration = moment.duration(apiData.duration).asMilliseconds();
 
     mutate({

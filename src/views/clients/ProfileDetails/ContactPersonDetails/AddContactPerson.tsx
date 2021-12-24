@@ -32,7 +32,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
   const snack = useSnack();
   const params = useParams();
   const [state, setState] = useState(initialState);
-  let formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: InputChangeType) => {
     setState({

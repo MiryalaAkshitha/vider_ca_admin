@@ -7,7 +7,7 @@ import PriorityText from "components/PriorityText";
 import useSnack from "hooks/useSnack";
 import { useMutation } from "react-query";
 import { getTitle } from "utils";
-import { SubTaskStatus } from "views/taskboard/board/utils";
+import { SubTaskStatus } from "utils/constants";
 import { StyledSubTaskTable } from "views/taskboard/styles";
 
 type Props = {

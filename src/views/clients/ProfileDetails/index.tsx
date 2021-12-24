@@ -34,7 +34,7 @@ function ProfileDetails() {
   });
 
   const handleUpdate = () => {
-    let { imageUrl, ...data } = state;
+    const { imageUrl, ...data } = state;
     mutate({ data, clientId: params.clientId });
   };
 

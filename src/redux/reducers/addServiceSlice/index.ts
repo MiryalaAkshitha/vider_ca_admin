@@ -84,7 +84,7 @@ export const addServiceSlice = createSlice({
       let startDatesUpdated: boolean = false;
       let endDatesUpdated: boolean = false;
 
-      let updateDatesForRemaining = ({ index, type, date }: UpdateDate) => {
+      const updateDatesForRemaining = ({ index, type, date }: UpdateDate) => {
         for (let i = index; i <= state.frequencyPeriods.length - 1; i++) {
           state.frequencyPeriods[i][type] =
             date.split(",")[0] + ", " + state.frequencyPeriods[i].period;
@@ -92,8 +92,8 @@ export const addServiceSlice = createSlice({
       };
 
       for (let i = state.frequencyPeriods.length - 1; i >= 0; i--) {
-        let existingStartDate = state.frequencyPeriods[i].startDate;
-        let existingEndDate = state.frequencyPeriods[i].endDate;
+        const existingStartDate = state.frequencyPeriods[i].startDate;
+        const existingEndDate = state.frequencyPeriods[i].endDate;
 
         if (existingStartDate && !startDatesUpdated) {
           updateDatesForRemaining({

@@ -9,13 +9,13 @@ interface SelectDayProps extends DialogProps {
 }
 
 function SelectDay({ open, setOpen, onChange }: SelectDayProps) {
-  let [days, setDays] = useState(0);
-  let [month, setMonth] = useState<number>(0);
+  const [days, setDays] = useState(0);
+  const [month, setMonth] = useState<number>(0);
 
-  let year = new Date().getFullYear();
+  const year = new Date().getFullYear();
   const getDays = (e: any) => {
     setMonth(e.target.value);
-    let days = moment(`${year}-${e.target.value}`).daysInMonth();
+    const days = moment(`${year}-${e.target.value}`).daysInMonth();
     setDays(days);
   };
 
@@ -26,12 +26,13 @@ function SelectDay({ open, setOpen, onChange }: SelectDayProps) {
 
   return (
     <Dialog
-      maxWidth='xs'
+      maxWidth="xs"
       fullWidth
       PaperProps={{ sx: { px: 2, py: 3, minHeight: 100 } }}
       open={open}
-      onClose={() => setOpen(false)}>
-      <Typography color='primary' mb={3}>
+      onClose={() => setOpen(false)}
+    >
+      <Typography color="primary" mb={3}>
         Select Month and Day
       </Typography>
       <Grid container spacing={2}>
@@ -39,9 +40,10 @@ function SelectDay({ open, setOpen, onChange }: SelectDayProps) {
           <TextField
             onChange={getDays}
             fullWidth
-            size='small'
-            label='Select Month'
-            select>
+            size="small"
+            label="Select Month"
+            select
+          >
             {MONTHS.map((item, index) => (
               <MenuItem key={index} value={index + 1}>
                 {item}
@@ -53,9 +55,10 @@ function SelectDay({ open, setOpen, onChange }: SelectDayProps) {
           <TextField
             onChange={handleChange}
             fullWidth
-            size='small'
-            label='Select Day'
-            select>
+            size="small"
+            label="Select Day"
+            select
+          >
             {Array.from(Array(days)).map((item, index) => (
               <MenuItem key={index} value={index + 1}>
                 {index + 1}

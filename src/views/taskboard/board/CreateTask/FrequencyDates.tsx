@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
-import { RecurringStateProps } from "types/createTask.types";
+import { RecurringStateProps } from "./types";
 
 interface IProps {
   state: RecurringStateProps;

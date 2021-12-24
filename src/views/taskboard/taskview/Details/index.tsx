@@ -9,8 +9,7 @@ import {
 import { Box } from "@mui/system";
 import Loader from "components/Loader";
 import moment from "moment";
-import { PriorityEnum } from "utils/constants";
-import { TaskStatus } from "views/taskboard/board/utils";
+import { PriorityEnum, TaskStatus } from "utils/constants";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField } from "./Fields";
 import useTaskViewData from "./useTaskDetailsData";

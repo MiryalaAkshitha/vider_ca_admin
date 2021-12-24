@@ -45,7 +45,7 @@ function Details({ data, setState }: IDetailsProps) {
     });
   };
 
-  let subCategories = CLIENT_CATEGORIES.find(
+  const subCategories = CLIENT_CATEGORIES.find(
     (item) => item.value === data.category
   )?.subCategories;
 

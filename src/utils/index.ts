@@ -1,5 +1,3 @@
-export let sample = "sample";
-
 export const getTitle = (key: string) => {
   return key
     .split("_")

@@ -21,9 +21,9 @@ function PasswordDetails({ state, forms, setState }: IPasswordDetailsProps) {
   const confirm = useConfirm();
 
   const onChange = (field: any, e: any) => {
-    let type = field?.fieldType;
-    let newFields = [...state];
-    let index = newFields.findIndex((item) => item.id === field?.id);
+    const type = field?.fieldType;
+    const newFields = [...state];
+    const index = newFields.findIndex((item) => item.id === field?.id);
     if (type === "checkbox") {
       newFields[index].value = e.target.checked.toString();
     } else {

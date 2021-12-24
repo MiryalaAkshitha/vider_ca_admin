@@ -1,4 +1,14 @@
-import { styled, Typography } from "@mui/material";
+import { Button, styled, Typography } from "@mui/material";
+
+export const StyledTasksFilterContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  background: "#F5F5F5",
+  marginTop: "-16px",
+  marginLeft: "-16px",
+  marginRight: "-16px",
+  padding: "10px 20px",
+}));
 
 export const StyledClientFilterItem = styled(Typography)<{ active: boolean }>(
   ({ active, theme }) => {
@@ -22,3 +32,13 @@ export const StyledClientFilterItem = styled(Typography)<{ active: boolean }>(
     };
   }
 );
+
+export const StyledMoreHorButton = styled(Button)(({ theme }) => ({
+  background: "white",
+  minWidth: 0,
+  p: 0,
+  px: 1,
+  height: "20px",
+  border: "1px solid lightgrey",
+  color: "rgba(0,0,0,0.5)",
+}));

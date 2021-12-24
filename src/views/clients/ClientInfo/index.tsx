@@ -14,16 +14,16 @@ function KybInfo() {
   const [state, setState] = useState<any[]>([]);
   const [forms, setForms] = useState<any[]>([]);
   const params = useParams();
-  let clientId = params.clientId || "";
+  const clientId = params.clientId || "";
 
   const { isLoading }: ResType = useQuery(
     ["client-info", { clientId, type: "kyb" }],
     getClientInfo,
     {
       onSuccess: (res: any) => {
-        let data = res.data;
+        const data = res.data;
         setState(data);
-        let forms = new Set(data.map((item: any) => item?.form));
+        const forms = new Set(data.map((item: any) => item?.form));
         setForms(Array.from(forms));
       },
     }

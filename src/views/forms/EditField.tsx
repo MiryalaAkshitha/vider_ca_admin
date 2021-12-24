@@ -56,7 +56,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
   };
 
   const handleOptionChange = (e: any, i: number) => {
-    let options = [...state.options];
+    const options = [...state.options];
     options[i] = e.target.value;
     setState({
       ...state,
@@ -65,7 +65,7 @@ function EditField({ open, setOpen, data }: EditFieldProps) {
   };
 
   const handleOptionDelete = (i: number) => {
-    let options = state.options.filter((_, index) => index !== i);
+    const options = state.options.filter((_, index) => index !== i);
     setState({
       ...state,
       options,

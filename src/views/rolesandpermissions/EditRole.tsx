@@ -32,9 +32,9 @@ function EditRole({ open, setOpen, data }: EditRoleProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    let name = e.target.elements.name.value;
-    let status = e.target.elements.status.value;
-    let active = status === "active" ? true : false;
+    const name = e.target.elements.name.value;
+    const status = e.target.elements.status.value;
+    const active = status === "active" ? true : false;
     mutate({
       id: data.id,
       data: { name, active },

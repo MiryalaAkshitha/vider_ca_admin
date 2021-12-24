@@ -1,15 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { UseQueryResult } from "react-query";
 
-export interface DialogProps {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-export interface DataResponse {
-  data: any[];
-}
-
 export type StorageResponse = UseQueryResult<
   {
     data: {
@@ -26,33 +17,13 @@ export type InputChangeType = React.ChangeEvent<HTMLInputElement>;
 
 export type SubmitType = React.FormEvent<HTMLFormElement>;
 
-export enum FILETYPES {
-  JPEG = "image/jpeg",
-  PNG = "image/png",
-  SVG = "image/svg+xml",
-  JPG = "image/jpg",
-  TEXT = "text/plain",
-  CSV = "text/csv",
-  MP4 = "video/mp4",
-  AUDIO = "audio/mpeg",
-  WEBM = "video/webm",
-  PDF = "application/pdf",
-  ZIP1 = "application/zip",
-  ZIP2 = "application/vnd.android.package-archive",
-  SHEET1 = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  SHEET2 = "application/vnd.oasis.opendocument.spreadsheet",
-  SHEET3 = "application/vnd.ms-excel",
-  DOC1 = "application/vnd.oasis.opendocument.text",
-  DOC2 = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  DOC3 = "application/msword",
-  PRESENTATION1 = "application/vnd.oasis.opendocument.presentation",
-  PRESENTATION2 = "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-  PRESENTATION3 = "application/vnd.ms-powerpoint",
+export type ViewType = "grid" | "list";
+
+export interface DialogProps {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export enum Reminders {
-  "30_MINUTES_BEFORE" = "30_minutes_before",
-  "1_HOUR_BEFORE" = "1_hour_before",
-  "2_HOUR_BEFORE" = "2_hours_before",
-  "1_DAY_BEFORE" = "1_day_before",
+export interface DataResponse {
+  data: any[];
 }

@@ -4,7 +4,6 @@ import { Box } from "@mui/system";
 import { getTasks } from "api/services/tasks";
 import Loader from "components/Loader";
 import MenuWrapper from "components/MenuWrapper";
-import View from "components/View";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -15,11 +14,8 @@ import CreateRecurringTask from "views/taskboard/board/CreateTask/CreateRecurrin
 import Filters from "views/taskboard/Filters";
 import TaskTable from "views/taskboard/table";
 
-type ViewType = "grid" | "list";
-
 function TaskBoard() {
-  const { queryParams, setQueryParams } = useQueryParams();
-  const view = (queryParams.view as ViewType) || "grid";
+  const { queryParams } = useQueryParams();
   const [open, setOpen] = useState<boolean>(false);
   const [openRecurring, setOpenRecurring] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,22 +29,14 @@ function TaskBoard() {
     getTasks
   );
 
-  const handleView = (view: ViewType) => {
-    setQueryParams({
-      ...queryParams,
-      view,
-    });
-  };
-
   if (isLoading) return <Loader />;
 
   return (
     <Box sx={{ overflowY: "hidden", p: 2 }}>
       <Filters />
-      <View value={view} onChange={handleView} />
       {data?.data?.length ? (
         <>
-          {view === "grid" ? (
+          {queryParams.view === "grid" ? (
             <Board data={data.data} />
           ) : (
             <TaskTable data={data.data} />

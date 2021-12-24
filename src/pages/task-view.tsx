@@ -44,9 +44,9 @@ function TaskDetails() {
 
   const handleActiveItem = (index: number) => {
     setActiveIndex(index);
-    let elementTop = elementsRef.current[index].offsetTop;
-    let headerHeight = headerRef.current!.offsetHeight;
-    let top = elementTop - headerHeight - 20;
+    const elementTop = elementsRef.current[index].offsetTop;
+    const headerHeight = headerRef.current!.offsetHeight;
+    const top = elementTop - headerHeight - 20;
     window.scrollTo({ top });
   };
 

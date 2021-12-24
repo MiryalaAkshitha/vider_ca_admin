@@ -36,9 +36,9 @@ function UploadImage({ onChange, name, sx }: UploadProps) {
       setLoading(true);
       setFile(file);
       setFileName(file.name);
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append("file", file);
-      let res: any = await http.post("/common/upload", formData);
+      const res: any = await http.post("/common/upload", formData);
       onChange(res.data.key);
     } catch (err: any) {
       enqueueSnackbar(err.response.data.message, {

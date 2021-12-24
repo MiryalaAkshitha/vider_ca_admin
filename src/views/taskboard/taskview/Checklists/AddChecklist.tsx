@@ -38,7 +38,7 @@ function AddChecklist({ open, setOpen }: DialogProps) {
   });
 
   const handleItemChange = (e: InputChangeType, index: number) => {
-    let newItems: any = [...state.checklistItems];
+    const newItems: any = [...state.checklistItems];
     newItems[index][e.target.name] = e.target.value;
     setState({ ...state, checklistItems: newItems });
   };

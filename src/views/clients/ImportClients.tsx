@@ -6,7 +6,8 @@ import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps, FILETYPES } from "types";
+import { DialogProps } from "types";
+import { FILETYPES } from "utils/constants";
 
 function ImportClients({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
