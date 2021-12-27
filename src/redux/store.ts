@@ -5,6 +5,7 @@ import errorReducer from "redux/reducers/errorSlice";
 import formsReducer from "redux/reducers/formsSlice";
 import GlobalReducer from "redux/reducers/globalSlice";
 import storageReducer from "redux/reducers/storageSlice";
+import taskBoardReducer from "redux/reducers/taskboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     addservice: addServiceReducer,
     forms: formsReducer,
     storage: storageReducer,
+    taskBoard: taskBoardReducer,
   },
 });
 

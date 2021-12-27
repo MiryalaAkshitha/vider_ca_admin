@@ -128,10 +128,10 @@ function Details({ state, setState, handleUpdate }: Props) {
           <Grid item xs={6}>
             <DetailSection label="Start Date">
               <CustomTextField
-                value={state?.startDate || ""}
+                value={state?.taskStartDate || ""}
                 onChange={handleChange}
                 type="date"
-                name="startDate"
+                name="taskStartDate"
               />
             </DetailSection>
           </Grid>

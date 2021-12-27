@@ -7,7 +7,9 @@ import MenuWrapper from "components/MenuWrapper";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { ResType } from "types";
+import { useSelector } from "react-redux";
+import { selectTaskBoard } from "redux/reducers/taskboardSlice";
+import { ResType, ViewType } from "types";
 import Board from "views/taskboard/board";
 import CreateTask from "views/taskboard/board/CreateTask";
 import CreateRecurringTask from "views/taskboard/board/CreateTask/CreateRecurringTask";
@@ -16,6 +18,8 @@ import TaskTable from "views/taskboard/table";
 
 function TaskBoard() {
   const { queryParams } = useQueryParams();
+  const view = (queryParams.view as ViewType) || "grid";
+  const { appliedFilters } = useSelector(selectTaskBoard);
   const [open, setOpen] = useState<boolean>(false);
   const [openRecurring, setOpenRecurring] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,6 +28,7 @@ function TaskBoard() {
       "tasks",
       {
         client: queryParams.client,
+        ...appliedFilters,
       },
     ],
     getTasks
@@ -36,7 +41,7 @@ function TaskBoard() {
       <Filters />
       {data?.data?.length ? (
         <>
-          {queryParams.view === "grid" ? (
+          {view === "grid" ? (
             <Board data={data.data} />
           ) : (
             <TaskTable data={data.data} />

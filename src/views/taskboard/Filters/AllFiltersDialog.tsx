@@ -13,9 +13,15 @@ import {
 import { getLabels } from "api/services/labels";
 import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
-import useQueryParams from "hooks/useQueryParams";
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleApply,
+  handleFilters,
+  handleSelected,
+  resetFilters,
+  selectTaskBoard,
+} from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import FilterContainer from "./FilterContainer";
 import { getFilters } from "./getFilters";
@@ -25,22 +31,9 @@ interface IProps {
   setOpen: (open: boolean) => void;
 }
 
-interface IState {
-  [key: string]: Array<string>;
-}
-
 function AllFiltersDialog({ open, setOpen }: IProps) {
-  const { queryParams, setQueryParams } = useQueryParams();
-  const [selected, setSelected] = useState<string>("Completed on");
-  const [state, setState] = useState<IState>({});
-
-  // useEffect(() => {
-  //   const result: IState = {};
-  //   Object.keys(queryParams).forEach((key) => {
-  //     result[key] = queryParams[key]?.split("|") || [];
-  //   });
-  //   setState(result);
-  // }, [query]);
+  const dispatch = useDispatch();
+  const { selected } = useSelector(selectTaskBoard);
 
   const { data: labels, isLoading: labelsLoading }: ResType = useQuery(
     "labels",
@@ -55,26 +48,21 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
   );
 
   const handleFilter = (e: any) => {
-    const result = { ...state };
-    if (e.target.checked) {
-      result[selected] = [...(result[selected] || []), e.target.value];
-    } else {
-      result[selected] = result[selected].filter((v) => v !== e.target.value);
-    }
-
-    setState(result);
+    dispatch(
+      handleFilters({
+        checked: e.target.checked,
+        value: e.target.value,
+      })
+    );
   };
 
   const applyFilters = () => {
-    const result = {};
-    Object.keys(state).forEach((key) => {
-      result[key] = state[key].join("|");
-    });
-    setQueryParams(result);
+    dispatch(handleApply());
+    setOpen(false);
   };
 
   const handleReset = () => {
-    setQueryParams({});
+    dispatch(resetFilters());
     setOpen(false);
   };
 
@@ -118,11 +106,11 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
             sx={{ borderRight: "1px solid lightgrey", overflowY: "auto" }}
           >
             <List sx={{ p: 0 }}>
-              {filters.map((filter, index: number) => (
+              {filters.map((filter) => (
                 <ListItemButton
-                  key={index}
-                  selected={selected === filter.title}
-                  onClick={() => setSelected(filter.title)}
+                  key={filter.key}
+                  selected={selected === filter.key}
+                  onClick={() => dispatch(handleSelected(filter.key))}
                 >
                   <Typography variant="body2" color="rgba(0,0,0,0.7)">
                     {filter.title}
@@ -132,12 +120,18 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
             </List>
           </Box>
           <Box sx={{ overflowY: "auto", p: 2, flex: 1 }}>
-            <FilterContainer
-              items={
-                filters.find((filter) => filter.title === selected)!.options
+            {filters.map((filter) => {
+              if (selected === filter.key) {
+                return (
+                  <FilterContainer
+                    key={filter.key}
+                    items={filter.options}
+                    onChange={handleFilter}
+                  />
+                );
               }
-              onChange={handleFilter}
-            />
+              return null;
+            })}
           </Box>
         </Box>
       )}
