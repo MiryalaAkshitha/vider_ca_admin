@@ -30,7 +30,6 @@ export const StyledDraggableItem = styled("div")<{
   background:
     isdragging === "true" ? theme.palette.primary.light : "rgba(0,0,0,0.03)",
   cursor: "pointer",
-  boxShadow: "0px 3px 15px #273b8014",
   ...draggablestyle,
 }));
 
