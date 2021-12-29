@@ -16,12 +16,12 @@ export const StyledTable = styled("table")(({ theme }) => ({
     color: "grey",
     fontFamily: "muli_regular",
     fontSize: 14,
-    padding: "15px 10px",
+    padding: "10px",
     textAlign: "left",
   },
   "& td": {
     textAlign: "left",
-    padding: "15px",
+    padding: "10px",
   },
   "& tbody tr:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,

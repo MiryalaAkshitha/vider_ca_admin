@@ -39,6 +39,10 @@ const importClients = (data: FormData) => {
   return http.post(`/client/import`, data);
 };
 
+const bulkDelete = ({ data }: any) => {
+  return http.post(`/client/bulk-delete`, data);
+};
+
 export {
   createClient,
   getClients,
@@ -48,4 +52,5 @@ export {
   updateContactPerson,
   deleteContactPerson,
   importClients,
+  bulkDelete,
 };
