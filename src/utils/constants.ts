@@ -87,6 +87,10 @@ export const FIELD_TYPES: Array<{ label: string; value: string }> = [
     label: "Password",
     value: "password",
   },
+  {
+    label: "File",
+    value: "file",
+  },
 ];
 
 export const clientMenu: Array<{ title: string; path: string }> = [
@@ -114,6 +118,7 @@ export const clientMenu: Array<{ title: string; path: string }> = [
 
 export const taskViewMenu: string[] = [
   "Details",
+  "Due Diligence",
   "Description",
   "Checklists",
   "Milestones",

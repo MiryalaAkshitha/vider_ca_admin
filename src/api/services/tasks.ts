@@ -158,6 +158,18 @@ const addMilestone = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/milestones`, data);
 };
 
+const getDDForms = ({ queryKey }: any) => {
+  return http.get(`/due-diligence`, {
+    params: {
+      taskId: queryKey[1],
+    },
+  });
+};
+
+const createDDForm = ({ data }: any) => {
+  return http.post(`/due-diligence`, data);
+};
+
 export {
   getTasks,
   getTasksAsOptions,
@@ -188,4 +200,6 @@ export {
   deleteChecklistItem,
   getMilestones,
   addMilestone,
+  getDDForms,
+  createDDForm,
 };

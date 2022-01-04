@@ -19,6 +19,7 @@ import Checklists from "views/taskboard/taskview/Checklists";
 import Comments from "views/taskboard/taskview/comments";
 import Description from "views/taskboard/taskview/Description";
 import Details from "views/taskboard/taskview/Details";
+import DueDiligence from "views/taskboard/taskview/duediligence";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
@@ -94,28 +95,35 @@ function TaskDetails() {
         />
       </StyledTaskSection>
       <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 1)}>
+        <DueDiligence
+          state={state}
+          setState={setState}
+          handleUpdate={handleUpdate}
+        />
+      </StyledTaskSection>
+      <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 2)}>
         <Description
           state={state}
           setState={setState}
           handleUpdate={handleUpdate}
         />
       </StyledTaskSection>
-      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 2)}>
+      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 3)}>
         <Checklists />
       </StyledTaskSection>
-      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 3)}>
+      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 4)}>
         <Milestones />
       </StyledTaskSection>
-      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 4)}>
+      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 5)}>
         <Comments />
       </StyledTaskSection>
-      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 5)}>
+      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 6)}>
         <SubTasks />
       </StyledTaskSection>
-      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 6)}>
+      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 7)}>
         <Attachments />
       </StyledTaskSection>
-      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 7)}>
+      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 8)}>
         <LogHours />
       </StyledTaskSection>
     </>

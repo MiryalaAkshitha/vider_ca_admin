@@ -14,7 +14,7 @@ function NoItems({ title, desc, img, btnTitle, btnAction }: Props) {
       px={2}
       py={10}
       justifyContent="center"
-      maxWidth={500}
+      maxWidth={550}
       mx="auto"
       display="flex"
       gap={4}

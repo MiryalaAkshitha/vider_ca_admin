@@ -62,6 +62,13 @@ export const theme: ThemeOptions = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        elevation1: {
+          boxShadow: "0px 5px 20px #0000001A",
+        },
+      },
+    },
     MuiPopover: {
       styleOverrides: {
         paper: {
@@ -119,7 +126,7 @@ export const theme: ThemeOptions = createTheme({
         },
         subtitle2: {
           fontFamily: "muli_medium",
-          fontSize: "18px",
+          fontSize: "17px",
         },
         body1: {
           fontFamily: "muli_regular",

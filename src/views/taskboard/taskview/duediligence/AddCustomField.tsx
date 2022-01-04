@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType } from "types";
 import { FIELD_TYPES } from "utils/constants";
 
-function AddField({ open, setOpen }: DialogProps) {
+function AddCustomField({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState({
@@ -218,4 +218,4 @@ function AddField({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddField;
+export default AddCustomField;

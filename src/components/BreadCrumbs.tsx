@@ -84,6 +84,12 @@ const getRoutes = (page: string, params: any) => {
         { title: "Tasks", path: "/task-board" },
         { title: "Task Details", path: "/" },
       ];
+
+    case "dueDiligence":
+      return [
+        { title: "Tasks Details", path: `/task-board/${params?.taskId}` },
+        { title: "Due Diligence", path: "/" },
+      ];
     case "viewRole":
       return [
         { title: "Roles", path: "/settings/roles-permissions" },

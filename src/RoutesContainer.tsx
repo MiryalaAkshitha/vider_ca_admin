@@ -20,8 +20,9 @@ const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const Clients = loadable(() => import("pages/clients"));
-const ClientView = loadable(() => import("pages/client-view"));
-const TasksView = loadable(() => import("pages/task-view"));
+const ClientView = loadable(() => import("pages/clients/client-view"));
+const TasksView = loadable(() => import("pages/taskboard/task-view"));
+const DueDiligence = loadable(() => import("pages/taskboard/due-diligence"));
 const Attachments = loadable(() => import("views/clients/Attachments"));
 const KybInfo = loadable(() => import("views/clients/ClientInfo"));
 const Passwords = loadable(() => import("views/clients/Passwords"));
@@ -29,7 +30,6 @@ const ProfileDetails = loadable(() => import("views/clients/ProfileDetails"));
 const RecurringProfile = loadable(
   () => import("views/clients/RecurringProfile")
 );
-
 const Forms = loadable(() => import("pages/settings/forms"));
 const Fields = loadable(() => import("pages/settings/fields"));
 const FieldsConfiguration = loadable(
@@ -55,6 +55,7 @@ function RoutesContainer() {
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />
+            <Route path=":taskId/due-diligence" element={<DueDiligence />} />
           </Route>
           <Route path="clients">
             <Route index element={<Clients />} />

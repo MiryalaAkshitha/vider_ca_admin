@@ -6,6 +6,7 @@ import formsReducer from "redux/reducers/formsSlice";
 import GlobalReducer from "redux/reducers/globalSlice";
 import storageReducer from "redux/reducers/storageSlice";
 import taskBoardReducer from "redux/reducers/taskboardSlice";
+import dueDiligenceReducer from "./reducers/dueDiligenceSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     forms: formsReducer,
     storage: storageReducer,
     taskBoard: taskBoardReducer,
+    dueDiligence: dueDiligenceReducer,
   },
 });
 
