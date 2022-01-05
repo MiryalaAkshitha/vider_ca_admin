@@ -161,13 +161,22 @@ const addMilestone = ({ taskId, data }: any) => {
 const getDDForms = ({ queryKey }: any) => {
   return http.get(`/due-diligence`, {
     params: {
-      taskId: queryKey[1],
+      taskUid: queryKey[1]?.taskUid,
+      taskId: queryKey[1]?.taskId,
     },
   });
 };
 
 const createDDForm = ({ data }: any) => {
   return http.post(`/due-diligence`, data);
+};
+
+const addDDFormField = ({ formId, data }: any) => {
+  return http.post(`/due-diligence/${formId}/fields`, data);
+};
+
+const reorderDDFormFields = (items: number[]) => {
+  return http.put(`/due-diligence/fields/reorder`, { items });
 };
 
 export {
@@ -202,4 +211,6 @@ export {
   addMilestone,
   getDDForms,
   createDDForm,
+  addDDFormField,
+  reorderDDFormFields,
 };

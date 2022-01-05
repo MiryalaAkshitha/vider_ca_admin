@@ -10,15 +10,39 @@ import {
   Typography,
 } from "@mui/material";
 import { getFields } from "api/services/forms";
+import { addDDFormField } from "api/services/tasks";
 import Loader from "components/Loader";
+import useSnack from "hooks/useSnack";
 import { Fragment, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import AddCustomField from "./AddCustomField";
 
-function Fields() {
+interface Props {
+  activeFormId: number | null;
+}
+
+function Fields({ activeFormId }: Props) {
+  const snack = useSnack();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const { data, isLoading }: ResType = useQuery(["fields"], getFields);
+
+  const { mutate } = useMutation(addDDFormField, {
+    onSuccess: () => {
+      snack.success("Field added successfully");
+      queryClient.invalidateQueries("dd-forms");
+      setOpen(false);
+    },
+    onError: () => {
+      snack.error("Error adding field");
+      setOpen(false);
+    },
+  });
+
+  const handleClick = (item: any) => {
+    mutate({ data: { ...item }, formId: activeFormId });
+  };
 
   return (
     <>
@@ -65,7 +89,10 @@ function Fields() {
             <List>
               {data?.data.map((item: any, index: number) => (
                 <Fragment key={index}>
-                  <ListItemButton sx={{ py: "12px" }}>
+                  <ListItemButton
+                    onClick={() => handleClick(item)}
+                    sx={{ py: "12px" }}
+                  >
                     <ListItemText primary={item?.name} />
                   </ListItemButton>
                   {index !== data?.data?.length - 1 && (

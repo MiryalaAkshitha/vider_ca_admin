@@ -1,39 +1,30 @@
-import { Add } from "@mui/icons-material";
+import { Add, PlayArrow } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import { getDDForms } from "api/services/tasks";
-import Loader from "components/Loader";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
-import { ResType } from "types";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AddPage from "./AddPage";
 
-function Forms() {
-  const params = useParams();
-  const [value, setValue] = React.useState(0);
+type Props = {
+  data: any;
+  value: number;
+  setValue: (value: number) => void;
+};
+
+function Forms({ data, value, setValue }: Props) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
-  const { data, isLoading }: ResType = useQuery(
-    ["dd-forms", params.taskId],
-    getDDForms
-  );
 
   const handleChange = (_, newValue: number) => {
     setValue(newValue);
   };
 
-  const onDragEnd = async (result: any) => {
-    console.log(result);
-  };
-
-  if (isLoading) return <Loader />;
-
   return (
     <>
-      {data?.data?.length > 0 ? (
+      {data.length > 0 ? (
         <>
           <Box textAlign="right">
             <Button
@@ -43,6 +34,17 @@ function Forms() {
             >
               Add Page
             </Button>
+            <Button
+              onClick={() => {
+                navigate(`/due-diligence/${data[0]?.task?.uid}`);
+                console.log(data);
+              }}
+              sx={{ ml: 1 }}
+              startIcon={<PlayArrow />}
+              color="secondary"
+            >
+              Preview
+            </Button>
           </Box>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
@@ -50,12 +52,11 @@ function Forms() {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              {data?.data?.map((item: any, index: number) => (
+              {data?.map((item: any, index: number) => (
                 <Tab label={item?.name} {...a11yProps(index)} key={item?.id} />
               ))}
             </Tabs>
           </Box>
-          <Box p={2}></Box>
         </>
       ) : (
         <Box

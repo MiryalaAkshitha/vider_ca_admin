@@ -7,6 +7,7 @@ import DeletedClients from "pages/settings/deleted-clients";
 import DeletedTasks from "pages/settings/deleted-tasks";
 import StorageManagement from "pages/settings/storage-management";
 import Storage from "pages/storage";
+import DueDiligencePreview from "pages/taskboard/due-diligence-preview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const Login = loadable(() => import("pages/login"));
@@ -52,6 +53,10 @@ function RoutesContainer() {
           <Route path="invoicing" element={<Invoicing />} />
           <Route path="storage" element={<Storage />} />
           <Route path="broadcast" element={<BroadCast />} />
+          <Route
+            path="due-diligence/:taskId"
+            element={<DueDiligencePreview />}
+          />
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />

@@ -10,6 +10,7 @@ import {
   TextField,
   IconButton,
 } from "@mui/material";
+import FileDrop from "components/FileDrop";
 import { useState } from "react";
 
 export function renderField(field: any, onChange: (v: any) => void) {
@@ -41,6 +42,18 @@ export function renderField(field: any, onChange: (v: any) => void) {
       />
     );
   }
+
+  if (type === "file") {
+    return (
+      <>
+        <FormLabel sx={{ mb: 1 }} component="legend">
+          {field?.name}
+        </FormLabel>
+        <FileDrop onChange={onChange} />
+      </>
+    );
+  }
+
   if (type === "url") {
     return (
       <FormControl fullWidth component="fieldset">

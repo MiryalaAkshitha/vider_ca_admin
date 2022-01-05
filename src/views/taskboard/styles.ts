@@ -128,3 +128,28 @@ export const StyledSubTaskTable = styled("table")({
     borderBottom: "1px solid #e0e0e0",
   },
 });
+
+export const StyledDraggebleFormField = styled("div")<{
+  isdragging: "true" | "false";
+  draggablestyle: any;
+}>(({ isdragging, theme, draggablestyle }) => ({
+  userSelect: "none",
+  marginBottom: "15px",
+  padding: 10,
+  border: `1px dashed ${
+    isdragging === "true" ? theme.palette.primary.main : "rgba(0,0,0,0.2)"
+  }`,
+  ...draggablestyle,
+  cursor: "zoom-in",
+  position: "relative",
+  "&:before": {
+    content: '""',
+    position: "absolute",
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "transparent",
+    top: 0,
+    zIndex: 2,
+  },
+}));
