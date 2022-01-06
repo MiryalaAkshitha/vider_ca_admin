@@ -40,7 +40,7 @@ function App() {
       <ConfirmDialogProvider>
         <SnackbarProvider
           maxSnack={3}
-          autoHideDuration={1500}
+          autoHideDuration={2000}
           anchorOrigin={{ horizontal: "right", vertical: "top" }}
         >
           <RoutesContainer />

@@ -175,6 +175,14 @@ const addDDFormField = ({ formId, data }: any) => {
   return http.post(`/due-diligence/${formId}/fields`, data);
 };
 
+const deleteDDFormField = (formFieldId: number) => {
+  return http.delete(`/due-diligence/fields/${formFieldId}`);
+};
+
+const updateDDFormField = ({ data }: any) => {
+  return http.put(`/due-diligence/fields/`, data);
+};
+
 const reorderDDFormFields = (items: number[]) => {
   return http.put(`/due-diligence/fields/reorder`, { items });
 };
@@ -213,4 +221,6 @@ export {
   createDDForm,
   addDDFormField,
   reorderDDFormFields,
+  deleteDDFormField,
+  updateDDFormField,
 };

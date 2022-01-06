@@ -39,6 +39,9 @@ function Clients() {
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [allSelected, setAllSelected] = useState<boolean>(false);
+  const [selected, setSelected] = useState<Array<number>>([]);
+  const [unselected, setUnselected] = useState<Array<number>>([]);
   const [columns, setColumns] = useState<Array<ColumnType>>([
     ...defaultColumns,
   ]);
@@ -49,9 +52,6 @@ function Clients() {
     labels: [],
     search: "",
   });
-  const [allSelected, setAllSelected] = useState<boolean>(false);
-  const [selected, setSelected] = useState<Array<number>>([]);
-  const [unselected, setUnselected] = useState<Array<number>>([]);
 
   const { data, isLoading }: ResType = useQuery(
     [

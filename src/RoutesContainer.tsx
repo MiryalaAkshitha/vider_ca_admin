@@ -53,10 +53,6 @@ function RoutesContainer() {
           <Route path="invoicing" element={<Invoicing />} />
           <Route path="storage" element={<Storage />} />
           <Route path="broadcast" element={<BroadCast />} />
-          <Route
-            path="due-diligence/:taskId"
-            element={<DueDiligencePreview />}
-          />
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />
@@ -96,6 +92,7 @@ function RoutesContainer() {
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="due-diligence/:taskId" element={<DueDiligencePreview />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, AddOutlined } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -13,19 +13,18 @@ import { getFields } from "api/services/forms";
 import { addDDFormField } from "api/services/tasks";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
-import AddCustomField from "./AddCustomField";
 
 interface Props {
+  setOpen: (open: boolean) => void;
   activeFormId: number | null;
 }
 
-function Fields({ activeFormId }: Props) {
+function Fields({ setOpen, activeFormId }: Props) {
   const snack = useSnack();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
   const { data, isLoading }: ResType = useQuery(["fields"], getFields);
 
   const { mutate } = useMutation(addDDFormField, {
@@ -41,7 +40,7 @@ function Fields({ activeFormId }: Props) {
   });
 
   const handleClick = (item: any) => {
-    mutate({ data: { ...item }, formId: activeFormId });
+    mutate({ data: { ...item, required: true }, formId: activeFormId });
   };
 
   return (
@@ -94,6 +93,20 @@ function Fields({ activeFormId }: Props) {
                     sx={{ py: "12px" }}
                   >
                     <ListItemText primary={item?.name} />
+                    <Box
+                      sx={{
+                        width: "22px",
+                        height: "22px",
+                        borderRadius: "5px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: (theme) =>
+                          `0.5px solid ${theme.palette.secondary.light}`,
+                      }}
+                    >
+                      <AddOutlined sx={{ fontSize: 16 }} color="secondary" />
+                    </Box>
                   </ListItemButton>
                   {index !== data?.data?.length - 1 && (
                     <Divider sx={{ background: "rgba(0,0,0,0.01)" }} />
@@ -104,7 +117,6 @@ function Fields({ activeFormId }: Props) {
           )}
         </Box>
       </Paper>
-      <AddCustomField open={open} setOpen={setOpen} />
     </>
   );
 }

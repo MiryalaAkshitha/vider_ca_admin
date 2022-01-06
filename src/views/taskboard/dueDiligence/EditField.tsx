@@ -1,16 +1,28 @@
 import { Add, Delete } from "@mui/icons-material";
-import { Button, Grid, IconButton, MenuItem, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import { createField } from "api/services/forms";
+import { updateDDFormField } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType } from "types";
 import { FIELD_TYPES } from "utils/constants";
 
-function AddCustomField({ open, setOpen }: DialogProps) {
+interface Props extends DialogProps {
+  data: any;
+}
+
+function EditField({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState({
@@ -20,13 +32,18 @@ function AddCustomField({ open, setOpen }: DialogProps) {
     maxLength: null,
     regexPattern: null,
     options: [""],
+    required: false,
   });
 
-  const { mutate, isLoading } = useMutation(createField, {
+  useEffect(() => {
+    setState(data);
+  }, [data]);
+
+  const { mutate, isLoading } = useMutation(updateDDFormField, {
     onSuccess: () => {
-      snack.success("Field Created");
+      snack.success("Field Updated");
       setOpen(false);
-      queryClient.invalidateQueries("fields");
+      queryClient.invalidateQueries("dd-forms");
       setState({
         name: "",
         fieldType: null,
@@ -34,6 +51,7 @@ function AddCustomField({ open, setOpen }: DialogProps) {
         maxLength: null,
         regexPattern: null,
         options: [""],
+        required: false,
       });
     },
     onError: (err: any) => {
@@ -74,7 +92,7 @@ function AddCustomField({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate(state);
+    mutate({ data: { ...state } });
   };
 
   const showOptions = () => {
@@ -97,7 +115,7 @@ function AddCustomField({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add Field">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Edit Field">
       <form onSubmit={handleSubmit}>
         <TextField
           onChange={handleChange}
@@ -107,6 +125,7 @@ function AddCustomField({ open, setOpen }: DialogProps) {
           required
           name="name"
           label="Name"
+          value={state.name}
         />
         <TextField
           sx={{ mt: 3 }}
@@ -173,6 +192,7 @@ function AddCustomField({ open, setOpen }: DialogProps) {
                 onChange={handleChange}
                 fullWidth
                 size="small"
+                value={state.maxLength}
                 type="number"
                 name="maxLength"
                 label="Min Length"
@@ -184,6 +204,7 @@ function AddCustomField({ open, setOpen }: DialogProps) {
                 variant="outlined"
                 fullWidth
                 size="small"
+                value={state.minLength}
                 name="minLength"
                 type="number"
                 onChange={handleChange}
@@ -199,17 +220,30 @@ function AddCustomField({ open, setOpen }: DialogProps) {
             fullWidth
             size="small"
             onChange={handleChange}
+            value={state.regexPattern}
             name="regexPattern"
             label="Regex Pattern"
           />
         )}
+        <FormControlLabel
+          sx={{ mt: 2 }}
+          control={
+            <Checkbox
+              checked={state.required}
+              onChange={(e) => {
+                setState({ ...state, required: e.target.checked });
+              }}
+            />
+          }
+          label="Is required"
+        />
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             loading={isLoading}
             fullWidth
             type="submit"
             loadingColor="white"
-            title="Create Field"
+            title="Update Field"
             color="secondary"
           />
         </Box>
@@ -218,4 +252,4 @@ function AddCustomField({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddCustomField;
+export default EditField;

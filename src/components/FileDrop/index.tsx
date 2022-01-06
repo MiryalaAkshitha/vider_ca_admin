@@ -7,22 +7,29 @@ import { useState } from "react";
 
 interface UploadProps {
   sx?: SystemStyleObject;
-  onChange: (files: File[]) => void;
+  onChange?: (files: File[]) => void;
   multiple?: boolean;
   accept?: string;
+  name?: string;
 }
 
-function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
+function FileDrop({
+  sx,
+  onChange,
+  name = "upload",
+  multiple = false,
+  accept,
+}: UploadProps) {
   const [files, setFiles] = useState<File[]>([]);
 
   const handleChange = (e: any) => {
     if (!e.target.files.length) return;
     if (multiple) {
       setFiles([...files, ...e.target.files]);
-      onChange([...files, ...e.target.files]);
+      onChange && onChange([...files, ...e.target.files]);
     } else {
       setFiles([e.target.files[0]]);
-      onChange([e.target.files[0]]);
+      onChange && onChange([e.target.files[0]]);
     }
   };
 
@@ -31,7 +38,7 @@ function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
     const newFiles = [...files];
     newFiles.splice(index, 1);
     setFiles(newFiles);
-    onChange(newFiles);
+    onChange && onChange(newFiles);
   };
 
   const handleDragEnter = (e: any) => {
@@ -56,10 +63,10 @@ function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
     if (!e.dataTransfer.files.length) return;
     if (multiple) {
       setFiles([...files, ...e.dataTransfer.files]);
-      onChange([...files, ...e.dataTransfer.files]);
+      onChange && onChange([...files, ...e.dataTransfer.files]);
     } else {
       setFiles([e.dataTransfer.files[0]]);
-      onChange([e.dataTransfer.files[0]]);
+      onChange && onChange([e.dataTransfer.files[0]]);
     }
   };
 
@@ -68,13 +75,13 @@ function FileDrop({ sx, onChange, multiple = false, accept }: UploadProps) {
       <input
         type="file"
         onChange={handleChange}
-        name="upload"
+        name={name}
         multiple={multiple}
-        id="file"
+        id={name}
         style={{ display: "none" }}
         {...(accept && { accept })}
       />
-      <label htmlFor="file">
+      <label htmlFor={name}>
         <UploadContainer
           sx={sx}
           onDrop={(e) => handleDrop(e)}

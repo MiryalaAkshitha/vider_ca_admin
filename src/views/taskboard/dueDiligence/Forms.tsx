@@ -5,7 +5,6 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AddPage from "./AddPage";
 
 type Props = {
@@ -15,7 +14,6 @@ type Props = {
 };
 
 function Forms({ data, value, setValue }: Props) {
-  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
 
   const handleChange = (_, newValue: number) => {
@@ -34,17 +32,20 @@ function Forms({ data, value, setValue }: Props) {
             >
               Add Page
             </Button>
-            <Button
-              onClick={() => {
-                navigate(`/due-diligence/${data[0]?.task?.uid}`);
-                console.log(data);
-              }}
-              sx={{ ml: 1 }}
-              startIcon={<PlayArrow />}
-              color="secondary"
+            <a
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+              href={`/due-diligence/${data[0]?.task?.uid}?preview=true`}
+              target="_blank"
             >
-              Preview
-            </Button>
+              <Button
+                sx={{ ml: 1 }}
+                startIcon={<PlayArrow />}
+                color="secondary"
+              >
+                Preview
+              </Button>
+            </a>
           </Box>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs

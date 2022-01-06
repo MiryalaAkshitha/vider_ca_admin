@@ -17,7 +17,6 @@ import AddEvent from "views/calendar/AddEvent";
 function Calendar() {
   useTitle("Calendar");
   const [open, setOpen] = useState<boolean>(false);
-
   const { data, isLoading }: ResType = useQuery(["events"], getEvents);
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
     ["task-options"],

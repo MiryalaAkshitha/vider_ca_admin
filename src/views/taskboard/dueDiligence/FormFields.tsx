@@ -3,9 +3,8 @@ import { reorderDDFormFields } from "api/services/tasks";
 import useSnack from "hooks/useSnack";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useMutation, useQueryClient } from "react-query";
-import { renderField } from "views/clients/ClientInfo/renderField";
 import { reorder } from "views/taskboard/board/utils";
-import { StyledDraggebleFormField } from "views/taskboard/styles";
+import FormFieldItem from "./FormFieldItem";
 
 type Props = {
   data: any;
@@ -16,7 +15,6 @@ type Props = {
 function FormFields({ data, value, setData }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const onChange = (field: any, e: any) => {};
 
   const { mutate } = useMutation(reorderDDFormFields, {
     onSuccess: () => {
@@ -66,15 +64,11 @@ function FormFields({ data, value, setData }: Props) {
                     index={index}
                   >
                     {(provided: any, snapshot: any) => (
-                      <StyledDraggebleFormField
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        draggablestyle={provided.draggableProps.style}
-                        isdragging={snapshot.isDragging?.toString()}
-                      >
-                        {renderField(item, (e: any) => onChange(item, e))}
-                      </StyledDraggebleFormField>
+                      <FormFieldItem
+                        provided={provided}
+                        snapshot={snapshot}
+                        item={item}
+                      />
                     )}
                   </Draggable>
                 )

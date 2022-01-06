@@ -13,18 +13,47 @@ import {
 import FileDrop from "components/FileDrop";
 import { useState } from "react";
 
-export function renderField(field: any, onChange: (v: any) => void) {
+export function renderField(field: any, onChange?: (v: any) => void) {
+  const handleChange = (v: any) => {
+    onChange && onChange(v);
+  };
+
   let type = field?.fieldType;
   if (type === "text" || type === "number" || type === "date") {
     return (
       <FormControl fullWidth component="fieldset">
-        <FormLabel component="legend">{field?.name}</FormLabel>
+        <FormLabel component="legend">
+          {field?.name}
+          <span style={{ color: "red" }}>{field.required && " *"}</span>
+        </FormLabel>
         <TextField
           name={field?.name}
           value={field?.value || ""}
           sx={{ mt: 1 }}
           type={type}
-          onChange={onChange}
+          onChange={(e) => handleChange(e.target.value)}
+          variant="outlined"
+          size="small"
+          InputLabelProps={{ shrink: true }}
+        />
+      </FormControl>
+    );
+  }
+  if (type === "multiline") {
+    return (
+      <FormControl fullWidth component="fieldset">
+        <FormLabel component="legend">
+          {field?.name}
+          <span style={{ color: "red" }}>{field.required && " *"}</span>
+        </FormLabel>
+        <TextField
+          rows={4}
+          multiline
+          name={field?.name}
+          value={field?.value || ""}
+          sx={{ mt: 1 }}
+          type={type}
+          onChange={(e) => handleChange(e.target.value)}
           variant="outlined"
           size="small"
           InputLabelProps={{ shrink: true }}
@@ -36,7 +65,7 @@ export function renderField(field: any, onChange: (v: any) => void) {
     return (
       <PasswordField
         label={field?.name}
-        onChange={onChange}
+        onChange={(e: any) => handleChange(e.target.value)}
         value={field?.value}
         name={field?.name}
       />
@@ -48,23 +77,26 @@ export function renderField(field: any, onChange: (v: any) => void) {
       <>
         <FormLabel sx={{ mb: 1 }} component="legend">
           {field?.name}
+          <span style={{ color: "red" }}>{field.required && " *"}</span>
         </FormLabel>
-        <FileDrop onChange={onChange} />
+        <FileDrop name={field?.name} onChange={(v: any) => handleChange(v)} />
       </>
     );
   }
-
   if (type === "url") {
     return (
       <FormControl fullWidth component="fieldset">
-        <FormLabel component="legend">{field?.name}</FormLabel>
+        <FormLabel component="legend">
+          {field?.name}
+          <span style={{ color: "red" }}>{field.required && " *"}</span>
+        </FormLabel>
         <TextField
           name={field?.name}
           value={field?.value || ""}
           sx={{ mt: 1 }}
           type={type}
           placeholder="https://example.com"
-          onChange={onChange}
+          onChange={(e: any) => handleChange(e.target.value)}
           variant="outlined"
           size="small"
           InputLabelProps={{ shrink: true }}
@@ -72,16 +104,19 @@ export function renderField(field: any, onChange: (v: any) => void) {
       </FormControl>
     );
   }
-  if (type === "dropdown" || type === "multiselect") {
+  if (type === "dropdown") {
     return (
       <FormControl fullWidth component="fieldset">
-        <FormLabel component="legend">{field?.name}</FormLabel>
+        <FormLabel component="legend">
+          {field?.name}
+          <span style={{ color: "red" }}>{field.required && " *"}</span>
+        </FormLabel>
         <TextField
           name={field?.name}
           value={field?.value || ""}
           type={type}
           sx={{ mt: 1 }}
-          onChange={onChange}
+          onChange={(e: any) => handleChange(e.target.value)}
           select
           variant="outlined"
           size="small"
@@ -99,13 +134,16 @@ export function renderField(field: any, onChange: (v: any) => void) {
   if (type === "radio") {
     return (
       <FormControl fullWidth component="fieldset">
-        <FormLabel component="legend">{field?.name}</FormLabel>
+        <FormLabel component="legend">
+          {field?.name}
+          <span style={{ color: "red" }}>{field.required && " *"}</span>
+        </FormLabel>
         <RadioGroup
           row
           aria-label="gender"
-          defaultValue="female"
+          value={field?.value}
           sx={{ mt: 1 }}
-          onChange={onChange}
+          onChange={(e: any) => handleChange(e.target.value)}
           name="radio-buttons-group"
         >
           {field?.options?.map((item: any, index: number) => (
@@ -123,7 +161,7 @@ export function renderField(field: any, onChange: (v: any) => void) {
   if (type === "checkbox") {
     return (
       <FormControlLabel
-        onChange={onChange}
+        onChange={(e: any) => handleChange(e.target.checked?.toString())}
         checked={field?.value === "true" ? true : false}
         control={<Checkbox />}
         label={field?.name}
