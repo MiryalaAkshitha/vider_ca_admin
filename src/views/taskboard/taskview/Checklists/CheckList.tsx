@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { deleteChecklist, updateChecklist } from "api/services/tasks";
+import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -20,6 +21,7 @@ type Props = {
 };
 
 const CheckList = ({ data }: Props) => {
+  const confirm = useConfirm();
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [show, setShow] = useState<boolean>(true);
@@ -49,8 +51,13 @@ const CheckList = ({ data }: Props) => {
   });
 
   const handleChecklistDelete = () => {
-    checklistDelete({
-      id: data.id,
+    confirm({
+      msg: "Are you sure you want to delete this checklist?",
+      action: () => {
+        checklistDelete({
+          id: data.id,
+        });
+      },
     });
   };
 
