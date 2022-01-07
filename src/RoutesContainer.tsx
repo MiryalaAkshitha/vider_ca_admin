@@ -1,15 +1,12 @@
 import loadable from "@loadable/component";
-import BroadCast from "pages/BroadCast";
-import Calendar from "pages/calendar";
-import Invoicing from "pages/invoicing";
-import Reports from "pages/reports";
-import DeletedClients from "pages/settings/deleted-clients";
-import DeletedTasks from "pages/settings/deleted-tasks";
-import StorageManagement from "pages/settings/storage-management";
-import Storage from "pages/storage";
-import DueDiligencePreview from "pages/taskboard/due-diligence-preview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+const BroadCast = loadable(() => import("pages/broadcast"));
+const Calendar = loadable(() => import("pages/calendar"));
+const Invoicing = loadable(() => import("pages/invoicing"));
+const Reports = loadable(() => import("pages/reports"));
+const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
+const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
 const Login = loadable(() => import("pages/login"));
 const SignUp = loadable(() => import("pages/signup"));
 const Dashboard = loadable(() => import("pages/dashboard"));
@@ -28,18 +25,25 @@ const Attachments = loadable(() => import("views/clients/Attachments"));
 const KybInfo = loadable(() => import("views/clients/ClientInfo"));
 const Passwords = loadable(() => import("views/clients/Passwords"));
 const ProfileDetails = loadable(() => import("views/clients/ProfileDetails"));
-const RecurringProfile = loadable(
-  () => import("views/clients/RecurringProfile")
-);
+const ViewRole = loadable(() => import("pages/settings/view-role"));
 const Forms = loadable(() => import("pages/settings/forms"));
 const Fields = loadable(() => import("pages/settings/fields"));
-const FieldsConfiguration = loadable(
-  () => import("pages/settings/fields-configuration")
-);
-const RolesAndPermissions = loadable(
-  () => import("pages/settings/roles-permissions")
-);
-const ViewRole = loadable(() => import("pages/settings/view-role"));
+const Storage = loadable(() => import("pages/storage"));
+const RecurringProfile = loadable(() => {
+  return import("views/clients/RecurringProfile");
+});
+const FieldsConfiguration = loadable(() => {
+  return import("pages/settings/fields-configuration");
+});
+const RolesAndPermissions = loadable(() => {
+  return import("pages/settings/roles-permissions");
+});
+const StorageManagement = loadable(() => {
+  return import("pages/settings/storage-management");
+});
+const DueDiligencePreview = loadable(() => {
+  return import("pages/taskboard/due-diligence-preview");
+});
 
 function RoutesContainer() {
   return (

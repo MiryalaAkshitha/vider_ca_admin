@@ -4,7 +4,7 @@ import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
@@ -39,6 +39,22 @@ function TaskDetails() {
     },
     cacheTime: 0,
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      elementsRef.current.forEach((element, index) => {
+        let elementTop = element.getBoundingClientRect().y;
+        let headerHeight = headerRef.current!.offsetHeight;
+        if (elementTop < headerHeight + 100) {
+          setActiveIndex(index);
+        }
+      });
+    };
+    window.addEventListener("wheel", handleScroll);
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+    };
+  }, []);
 
   const getRef = (ref: any, index: number) => {
     elementsRef.current[index] = ref as HTMLElement;

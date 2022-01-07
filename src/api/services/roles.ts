@@ -13,15 +13,25 @@ interface IUpdateData {
   };
 }
 
-const getRoles = () => http.get("/roles");
+const getRoles = () => {
+  return http.get("/roles");
+};
 
-const getRole = ({ queryKey }: any) => http.get(`/roles/${queryKey[1]}`);
+const getRole = ({ queryKey }: any) => {
+  return http.get(`/roles/${queryKey[1]}`);
+};
 
-const getPermissions = () => http.get("/permissions/tree");
+const getPermissions = () => {
+  return http.get("/permissions/tree");
+};
 
-const createRole = (data: Data) => http.post("/roles", data);
+const createRole = (data: Data) => {
+  return http.post("/roles", data);
+};
 
-const deleteRole = (id: number) => http.delete(`/roles/${id}`);
+const deleteRole = (id: number) => {
+  return http.delete(`/roles/${id}`);
+};
 
 const updateRole = ({ id, data }: IUpdateData) => {
   return http.put(`/roles/${id}`, data);

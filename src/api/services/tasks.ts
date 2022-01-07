@@ -54,7 +54,9 @@ const getTasks = ({ queryKey }) => {
   });
 };
 
-const getTasksAsOptions = () => http.get("/tasks/as-options");
+const getTasksAsOptions = () => {
+  return http.get("/tasks/as-options");
+};
 
 const getTask = ({ queryKey }: any) => {
   return http.get(`/tasks/task-details/${queryKey[1]}`);

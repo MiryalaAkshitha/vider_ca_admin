@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import errorReducer from "redux/reducers/errorSlice";
 import formsReducer from "redux/reducers/formsSlice";
 import GlobalReducer from "redux/reducers/globalSlice";
 import storageReducer from "redux/reducers/storageSlice";
@@ -8,7 +7,6 @@ import taskBoardReducer from "redux/reducers/taskboardSlice";
 
 const store = configureStore({
   reducer: {
-    error: errorReducer,
     global: GlobalReducer,
     forms: formsReducer,
     storage: storageReducer,

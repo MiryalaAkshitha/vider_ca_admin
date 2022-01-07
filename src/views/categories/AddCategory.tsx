@@ -62,9 +62,7 @@ function AddCategory({ open, setOpen }: DialogProps) {
   };
 
   const handleSubmit = () => {
-    const { name, image } = state;
-    if (!name) return snack.error("Name is required");
-    if (!image) return snack.error("Image is required");
+    if (!state.name) return snack.error("Name is required");
     mutate(state);
   };
 
