@@ -1,29 +1,31 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { addLogHour } from "api/services/tasks";
+import { updateLogHour } from "api/services/tasks";
 import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
 import { DialogProps, ResType, SubmitType } from "types";
 
 interface StateProps {
-  users: any[];
+  user: any;
   completedDate: string;
   duration: string;
 }
 
-function AddLogHour({ open, setOpen }: DialogProps) {
-  const params = useParams();
+interface Props extends DialogProps {
+  selectedItem: any;
+}
+
+function EditLogHour({ open, setOpen, selectedItem }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState<StateProps>({
-    users: [],
+    user: null,
     completedDate: "",
     duration: "",
   });
@@ -32,15 +34,17 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     enabled: open,
   });
 
-  const { mutate, isLoading: createLoading } = useMutation(addLogHour, {
+  useEffect(() => {
+    setState({
+      ...selectedItem,
+      duration: moment.utc(+selectedItem?.duration).format("HH:mm"),
+    });
+  }, [selectedItem]);
+
+  const { mutate, isLoading: updateLoading } = useMutation(updateLogHour, {
     onSuccess: () => {
-      snack.success("Log Hour Added");
+      snack.success("Log Hour Updated");
       setOpen(false);
-      setState({
-        users: [],
-        completedDate: "",
-        duration: "",
-      });
       queryClient.invalidateQueries("loghours");
     },
     onError: (err: any) => {
@@ -54,8 +58,8 @@ function AddLogHour({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    if (!state.users.length) {
-      snack.error("Please select atleast one user");
+    if (!state.user) {
+      snack.error("Please select user");
       return;
     }
     if (!state.duration.match(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)) {
@@ -66,24 +70,23 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     apiData.duration = moment.duration(apiData.duration).asMilliseconds();
 
     mutate({
-      taskId: params.taskId,
+      id: selectedItem?.id,
       data: apiData,
     });
   };
 
   return (
-    <DrawerWrapper open={open} title="Add Log Hour" setOpen={setOpen}>
+    <DrawerWrapper open={open} title="Edit Log Hour" setOpen={setOpen}>
       {isLoading ? (
         <Loader />
       ) : (
         <form onSubmit={handleSubmit}>
           <Autocomplete
-            multiple
             id="tags-standard"
             onChange={(_, value) => {
-              setState({ ...state, users: value });
+              setState({ ...state, user: value });
             }}
-            value={state.users || []}
+            value={state?.user}
             options={data?.data || []}
             getOptionLabel={(option: any) => {
               return option?.firstName + " " + option?.lastName;
@@ -104,10 +107,10 @@ function AddLogHour({ open, setOpen }: DialogProps) {
             fullWidth
             onChange={handleChange}
             size="small"
-            value={state.completedDate}
             name="completedDate"
             type="date"
             label="Date"
+            value={state?.completedDate}
             InputLabelProps={{ shrink: true }}
             required
           />
@@ -118,16 +121,16 @@ function AddLogHour({ open, setOpen }: DialogProps) {
             onChange={handleChange}
             size="small"
             label="Duration (HH:MM)"
-            value={state.duration}
+            value={state?.duration}
             name="duration"
             required
           />
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
-              loading={createLoading}
+              loading={updateLoading}
               fullWidth
               loadingColor="white"
-              title="Add Log Hour"
+              title="Update Log Hour"
               color="secondary"
               type="submit"
             />
@@ -138,4 +141,4 @@ function AddLogHour({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddLogHour;
+export default EditLogHour;

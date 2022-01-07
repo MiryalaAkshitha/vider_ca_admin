@@ -37,6 +37,7 @@ function TaskDetails() {
     onSuccess: (res: any) => {
       setState(res?.data);
     },
+    cacheTime: 0,
   });
 
   const getRef = (ref: any, index: number) => {
@@ -95,11 +96,7 @@ function TaskDetails() {
         />
       </StyledTaskSection>
       <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 1)}>
-        <DueDiligence
-          state={state}
-          setState={setState}
-          handleUpdate={handleUpdate}
-        />
+        <DueDiligence />
       </StyledTaskSection>
       <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 2)}>
         <Description

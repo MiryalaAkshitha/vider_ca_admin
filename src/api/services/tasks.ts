@@ -122,6 +122,14 @@ const addLogHour = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/loghours/add`, data);
 };
 
+const updateLogHour = ({ id, data }: any) => {
+  return http.put(`/tasks/loghours/${id}`, data);
+};
+
+const deleteLogHour = (id: number) => {
+  return http.delete(`/tasks/loghours/${id}`);
+};
+
 const getChecklists = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/checklists`, { params: { taskId: queryKey[1] } });
 };
@@ -156,6 +164,14 @@ const getMilestones = ({ queryKey }: QueryType) => {
 
 const addMilestone = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/milestones`, data);
+};
+
+const updateMilestone = ({ id, data }: any) => {
+  return http.put(`/tasks/milestones/${id}`, data);
+};
+
+const deleteMilestone = (id: number) => {
+  return http.delete(`/tasks/milestones/${id}`);
 };
 
 const getDDForms = ({ queryKey }: any) => {
@@ -208,6 +224,8 @@ export {
   addAttachmentsFromStorage,
   getLogHours,
   addLogHour,
+  updateLogHour,
+  deleteLogHour,
   getChecklists,
   addChecklist,
   addChecklistItems,
@@ -217,6 +235,8 @@ export {
   deleteChecklistItem,
   getMilestones,
   addMilestone,
+  deleteMilestone,
+  updateMilestone,
   getDDForms,
   createDDForm,
   addDDFormField,

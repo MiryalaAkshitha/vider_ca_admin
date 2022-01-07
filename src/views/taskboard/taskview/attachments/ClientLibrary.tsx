@@ -71,7 +71,7 @@ function ClientLibrary({ setOpen }: Props) {
         aria-label="gmail"
         defaultExpanded={["3"]}
         defaultEndIcon={<div style={{ width: 24 }} />}
-        sx={{ flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        sx={{ flexGrow: 1, maxWidth: 400, minHeight: 300, overflowY: "auto" }}
       >
         {_.orderBy(rootFolders, ["type"], ["desc"])?.map((item, index) => (
           <StyledTreeItem

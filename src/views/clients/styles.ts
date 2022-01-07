@@ -163,4 +163,22 @@ export const StyledTaskSection = styled("div")(({ theme }) => ({
   padding: 30,
   paddingBottom: 50,
   borderBottom: "4px solid rgba(0,0,0,0.05)",
+  position: "relative",
+  overflow: "hidden",
 }));
+
+export const StyledLogHoursTopbar = styled("div")<{ active: 1 | 0 }>(
+  ({ active }) => ({
+    position: "absolute",
+    left: 0,
+    transition: "0.4s",
+    top: active ? 0 : -100,
+    width: "100%",
+    background: "#ededed",
+    padding: 15,
+    zIndex: 100,
+    display: "flex",
+    gap: 10,
+    justifyContent: "space-between",
+  })
+);
