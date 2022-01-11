@@ -36,7 +36,7 @@ function FormsContainer({ onUpdate }: Props) {
   const addForm = (item: any) => {
     mutate({
       formId: item?.id,
-      clientId: params.clientId || "",
+      client: params.clientId || "",
       type: "kyb",
     });
   };

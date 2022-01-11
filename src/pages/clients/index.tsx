@@ -181,7 +181,7 @@ function Clients() {
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
-        onRowClick={(v) => navigate(`/clients/${v?.clientId}/profile`)}
+        onRowClick={(v) => navigate(`/clients/${v?.id}/profile`)}
         data={data?.data[0] || []}
         columns={columns}
         pagination={{

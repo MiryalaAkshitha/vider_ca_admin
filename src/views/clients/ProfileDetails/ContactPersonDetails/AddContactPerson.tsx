@@ -63,7 +63,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate({ ...state, clientId: params.clientId });
+    mutate({ ...state, client: params.clientId });
   };
 
   return (

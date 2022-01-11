@@ -1,64 +1,45 @@
-import { Box } from "@mui/system";
-import { getClientInfo, updateClientInfo } from "api/services/client-info";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
-import { useState } from "react";
-import { useMutation, useQuery, UseQueryResult } from "react-query";
+import { Box } from "@mui/system";
+import { getClientPasswords } from "api/services/client-info";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { DataResponse } from "types";
-import FormsContainer from "./FormsContainer";
-import KybDetails from "./PasswordDetails";
+import { ResType } from "types";
+import { Fab } from "@mui/material";
+import { useState } from "react";
+import { Add } from "@mui/icons-material";
+import AddPassword from "./AddPassword";
+import PasswordCard from "./PasswodCard";
 
 function Passwords() {
-  const snack = useSnack();
-  const [state, setState] = useState<any[]>([]);
-  const [forms, setForms] = useState<any[]>([]);
   const params = useParams();
-  let clientId = params.clientId || "";
+  const clientId = params.clientId || "";
+  const [open, setOpen] = useState(false);
 
-  const { isLoading }: UseQueryResult<DataResponse, Error> = useQuery(
-    ["client-info", { clientId, type: "passwords" }],
-    getClientInfo,
-    {
-      onSuccess: (res: any) => {
-        let data = res.data;
-        setState(data);
-        let forms = new Set(data.map((item: any) => item?.form));
-        setForms(Array.from(forms));
-      },
-    }
+  const { data, isLoading }: ResType = useQuery(
+    ["client-passwords", clientId],
+    getClientPasswords
   );
 
-  const { mutate, isLoading: updateKybLoading } = useMutation(
-    updateClientInfo,
-    {
-      onSuccess: () => {
-        snack.success("Passwords Updated");
-      },
-      onError: (err: any) => {
-        snack.error(err.response.data.message);
-      },
-    }
-  );
-
-  const onUpdate = () => {
-    mutate({
-      data: state,
-      clientId,
-    });
-  };
-
-  if (isLoading || updateKybLoading) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
-    <Box px={4} py={2} display="flex" justifyContent="space-between" gap={4}>
-      <Box sx={{ maxWidth: 1000, width: "100%" }}>
-        <KybDetails state={state} setState={setState} forms={forms} />
+    <>
+      <Box sx={{ maxWidth: 1200, width: "100%", p: 2, py: 5, margin: "auto" }}>
+        {data?.data?.map((item: any) => (
+          <PasswordCard key={item.id} data={item} />
+        ))}
       </Box>
-      <Box sx={{ maxWidth: 500, width: "100%" }}>
-        <FormsContainer onUpdate={onUpdate} />
-      </Box>
-    </Box>
+      <Fab
+        onClick={(e) => setOpen(true)}
+        size="medium"
+        color="secondary"
+        sx={{ position: "fixed", bottom: 40, right: 40, borderRadius: "8px" }}
+        aria-label="add"
+      >
+        <Add />
+      </Fab>
+      <AddPassword open={open} setOpen={setOpen} />
+    </>
   );
 }
 

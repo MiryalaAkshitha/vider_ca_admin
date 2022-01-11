@@ -19,8 +19,8 @@ const getClient = ({ queryKey }: any) => {
   return http.get(`/client/${queryKey[1]}`);
 };
 
-const updateClient = ({ data, clientId }: any) => {
-  return http.put(`/client/${clientId}`, data);
+const updateClient = ({ data, id }: any) => {
+  return http.put(`/client/${id}`, data);
 };
 
 const createContactPerson = (data: any) => {

@@ -20,15 +20,10 @@ function KybDetails({ state, forms, setState }: IKybDetailsProps) {
   const params = useParams();
   const confirm = useConfirm();
 
-  const onChange = (field: any, e: any) => {
-    const type = field?.fieldType;
+  const onChange = (field: any, value: any) => {
     const newFields = [...state];
     const index = newFields.findIndex((item) => item.id === field?.id);
-    if (type === "checkbox") {
-      newFields[index].value = e.target.checked.toString();
-    } else {
-      newFields[index].value = e.target.value;
-    }
+    newFields[index].value = value;
     setState(newFields);
   };
 
@@ -68,7 +63,7 @@ function KybDetails({ state, forms, setState }: IKybDetailsProps) {
               .filter((item) => item?.form === form)
               .map((field, index) => (
                 <Grid item xs={6} key={index}>
-                  {renderField(field, (e: any) => onChange(field, e))}
+                  {renderField(field, (value: any) => onChange(field, value))}
                 </Grid>
               ))}
           </Grid>

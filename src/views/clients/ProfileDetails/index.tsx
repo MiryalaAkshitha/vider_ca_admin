@@ -35,7 +35,7 @@ function ProfileDetails() {
 
   const handleUpdate = () => {
     const { imageUrl, ...data } = state;
-    mutate({ data, clientId: params.clientId });
+    mutate({ data, id: params.clientId });
   };
 
   if (isLoading) return <Loader />;

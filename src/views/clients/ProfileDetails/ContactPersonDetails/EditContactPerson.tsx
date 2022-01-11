@@ -73,7 +73,7 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
     e.preventDefault();
     mutate({
       id: data?.id,
-      data: { ...state, clientId: params.clientId },
+      data: { ...state, client: params.clientId },
     });
   };
 
