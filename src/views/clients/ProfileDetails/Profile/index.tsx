@@ -1,5 +1,6 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import moment from "moment";
 import { StyledLabel } from "views/labels/styles";
 import ProfileImage from "./ProfileImage";
 
@@ -11,102 +12,99 @@ interface IProfileProps {
 
 function Profile({ data, setState, onUpdate }: IProfileProps) {
   return (
-    <Box>
-      <Grid
-        container
-        alignItems="center"
-        sx={{
-          p: 3,
-          background: "#FBF9F2",
-        }}
-      >
-        <Grid item xs={10}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <Box maxWidth={400} display="flex" gap={2} alignItems="center">
-              <ProfileImage
-                src={data?.imageUrl}
-                onChange={(v: string) => setState({ ...data, image: v })}
-              />
-              <Box flex={1}>
-                <Typography variant="subtitle2">{data?.displayName}</Typography>
-                <Typography variant="caption" color="textSecondary">
-                  {data?.category}
-                </Typography>
-                <Box mt={1} display="flex" flexWrap="wrap" gap={1}>
-                  {data?.labels?.map((item: any, index: number) => (
-                    <StyledLabel key={index} color={"rgba(20, 158, 205,0.1)"}>
-                      <Typography color="black" variant="caption">
-                        {item?.name}
-                      </Typography>
-                    </StyledLabel>
-                  ))}
-                </Box>
+    <Box
+      sx={{
+        p: 1,
+        background: "#FBF9F2",
+        display: "flex",
+        alignItems: "center",
+        gap: 2,
+      }}
+    >
+      <Box flex={1}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <Box maxWidth={400} display="flex" gap={2} alignItems="center">
+            <ProfileImage
+              src={data?.imageUrl}
+              onChange={(v: string) => setState({ ...data, image: v })}
+            />
+            <Box flex={1}>
+              <Typography variant="subtitle2">{data?.displayName}</Typography>
+              <Typography variant="caption" color="textSecondary">
+                {data?.category}
+              </Typography>
+              <Box mt={1} display="flex" flexWrap="wrap" gap={1}>
+                {data?.labels?.map((item: any, index: number) => (
+                  <StyledLabel key={index} color={"rgba(20, 158, 205,0.1)"}>
+                    <Typography color="black" variant="caption">
+                      {item?.name}
+                    </Typography>
+                  </StyledLabel>
+                ))}
               </Box>
             </Box>
-            <div>
-              <Typography variant="caption" color="textSecondary" gutterBottom>
-                Client ID
-              </Typography>
-              <Typography variant="body2" color="primary">
-                {data?.clientId}
-              </Typography>
-            </div>
-            {data?.panNumber && (
-              <div>
-                <Typography
-                  variant="caption"
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Pan Number
-                </Typography>
-                <Typography variant="body2" color="primary">
-                  {data?.panNumber}
-                </Typography>
-              </div>
-            )}
-            <div>
-              <Typography variant="caption" color="textSecondary" gutterBottom>
-                Email
-              </Typography>
-              <Typography variant="body2" color="primary">
-                <a
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  href={`mailto:${data?.email}`}
-                >
-                  {data?.email}
-                </a>
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="caption" color="textSecondary" gutterBottom>
-                Phone
-              </Typography>
-              <Typography variant="body2" color="primary">
-                <a
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  href={`tel:${data?.mobileNumber}`}
-                >
-                  {data?.mobileNumber}
-                </a>
-              </Typography>
-            </div>
           </Box>
-        </Grid>
-        <Grid item xs={2}>
-          <Box textAlign="right">
-            <Button onClick={onUpdate} variant="outlined" color="secondary">
-              Update Profile
-            </Button>
-          </Box>
-        </Grid>
-      </Grid>
+          <div>
+            <Typography variant="caption" color="textSecondary" gutterBottom>
+              Client ID
+            </Typography>
+            <Typography variant="body2" color="primary">
+              {data?.clientId}
+            </Typography>
+          </div>
+          {data?.dob && (
+            <div>
+              <Typography variant="caption" color="textSecondary" gutterBottom>
+                Date of birth
+              </Typography>
+              <Typography variant="body2" color="primary">
+                {moment(data?.dob).format("DD MMM, YYYY")}
+              </Typography>
+            </div>
+          )}
+          {data?.panNumber && (
+            <div>
+              <Typography variant="caption" color="textSecondary" gutterBottom>
+                Pan Number
+              </Typography>
+              <Typography variant="body2" color="primary">
+                {data?.panNumber}
+              </Typography>
+            </div>
+          )}
+        </Box>
+      </Box>
+      <Box display="flex" gap={3} alignItems="center">
+        <Box textAlign="right">
+          <Typography variant="body2" gutterBottom color="#149ECD">
+            <a
+              style={{ color: "inherit", textDecoration: "none" }}
+              href={`mailto:${data?.email}`}
+            >
+              +91 {data?.mobileNumber}
+            </a>
+          </Typography>
+          <Typography variant="body2" color="#149ECD">
+            <a
+              style={{ color: "inherit", textDecoration: "none" }}
+              href={`mailto:${data?.email}`}
+            >
+              {data?.email}
+            </a>
+          </Typography>
+        </Box>
+        <div>
+          <Button onClick={onUpdate} variant="outlined" color="secondary">
+            Update Profile
+          </Button>
+        </div>
+      </Box>
     </Box>
   );
 }

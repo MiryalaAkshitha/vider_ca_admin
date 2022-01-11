@@ -8,10 +8,12 @@ import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { DialogProps, InputChangeType } from "types";
+import { CONTACT_PERSON_ROLES } from "utils/constants";
 
 interface StateProps {
   name: string;
   role: string;
+  customRole: string;
   email: string;
   mobile: string;
   dscAvailable: boolean;
@@ -21,6 +23,7 @@ interface StateProps {
 const initialState: StateProps = {
   name: "",
   role: "",
+  customRole: "",
   email: "",
   mobile: "",
   dscAvailable: false,
@@ -63,7 +66,9 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate({ ...state, client: params.clientId });
+    const { customRole, ...apiData } = state;
+    apiData.role = state.role === "custom" ? customRole : state.role;
+    mutate({ ...apiData, client: params.clientId });
   };
 
   return (
@@ -89,10 +94,25 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
           name="role"
           label="Role"
         >
-          <MenuItem value="accountant">Accountant</MenuItem>
-          <MenuItem value="admin">Admin</MenuItem>
-          <MenuItem value="staff">Staff</MenuItem>
+          {CONTACT_PERSON_ROLES.map((role, index: number) => (
+            <MenuItem value={role} key={index}>
+              {role}
+            </MenuItem>
+          ))}
+          <MenuItem value="custom">Custom</MenuItem>
         </TextField>
+        {state.role === "custom" && (
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            required
+            onChange={handleChange}
+            name="customRole"
+            size="small"
+            label="Role Name"
+          />
+        )}
         <TextField
           sx={{ mt: 3 }}
           variant="outlined"

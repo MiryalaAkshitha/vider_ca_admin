@@ -1,9 +1,11 @@
-import { Add, Delete } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Button, CircularProgress, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { bulkDelete, getClients } from "api/services/client";
+import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
 import useSnack from "hooks/useSnack";
@@ -22,13 +24,30 @@ function Clients() {
   const queryClient = useQueryClient();
   const defaultColumns: Array<ColumnType> = [
     { key: "displayName", title: "Display Name" },
+    { key: "tradeName", title: "Trade Name", hide: true },
     { key: "clientId", title: "Client Id", hide: true },
-    { key: "category", title: "Cateogory" },
+    { key: "category", title: "Category" },
     { key: "subCategory", title: "Sub Category" },
     { key: "mobileNumber", title: "Mobile Number" },
     { key: "email", title: "Email" },
     { key: "panNumber", title: "Pan Number", hide: true },
     { key: "authorizedPerson", title: "Authorized Person", hide: true },
+    {
+      key: "active",
+      title: "Status",
+      hide: true,
+      render: (rowData) => {
+        return (
+          <div>
+            {rowData?.active ? (
+              <span style={{ color: "green" }}>Active</span>
+            ) : (
+              <span style={{ color: "red" }}>Inactive</span>
+            )}
+          </div>
+        );
+      },
+    },
   ];
 
   const navigate = useNavigate();
@@ -132,13 +151,14 @@ function Clients() {
           <Box display="flex" gap={2} alignItems="center">
             <SearchContainer
               debounced
+              minWidth="400px"
               onChange={(v) => {
                 setFilters({
                   ...filters,
                   search: v,
                 });
               }}
-              placeHolder="Search by display name"
+              placeHolder="Search"
             />
             <Button
               startIcon={<FilterAltOutlinedIcon />}
@@ -160,17 +180,9 @@ function Clients() {
         </Grid>
         <Grid item>
           <Button
-            onClick={() => setOpen(true)}
-            variant="outlined"
-            startIcon={<Add />}
-            color="secondary"
-          >
-            Add Client
-          </Button>
-          <Button
             onClick={() => setOpenImportDialog(true)}
             variant="outlined"
-            startIcon={<Add />}
+            startIcon={<ImportExportIcon />}
             color="secondary"
             sx={{ ml: 2 }}
           >
@@ -205,6 +217,7 @@ function Clients() {
           ),
         }}
       />
+      <FloatingButton onClick={() => setOpen(true)} />
       <AddClient open={open} setOpen={setOpen} />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter

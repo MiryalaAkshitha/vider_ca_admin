@@ -13,7 +13,7 @@ import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { CLIENT_CATEGORIES, STATES } from "utils/constants";
 import ContactPersonDetails from "../ContactPersonDetails";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
@@ -48,6 +48,11 @@ function Details({ data, setState }: IDetailsProps) {
   const subCategories = CLIENT_CATEGORIES.find(
     (item) => item.value === data.category
   )?.subCategories;
+
+  const state = STATES.find((item) => item?.value === data?.state) || {
+    label: "",
+    value: "",
+  };
 
   if (isLoading || userLoading) return <Loader />;
 
@@ -122,6 +127,18 @@ function Details({ data, setState }: IDetailsProps) {
         </Grid>
         <Grid item xs={4}>
           <TextField
+            label="Trade Name"
+            name="tradeName"
+            onChange={handleChange}
+            value={data?.tradeName}
+            fullWidth
+            variant="outlined"
+            size="small"
+            InputLabelProps={{ shrink: true }}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
             label="Authorized Person"
             name="authorizedPerson"
             onChange={handleChange}
@@ -130,6 +147,22 @@ function Details({ data, setState }: IDetailsProps) {
             variant="outlined"
             size="small"
             InputLabelProps={{ shrink: true }}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextFieldWithCopy
+            label="PAN Number"
+            name="panNumber"
+            value={data?.panNumber}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextFieldWithCopy
+            label="GST Number"
+            name="gstNumber"
+            value={data?.gstNumber}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={4}>
@@ -156,6 +189,19 @@ function Details({ data, setState }: IDetailsProps) {
             onChange={handleChange}
           />
         </Grid>
+        <Grid item xs={4}>
+          <TextField
+            label="Date of birth"
+            name="dob"
+            onChange={handleChange}
+            value={data?.dob}
+            fullWidth
+            type="date"
+            variant="outlined"
+            size="small"
+            InputLabelProps={{ shrink: true }}
+          />
+        </Grid>
         <Grid item xs={8}>
           <TextFieldWithCopy
             label="Address"
@@ -177,15 +223,20 @@ function Details({ data, setState }: IDetailsProps) {
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
-            label="State"
-            name="state"
-            value={data?.state}
-            fullWidth
-            variant="outlined"
-            onChange={handleChange}
-            size="small"
-            InputLabelProps={{ shrink: true }}
+          <Autocomplete
+            onChange={(_, value) => setState({ ...data, state: value?.value })}
+            value={state}
+            options={STATES || []}
+            getOptionLabel={(option: any) => option?.label}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="State"
+              />
+            )}
           />
         </Grid>
         <Grid item xs={4}>
@@ -218,19 +269,6 @@ function Details({ data, setState }: IDetailsProps) {
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            label="Date of birth"
-            name="dob"
-            onChange={handleChange}
-            value={data?.dob}
-            fullWidth
-            type="date"
-            variant="outlined"
-            size="small"
-            InputLabelProps={{ shrink: true }}
-          />
         </Grid>
         <Grid item xs={4}>
           <Autocomplete

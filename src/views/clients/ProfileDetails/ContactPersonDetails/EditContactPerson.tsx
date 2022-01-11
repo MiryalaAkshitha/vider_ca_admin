@@ -8,10 +8,12 @@ import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { DialogProps, InputChangeType } from "types";
+import { CONTACT_PERSON_ROLES } from "utils/constants";
 
 interface StateProps {
   name: string;
   role: string;
+  customRole: string;
   email: string;
   mobile: string;
   dscAvailable: boolean;
@@ -21,6 +23,7 @@ interface StateProps {
 const initialState: StateProps = {
   name: "",
   role: "",
+  customRole: "",
   email: "",
   mobile: "",
   dscAvailable: false,
@@ -39,7 +42,15 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    setState(data);
+    let result = data;
+    if (!CONTACT_PERSON_ROLES.includes(data.role)) {
+      result = {
+        ...result,
+        role: "custom",
+        customRole: result.role,
+      };
+    }
+    setState(result);
   }, [data]);
 
   const handleChange = (e: InputChangeType) => {
@@ -71,9 +82,11 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    const { customRole, ...apiData } = state;
+    apiData.role = state.role === "custom" ? customRole : state.role;
     mutate({
       id: data?.id,
-      data: { ...state, client: params.clientId },
+      data: { ...apiData, client: params.clientId },
     });
   };
 
@@ -102,10 +115,26 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
           name="role"
           label="Role"
         >
-          <MenuItem value="accountant">Accountant</MenuItem>
-          <MenuItem value="admin">Admin</MenuItem>
-          <MenuItem value="staff">Staff</MenuItem>
+          {CONTACT_PERSON_ROLES.map((role, index: number) => (
+            <MenuItem value={role} key={index}>
+              {role}
+            </MenuItem>
+          ))}
+          <MenuItem value="custom">Custom</MenuItem>
         </TextField>
+        {state.role === "custom" && (
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            required
+            onChange={handleChange}
+            value={state.customRole}
+            name="customRole"
+            size="small"
+            label="Role Name"
+          />
+        )}
         <TextField
           sx={{ mt: 3 }}
           variant="outlined"

@@ -21,6 +21,7 @@ function ProfileDetails() {
       onSuccess: (res: any) => {
         setState(res.data);
       },
+      cacheTime: 0,
     }
   );
 

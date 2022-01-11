@@ -15,6 +15,7 @@ interface StateProps {
   category: string;
   subCategory: string | null;
   displayName: string;
+  tradeName: string;
   clientManager: string;
   mobileNumber: string;
   email: string;
@@ -27,6 +28,7 @@ function AddClient({ open, setOpen }: DialogProps) {
     category: "",
     subCategory: null,
     displayName: "",
+    tradeName: "",
     clientManager: "",
     mobileNumber: "",
     email: "",
@@ -129,6 +131,16 @@ function AddClient({ open, setOpen }: DialogProps) {
             onChange={handleChange}
             size="small"
             label="Display Name"
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            name="tradeName"
+            required
+            onChange={handleChange}
+            size="small"
+            label="Trade Name"
           />
           <TextField
             sx={{ mt: 3 }}
