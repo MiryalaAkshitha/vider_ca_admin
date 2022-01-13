@@ -7,7 +7,8 @@ import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { DialogProps, ResType, SubmitType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 
@@ -22,7 +23,7 @@ interface StateProps {
 }
 
 function AddClient({ open, setOpen }: DialogProps) {
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const snack = useSnack();
   const [state, setState] = useState<StateProps>({
     category: "",
@@ -59,11 +60,9 @@ function AddClient({ open, setOpen }: DialogProps) {
   };
 
   const { mutate, isLoading } = useMutation(createClient, {
-    onSuccess: () => {
+    onSuccess: (res) => {
       snack.success("Client Created");
-      setOpen(false);
-      formRef.current?.reset();
-      queryClient.invalidateQueries("clients");
+      navigate(`/clients/${res.data.id}/profile`);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

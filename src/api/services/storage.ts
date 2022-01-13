@@ -32,4 +32,20 @@ const getStorageTree = ({ queryKey }: any) => {
   return http.get("/storage/tree", { params: { clientId: queryKey[1] } });
 };
 
-export { createFolder, getStorage, uploadFile, moveFile, getStorageTree };
+const renameFile = (data: any) => {
+  return http.post("/storage/rename-file", data);
+};
+
+const removeFile = (id: number) => {
+  return http.delete(`/storage/remove-file/${id}`);
+};
+
+export {
+  createFolder,
+  getStorage,
+  uploadFile,
+  moveFile,
+  getStorageTree,
+  renameFile,
+  removeFile,
+};

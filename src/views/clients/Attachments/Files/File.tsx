@@ -1,20 +1,21 @@
-import { DeleteOutlineOutlined, DownloadOutlined } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import {
-  StyledFile,
-  StyledFileFooter,
-  StyledFileTitle,
-} from "views/clients/styles";
+import { StyledFile, StyledFileTitle } from "views/clients/styles";
+import FolderMenu from "../FolderOrFileMenu";
 import { renderFile } from "./renderFile";
 
 type Props = {
   data: any;
 };
 
+type Position = {
+  mouseX: number;
+  mouseY: number;
+};
+
 function File({ data }: Props) {
   const [dragging, setDragging] = useState(false);
+  const [contextMenu, setContextMenu] = useState<Position | null>(null);
 
   const onDragStart = (e: any) => {
     setDragging(true);
@@ -25,40 +26,46 @@ function File({ data }: Props) {
     setDragging(false);
   };
 
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: e.clientX - 2,
+            mouseY: e.clientY - 4,
+          }
+        : null
+    );
+  };
+
   return (
-    <StyledFile
-      draggable={true}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      dragging={dragging}
-    >
-      <Box
-        width="100%"
-        height="200px"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
+    <>
+      <StyledFile
+        onContextMenu={handleContextMenu}
+        draggable={true}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        dragging={dragging}
       >
-        {renderFile(data)}
-      </Box>
-      <StyledFileFooter>
-        <StyledFileTitle variant="body2">{data?.name}</StyledFileTitle>
-        <Box display="flex" gap={1}>
-          <div>
-            <IconButton size="small">
-              <DeleteOutlineOutlined fontSize="small" color="secondary" />
-            </IconButton>
-          </div>
-          <div>
-            <a href={data?.fileUrl}>
-              <IconButton size="small">
-                <DownloadOutlined fontSize="small" color="secondary" />
-              </IconButton>
-            </a>
-          </div>
+        <Box
+          width="100%"
+          height="200px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {renderFile(data)}
         </Box>
-      </StyledFileFooter>
-    </StyledFile>
+        <Box bgcolor="#FBF9F2" p={1}>
+          <StyledFileTitle variant="body2">{data?.name}</StyledFileTitle>
+        </Box>
+      </StyledFile>
+      <FolderMenu
+        contextMenu={contextMenu}
+        setContextMenu={setContextMenu}
+        data={data}
+      />
+    </>
   );
 }
 

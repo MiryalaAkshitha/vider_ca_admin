@@ -29,15 +29,6 @@ export const StyledProfileNavItem = styled(Typography)<{ active: boolean }>(
   })
 );
 
-export const StyledFileFooter = styled("div")(() => ({
-  display: "flex",
-  width: "100%",
-  alignItems: "center",
-  gap: 10,
-  padding: "4px 6px",
-  backgroundColor: "#FBF9F2",
-}));
-
 export const StyledFile = styled("div")<{ dragging: boolean }>(
   ({ dragging }) => ({
     border: `1px solid ${dragging ? "red" : "#DDDDDD"}`,

@@ -19,10 +19,11 @@ import TextFieldWithCopy from "./TextFieldWithCopy";
 
 interface IDetailsProps {
   data: any;
+  apiData: any;
   setState: (data: any) => void;
 }
 
-function Details({ data, setState }: IDetailsProps) {
+function Details({ data, apiData, setState }: IDetailsProps) {
   const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
 
   const { data: users, isLoading: userLoading }: ResType = useQuery(
@@ -309,7 +310,7 @@ function Details({ data, setState }: IDetailsProps) {
             <MenuItem value="active">Active</MenuItem>
             <MenuItem value="inactive">Inactive</MenuItem>
           </TextField>
-          {!data?.active && (
+          {!apiData?.active && (
             <Box mt={1}>
               <Typography variant="caption" color="secondary">
                 Inactive from{" "}

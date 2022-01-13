@@ -27,7 +27,7 @@ function SearchContainer(props: SearchContainerProps) {
   return (
     <Box>
       <TextField
-        sx={{ maxWidth, minWidth, width: "100%" }}
+        sx={{ maxWidth, minWidth }}
         color="primary"
         onChange={(e) => {
           debounced ? handleChange(e) : onChange(e.target.value);

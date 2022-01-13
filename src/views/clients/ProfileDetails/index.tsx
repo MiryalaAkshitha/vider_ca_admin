@@ -3,18 +3,19 @@ import { getClient, updateClient } from "api/services/client";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import Details from "./Details";
 import Profile from "./Profile";
 
 function ProfileDetails() {
+  const queryClient = useQueryClient();
   const params = useParams();
   const snack = useSnack();
   const [state, setState] = useState<any>({});
 
-  const { isLoading }: ResType = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["client", params.clientId],
     getClient,
     {
@@ -28,6 +29,7 @@ function ProfileDetails() {
   const { mutate } = useMutation(updateClient, {
     onSuccess: () => {
       snack.success("Profile Updated");
+      queryClient.invalidateQueries("client");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -44,7 +46,7 @@ function ProfileDetails() {
   return (
     <Box px={4} pt={2} pb={10}>
       <Profile data={state} setState={setState} onUpdate={handleUpdate} />
-      <Details data={state} setState={setState} />
+      <Details apiData={data?.data} data={state} setState={setState} />
     </Box>
   );
 }
