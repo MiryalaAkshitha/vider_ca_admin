@@ -48,9 +48,8 @@ export const StyledFolder = styled("div")<{
   dragging: boolean;
   dropping: boolean;
 }>(({ dragging, dropping }) => ({
-  border: `1px solid ${
-    dragging ? "red" : dropping ? "#182F53" : "rgba(0,0,0,0.08)"
-  }`,
+  border: `1px solid ${dragging ? "red" : dropping ? "#182F53" : "rgba(0,0,0,0.08)"
+    }`,
   borderRadius: "10px",
   cursor: "pointer",
   display: "flex",
@@ -79,12 +78,42 @@ export const StyledProfileImageContainer = styled("div")(() => ({
   borderRadius: "50%",
 }));
 
+export const StyledOrganizationImageContainer = styled("div")(() => ({
+  width: "auto",
+  height: 70,
+  position: "relative",
+}));
+
+
+export const StyledOrganizationImage = styled("img")(() => ({
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+}));
+
 export const StyledProfileImage = styled("img")(() => ({
   width: "100%",
   height: "100%",
   borderRadius: "50%",
   objectFit: "cover",
 }));
+
+export const StyledOrganizationImageOverlay = styled("div")<{ hover: boolean }>(
+  ({ hover }) => ({
+    position: "absolute",
+    right: 0,
+    top: 0,
+    width: "100%",
+    opacity: hover ? 1 : 0,
+    height: "100%",
+    display: "flex",
+    transition: "0.3s",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "rgba(0,0,0,0.6)",
+    cursor: "pointer",
+  })
+);
 
 export const StyledProfileImageOverlay = styled("div")<{ hover: boolean }>(
   ({ hover }) => ({

@@ -63,4 +63,8 @@ export const menuItems: Array<IMenuItem> = [
       },
     ],
   },
+  {
+    title: "Organization profile",
+    path: "/settings/organization-profile",
+  },
 ];
