@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { deleteLogHour } from "api/services/tasks";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
-import { StyledLogHoursTopbar } from "views/clients/styles";
+import { StyledLogHoursTopbar } from "views/clients/clients/styles";
 
 type Props = {
   selectedItems: number[];

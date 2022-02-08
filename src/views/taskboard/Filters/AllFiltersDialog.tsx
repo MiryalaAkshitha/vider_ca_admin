@@ -23,6 +23,8 @@ import {
   selectTaskBoard,
 } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
+import CategoryFilter from "./CategoryFilter";
+import ClientCategoryFilter from "./ClientCategoryFilter";
 import FilterContainer from "./FilterContainer";
 import { getFilters } from "./getFilters";
 
@@ -106,6 +108,22 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
             sx={{ borderRight: "1px solid lightgrey", overflowY: "auto" }}
           >
             <List sx={{ p: 0 }}>
+              <ListItemButton
+                selected={selected === "category"}
+                onClick={() => dispatch(handleSelected("category"))}
+              >
+                <Typography variant="body2" color="rgba(0,0,0,0.7)">
+                  Category
+                </Typography>
+              </ListItemButton>
+              <ListItemButton
+                selected={selected === "clientCategory"}
+                onClick={() => dispatch(handleSelected("clientCategory"))}
+              >
+                <Typography variant="body2" color="rgba(0,0,0,0.7)">
+                  Client Category
+                </Typography>
+              </ListItemButton>
               {filters.map((filter) => (
                 <ListItemButton
                   key={filter.key}
@@ -132,6 +150,8 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
               }
               return null;
             })}
+            {selected === "category" && <CategoryFilter />}
+            {selected === "clientCategory" && <ClientCategoryFilter />}
           </Box>
         </Box>
       )}

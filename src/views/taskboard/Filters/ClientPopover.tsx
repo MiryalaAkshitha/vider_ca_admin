@@ -1,5 +1,8 @@
 import { Menu, MenuItem, Typography } from "@mui/material";
+import { addPin } from "api/services/tasks";
 import useQueryParams from "hooks/useQueryParams";
+import useSnack from "hooks/useSnack";
+import { useMutation, useQueryClient } from "react-query";
 
 interface IProps {
   anchorEl: HTMLElement | null;
@@ -9,8 +12,23 @@ interface IProps {
 
 function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
   const { queryParams, setQueryParams } = useQueryParams();
+  const queryClient = useQueryClient();
+  const snack = useSnack();
+
+  const { mutate } = useMutation(addPin, {
+    onSuccess: () => {
+      setAnchorEl(null);
+      queryClient.invalidateQueries("pins");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
 
   const handleClientFilter = (id: any) => {
+    mutate({
+      client: id,
+    });
     setQueryParams({ ...queryParams, client: id });
   };
 

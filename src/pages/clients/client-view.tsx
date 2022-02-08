@@ -4,7 +4,10 @@ import RouterLink from "components/RouterLink";
 import useTitle from "hooks/useTitle";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { clientMenu } from "utils/constants";
-import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
+import {
+  StyledProfileNav,
+  StyledProfileNavItem,
+} from "views/clients/clients/styles";
 
 function ClientProfile() {
   const params = useParams();

@@ -6,7 +6,7 @@ import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
-import { renderField } from "views/clients/ClientInfo/renderField";
+import { renderField } from "views/clients/clients/ClientInfo/renderField";
 
 interface IKybDetailsProps {
   state: any[];

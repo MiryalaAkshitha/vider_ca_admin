@@ -9,6 +9,7 @@ interface CreateFolder {
 interface GetStorage {
   folderId: string | null;
   clientId: string;
+  search?: string;
 }
 
 const createFolder = (data: CreateFolder) => {
@@ -25,6 +26,10 @@ const moveFile = ({ fileId, folderId }: any) => {
 
 const getStorage = ({ queryKey }: any) => {
   const params: GetStorage = queryKey[1];
+  return http.get("/storage", { params });
+};
+
+const searchStorage = (params: any) => {
   return http.get("/storage", { params });
 };
 
@@ -48,4 +53,5 @@ export {
   getStorageTree,
   renameFile,
   removeFile,
+  searchStorage,
 };

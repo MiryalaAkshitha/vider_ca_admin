@@ -5,10 +5,13 @@ import { noSubTasks } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";
 import moment from "moment";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import { getTitle } from "utils";
+import { TaskStatus } from "utils/constants";
+import { StyledTimline } from "views/taskboard/styles";
 import AddLogHour from "./AddLogHour";
 import LogHoursList from "./LogHoursList";
 import LogHoursTopbar from "./LogHoursTopbar";
@@ -31,21 +34,51 @@ function LogHours() {
     }
   };
 
-  const totalLogHours = data?.data?.reduce((acc: number, curr: any) => {
-    return acc + +curr.duration;
-  }, 0);
+  const totalLogHours = data?.data?.logHours?.reduce(
+    (acc: number, curr: any) => {
+      return acc + +curr.duration;
+    },
+    0
+  );
 
   if (isLoading) return <Loader />;
 
   return (
     <>
-      <Box display="flex" justifyContent="space-between">
+      <Box>
+        <Typography variant="subtitle1" color="primary">
+          Timeline
+        </Typography>
+        <StyledTimline>
+          {Object.values(TaskStatus).map(
+            (status: TaskStatus, index: number) => (
+              <div key={index}>
+                <div>
+                  <Typography
+                    color={getTimelineStatusColor(status)}
+                    variant="h6"
+                  >
+                    {getTitle(status)}
+                  </Typography>
+                </div>
+                <Typography variant="caption">
+                  {data?.data?.timeline[status] &&
+                    moment(data?.data?.timeline[status]).format(
+                      "DD MMM YYYY, h:mm a"
+                    )}
+                </Typography>
+              </div>
+            )
+          )}
+        </StyledTimline>
+      </Box>
+      <Box mt={4} display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
           Log Hours{" "}
-          {data?.data?.length > 0 &&
+          {data?.data?.logHours?.length > 0 &&
             `(${moment.utc(totalLogHours).format("HH:mm")})`}
         </Typography>
-        {data?.data?.length ? (
+        {data?.data?.logHours?.length ? (
           <Button
             startIcon={<Add />}
             onClick={() => setOpen(true)}
@@ -56,11 +89,11 @@ function LogHours() {
         ) : null}
       </Box>
       <Box mt={4}>
-        {data?.data?.length ? (
+        {data?.data?.logHours?.length ? (
           <LogHoursList
             selectedItems={selectedItems}
             onSelect={handleSelect}
-            data={data?.data}
+            data={data?.data?.logHours}
           />
         ) : (
           <NoItems
@@ -80,5 +113,21 @@ function LogHours() {
     </>
   );
 }
+
+const getTimelineStatusColor = (status: TaskStatus) => {
+  switch (status) {
+    case TaskStatus.TODO:
+      return "#149ECD";
+    case TaskStatus.IN_PROGRESS:
+      return "#F7964F";
+    case TaskStatus.ON_HOLD:
+      return "#F2353C";
+    case TaskStatus.DONE:
+      return "#019335";
+    case TaskStatus.UNDER_REVIEW:
+      return "#673AB7";
+    default:
+  }
+};
 
 export default LogHours;

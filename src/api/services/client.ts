@@ -43,6 +43,22 @@ const bulkDelete = ({ data }: any) => {
   return http.post(`/client/bulk-delete`, data);
 };
 
+const createLead = (data: any) => {
+  return http.post("/leads", data);
+};
+
+const updateLead = ({ id, data }) => {
+  return http.put(`/leads/${id}`, data);
+};
+
+const deleteLead = (id: number) => {
+  return http.delete(`/leads/${id}`);
+};
+
+const getLeads = (data: any) => {
+  return http.get("/leads", data);
+};
+
 export {
   createClient,
   getClients,
@@ -53,4 +69,8 @@ export {
   deleteContactPerson,
   importClients,
   bulkDelete,
+  createLead,
+  getLeads,
+  updateLead,
+  deleteLead,
 };

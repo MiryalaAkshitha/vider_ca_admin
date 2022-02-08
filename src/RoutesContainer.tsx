@@ -18,19 +18,22 @@ const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const Clients = loadable(() => import("pages/clients"));
+const Leads = loadable(() => import("views/clients/leads"));
 const ClientView = loadable(() => import("pages/clients/client-view"));
 const TasksView = loadable(() => import("pages/taskboard/task-view"));
 const DueDiligence = loadable(() => import("pages/taskboard/due-diligence"));
-const Attachments = loadable(() => import("views/clients/Attachments"));
-const KybInfo = loadable(() => import("views/clients/ClientInfo"));
-const Passwords = loadable(() => import("views/clients/Passwords"));
-const ProfileDetails = loadable(() => import("views/clients/ProfileDetails"));
+const Attachments = loadable(() => import("views/clients/clients/Attachments"));
+const KybInfo = loadable(() => import("views/clients/clients/ClientInfo"));
+const Passwords = loadable(() => import("views/clients/clients/Passwords"));
+const ProfileDetails = loadable(
+  () => import("views/clients/clients/ProfileDetails")
+);
 const ViewRole = loadable(() => import("pages/settings/view-role"));
 const Forms = loadable(() => import("pages/settings/forms"));
 const Fields = loadable(() => import("pages/settings/fields"));
 const Storage = loadable(() => import("pages/storage"));
 const RecurringProfile = loadable(() => {
-  return import("views/clients/RecurringProfile");
+  return import("views/clients/clients/RecurringProfile");
 });
 const FieldsConfiguration = loadable(() => {
   return import("pages/settings/fields-configuration");
@@ -72,6 +75,7 @@ function RoutesContainer() {
               <Route path="profile" element={<ProfileDetails />} />
             </Route>
           </Route>
+          <Route path="leads" element={<Leads />} />
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="categories" element={<Categories />} />

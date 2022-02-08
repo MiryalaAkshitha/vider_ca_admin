@@ -1,5 +1,4 @@
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import SortIcon from "@mui/icons-material/Sort";
 import { Box, Button } from "@mui/material";
 import View from "components/View";
 import useQueryParams from "hooks/useQueryParams";
@@ -35,16 +34,6 @@ function Filters() {
               sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
             >
               Filters
-            </Button>
-          </div>
-          <div>
-            <Button
-              size="small"
-              startIcon={<SortIcon />}
-              color="primary"
-              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
-            >
-              Sort
             </Button>
           </div>
         </Box>

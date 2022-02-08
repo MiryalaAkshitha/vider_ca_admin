@@ -76,7 +76,7 @@ function Details({ state, setState, handleUpdate }: Props) {
       <Box mt={4}>
         <Grid container alignItems="center" spacing={2}>
           <Grid item xs={12}>
-            <DetailSection label="Select Members" labelWidth="15%">
+            <DetailSection label="Members" labelWidth="15%">
               <Autocomplete
                 multiple
                 value={state?.members || []}
@@ -107,6 +107,15 @@ function Details({ state, setState, handleUpdate }: Props) {
             <DetailSection label="Client">
               <CustomTextField
                 value={state?.client?.displayName}
+                onChange={handleChange}
+                disabled
+              />
+            </DetailSection>
+          </Grid>
+          <Grid item xs={6}>
+            <DetailSection label="Task Type">
+              <CustomTextField
+                value={state?.recurring ? "Recurring" : "Non-recurring"}
                 onChange={handleChange}
                 disabled
               />
@@ -247,6 +256,15 @@ function Details({ state, setState, handleUpdate }: Props) {
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
+            <DetailSection label="Financial Year">
+              <CustomTextField
+                value={state?.financialYear || ""}
+                onChange={handleChange}
+                disabled
+              />
+            </DetailSection>
+          </Grid>
+          <Grid item xs={6}>
             <DetailSection label="Fee Amount">
               <CustomTextField
                 value={state?.feeAmount || ""}
@@ -260,6 +278,15 @@ function Details({ state, setState, handleUpdate }: Props) {
             <DetailSection label="Directory">
               <CustomTextField
                 value={state?.directory || ""}
+                onChange={handleChange}
+                name="directory"
+              />
+            </DetailSection>
+          </Grid>
+          <Grid item xs={12}>
+            <DetailSection label="Remarks" labelWidth="15%">
+              <CustomTextField
+                value={state?.remarks || ""}
                 onChange={handleChange}
                 name="directory"
               />

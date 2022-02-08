@@ -118,7 +118,7 @@ export const theme: ThemeOptions = createTheme({
         },
         h6: {
           fontFamily: "muli_bold",
-          fontSize: "16px",
+          fontSize: "15px",
         },
         subtitle1: {
           fontFamily: "muli_medium",

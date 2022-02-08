@@ -54,7 +54,7 @@ input::placeholder {
 .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
   font-family: muli_regular !important;
 }
-.ql-container {
+.ql-editor {
   min-height: 150px;
   font-family: muli_regular !important;
 }
@@ -70,4 +70,32 @@ input::placeholder {
 }
 .fc-today-button {
   text-transform: capitalize !important;
+}
+
+/* MENTIONS */
+.mentions_input {
+  font-family: muli_regular !important;
+}
+.mentions_input__highlighter {
+  height: 160px;
+  padding: 10px;
+}
+.mentions_input textarea {
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 5px !important;
+  padding: 10px;
+}
+.mentions_input__suggestions {
+  border-radius: 5px !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  background: #fafafa;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(20px);
+}
+.mentions_input__suggestions__item {
+  padding: 5px;
+  font-size: 14px;
+}
+.mentions_input__suggestions__item--focused {
+  background-color: rgba(0, 0, 0, 0.1);
 }

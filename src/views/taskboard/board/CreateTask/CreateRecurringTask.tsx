@@ -97,12 +97,26 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
             label="Frequency"
             onChange={handleChange}
           />
+
           {state.frequency && state.frequency !== RecurringFrequency.CUSTOM && (
             <FrequencyDates state={state} setState={setState} />
           )}
           {state.frequency && state.frequency === RecurringFrequency.CUSTOM && (
             <CustomDates state={state} setState={setState} />
           )}
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            required
+            size="small"
+            type="number"
+            inputProps={{ min: 1999, max: 2050 }}
+            value={state.financialYear || ""}
+            label="Financial Year"
+            name="financialYear"
+          />
           <Autocomplete
             multiple
             id="tags-standard"

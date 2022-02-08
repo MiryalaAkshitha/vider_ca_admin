@@ -6,7 +6,7 @@ import { deleteContactPerson } from "api/services/client";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { StyledContactPerson } from "views/clients/styles";
+import { StyledContactPerson } from "views/clients/clients/styles";
 import EditContactPerson from "./EditContactPerson";
 
 type Props = {

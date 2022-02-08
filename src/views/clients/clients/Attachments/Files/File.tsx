@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { StyledFile, StyledFileTitle } from "views/clients/styles";
+import { StyledFile, StyledFileTitle } from "views/clients/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 import { renderFile } from "./renderFile";
 

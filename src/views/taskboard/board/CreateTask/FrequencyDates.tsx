@@ -1,5 +1,10 @@
-import { Autocomplete, TextField } from "@mui/material";
-import React, { Dispatch, SetStateAction } from "react";
+import {
+  Autocomplete,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { RecurringStateProps } from "./types";
 
 interface IProps {
@@ -8,6 +13,8 @@ interface IProps {
 }
 
 function FrequencyDates({ state, setState }: IProps) {
+  const [neverExpires, setNeverExpires] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
@@ -60,6 +67,23 @@ function FrequencyDates({ state, setState }: IProps) {
         InputLabelProps={{ shrink: true }}
         label="Recurring End Date"
         name="recurringEndDate"
+        disabled={neverExpires}
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            onChange={(e) => {
+              setNeverExpires(e.target.checked);
+              if (e.target.checked) {
+                setState({
+                  ...state,
+                  recurringEndDate: null,
+                });
+              }
+            }}
+          />
+        }
+        label="Never expires"
       />
     </>
   );

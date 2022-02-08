@@ -7,7 +7,7 @@ import {
   StyledProfileImage,
   StyledProfileImageContainer,
   StyledProfileImageOverlay,
-} from "views/clients/styles";
+} from "views/clients/clients/styles";
 
 function ProfileImage({ src, onChange }: any) {
   const [hover, setHover] = useState(false);

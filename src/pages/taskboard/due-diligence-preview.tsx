@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ResType } from "types";
-import { renderField } from "views/clients/ClientInfo/renderField";
+import { renderField } from "views/clients/clients/ClientInfo/renderField";
 
 function DueDiligencePreview() {
   useTitle("Due Diligence Preview");

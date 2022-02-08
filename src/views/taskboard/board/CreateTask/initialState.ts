@@ -11,6 +11,8 @@ export const initialState = {
   members: [],
   labels: [],
   taskLeader: null,
+  financialYear: null,
+  expectedCompletionDate: null,
 };
 
 export const RecurringInitialState = {
@@ -28,4 +30,5 @@ export const RecurringInitialState = {
   members: [],
   labels: [],
   taskLeader: null,
+  financialYear: null,
 };

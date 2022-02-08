@@ -7,6 +7,13 @@ type Props = {
 };
 
 function TaskComment({ data }: Props) {
+  const reg = /@\[+[a-z\s]+\]/gi;
+
+  const result = data?.text?.replace(reg, function (str) {
+    return `<span style='color:red'>
+      ${str.replace("[", "")?.replace("]", "")} </span>`;
+  });
+
   return (
     <Box mt={4} borderBottom="1px solid rgba(0,0,0,0.08)" pb={3}>
       <Box maxWidth={1000}>
@@ -22,7 +29,11 @@ function TaskComment({ data }: Props) {
           </div>
         </Box>
         <Typography variant="body2" color="rgba(0,0,0,0.8)">
-          {data?.text}
+          <span
+            dangerouslySetInnerHTML={{
+              __html: result,
+            }}
+          ></span>
         </Typography>
       </Box>
     </Box>

@@ -18,6 +18,10 @@ type Filter = {
   dueOn: string[];
   createdOn: string[];
   completedOn: string[];
+  category: Array<{ label: string; value: string }>;
+  subCategory: Array<{ label: string; value: string }>;
+  clientCategory: Array<{ label: string; value: string }>;
+  clientSubCategory: Array<{ label: string; value: string }>;
 };
 
 const filterState: Filter = {
@@ -32,6 +36,10 @@ const filterState: Filter = {
   dueOn: [],
   createdOn: [],
   completedOn: [],
+  category: [],
+  subCategory: [],
+  clientCategory: [],
+  clientSubCategory: [],
 };
 
 interface InitialState {
@@ -43,7 +51,7 @@ interface InitialState {
 const initialState: InitialState = {
   selectedFilters: filterState,
   appliedFilters: filterState,
-  selected: "assignee",
+  selected: "category",
 };
 
 export const taskBoardSlice = createSlice({
@@ -60,6 +68,12 @@ export const taskBoardSlice = createSlice({
         );
       }
     },
+    handleCategories(
+      state,
+      action: PayloadAction<{ value: any[]; key: string }>
+    ) {
+      state.selectedFilters[action.payload.key] = action.payload.value;
+    },
     handleSelected(state, action: PayloadAction<string>) {
       state.selected = action.payload;
     },
@@ -75,7 +89,12 @@ export const taskBoardSlice = createSlice({
 
 export const selectTaskBoard = (state: RootState) => state.taskBoard;
 
-export const { resetFilters, handleSelected, handleFilters, handleApply } =
-  taskBoardSlice.actions;
+export const {
+  resetFilters,
+  handleSelected,
+  handleFilters,
+  handleApply,
+  handleCategories,
+} = taskBoardSlice.actions;
 
 export default taskBoardSlice.reducer;

@@ -5,7 +5,7 @@ import { deleteDDFormField } from "api/services/tasks";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { renderField } from "views/clients/ClientInfo/renderField";
+import { renderField } from "views/clients/clients/ClientInfo/renderField";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
 import EditField from "./EditField";
 

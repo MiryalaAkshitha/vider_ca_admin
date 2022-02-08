@@ -168,3 +168,35 @@ export const StyledDraggebleFormField = styled("div")<{
     borderLeft: "none",
   },
 }));
+
+export const StyledTimline = styled("div")(() => {
+  return {
+    display: "flex",
+    marginTop: 20,
+    "& > div": {
+      textAlign: "center",
+      marginRight: 100,
+      "& div": {
+        background: "#F4F4F4",
+        padding: "5px 20px",
+        borderRadius: 5,
+        marginBottom: 10,
+      },
+    },
+    "& > div:not(:last-child)": {
+      marginRight: 100,
+      "& div": {
+        position: "relative",
+        "&:after": {
+          content: '""',
+          position: "absolute",
+          left: "100%",
+          top: "50%",
+          width: "100px",
+          height: "1px",
+          border: "0.5px dashed lightgrey",
+        },
+      },
+    },
+  };
+});

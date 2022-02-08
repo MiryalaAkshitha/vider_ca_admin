@@ -11,6 +11,8 @@ export interface StateProps {
   labels: any[];
   members: any[];
   taskLeader: number | null;
+  financialYear: number | null;
+  expectedCompletionDate: string | null;
 }
 
 export interface RecurringStateProps {
@@ -28,4 +30,5 @@ export interface RecurringStateProps {
   labels: any[];
   members: any[];
   taskLeader: number | null;
+  financialYear: number | null;
 }

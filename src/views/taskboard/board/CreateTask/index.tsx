@@ -49,11 +49,8 @@ function CreateTask({ open, setOpen }: DialogProps) {
       snack.error("Please select atleast one client");
       return;
     }
-
-    const { category, subCategory } = apiData;
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
-    apiData.category = subCategory || category;
     mutate(apiData);
   };
 
@@ -156,6 +153,31 @@ function CreateTask({ open, setOpen }: DialogProps) {
             InputLabelProps={{ shrink: true }}
             label="Due Date"
             name="dueDate"
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            type="date"
+            value={state.expectedCompletionDate || ""}
+            InputLabelProps={{ shrink: true }}
+            label="Expected Completion Date"
+            name="expectedCompletionDate"
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            required
+            size="small"
+            type="number"
+            inputProps={{ min: 1999, max: 2050 }}
+            value={state.financialYear || ""}
+            label="Financial Year"
+            name="financialYear"
           />
           <Autocomplete
             multiple

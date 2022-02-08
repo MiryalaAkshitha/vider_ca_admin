@@ -50,7 +50,7 @@ function CreateForm({ open, setOpen }: DialogProps) {
           multiple
           id="tags-standard"
           sx={{ mt: 3 }}
-          options={["kyb", "passwords"]}
+          options={["kyb", "passwords", "ddforms"]}
           onChange={(_, v) => setState({ ...state, tags: v })}
           getOptionLabel={(option) => option}
           renderInput={(params) => (

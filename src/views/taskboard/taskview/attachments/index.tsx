@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { ResType } from "types";
-import File from "views/clients/Attachments/Files/File";
+import File from "views/clients/clients/Attachments/Files/File";
 import UploadAttachmentModal from "./UploadAttachmentModal";
 
 function Attachments() {

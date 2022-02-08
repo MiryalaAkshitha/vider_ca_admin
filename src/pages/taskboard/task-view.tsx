@@ -13,7 +13,7 @@ import {
   StyledProfileNav,
   StyledProfileNavItem,
   StyledTaskSection,
-} from "views/clients/styles";
+} from "views/clients/clients/styles";
 import Attachments from "views/taskboard/taskview/attachments";
 import Checklists from "views/taskboard/taskview/Checklists";
 import Comments from "views/taskboard/taskview/comments";

@@ -1,10 +1,11 @@
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { endTimer, startTimer } from "api/services/tasks";
 import { icons } from "assets";
+import Members from "components/Members";
+import PriorityText from "components/PriorityText";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -105,12 +106,6 @@ function TaskItem({ data }: Props) {
           <Box display="flex" justifyContent="space-between">
             <div>
               <Typography variant="caption" color="gray">
-                Start Date:{" "}
-                {data?.dueDate &&
-                  moment(data?.taskStartDate).format("DD MMM YYYY")}
-              </Typography>
-              <br />
-              <Typography variant="caption" color="gray">
                 Due Date:{" "}
                 {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
               </Typography>
@@ -128,19 +123,14 @@ function TaskItem({ data }: Props) {
       </Box>
       <Box
         display="flex"
-        px={2}
+        px={1}
         py={1}
         mt={1}
         gap="10px"
         borderTop="1px solid rgba(0,0,0,0.1)"
       >
         {data?.priority !== "none" && (
-          <Box display="flex" alignItems="center" gap="5px">
-            <ArrowUpwardRoundedIcon sx={{ fontSize: 16 }} color="secondary" />
-            <Typography sx={{ textTransform: "capitalize" }} variant="caption">
-              {data?.priority}
-            </Typography>
-          </Box>
+          <PriorityText variant="body2" text={data?.priority} />
         )}
         <Box
           onClick={handleEndTimer}
@@ -163,6 +153,14 @@ function TaskItem({ data }: Props) {
               sx={{ fontSize: 16, cursor: "pointer" }}
             />
           )}
+        </Box>
+        <Box flex={1} display="flex" justifyContent="flex-end">
+          <Members
+            data={data?.members?.map((item) => ({
+              src: "",
+              title: item?.firstName,
+            }))}
+          />
         </Box>
       </Box>
     </>

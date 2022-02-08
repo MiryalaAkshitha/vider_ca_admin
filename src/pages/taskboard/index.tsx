@@ -29,6 +29,12 @@ function TaskBoard() {
       {
         client: queryParams.client,
         ...appliedFilters,
+        category: appliedFilters.category.map((c) => c.value),
+        subCategory: appliedFilters.subCategory.map((c) => c.value),
+        clientCategory: appliedFilters.clientCategory.map((item) => item.value),
+        clientSubCategory: appliedFilters.clientSubCategory.map(
+          (item) => item.value
+        ),
       },
     ],
     getTasks

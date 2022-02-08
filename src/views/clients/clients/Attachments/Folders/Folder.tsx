@@ -6,7 +6,7 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useLocation } from "react-router-dom";
-import { StyledFolder } from "views/clients/styles";
+import { StyledFolder } from "views/clients/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 
 type Props = {

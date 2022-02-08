@@ -1,6 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 import { StyledLabel } from "views/labels/styles";
 import ProfileImage from "./ProfileImage";
 
@@ -11,6 +12,8 @@ interface IProfileProps {
 }
 
 function Profile({ data, setState, onUpdate }: IProfileProps) {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -99,11 +102,22 @@ function Profile({ data, setState, onUpdate }: IProfileProps) {
             </a>
           </Typography>
         </Box>
-        <div>
+        <Box>
+          <Button
+            onClick={() => {
+              navigate(`/task-board?client=${data?.id}`);
+            }}
+            variant="outlined"
+            color="secondary"
+          >
+            View Tasks
+          </Button>
+        </Box>
+        <Box>
           <Button onClick={onUpdate} variant="outlined" color="secondary">
             Update Profile
           </Button>
-        </div>
+        </Box>
       </Box>
     </Box>
   );

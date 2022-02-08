@@ -6,9 +6,11 @@ import _ from "lodash";
 interface SearchContainerProps {
   placeHolder?: string;
   onChange: (v: string) => void;
+  onFocus?: (e: any) => void;
   maxWidth?: string;
   debounced?: boolean;
   minWidth?: string;
+  value?: string;
 }
 
 function SearchContainer(props: SearchContainerProps) {
@@ -18,6 +20,8 @@ function SearchContainer(props: SearchContainerProps) {
     maxWidth = "600px",
     debounced,
     minWidth = "600px",
+    onFocus,
+    value,
   } = props;
 
   const handleChange = _.debounce(function (e) {
@@ -32,9 +36,11 @@ function SearchContainer(props: SearchContainerProps) {
         onChange={(e) => {
           debounced ? handleChange(e) : onChange(e.target.value);
         }}
+        {...(value !== undefined && { value: value })}
         size="small"
         placeholder={placeHolder}
         InputProps={{ endAdornment: <Search /> }}
+        onFocus={onFocus}
       />
     </Box>
   );
