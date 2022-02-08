@@ -28,6 +28,9 @@ const Passwords = loadable(() => import("views/clients/clients/Passwords"));
 const ProfileDetails = loadable(
   () => import("views/clients/clients/ProfileDetails")
 );
+const OrganizationProfile = loadable(
+  () => import("pages/settings/organizationProfile/ProfileDetails")
+);
 const ViewRole = loadable(() => import("pages/settings/view-role"));
 const Forms = loadable(() => import("pages/settings/forms"));
 const Fields = loadable(() => import("pages/settings/fields"));
@@ -96,6 +99,10 @@ function RoutesContainer() {
           <Route
             path="fields-configuration"
             element={<FieldsConfiguration />}
+          />
+          <Route
+            path="organization-profile"
+            element={<OrganizationProfile />}
           />
         </Route>
         <Route path="/signup" element={<SignUp />} />

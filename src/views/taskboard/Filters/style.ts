@@ -41,4 +41,5 @@ export const StyledMoreHorButton = styled(Button)(({ theme }) => ({
   height: "20px",
   border: "1px solid lightgrey",
   color: "rgba(0,0,0,0.5)",
+  marginTop: 5,
 }));
