@@ -5,6 +5,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { Button, CircularProgress, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { bulkDelete, getClients } from "api/services/client";
+import { useConfirm } from "components/ConfirmDialogProvider";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
@@ -50,17 +51,15 @@ function Clients() {
     },
   ];
 
+  const confirm = useConfirm();
   const navigate = useNavigate();
   const snack = useSnack();
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(5);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-  const [allSelected, setAllSelected] = useState<boolean>(false);
-  const [selected, setSelected] = useState<Array<number>>([]);
-  const [unselected, setUnselected] = useState<Array<number>>([]);
   const [columns, setColumns] = useState<Array<ColumnType>>([
     ...defaultColumns,
   ]);
@@ -77,7 +76,7 @@ function Clients() {
       "clients",
       {
         limit: limit,
-        offset: offset > 0 ? (offset - 1) * limit : offset,
+        offset: offset * limit,
         query: {
           ...filters,
           category: filters.category.map((c: any) => c?.value),
@@ -92,54 +91,23 @@ function Clients() {
   const { mutate, isLoading: deleteLoading } = useMutation(bulkDelete, {
     onSuccess: () => {
       snack.success("Clients Deleted");
-      setAllSelected(false);
-      setSelected([]);
-      setUnselected([]);
-      setFilters({
-        ...filters,
-        category: [],
-        subCategory: [],
-        monthAdded: "",
-        labels: [],
-      });
-      setOffset(0);
       queryClient.invalidateQueries("clients");
+      setOffset(0);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
   });
 
-  const handleDelete = () => {
-    mutate({
-      data: {
-        all: allSelected,
-        unselected,
-        selected,
-        filters: {
-          ...filters,
-          category: filters.category.map((c: any) => c?.value),
-          subCategory: filters.subCategory.map((c: any) => c?.value),
-          labels: filters.labels.map((c: any) => c?.id),
-        },
+  const handleDelete = (selected: any) => {
+    confirm({
+      msg: "Are you sure you want to delete?",
+      action: () => {
+        mutate({
+          ids: selected.map((c: any) => c.id),
+        });
       },
     });
-  };
-
-  const handleSelect = (checked: boolean, v: any) => {
-    if (allSelected) {
-      if (!checked) {
-        setUnselected([...unselected, v?.id]);
-      } else {
-        setUnselected(unselected.filter((c) => c !== v.id));
-      }
-    } else {
-      if (checked) {
-        setSelected([...selected, v?.id]);
-      } else {
-        setSelected(selected.filter((c) => c !== v.id));
-      }
-    }
   };
 
   if (deleteLoading) return <CircularProgress />;
@@ -200,18 +168,17 @@ function Clients() {
           totalCount: data?.data[1],
           pageCount: limit,
           onPageCountChange: (v) => setLimit(v),
-          onChange: (v) => setOffset(v),
+          onChange: (v) => {
+            console.log(v);
+            setOffset(v);
+          },
         }}
         selection={{
-          all: allSelected,
-          selected: selected,
-          unselected: unselected,
-          onSelectAll: (v) => {
-            setAllSelected(v);
-          },
-          onSelect: (checked, v) => handleSelect(checked, v),
-          toolbar: (
-            <IconButton color="secondary" onClick={handleDelete}>
+          toolbar: (selected) => (
+            <IconButton
+              color="secondary"
+              onClick={() => handleDelete(selected)}
+            >
               <Delete />
             </IconButton>
           ),

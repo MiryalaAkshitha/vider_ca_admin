@@ -95,6 +95,11 @@ const getRoutes = (page: string, params: any) => {
         { title: "Roles", path: "/settings/roles-permissions" },
         { title: params?.role, path: "/" },
       ];
+    case "dscRegisterDetails":
+      return [
+        { title: "Dsc Register", path: "/dsc-register" },
+        { title: "Dsc Register Details", path: "/" },
+      ];
     default:
       return [];
   }

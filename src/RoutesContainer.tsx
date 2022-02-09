@@ -19,6 +19,10 @@ const Users = loadable(() => import("pages/settings/users"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("views/clients/leads"));
+const DscRegister = loadable(() => import("views/clients/dscregister"));
+const DscRegisterView = loadable(
+  () => import("views/clients/dscregister/view")
+);
 const ClientView = loadable(() => import("pages/clients/client-view"));
 const TasksView = loadable(() => import("pages/taskboard/task-view"));
 const DueDiligence = loadable(() => import("pages/taskboard/due-diligence"));
@@ -79,6 +83,10 @@ function RoutesContainer() {
             </Route>
           </Route>
           <Route path="leads" element={<Leads />} />
+          <Route path="dsc-register">
+            <Route index element={<DscRegister />} />
+            <Route path=":dscId" element={<DscRegisterView />} />
+          </Route>
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="categories" element={<Categories />} />

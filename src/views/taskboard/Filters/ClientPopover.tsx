@@ -43,7 +43,8 @@ function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
         sx: {
           transform: "translateY(-10px)",
           minWidth: 200,
-          height: 300,
+          minHeight: 100,
+          maxHeight: 300,
         },
       }}
       transformOrigin={{ horizontal: "left", vertical: "top" }}

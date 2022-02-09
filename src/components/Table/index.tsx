@@ -13,7 +13,7 @@ import { StyledTable, StyledTableLoader } from "./styles";
 export type ColumnType = {
   key: string;
   title: string;
-  render?: (item: any) => React.ReactElement | null;
+  render?: (item: any) => React.ReactElement | string | null;
   hide?: boolean;
 };
 
@@ -25,12 +25,7 @@ type PaginationType = {
 };
 
 type SelectionType = {
-  all: boolean;
-  selected: Array<number>;
-  unselected: Array<number>;
-  onSelect: (checked: boolean, v: any) => void;
-  onSelectAll: (v: any) => void;
-  toolbar?: React.ReactNode | null;
+  toolbar: (selected: any) => React.ReactNode | null;
 };
 
 interface TableProps {
@@ -55,14 +50,35 @@ function Table(props: TableProps) {
   } = props;
 
   const [page, setPage] = useState(0);
+  const [selected, setSelected] = useState<any>({});
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    selection?.onSelectAll(e.target.checked);
+    if (e.target.checked) {
+      setSelected({
+        ...selected,
+        [page]: data,
+      });
+    } else {
+      setSelected({
+        ...selected,
+        [page]: [],
+      });
+    }
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>, item: any) => {
     e.stopPropagation();
-    selection?.onSelect(e.target.checked, item);
+    if (e.target.checked) {
+      setSelected({
+        ...selected,
+        [page]: [...(selected[page] || []), item],
+      });
+    } else {
+      setSelected({
+        ...selected,
+        [page]: _.without(selected[page], item),
+      });
+    }
   };
 
   const handleRowClick = (item: any) => {
@@ -70,15 +86,7 @@ function Table(props: TableProps) {
     onRowClick(item);
   };
 
-  const checkIfSelected = (item: any): boolean => {
-    if (selection?.all) {
-      return _.findIndex(selection?.unselected, (v) => v === item.id) === -1;
-    }
-    return _.findIndex(selection?.selected, (v) => v === item.id) !== -1;
-  };
-
-  const showToolBar =
-    selection && (selection?.all || selection?.selected?.length > 0);
+  const showToolBar = selected[page] && selected[page].length > 0;
 
   return (
     <Box
@@ -99,11 +107,15 @@ function Table(props: TableProps) {
         {showToolBar && (
           <Toolbar
             sx={{
-              background: (theme) => theme.palette.primary.light,
+              background: "rgba(24, 47, 83, 0.2)",
               justifyContent: "flex-end",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
             }}
           >
-            {selection.toolbar}
+            {selection!.toolbar(selected[page])}
           </Toolbar>
         )}
         <StyledTable>
@@ -113,8 +125,8 @@ function Table(props: TableProps) {
                 <th style={{ width: 50 }}>
                   <Checkbox
                     color="secondary"
-                    checked={selection.all}
                     onChange={handleSelectAll}
+                    checked={selected[page]?.length === data?.length}
                   />
                 </th>
               )}
@@ -128,13 +140,17 @@ function Table(props: TableProps) {
             {data.map((item, index) => (
               <tr key={index}>
                 {selection && (
-                  <td>
-                    <Checkbox
-                      onChange={(e) => handleSelect(e, item)}
-                      color="secondary"
-                      checked={checkIfSelected(item)}
-                    />
-                  </td>
+                  <>
+                    <td>
+                      <Checkbox
+                        onChange={(e) => handleSelect(e, item)}
+                        color="secondary"
+                        checked={Boolean(
+                          selected[page]?.find((v: any) => v.id === item.id)
+                        )}
+                      />
+                    </td>
+                  </>
                 )}
                 {columns.map((col, colIndex) => {
                   if (col.hide) {

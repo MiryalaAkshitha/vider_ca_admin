@@ -39,8 +39,8 @@ const importClients = (data: FormData) => {
   return http.post(`/client/import`, data);
 };
 
-const bulkDelete = ({ data }: any) => {
-  return http.post(`/client/bulk-delete`, data);
+const bulkDelete = ({ ids }: any) => {
+  return http.post(`/client/bulk-delete`, { ids });
 };
 
 const createLead = (data: any) => {
@@ -59,6 +59,30 @@ const getLeads = (data: any) => {
   return http.get("/leads", data);
 };
 
+const getDscRegisters = (data: any) => {
+  return http.get("/dsc-register", data);
+};
+
+const createDscRegister = (data: any) => {
+  return http.post("/dsc-register", data);
+};
+
+const updateDscRegister = ({ id, data }: any) => {
+  return http.put(`/dsc-register/${id}`, data);
+};
+
+const deleteDscRegister = (id: number) => {
+  return http.delete(`/dsc-register/${id}`);
+};
+
+const getDscRegister = ({ queryKey }) => {
+  return http.get("/dsc-register/details", { params: { ...queryKey[1] } });
+};
+
+const issueOrReceiveDsc = ({ id, data }: any) => {
+  return http.post(`/dsc-register/${id}/issue-receive`, data);
+};
+
 export {
   createClient,
   getClients,
@@ -73,4 +97,10 @@ export {
   getLeads,
   updateLead,
   deleteLead,
+  getDscRegisters,
+  createDscRegister,
+  updateDscRegister,
+  deleteDscRegister,
+  getDscRegister,
+  issueOrReceiveDsc,
 };
