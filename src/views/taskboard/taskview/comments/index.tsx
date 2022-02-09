@@ -24,7 +24,6 @@ function Comments() {
         Comments
       </Typography>
       <CommentInput />
-
       <Box>
         {data?.data?.map((comment: any, index: number) => (
           <TaskComment data={comment} key={index} />

@@ -63,9 +63,10 @@ function LogHours() {
                 </div>
                 <Typography variant="caption">
                   {data?.data?.timeline[status] &&
-                    moment(data?.data?.timeline[status]).format(
-                      "DD MMM YYYY, h:mm a"
-                    )}
+                    moment
+                      .utc(data?.data?.timeline[status])
+                      .local()
+                      .format("MM/DD/YYYY, h:mm a")}
                 </Typography>
               </div>
             )
