@@ -6,6 +6,11 @@ interface FilterPayload {
   value: string | number;
 }
 
+interface CustomDatePayload {
+  dateType: "fromDate" | "toDate";
+  value: string;
+}
+
 type Filter = {
   assignee: number[];
   createdBy: number[];
@@ -22,6 +27,24 @@ type Filter = {
   subCategory: Array<{ label: string; value: string }>;
   clientCategory: Array<{ label: string; value: string }>;
   clientSubCategory: Array<{ label: string; value: string }>;
+  customDates: {
+    startDate: {
+      fromDate: string;
+      toDate: string;
+    };
+    dueOn: {
+      fromDate: string;
+      toDate: string;
+    };
+    createdOn: {
+      fromDate: string;
+      toDate: string;
+    };
+    completedOn: {
+      fromDate: string;
+      toDate: number;
+    };
+  };
 };
 
 const filterState: Filter = {
@@ -40,6 +63,24 @@ const filterState: Filter = {
   subCategory: [],
   clientCategory: [],
   clientSubCategory: [],
+  customDates: {
+    startDate: {
+      fromDate: "",
+      toDate: "",
+    },
+    dueOn: {
+      fromDate: "",
+      toDate: "",
+    },
+    createdOn: {
+      fromDate: "",
+      toDate: "",
+    },
+    completedOn: {
+      fromDate: "",
+      toDate: 100,
+    },
+  },
 };
 
 interface InitialState {
@@ -68,6 +109,11 @@ export const taskBoardSlice = createSlice({
         );
       }
     },
+    handleCustomDates(state, action: PayloadAction<CustomDatePayload>) {
+      let selectedCustomDate =
+        state.selectedFilters.customDates[state.selected];
+      selectedCustomDate[action.payload.dateType] = action.payload.value;
+    },
     handleCategories(
       state,
       action: PayloadAction<{ value: any[]; key: string }>
@@ -95,6 +141,7 @@ export const {
   handleFilters,
   handleApply,
   handleCategories,
+  handleCustomDates,
 } = taskBoardSlice.actions;
 
 export default taskBoardSlice.reducer;

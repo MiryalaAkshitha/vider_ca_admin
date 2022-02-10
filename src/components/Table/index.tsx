@@ -177,13 +177,14 @@ function Table(props: TableProps) {
         <Box px={2} mt={2} justifyContent="flex-end" display="flex">
           <TablePagination
             component="div"
-            count={pagination.totalCount}
+            count={pagination.totalCount || 10}
             page={page}
             onPageChange={(v, page) => {
               setPage(page);
               pagination.onChange(page);
             }}
-            rowsPerPage={pagination.pageCount}
+            rowsPerPageOptions={[5, 10, 20]}
+            rowsPerPage={pagination.pageCount || 10}
             onRowsPerPageChange={(e) => {
               if (pagination.onPageCountChange) {
                 pagination.onPageCountChange(+e.target.value);

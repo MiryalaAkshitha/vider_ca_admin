@@ -10,7 +10,7 @@ export const StyledTasksFilterContainer = styled("div")(({ theme }) => ({
   padding: "10px 20px",
 }));
 
-export const StyledClientFilterItem = styled(Typography)<{ active: boolean }>(
+export const StyledClientFilterItem = styled(Typography)<{ active: string }>(
   ({ active, theme }) => {
     return {
       position: "relative",
@@ -27,7 +27,7 @@ export const StyledClientFilterItem = styled(Typography)<{ active: boolean }>(
         background: theme.palette.primary.main,
         left: "50%",
         bottom: -10,
-        opacity: active ? 1 : 0,
+        opacity: active === "true" ? 1 : 0,
       },
     };
   }

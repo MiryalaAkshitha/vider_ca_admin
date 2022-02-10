@@ -1,7 +1,8 @@
-import { Menu, MenuItem, Typography } from "@mui/material";
+import { Box, MenuItem, Popover, TextField, Typography } from "@mui/material";
 import { addPin } from "api/services/tasks";
 import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
 interface IProps {
@@ -14,6 +15,7 @@ function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
   const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
+  const [search, setSearch] = useState("");
 
   const { mutate } = useMutation(addPin, {
     onSuccess: () => {
@@ -32,11 +34,14 @@ function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
     setQueryParams({ ...queryParams, client: id });
   };
 
+  const filteredData = data?.filter((item: any) => {
+    return item?.displayName?.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
-    <Menu
+    <Popover
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}
-      onClick={() => setAnchorEl(null)}
       onClose={() => setAnchorEl(null)}
       PaperProps={{
         elevation: 0,
@@ -50,7 +55,18 @@ function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
       transformOrigin={{ horizontal: "left", vertical: "top" }}
       anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
     >
-      {data?.map((item: any, index: number) => (
+      <Box p={1} pt={2}>
+        <TextField
+          size="small"
+          autoFocus
+          placeholder="Search"
+          variant="outlined"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          fullWidth
+        />
+      </Box>
+      {filteredData?.map((item: any, index: number) => (
         <MenuItem
           selected={item?.id === +queryParams.client!}
           key={index}
@@ -61,7 +77,7 @@ function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
           </Typography>
         </MenuItem>
       ))}
-    </Menu>
+    </Popover>
   );
 }
 

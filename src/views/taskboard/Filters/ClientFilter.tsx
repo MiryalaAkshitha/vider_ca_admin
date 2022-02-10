@@ -27,7 +27,7 @@ function ClientFilter() {
           variant="body1"
           color="rgba(0,0,0,0.7)"
           onClick={() => setQueryParams({ ...queryParams, client: "" })}
-          active={!client}
+          active={(Boolean(client) === false)?.toString()}
         >
           All Clients
         </StyledClientFilterItem>
@@ -90,7 +90,7 @@ const ClientFilterItem = ({ item }) => {
           }
           variant="body1"
           color="rgba(0,0,0,0.7)"
-          active={item?.client?.id === +client!}
+          active={(item?.client?.id === +client!)?.toString()}
         >
           {item?.client?.displayName}
         </StyledClientFilterItem>

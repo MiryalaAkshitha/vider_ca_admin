@@ -40,7 +40,7 @@ function CustomizeColumns(props: ClientFilterProps) {
     <DrawerWrapper open={open} setOpen={setOpen} title="Customize Columns">
       <Grid container spacing={1}>
         {state.map((column: ColumnType, index: number) => (
-          <Grid item xs={6}>
+          <Grid item xs={6} key={index}>
             <FormControlLabel
               control={
                 <Checkbox

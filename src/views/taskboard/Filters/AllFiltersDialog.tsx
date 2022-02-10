@@ -17,7 +17,6 @@ import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleApply,
-  handleFilters,
   handleSelected,
   resetFilters,
   selectTaskBoard,
@@ -48,15 +47,6 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
     getUsers,
     { enabled: open }
   );
-
-  const handleFilter = (e: any) => {
-    dispatch(
-      handleFilters({
-        checked: e.target.checked,
-        value: e.target.value,
-      })
-    );
-  };
 
   const applyFilters = () => {
     dispatch(handleApply());
@@ -137,15 +127,11 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
               ))}
             </List>
           </Box>
-          <Box sx={{ overflowY: "auto", p: 2, flex: 1 }}>
+          <Box sx={{ overflowY: "auto", pt: 1, px: 2, pb: 4, flex: 1 }}>
             {filters.map((filter) => {
               if (selected === filter.key) {
                 return (
-                  <FilterContainer
-                    key={filter.key}
-                    items={filter.options}
-                    onChange={handleFilter}
-                  />
+                  <FilterContainer key={filter.key} items={filter.options} />
                 );
               }
               return null;

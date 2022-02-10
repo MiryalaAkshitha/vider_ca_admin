@@ -15,7 +15,8 @@ import { DialogProps, ResType, SubmitType } from "types";
 interface StateProps {
   users: any[];
   completedDate: string;
-  duration: string;
+  hours: string;
+  minutes: string;
 }
 
 function AddLogHour({ open, setOpen }: DialogProps) {
@@ -25,7 +26,8 @@ function AddLogHour({ open, setOpen }: DialogProps) {
   const [state, setState] = useState<StateProps>({
     users: [],
     completedDate: "",
-    duration: "",
+    hours: "00",
+    minutes: "00",
   });
 
   const { data, isLoading }: ResType = useQuery("users", getUsers, {
@@ -39,7 +41,8 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       setState({
         users: [],
         completedDate: "",
-        duration: "",
+        hours: "00",
+        minutes: "00",
       });
       queryClient.invalidateQueries("loghours");
     },
@@ -58,13 +61,16 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       snack.error("Please select atleast one user");
       return;
     }
-    if (!state.duration.match(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)) {
-      snack.error("Please enter duration in HH:MM format");
+    if (state.hours === "00" && state.minutes === "00") {
+      snack.error("Please enter duration");
       return;
     }
-    const apiData: any = { ...state };
-    apiData.duration = moment.duration(apiData.duration).asMilliseconds();
-
+    const { hours, minutes, ...apiData } = {
+      ...state,
+      duration: moment
+        .duration(`${state.hours}:${state.minutes}`)
+        .asMilliseconds(),
+    };
     mutate({
       taskId: params.taskId,
       data: apiData,
@@ -111,17 +117,36 @@ function AddLogHour({ open, setOpen }: DialogProps) {
             InputLabelProps={{ shrink: true }}
             required
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            label="Duration (HH:MM)"
-            value={state.duration}
-            name="duration"
-            required
-          />
+          <Box sx={{ mt: 3, display: "flex", gap: 1 }}>
+            <Autocomplete
+              value={state.hours}
+              disableClearable
+              sx={{ minWidth: 100 }}
+              onChange={(_, value) => {
+                setState({ ...state, hours: value });
+              }}
+              size="small"
+              options={Array.from(Array(24).keys()).map((_, index) =>
+                index <= 9 ? `0${index}` : index?.toString()
+              )}
+              renderInput={(params) => <TextField {...params} label="Hours" />}
+            />
+            <Autocomplete
+              value={state.minutes}
+              size="small"
+              disableClearable
+              onChange={(_, value) => {
+                setState({ ...state, minutes: value });
+              }}
+              sx={{ minWidth: 100 }}
+              options={Array.from(Array(60).keys()).map((_, index) =>
+                index <= 9 ? `0${index}` : index?.toString()
+              )}
+              renderInput={(params) => (
+                <TextField {...params} label="Minutes" />
+              )}
+            />
+          </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={createLoading}

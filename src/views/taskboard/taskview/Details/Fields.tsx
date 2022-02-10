@@ -62,8 +62,10 @@ export function CustomSelect({ value, options, onChange, name }: SelectProps) {
       value={value}
       onChange={onChange}
     >
-      {options.map((option) => (
-        <MenuItem value={option.value}>{getTitle(option.label)}</MenuItem>
+      {options.map((option, index) => (
+        <MenuItem value={option.value} key={index}>
+          {getTitle(option.label)}
+        </MenuItem>
       ))}
     </TextField>
   );

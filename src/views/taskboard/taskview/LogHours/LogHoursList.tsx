@@ -14,11 +14,12 @@ function LogHoursList({ data, onSelect, selectedItems }: Props) {
 
   return (
     <div>
-      {Object.keys(grouped).map((date: any) => (
-        <Box mb={3}>
+      {Object.keys(grouped).map((date: any, index: number) => (
+        <Box mb={3} key={index}>
           <FormattedDate date={date} />
-          {grouped[date].map((logHour: any) => (
+          {grouped[date].map((logHour: any, index: number) => (
             <LogHourItem
+              key={index}
               selectedItems={selectedItems}
               onSelect={onSelect}
               logHour={logHour}

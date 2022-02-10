@@ -11,6 +11,8 @@ interface SearchContainerProps {
   debounced?: boolean;
   minWidth?: string;
   value?: string;
+  defaultValue?: string;
+  autoFocus?: boolean;
 }
 
 function SearchContainer(props: SearchContainerProps) {
@@ -22,6 +24,8 @@ function SearchContainer(props: SearchContainerProps) {
     minWidth = "600px",
     onFocus,
     value,
+    defaultValue = "",
+    autoFocus = false,
   } = props;
 
   const handleChange = _.debounce(function (e) {
@@ -33,6 +37,8 @@ function SearchContainer(props: SearchContainerProps) {
       <TextField
         sx={{ maxWidth, minWidth }}
         color="primary"
+        defaultValue={defaultValue}
+        autoFocus={autoFocus}
         onChange={(e) => {
           debounced ? handleChange(e) : onChange(e.target.value);
         }}

@@ -1,5 +1,6 @@
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Box, Button } from "@mui/material";
+import SearchContainer from "components/SearchContainer";
 import View from "components/View";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
@@ -21,26 +22,33 @@ function Filters() {
   };
 
   return (
-    <StyledTasksFilterContainer>
-      <ClientFilter />
-      <Box display="flex" gap={5}>
-        <Box display="flex" gap={2}>
-          <div>
-            <Button
-              size="small"
-              startIcon={<FilterAltOutlinedIcon />}
-              onClick={() => setOpenFilters(true)}
-              color="primary"
-              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
-            >
-              Filters
-            </Button>
-          </div>
-        </Box>
+    <Box>
+      <StyledTasksFilterContainer>
+        <ClientFilter />
+        <SearchContainer
+          minWidth="400px"
+          defaultValue={queryParams.search}
+          placeHolder="Search"
+          debounced
+          onChange={(v) => setQueryParams({ ...queryParams, search: v })}
+        />
+        <AllFiltersDialog open={openFilters} setOpen={setOpenFilters} />
+      </StyledTasksFilterContainer>
+      <Box display="flex" gap={3} justifyContent="flex-end" mt={2}>
+        <div>
+          <Button
+            size="small"
+            startIcon={<FilterAltOutlinedIcon />}
+            onClick={() => setOpenFilters(true)}
+            color="primary"
+            sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
+          >
+            Filters
+          </Button>
+        </div>
         <View value={view} onChange={handleView} />
       </Box>
-      <AllFiltersDialog open={openFilters} setOpen={setOpenFilters} />
-    </StyledTasksFilterContainer>
+    </Box>
   );
 }
 

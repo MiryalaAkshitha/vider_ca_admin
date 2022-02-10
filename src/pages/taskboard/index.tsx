@@ -28,6 +28,7 @@ function TaskBoard() {
       "tasks",
       {
         client: queryParams.client,
+        search: queryParams.search,
         ...appliedFilters,
         category: appliedFilters.category.map((c) => c.value),
         subCategory: appliedFilters.subCategory.map((c) => c.value),
