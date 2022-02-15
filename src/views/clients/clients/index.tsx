@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
+import { getTitle } from "utils";
 import AddClient from "views/clients/clients/AddClient";
 import CustomizeColumns from "views/clients/clients/CustomizeColumns";
 import ClientFilter from "views/clients/clients/Filter";
@@ -27,8 +28,16 @@ function Clients() {
     { key: "displayName", title: "Display Name" },
     { key: "tradeName", title: "Trade Name", hide: true },
     { key: "clientId", title: "Client Id", hide: true },
-    { key: "category", title: "Category" },
-    { key: "subCategory", title: "Sub Category" },
+    {
+      key: "category",
+      title: "Category",
+      render: (rowData) => getTitle(rowData?.category),
+    },
+    {
+      key: "subCategory",
+      title: "Sub Category",
+      render: (rowData) => getTitle(rowData?.subCategory),
+    },
     { key: "mobileNumber", title: "Mobile Number" },
     { key: "email", title: "Email" },
     { key: "panNumber", title: "Pan Number", hide: true },
@@ -54,7 +63,7 @@ function Clients() {
   const confirm = useConfirm();
   const navigate = useNavigate();
   const snack = useSnack();
-  const [limit, setLimit] = useState<number>(5);
+  const [limit, setLimit] = useState<number>(50);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
@@ -98,6 +107,12 @@ function Clients() {
       snack.error(err.response.data.message);
     },
   });
+
+  const handleRowClick = (v: any) => {
+    navigate(
+      `/clients/${v?.id}/profile?displayName=${v?.displayName}&clientId=${v?.clientId}`
+    );
+  };
 
   const handleDelete = (selected: any) => {
     confirm({
@@ -161,7 +176,7 @@ function Clients() {
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
-        onRowClick={(v) => navigate(`/clients/${v?.id}/profile`)}
+        onRowClick={(v) => handleRowClick(v)}
         data={data?.data[0] || []}
         columns={columns}
         pagination={{
@@ -169,7 +184,6 @@ function Clients() {
           pageCount: limit,
           onPageCountChange: (v) => setLimit(v),
           onChange: (v) => {
-            console.log(v);
             setOffset(v);
           },
         }}

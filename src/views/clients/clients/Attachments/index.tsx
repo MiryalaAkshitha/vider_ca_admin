@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import { getStorage } from "api/services/storage";
 import Loader from "components/Loader";
+import moment from "moment";
 import { useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { StorageResponse } from "types";
@@ -23,20 +24,48 @@ function Attachments() {
     getStorage
   );
 
-  const folders = data?.data?.result?.filter((item) => item.type === "folder");
-  const files = data?.data?.result?.filter((item) => item.type === "file");
+  const getFilesOrFolders = (type: "folder" | "file") => {
+    let soryBy = searchParams.get("soryBy");
+    let result = data?.data?.result?.filter((item) => item.type === type);
+
+    if (soryBy === "a_z") {
+      result = result?.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    if (soryBy === "z_a") {
+      result = result?.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    if (soryBy === "date_newest") {
+      result = result?.sort((a, b) => {
+        return moment.utc(b?.createdAt).local().diff(moment(a.createdAt));
+      });
+    }
+
+    if (soryBy === "date_oldest") {
+      result = result?.sort((a, b) => {
+        return moment.utc(a?.createdAt).local().diff(moment(b.createdAt));
+      });
+    }
+
+    return result;
+  };
 
   if (isLoading) return <Loader />;
 
   return (
     <>
       <Search />
-      <Box px={4} py={2} width="90%">
+      <Box px={4} py={2}>
         {data?.data.breadCrumbs.length ? (
           <BreadCrumbs data={data?.data?.breadCrumbs} />
         ) : null}
-        {folders?.length ? <Folders data={folders} /> : null}
-        {files?.length ? <Files data={files} /> : null}
+        {getFilesOrFolders("folder")?.length ? (
+          <Folders data={getFilesOrFolders("folder")} />
+        ) : null}
+        {getFilesOrFolders("file")?.length ? (
+          <Files data={getFilesOrFolders("file")} />
+        ) : null}
         <AddAttachment />
       </Box>
     </>

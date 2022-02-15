@@ -126,6 +126,7 @@ export const taskViewMenu: string[] = [
   "Sub Tasks",
   "Attachments",
   "Log Hours",
+  "Events",
 ];
 
 export const CLIENT_CATEGORIES: Array<{

@@ -21,9 +21,10 @@ interface IDetailsProps {
   data: any;
   apiData: any;
   setState: (data: any) => void;
+  onUpdate: () => void;
 }
 
-function Details({ data, apiData, setState }: IDetailsProps) {
+function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
   const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
 
   const { data: users, isLoading: userLoading }: ResType = useQuery(
@@ -75,6 +76,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
         <Grid item xs={4}>
           <TextField
             variant="outlined"
+            onBlur={onUpdate}
             fullWidth
             size="small"
             select
@@ -97,6 +99,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             <TextField
               variant="outlined"
               fullWidth
+              onBlur={onUpdate}
               required
               name="subCategory"
               onChange={handleChange}
@@ -119,6 +122,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             label="Display Name"
             name="displayName"
             onChange={handleChange}
+            onBlur={onUpdate}
             value={data?.displayName}
             fullWidth
             variant="outlined"
@@ -129,6 +133,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
         <Grid item xs={4}>
           <TextField
             label="Trade Name"
+            onBlur={onUpdate}
             name="tradeName"
             onChange={handleChange}
             value={data?.tradeName}
@@ -143,6 +148,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             label="Authorized Person"
             name="authorizedPerson"
             onChange={handleChange}
+            onBlur={onUpdate}
             value={data?.authorizedPerson}
             fullWidth
             variant="outlined"
@@ -156,6 +162,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             name="panNumber"
             value={data?.panNumber}
             onChange={handleChange}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -164,6 +171,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             name="gstNumber"
             value={data?.gstNumber}
             onChange={handleChange}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -172,6 +180,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             name="mobileNumber"
             value={data?.mobileNumber}
             onChange={handleChange}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -180,6 +189,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             name="alternateMobileNumber"
             value={data?.alternateMobileNumber}
             onChange={handleChange}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -188,6 +198,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             name="email"
             value={data?.email}
             onChange={handleChange}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -201,6 +212,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             variant="outlined"
             size="small"
             InputLabelProps={{ shrink: true }}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={8}>
@@ -209,6 +221,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             name="address"
             value={data?.address}
             onChange={handleChange}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -221,6 +234,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             size="small"
             onChange={handleChange}
             InputLabelProps={{ shrink: true }}
+            onBlur={onUpdate}
           />
         </Grid>
         <Grid item xs={4}>
@@ -228,6 +242,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             onChange={(_, value) => setState({ ...data, state: value?.value })}
             value={state}
             options={STATES || []}
+            onBlur={onUpdate}
             getOptionLabel={(option: any) => option?.label}
             renderInput={(params) => (
               <TextField
@@ -248,6 +263,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             fullWidth
             variant="outlined"
             onChange={handleChange}
+            onBlur={onUpdate}
             size="small"
             InputLabelProps={{ shrink: true }}
           />
@@ -257,6 +273,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
             label="Client Manager"
             name="clientManager"
             fullWidth
+            onBlur={onUpdate}
             variant="outlined"
             value={data?.clientManager?.id || data?.clientManager}
             size="small"
@@ -275,8 +292,12 @@ function Details({ data, apiData, setState }: IDetailsProps) {
           <Autocomplete
             multiple
             id="tags-standard"
-            onChange={(_, value) => setState({ ...data, labels: value })}
+            onBlur={onUpdate}
+            onChange={(_, value) => {
+              setState({ ...data, labels: value });
+            }}
             value={data?.labels || []}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             options={labels?.data || []}
             getOptionLabel={(option: any) => option?.name}
             renderInput={(params) => (
@@ -293,6 +314,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
         <Grid item xs={4}>
           <TextField
             label="Status"
+            onBlur={onUpdate}
             name="active"
             onChange={(e) => {
               setState({
@@ -322,6 +344,7 @@ function Details({ data, apiData, setState }: IDetailsProps) {
         <Grid item xs={4}>
           <TextField
             label="Local Directory Path"
+            onBlur={onUpdate}
             name="localDirectoryPath"
             onChange={handleChange}
             value={data?.localDirectoryPath}

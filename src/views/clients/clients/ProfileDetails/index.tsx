@@ -46,7 +46,12 @@ function ProfileDetails() {
   return (
     <Box px={4} pt={2} pb={10}>
       <Profile data={state} setState={setState} onUpdate={handleUpdate} />
-      <Details apiData={data?.data} data={state} setState={setState} />
+      <Details
+        apiData={data?.data}
+        data={state}
+        setState={setState}
+        onUpdate={handleUpdate}
+      />
     </Box>
   );
 }

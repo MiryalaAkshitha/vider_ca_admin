@@ -11,10 +11,10 @@ import KybDetails from "./KybDetails";
 
 function KybInfo() {
   const snack = useSnack();
-  const [state, setState] = useState<any[]>([]);
-  const [forms, setForms] = useState<any[]>([]);
   const params = useParams();
   const clientId = params.clientId || "";
+  const [state, setState] = useState<any[]>([]);
+  const [forms, setForms] = useState<any[]>([]);
 
   const { isLoading }: ResType = useQuery(
     ["client-info", { clientId, type: "kyb" }],
@@ -51,14 +51,16 @@ function KybInfo() {
   if (isLoading || updateKybLoading) return <Loader />;
 
   return (
-    <Box px={4} py={2} display="flex" justifyContent="space-between" gap={4}>
-      <Box sx={{ maxWidth: 1000, width: "100%" }}>
-        <KybDetails state={state} setState={setState} forms={forms} />
+    <>
+      <Box px={4} py={2} display="flex" justifyContent="space-between" gap={4}>
+        <Box sx={{ maxWidth: 1000, width: "100%" }}>
+          <KybDetails state={state} setState={setState} forms={forms} />
+        </Box>
+        <Box sx={{ maxWidth: 500, width: "100%" }}>
+          <FormsContainer onUpdate={onUpdate} />
+        </Box>
       </Box>
-      <Box sx={{ maxWidth: 500, width: "100%" }}>
-        <FormsContainer onUpdate={onUpdate} />
-      </Box>
-    </Box>
+    </>
   );
 }
 

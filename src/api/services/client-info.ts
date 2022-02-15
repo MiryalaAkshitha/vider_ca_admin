@@ -4,6 +4,10 @@ const addToClientInfo = (data: any) => {
   return http.post("/client-info", data);
 };
 
+const addFieldToClientInfo = (data: any) => {
+  return http.post("/client-info/add-field", data);
+};
+
 const updateClientInfo = ({ data }: any) => {
   return http.put("/client-info", data);
 };
@@ -41,4 +45,5 @@ export {
   addClientPassword,
   updateClientPassword,
   deleteClientPassword,
+  addFieldToClientInfo,
 };

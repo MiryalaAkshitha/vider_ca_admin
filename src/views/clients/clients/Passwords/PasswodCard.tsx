@@ -73,7 +73,12 @@ function PasswordCard({ data }: Props) {
             <Typography gutterBottom variant="body2" color="rgba(0,0,0,0.5)">
               Website Url
             </Typography>
-            <Typography gutterBottom color="primary" variant="body1">
+            <Typography
+              sx={{ wordBreak: "break-all" }}
+              gutterBottom
+              color="primary"
+              variant="body1"
+            >
               <a
                 target="_blank"
                 rel="noopener noreferrer"

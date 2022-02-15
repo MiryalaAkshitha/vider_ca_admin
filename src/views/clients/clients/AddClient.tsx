@@ -62,7 +62,9 @@ function AddClient({ open, setOpen }: DialogProps) {
   const { mutate, isLoading } = useMutation(createClient, {
     onSuccess: (res) => {
       snack.success("Client Created");
-      navigate(`/clients/${res.data.id}/profile`);
+      navigate(
+        `/clients/${res.data.id}/profile/?displayName=${res.data?.displayName}&clientId=${res.data?.clientId}`
+      );
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

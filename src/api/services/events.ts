@@ -4,8 +4,8 @@ const createEvent = (data: any) => {
   return http.post("/events", data);
 };
 
-const getEvents = () => {
-  return http.get("/events");
+const getEvents = ({ queryKey }) => {
+  return http.get("/events", { params: { ...queryKey[1] } });
 };
 
 export { getEvents, createEvent };

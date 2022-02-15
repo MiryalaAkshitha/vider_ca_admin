@@ -4,7 +4,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Box } from "@mui/material";
 import { getEvents } from "api/services/events";
-import { getTasksAsOptions } from "api/services/tasks";
+import { getTasks } from "api/services/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
@@ -19,8 +19,8 @@ function Calendar() {
   const [open, setOpen] = useState<boolean>(false);
   const { data, isLoading }: ResType = useQuery(["events"], getEvents);
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["task-options"],
-    getTasksAsOptions
+    ["tasks"],
+    getTasks
   );
 
   const eventsData =
@@ -32,7 +32,7 @@ function Calendar() {
 
   const tasksData =
     tasks?.data?.map((item: any) => ({
-      title: `${item?.name} - (${item?.clientName})`,
+      title: `${item?.name} - (${item?.client?.displayName})`,
       date: moment(item?.dueDate).format("YYYY-MM-DD"),
     })) || [];
 

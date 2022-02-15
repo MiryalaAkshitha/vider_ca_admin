@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link, { LinkProps } from "@mui/material/Link";
+import useQueryParams from "hooks/useQueryParams";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 interface LinkRouterProps extends LinkProps {
@@ -14,7 +15,8 @@ const LinkRouter = (props: LinkRouterProps) => (
 
 function BreadCrumbs({ page }: { page: string }) {
   const params: any = useParams();
-  const routes = getRoutes(page, params);
+  const { queryParams } = useQueryParams();
+  const routes = getRoutes(page, params, queryParams);
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
@@ -41,7 +43,7 @@ function BreadCrumbs({ page }: { page: string }) {
   );
 }
 
-const getRoutes = (page: string, params: any) => {
+const getRoutes = (page: string, params: any, query: any) => {
   switch (page) {
     case "addService":
       return [
@@ -77,7 +79,7 @@ const getRoutes = (page: string, params: any) => {
     case "clientProfile":
       return [
         { title: "Clients", path: "/clients" },
-        { title: params?.clientId, path: "/" },
+        { title: `${query?.displayName} - ${query?.clientId}`, path: "/" },
       ];
     case "taskView":
       return [

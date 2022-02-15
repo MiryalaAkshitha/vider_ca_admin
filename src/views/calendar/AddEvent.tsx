@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { getClients } from "api/services/client";
 import { createEvent } from "api/services/events";
-import { getTasksAsOptions } from "api/services/tasks";
+import { getTasks } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -29,7 +29,8 @@ interface IState {
   reminder: string | null;
   reminderNotes: string | null;
   client: number | null;
-  task: number | null;
+  task: any;
+  members: Array<any>;
 }
 
 function AddEvent({ open, setOpen }: DialogProps) {
@@ -46,6 +47,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
     reminderNotes: null,
     client: null,
     task: null,
+    members: [],
   });
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
@@ -57,8 +59,8 @@ function AddEvent({ open, setOpen }: DialogProps) {
   );
 
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["task-options", {}],
-    getTasksAsOptions,
+    ["tasks", {}],
+    getTasks,
     {
       enabled: open,
     }
@@ -81,7 +83,10 @@ function AddEvent({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    mutate(state);
+    mutate({
+      ...state,
+      task: state.task?.id,
+    });
   };
 
   return (
@@ -93,7 +98,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
           <Autocomplete
             id="tags-standard"
             onChange={(_, value) => {
-              setState({ ...state, client: value?.id });
+              setState({ ...state, client: value?.id, task: null });
             }}
             options={clients?.data[0] || []}
             getOptionLabel={(option: any) => option?.displayName}
@@ -113,11 +118,12 @@ function AddEvent({ open, setOpen }: DialogProps) {
               id="tags-standard"
               sx={{ mt: 3 }}
               onChange={(_, value) => {
-                setState({ ...state, task: value?.id });
+                setState({ ...state, task: value, members: [] });
               }}
+              value={state.task}
               options={
                 tasks?.data?.filter(
-                  (item: any) => item?.clientId === state.client
+                  (item: any) => item?.client?.id === state.client
                 ) || []
               }
               getOptionLabel={(option: any) => option?.name}
@@ -133,6 +139,31 @@ function AddEvent({ open, setOpen }: DialogProps) {
               )}
             />
           )}
+          {state.task && (
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              onChange={(_, value) => {
+                setState({ ...state, members: value });
+              }}
+              value={state.members}
+              options={state?.task?.members || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => {
+                return option?.firstName + " " + option?.lastName;
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Members"
+                />
+              )}
+            />
+          )}
+
           <TextField
             label="Event Name"
             variant="outlined"
@@ -194,8 +225,20 @@ function AddEvent({ open, setOpen }: DialogProps) {
               />
             </Grid>
           </Grid>
-          <FormControlLabel
+          <TextField
+            label="Notes"
+            multiline
+            rows={3}
+            type="time"
             sx={{ mt: 3 }}
+            variant="outlined"
+            size="small"
+            name="reminderNotes"
+            onChange={handleChange}
+            fullWidth
+          />
+          <FormControlLabel
+            sx={{ mt: 2 }}
             control={
               <Checkbox
                 checked={reminderChecked}
@@ -223,18 +266,6 @@ function AddEvent({ open, setOpen }: DialogProps) {
                   </MenuItem>
                 ))}
               </TextField>
-              <TextField
-                label="Notes"
-                multiline
-                rows={3}
-                type="time"
-                sx={{ mt: 3 }}
-                variant="outlined"
-                size="small"
-                name="reminderNotes"
-                onChange={handleChange}
-                fullWidth
-              />
             </>
           )}
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>

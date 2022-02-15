@@ -5,21 +5,25 @@ import {
   ListItemText,
   MenuItem,
   Paper,
+  TextField,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { searchStorage } from "api/services/storage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
-import { useState } from "react";
+import useQueryParams from "hooks/useQueryParams";
+import { useRef, useState } from "react";
 import { useMutation } from "react-query";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function Search() {
   const params = useParams();
+  const { queryParams, setQueryParams } = useQueryParams();
   const [search, setSearch] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const fieldRef = useRef<HTMLInputElement | null>(null);
 
   const query = {
     clientId: params.clientId || "",
@@ -35,7 +39,36 @@ function Search() {
   );
 
   return (
-    <Box px={4} pt={2} display="flex" justifyContent="flex-end">
+    <Box px={4} pt={2} display="flex" gap={2} justifyContent="flex-end">
+      <TextField
+        sx={{ minWidth: 100 }}
+        value={queryParams.soryBy || ""}
+        InputLabelProps={{ shrink: true }}
+        onChange={(e) => {
+          setQueryParams({
+            ...queryParams,
+            soryBy: e.target.value,
+          });
+        }}
+        SelectProps={{
+          native: true,
+          autoWidth: true,
+          onClose: () => {
+            if (fieldRef.current) {
+              fieldRef.current.blur();
+            }
+          },
+        }}
+        size="small"
+        select
+        label="Sort By"
+      >
+        <option value="">None</option>
+        <option value="a_z">A-Z</option>
+        <option value="z_a">Z-A</option>
+        <option value="date_oldest">Date Oldest</option>
+        <option value="date_newest">Date Newest</option>
+      </TextField>
       <Box position="relative">
         <SearchContainer
           minWidth="350px"

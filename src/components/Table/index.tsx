@@ -183,7 +183,7 @@ function Table(props: TableProps) {
               setPage(page);
               pagination.onChange(page);
             }}
-            rowsPerPageOptions={[5, 10, 20]}
+            rowsPerPageOptions={[5, 10, 20, 25, 50]}
             rowsPerPage={pagination.pageCount || 10}
             onRowsPerPageChange={(e) => {
               if (pagination.onPageCountChange) {

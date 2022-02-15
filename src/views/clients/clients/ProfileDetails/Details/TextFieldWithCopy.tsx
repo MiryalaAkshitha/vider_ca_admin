@@ -8,6 +8,7 @@ interface TextFieldWithCopyProps {
   name?: string;
   disabled?: boolean;
   onChange?: (e: any) => void;
+  onBlur?: (e: any) => void;
 }
 
 function TextFieldWithCopy({
@@ -15,6 +16,7 @@ function TextFieldWithCopy({
   value,
   name,
   onChange,
+  onBlur,
 }: TextFieldWithCopyProps) {
   const snack = useSnack();
 
@@ -37,6 +39,7 @@ function TextFieldWithCopy({
       fullWidth
       variant="outlined"
       size="small"
+      onBlur={onBlur}
       value={value}
       name={name}
       onChange={onChange}

@@ -36,6 +36,7 @@ import noSubTasks from "./images/noSubTasks.svg";
 import noChecklists from "./images/noChecklists.svg";
 import noMilestones from "./images/noMilestones.svg";
 import noDueDiligence from "./images/noDueDiligence.svg";
+import noEvents from "./images/noEvents.svg";
 
 export {
   quote,
@@ -49,6 +50,7 @@ export {
   noChecklists,
   noMilestones,
   noDueDiligence,
+  noEvents,
 };
 
 export const icons = {

@@ -17,23 +17,25 @@ function ClientProfile() {
 
   return (
     <div>
-      <Box p={2}>
-        <BreadCrumbs page="clientProfile" />
-      </Box>
-      <StyledProfileNav>
-        {clientMenu.map((item, index) => (
-          <RouterLink
-            to={`/clients/${params.clientId}${item.path}`}
-            key={index}
-          >
-            <StyledProfileNavItem
-              active={location.pathname.includes(item.path)}
+      <Box sx={{ position: "sticky", top: 55, bgcolor: "white", zIndex: 2 }}>
+        <Box p={2}>
+          <BreadCrumbs page="clientProfile" />
+        </Box>
+        <StyledProfileNav>
+          {clientMenu.map((item, index) => (
+            <RouterLink
+              to={`/clients/${params.clientId}${item.path}`}
+              key={index}
             >
-              {item.title}
-            </StyledProfileNavItem>
-          </RouterLink>
-        ))}
-      </StyledProfileNav>
+              <StyledProfileNavItem
+                active={location.pathname.includes(item.path)}
+              >
+                {item.title}
+              </StyledProfileNavItem>
+            </RouterLink>
+          ))}
+        </StyledProfileNav>
+      </Box>
       <Outlet />
     </div>
   );

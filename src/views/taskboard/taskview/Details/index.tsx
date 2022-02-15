@@ -9,6 +9,7 @@ import {
 import { Box } from "@mui/system";
 import Loader from "components/Loader";
 import moment from "moment";
+import { getTitle } from "utils";
 import { PriorityEnum, TaskStatus } from "utils/constants";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField } from "./Fields";
@@ -16,11 +17,12 @@ import useTaskViewData from "./useTaskDetailsData";
 
 interface Props {
   state: any;
+  staticState: any;
   setState: (state: any) => void;
   handleUpdate: () => void;
 }
 
-function Details({ state, setState, handleUpdate }: Props) {
+function Details({ state, staticState, setState, handleUpdate }: Props) {
   const { users, loading, categories, labels } = useTaskViewData();
 
   const handleChange = (e: any) => {
@@ -85,6 +87,9 @@ function Details({ state, setState, handleUpdate }: Props) {
                 getOptionLabel={(option) => {
                   return option?.firstName + " " + option?.lastName;
                 }}
+                isOptionEqualToValue={(option, value) => {
+                  return option?.id === value?.id;
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -121,6 +126,17 @@ function Details({ state, setState, handleUpdate }: Props) {
               />
             </DetailSection>
           </Grid>
+          {state?.recurring && (
+            <Grid item xs={6}>
+              <DetailSection label="Frequency">
+                <CustomTextField
+                  value={getTitle(state?.frequency)}
+                  onChange={handleChange}
+                  disabled
+                />
+              </DetailSection>
+            </Grid>
+          )}
           <Grid item xs={6}>
             <DetailSection label="Status">
               <CustomSelect
@@ -205,6 +221,9 @@ function Details({ state, setState, handleUpdate }: Props) {
                 }
                 value={state?.taskLeader || {}}
                 options={users?.data || []}
+                isOptionEqualToValue={(option, value) => {
+                  return option?.id === value?.id;
+                }}
                 getOptionLabel={(option) => {
                   return option?.firstName + " " + option?.lastName;
                 }}
@@ -233,9 +252,12 @@ function Details({ state, setState, handleUpdate }: Props) {
                 multiple
                 id="tags-standard"
                 onChange={(_, value) => setState({ ...state, labels: value })}
-                options={labels?.data || []}
-                value={state?.labels || []}
+                options={labels?.data ? labels?.data : []}
+                value={state?.labels ? state.labels : []}
                 getOptionLabel={(option) => option?.name}
+                isOptionEqualToValue={(option, value) => {
+                  return option?.id === value?.id;
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -288,16 +310,23 @@ function Details({ state, setState, handleUpdate }: Props) {
               <CustomTextField
                 value={state?.remarks || ""}
                 onChange={handleChange}
-                name="directory"
+                name="remarks"
               />
             </DetailSection>
           </Grid>
         </Grid>
-        <Box sx={{ mx: "auto" }} textAlign="center" maxWidth={200} mt={4}>
+        <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }} mt={4}>
+          <Button
+            onClick={() => setState(staticState)}
+            size="large"
+            variant="outlined"
+            color="secondary"
+          >
+            Cancel
+          </Button>
           <Button
             onClick={handleUpdate}
             size="large"
-            fullWidth
             variant="contained"
             color="secondary"
           >

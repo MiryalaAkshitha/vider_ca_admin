@@ -20,6 +20,7 @@ import Comments from "views/taskboard/taskview/comments";
 import Description from "views/taskboard/taskview/Description";
 import Details from "views/taskboard/taskview/Details";
 import DueDiligence from "views/taskboard/taskview/duediligence";
+import Events from "views/taskboard/taskview/events";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
@@ -31,10 +32,12 @@ function TaskDetails() {
   const [activeIndex, setActiveIndex] = useState(0);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const elementsRef = useRef<HTMLElement[]>([]);
+  const [staticState, setStaticState] = useState<any>({});
   const [state, setState] = useState<any>({});
 
   const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
     onSuccess: (res: any) => {
+      setStaticState(res?.data);
       setState(res?.data);
     },
     cacheTime: 0,
@@ -69,7 +72,9 @@ function TaskDetails() {
   };
 
   const { mutate } = useMutation(updateTask, {
-    onSuccess: () => {
+    onSuccess: (res) => {
+      setStaticState(res.data);
+      setState(res.data);
       snack.success("Task Details Updated");
     },
     onError: (err: any) => {
@@ -107,37 +112,41 @@ function TaskDetails() {
       <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 0)}>
         <Details
           state={state}
+          staticState={staticState}
           setState={setState}
           handleUpdate={handleUpdate}
         />
       </StyledTaskSection>
-      <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 1)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 1)}>
         <DueDiligence />
       </StyledTaskSection>
-      <StyledTaskSection data-index={0} ref={(ref) => getRef(ref, 2)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 2)}>
         <Description
           state={state}
           setState={setState}
           handleUpdate={handleUpdate}
         />
       </StyledTaskSection>
-      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 3)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 3)}>
         <Checklists />
       </StyledTaskSection>
-      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 4)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 4)}>
         <Milestones />
       </StyledTaskSection>
-      <StyledTaskSection data-index={1} ref={(ref) => getRef(ref, 5)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 5)}>
         <Comments />
       </StyledTaskSection>
-      <StyledTaskSection data-index={2} ref={(ref) => getRef(ref, 6)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 6)}>
         <SubTasks />
       </StyledTaskSection>
-      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 7)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 7)}>
         <Attachments />
       </StyledTaskSection>
-      <StyledTaskSection data-index={3} ref={(ref) => getRef(ref, 8)}>
+      <StyledTaskSection ref={(ref) => getRef(ref, 8)}>
         <LogHours />
+      </StyledTaskSection>
+      <StyledTaskSection ref={(ref) => getRef(ref, 9)}>
+        <Events task={state} />
       </StyledTaskSection>
     </>
   );
