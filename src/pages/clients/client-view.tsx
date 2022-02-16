@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import BreadCrumbs from "components/BreadCrumbs";
 import RouterLink from "components/RouterLink";
+import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { clientMenu } from "utils/constants";
@@ -11,6 +12,7 @@ import {
 
 function ClientProfile() {
   const params = useParams();
+  const { queryParams } = useQueryParams();
   const location = useLocation();
 
   useTitle("Clients");
@@ -24,7 +26,7 @@ function ClientProfile() {
         <StyledProfileNav>
           {clientMenu.map((item, index) => (
             <RouterLink
-              to={`/clients/${params.clientId}${item.path}`}
+              to={`/clients/${params.clientId}${item.path}?displayName=${queryParams.displayName}&clientId=${queryParams.clientId}`}
               key={index}
             >
               <StyledProfileNavItem
