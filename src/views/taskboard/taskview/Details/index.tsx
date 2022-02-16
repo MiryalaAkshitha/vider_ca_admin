@@ -14,6 +14,8 @@ import { PriorityEnum, TaskStatus } from "utils/constants";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField } from "./Fields";
 import useTaskViewData from "./useTaskDetailsData";
+import { Link } from "react-router-dom";
+import useQueryParams from "hooks/useQueryParams";
 
 interface Props {
   state: any;
@@ -24,6 +26,7 @@ interface Props {
 
 function Details({ state, staticState, setState, handleUpdate }: Props) {
   const { users, loading, categories, labels } = useTaskViewData();
+  const { queryParams } = useQueryParams();
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {
@@ -58,11 +61,25 @@ function Details({ state, staticState, setState, handleUpdate }: Props) {
           </Box>
           <div>
             <Typography variant="subtitle2" color="primary">
-              {state?.name}
+              {state?.name}{" "}
             </Typography>
             <Typography variant="body2" color="gray">
               Created by {state?.user?.firstName + " " + state?.user?.lastName}{" "}
-              on {moment(state?.createdAt).format("MMM Do YYYY, hh:mm a")}
+              on {moment(state?.createdAt).format("MMM Do YYYY, hh:mm a")}{" "}
+              {state?.parentTask && (
+                <>
+                  - Sub task of{" "}
+                  <Link
+                    style={{
+                      color: "#4a89dc",
+                    }}
+                    to={`/task-board/${state?.parentTask?.id}?clienId=${queryParams.clientId}`}
+                  >
+                    {" "}
+                    {state?.parentTask?.name}
+                  </Link>
+                </>
+              )}
             </Typography>
           </div>
         </Box>

@@ -27,7 +27,7 @@ function NotificationsDatePicker() {
           value={value}
           onChange={handleChange}
           renderInput={(params) => (
-            <TextField {...params} sx={{ maxWidth: "200px" }} />
+            <TextField size="small" {...params} sx={{ maxWidth: "200px" }} />
           )}
         />
         <DesktopDatePicker
@@ -36,7 +36,7 @@ function NotificationsDatePicker() {
           value={value}
           onChange={handleChange}
           renderInput={(params) => (
-            <TextField {...params} sx={{ maxWidth: "200px" }} />
+            <TextField size="small" {...params} sx={{ maxWidth: "200px" }} />
           )}
         />
       </Box>

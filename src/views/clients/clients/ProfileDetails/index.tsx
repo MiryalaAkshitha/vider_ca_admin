@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import Activity from "./Acitivity";
 import Details from "./Details";
 import Profile from "./Profile";
 
@@ -52,6 +53,7 @@ function ProfileDetails() {
         setState={setState}
         onUpdate={handleUpdate}
       />
+      <Activity />
     </Box>
   );
 }

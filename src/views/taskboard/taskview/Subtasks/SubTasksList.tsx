@@ -1,13 +1,11 @@
-import { MenuItem, TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateSubTask } from "api/services/tasks";
 import FormattedDate from "components/FormattedDate";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
-import useSnack from "hooks/useSnack";
-import { useMutation } from "react-query";
+import useQueryParams from "hooks/useQueryParams";
+import { useNavigate } from "react-router-dom";
 import { getTitle } from "utils";
-import { SubTaskStatus } from "utils/constants";
 import { StyledSubTaskTable } from "views/taskboard/styles";
 
 type Props = {
@@ -15,20 +13,11 @@ type Props = {
 };
 
 function SubTasksList({ data }: Props) {
-  const snack = useSnack();
+  const navigate = useNavigate();
+  const { queryParams } = useQueryParams();
 
-  const { mutate } = useMutation(updateSubTask, {
-    onSuccess: () => {
-      snack.success("Sub task status updted.");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const handleChange = (e: any, item: any) => {
-    const status = e.target.value;
-    mutate({ id: item?.id, data: { ...item, status } });
+  const handleClick = (item: any) => {
+    navigate(`/task-board/${item?.id}/?clientId=${queryParams.clientId}`);
   };
 
   return (
@@ -67,7 +56,7 @@ function SubTasksList({ data }: Props) {
           <tbody>
             {data.map((item: any, index: number) => {
               return (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleClick(item)}>
                   <td>
                     <Typography variant="body2">{item.name}</Typography>
                   </td>
@@ -76,31 +65,21 @@ function SubTasksList({ data }: Props) {
                   </td>
                   <td>
                     <Members
-                      data={item?.members?.map((item) => ({
-                        src: "",
-                        title: item?.firstName,
-                      }))}
+                      data={
+                        item?.members?.map((item) => ({
+                          src: "",
+                          title: item?.firstName,
+                        })) || []
+                      }
                     />
                   </td>
                   <td>
                     <PriorityText text={item.priority} />
                   </td>
                   <td>
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      select
-                      defaultValue={item?.status || ""}
-                      onChange={(e) => handleChange(e, item)}
-                      required
-                      InputProps={{ sx: { minWidth: "120px" } }}
-                    >
-                      {Object.values(SubTaskStatus).map((item, index) => (
-                        <MenuItem key={index} value={item}>
-                          {getTitle(item)}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                    <Typography variant="body2">
+                      {getTitle(item.status)}
+                    </Typography>
                   </td>
                 </tr>
               );

@@ -113,11 +113,6 @@ function Profile({ data, setState, onUpdate }: IProfileProps) {
             View Tasks
           </Button>
         </Box>
-        <Box>
-          <Button onClick={onUpdate} variant="outlined" color="secondary">
-            Update Profile
-          </Button>
-        </Box>
       </Box>
     </Box>
   );

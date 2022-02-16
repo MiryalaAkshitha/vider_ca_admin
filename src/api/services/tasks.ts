@@ -100,14 +100,6 @@ const createSubTask = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/subtasks`, data);
 };
 
-const getSubTasks = ({ queryKey }: QueryType) => {
-  return http.get(`/tasks/subtasks`, { params: { taskId: queryKey[1] } });
-};
-
-const updateSubTask = ({ id, data }: any) => {
-  return http.put(`/tasks/${id}/subtasks`, data);
-};
-
 const startTimer = ({ taskId, startTime }: StartTimerData) => {
   return http.post(`/tasks/${taskId}/loghours/start-timer`, { startTime });
 };
@@ -233,8 +225,6 @@ export {
   addAttachment,
   getTaskAttachments,
   createSubTask,
-  getSubTasks,
-  updateSubTask,
   addAttachmentsFromStorage,
   getLogHours,
   addLogHour,

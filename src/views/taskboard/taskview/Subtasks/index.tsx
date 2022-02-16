@@ -1,27 +1,14 @@
 import { Add } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getSubTasks } from "api/services/tasks";
 import { noSubTasks } from "assets";
-import Loader from "components/Loader";
 import NoItems from "components/NoItems";
 import { useState } from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router";
-import { ResType } from "types";
 import AddSubTask from "./AddSubTask";
 import SubTasksList from "./SubTasksList";
 
-function SubTasks() {
-  const params: any = useParams();
+function SubTasks({ task }) {
   const [open, setOpen] = useState<boolean>(false);
-
-  const { data, isLoading }: ResType = useQuery(
-    ["subtasks", params.taskId],
-    getSubTasks
-  );
-
-  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -29,7 +16,7 @@ function SubTasks() {
         <Typography variant="subtitle1" color="primary">
           Sub Tasks
         </Typography>
-        {data?.data?.length ? (
+        {task?.subTasks?.length ? (
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
@@ -40,8 +27,8 @@ function SubTasks() {
         ) : null}
       </Box>
       <Box mt={4}>
-        {data?.data?.length ? (
-          <SubTasksList data={data?.data} />
+        {task?.subTasks?.length ? (
+          <SubTasksList data={task?.subTasks} />
         ) : (
           <NoItems
             img={noSubTasks}

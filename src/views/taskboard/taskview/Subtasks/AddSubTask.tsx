@@ -41,7 +41,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
     onSuccess: () => {
       snack.success("Sub Task Created");
       setOpen(false);
-      queryClient.invalidateQueries("subtasks");
+      queryClient.invalidateQueries("task");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -78,17 +78,6 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             label="Task Name"
             name="name"
             required
-          />
-          <TextField
-            sx={{ mt: 2 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            multiline
-            rows={4}
-            label="Description"
-            name="description"
           />
           <TextField
             sx={{ mt: 3 }}
@@ -142,6 +131,17 @@ function AddSubTask({ open, setOpen }: DialogProps) {
                 label="Members"
               />
             )}
+          />
+          <TextField
+            sx={{ mt: 2 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            multiline
+            rows={4}
+            label="Description"
+            name="description"
           />
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton

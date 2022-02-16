@@ -191,6 +191,7 @@ function NotificationsTabs() {
       <Box
         sx={{
           padding: "30px 20px",
+          pr: 0,
         }}
       >
         <NotificationsDatePicker />
@@ -215,13 +216,15 @@ function NotificationsTabs() {
                           display: "flex",
                           justifyContent: "space-between",
                           padding: "10px 0",
-                          flex: 1,
+                          gap: 1,
+                          pr: 1,
                         }}
                       >
                         <Box
                           sx={{
                             display: "flex",
                             alignItems: "flex-start",
+                            flex: 1,
                           }}
                         >
                           <Avatar alt="Remy Sharp" />
@@ -234,11 +237,11 @@ function NotificationsTabs() {
                           >
                             {data.user} has added a new task{" "}
                             <span style={{ color: "#3174c4" }}>
-                              "{data.category}"
+                              "{data.category}" asfasfsafasfas
                             </span>{" "}
                             for Client{" "}
                             <span style={{ color: "#3174c4" }}>
-                              "{data.name}"
+                              "{data.name}" so sdf sd sdf sdf sd f
                             </span>
                           </Typography>
                         </Box>

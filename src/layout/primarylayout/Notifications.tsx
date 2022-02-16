@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Paper, Typography } from "@mui/material";
+import { Button, Menu, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import NotificationsTabs from "./NotificationsTabs";
 
@@ -31,7 +31,7 @@ function Notifications({ notificationsAnchorEl, setNotificationsAnchorEl }) {
         <Paper
           elevation={20}
           sx={{
-            width: "770px",
+            width: "670px",
             height: "100%",
           }}
         >
@@ -44,13 +44,13 @@ function Notifications({ notificationsAnchorEl, setNotificationsAnchorEl }) {
             }}
           >
             <Typography variant="subtitle2">Global Activity</Typography>
-            <Typography
-              variant="body2"
-              sx={{ cursor: "pointer" }}
+            <Button
+              sx={{ minWidth: 80 }}
+              size="small"
               onClick={(e) => handleClose()}
             >
               Close
-            </Typography>
+            </Button>
           </Box>
           <NotificationsTabs />
         </Paper>
