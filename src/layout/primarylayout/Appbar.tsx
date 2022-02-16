@@ -13,6 +13,14 @@ import { useSelector } from "react-redux";
 import { selectTitle } from "redux/reducers/globalSlice";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Link } from "react-router-dom";
+import {
+  AddCircleOutlineRounded,
+  LanguageOutlined,
+  NotificationsOutlined,
+} from "@mui/icons-material";
+import GlobalCreateModal from "./GlobalCreateModal";
+import AddCreateTask from "./AddCreateTask";
+import Notifications from "./Notifications";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: theme.transitions.create(["width", "margin"], {
@@ -27,6 +35,10 @@ function Appbar() {
   const [configAnchorEl, setConfigAnchorEl] = useState<null | HTMLElement>(
     null
   );
+  const [openGlobalDialog, setOpenGlobalDialog] = useState<boolean>(false);
+  const [notificationsAnchorEl, setNotificationsAnchorEl] =
+    useState<null | HTMLElement>(null);
+
   const title = useSelector(selectTitle);
 
   return (
@@ -47,6 +59,19 @@ function Appbar() {
             <IconButton onClick={(e) => setConfigAnchorEl(e.currentTarget)}>
               <MenuOutlinedIcon color="primary" />
             </IconButton>
+            <IconButton onClick={() => setOpenGlobalDialog(true)}>
+              <AddCircleOutlineRounded color="primary" />
+            </IconButton>
+            <IconButton
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                setNotificationsAnchorEl(e.currentTarget);
+              }}
+            >
+              <LanguageOutlined color="primary" />
+            </IconButton>
+            <IconButton>
+              <NotificationsOutlined color="primary" />
+            </IconButton>
             <Link to="/settings/categories">
               <IconButton>
                 <SettingsOutlinedIcon color="primary" />
@@ -62,6 +87,13 @@ function Appbar() {
       <ConfigurationMenu
         anchorEl={configAnchorEl}
         setAnchorEl={setConfigAnchorEl}
+      />
+      <GlobalCreateModal open={openGlobalDialog} setOpen={setOpenGlobalDialog}>
+        <AddCreateTask setOpen={setOpenGlobalDialog} />
+      </GlobalCreateModal>
+      <Notifications
+        notificationsAnchorEl={notificationsAnchorEl}
+        setNotificationsAnchorEl={setNotificationsAnchorEl}
       />
     </>
   );
