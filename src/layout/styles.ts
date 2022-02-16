@@ -1,6 +1,6 @@
 import { CSSObject, styled, Theme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import { ListItemButton } from "@mui/material";
+import { ListItemButton, Tab, Tabs } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -73,5 +73,51 @@ export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   },
   "&.Mui-selected:hover": {
     background: "rgba(0, 0, 0, 0.4)",
+  },
+}));
+
+export const StyledAddCreateTaskTabs = styled(Tabs)(({ theme }) => ({
+  "& .MuiTabs-indicator": {
+    display: "none",
+  },
+}));
+
+export const StyledAddCreateTaskTab = styled(Tab)(({ theme }) => ({
+  "&.MuiButtonBase-root": {
+    fontFamily: "muli_regular",
+    textTransform: "capitalize",
+    textAlign: "left",
+    paddingLeft: "30px",
+    borderBottom: "1px solid lightgray",
+    alignItems: "start",
+    fontSize: "16px",
+    color: theme.palette.primary.main,
+  },
+  "&.Mui-selected": {
+    backgroundColor: "#FFF4F4",
+  },
+}));
+
+export const StyledNotificationsTabs = styled(Tab)(({ theme }) => ({
+  "&.MuiBox-root": {
+    padding: "0px",
+  },
+  "&.MuiButtonBase-root": {
+    fontFamily: "muli_regular",
+    textTransform: "capitalize",
+    textAlign: "center",
+    borderBottom: "1px solid lightgray",
+    alignItems: "center",
+    padding: "0 14px",
+    fontSize: "16px",
+    minWidth: "auto",
+    color: theme.palette.primary.main,
+  },
+  "&.MuiTabs-root": {
+    backgroundColor: "red",
+  },
+  "&.Mui-selected": {
+    borderBottom: "1px solid theme.palette.primary.main",
+    backgroundColor: "none",
   },
 }));
