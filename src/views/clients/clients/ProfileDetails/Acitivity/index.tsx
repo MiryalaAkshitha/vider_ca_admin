@@ -1,47 +1,36 @@
+import Loader from "components/Loader";
 import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
+import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import { Box, Typography } from "@mui/material";
-
-const activityItems = [
-  {
-    date: "21 December, 2021",
-    time: "03:45 PM",
-    action: "Client Added",
-    remakrs: "Client added by sai veer with GSTIN number - 21APKSF2125R1ZE",
-  },
-  {
-    date: "21 December, 2021",
-    time: "03:45 PM",
-    action: "Client Added",
-    remakrs: "Client added by sai veer with GSTIN number - 21APKSF2125R1ZE",
-  },
-  {
-    date: "21 December, 2021",
-    time: "03:45 PM",
-    action: "Client Added",
-    remakrs: "Client added by sai veer with GSTIN number - 21APKSF2125R1ZE",
-  },
-  {
-    date: "21 December, 2021",
-    time: "03:45 PM",
-    action: "Client Added",
-    remakrs: "Client added by sai veer with GSTIN number - 21APKSF2125R1ZE",
-  },
-];
+import { getActivity } from "api/services/common";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import { ResType } from "types";
+import moment from "moment";
+import { getTitle } from "utils";
 
 function Activity() {
+  const params = useParams();
+
+  const { isLoading, data }: ResType = useQuery(
+    ["activity", { type: "clients", typeId: params.clientId }],
+    getActivity
+  );
+
+  if (isLoading) return <Loader />;
+
   return (
     <Box width={1000} mt={4}>
       <Typography variant="subtitle1" gutterBottom color="primary">
         Activity Log
       </Typography>
       <Timeline>
-        {activityItems.map((item, index) => (
+        {data?.data?.map((item: any, index: number) => (
           <TimelineItem key={index}>
             <TimelineOppositeContent
               sx={{
@@ -71,10 +60,10 @@ function Activity() {
                 }}
               >
                 <Typography variant="subtitle2" color="primary">
-                  {item.date}
+                  {moment(item.createdAt).format("MMM DD, YYYY")}
                 </Typography>
                 <Typography variant="caption" color="rgba(0,0,0,0.4)">
-                  {item.time}
+                  {moment(item.createdAt).format("hh:mm A")}
                 </Typography>
               </Box>
             </TimelineOppositeContent>
@@ -94,10 +83,10 @@ function Activity() {
                 }}
               >
                 <Typography variant="subtitle2" color="primary">
-                  {item.action}
+                  {getTitle(item?.action)}
                 </Typography>
                 <Typography variant="body2" color="rgba(0,0,0,0.6)">
-                  {item.remakrs}
+                  {item?.remarks}
                 </Typography>
               </Box>
             </TimelineContent>
