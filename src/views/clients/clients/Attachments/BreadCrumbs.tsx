@@ -1,27 +1,45 @@
-import { Breadcrumbs } from "@mui/material";
+import { Breadcrumbs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { Link, useLocation } from "react-router-dom";
+import useQueryParams from "hooks/useQueryParams";
 
 function BreadCrumbs({ data }: any) {
-  const location: any = useLocation();
+  const { queryParams, setQueryParams } = useQueryParams();
 
   return (
     <Box mb={3}>
       <Breadcrumbs maxItems={4} aria-label="breadcrumb">
-        <Link
-          to={`${location.pathname}`}
-          style={{ color: "initial", textDecoration: "none" }}
+        <Typography
+          variant="body1"
+          color="primary"
+          sx={{
+            cursor: "pointer",
+          }}
+          onClick={() =>
+            setQueryParams({
+              ...queryParams,
+              folderId: "",
+            })
+          }
         >
           Home
-        </Link>
+        </Typography>
         {data.map((item: any, index: number) => (
-          <Link
+          <Typography
+            variant="body1"
+            color="primary"
             key={index}
-            to={`${location.pathname}?folderId=${item?.uid}`}
-            style={{ color: "initial", textDecoration: "none" }}
+            sx={{
+              cursor: "pointer",
+            }}
+            onClick={() =>
+              setQueryParams({
+                ...queryParams,
+                folderId: item?.uid,
+              })
+            }
           >
             {item?.name}
-          </Link>
+          </Typography>
         ))}
       </Breadcrumbs>
     </Box>

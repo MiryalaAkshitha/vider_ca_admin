@@ -55,12 +55,12 @@ const deleteLead = (id: number) => {
   return http.delete(`/leads/${id}`);
 };
 
-const getLeads = (data: any) => {
-  return http.get("/leads", data);
+const getLeads = ({ queryKey }) => {
+  return http.get("/leads", { params: { ...queryKey[1] } });
 };
 
-const getDscRegisters = (data: any) => {
-  return http.get("/dsc-register", data);
+const getDscRegisters = ({ queryKey }) => {
+  return http.get("/dsc-register", { params: { ...queryKey[1] } });
 };
 
 const createDscRegister = (data: any) => {

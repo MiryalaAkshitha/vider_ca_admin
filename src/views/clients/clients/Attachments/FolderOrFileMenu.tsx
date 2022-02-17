@@ -50,11 +50,15 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
   };
 
   const openItem = (e: any) => {
-    if (data?.fileType === "folder") {
+    if (data?.type === "folder") {
       navigate(`${location.pathname}?folderId=${data?.uid}`);
     } else {
       window.open(data?.fileUrl);
     }
+  };
+
+  const downloadItem = (e: any) => {
+    window.open(data?.fileUrl);
   };
 
   return (
@@ -97,12 +101,14 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
           </ListItemIcon>
           <Typography variant="body2">Remove</Typography>
         </MenuItem>
-        <MenuItem sx={{ mt: 1 }}>
-          <ListItemIcon>
-            <FileDownloadOutlinedIcon color="primary" fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="body2">Download</Typography>
-        </MenuItem>
+        {data?.type === "file" && (
+          <MenuItem sx={{ mt: 1 }} onClick={downloadItem}>
+            <ListItemIcon>
+              <FileDownloadOutlinedIcon color="primary" fontSize="small" />
+            </ListItemIcon>
+            <Typography variant="body2">Download</Typography>
+          </MenuItem>
+        )}
       </Menu>
       <RenameFileOrFolderDialog
         open={open}

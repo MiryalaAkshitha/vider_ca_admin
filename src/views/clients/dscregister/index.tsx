@@ -20,9 +20,12 @@ import IssueOrReceive from "./IssueOrReceive";
 function DscRegister() {
   useTitle("Dsc Register");
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState<number>(5);
+  const [offset, setOffset] = useState<number>(0);
 
   const { isLoading, data }: ResType = useQuery(
-    "dsc-register",
+    ["dsc-register", { limit: limit, offset: offset * limit, search }],
     getDscRegisters
   );
 
@@ -34,12 +37,24 @@ function DscRegister() {
           debounced
           minWidth="400px"
           onChange={(v) => {
-            console.log(v);
+            setSearch(v);
           }}
           placeHolder="Search"
         />
       </Box>
-      <Table data={data?.data || []} columns={columns} loading={isLoading} />
+      <Table
+        data={data?.data?.data || []}
+        columns={columns}
+        loading={isLoading}
+        pagination={{
+          totalCount: data?.data?.totalCount,
+          pageCount: limit,
+          onPageCountChange: (v) => setLimit(v),
+          onChange: (v) => {
+            setOffset(v);
+          },
+        }}
+      />
       <FloatingButton onClick={() => setOpen(true)} />
       <AddDscRegister open={open} setOpen={() => setOpen(false)} />
     </Box>

@@ -1,3 +1,5 @@
+import { MoreVert } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { StyledFile, StyledFileTitle } from "views/clients/clients/styles";
@@ -41,7 +43,9 @@ function File({ data }: Props) {
   return (
     <>
       <StyledFile
-        onContextMenu={handleContextMenu}
+        onDoubleClick={() => {
+          window.open(data?.fileUrl);
+        }}
         draggable={true}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
@@ -56,8 +60,18 @@ function File({ data }: Props) {
         >
           {renderFile(data)}
         </Box>
-        <Box bgcolor="#FBF9F2" p={1}>
+        <Box
+          bgcolor="#FBF9F2"
+          p={1}
+          display="flex"
+          justifyContent="space-between"
+          gap={1}
+          alignItems="center"
+        >
           <StyledFileTitle variant="body2">{data?.name}</StyledFileTitle>
+          <IconButton size="small" onClick={handleContextMenu}>
+            <MoreVert />
+          </IconButton>
         </Box>
       </StyledFile>
       <FolderMenu

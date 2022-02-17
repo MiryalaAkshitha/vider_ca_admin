@@ -1,11 +1,10 @@
 import { Typography } from "@mui/material";
 import { moveFile } from "api/services/storage";
 import { icons } from "assets";
-import RouterLink from "components/RouterLink";
+import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useLocation } from "react-router-dom";
 import { StyledFolder } from "views/clients/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 
@@ -20,11 +19,11 @@ type Position = {
 
 function Folder({ data }: Props) {
   const queryClient = useQueryClient();
-  const location = useLocation();
   const snack = useSnack();
   const [dragging, setDragging] = useState(false);
   const [dropping, setDropping] = useState(false);
   const [contextMenu, setContextMenu] = useState<Position | null>(null);
+  const { queryParams, setQueryParams } = useQueryParams();
 
   const { mutate } = useMutation(moveFile, {
     onSuccess: () => {
@@ -94,8 +93,14 @@ function Folder({ data }: Props) {
 
   return (
     <>
-      <RouterLink to={`${location.pathname}?folderId=${data?.uid}`}>
+      <>
         <StyledFolder
+          onClick={() => {
+            setQueryParams({
+              ...queryParams,
+              folderId: data?.uid,
+            });
+          }}
           onContextMenu={handleContextMenu}
           draggable={true}
           dragging={dragging}
@@ -110,7 +115,7 @@ function Folder({ data }: Props) {
           <img src={icons.folder} alt="" />
           <Typography variant="body2">{data?.name}</Typography>
         </StyledFolder>
-      </RouterLink>
+      </>
       <FolderMenu
         contextMenu={contextMenu}
         setContextMenu={setContextMenu}

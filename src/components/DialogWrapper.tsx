@@ -6,7 +6,7 @@ interface IDrawerWrapperProps {
   setOpen: (open: boolean) => void;
   title: string;
   children: React.ReactNode;
-  width?: "sm" | "md" | "lg" | "xl";
+  width?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 function DialogWrapper(props: IDrawerWrapperProps) {
