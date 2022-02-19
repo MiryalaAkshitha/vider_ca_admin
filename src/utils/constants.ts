@@ -114,6 +114,10 @@ export const clientMenu: Array<{ title: string; path: string }> = [
     title: "Recurring Profile",
     path: "/recurring-profile",
   },
+  {
+    title: "Archives",
+    path: "/archives",
+  },
 ];
 
 export const taskViewMenu: string[] = [
@@ -267,6 +271,7 @@ export enum TaskStatus {
   ON_HOLD = "on_hold",
   UNDER_REVIEW = "under_review",
   DONE = "done",
+  TERMINATED = "terminated",
 }
 
 export enum SubTaskStatus {

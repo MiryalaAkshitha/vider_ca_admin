@@ -114,7 +114,12 @@ function View() {
                   {
                     title: "Issued Date",
                     key: "date",
-                    render: (row) => moment(row.date).format("DD-MM-YYYY"),
+                    render: (row) => {
+                      return moment
+                        .utc(row?.date)
+                        .local()
+                        .format("MM/DD/YYYY, h:mm a");
+                    },
                   },
                 ]}
               />
@@ -135,7 +140,12 @@ function View() {
                   {
                     title: "Received Date",
                     key: "date",
-                    render: (row) => moment(row.date).format("DD-MM-YYYY"),
+                    render: (row) => {
+                      return moment
+                        .utc(row?.date)
+                        .local()
+                        .format("MM/DD/YYYY, h:mm a");
+                    },
                   },
                 ]}
               />

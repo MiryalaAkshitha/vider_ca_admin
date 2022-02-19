@@ -83,6 +83,22 @@ const issueOrReceiveDsc = ({ id, data }: any) => {
   return http.post(`/dsc-register/${id}/issue-receive`, data);
 };
 
+const getCompletedTasks = ({ queryKey }) => {
+  return http.get(`/tasks/completed-tasks`, {
+    params: {
+      clientId: queryKey[1].clientId,
+    },
+  });
+};
+
+const getTerminatedTasks = ({ queryKey }) => {
+  return http.get(`/tasks/terminated-tasks`, {
+    params: {
+      clientId: queryKey[1].clientId,
+    },
+  });
+};
+
 export {
   createClient,
   getClients,
@@ -103,4 +119,6 @@ export {
   deleteDscRegister,
   getDscRegister,
   issueOrReceiveDsc,
+  getTerminatedTasks,
+  getCompletedTasks,
 };

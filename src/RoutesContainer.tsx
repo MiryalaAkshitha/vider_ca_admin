@@ -29,6 +29,7 @@ const DueDiligence = loadable(() => import("pages/taskboard/due-diligence"));
 const Attachments = loadable(() => import("views/clients/clients/Attachments"));
 const KybInfo = loadable(() => import("views/clients/clients/ClientInfo"));
 const Passwords = loadable(() => import("views/clients/clients/Passwords"));
+const Archives = loadable(() => import("views/clients/clients/Archives"));
 const ProfileDetails = loadable(
   () => import("views/clients/clients/ProfileDetails")
 );
@@ -80,6 +81,7 @@ function RoutesContainer() {
               <Route path="attachments" element={<Attachments />} />
               <Route path="recurring-profile" element={<RecurringProfile />} />
               <Route path="profile" element={<ProfileDetails />} />
+              <Route path="archives" element={<Archives />} />
             </Route>
           </Route>
           <Route path="leads" element={<Leads />} />

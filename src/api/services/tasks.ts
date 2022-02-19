@@ -209,6 +209,10 @@ const removePin = (id: number) => {
   return http.delete(`/tasks/client-pins/${id}`);
 };
 
+const terminateTask = ({ id, reason }: any) => {
+  return http.post(`/tasks/${id}/terminate`, { reason });
+};
+
 export {
   getTasks,
   getTasksAsOptions,
@@ -250,4 +254,5 @@ export {
   getPins,
   addPin,
   removePin,
+  terminateTask,
 };

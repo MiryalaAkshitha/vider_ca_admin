@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import { Box, Button } from "@mui/material";
 import { getTask, updateTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
@@ -24,6 +25,7 @@ import Events from "views/taskboard/taskview/events";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
+import TerminationDialog from "views/taskboard/taskview/TerminationDialog";
 
 function TaskDetails() {
   useTitle("Task Details");
@@ -32,6 +34,7 @@ function TaskDetails() {
   const [staticState, setStaticState] = useState<any>({});
   const [state, setState] = useState<any>({});
   const [selected, setSelected] = useState<any>("");
+  const [open, setOpen] = useState(false);
 
   const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
     onSuccess: (res: any) => {
@@ -62,7 +65,7 @@ function TaskDetails() {
 
   const handleUpdate = () => {
     mutate({
-      id: state?.id,
+      id: staticState?.id,
       data: state,
     });
   };
@@ -79,8 +82,19 @@ function TaskDetails() {
   return (
     <>
       <Box position="sticky" top={55} zIndex={2}>
-        <Box p={2} bgcolor="white">
+        <Box
+          p={2}
+          bgcolor="white"
+          display="flex"
+          justifyContent="space-between"
+        >
           <BreadCrumbs page="taskView" />
+          <Button
+            onClick={() => setOpen(true)}
+            startIcon={<CancelPresentationIcon color="secondary" />}
+          >
+            Terminate task
+          </Button>
         </Box>
         <StyledProfileNav>
           {taskMenu().map((item, index) => (
@@ -159,6 +173,7 @@ function TaskDetails() {
       <TaskSection selected={selected} setSelected={setSelected} id="Events">
         <Events task={state} />
       </TaskSection>
+      <TerminationDialog open={open} setOpen={setOpen} />
     </>
   );
 }

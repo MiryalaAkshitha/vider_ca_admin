@@ -130,9 +130,10 @@ const Actions = ({ data }) => {
             </Button>
             <Typography variant="body2">
               {data?.status === "received"
-                ? `(Received on ${moment(data?.receivedDate).format(
-                    "YYYY-MM-DD"
-                  )})`
+                ? `(Received on ${moment
+                    .utc(data?.receivedDate)
+                    .local()
+                    .format("MM/DD/YYYY, h:mm a")})`
                 : "(Not Issued)"}
             </Typography>
           </Box>
@@ -152,7 +153,12 @@ const Actions = ({ data }) => {
               Receive
             </Button>
             <Typography variant="body2">
-              (Issued on {moment(data?.issuedDate).format("YYYY-MM-DD")})
+              (Issued on{" "}
+              {moment
+                .utc(data?.issuedDate)
+                .local()
+                .format("MM/DD/YYYY, h:mm a")}
+              )
             </Typography>
           </Box>
         )}
@@ -172,7 +178,14 @@ const columns = [
   { key: "client.displayName", title: "Client Name" },
   { key: "holderName", title: "DSC Holder Name" },
   { key: "expiryDate", title: "Expiry Date" },
-  { key: "", title: "No of days left to expiry" },
+  {
+    key: "",
+    title: "No of days left to expiry",
+    render: (row: any) => {
+      const daysLeft = moment(row.expiryDate).diff(moment(), "days");
+      return (daysLeft > 0 ? daysLeft : 0).toString();
+    },
+  },
   { key: "password", title: "Password" },
   {
     key: "actions",
