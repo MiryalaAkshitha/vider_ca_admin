@@ -23,6 +23,7 @@ type AddComment = {
   taskId: string;
   data: {
     text: string;
+    parentId?: number;
   };
 };
 

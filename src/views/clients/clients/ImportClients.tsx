@@ -63,7 +63,7 @@ function ImportClients({ open, setOpen }: DialogProps) {
         </Typography>
         <a
           style={{ textDecoration: "none" }}
-          href="https://jss-vider.s3.ap-south-1.amazonaws.com/bc478cc4-3e67-4414-830e-d57e0385ca38-sample_clients.xlsx"
+          href="https://jss-vider.s3.ap-south-1.amazonaws.com/a3b58ae6-c90a-410a-a6d9-0576b1012494-sample_clients.xlsx"
         >
           <Typography variant="caption" color="secondary">
             Download Sample File

@@ -77,13 +77,20 @@ input::placeholder {
   font-family: muli_regular !important;
 }
 .mentions_input__highlighter {
-  height: 160px;
+  height: auto;
+  min-height: 60px;
   padding: 10px;
+  padding-right: 50px;
+  transition: height 0.3s;
+}
+.focused_mentions_input .mentions_input__highlighter {
+  min-height: 160px;
 }
 .mentions_input textarea {
   border: 1px solid rgba(0, 0, 0, 0.2) !important;
   border-radius: 5px !important;
   padding: 10px;
+  padding-right: 50px;
 }
 .mentions_input__suggestions {
   border-radius: 5px !important;
