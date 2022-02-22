@@ -3,7 +3,10 @@ import { RootState } from "redux/store";
 
 interface FilterPayload {
   checked: boolean;
-  value: string | number;
+  value: {
+    label: string;
+    value: string | number;
+  };
 }
 
 interface CustomDatePayload {
@@ -12,17 +15,17 @@ interface CustomDatePayload {
 }
 
 type Filter = {
-  assignee: number[];
-  createdBy: number[];
-  completedBy: number[];
-  status: string[];
-  priority: string[];
-  tags: string[];
-  taskType: string[];
-  startDate: string[];
-  dueOn: string[];
-  createdOn: string[];
-  completedOn: string[];
+  assignee: Array<{ label: string; value: number }>;
+  createdBy: Array<{ label: string; value: number }>;
+  completedBy: Array<{ label: string; value: number }>;
+  status: Array<{ label: string; value: string }>;
+  priority: Array<{ label: string; value: string }>;
+  tags: Array<{ label: string; value: string }>;
+  taskType: Array<{ label: string; value: string }>;
+  startDate: Array<{ label: string; value: string }>;
+  dueOn: Array<{ label: string; value: string }>;
+  createdOn: Array<{ label: string; value: string }>;
+  completedOn: Array<{ label: string; value: string }>;
   category: Array<{ label: string; value: string }>;
   subCategory: Array<{ label: string; value: string }>;
   clientCategory: Array<{ label: string; value: string }>;
@@ -87,12 +90,14 @@ interface InitialState {
   selectedFilters: Filter;
   appliedFilters: Filter;
   selected: string;
+  search: string;
 }
 
 const initialState: InitialState = {
   selectedFilters: filterState,
   appliedFilters: filterState,
   selected: "category",
+  search: "",
 };
 
 export const taskBoardSlice = createSlice({
@@ -105,7 +110,7 @@ export const taskBoardSlice = createSlice({
         state.selectedFilters[state.selected].push(action.payload.value);
       } else {
         state.selectedFilters[state.selected] = filterItem.filter(
-          (item: any) => item !== action.payload.value
+          (item: any) => item.value !== action.payload.value.value
         );
       }
     },
@@ -120,8 +125,23 @@ export const taskBoardSlice = createSlice({
     ) {
       state.selectedFilters[action.payload.key] = action.payload.value;
     },
+    handleSearch(state, action: PayloadAction<string>) {
+      state.search = action.payload;
+    },
     handleSelected(state, action: PayloadAction<string>) {
       state.selected = action.payload;
+    },
+    handleRemove(
+      state,
+      action: PayloadAction<{ filter: string; filterItemIndex: number }>
+    ) {
+      const { filter, filterItemIndex } = action.payload;
+      state.appliedFilters[filter] = state.appliedFilters[filter].filter(
+        (item: any, index: number) => index !== filterItemIndex
+      );
+      state.selectedFilters[filter] = state.appliedFilters[filter].filter(
+        (item: any, index: number) => index !== filterItemIndex
+      );
     },
     handleApply(state) {
       state.appliedFilters = state.selectedFilters;
@@ -142,6 +162,8 @@ export const {
   handleApply,
   handleCategories,
   handleCustomDates,
+  handleSearch,
+  handleRemove,
 } = taskBoardSlice.actions;
 
 export default taskBoardSlice.reducer;

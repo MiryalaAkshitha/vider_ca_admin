@@ -13,14 +13,17 @@ interface FilterProps {
 
 const FilterContainer = ({ items }: FilterProps) => {
   const dispatch = useDispatch();
-  const { appliedFilters, selected, selectedFilters } =
+  const { selected, selectedFilters, appliedFilters } =
     useSelector(selectTaskBoard);
 
-  const onChange = (e: any) => {
+  const onChange = (e: any, label: string) => {
     dispatch(
       handleFilters({
         checked: e.target.checked,
-        value: e.target.value,
+        value: {
+          label,
+          value: e.target.value,
+        },
       })
     );
   };
@@ -41,16 +44,24 @@ const FilterContainer = ({ items }: FilterProps) => {
           <FormControlLabel
             control={
               <Checkbox
-                defaultChecked={appliedFilters[selected]?.includes(item.value)}
+                defaultChecked={Boolean(
+                  appliedFilters[selected].find(
+                    (filter: any) => filter.value === item.value
+                  )
+                )}
                 value={item.value}
-                onChange={(e) => onChange(e)}
+                onChange={(e) => onChange(e, getTitle(item.label))}
               />
             }
             label={getTitle(item.label)}
           />
         </div>
       ))}
-      {selectedFilters[selected]?.includes("custom") && (
+      {Boolean(
+        selectedFilters[selected].find(
+          (filter: any) => filter.value === "custom"
+        )
+      ) && (
         <Box mt={1}>
           <TextField
             sx={{ width: "80%" }}
@@ -59,7 +70,7 @@ const FilterContainer = ({ items }: FilterProps) => {
             size="small"
             onChange={(e) => onCustomDatesChange(e, "fromDate")}
             label="From Date"
-            value={selectedFilters.customDates[selected].fromDate}
+            defaultValue={appliedFilters.customDates[selected].fromDate}
             InputLabelProps={{ shrink: true }}
             fullWidth
           />
@@ -70,7 +81,7 @@ const FilterContainer = ({ items }: FilterProps) => {
             size="small"
             onChange={(e) => onCustomDatesChange(e, "toDate")}
             label="To Date"
-            value={selectedFilters.customDates[selected].toDate}
+            defaultValue={appliedFilters.customDates[selected].toDate}
             InputLabelProps={{ shrink: true }}
             fullWidth
           />

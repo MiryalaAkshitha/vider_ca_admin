@@ -64,6 +64,8 @@ function Search() {
         label="Sort By"
       >
         <option value="">None</option>
+        <option value="size_low_to_high">Size(low-high)</option>
+        <option value="size_high_to_low">Size(high-low)</option>
         <option value="a_z">A-Z</option>
         <option value="z_a">Z-A</option>
         <option value="date_oldest">Date Oldest</option>
@@ -93,6 +95,7 @@ function Search() {
               minHeight: "200px",
               maxHeight: "400px",
               overflowY: "auto",
+              zIndex: 1,
             }}
           >
             {isLoading ? (

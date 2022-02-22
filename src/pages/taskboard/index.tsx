@@ -19,34 +19,43 @@ import TaskTable from "views/taskboard/table";
 function TaskBoard() {
   const { queryParams } = useQueryParams();
   const view = (queryParams.view as ViewType) || "grid";
-  const { appliedFilters } = useSelector(selectTaskBoard);
+  const { search, appliedFilters } = useSelector(selectTaskBoard);
   const [open, setOpen] = useState<boolean>(false);
   const [openRecurring, setOpenRecurring] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const getFiltersData = () => {
+    let result = {};
+    let { customDates, ...remFilters } = appliedFilters;
+
+    Object.keys(remFilters).forEach((key) => {
+      result[key] = remFilters[key].map((item: any) => item.value);
+    });
+
+    return {
+      ...result,
+      customDates,
+    };
+  };
+
   const { data, isLoading }: ResType = useQuery(
     [
       "tasks",
       {
         client: queryParams.client,
-        search: queryParams.search,
-        ...appliedFilters,
-        category: appliedFilters.category.map((c) => c.value),
-        subCategory: appliedFilters.subCategory.map((c) => c.value),
-        clientCategory: appliedFilters.clientCategory.map((item) => item.value),
-        clientSubCategory: appliedFilters.clientSubCategory.map(
-          (item) => item.value
-        ),
+        search: search,
+        ...getFiltersData(),
       },
     ],
     getTasks
   );
 
-  if (isLoading) return <Loader />;
-
   return (
     <Box sx={{ overflowY: "hidden", p: 2 }}>
       <Filters />
-      {data?.data?.length ? (
+      {isLoading ? (
+        <Loader />
+      ) : data?.data?.length ? (
         <>
           {view === "grid" ? (
             <Board data={data.data} />

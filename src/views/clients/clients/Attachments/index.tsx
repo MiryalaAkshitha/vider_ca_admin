@@ -48,6 +48,15 @@ function Attachments() {
       });
     }
 
+    if (type === "file") {
+      if (soryBy === "size_low_to_high") {
+        result = [...(result || [])]?.sort((a, b) => a.fileSize - b.fileSize);
+      }
+      if (soryBy === "size_high_to_low") {
+        result = [...(result || [])]?.sort((a, b) => b.fileSize - a.fileSize);
+      }
+    }
+
     return result;
   };
 

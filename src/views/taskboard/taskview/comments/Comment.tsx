@@ -46,8 +46,8 @@ function TaskComment({ data, users }: Props) {
   };
 
   const reg = /@\[+[a-z\s]+\]/gi;
-  const getText = (text) =>
-    text?.replace(reg, function (str) {
+  const getText = (text: string) =>
+    text.replace(reg, function (str) {
       return `<span style='color:red'>
       ${str.replace("[", "")?.replace("]", "")} </span>`;
     });
@@ -55,13 +55,17 @@ function TaskComment({ data, users }: Props) {
   return (
     <Box mt={4} borderBottom="1px solid rgba(0,0,0,0.08)" pb={3}>
       <Box maxWidth={1000}>
-        <Box mb={2} display="flex" gap={2} alignItems="center">
+        <Box mb="8px" display="flex" gap={2} alignItems="center">
           <Avatar src="https://picsum.photos/200" />
           <div>
-            <Typography variant="body1">
+            <Typography variant="body1" sx={{ lineHeight: "18px" }}>
               {data?.user?.firstName + " " + data?.user?.lastName}
             </Typography>
-            <Typography variant="caption" color="rgba(0,0,0,0.5)">
+            <Typography
+              variant="caption"
+              sx={{ fontSize: 10 }}
+              color="rgba(0,0,0,0.5)"
+            >
               {moment(data?.createdAt).calendar()}
             </Typography>
           </div>
@@ -146,7 +150,7 @@ function TaskComment({ data, users }: Props) {
                 <Box mb={1} display="flex" gap={2} alignItems="center">
                   <Avatar src="https://picsum.photos/200" />
                   <div>
-                    <Typography variant="body1">
+                    <Typography variant="body1" sx={{ lineHeight: "18px" }}>
                       {item?.user?.firstName + " " + item?.user?.lastName}
                     </Typography>
                     <Typography variant="caption" color="rgba(0,0,0,0.5)">
