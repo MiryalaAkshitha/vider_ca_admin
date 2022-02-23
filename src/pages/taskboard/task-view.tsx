@@ -22,6 +22,7 @@ import Description from "views/taskboard/taskview/Description";
 import Details from "views/taskboard/taskview/Details";
 import DueDiligence from "views/taskboard/taskview/duediligence";
 import Events from "views/taskboard/taskview/events";
+import Expenditure from "views/taskboard/taskview/expenditure";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
@@ -150,6 +151,13 @@ function TaskDetails() {
       </TaskSection>
       <TaskSection selected={selected} setSelected={setSelected} id="Comments">
         <Comments />
+      </TaskSection>
+      <TaskSection
+        selected={selected}
+        setSelected={setSelected}
+        id="Expenditure"
+      >
+        <Expenditure />
       </TaskSection>
       {!staticState?.parentTask && (
         <TaskSection

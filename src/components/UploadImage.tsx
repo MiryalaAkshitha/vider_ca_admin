@@ -22,9 +22,15 @@ interface UploadProps {
   name: string;
   onChange: (v: string) => void;
   sx?: SystemStyleObject;
+  label?: string;
 }
 
-function UploadImage({ onChange, name, sx }: UploadProps) {
+function UploadImage({
+  onChange,
+  name,
+  sx,
+  label = "Drag and drop or Browse",
+}: UploadProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
@@ -101,7 +107,7 @@ function UploadImage({ onChange, name, sx }: UploadProps) {
               <>
                 <CloudUploadOutlinedIcon color="disabled" fontSize="large" />
                 <Typography color="GrayText" sx={{ textAlign: "center" }}>
-                  Drag and drop or Browse
+                  {label}
                 </Typography>
                 {file && (
                   <Box mt={1} width="100%" borderRadius={8}>

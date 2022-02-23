@@ -127,6 +127,7 @@ export const taskViewMenu: string[] = [
   "Checklists",
   "Milestones",
   "Comments",
+  "Expenditure",
   "Sub Tasks",
   "Attachments",
   "Log Hours",
