@@ -1,18 +1,16 @@
-import { Delete } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Button, CircularProgress, Grid, IconButton } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { bulkDelete, getClients } from "api/services/client";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { getClients } from "api/services/client";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
-import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useRef, useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle } from "utils";
@@ -20,10 +18,10 @@ import AddClient from "views/clients/clients/AddClient";
 import CustomizeColumns from "views/clients/clients/CustomizeColumns";
 import ClientFilter from "views/clients/clients/Filter";
 import ImportClients from "views/clients/clients/ImportClients";
+import Actions from "./Actions";
 
 function Clients() {
   useTitle("Clients");
-  const queryClient = useQueryClient();
   const defaultColumns: Array<ColumnType> = [
     { key: "displayName", title: "Display Name" },
     { key: "tradeName", title: "Trade Name", hide: true },
@@ -45,7 +43,6 @@ function Clients() {
     {
       key: "active",
       title: "Status",
-      hide: true,
       render: (rowData) => {
         return (
           <div>
@@ -60,9 +57,7 @@ function Clients() {
     },
   ];
 
-  const confirm = useConfirm();
   const navigate = useNavigate();
-  const snack = useSnack();
   const [limit, setLimit] = useState<number>(50);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -79,6 +74,9 @@ function Clients() {
     labels: [],
     search: "",
   });
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selected, setSelected] = useState<any[]>([]);
+  const selectionRef = useRef<any>({});
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -97,35 +95,11 @@ function Clients() {
     getClients
   );
 
-  const { mutate, isLoading: deleteLoading } = useMutation(bulkDelete, {
-    onSuccess: () => {
-      snack.success("Clients Deleted");
-      queryClient.invalidateQueries("clients");
-      setOffset(0);
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
   const handleRowClick = (v: any) => {
     navigate(
       `/clients/${v?.id}/profile?displayName=${v?.displayName}&clientId=${v?.clientId}`
     );
   };
-
-  const handleDelete = (selected: any) => {
-    confirm({
-      msg: "Are you sure you want to delete?",
-      action: () => {
-        mutate({
-          ids: selected.map((c: any) => c.id),
-        });
-      },
-    });
-  };
-
-  if (deleteLoading) return <CircularProgress />;
 
   return (
     <Box>
@@ -162,15 +136,26 @@ function Clients() {
           </Box>
         </Grid>
         <Grid item>
-          <Button
-            onClick={() => setOpenImportDialog(true)}
-            variant="outlined"
-            startIcon={<ImportExportIcon />}
-            color="secondary"
-            sx={{ ml: 2 }}
-          >
-            Import Clients
-          </Button>
+          <Box display="flex" gap={2}>
+            {selected.length > 0 && (
+              <Button
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                variant="outlined"
+                color="secondary"
+                endIcon={<KeyboardArrowDownOutlinedIcon />}
+              >
+                Actions
+              </Button>
+            )}
+            <Button
+              onClick={() => setOpenImportDialog(true)}
+              variant="outlined"
+              startIcon={<ImportExportIcon />}
+              color="secondary"
+            >
+              Import Clients
+            </Button>
+          </Box>
         </Grid>
       </Grid>
       <Table
@@ -188,14 +173,10 @@ function Clients() {
           },
         }}
         selection={{
-          toolbar: (selected) => (
-            <IconButton
-              color="secondary"
-              onClick={() => handleDelete(selected)}
-            >
-              <Delete />
-            </IconButton>
-          ),
+          selectionRef: selectionRef,
+          onSelect: (selected) => {
+            setSelected(selected);
+          },
         }}
       />
       <FloatingButton onClick={() => setOpen(true)} />
@@ -213,6 +194,12 @@ function Clients() {
         setColumns={setColumns}
         open={openCustomColumns}
         setOpen={setOpenCustomColumns}
+      />
+      <Actions
+        clearSelection={selectionRef.current?.clearSelection}
+        selected={selected}
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
       />
     </Box>
   );

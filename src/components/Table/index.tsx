@@ -1,4 +1,3 @@
-import _ from "lodash";
 import {
   Checkbox,
   CircularProgress,
@@ -7,7 +6,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Box, SystemStyleObject } from "@mui/system";
-import React, { useState } from "react";
+import _ from "lodash";
+import React, { useEffect, useState } from "react";
 import { StyledTable, StyledTableLoader } from "./styles";
 
 export type ColumnType = {
@@ -25,7 +25,12 @@ type PaginationType = {
 };
 
 type SelectionType = {
-  toolbar: (selected: any) => React.ReactNode | null;
+  selectionRef?: React.MutableRefObject<any>;
+  toolbar?: (
+    selected: any,
+    clearSelection?: () => void
+  ) => React.ReactNode | null;
+  onSelect?: (selected: any) => void;
 };
 
 interface TableProps {
@@ -53,38 +58,45 @@ function Table(props: TableProps) {
   const [selected, setSelected] = useState<any>({});
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newData = { ...selected };
     if (e.target.checked) {
-      setSelected({
-        ...selected,
-        [page]: data,
-      });
+      newData[page] = data;
     } else {
-      setSelected({
-        ...selected,
-        [page]: [],
-      });
+      newData[page] = [];
     }
+    setSelected(newData);
+    selection?.onSelect?.(newData[page]);
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>, item: any) => {
     e.stopPropagation();
+    let newData = { ...selected };
     if (e.target.checked) {
-      setSelected({
-        ...selected,
-        [page]: [...(selected[page] || []), item],
-      });
+      newData[page] = [...(selected[page] || []), item];
     } else {
-      setSelected({
-        ...selected,
-        [page]: _.without(selected[page], item),
-      });
+      newData[page] = selected[page]?.filter((v: any) => v?.id !== item?.id);
     }
+    setSelected(newData);
+    selection?.onSelect?.(newData[page]);
   };
 
   const handleRowClick = (item: any) => {
     if (!onRowClick) return;
     onRowClick(item);
   };
+
+  useEffect(() => {
+    const clearSelection = () => {
+      setSelected((prevState) => ({
+        ...prevState,
+        [page]: [],
+      }));
+      selection?.onSelect?.([]);
+    };
+    if (selection?.selectionRef) {
+      selection.selectionRef.current.clearSelection = clearSelection;
+    }
+  }, [selection, page]);
 
   const showToolBar = selected[page] && selected[page].length > 0;
 
@@ -115,7 +127,7 @@ function Table(props: TableProps) {
               width: "100%",
             }}
           >
-            {selection!.toolbar(selected[page])}
+            {selection?.toolbar && selection.toolbar(selected[page])}
           </Toolbar>
         )}
         <StyledTable>

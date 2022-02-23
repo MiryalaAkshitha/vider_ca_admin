@@ -43,6 +43,10 @@ const bulkDelete = ({ ids }: any) => {
   return http.post(`/client/bulk-delete`, { ids });
 };
 
+const bulkUpdate = ({ ids, data }: any) => {
+  return http.patch(`/client/bulk-update`, { ids, ...data });
+};
+
 const createLead = (data: any) => {
   return http.post("/leads", data);
 };
@@ -51,8 +55,8 @@ const updateLead = ({ id, data }) => {
   return http.put(`/leads/${id}`, data);
 };
 
-const deleteLead = (id: number) => {
-  return http.delete(`/leads/${id}`);
+const deleteLeads = (ids: number[]) => {
+  return http.post(`/leads/delete`, { ids });
 };
 
 const getLeads = ({ queryKey }) => {
@@ -109,10 +113,11 @@ export {
   deleteContactPerson,
   importClients,
   bulkDelete,
+  bulkUpdate,
   createLead,
   getLeads,
   updateLead,
-  deleteLead,
+  deleteLeads,
   getDscRegisters,
   createDscRegister,
   updateDscRegister,

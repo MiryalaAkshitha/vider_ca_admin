@@ -1,13 +1,13 @@
 import { Delete, Edit, InfoOutlined } from "@mui/icons-material";
 import { Box, Button, IconButton } from "@mui/material";
-import { deleteLead, getLeads } from "api/services/client";
+import { deleteLeads, getLeads } from "api/services/client";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
@@ -19,15 +19,40 @@ import ViewLead from "./ViewLead";
 
 function Leads() {
   useTitle("Leads");
+  const confirm = useConfirm();
+  const queryClient = useQueryClient();
+  const snack = useSnack();
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState<number>(5);
   const [offset, setOffset] = useState<number>(0);
-
   const [open, setOpen] = useState(false);
+  const selectionRef = useRef<any>({});
+
   const { isLoading, data }: ResType = useQuery(
     ["leads", { limit: limit, offset: offset * limit, search }],
     getLeads
   );
+
+  const { mutate } = useMutation(deleteLeads, {
+    onSuccess: (res) => {
+      snack.success("Leads Deleted");
+      selectionRef?.current?.clearSelection();
+      queryClient.invalidateQueries("leads");
+      setOpen(false);
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleDelete = (data: any) => {
+    confirm({
+      msg: "Are you sure you want to delete selected leads?",
+      action: () => {
+        mutate(data.map((c: any) => c.id));
+      },
+    });
+  };
 
   return (
     <Box p={3}>
@@ -46,6 +71,17 @@ function Leads() {
         data={data?.data?.data || []}
         columns={columns}
         loading={isLoading}
+        selection={{
+          selectionRef: selectionRef,
+          toolbar: (selected, clearSelection) => (
+            <IconButton
+              color="secondary"
+              onClick={() => handleDelete(selected)}
+            >
+              <Delete />
+            </IconButton>
+          ),
+        }}
         pagination={{
           totalCount: data?.data?.totalCount,
           pageCount: limit,
@@ -62,33 +98,10 @@ function Leads() {
 }
 
 const Actions = ({ data }) => {
-  const confirm = useConfirm();
-  const queryClient = useQueryClient();
-  const snack = useSnack();
   const [open, setOpen] = useState(false);
   const [convertOpen, setConvertOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
-
-  const { mutate } = useMutation(deleteLead, {
-    onSuccess: (res) => {
-      snack.success("Lead Deleted");
-      queryClient.invalidateQueries("leads");
-      setOpen(false);
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const handleDelete = () => {
-    confirm({
-      msg: "Are you sure you want to delete this lead?",
-      action: () => {
-        mutate(data?.id);
-      },
-    });
-  };
 
   return (
     <>
@@ -110,9 +123,6 @@ const Actions = ({ data }) => {
           }}
         >
           <Edit />
-        </IconButton>
-        <IconButton size="small" onClick={handleDelete}>
-          <Delete />
         </IconButton>
         <Button
           disabled={data?.status === "converted"}
