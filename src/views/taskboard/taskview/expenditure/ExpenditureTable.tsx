@@ -1,5 +1,4 @@
 import { Delete, Edit } from "@mui/icons-material";
-import AttachmentIcon from "@mui/icons-material/Attachment";
 import { Box, IconButton } from "@mui/material";
 import { deleteExpenditure } from "api/services/expenditure";
 import { useConfirm } from "components/ConfirmDialogProvider";
@@ -87,8 +86,19 @@ const columns = [
     title: "Attachment",
     render: (rowData: any) =>
       rowData?.attachment ? (
-        <a download={rowData?.attachment} href={rowData?.attachmentUrl}>
-          <AttachmentIcon color="secondary" />
+        <a
+          download={rowData?.attachment}
+          href={rowData?.attachmentUrl}
+          style={{
+            whiteSpace: "nowrap",
+            display: "inline-block",
+            maxWidth: 200,
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+          }}
+        >
+          {/* <AttachmentIcon color="secondary" /> */}
+          {rowData?.attachment}
         </a>
       ) : (
         "NA"

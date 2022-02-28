@@ -59,9 +59,9 @@ function Archives() {
             SelectProps={{ native: true }}
           >
             <option value="">None</option>
-            {Array.from(Array(40).keys()).map((_, index) => (
-              <option value={index + 2000} key={index}>
-                {index + 2000}
+            {Array.from(Array(50).keys()).map((_, index) => (
+              <option value={`${2000 + index}-${2000 + index + 1}`} key={index}>
+                {2000 + index}-{2000 + index + 1}
               </option>
             ))}
           </TextField>

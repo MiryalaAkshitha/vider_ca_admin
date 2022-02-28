@@ -116,7 +116,16 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
             value={state.financialYear || ""}
             label="Financial Year"
             name="financialYear"
-          />
+            select
+            SelectProps={{ native: true }}
+          >
+            <option value=""></option>
+            {Array.from(Array(50).keys()).map((_, index) => (
+              <option value={`${2000 + index}-${2000 + index + 1}`} key={index}>
+                {2000 + index}-{2000 + index + 1}
+              </option>
+            ))}
+          </TextField>
           <Autocomplete
             multiple
             id="tags-standard"

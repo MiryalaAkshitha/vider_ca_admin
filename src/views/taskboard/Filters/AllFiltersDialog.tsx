@@ -34,7 +34,7 @@ interface IProps {
 
 function AllFiltersDialog({ open, setOpen }: IProps) {
   const dispatch = useDispatch();
-  const { selected } = useSelector(selectTaskBoard);
+  const { selected, appliedFilters } = useSelector(selectTaskBoard);
 
   const { data: labels, isLoading: labelsLoading }: ResType = useQuery(
     "labels",
@@ -103,7 +103,12 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                 onClick={() => dispatch(handleSelected("category"))}
               >
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
-                  Category
+                  Category{" "}
+                  {appliedFilters["category"].length > 0 && (
+                    <span style={{ fontWeight: "bold" }}>
+                      ({appliedFilters["category"].length})
+                    </span>
+                  )}
                 </Typography>
               </ListItemButton>
               <ListItemButton
@@ -111,7 +116,12 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                 onClick={() => dispatch(handleSelected("clientCategory"))}
               >
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
-                  Client Category
+                  Client Category{" "}
+                  {appliedFilters["clientCategory"].length > 0 && (
+                    <span style={{ fontWeight: "bold" }}>
+                      ({appliedFilters["clientCategory"].length})
+                    </span>
+                  )}
                 </Typography>
               </ListItemButton>
               {filters.map((filter) => (
@@ -121,7 +131,12 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                   onClick={() => dispatch(handleSelected(filter.key))}
                 >
                   <Typography variant="body2" color="rgba(0,0,0,0.7)">
-                    {filter.title}
+                    {filter.title}{" "}
+                    {appliedFilters[filter.key].length > 0 && (
+                      <span style={{ fontWeight: "bold" }}>
+                        ({appliedFilters[filter.key].length})
+                      </span>
+                    )}
                   </Typography>
                 </ListItemButton>
               ))}

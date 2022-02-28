@@ -61,16 +61,12 @@ function TaskComment({ data, users }: Props) {
             <Typography variant="body1" sx={{ lineHeight: "18px" }}>
               {data?.user?.firstName + " " + data?.user?.lastName}
             </Typography>
-            <Typography
-              variant="caption"
-              sx={{ fontSize: 10 }}
-              color="rgba(0,0,0,0.5)"
-            >
+            <Typography variant="caption" color="rgba(0,0,0,0.5)">
               {moment(data?.createdAt).calendar()}
             </Typography>
           </div>
         </Box>
-        <Typography variant="body2" color="rgba(0,0,0,0.8)">
+        <Typography variant="body1" color="rgba(0,0,0,0.8)">
           <span
             dangerouslySetInnerHTML={{
               __html: getText(data?.text),
@@ -148,12 +144,19 @@ function TaskComment({ data, users }: Props) {
             {data?.replies?.map((item: any) => (
               <Box mb={2}>
                 <Box mb={1} display="flex" gap={2} alignItems="center">
-                  <Avatar src="https://picsum.photos/200" />
+                  <Avatar
+                    sx={{ width: 30, height: 30 }}
+                    src="https://picsum.photos/200"
+                  />
                   <div>
-                    <Typography variant="body1" sx={{ lineHeight: "18px" }}>
+                    <Typography variant="body2" sx={{ lineHeight: "10px" }}>
                       {item?.user?.firstName + " " + item?.user?.lastName}
                     </Typography>
-                    <Typography variant="caption" color="rgba(0,0,0,0.5)">
+                    <Typography
+                      variant="caption"
+                      color="rgba(0,0,0,0.5)"
+                      sx={{ fontSize: 10 }}
+                    >
                       {moment(item?.createdAt).calendar()}
                     </Typography>
                   </div>

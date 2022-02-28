@@ -31,7 +31,7 @@ function TerminatedTasks({ filters }: Props) {
     let result = data?.data || [];
     if (filters.financialYear) {
       result = result?.filter((item: any) => {
-        return +item.financialYear === +filters.financialYear;
+        return item.financialYear === filters.financialYear;
       });
     }
     if (filters.search) {
