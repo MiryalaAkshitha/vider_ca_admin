@@ -4,7 +4,7 @@ import { createFolder } from "api/services/storage";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { DialogProps } from "types";
 
 const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
@@ -12,9 +12,7 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const inputRef = useRef<HTMLInputElement>(null);
-  const params = useParams();
   const [searchParams] = useSearchParams();
-  const clientId = params.clientId || "";
 
   const { mutate } = useMutation(createFolder, {
     onSuccess: () => {
@@ -36,8 +34,7 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
 
     mutate({
       name,
-      clientId,
-      type: "client",
+      type: "organization",
       folderId: searchParams.get("folderId"),
     });
   };

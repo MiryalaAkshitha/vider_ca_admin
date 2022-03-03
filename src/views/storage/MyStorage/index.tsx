@@ -3,22 +3,20 @@ import { getStorage } from "api/services/storage";
 import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { StorageResponse } from "types";
+import BreadCrumbs from "views/clients/clients/Attachments/BreadCrumbs";
+import Files from "views/clients/clients/Attachments/Files";
+import Folders from "views/clients/clients/Attachments/Folders";
+import Search from "views/clients/clients/Attachments/Search";
 import AddAttachment from "./AddAttachment";
-import BreadCrumbs from "./BreadCrumbs";
-import Files from "./Files";
-import Folders from "./Folders";
-import Search from "./Search";
 
 function Attachments() {
-  const params = useParams();
   const [searchParams] = useSearchParams();
 
   const query = {
-    clientId: params.clientId || "",
     folderId: searchParams.get("folderId"),
-    type: "client",
+    type: "organization",
   };
   const { data, isLoading }: StorageResponse = useQuery(
     ["storage", query],
@@ -65,7 +63,7 @@ function Attachments() {
 
   return (
     <>
-      <Search type="client" />
+      <Search type="organization" />
       <Box px={4} py={2}>
         {data?.data.breadCrumbs.length ? (
           <BreadCrumbs data={data?.data?.breadCrumbs} />

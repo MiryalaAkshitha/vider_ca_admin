@@ -41,7 +41,7 @@ export const menuItems: Array<IMenuItem> = [
 
   {
     title: "Storage",
-    path: "/storage",
+    path: "/storage/my-storage",
     icon: icons.storage,
   },
   {

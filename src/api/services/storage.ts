@@ -2,8 +2,9 @@ import { http } from "api/http";
 
 interface CreateFolder {
   name: string;
-  clientId: string;
+  clientId?: string;
   folderId: string | null;
+  type: "organization" | "client";
 }
 
 interface GetStorage {

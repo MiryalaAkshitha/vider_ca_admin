@@ -40,6 +40,10 @@ const ViewRole = loadable(() => import("pages/settings/view-role"));
 const Forms = loadable(() => import("pages/settings/forms"));
 const Fields = loadable(() => import("pages/settings/fields"));
 const Storage = loadable(() => import("pages/storage"));
+const MyStorage = loadable(() => import("views/storage/MyStorage"));
+const AllClientsStorage = loadable(
+  () => import("views/storage/AllClientsStorage")
+);
 const RecurringProfile = loadable(() => {
   return import("views/clients/clients/RecurringProfile");
 });
@@ -66,7 +70,10 @@ function RoutesContainer() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
           <Route path="invoicing" element={<Invoicing />} />
-          <Route path="storage" element={<Storage />} />
+          <Route path="storage" element={<Storage />}>
+            <Route path="my-storage" element={<MyStorage />} />
+            <Route path="all-clients-storage" element={<AllClientsStorage />} />
+          </Route>
           <Route path="broadcast" element={<BroadCast />} />
           <Route path="task-board">
             <Route index element={<TaskBoard />} />

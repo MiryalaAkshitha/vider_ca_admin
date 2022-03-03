@@ -1,12 +1,12 @@
 import { Add } from "@mui/icons-material";
-import useSnack from "hooks/useSnack";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Fab, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { uploadFile } from "api/services/storage";
+import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   selectStorage,
   setInitialUploads,
@@ -20,7 +20,6 @@ function AddAttachment() {
   const snack = useSnack();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const params = useParams();
   const [searchParams] = useSearchParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { uploads } = useSelector(selectStorage);
@@ -46,8 +45,7 @@ function AddAttachment() {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("folderId", searchParams.get("folderId") || "");
-        formData.append("clientId", params.clientId || "");
-        formData.append("type", "client");
+        formData.append("type", "organization");
         await mutateAsync(formData);
       }
     } catch (err: any) {

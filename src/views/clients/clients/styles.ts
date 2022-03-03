@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledProfileNav = styled("div")(({ theme }) => ({
@@ -48,8 +48,9 @@ export const StyledFolder = styled("div")<{
   dragging: boolean;
   dropping: boolean;
 }>(({ dragging, dropping }) => ({
-  border: `1px solid ${dragging ? "red" : dropping ? "#182F53" : "rgba(0,0,0,0.08)"
-    }`,
+  border: `1px solid ${
+    dragging ? "red" : dropping ? "#182F53" : "rgba(0,0,0,0.08)"
+  }`,
   borderRadius: "10px",
   cursor: "pointer",
   display: "flex",
@@ -83,7 +84,6 @@ export const StyledOrganizationImageContainer = styled("div")(() => ({
   height: 70,
   position: "relative",
 }));
-
 
 export const StyledOrganizationImage = styled("img")(() => ({
   width: "100%",
@@ -202,3 +202,15 @@ export const StyledLogHoursTopbar = styled("div")<{ active: 1 | 0 }>(
     justifyContent: "space-between",
   })
 );
+
+export const StyledSearchList = styled(Paper)(() => ({
+  width: "100%",
+  boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+  position: "absolute",
+  top: "100%",
+  left: 0,
+  minHeight: "200px",
+  maxHeight: "400px",
+  overflowY: "auto",
+  zIndex: 1,
+}));

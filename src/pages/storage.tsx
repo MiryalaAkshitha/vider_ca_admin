@@ -1,10 +1,12 @@
 import { Box } from "@mui/system";
-import ComingSoon from "components/ComingSoon";
+import { Outlet } from "react-router-dom";
+import Nav from "views/storage/Nav";
 
 function Storage() {
   return (
     <Box p={2}>
-      <ComingSoon title="Storage" />
+      <Nav />
+      <Outlet />
     </Box>
   );
 }
