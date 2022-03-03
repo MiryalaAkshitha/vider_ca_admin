@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { searchStorage } from "api/services/storage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
+import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useParams } from "react-router-dom";
@@ -17,10 +18,11 @@ interface Props {
 
 function Search({ type }: Props) {
   const params = useParams();
+  const { queryParams } = useQueryParams();
   const [search, setSearch] = useState("");
 
   const query = {
-    clientId: params.clientId || "",
+    clientId: params.clientId || queryParams.clientId || "",
   };
 
   const { mutate, data, isLoading }: any = useMutation(searchStorage);

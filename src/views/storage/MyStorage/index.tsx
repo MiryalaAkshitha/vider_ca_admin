@@ -24,7 +24,7 @@ function Attachments() {
   );
 
   const getFilesOrFolders = (type: "folder" | "file") => {
-    let soryBy = searchParams.get("soryBy");
+    let soryBy = searchParams.get("sortBy");
     let result = data?.data?.result?.filter((item) => item.type === type);
 
     if (soryBy === "a_z") {

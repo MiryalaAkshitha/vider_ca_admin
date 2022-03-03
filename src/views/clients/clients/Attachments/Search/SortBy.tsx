@@ -14,7 +14,7 @@ const SortBy = () => {
       onChange={(e) => {
         setQueryParams({
           ...queryParams,
-          soryBy: e.target.value,
+          sortBy: e.target.value,
         });
       }}
       SelectProps={{

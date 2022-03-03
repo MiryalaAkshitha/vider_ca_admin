@@ -26,6 +26,8 @@ function AddAttachment() {
   const { uploads } = useSelector(selectStorage);
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
 
+  let clientId = params.clientId || searchParams.get("clientId") || "";
+
   const { mutateAsync } = useMutation(uploadFile, {
     onSuccess: (res: any) => {
       dispatch(setUploadData(res.data));
@@ -46,7 +48,7 @@ function AddAttachment() {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("folderId", searchParams.get("folderId") || "");
-        formData.append("clientId", params.clientId || "");
+        formData.append("clientId", clientId);
         formData.append("type", "client");
         await mutateAsync(formData);
       }

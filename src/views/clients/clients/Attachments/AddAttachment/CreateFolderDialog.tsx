@@ -14,7 +14,8 @@ const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const clientId = params.clientId || "";
+
+  let clientId = params.clientId || searchParams.get("clientId") || "";
 
   const { mutate } = useMutation(createFolder, {
     onSuccess: () => {
