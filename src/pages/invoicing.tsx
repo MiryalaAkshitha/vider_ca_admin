@@ -1,11 +1,42 @@
+import { useState } from "react";
+import { Add } from "@mui/icons-material";
+
+import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
-import ComingSoon from "components/ComingSoon";
+
+import useTitle from "hooks/useTitle";
+import InvoiceDashboardMenu from "views/invoicing/dashboard/InvoiceDashboardMenu";
+import { CreateInvoice } from "views/invoicing/createInvoice/CreateInvoice";
 
 function Invoicing() {
+  useTitle("Invoice");
+
+  const [open, setOpen] = useState(false);
+
   return (
-    <Box p={2}>
-      <ComingSoon title="Invoicing" />
-    </Box>
+    <>
+      {open ? (
+        <CreateInvoice setOpen={setOpen} />
+      ) : (
+        <Box>
+          <InvoiceDashboardMenu />
+          <Fab
+            onClick={() => setOpen(true)}
+            size="medium"
+            color="secondary"
+            sx={{
+              position: "fixed",
+              bottom: 40,
+              right: 40,
+              borderRadius: "8px",
+            }}
+            aria-label="add"
+          >
+            <Add />
+          </Fab>
+        </Box>
+      )}
+    </>
   );
 }
 
