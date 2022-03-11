@@ -16,7 +16,7 @@ const RecurringProfileItem = ({ active, last, data, onClick }: Props) => {
         {data?.name}
       </Typography>
       <Typography variant="body2" gutterBottom color="rgba(0,0,0,0.6)">
-        Created by {data?.user?.firstName} {data?.user?.lastName}
+        Created by {data?.user?.fullName}
       </Typography>
       <Typography variant="caption" gutterBottom color="rgba(0,0,0,0.6)">
         on {moment(data?.createdAt).format("MMM DD, YYYY, hh:mm a")}

@@ -64,9 +64,7 @@ function Users() {
         {data?.data
           ?.filter((item: any) => {
             return (
-              item?.firstName?.toLowerCase().indexOf(search.toLowerCase()) >
-                -1 ||
-              item?.lastName?.toLowerCase().indexOf(search.toLowerCase()) > -1
+              item?.fullName?.toLowerCase().indexOf(search.toLowerCase()) > -1
             );
           })
           ?.filter((item: any) => {

@@ -120,7 +120,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             options={data?.data || []}
             sx={{ mt: 3 }}
             getOptionLabel={(option: any) => {
-              return option?.firstName + " " + option?.lastName;
+              return option?.fullName;
             }}
             renderInput={(params) => (
               <TextField

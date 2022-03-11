@@ -8,6 +8,7 @@ const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
 const Login = loadable(() => import("pages/login"));
+const Join = loadable(() => import("pages/join"));
 const SignUp = loadable(() => import("pages/signup"));
 const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout/primarylayout"));
@@ -124,6 +125,7 @@ function RoutesContainer() {
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/join" element={<Join />} />
         <Route path="due-diligence/:taskId" element={<DueDiligencePreview />} />
       </Routes>
     </Router>

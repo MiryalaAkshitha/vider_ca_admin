@@ -154,7 +154,7 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
             options={users?.data || []}
             sx={{ mt: 3 }}
             getOptionLabel={(option: any) => {
-              return option?.firstName + " " + option?.lastName;
+              return option?.fullName;
             }}
             renderInput={(params) => (
               <TextField
@@ -173,7 +173,7 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
             value={state.taskLeader}
             options={
               users?.data?.map((item) => ({
-                label: item?.firstName + " " + item?.lastName,
+                label: item?.fullName,
                 value: item?.id,
               })) || []
             }

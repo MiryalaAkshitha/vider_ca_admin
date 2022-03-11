@@ -68,7 +68,7 @@ function SubTasksList({ data }: Props) {
                       data={
                         item?.members?.map((item) => ({
                           src: "",
-                          title: item?.firstName,
+                          title: item?.fullName,
                         })) || []
                       }
                     />

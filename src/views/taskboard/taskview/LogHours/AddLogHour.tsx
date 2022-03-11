@@ -92,7 +92,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
             value={state.users || []}
             options={data?.data || []}
             getOptionLabel={(option: any) => {
-              return option?.firstName + " " + option?.lastName;
+              return option?.fullName;
             }}
             renderInput={(params) => (
               <TextField

@@ -33,7 +33,7 @@ const columns: Array<ColumnType> = [
     title: "Members",
     render: (v) => (
       <Members
-        data={v?.members?.map((item: any) => ({ title: item?.firstName }))}
+        data={v?.members?.map((item: any) => ({ title: item?.fullName }))}
       />
     ),
   },

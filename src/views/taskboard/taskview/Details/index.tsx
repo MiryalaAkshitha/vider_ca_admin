@@ -64,8 +64,8 @@ function Details({ state, staticState, setState, handleUpdate }: Props) {
               {state?.name}{" "}
             </Typography>
             <Typography variant="body2" color="gray">
-              Created by {state?.user?.firstName + " " + state?.user?.lastName}{" "}
-              on {moment(state?.createdAt).format("MMM Do YYYY, hh:mm a")}{" "}
+              Created by {state?.user?.fullName} on{" "}
+              {moment(state?.createdAt).format("MMM Do YYYY, hh:mm a")}{" "}
               {state?.parentTask && (
                 <>
                   - Sub task of{" "}
@@ -102,7 +102,7 @@ function Details({ state, staticState, setState, handleUpdate }: Props) {
                 onChange={(_, value) => setState({ ...state, members: value })}
                 options={users?.data || []}
                 getOptionLabel={(option) => {
-                  return option?.firstName + " " + option?.lastName;
+                  return option?.fullName;
                 }}
                 isOptionEqualToValue={(option, value) => {
                   return option?.id === value?.id;
@@ -242,7 +242,7 @@ function Details({ state, staticState, setState, handleUpdate }: Props) {
                   return option?.id === value?.id;
                 }}
                 getOptionLabel={(option) => {
-                  return option?.firstName + " " + option?.lastName;
+                  return option?.fullName;
                 }}
                 renderInput={(params) => (
                   <TextField

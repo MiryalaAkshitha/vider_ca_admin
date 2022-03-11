@@ -14,7 +14,7 @@ function UserCard({ data }: Props) {
         src={data?.imageUrl || icons.user}
       />
       <Typography gutterBottom variant="subtitle2" color="primary">
-        {data?.firstName + " " + data?.lastName}
+        {data?.fullName}
       </Typography>
       <Typography variant="body2" color="rgba(0,0,0,0.5)">
         {data?.email}

@@ -17,7 +17,11 @@ http.interceptors.response.use(
       alert("Please Check your internet connection");
     }
     if (err.response.data.statusCode === 401) {
-      if (err.response.config.url !== "/users/signin") {
+      console.log(err.response.config);
+      if (
+        err.response.config.url !== "/users/signin" &&
+        err.response.config.url !== "/users/signup"
+      ) {
         localStorage.removeItem("token");
         alert("Session Expired, Please Login Again");
         window.location.href = "/login";

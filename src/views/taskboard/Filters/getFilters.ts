@@ -12,7 +12,7 @@ export const getFilters = ({ users, labels }): Filter[] => {
       title: "Assignee",
       key: "assignee",
       options: users?.data?.map((item: any) => ({
-        label: item?.firstName + " " + item?.lastName,
+        label: item?.fullName,
         value: item?.id.toString(),
       })),
     },
@@ -20,7 +20,7 @@ export const getFilters = ({ users, labels }): Filter[] => {
       title: "Created by",
       key: "createdBy",
       options: users?.data?.map((item: any) => ({
-        label: item?.firstName + " " + item?.lastName,
+        label: item?.fullName,
         value: item?.id?.toString(),
       })),
     },
@@ -28,7 +28,7 @@ export const getFilters = ({ users, labels }): Filter[] => {
       title: "Completed by",
       key: "completedBy",
       options: users?.data?.map((item: any) => ({
-        label: item?.firstName + " " + item?.lastName,
+        label: item?.fullName,
         value: item?.id?.toString(),
       })),
     },

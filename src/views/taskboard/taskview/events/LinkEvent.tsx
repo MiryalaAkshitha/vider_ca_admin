@@ -87,7 +87,7 @@ function LinkEvent({ open, setOpen, data }: Props) {
           value={state.members}
           options={data?.members || []}
           getOptionLabel={(option: any) => {
-            return option?.firstName + " " + option?.lastName;
+            return option?.fullName;
           }}
           renderInput={(params) => (
             <TextField

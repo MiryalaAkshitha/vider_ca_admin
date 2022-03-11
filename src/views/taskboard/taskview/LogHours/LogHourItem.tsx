@@ -71,7 +71,7 @@ function LogHourItem({ logHour, onSelect, selectedItems }: Props) {
             />
           </Box>
           <Typography variant="body2">
-            {logHour?.user?.firstName} (
+            {logHour?.user?.fullName} (
             {moment.utc(+logHour?.duration).format("HH [hrs] mm [mins]")})
           </Typography>
         </Box>

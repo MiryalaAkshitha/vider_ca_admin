@@ -158,7 +158,7 @@ function TaskItem({ data }: Props) {
           <Members
             data={data?.members?.map((item) => ({
               src: "",
-              title: item?.firstName,
+              title: item?.fullName,
             }))}
           />
         </Box>

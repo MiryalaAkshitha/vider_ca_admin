@@ -89,7 +89,7 @@ function EditLogHour({ open, setOpen, selectedItem }: Props) {
             value={state?.user}
             options={data?.data || []}
             getOptionLabel={(option: any) => {
-              return option?.firstName + " " + option?.lastName;
+              return option?.fullName;
             }}
             renderInput={(params) => (
               <TextField

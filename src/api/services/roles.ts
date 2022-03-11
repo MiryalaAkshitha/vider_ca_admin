@@ -13,6 +13,10 @@ interface IUpdateData {
   };
 }
 
+const getAllRoles = () => {
+  return http.get("/roles/all");
+};
+
 const getRoles = () => {
   return http.get("/roles");
 };
@@ -44,4 +48,5 @@ export {
   deleteRole,
   getRole,
   getPermissions,
+  getAllRoles,
 };

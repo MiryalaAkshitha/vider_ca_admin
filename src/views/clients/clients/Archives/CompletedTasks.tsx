@@ -84,7 +84,7 @@ function CompletedTasks({ filters }: Props) {
               render: (v) => (
                 <Members
                   data={v?.members?.map((item: any) => ({
-                    title: item?.firstName,
+                    title: item?.fullName,
                   }))}
                 />
               ),

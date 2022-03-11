@@ -1,70 +1,34 @@
-import {
-  Box,
-  Button,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { signup } from "api/services/users";
-import { whiteLogo } from "assets";
-import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
-import { useState } from "react";
-import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
-import PasswordField from "views/login/PasswordField";
+import { Box, Grid, Typography } from "@mui/material";
+import { newlogo, signup } from "assets";
+import { useSelector } from "react-redux";
+import { selectSignup } from "redux/reducers/signUpSlice";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
-
-type State = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  companyName: string;
-  mobile: string;
-  companySize: number;
-  companyAddress: string;
-  password: string;
-};
+import CreateAccount from "views/signup/CreateAcount";
+import OrganizationDetails from "views/signup/OrganizationDetails";
+import Otp from "views/signup/Otp";
+import Team from "views/signup/Team";
 
 const SignUp = () => {
-  const navigate = useNavigate();
-  const snack = useSnack();
-  const [state, setState] = useState<State>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    companyName: "",
-    companyAddress: "",
-    mobile: "",
-    companySize: 0,
-    password: "",
-  });
-
-  const handleChange = (e: any) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
-
-  const { mutate, isLoading } = useMutation(signup, {
-    onSuccess: () => {
-      navigate("/login");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    mutate(state);
-  };
+  const { step } = useSelector(selectSignup);
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={6} lg={6}>
         <BackgroundImage>
           <LogoContainer>
-            <img src={whiteLogo} alt="" />
+            <img src={newlogo} alt="" />
+            <Box mt={6}>
+              <img src={signup} alt="" />
+            </Box>
+            <Typography mt={2} variant="subtitle2" color="white">
+              Vider Practice Management software
+            </Typography>
+            <Typography mt={1} variant="body2" color="rgba(255,255,255,0.7)">
+              Praesent eu dolor eu orci vehicula euismod. Vivamus sed
+              sollicitudin libero, vel malesuada velit. Nullam et maximus lorem.
+              Suspendisse maximus dolor quis consequat volutpat donec vehicula
+              elit eu erat pulvinar.
+            </Typography>
           </LogoContainer>
         </BackgroundImage>
       </Grid>
@@ -74,109 +38,14 @@ const SignUp = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          minHeight="100vh"
+          height="100vh"
+          sx={{ overflowY: "auto" }}
         >
-          <Box maxWidth="600px" width="100%">
-            <Typography sx={{ mb: 2, textAlign: "center" }} variant="subtitle1">
-              Create a new account
-            </Typography>
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="firstName"
-                    label="First Name"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="lastName"
-                    label="Last Name"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="mobile"
-                    label="Mobile Number"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="companyName"
-                    label="Company Name"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="email"
-                    label="Company Email"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="companySize"
-                    label="Team Size"
-                    type="number"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    size="small"
-                    name="companyAddress"
-                    label="State"
-                    onChange={handleChange}
-                    select
-                  >
-                    <MenuItem value="Telangana">Telangana</MenuItem>
-                    <MenuItem value="Andhra Pradesh">Andhra Pradesh</MenuItem>
-                    <MenuItem value="Tamilanadu">Tamilanadu</MenuItem>
-                  </TextField>
-                </Grid>
-                <Grid item xs={6}>
-                  <PasswordField label="Password" onChange={handleChange} />
-                </Grid>
-              </Grid>
-              <LoadingButton
-                loading={isLoading}
-                sx={{ mt: 4 }}
-                size="large"
-                fullWidth
-                type="submit"
-                title="Submit"
-                color="secondary"
-              />
-            </form>
-            <Box textAlign="center">
-              <Button sx={{ mt: 2 }} onClick={() => navigate("/login")}>
-                Already have an account - Sign in
-              </Button>
-            </Box>
+          <Box maxWidth="400px" width="100%" pt={8} pb={4}>
+            {step === "signup" && <CreateAccount />}
+            {step === "otp" && <Otp />}
+            {step === "details" && <OrganizationDetails />}
+            {step === "team" && <Team />}
           </Box>
         </Box>
       </Grid>

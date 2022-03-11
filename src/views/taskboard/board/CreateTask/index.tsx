@@ -216,7 +216,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
             options={users?.data || []}
             sx={{ mt: 3 }}
             getOptionLabel={(option: any) => {
-              return option?.firstName + " " + option?.lastName;
+              return option?.fullName;
             }}
             renderInput={(params) => (
               <TextField
@@ -242,7 +242,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
           >
             {users?.data.map((item, index) => (
               <MenuItem value={item?.id} key={index}>
-                {item?.firstName + " " + item?.lastName}
+                {item?.fullName}
               </MenuItem>
             ))}
           </TextField>

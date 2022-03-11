@@ -59,7 +59,7 @@ function TaskComment({ data, users }: Props) {
           <Avatar src="https://picsum.photos/200" />
           <div>
             <Typography variant="body1" sx={{ lineHeight: "18px" }}>
-              {data?.user?.firstName + " " + data?.user?.lastName}
+              {data?.user?.fullName}
             </Typography>
             <Typography variant="caption" color="rgba(0,0,0,0.5)">
               {moment(data?.createdAt).calendar()}
@@ -125,7 +125,7 @@ function TaskComment({ data, users }: Props) {
                 }}
                 data={users?.map((user: any) => ({
                   id: user.id,
-                  display: `${user.firstName} ${user.lastName}`,
+                  display: user.fullName,
                 }))}
               />
             </MentionsInput>
@@ -150,7 +150,7 @@ function TaskComment({ data, users }: Props) {
                   />
                   <div>
                     <Typography variant="body2" sx={{ lineHeight: "10px" }}>
-                      {item?.user?.firstName + " " + item?.user?.lastName}
+                      {item?.user?.fullName}
                     </Typography>
                     <Typography
                       variant="caption"

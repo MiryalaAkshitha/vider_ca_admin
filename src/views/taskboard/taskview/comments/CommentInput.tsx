@@ -54,7 +54,7 @@ function CommentInput({ users }) {
           }}
           data={users?.map((user: any) => ({
             id: user.id,
-            display: `${user.firstName} ${user.lastName}`,
+            display: user.fullName,
           }))}
         />
       </MentionsInput>

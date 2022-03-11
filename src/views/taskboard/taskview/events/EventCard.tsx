@@ -37,7 +37,7 @@ function EventCard({ data }: any) {
               data={
                 data?.members?.map((item) => ({
                   src: "",
-                  title: item?.firstName,
+                  title: item?.fullName,
                 })) || []
               }
             />

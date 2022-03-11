@@ -12,8 +12,7 @@ import { DialogProps, InputChangeType, ResType, SubmitType } from "types";
 import PasswordField from "views/login/PasswordField";
 
 type State = {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   mobile: string;
   password: string;
@@ -24,8 +23,7 @@ function AddMember({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState<State>({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     mobile: "",
     password: "",
@@ -69,18 +67,8 @@ function AddMember({ open, setOpen }: DialogProps) {
             fullWidth
             size="small"
             required
-            label="First Name"
-            name="firstName"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            required
-            label="Last Name"
-            name="lastName"
+            label="Full Name"
+            name="fullName"
             onChange={handleChange}
           />
           <TextField
@@ -124,6 +112,7 @@ function AddMember({ open, setOpen }: DialogProps) {
           <PasswordField
             sx={{ mt: 3 }}
             label="Password"
+            value={state.password}
             onChange={handleChange}
           />
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>

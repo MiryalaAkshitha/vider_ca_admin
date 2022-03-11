@@ -1,7 +1,8 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { signin } from "api/services/users";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { joinUser } from "api/services/users";
 import { newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
+import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -10,22 +11,21 @@ import ForgotPassword from "views/login/ForgotPassword";
 import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
 
-type DataType = { username: string; password: string };
-
 const Login = () => {
+  const { queryParams } = useQueryParams();
   const navigate = useNavigate();
   const snack = useSnack();
   const [open, setOpen] = useState<boolean>(false);
-  const [state, setState] = useState<DataType>({
-    username: "",
+  const [state, setState] = useState({
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: any) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const { mutate, isLoading } = useMutation(signin, {
+  const { mutate, isLoading } = useMutation(joinUser, {
     onSuccess: (res: any) => {
       localStorage.setItem("token", res.data.access_token);
       window.location.href = "/";
@@ -37,7 +37,14 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    mutate(state);
+    if (state.password !== state.confirmPassword) {
+      snack.error("Passwords do not match");
+      return;
+    }
+    mutate({
+      password: state.password,
+      token: queryParams?.token || "",
+    });
   };
 
   return (
@@ -71,20 +78,19 @@ const Login = () => {
           minHeight="100vh"
         >
           <Box maxWidth="400px" width="100%">
-            <Typography variant="subtitle1">Sign in to your Account</Typography>
+            <Typography variant="subtitle1">Set Password</Typography>
             <form onSubmit={handleSubmit}>
-              <TextField
-                required
-                fullWidth
-                size="small"
-                name="username"
-                label="Email"
+              <PasswordField
+                name="password"
+                value={state.password}
+                label="New Password"
                 sx={{ mt: 3 }}
                 onChange={handleChange}
               />
               <PasswordField
-                value={state.password}
-                label="Password"
+                name="confirmPassword"
+                value={state.confirmPassword}
+                label="Confirm Password"
                 sx={{ mt: 3 }}
                 onChange={handleChange}
               />
@@ -99,13 +105,8 @@ const Login = () => {
               />
             </form>
             <div>
-              <Button sx={{ mt: 3 }} onClick={() => setOpen(true)}>
-                Forgot Password?
-              </Button>
-            </div>
-            <div>
-              <Button sx={{ mt: 1 }} onClick={() => navigate("/signup")}>
-                Don't have an account - Create New Account
+              <Button sx={{ mt: 1 }} onClick={() => navigate("/login")}>
+                Already have an account - Login
               </Button>
             </div>
           </Box>

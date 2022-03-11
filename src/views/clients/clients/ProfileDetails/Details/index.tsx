@@ -283,7 +283,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           >
             {users?.data?.map((item: any, index: number) => (
               <MenuItem key={index} value={item?.id}>
-                {item?.firstName + " " + item?.lastName}
+                {item?.fullName}
               </MenuItem>
             ))}
           </TextField>
