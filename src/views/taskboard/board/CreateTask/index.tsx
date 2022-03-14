@@ -51,11 +51,14 @@ function CreateTask({ open, setOpen }: DialogProps) {
     }
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
+    apiData.category = apiData.category?.id;
+    apiData.subCategory = apiData.subCategory?.id;
+    apiData.taskLeader = apiData.taskLeader?.id;
     mutate(apiData);
   };
 
   let subCategories = categories?.data.find(
-    (item) => item.id === state.category
+    (item) => item.id === state.category?.id
   )?.subCategories;
 
   return (
@@ -82,43 +85,45 @@ function CreateTask({ open, setOpen }: DialogProps) {
               />
             )}
           />
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
+          <Autocomplete
+            id="tags-standard"
+            onChange={(_, value) => {
+              setState({ ...state, category: value });
+            }}
             sx={{ mt: 3 }}
-            onChange={handleChange}
-            select
-            required
-            value={state.category || ""}
-            name="category"
-            label="Category"
-          >
-            {categories?.data.map((item, index) => (
-              <MenuItem value={item.id} key={index}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={categories?.data || []}
+            value={state.category}
+            getOptionLabel={(option: any) => option?.name}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Category"
+              />
+            )}
+          />
           {subCategories?.length ? (
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
+            <Autocomplete
+              id="tags-standard"
+              onChange={(_, value) => {
+                setState({ ...state, subCategory: value });
+              }}
+              options={subCategories || []}
+              value={state.subCategory}
               sx={{ mt: 3 }}
-              select
-              required
-              value={state.subCategory || ""}
-              onChange={handleChange}
-              name="subCategory"
-              label="Sub Category"
-            >
-              {subCategories?.map((item: any, index: number) => (
-                <MenuItem key={index} value={item?.id}>
-                  {item?.name}
-                </MenuItem>
-              ))}
-            </TextField>
+              getOptionLabel={(option: any) => option?.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Sub Category"
+                />
+              )}
+            />
           ) : null}
           <TextField
             sx={{ mt: 3 }}
@@ -228,24 +233,25 @@ function CreateTask({ open, setOpen }: DialogProps) {
               />
             )}
           />
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
+          <Autocomplete
+            id="tags-standard"
+            onChange={(_, value) => {
+              setState({ ...state, taskLeader: value });
+            }}
             sx={{ mt: 3 }}
-            select
-            required
-            value={state.taskLeader || ""}
-            onChange={handleChange}
-            name="taskLeader"
-            label="Task Leader"
-          >
-            {users?.data.map((item, index) => (
-              <MenuItem value={item?.id} key={index}>
-                {item?.fullName}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={users?.data || []}
+            value={state.taskLeader}
+            getOptionLabel={(option: any) => option?.fullName}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Task Leader"
+              />
+            )}
+          />
           <TextField
             variant="outlined"
             fullWidth

@@ -176,7 +176,7 @@ function TaskDetails() {
         <Attachments />
       </TaskSection>
       <TaskSection selected={selected} setSelected={setSelected} id="Log Hours">
-        <LogHours />
+        <LogHours task={staticState} />
       </TaskSection>
       <TaskSection selected={selected} setSelected={setSelected} id="Events">
         <Events task={state} />

@@ -64,19 +64,30 @@ const TreeLabel = ({ item, onFileChange }: TreeLabelProps) => {
           </Typography>
         </Box>
       ) : (
-        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Checkbox
-            sx={{ ml: -1 }}
-            size="small"
-            onChange={() => onFileChange(item?.id)}
-          />
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: "inherit", flexGrow: 1 }}
+        <label htmlFor={item?.id}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              p: 0.5,
+              pr: 0,
+              cursor: "pointer",
+            }}
           >
-            {item?.name}
-          </Typography>
-        </Box>
+            <Checkbox
+              id={item?.id}
+              sx={{ ml: -1 }}
+              size="small"
+              onChange={() => onFileChange(item?.id)}
+            />
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "inherit", flexGrow: 1 }}
+            >
+              {item?.name}
+            </Typography>
+          </Box>
+        </label>
       )}
     </>
   );

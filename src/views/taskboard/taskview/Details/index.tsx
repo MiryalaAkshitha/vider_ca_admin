@@ -296,10 +296,32 @@ function Details({ state, staticState, setState, handleUpdate }: Props) {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Financial Year">
-              <CustomTextField
-                value={state?.financialYear || ""}
-                onChange={handleChange}
-                disabled
+              <Autocomplete
+                onChange={(_, value) =>
+                  setState({ ...state, financialYear: value })
+                }
+                value={state?.financialYear}
+                options={
+                  Array.from(Array(50).keys()).map(
+                    (_, index) => `${2000 + index}-${2000 + index + 1}`
+                  ) || []
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="medium"
+                    variant="outlined"
+                    sx={{
+                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                        {
+                          borderWidth: 1,
+                        },
+                      "& fieldset": {
+                        border: 0,
+                      },
+                    }}
+                  />
+                )}
               />
             </DetailSection>
           </Grid>

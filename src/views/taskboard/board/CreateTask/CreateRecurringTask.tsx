@@ -54,6 +54,9 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
 
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
+    apiData.category = apiData.category?.id;
+    apiData.subCategory = apiData.subCategory?.id;
+    apiData.taskLeader = apiData.taskLeader?.id;
     mutate(apiData);
   };
 
@@ -166,17 +169,24 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
               />
             )}
           />
-          <CustomSelect
-            label="Task Leader"
-            name="taskLeader"
-            onChange={handleChange}
+          <Autocomplete
+            id="tags-standard"
+            onChange={(_, value) => {
+              setState({ ...state, taskLeader: value });
+            }}
+            sx={{ mt: 3 }}
+            options={users?.data || []}
             value={state.taskLeader}
-            options={
-              users?.data?.map((item) => ({
-                label: item?.fullName,
-                value: item?.id,
-              })) || []
-            }
+            getOptionLabel={(option: any) => option?.fullName}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Task Leader"
+              />
+            )}
           />
           <CustomSelect
             label="Priority"

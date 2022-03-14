@@ -107,7 +107,7 @@ function Profile({ data, setState, onUpdate }: IProfileProps) {
             onClick={() => {
               navigate(`/task-board?client=${data?.id}`);
             }}
-            variant="outlined"
+            variant="contained"
             color="secondary"
           >
             View Tasks

@@ -1,5 +1,5 @@
-import { MenuItem, TextField } from "@mui/material";
-import React, { Dispatch, SetStateAction } from "react";
+import { Autocomplete, TextField } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
 import { RecurringStateProps } from "./types";
 
 interface IProps {
@@ -9,53 +9,51 @@ interface IProps {
 }
 
 function SelectCategory({ state, setState, categories }: IProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
-
   const subCategories = categories?.find(
-    (item: any) => item.id === state.category
+    (item: any) => item.id === state.category?.id
   )?.subCategories;
 
   return (
     <>
-      <TextField
-        variant="outlined"
-        fullWidth
-        size="small"
+      <Autocomplete
+        id="tags-standard"
+        onChange={(_, value) => {
+          setState({ ...state, category: value });
+        }}
         sx={{ mt: 3 }}
-        onChange={handleChange}
-        select
-        required
-        value={state.category || ""}
-        name="category"
-        label="Category"
-      >
-        {categories?.map((item: any, index: number) => (
-          <MenuItem value={item.id} key={index}>
-            {item.name}
-          </MenuItem>
-        ))}
-      </TextField>
+        options={categories || []}
+        value={state.category}
+        getOptionLabel={(option: any) => option?.name}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            size="small"
+            fullWidth
+            label="Category"
+          />
+        )}
+      />
       {subCategories?.length ? (
-        <TextField
-          variant="outlined"
-          fullWidth
-          size="small"
+        <Autocomplete
+          id="tags-standard"
+          onChange={(_, value) => {
+            setState({ ...state, subCategory: value });
+          }}
+          options={subCategories || []}
+          value={state.subCategory}
           sx={{ mt: 3 }}
-          select
-          required
-          value={state.subCategory || ""}
-          onChange={handleChange}
-          name="subCategory"
-          label="Sub Category"
-        >
-          {subCategories?.map((item: any, index: number) => (
-            <MenuItem key={index} value={item?.id}>
-              {item?.name}
-            </MenuItem>
-          ))}
-        </TextField>
+          getOptionLabel={(option: any) => option?.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              size="small"
+              fullWidth
+              label="Sub Category"
+            />
+          )}
+        />
       ) : null}
     </>
   );

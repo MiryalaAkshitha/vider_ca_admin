@@ -1,7 +1,7 @@
 export interface StateProps {
   name: string;
-  category: number | null;
-  subCategory: number | null;
+  category: any;
+  subCategory: any;
   client: number[];
   frequency: string | null;
   feeAmount: string | null;
@@ -10,15 +10,15 @@ export interface StateProps {
   dueDate: string | null;
   labels: any[];
   members: any[];
-  taskLeader: number | null;
+  taskLeader: any;
   financialYear: number | null;
   expectedCompletionDate: string | null;
 }
 
 export interface RecurringStateProps {
   name: string;
-  category: number | null;
-  subCategory: number | null;
+  category: any;
+  subCategory: any;
   client: number[];
   frequency: string | null;
   feeAmount: string | null;
@@ -29,6 +29,6 @@ export interface RecurringStateProps {
   customDates: Array<{ startDate: string; dueDate: string }>;
   labels: any[];
   members: any[];
-  taskLeader: number | null;
+  taskLeader: any;
   financialYear: number | null;
 }

@@ -25,6 +25,7 @@ import { ResType } from "types";
 import CategoryFilter from "./CategoryFilter";
 import ClientCategoryFilter from "./ClientCategoryFilter";
 import FilterContainer from "./FilterContainer";
+import FinancialYearFilter from "./FinancialYearFilter";
 import { getFilters } from "./getFilters";
 
 interface IProps {
@@ -124,6 +125,19 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                   )}
                 </Typography>
               </ListItemButton>
+              <ListItemButton
+                selected={selected === "financialYear"}
+                onClick={() => dispatch(handleSelected("financialYear"))}
+              >
+                <Typography variant="body2" color="rgba(0,0,0,0.7)">
+                  Financial Year{" "}
+                  {appliedFilters["financialYear"].length > 0 && (
+                    <span style={{ fontWeight: "bold" }}>
+                      ({appliedFilters["financialYear"].length})
+                    </span>
+                  )}
+                </Typography>
+              </ListItemButton>
               {filters.map((filter) => (
                 <ListItemButton
                   key={filter.key}
@@ -153,6 +167,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
             })}
             {selected === "category" && <CategoryFilter />}
             {selected === "clientCategory" && <ClientCategoryFilter />}
+            {selected === "financialYear" && <FinancialYearFilter />}
           </Box>
         </Box>
       )}

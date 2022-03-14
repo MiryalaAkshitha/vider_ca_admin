@@ -30,6 +30,7 @@ type Filter = {
   subCategory: Array<{ label: string; value: string }>;
   clientCategory: Array<{ label: string; value: string }>;
   clientSubCategory: Array<{ label: string; value: string }>;
+  financialYear: Array<{ label: string; value: string }>;
   customDates: {
     startDate: {
       fromDate: string;
@@ -66,6 +67,7 @@ const filterState: Filter = {
   subCategory: [],
   clientCategory: [],
   clientSubCategory: [],
+  financialYear: [],
   customDates: {
     startDate: {
       fromDate: "",

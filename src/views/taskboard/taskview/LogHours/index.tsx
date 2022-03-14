@@ -5,18 +5,16 @@ import { noSubTasks } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";
 import moment from "moment";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import { getTitle } from "utils";
-import { TaskStatus } from "utils/constants";
-import { StyledTimline } from "views/taskboard/styles";
 import AddLogHour from "./AddLogHour";
 import LogHoursList from "./LogHoursList";
 import LogHoursTopbar from "./LogHoursTopbar";
+import Timeline from "./Timeline";
 
-function LogHours() {
+function LogHours({ task }) {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -45,34 +43,7 @@ function LogHours() {
 
   return (
     <>
-      <Box>
-        <Typography variant="subtitle1" color="primary">
-          Timeline
-        </Typography>
-        <StyledTimline>
-          {Object.values(TaskStatus).map(
-            (status: TaskStatus, index: number) => (
-              <div key={index}>
-                <div>
-                  <Typography
-                    color={getTimelineStatusColor(status)}
-                    variant="h6"
-                  >
-                    {getTitle(status)}
-                  </Typography>
-                </div>
-                <Typography variant="caption">
-                  {data?.data?.timeline[status] &&
-                    moment
-                      .utc(data?.data?.timeline[status])
-                      .local()
-                      .format("MM/DD/YYYY, h:mm a")}
-                </Typography>
-              </div>
-            )
-          )}
-        </StyledTimline>
-      </Box>
+      <Timeline task={task} data={data} />
       <Box mt={4} display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
           Log Hours{" "}
@@ -114,21 +85,5 @@ function LogHours() {
     </>
   );
 }
-
-const getTimelineStatusColor = (status: TaskStatus) => {
-  switch (status) {
-    case TaskStatus.TODO:
-      return "#149ECD";
-    case TaskStatus.IN_PROGRESS:
-      return "#F7964F";
-    case TaskStatus.ON_HOLD:
-      return "#F2353C";
-    case TaskStatus.DONE:
-      return "#019335";
-    case TaskStatus.UNDER_REVIEW:
-      return "#673AB7";
-    default:
-  }
-};
 
 export default LogHours;
