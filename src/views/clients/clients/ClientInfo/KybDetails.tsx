@@ -33,7 +33,7 @@ function KybDetails({ state, forms, setState }: IKybDetailsProps) {
 
   const { mutate } = useMutation(deleteClientInfo, {
     onSuccess: () => {
-      snack.success("Fields has been successfully deleted");
+      snack.success("Fields has been successfully deleted.");
       queryClient.invalidateQueries("client-info");
     },
     onError: (err: any) => {
