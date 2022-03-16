@@ -18,6 +18,9 @@ phases:
     commands:
       - echo Building...
       - yarn build
+  post_build:
+    commands:
+      - cp apache.conf build/.htaccess
 artifacts:
   files:
     - public/**/*
