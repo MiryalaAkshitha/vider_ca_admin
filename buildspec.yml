@@ -20,6 +20,8 @@ phases:
       - yarn build
 artifacts:
   files:
-    - "**/*"
+    - "build/*"
+    - appspec.yml
+    - "public/**/*"
+
   discard-paths: no
-  base-directory: build
