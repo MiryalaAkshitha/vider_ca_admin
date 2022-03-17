@@ -83,12 +83,7 @@ function TaskDetails() {
   return (
     <>
       <Box position="sticky" top={55} zIndex={2}>
-        <Box
-          p={2}
-          bgcolor="white"
-          display="flex"
-          justifyContent="space-between"
-        >
+        <Box p={2} bgcolor="white" display="flex" justifyContent="space-between">
           <BreadCrumbs page="taskView" />
           <Button
             onClick={() => setOpen(true)}
@@ -117,62 +112,30 @@ function TaskDetails() {
           handleUpdate={handleUpdate}
         />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Due Diligence"
-      >
+      <TaskSection selected={selected} setSelected={setSelected} id="Due Diligence">
         <DueDiligence />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Description"
-      >
-        <Description
-          state={state}
-          setState={setState}
-          handleUpdate={handleUpdate}
-        />
+      <TaskSection selected={selected} setSelected={setSelected} id="Description">
+        <Description state={state} setState={setState} handleUpdate={handleUpdate} />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Checklists"
-      >
+      <TaskSection selected={selected} setSelected={setSelected} id="Checklists">
         <Checklists />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Milestones"
-      >
+      <TaskSection selected={selected} setSelected={setSelected} id="Milestones">
         <Milestones />
       </TaskSection>
       <TaskSection selected={selected} setSelected={setSelected} id="Comments">
         <Comments />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Expenditure"
-      >
+      <TaskSection selected={selected} setSelected={setSelected} id="Expenditure">
         <Expenditure />
       </TaskSection>
       {!staticState?.parentTask && (
-        <TaskSection
-          selected={selected}
-          setSelected={setSelected}
-          id="Sub Tasks"
-        >
+        <TaskSection selected={selected} setSelected={setSelected} id="Sub Tasks">
           <SubTasks task={staticState} />
         </TaskSection>
       )}
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Attachments"
-      >
+      <TaskSection selected={selected} setSelected={setSelected} id="Attachments">
         <Attachments />
       </TaskSection>
       <TaskSection selected={selected} setSelected={setSelected} id="Log Hours">
@@ -196,30 +159,30 @@ interface Props {
 const TaskSection = ({ children, selected, setSelected, id }: Props) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (selected === id) {
-      if (elementRef.current) {
-        const elementTop = elementRef.current.offsetTop;
-        const top = elementTop - 140;
-        window.scrollTo({ top });
-      }
-    }
-  }, [selected, id]);
-
   // useEffect(() => {
-  //   const handleScroll = () => {
+  //   if (selected === id) {
   //     if (elementRef.current) {
-  //       let elementTop = elementRef.current.getBoundingClientRect().y;
-  //       if (elementTop < 200) {
-  //         setSelected(id);
-  //       }
+  //       const elementTop = elementRef.current.offsetTop;
+  //       const top = elementTop - 140;
+  //       window.scrollTo({ top });
   //     }
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [id, setSelected]);
+  //   }
+  // }, [selected, id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (elementRef.current) {
+        let elementTop = elementRef.current.getBoundingClientRect().y;
+        if (elementTop < 230) {
+          setSelected(id);
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [id, setSelected]);
 
   return <StyledTaskSection ref={elementRef}>{children}</StyledTaskSection>;
 };

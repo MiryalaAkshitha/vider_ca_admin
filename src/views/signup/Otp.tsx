@@ -6,11 +6,7 @@ import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
 import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleStep,
-  handleToken,
-  selectSignup,
-} from "redux/reducers/signUpSlice";
+import { handleStep, handleToken, selectSignup } from "redux/reducers/signUpSlice";
 
 function Otp() {
   const snack = useSnack();
@@ -59,17 +55,12 @@ function Otp() {
 
   return (
     <Box>
-      <Button
-        onClick={() => dispatch(handleStep("signup"))}
-        startIcon={<ArrowBack />}
-      ></Button>
+      <Button onClick={() => dispatch(handleStep("signup"))} startIcon={<ArrowBack />}></Button>
       <Box textAlign="center">
         <Typography sx={{ mb: 2, textAlign: "center" }} variant="subtitle1">
           Otp Verification
         </Typography>
-        <Typography variant="body2">
-          Enter the 4 digit OTP sent to your mobile number
-        </Typography>
+        <Typography variant="body2">Enter the 4 digit OTP sent to your mobile number</Typography>
         <Typography variant="h6">{mobileNumber}</Typography>
         <Box width="80%" margin="auto" mt={5}>
           <OtpInput
@@ -101,13 +92,7 @@ function Otp() {
             Submit
           </Button>
           {count > 0 ? (
-            <Box
-              mt={2}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              gap={1}
-            >
+            <Box mt={2} display="flex" justifyContent="center" alignItems="center" gap={1}>
               <Typography variant="body2" color="secondary">
                 Resend Otp in
               </Typography>
