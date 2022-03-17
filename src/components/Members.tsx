@@ -1,4 +1,4 @@
-import { Avatar, AvatarProps } from "@mui/material";
+import { Avatar, AvatarProps, Tooltip } from "@mui/material";
 import { Box } from "@mui/system";
 
 interface MembersProps {
@@ -15,6 +15,11 @@ function Members({ data }: MembersProps) {
         },
       }}
     >
+      {/* {data.map((x, i) => {
+        if (x.title === "") {
+          console.log(x);
+        }
+      })} */}
       {data.map((member, i) => (
         <Member title={member.title} src={member.src} key={i} />
       ))}
@@ -32,13 +37,15 @@ interface Props extends AvatarProps {
 const Member = function ({ title, src, ...props }: Props) {
   return (
     <>
-      {title ? (
-        <Avatar {...props} sx={{ border: "2px solid white" }}>
-          {title[0]}
-        </Avatar>
-      ) : (
-        <Avatar {...props} src={src}></Avatar>
-      )}
+      <Tooltip title={title ? title : "no title"}>
+        {title ? (
+          <Avatar {...props} sx={{ border: "2px solid white" }}>
+            {title[0]}
+          </Avatar>
+        ) : (
+          <Avatar {...props} src={src}></Avatar>
+        )}
+      </Tooltip>
     </>
   );
 };

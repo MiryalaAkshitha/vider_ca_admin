@@ -1,7 +1,6 @@
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createTask } from "api/services/tasks";
-import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
@@ -17,8 +16,9 @@ import useCreateTaskInitialData from "./useCreateTaskInitialData";
 function CreateTask({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const { users, labels, categories, clients, loading } =
-    useCreateTaskInitialData({ enabled: open });
+  const { users, labels, categories, clients, loading } = useCreateTaskInitialData({
+    enabled: open,
+  });
   const [state, setState] = useState<StateProps>(initialState);
 
   const handleChange = (e: InputChangeType) => {
@@ -62,7 +62,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
   )?.subCategories;
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
+    <>
       {loading ? (
         <Loader />
       ) : (
@@ -76,13 +76,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
             options={clients?.data[0] || []}
             getOptionLabel={(option: any) => option?.displayName}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Client"
-              />
+              <TextField {...params} variant="outlined" size="small" fullWidth label="Client" />
             )}
           />
           <Autocomplete
@@ -95,13 +89,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
             value={state.category}
             getOptionLabel={(option: any) => option?.name}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Category"
-              />
+              <TextField {...params} variant="outlined" size="small" fullWidth label="Category" />
             )}
           />
           {subCategories?.length ? (
@@ -202,13 +190,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
             sx={{ mt: 3 }}
             getOptionLabel={(option: any) => option?.name}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Labels"
-              />
+              <TextField {...params} variant="outlined" size="small" fullWidth label="Labels" />
             )}
           />
           <Autocomplete
@@ -224,13 +206,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
               return option?.fullName;
             }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Members"
-              />
+              <TextField {...params} variant="outlined" size="small" fullWidth label="Members" />
             )}
           />
           <Autocomplete
@@ -302,7 +278,7 @@ function CreateTask({ open, setOpen }: DialogProps) {
           </Box>
         </form>
       )}
-    </DrawerWrapper>
+    </>
   );
 }
 

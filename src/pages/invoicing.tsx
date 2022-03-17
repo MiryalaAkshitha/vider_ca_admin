@@ -5,8 +5,9 @@ import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
 
 import useTitle from "hooks/useTitle";
-import InvoiceDashboardMenu from "views/invoicing/dashboard/InvoiceDashboardMenu";
+// import InvoiceDashboardMenu from "views/invoicing/dashboard/InvoiceDashboardMenu";
 import { CreateInvoice } from "views/invoicing/createInvoice/CreateInvoice";
+import DashboardInvoice from "views/invoicing/dashboard/DashboardInvoice";
 
 function Invoicing() {
   useTitle("Invoice");
@@ -19,7 +20,7 @@ function Invoicing() {
         <CreateInvoice setOpen={setOpen} />
       ) : (
         <Box>
-          <InvoiceDashboardMenu />
+          <DashboardInvoice />
           <Fab
             onClick={() => setOpen(true)}
             size="medium"
