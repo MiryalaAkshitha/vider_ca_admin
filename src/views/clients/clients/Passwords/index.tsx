@@ -5,10 +5,11 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { Fab } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Add } from "@mui/icons-material";
 import AddPassword from "./AddPassword";
 import PasswordCard from "./PasswodCard";
+import urlMetaData from "url-metadata";
 
 function Passwords() {
   const params = useParams();
@@ -19,6 +20,13 @@ function Passwords() {
     ["client-passwords", clientId],
     getClientPasswords
   );
+
+  useEffect(() => {
+    // urlMetaData("https://www.google.com").then(
+    //   (res) => console.log(res),
+    //   (err) => console.log(err)
+    // );
+  }, []);
 
   if (isLoading) return <Loader />;
 

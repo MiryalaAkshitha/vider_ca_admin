@@ -5,6 +5,7 @@ import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
+import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -34,10 +35,7 @@ function TaskDetails() {
   const params: any = useParams();
   const [staticState, setStaticState] = useState<any>({});
   const [state, setState] = useState<any>({});
-  const [clicked, setClicked] = useState<string>("");
-  const [scrolled, setScrolled] = useState<string>("");
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("Details");
 
   const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
     onSuccess: (res: any) => {
@@ -47,30 +45,30 @@ function TaskDetails() {
     cacheTime: 0,
   });
 
-  useEffect(() => {
-    setScrolled("Details");
-    setClicked("Details");
-  }, [params.taskId]);
+  let isClicked = false;
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isClicked) return;
       let elements = document.querySelectorAll(`[data-target]`);
       let inViewElements = Array.from(elements).filter((item) => {
         return item.getBoundingClientRect().y < 200;
       });
       window.location.hash =
-        inViewElements[inViewElements.length - 1].getAttribute("data-target") ||
-        "";
+        inViewElements[inViewElements.length - 1]?.getAttribute(
+          "data-target"
+        ) || "";
     };
-
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isClicked]);
 
   const handleActiveItem = (item: any) => {
+    window.location.hash = item.id;
+    isClicked = true;
     let element: HTMLElement | null = document.querySelector(
       `[data-target=${item.id}]`
     );
@@ -78,7 +76,6 @@ function TaskDetails() {
     window.scrollTo({
       top: elementTop,
     });
-    window.location.hash = item.id;
   };
 
   const { mutate } = useMutation(updateTask, {
@@ -137,12 +134,7 @@ function TaskDetails() {
           ))}
         </StyledProfileNav>
       </Box>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        id="details"
-        setScrolled={setScrolled}
-      >
+      <TaskSection id="details">
         <Details
           state={state}
           staticState={staticState}
@@ -150,90 +142,40 @@ function TaskDetails() {
           handleUpdate={handleUpdate}
         />
       </TaskSection>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="dd"
-      >
+      <TaskSection id="dd">
         <DueDiligence />
       </TaskSection>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="description"
-      >
+      <TaskSection id="description">
         <Description
           state={state}
           setState={setState}
           handleUpdate={handleUpdate}
         />
       </TaskSection>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="checklists"
-      >
+      <TaskSection id="checklists">
         <Checklists />
       </TaskSection>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="milestones"
-      >
+      <TaskSection id="milestones">
         <Milestones />
       </TaskSection>
-      <TaskSection
-        setScrolled={setScrolled}
-        clicked={clicked}
-        scrolled={scrolled}
-        id="comments"
-      >
+      <TaskSection id="comments">
         <Comments />
       </TaskSection>
-      <TaskSection
-        setScrolled={setScrolled}
-        clicked={clicked}
-        scrolled={scrolled}
-        id="expenditure"
-      >
+      <TaskSection id="expenditure">
         <Expenditure />
       </TaskSection>
       {!staticState?.parentTask && (
-        <TaskSection
-          setScrolled={setScrolled}
-          clicked={clicked}
-          scrolled={scrolled}
-          id="subtasks"
-        >
+        <TaskSection id="subtasks">
           <SubTasks task={staticState} />
         </TaskSection>
       )}
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="attachments"
-      >
+      <TaskSection id="attachments">
         <Attachments />
       </TaskSection>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="loghours"
-      >
+      <TaskSection id="loghours">
         <LogHours task={staticState} />
       </TaskSection>
-      <TaskSection
-        clicked={clicked}
-        scrolled={scrolled}
-        setScrolled={setScrolled}
-        id="events"
-      >
+      <TaskSection id="events">
         <Events task={state} />
       </TaskSection>
       <TerminationDialog open={open} setOpen={setOpen} />
@@ -244,16 +186,11 @@ function TaskDetails() {
 interface Props {
   id: string;
   children: any;
-  clicked: string;
-  scrolled: string;
-  setScrolled: (item: string) => void;
 }
 
 const TaskSection = ({
   children,
-  clicked,
-  scrolled,
-  setScrolled,
+
   id,
 }: Props) => {
   const elementRef = useRef<HTMLDivElement | null>(null);

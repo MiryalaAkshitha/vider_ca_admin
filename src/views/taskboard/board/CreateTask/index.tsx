@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import DrawerWrapper from "components/DrawerWrapper";
 import useQueryParams from "hooks/useQueryParams";
