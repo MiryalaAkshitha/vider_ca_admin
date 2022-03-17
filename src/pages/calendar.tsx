@@ -13,10 +13,11 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import AddEvent from "views/calendar/AddEvent";
+import useQueryParams from "hooks/useQueryParams";
 
 function Calendar() {
   useTitle("Calendar");
-  const [open, setOpen] = useState<boolean>(false);
+  const { queryParams, setQueryParams } = useQueryParams();
   const { data, isLoading }: ResType = useQuery(["events"], getEvents);
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
     ["tasks"],
@@ -56,8 +57,15 @@ function Calendar() {
         displayEventEnd={true}
         eventTextColor="black"
       />
-      <FloatingButton onClick={() => setOpen(true)} />
-      <AddEvent open={open} setOpen={setOpen} />
+      <FloatingButton
+        onClick={() =>
+          setQueryParams({
+            ...queryParams,
+            createEvent: "true",
+          })
+        }
+      />
+      <AddEvent />
     </Box>
   );
 }

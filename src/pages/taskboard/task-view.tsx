@@ -34,8 +34,10 @@ function TaskDetails() {
   const params: any = useParams();
   const [staticState, setStaticState] = useState<any>({});
   const [state, setState] = useState<any>({});
-  const [selected, setSelected] = useState<any>("");
+  const [clicked, setClicked] = useState<string>("");
+  const [scrolled, setScrolled] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("Details");
 
   const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
     onSuccess: (res: any) => {
@@ -46,11 +48,37 @@ function TaskDetails() {
   });
 
   useEffect(() => {
-    setSelected("Details");
+    setScrolled("Details");
+    setClicked("Details");
   }, [params.taskId]);
 
-  const handleActiveItem = (item: string) => {
-    setSelected(item);
+  useEffect(() => {
+    const handleScroll = () => {
+      let elements = document.querySelectorAll(`[data-target]`);
+      let inViewElements = Array.from(elements).filter((item) => {
+        return item.getBoundingClientRect().y < 200;
+      });
+      window.location.hash =
+        inViewElements[inViewElements.length - 1].getAttribute("data-target") ||
+        "";
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleActiveItem = (item: any) => {
+    let element: HTMLElement | null = document.querySelector(
+      `[data-target=${item.id}]`
+    );
+    let elementTop = element ? element.offsetTop - 150 : 0;
+    window.scrollTo({
+      top: elementTop,
+    });
+    window.location.hash = item.id;
   };
 
   const { mutate } = useMutation(updateTask, {
@@ -73,7 +101,7 @@ function TaskDetails() {
 
   const taskMenu = () => {
     if (staticState?.parentTask) {
-      return taskViewMenu.filter((item) => item !== "Sub Tasks");
+      return taskViewMenu.filter((item) => item.id !== "subtasks");
     }
     return taskViewMenu;
   };
@@ -102,14 +130,19 @@ function TaskDetails() {
             <StyledProfileNavItem
               onClick={() => handleActiveItem(item)}
               key={index}
-              active={selected === item}
+              active={window.location.hash?.replace("#", "") === item.id}
             >
-              {item}
+              {item.label}
             </StyledProfileNavItem>
           ))}
         </StyledProfileNav>
       </Box>
-      <TaskSection selected={selected} setSelected={setSelected} id="Details">
+      <TaskSection
+        clicked={clicked}
+        scrolled={scrolled}
+        id="details"
+        setScrolled={setScrolled}
+      >
         <Details
           state={state}
           staticState={staticState}
@@ -118,16 +151,18 @@ function TaskDetails() {
         />
       </TaskSection>
       <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Due Diligence"
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="dd"
       >
         <DueDiligence />
       </TaskSection>
       <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Description"
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="description"
       >
         <Description
           state={state}
@@ -136,49 +171,69 @@ function TaskDetails() {
         />
       </TaskSection>
       <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Checklists"
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="checklists"
       >
         <Checklists />
       </TaskSection>
       <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Milestones"
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="milestones"
       >
         <Milestones />
       </TaskSection>
-      <TaskSection selected={selected} setSelected={setSelected} id="Comments">
+      <TaskSection
+        setScrolled={setScrolled}
+        clicked={clicked}
+        scrolled={scrolled}
+        id="comments"
+      >
         <Comments />
       </TaskSection>
       <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Expenditure"
+        setScrolled={setScrolled}
+        clicked={clicked}
+        scrolled={scrolled}
+        id="expenditure"
       >
         <Expenditure />
       </TaskSection>
       {!staticState?.parentTask && (
         <TaskSection
-          selected={selected}
-          setSelected={setSelected}
-          id="Sub Tasks"
+          setScrolled={setScrolled}
+          clicked={clicked}
+          scrolled={scrolled}
+          id="subtasks"
         >
           <SubTasks task={staticState} />
         </TaskSection>
       )}
       <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Attachments"
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="attachments"
       >
         <Attachments />
       </TaskSection>
-      <TaskSection selected={selected} setSelected={setSelected} id="Log Hours">
+      <TaskSection
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="loghours"
+      >
         <LogHours task={staticState} />
       </TaskSection>
-      <TaskSection selected={selected} setSelected={setSelected} id="Events">
+      <TaskSection
+        clicked={clicked}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
+        id="events"
+      >
         <Events task={state} />
       </TaskSection>
       <TerminationDialog open={open} setOpen={setOpen} />
@@ -187,41 +242,27 @@ function TaskDetails() {
 }
 
 interface Props {
-  selected: string;
   id: string;
   children: any;
-  setSelected: (item: string) => void;
+  clicked: string;
+  scrolled: string;
+  setScrolled: (item: string) => void;
 }
 
-const TaskSection = ({ children, selected, setSelected, id }: Props) => {
+const TaskSection = ({
+  children,
+  clicked,
+  scrolled,
+  setScrolled,
+  id,
+}: Props) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (selected === id) {
-      if (elementRef.current) {
-        const elementTop = elementRef.current.offsetTop;
-        const top = elementTop - 140;
-        window.scrollTo({ top });
-      }
-    }
-  }, [selected, id]);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (elementRef.current) {
-  //       let elementTop = elementRef.current.getBoundingClientRect().y;
-  //       if (elementTop < 200) {
-  //         setSelected(id);
-  //       }
-  //     }
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [id, setSelected]);
-
-  return <StyledTaskSection ref={elementRef}>{children}</StyledTaskSection>;
+  return (
+    <StyledTaskSection data-target={id} ref={elementRef}>
+      {children}
+    </StyledTaskSection>
+  );
 };
 
 export default TaskDetails;

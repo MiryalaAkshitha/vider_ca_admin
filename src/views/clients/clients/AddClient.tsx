@@ -5,11 +5,12 @@ import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
+import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { DialogProps, ResType, SubmitType } from "types";
+import { ResType, SubmitType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 
 interface StateProps {
@@ -22,7 +23,8 @@ interface StateProps {
   email: string;
 }
 
-function AddClient({ open, setOpen }: DialogProps) {
+function AddClient() {
+  const { queryParams, setQueryParams } = useQueryParams();
   const navigate = useNavigate();
   const snack = useSnack();
   const [state, setState] = useState<StateProps>({
@@ -40,7 +42,7 @@ function AddClient({ open, setOpen }: DialogProps) {
     "users",
     getUsers,
     {
-      enabled: open,
+      enabled: queryParams.createClient === "true",
     }
   );
 
@@ -81,7 +83,16 @@ function AddClient({ open, setOpen }: DialogProps) {
   )?.subCategories;
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add Client">
+    <DrawerWrapper
+      open={queryParams.createClient === "true"}
+      setOpen={() => {
+        delete queryParams.createClient;
+        setQueryParams({
+          ...queryParams,
+        });
+      }}
+      title="Add Client"
+    >
       {userLoading ? (
         <Loader />
       ) : (

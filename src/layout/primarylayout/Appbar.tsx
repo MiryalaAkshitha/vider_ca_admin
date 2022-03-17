@@ -19,8 +19,8 @@ import {
   NotificationsOutlined,
 } from "@mui/icons-material";
 import GlobalCreateModal from "./GlobalCreateModal";
-import AddCreateTask from "./AddCreateTask";
 import Notifications from "./Notifications";
+import GlobalAdd from "./GlobalAdd";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: theme.transitions.create(["width", "margin"], {
@@ -35,7 +35,8 @@ function Appbar() {
   const [configAnchorEl, setConfigAnchorEl] = useState<null | HTMLElement>(
     null
   );
-  const [openGlobalDialog, setOpenGlobalDialog] = useState<boolean>(false);
+  const [globalAddAnchorEl, setGlobalAddAnchorEl] =
+    useState<HTMLElement | null>(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] =
     useState<null | HTMLElement>(null);
 
@@ -59,7 +60,10 @@ function Appbar() {
             <IconButton onClick={(e) => setConfigAnchorEl(e.currentTarget)}>
               <MenuOutlinedIcon color="primary" />
             </IconButton>
-            <IconButton onClick={() => setOpenGlobalDialog(true)}>
+            <IconButton
+              title="Global Add"
+              onClick={(e) => setGlobalAddAnchorEl(e.currentTarget)}
+            >
               <AddCircleOutlineRounded color="primary" />
             </IconButton>
             <IconButton
@@ -88,9 +92,10 @@ function Appbar() {
         anchorEl={configAnchorEl}
         setAnchorEl={setConfigAnchorEl}
       />
-      <GlobalCreateModal open={openGlobalDialog} setOpen={setOpenGlobalDialog}>
-        <AddCreateTask setOpen={setOpenGlobalDialog} />
-      </GlobalCreateModal>
+      <GlobalAdd
+        anchorEl={globalAddAnchorEl}
+        setAnchorEl={setGlobalAddAnchorEl}
+      />
       <Notifications
         notificationsAnchorEl={notificationsAnchorEl}
         setNotificationsAnchorEl={setNotificationsAnchorEl}

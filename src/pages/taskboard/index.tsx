@@ -51,7 +51,7 @@ function TaskBoard() {
   );
 
   return (
-    <Box sx={{ overflowY: "hidden", p: 2 }}>
+    <Box p={2}>
       <Filters />
       {isLoading ? (
         <Loader />
