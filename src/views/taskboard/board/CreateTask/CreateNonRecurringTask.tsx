@@ -1,6 +1,6 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createRecurringTask } from "api/services/tasks";
+import { createTask } from "api/services/tasks";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
@@ -8,37 +8,35 @@ import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { InputChangeType, SubmitType } from "types";
-import { PriorityEnum, RecurringFrequency } from "utils/constants";
-import CustomDates from "./CustomDates";
-import CustomSelect from "./CustomSelect";
-import CustomTextField from "./CustomTextField";
-import FrequencyDates from "./FrequencyDates";
-import { RecurringInitialState } from "./initialState";
-import SelectCategory from "./SelectCategory";
-import { RecurringStateProps } from "./types";
+import { getTitle } from "utils";
+import { PriorityEnum } from "utils/constants";
+import { initialState } from "./initialState";
+import { StateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
-function CreateRecurringTask() {
+function CreateNonRecurringTask() {
   const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
   const { users, labels, categories, clients, loading } =
     useCreateTaskInitialData({});
-  const [state, setState] = useState<RecurringStateProps>(
-    RecurringInitialState
-  );
+  const [state, setState] = useState<StateProps>(initialState);
 
   const handleChange = (e: InputChangeType) => {
+    if (e.target.name === "category") {
+      setState({ ...state, category: +e.target.value, subCategory: null });
+      return;
+    }
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const { mutate, isLoading } = useMutation(createRecurringTask, {
+  const { mutate, isLoading } = useMutation(createTask, {
     onSuccess: () => {
-      snack.success("Recurring Task Created");
-      setState(RecurringInitialState);
-      queryClient.invalidateQueries("tasks");
+      snack.success("Task Created");
       delete queryParams.createTask;
       setQueryParams({ ...queryParams });
+      setState(initialState);
+      queryClient.invalidateQueries("tasks");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -47,13 +45,12 @@ function CreateRecurringTask() {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    let apiData = { ...state };
+    const apiData = { ...state };
 
     if (!apiData.client?.length) {
       snack.error("Please select atleast one client");
       return;
     }
-
     apiData.members = apiData.members.map((member: any) => member.id);
     apiData.labels = apiData.labels.map((label: any) => label.id);
     apiData.category = apiData.category?.id;
@@ -62,6 +59,10 @@ function CreateRecurringTask() {
     mutate(apiData);
   };
 
+  let subCategories = categories?.data.find(
+    (item) => item.id === state.category?.id
+  )?.subCategories;
+
   return (
     <>
       {loading ? (
@@ -69,10 +70,10 @@ function CreateRecurringTask() {
       ) : (
         <form onSubmit={handleSubmit}>
           <Autocomplete
-            id="tags-standard"
             multiple
+            id="tags-standard"
             onChange={(_, value) => {
-              setState({ ...state, client: value?.map((v: any) => v.id) });
+              setState({ ...state, client: value?.map((item) => item?.id) });
             }}
             options={clients?.data[0] || []}
             getOptionLabel={(option: any) => option?.displayName}
@@ -86,29 +87,92 @@ function CreateRecurringTask() {
               />
             )}
           />
-          <SelectCategory
-            state={state}
-            setState={setState}
-            categories={categories?.data}
+          <Autocomplete
+            id="tags-standard"
+            onChange={(_, value) => {
+              setState({ ...state, category: value });
+            }}
+            sx={{ mt: 3 }}
+            options={categories?.data || []}
+            value={state.category}
+            getOptionLabel={(option: any) => option?.name}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Category"
+              />
+            )}
           />
-          <CustomTextField label="Name" name="name" onChange={handleChange} />
-          <CustomSelect
-            name="frequency"
-            options={Object.values(RecurringFrequency).map((item) => ({
-              label: item,
-              value: item,
-            }))}
-            value={state.frequency}
-            label="Frequency"
+          {subCategories?.length ? (
+            <Autocomplete
+              id="tags-standard"
+              onChange={(_, value) => {
+                setState({ ...state, subCategory: value });
+              }}
+              options={subCategories || []}
+              value={state.subCategory}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => option?.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Sub Category"
+                />
+              )}
+            />
+          ) : null}
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
             onChange={handleChange}
+            size="small"
+            label="Name"
+            name="name"
+            required
           />
-
-          {state.frequency && state.frequency !== RecurringFrequency.CUSTOM && (
-            <FrequencyDates state={state} setState={setState} />
-          )}
-          {state.frequency && state.frequency === RecurringFrequency.CUSTOM && (
-            <CustomDates state={state} setState={setState} />
-          )}
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            type="date"
+            value={state.startDate || ""}
+            InputLabelProps={{ shrink: true }}
+            label="Start Date"
+            name="startDate"
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            type="date"
+            value={state.dueDate || ""}
+            InputLabelProps={{ shrink: true }}
+            label="Due Date"
+            name="dueDate"
+          />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            size="small"
+            type="date"
+            value={state.expectedCompletionDate || ""}
+            InputLabelProps={{ shrink: true }}
+            label="Expected Completion Date"
+            name="expectedCompletionDate"
+          />
           <TextField
             sx={{ mt: 3 }}
             variant="outlined"
@@ -190,28 +254,43 @@ function CreateRecurringTask() {
               />
             )}
           />
-          <CustomSelect
-            label="Priority"
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="small"
+            sx={{ mt: 3 }}
+            select
+            required
             name="priority"
+            value={state.priority || ""}
+            label="Priority"
             onChange={handleChange}
-            value={state.priority}
-            options={Object.values(PriorityEnum)?.map((item) => ({
-              label: item,
-              value: item,
-            }))}
-          />
-          <CustomTextField
+          >
+            {Object.values(PriorityEnum).map((item, index) => (
+              <MenuItem key={index} value={item}>
+                {getTitle(item)}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            size="small"
+            onChange={handleChange}
             name="feeAmount"
             label="Fee Amount"
-            onChange={handleChange}
           />
-          <CustomTextField
-            name="description"
-            label="Description"
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            size="small"
             onChange={handleChange}
-            rows={5}
-            required={false}
+            name="description"
             multiline
+            rows={4}
+            label="Description"
           />
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
@@ -229,4 +308,4 @@ function CreateRecurringTask() {
   );
 }
 
-export default CreateRecurringTask;
+export default CreateNonRecurringTask;

@@ -4,23 +4,18 @@ import { Box } from "@mui/system";
 import { getTasks } from "api/services/tasks";
 import Loader from "components/Loader";
 import useQueryParams from "hooks/useQueryParams";
-import { useState } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { ResType, ViewType } from "types";
 import Board from "views/taskboard/board";
-// import CreateTask from "views/taskboard/board/CreateTask";
-// import CreateRecurringTask from "views/taskboard/board/CreateTask/CreateRecurringTask";
-import MainCreateTaskDrawer from "views/taskboard/board/CreateTask/MainCreateTaskDrawer";
 import Filters from "views/taskboard/Filters";
 import TaskTable from "views/taskboard/table";
 
 function TaskBoard() {
-  const { queryParams } = useQueryParams();
+  const { queryParams, setQueryParams } = useQueryParams();
   const view = (queryParams.view as ViewType) || "grid";
   const { search, appliedFilters } = useSelector(selectTaskBoard);
-  const [open, setOpen] = useState<boolean>(false);
 
   const getFiltersData = () => {
     let result = {};
@@ -54,7 +49,13 @@ function TaskBoard() {
       {isLoading ? (
         <Loader />
       ) : data?.data?.length ? (
-        <>{view === "grid" ? <Board data={data.data} /> : <TaskTable data={data.data} />}</>
+        <>
+          {view === "grid" ? (
+            <Board data={data.data} />
+          ) : (
+            <TaskTable data={data.data} />
+          )}
+        </>
       ) : (
         <Box textAlign="center" mt={20}>
           <Typography variant="subtitle1" color="rgba(0,0,0,0.5)">
@@ -63,8 +64,12 @@ function TaskBoard() {
         </Box>
       )}
       <Fab
-        // onClick={(e) => setAnchorEl(e.currentTarget)}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setQueryParams({
+            ...queryParams,
+            createTask: "true",
+          });
+        }}
         size="medium"
         color="secondary"
         sx={{ position: "fixed", bottom: 40, right: 40, borderRadius: "8px" }}
@@ -72,7 +77,6 @@ function TaskBoard() {
       >
         <Add />
       </Fab>
-      <MainCreateTaskDrawer open={open} setOpen={setOpen} />
     </Box>
   );
 }

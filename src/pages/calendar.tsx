@@ -1,19 +1,18 @@
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Box } from "@mui/material";
 import { getEvents } from "api/services/events";
 import { getTasks } from "api/services/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
+import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
-import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import AddEvent from "views/calendar/AddEvent";
-import useQueryParams from "hooks/useQueryParams";
 
 function Calendar() {
   useTitle("Calendar");

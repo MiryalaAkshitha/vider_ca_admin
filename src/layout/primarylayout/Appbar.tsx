@@ -1,5 +1,11 @@
+import {
+  AddCircleOutlineRounded,
+  LanguageOutlined,
+  NotificationsOutlined
+} from "@mui/icons-material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { IconButton } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled, useTheme } from "@mui/material/styles";
@@ -7,20 +13,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { selectTitle } from "redux/reducers/globalSlice";
 import AccountMenu from "./AccountMenu";
 import ConfigurationMenu from "./ConfigurationMenu";
-import { useSelector } from "react-redux";
-import { selectTitle } from "redux/reducers/globalSlice";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { Link } from "react-router-dom";
-import {
-  AddCircleOutlineRounded,
-  LanguageOutlined,
-  NotificationsOutlined,
-} from "@mui/icons-material";
-import GlobalCreateModal from "./GlobalCreateModal";
-import Notifications from "./Notifications";
 import GlobalAdd from "./GlobalAdd";
+import Notifications from "./Notifications";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: theme.transitions.create(["width", "margin"], {
