@@ -1,42 +1,28 @@
-import { MenuItem, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { createClient } from "api/services/client";
 import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
+import CustomSelectField from "components/FormFields/CustomSelectField";
+import CustomTextField from "components/FormFields/CustomTextField";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
-import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { ResType, SubmitType } from "types";
+import { ResType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
-
-interface StateProps {
-  category: string;
-  subCategory: string | null;
-  displayName: string;
-  tradeName: string;
-  clientManager: string;
-  mobileNumber: string;
-  email: string;
-}
+import {
+  createClientDefaultValues,
+  CreateClientSchema,
+} from "utils/vallidations";
 
 function AddClient() {
   const { queryParams, setQueryParams } = useQueryParams();
   const navigate = useNavigate();
   const snack = useSnack();
-  const [state, setState] = useState<StateProps>({
-    category: "",
-    subCategory: null,
-    displayName: "",
-    tradeName: "",
-    clientManager: "",
-    mobileNumber: "",
-    email: "",
-  });
-  let formRef = useRef<HTMLFormElement>(null);
 
   const { data: users, isLoading: userLoading }: ResType = useQuery(
     "users",
@@ -45,21 +31,6 @@ function AddClient() {
       enabled: queryParams.createClient === "true",
     }
   );
-
-  const handleChange = (e: any) => {
-    if (e.target.name === "category") {
-      setState({
-        ...state,
-        category: e.target.value,
-        subCategory: null,
-      });
-      return;
-    }
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const { mutate, isLoading } = useMutation(createClient, {
     onSuccess: (res) => {
@@ -73,14 +44,21 @@ function AddClient() {
     },
   });
 
-  const handleSubmit = (e: SubmitType) => {
-    e.preventDefault();
-    mutate(state);
-  };
+  const { watch, control, formState, handleSubmit } = useForm({
+    defaultValues: createClientDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(CreateClientSchema),
+  });
 
   let subCategories = CLIENT_CATEGORIES.find(
-    (item) => item.value === state.category
+    (item) => item.value === watch("category")
   )?.subCategories;
+
+  const onFormSubmit = (data: any) => {
+    mutate(data);
+  };
+
+  const { errors } = formState;
 
   return (
     <DrawerWrapper
@@ -96,113 +74,84 @@ function AddClient() {
       {userLoading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleSubmit} ref={formRef}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            select
-            value={state.category || ""}
-            onChange={handleChange}
-            required
+        <form onSubmit={handleSubmit(onFormSubmit)}>
+          <CustomSelectField
+            control={control}
             name="category"
             label="Category"
-          >
-            {CLIENT_CATEGORIES.map((item, index) => (
-              <MenuItem key={index} value={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            error={errors.category}
+            options={CLIENT_CATEGORIES.map((item) => ({
+              label: item.label,
+              value: item.value,
+            }))}
+          />
           {subCategories && (
-            <TextField
-              variant="outlined"
-              fullWidth
-              required
-              sx={{ mt: 3 }}
-              name="subCategory"
-              value={state.subCategory || ""}
-              onChange={handleChange}
-              size="small"
-              select
-              label="Sub Category"
-            >
-              {subCategories.map((item, index) => (
-                <MenuItem key={index} value={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </TextField>
+            <Box mt={2}>
+              <CustomSelectField
+                control={control}
+                name="subCategory"
+                label="Sub Category"
+                error={errors.subCategory}
+                options={subCategories.map((item) => ({
+                  label: item.label,
+                  value: item.value,
+                }))}
+              />
+            </Box>
           )}
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="displayName"
-            required
-            onChange={handleChange}
-            size="small"
-            label="Display Name"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="tradeName"
-            required
-            onChange={handleChange}
-            size="small"
-            label="Trade Name"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            value={state.clientManager || ""}
-            name="clientManager"
-            size="small"
-            label="Client Manager"
-            select
-          >
-            {users?.data?.map((item: any, index: number) => (
-              <MenuItem key={index} value={item?.id}>
-                {item?.fullName}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            name="mobileNumber"
-            size="small"
-            label="Mobile Number"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="email"
-            required
-            type="email"
-            onChange={handleChange}
-            size="small"
-            label="Email ID"
-          />
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
-              fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Create Client"
-              color="secondary"
+          <Box mt={2}>
+            <CustomTextField
+              control={control}
+              name="displayName"
+              label="Display Name"
+              error={errors.displayName}
             />
           </Box>
+          <Box mt={2}>
+            <CustomTextField
+              control={control}
+              name="tradeName"
+              label="Trade Name"
+              error={errors.tradeName}
+            />
+          </Box>
+          <Box mt={2}>
+            <CustomSelectField
+              control={control}
+              name="clientManager"
+              label="Client Manager"
+              error={errors.clientManager}
+              options={users?.data?.map((item: any) => ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <CustomTextField
+              control={control}
+              name="mobileNumber"
+              label="Mobile Number"
+              error={errors.mobileNumber}
+            />
+          </Box>
+          <Box mt={2}>
+            <CustomTextField
+              control={control}
+              name="email"
+              label="Email"
+              error={errors.email}
+            />
+          </Box>
+          <LoadingButton
+            loading={isLoading}
+            fullWidth
+            sx={{ mt: 3 }}
+            type="submit"
+            loadingColor="white"
+            title="Create Client"
+            color="secondary"
+          />
         </form>
       )}
     </DrawerWrapper>

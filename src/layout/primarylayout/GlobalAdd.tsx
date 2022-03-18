@@ -51,10 +51,9 @@ function GlobalAdd({ anchorEl, setAnchorEl }: AccountMenuProps) {
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
       {globalAddMenu.map((item, index) => (
-        <>
+        <div key={index}>
           <MenuItem
             sx={{ py: 1, m: 0 }}
-            key={index}
             onClick={() => {
               setQueryParams({
                 ...queryParams,
@@ -70,7 +69,7 @@ function GlobalAdd({ anchorEl, setAnchorEl }: AccountMenuProps) {
           {globalAddMenu.length - 1 !== index && (
             <Divider sx={{ mx: 1, my: 0 }} />
           )}
-        </>
+        </div>
       ))}
     </Menu>
   );

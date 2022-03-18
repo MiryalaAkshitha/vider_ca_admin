@@ -3,7 +3,7 @@ import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClientPasswords } from "api/services/client-info";
 import Loader from "components/Loader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
