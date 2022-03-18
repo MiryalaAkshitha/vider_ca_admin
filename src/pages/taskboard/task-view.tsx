@@ -5,7 +5,6 @@ import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
-import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";

@@ -43,7 +43,7 @@ function Events({ task }: any) {
           <Grid container spacing={2}>
             {data?.data?.map((item: any, index: number) => (
               <Grid item xs={4}>
-                <EventCard data={item} key={index} />
+                <EventCard task={task} data={item} key={index} />
               </Grid>
             ))}
           </Grid>
@@ -57,7 +57,7 @@ function Events({ task }: any) {
           />
         )}
       </Box>
-      <LinkEvent open={open} setOpen={setOpen} data={task} />
+      <LinkEvent open={open} setOpen={setOpen} task={task} />
     </>
   );
 }

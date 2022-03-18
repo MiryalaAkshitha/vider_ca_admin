@@ -7,11 +7,11 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { createEvent } from "api/services/events";
+import { updateEvent } from "api/services/events";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 import { getTitle } from "utils";
@@ -32,9 +32,10 @@ interface IState {
 
 interface Props extends DialogProps {
   task: any;
+  event: any;
 }
 
-function LinkEvent({ open, setOpen, task }: Props) {
+function EditEvent({ open, setOpen, task, event }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [reminderChecked, setReminderChecked] = useState<boolean>(false);
@@ -51,9 +52,16 @@ function LinkEvent({ open, setOpen, task }: Props) {
     members: [],
   });
 
-  const { mutate, isLoading: createLoading } = useMutation(createEvent, {
+  useEffect(() => {
+    setState(event);
+    if (event.reminder) {
+      setReminderChecked(true);
+    }
+  }, [event]);
+
+  const { mutate, isLoading: createLoading } = useMutation(updateEvent, {
     onSuccess: () => {
-      snack.success("Event Created");
+      snack.success("Event Updated");
       setOpen(false);
       queryClient.invalidateQueries("events");
     },
@@ -68,15 +76,19 @@ function LinkEvent({ open, setOpen, task }: Props) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
+    let data = { ...state };
+    if (!reminderChecked) {
+      data.reminder = null;
+      data.reminderNotes = null;
+    }
     mutate({
-      ...state,
-      task: task?.id,
-      client: task?.client?.id,
+      id: event.id,
+      data,
     });
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create an Event">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Edit Event">
       <form onSubmit={handleSubmit}>
         <Autocomplete
           multiple
@@ -107,6 +119,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           fullWidth
           required
           name="title"
+          value={state.title}
           onChange={handleChange}
         />
         <TextField
@@ -114,6 +127,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           sx={{ mt: 3 }}
           variant="outlined"
           size="small"
+          value={state.location}
           fullWidth
           name="location"
           onChange={handleChange}
@@ -126,6 +140,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           size="small"
           fullWidth
           required
+          value={state.date}
           InputLabelProps={{ shrink: true }}
           name="date"
           onChange={handleChange}
@@ -141,6 +156,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
               InputLabelProps={{ shrink: true }}
               fullWidth
               required
+              value={state.startTime}
               name="startTime"
               onChange={handleChange}
             />
@@ -156,6 +172,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
               fullWidth
               required
               name="endTime"
+              value={state.endTime}
               onChange={handleChange}
             />
           </Grid>
@@ -168,6 +185,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           sx={{ mt: 3 }}
           variant="outlined"
           size="small"
+          value={state.reminderNotes}
           name="reminderNotes"
           onChange={handleChange}
           fullWidth
@@ -192,6 +210,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
               sx={{ mt: 3 }}
               required
               name="reminder"
+              value={state.reminder}
               label="Reminder"
               onChange={handleChange}
             >
@@ -209,7 +228,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
             type="submit"
             fullWidth
             loadingColor="white"
-            title="Create Event"
+            title="Update Event"
             color="secondary"
           />
         </Box>
@@ -218,4 +237,4 @@ function LinkEvent({ open, setOpen, task }: Props) {
   );
 }
 
-export default LinkEvent;
+export default EditEvent;
