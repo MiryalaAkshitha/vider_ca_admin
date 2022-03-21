@@ -1,21 +1,12 @@
-import { Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography } from "@mui/material";
 
 const InvoiceHeadings = ({ title }) => {
   return (
-    <>
-      <Typography
-        component="div"
-        sx={{
-          color: "#0D47A1",
-          backgroundColor: "#F4F4F4",
-          padding: "15px 20px",
-          fontWeight: "600",
-        }}
-      >
+    <Box bgcolor="#F4F4F4" p={2}>
+      <Typography variant="subtitle2" color="primary">
         {title}
       </Typography>
-    </>
+    </Box>
   );
 };
 

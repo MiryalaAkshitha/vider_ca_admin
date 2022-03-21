@@ -1,41 +1,40 @@
-import React, { useState } from "react";
-import { Divider, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import Add from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
-import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import { Button, Divider, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-
-const termsData = [
-  "Please pay within 15 days from the date of invoice, overdue interest @ 14% will be charged on delayed payments.",
-  "Please quote invoice number when remitting funds.",
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid rerum ratione reprehenderit!",
-];
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleAddTermsAndConditions,
+  handleRemoveTermsAndConditions,
+  handleUpdateTermsAndConditions,
+  selectInvoice,
+} from "redux/reducers/createInvoiceSlice";
 
 const DraggableListItems = () => {
-  const [terms, updateTerms] = useState([...termsData]);
+  const dispatch = useDispatch();
+  const { termsAndConditions } = useSelector(selectInvoice);
   const [term, setTerm] = useState("");
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
-    const items = Array.from(terms);
+    const items = Array.from(termsAndConditions);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
-    updateTerms(items);
+    dispatch(handleUpdateTermsAndConditions(items));
   }
 
   function handleAddTerm() {
     if (term !== "") {
-      updateTerms([...terms, term]);
+      dispatch(handleAddTermsAndConditions(term));
+      setTerm("");
     }
   }
 
   function handleRemoveTerm(index) {
-    let tempArr = [...terms];
-    tempArr.splice(index, 1);
-    updateTerms([...tempArr]);
+    dispatch(handleRemoveTermsAndConditions(index));
   }
 
   return (
@@ -44,9 +43,13 @@ const DraggableListItems = () => {
         <Droppable droppableId="terms">
           {(provided) => (
             <Box ref={provided.innerRef} {...provided.droppableProps}>
-              {terms.map((term, index) => {
+              {termsAndConditions.map((term, index) => {
                 return (
-                  <Draggable key={index} draggableId={index.toString()} index={index}>
+                  <Draggable
+                    key={index}
+                    draggableId={index.toString()}
+                    index={index}
+                  >
                     {(provided) => (
                       <Box
                         ref={provided.innerRef}
@@ -61,12 +64,7 @@ const DraggableListItems = () => {
                             justifyContent: "space-between",
                           }}
                         >
-                          <Typography
-                            component="div"
-                            sx={{
-                              fontWeight: "600",
-                            }}
-                          >
+                          <Typography variant="body1">
                             {`${index + 1}. ${term}`}
                           </Typography>
                           <Box
@@ -79,18 +77,19 @@ const DraggableListItems = () => {
                           >
                             <CloseIcon
                               onClick={() => handleRemoveTerm(index)}
-                              sx={{ cursor: "pointer", fontSize: "20px", color: "red" }}
+                              sx={{
+                                cursor: "pointer",
+                                fontSize: "20px",
+                                color: "red",
+                              }}
                             />
-                            {index < terms.length - 1 ? (
-                              <ArrowDownwardRoundedIcon
-                                sx={{ cursor: "pointer", fontSize: "20px", color: "red" }}
-                              />
-                            ) : null}
-                            {index !== 0 ? (
-                              <ArrowUpwardRoundedIcon
-                                sx={{ cursor: "pointer", fontSize: "20px", color: "red" }}
-                              />
-                            ) : null}
+                            <DragIndicatorIcon
+                              sx={{
+                                cursor: "pointer",
+                                fontSize: "20px",
+                                color: "red",
+                              }}
+                            />
                           </Box>
                         </Box>
                         <Divider />
@@ -104,21 +103,8 @@ const DraggableListItems = () => {
           )}
         </Droppable>
       </DragDropContext>
-
-      <Box
-        sx={{
-          padding: "10px 20px",
-        }}
-      >
+      <Box mt={4}>
         <TextField
-          sx={{
-            "& .MuiInput-root": {
-              "::before": {
-                content: "normal",
-                border: "0",
-              },
-            },
-          }}
           fullWidth
           label="Enter your Term here"
           variant="standard"
@@ -126,6 +112,7 @@ const DraggableListItems = () => {
           onChange={(e) => {
             setTerm(e.target.value);
           }}
+          sx={{ mb: 2 }}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               handleAddTerm();
@@ -133,21 +120,9 @@ const DraggableListItems = () => {
           }}
         />
       </Box>
-      <Divider />
-
-      <Typography
-        sx={{
-          color: "#F2353C",
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer",
-          marginTop: "10px",
-          width: "fit-content",
-        }}
-        onClick={handleAddTerm}
-      >
-        <Add /> Add new Term
-      </Typography>
+      <Button color="secondary" startIcon={<Add />} onClick={handleAddTerm}>
+        Add new term
+      </Button>
     </Box>
   );
 };

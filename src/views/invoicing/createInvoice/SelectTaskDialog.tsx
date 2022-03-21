@@ -1,24 +1,29 @@
-import { useState } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SearchIcon from "@mui/icons-material/Search";
 import {
-  Typography,
   Button,
+  Checkbox,
   Dialog,
-  Grid,
   Divider,
-  TextField,
+  Grid,
   InputAdornment,
-  TableContainer,
+  Paper,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Checkbox,
-  Paper,
+  TextField,
+  Typography,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Box } from "@mui/system";
+import { getInvoicingTasks } from "api/services/invoicing";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import { selectInvoice } from "redux/reducers/createInvoiceSlice";
+import { ResType } from "types";
 
 const taskHeadings = [
   "Task Category",
@@ -51,18 +56,24 @@ const taskData = [
 const CheckboxStates = taskData.map(() => false);
 
 const SelectTaskDialog = ({ open, setOpen, addTask }) => {
+  const { client } = useSelector(selectInvoice);
   function handleClose() {
     setOpen(false);
   }
 
-  function handleAddTask() {
-    let tasksToAdd = selectedTasks
-      .map((value, index) => {
-        return value === true ? taskData[index].category : null;
-      })
-      .filter(Boolean);
+  const { data, isLoading }: ResType = useQuery(
+    [
+      "invocing-tasks",
+      {
+        client: client,
+      },
+    ],
+    getInvoicingTasks,
+    { enabled: open }
+  );
 
-    addTask(tasksToAdd);
+  function handleAddTask() {
+    addTask();
     setOpen(false);
   }
 

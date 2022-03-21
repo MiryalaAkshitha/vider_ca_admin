@@ -5,6 +5,7 @@ import GlobalReducer from "redux/reducers/globalSlice";
 import storageReducer from "redux/reducers/storageSlice";
 import taskBoardReducer from "redux/reducers/taskboardSlice";
 import signUpSliceReducer from "./reducers/signUpSlice";
+import createInvoiceReducer from "./reducers/createInvoiceSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     storage: storageReducer,
     taskBoard: taskBoardReducer,
     signup: signUpSliceReducer,
+    createInvoice: createInvoiceReducer,
   },
 });
 
