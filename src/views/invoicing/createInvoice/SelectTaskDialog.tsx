@@ -20,7 +20,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Box } from "@mui/system";
 
-const taskHeadings = ["Task Category", "Task Name (Task ID)", "Task Status", "Team members"];
+const taskHeadings = [
+  "Task Category",
+  "Task Name (Task ID)",
+  "Task Status",
+  "Team members",
+];
 
 const taskData = [
   {
@@ -67,8 +72,19 @@ const SelectTaskDialog = ({ open, setOpen, addTask }) => {
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={"lg"}>
-        <Box sx={{ display: "flex", flexDirection: "column", padding: "10px 20px" }}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={true}
+        maxWidth={"lg"}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "10px 20px",
+          }}
+        >
           <Box
             sx={{
               width: "100%",
@@ -126,7 +142,9 @@ const SelectTaskDialog = ({ open, setOpen, addTask }) => {
                                 checked={selectAll}
                                 onChange={() => {
                                   setSelectAll(!selectAll);
-                                  setSelectedTasks([...selectedTasks.map(() => !selectAll)]);
+                                  setSelectedTasks([
+                                    ...selectedTasks.map(() => !selectAll),
+                                  ]);
                                 }}
                               />
                             ) : null}
@@ -174,7 +192,6 @@ const SelectTaskDialog = ({ open, setOpen, addTask }) => {
               </Table>
             </TableContainer>
           </Grid>
-
           <Button
             color="secondary"
             variant="contained"

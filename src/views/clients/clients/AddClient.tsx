@@ -3,8 +3,8 @@ import { Box } from "@mui/system";
 import { createClient } from "api/services/client";
 import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
-import CustomSelectField from "components/FormFields/CustomSelectField";
-import CustomTextField from "components/FormFields/CustomTextField";
+import FormInput from "components/FormFields/FormInput";
+import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
@@ -44,7 +44,7 @@ function AddClient() {
     },
   });
 
-  const { watch, control, formState, handleSubmit } = useForm({
+  const { watch, control, handleSubmit } = useForm({
     defaultValues: createClientDefaultValues,
     mode: "onChange",
     resolver: yupResolver(CreateClientSchema),
@@ -57,8 +57,6 @@ function AddClient() {
   const onFormSubmit = (data: any) => {
     mutate(data);
   };
-
-  const { errors } = formState;
 
   return (
     <DrawerWrapper
@@ -75,11 +73,10 @@ function AddClient() {
         <Loader />
       ) : (
         <form onSubmit={handleSubmit(onFormSubmit)}>
-          <CustomSelectField
+          <FormSelect
             control={control}
             name="category"
             label="Category"
-            error={errors.category}
             options={CLIENT_CATEGORIES.map((item) => ({
               label: item.label,
               value: item.value,
@@ -87,11 +84,10 @@ function AddClient() {
           />
           {subCategories && (
             <Box mt={2}>
-              <CustomSelectField
+              <FormSelect
                 control={control}
                 name="subCategory"
                 label="Sub Category"
-                error={errors.subCategory}
                 options={subCategories.map((item) => ({
                   label: item.label,
                   value: item.value,
@@ -100,27 +96,20 @@ function AddClient() {
             </Box>
           )}
           <Box mt={2}>
-            <CustomTextField
+            <FormInput
               control={control}
               name="displayName"
               label="Display Name"
-              error={errors.displayName}
             />
           </Box>
           <Box mt={2}>
-            <CustomTextField
-              control={control}
-              name="tradeName"
-              label="Trade Name"
-              error={errors.tradeName}
-            />
+            <FormInput control={control} name="tradeName" label="Trade Name" />
           </Box>
           <Box mt={2}>
-            <CustomSelectField
+            <FormSelect
               control={control}
               name="clientManager"
               label="Client Manager"
-              error={errors.clientManager}
               options={users?.data?.map((item: any) => ({
                 label: item.fullName,
                 value: item.id,
@@ -128,20 +117,14 @@ function AddClient() {
             />
           </Box>
           <Box mt={2}>
-            <CustomTextField
+            <FormInput
               control={control}
               name="mobileNumber"
               label="Mobile Number"
-              error={errors.mobileNumber}
             />
           </Box>
           <Box mt={2}>
-            <CustomTextField
-              control={control}
-              name="email"
-              label="Email"
-              error={errors.email}
-            />
+            <FormInput control={control} name="email" label="Email" />
           </Box>
           <LoadingButton
             loading={isLoading}

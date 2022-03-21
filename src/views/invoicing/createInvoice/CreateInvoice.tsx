@@ -28,7 +28,8 @@ const billingAddress = [
   },
   {
     title: "Address",
-    value: "2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur, Telangana 500081",
+    value:
+      "2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur, Telangana 500081",
   },
   {
     title: "Mail Address",
@@ -55,7 +56,8 @@ const shippingAddress = [
   },
   {
     title: "Address",
-    value: "2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur, Telangana 500081",
+    value:
+      "2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur, Telangana 500081",
   },
   {
     title: "Mail Address",
@@ -118,7 +120,7 @@ export const CreateInvoice = ({ setOpen }) => {
         sx={{
           maxWidth: "1500px",
           margin: "0 auto",
-          padding: "30px 0",
+          padding: "30px",
         }}
       >
         <Box>
@@ -152,7 +154,9 @@ export const CreateInvoice = ({ setOpen }) => {
               >
                 <MenuItem value={"customer1"}>Vider Soft</MenuItem>
                 <MenuItem value={"customer2"}>Vider Softawre</MenuItem>
-                <MenuItem value={"customer3"}>Vider Software Solutions</MenuItem>
+                <MenuItem value={"customer3"}>
+                  Vider Software Solutions
+                </MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -243,24 +247,6 @@ export const CreateInvoice = ({ setOpen }) => {
             <Grid item xs={12}>
               <InvoiceHeadings title="Invoice Details" />
               <Grid container sx={{ padding: "30px 0" }}>
-                <Grid
-                  item
-                  xs={6}
-                  sx={{
-                    marginBottom: "30px",
-                  }}
-                >
-                  <TextField
-                    fullWidth
-                    id="outlined-basic"
-                    value={invoiceNumber}
-                    onChange={(e) => {
-                      setInvoiceNumber(e.target.value);
-                    }}
-                    label="Invoice number"
-                    variant="outlined"
-                  />
-                </Grid>
                 <Grid container columnSpacing={3}>
                   <Grid item xs={4}>
                     <TextField
@@ -289,7 +275,9 @@ export const CreateInvoice = ({ setOpen }) => {
                         <MenuItem value="term0">Net 30</MenuItem>
                         <MenuItem value={"term1"}>Vider Soft</MenuItem>
                         <MenuItem value={"term2"}>Vider Softawre</MenuItem>
-                        <MenuItem value={"term3"}>Vider Software Solutions</MenuItem>
+                        <MenuItem value={"term3"}>
+                          Vider Software Solutions
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -346,7 +334,9 @@ export const CreateInvoice = ({ setOpen }) => {
                   >
                     <MenuItem value={"bank1"}>HDFC</MenuItem>
                     <MenuItem value={"bank2"}>Vider Softawre</MenuItem>
-                    <MenuItem value={"bank3"}>Vider Software Solutions</MenuItem>
+                    <MenuItem value={"bank3"}>
+                      Vider Software Solutions
+                    </MenuItem>
                   </Select>
                 </FormControl>
                 <Box
@@ -401,7 +391,9 @@ export const CreateInvoice = ({ setOpen }) => {
               }}
             >
               <QrCode2Icon sx={{ fontSize: "200px" }} />
-              <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>Scan and pay</Typography>
+              <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
+                Scan and pay
+              </Typography>
             </Grid>
           </Grid>
         </Box>
@@ -420,7 +412,8 @@ export const CreateInvoice = ({ setOpen }) => {
         </Box>
         <Box sx={{ margin: "50px 0 100px 0" }}>
           <Typography sx={{ textAlign: "center" }}>
-            For any enquiry, reach out via email viderbusiness@gmail.com or call on +91 81211 81212
+            For any enquiry, reach out via email viderbusiness@gmail.com or call
+            on +91 81211 81212
           </Typography>
         </Box>
       </Box>
