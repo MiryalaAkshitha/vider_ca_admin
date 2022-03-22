@@ -1,4 +1,3 @@
-import { ArrowBack } from "@mui/icons-material";
 import {
   FormControl,
   Grid,
@@ -13,7 +12,6 @@ import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   handleClientChange,
   selectInvoice,
@@ -31,26 +29,10 @@ import Particulars from "./Particulars";
 const CreateInvoice = () => {
   const { client } = useSelector(selectInvoice);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { data, isLoading }: ResType = useQuery(["clients", {}], getClients);
 
-  useTitle(
-    <>
-      <Typography
-        variant="body2"
-        sx={{
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          fontSize: "16px",
-        }}
-        onClick={() => navigate("/invoicing")}
-      >
-        <ArrowBack /> New Invoice
-      </Typography>
-    </>
-  );
+  useTitle("New Invoice");
 
   if (isLoading) return <Loader />;
 
@@ -119,8 +101,8 @@ const CreateInvoice = () => {
             on +91 81211 81212
           </Typography>
         </Box>
-        <BottomBar />
       </Box>
+      <BottomBar />
     </>
   );
 };

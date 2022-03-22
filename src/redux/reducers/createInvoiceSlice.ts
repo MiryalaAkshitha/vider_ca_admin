@@ -1,5 +1,5 @@
-import { RootState } from "redux/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "redux/store";
 
 export const particularsHeadings = [
   "Particulars (Task / Service name)",
@@ -35,7 +35,6 @@ interface Particular {
   igstPercent: null | number;
   cgstPercent: null | number;
   sgstPercent: null | number;
-  amount: number;
 }
 
 interface OtherParticular {
@@ -49,8 +48,8 @@ export interface ICreateInvoice {
   invoiceDate: string | null;
   invoiceDueDate: string | null;
   terms: string | null;
-  shippingAddress: Address | null;
-  billingAddress: Address | null;
+  shippingAddress: Address;
+  billingAddress: Address;
   particulars: Array<Particular>;
   otherParticulars: Array<OtherParticular>;
   bankName: string | null;
@@ -58,6 +57,10 @@ export interface ICreateInvoice {
   bankIfscCode: string | null;
   bankBranch: string | null;
   termsAndConditions: Array<string>;
+  tasks: Array<number>;
+  tdsPercent: number;
+  otherCharges: number;
+  roundOff: string;
 }
 
 const initialState: ICreateInvoice = {
@@ -94,6 +97,16 @@ const initialState: ICreateInvoice = {
   bankIfscCode: null,
   bankBranch: null,
   termsAndConditions: [],
+  tasks: [],
+  tdsPercent: 0,
+  otherCharges: 0,
+  roundOff: "",
+};
+
+type AddressChangeType = {
+  key: string;
+  value: string;
+  type: "billing" | "shipping";
 };
 
 export const createInvoiceSlice = createSlice({
@@ -102,7 +115,7 @@ export const createInvoiceSlice = createSlice({
   reducers: {
     handleChange(
       state,
-      action: PayloadAction<{ key: string; value: string | null }>
+      action: PayloadAction<{ key: string; value: string | number | null }>
     ) {
       state[action.payload.key] = action.payload.value;
     },
@@ -138,10 +151,9 @@ export const createInvoiceSlice = createSlice({
         discountType: "PERCENT",
         discount: 0,
         taxableAmount: 0,
-        igstPercent: 5,
+        igstPercent: 0,
         cgstPercent: 0,
         sgstPercent: 0,
-        amount: 0,
       });
     },
     handleRemoveParticular(state, action: PayloadAction<number>) {
@@ -188,56 +200,43 @@ export const createInvoiceSlice = createSlice({
     handleUpdateTermsAndConditions(state, action) {
       state.termsAndConditions = action.payload;
     },
+    handleAddTasksToParticular(state, action: PayloadAction<any[]>) {
+      action.payload.forEach((task) => {
+        state.particulars.push({
+          name: task.name,
+          hsn: "",
+          units: 1,
+          rate: +task?.feeAmount || 0,
+          discountType: "PERCENT",
+          discount: 0,
+          taxableAmount: 0,
+          igstPercent: 0,
+          cgstPercent: 0,
+          sgstPercent: 0,
+        });
+        task?.expenditure?.forEach((expenditure) => {
+          state.otherParticulars.push({
+            name: expenditure.particularName,
+            type: expenditure.type,
+            amount: +expenditure?.amount || 0,
+          });
+        });
+        state.tasks.push(task.id);
+      });
+    },
+    handleAddressChange(state, action: PayloadAction<AddressChangeType>) {
+      const { key, value, type } = action.payload;
+      if (type === "billing") {
+        state.billingAddress[key] = value;
+      }
+      if (type === "shipping") {
+        state.shippingAddress[key] = value;
+      }
+    },
   },
 });
 
 export const selectInvoice = (state: RootState) => state.createInvoice;
-
-export const getTaxableAmount = (particular) => {
-  let result = particular.units * particular.rate;
-  if (particular.discountType === "PERCENT") {
-    result = result - (result * particular.discount) / 100;
-  }
-
-  if (particular.discountType === "AMOUNT") {
-    result = result - particular.discount;
-  }
-
-  return result;
-};
-
-export const getIgstAmount = (particular) => {
-  const taxableAmount = getTaxableAmount(particular);
-  return (taxableAmount * particular.igstPercent) / 100;
-};
-
-export const getAmount = (particular) => {
-  const taxableAmount = getTaxableAmount(particular);
-  const igstAmount = getIgstAmount(particular);
-  return taxableAmount + igstAmount;
-};
-
-export const totalTaxableValue = (particulars) => {
-  return particulars.reduce(
-    (acc, particular) => acc + getTaxableAmount(particular),
-    0
-  );
-};
-
-export const totalIgstValue = (particulars) => {
-  return particulars.reduce(
-    (acc, particular) => acc + getIgstAmount(particular),
-    0
-  );
-};
-
-export const totalAmount = (particulars) => {
-  return totalTaxableValue(particulars) + totalIgstValue(particulars);
-};
-
-export const totalOtherParticularsAmount = (particulars) => {
-  return particulars.reduce((acc, particular) => acc + particular.amount, 0);
-};
 
 export const {
   handleChange,
@@ -252,6 +251,8 @@ export const {
   handleRemoveOtherParticular,
   handleChangeOtherParticular,
   handleClientChange,
+  handleAddTasksToParticular,
+  handleAddressChange,
 } = createInvoiceSlice.actions;
 
 export default createInvoiceSlice.reducer;

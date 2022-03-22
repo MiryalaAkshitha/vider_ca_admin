@@ -10,24 +10,21 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAmount,
-  getIgstAmount,
-  getTaxableAmount,
   handleAddParticular,
   handleChangeParticular,
   handleRemoveParticular,
   particularsHeadings,
   selectInvoice,
-  totalAmount,
-  totalIgstValue,
-  totalTaxableValue,
 } from "redux/reducers/createInvoiceSlice";
+import { InvoiceCalculations } from "./calculations";
 import SelectTaskDialog from "./SelectTaskDialog";
 
 function Particulars() {
-  const { particulars } = useSelector(selectInvoice);
+  const state = useSelector(selectInvoice);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+
+  let iCalcs = new InvoiceCalculations(state);
 
   function updateParticular(index, key, value) {
     dispatch(
@@ -49,11 +46,7 @@ function Particulars() {
 
   return (
     <Box mt={2}>
-      <SelectTaskDialog
-        open={open}
-        setOpen={setOpen}
-        addTask={addNewParticular}
-      />
+      <SelectTaskDialog open={open} setOpen={setOpen} />
       <TableContainer>
         <Table sx={{ tableLayout: "fixed", emptyCells: "hide" }}>
           <TableHead
@@ -76,7 +69,7 @@ function Particulars() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {particulars.map((row, index) => (
+            {state.particulars.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{
@@ -176,7 +169,7 @@ function Particulars() {
                   <TextField
                     fullWidth
                     variant="standard"
-                    value={getTaxableAmount(row)}
+                    value={iCalcs.getTaxableAmount(row)}
                     disabled
                   />
                 </TableCell>
@@ -192,6 +185,7 @@ function Particulars() {
                         updateParticular(index, "igstPercent", e.target.value);
                       }}
                     >
+                      <option value="0">0 %</option>
                       <option value="5">5 %</option>
                       <option value="10">10 %</option>
                       <option value="15">15 %</option>
@@ -200,7 +194,7 @@ function Particulars() {
                     <TextField
                       fullWidth
                       variant="standard"
-                      value={getIgstAmount(row)}
+                      value={iCalcs.getIgstAmount(row)}
                       disabled
                     />
                   </Box>
@@ -216,7 +210,7 @@ function Particulars() {
                     fullWidth
                     id="amount"
                     variant="standard"
-                    value={getAmount(row)}
+                    value={iCalcs.getAmount(row)}
                     disabled
                   />
                   <IconButton color="secondary">
@@ -245,26 +239,26 @@ function Particulars() {
                   </Button>
                 </Box>
               </TableCell>
-              {particulars.length !== 0 && (
+              {state.particulars.length !== 0 && (
                 <>
                   <TableCell>
                     <Typography variant="body2">
                       Total taxable amount:
                     </Typography>
                     <Typography variant="subtitle2">
-                      {totalTaxableValue(particulars)} /-
+                      {iCalcs.totalTaxableAmount()} /-
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">Total IGST:</Typography>
                     <Typography variant="subtitle2">
-                      {totalIgstValue(particulars)} /-
+                      {iCalcs.totalIgstAmount()} /-
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">Total amount:</Typography>
                     <Typography variant="subtitle2">
-                      {totalAmount(particulars)} /-
+                      {iCalcs.totalAmount()} /-
                     </Typography>
                   </TableCell>
                 </>

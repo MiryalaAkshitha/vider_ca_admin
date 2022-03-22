@@ -7,13 +7,14 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { getStates } from "api/services/common";
 import { getLabels } from "api/services/labels";
 import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import { CLIENT_CATEGORIES, STATES } from "utils/constants";
+import { CLIENT_CATEGORIES } from "utils/constants";
 import ContactPersonDetails from "../ContactPersonDetails";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
@@ -30,6 +31,11 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
   const { data: users, isLoading: userLoading }: ResType = useQuery(
     "users",
     getUsers
+  );
+
+  const { data: states, isLoading: statesLoading }: ResType = useQuery(
+    "states",
+    getStates
   );
 
   const handleChange = (e: any) => {
@@ -51,12 +57,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
     (item) => item.value === data.category
   )?.subCategories;
 
-  const state = STATES.find((item) => item?.value === data?.state) || {
-    label: "",
-    value: "",
-  };
-
-  if (isLoading || userLoading) return <Loader />;
+  if (isLoading || userLoading || statesLoading) return <Loader />;
 
   return (
     <Box mt={5}>
@@ -239,11 +240,11 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
         </Grid>
         <Grid item xs={4}>
           <Autocomplete
-            onChange={(_, value) => setState({ ...data, state: value?.value })}
-            value={state}
-            options={STATES || []}
+            onChange={(_, value) => setState({ ...data, state: value })}
+            value={data?.state || ""}
+            options={states?.data?.map((item) => item?.name) || []}
             onBlur={onUpdate}
-            getOptionLabel={(option: any) => option?.label}
+            getOptionLabel={(option: any) => option}
             renderInput={(params) => (
               <TextField
                 {...params}

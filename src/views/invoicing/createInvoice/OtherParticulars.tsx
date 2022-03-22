@@ -11,13 +11,15 @@ import {
   handleChangeOtherParticular,
   handleRemoveOtherParticular,
   selectInvoice,
-  totalOtherParticularsAmount,
 } from "redux/reducers/createInvoiceSlice";
+import { InvoiceCalculations } from "./calculations";
 import TotalCalculations from "./TotalCalculations";
 
 function OtherParticulars() {
   const dispatch = useDispatch();
-  const { otherParticulars } = useSelector(selectInvoice);
+  const state = useSelector(selectInvoice);
+
+  let iCalcs = new InvoiceCalculations(state);
 
   function updateOtherParticular(index, key, value) {
     dispatch(
@@ -66,7 +68,7 @@ function OtherParticulars() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {otherParticulars.map((data, index) => {
+            {state.otherParticulars.map((data, index) => {
               return (
                 <TableRow
                   key={index}
@@ -146,7 +148,7 @@ function OtherParticulars() {
               <TableCell>
                 <Typography variant="body2">Total Amount</Typography>
                 <Typography variant="subtitle2">
-                  {totalOtherParticularsAmount(otherParticulars)} /-
+                  {iCalcs.additionalCharges()} /-
                 </Typography>
               </TableCell>
             </TableRow>

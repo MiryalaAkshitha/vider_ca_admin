@@ -3,15 +3,23 @@ import {
   Divider,
   FormControlLabel,
   FormGroup,
+  Grid,
   TextField,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleChange, selectInvoice } from "redux/reducers/createInvoiceSlice";
+import { InvoiceCalculations } from "./calculations";
 
 function TotalCalculations() {
-  const [checkTDS, setCheckTDS] = useState(true);
-  const [checkAdditionalCharges, setCheckAdditionalCharges] = useState(true);
+  const state = useSelector(selectInvoice);
+  const dispatch = useDispatch();
+  const [showTds, setShowTds] = useState(false);
+  const [showOtherCharges, setShowOtherCharges] = useState(false);
+
+  const iCalcs = new InvoiceCalculations(state);
 
   return (
     <Box
@@ -19,234 +27,157 @@ function TotalCalculations() {
         backgroundColor: "#f3f5fa",
       }}
     >
-      <Box
-        sx={{
-          padding: "20px 30px",
-          display: "flex",
-          flexDirection: "column",
-          rowGap: "6px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-              fontSize: "18px",
-            }}
-          >
-            Sub Total<span>:</span>
-          </Typography>
-          <Typography
-            sx={{
-              flex: 1,
-              marginLeft: "20px",
-              fontSize: "20px",
-              fontWeight: "bold",
-            }}
-          >
-            50,000 /-
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-            }}
-          >
-            + Pure Agent<span>:</span>
-          </Typography>
-          <Typography
-            sx={{
-              flex: 1,
-              marginLeft: "20px",
-            }}
-          >
-            500.5 /-
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-            }}
-            component="div"
-          >
-            <span>
-              <FormGroup>
+      <Box p={2}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography sx={{ flex: 1 }} variant="body1">
+                Sub Total
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2">
+              {iCalcs.totalAmount()} /-
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} mt="3px" alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography variant="body2">
+                Pure Agent/Additional Charges
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1">
+              {iCalcs.additionalCharges()}/-
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} mt="3px" alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1} alignItems="center">
+              <FormGroup sx={{ flex: 1 }}>
                 <FormControlLabel
-                  sx={{
-                    "&.MuiFormControlLabel-root": {
-                      margin: "0",
-                    },
-                    "& .MuiCheckbox-root": {
-                      marginRight: "5px",
-                    },
-                  }}
                   control={
                     <Checkbox
-                      sx={{ padding: "0" }}
-                      color="secondary"
                       onChange={(e) => {
-                        setCheckTDS(!checkTDS);
+                        setShowTds(e.target.checked);
                       }}
-                      checked={checkTDS}
+                      color="secondary"
                     />
                   }
                   label="Add TDS"
                 />
               </FormGroup>
-            </span>
-            <span>:</span>
-          </Typography>
-          <Typography
-            sx={{
-              flex: 1,
-              marginLeft: "20px",
-            }}
-            component="div"
-          >
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              placeholder="Enter TDS Amount"
-              disabled={!checkTDS}
-            />
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-            }}
-            component="div"
-          >
-            <span>
-              <FormGroup>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box display="flex" flex={1} gap={1}>
+              <TextField
+                fullWidth
+                select
+                onChange={(e) => {
+                  dispatch(
+                    handleChange({
+                      key: "tdsPercent",
+                      value: +e.target.value,
+                    })
+                  );
+                }}
+                disabled={!showTds}
+                variant="standard"
+                SelectProps={{ native: true }}
+              >
+                <option value="0">0%</option>
+                <option value="5">5%</option>
+                <option value="10">10% </option>
+              </TextField>
+              <TextField
+                value={iCalcs.tdsAmount()}
+                fullWidth
+                disabled
+                type="number"
+                variant="standard"
+              />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} alignItems="flex-end">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1} alignItems="center">
+              <FormGroup sx={{ flex: 1 }}>
                 <FormControlLabel
-                  sx={{
-                    "&.MuiFormControlLabel-root": {
-                      margin: "0",
-                    },
-                    "& .MuiCheckbox-root": {
-                      marginRight: "5px",
-                    },
-                  }}
                   control={
                     <Checkbox
-                      sx={{ padding: "0" }}
-                      color="secondary"
                       onChange={(e) => {
-                        setCheckAdditionalCharges(!checkAdditionalCharges);
+                        setShowOtherCharges(e.target.checked);
                       }}
-                      checked={checkAdditionalCharges}
+                      color="secondary"
                     />
                   }
-                  label="Additional Charges"
+                  label="Other Charges"
                 />
               </FormGroup>
-            </span>
-            <span>:</span>
-          </Typography>
-          <Typography
-            sx={{
-              flex: 1,
-              marginLeft: "20px",
-            }}
-            component="div"
-          >
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              placeholder="Enter Amount"
-              disabled={!checkAdditionalCharges}
-            />
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-            }}
-          >
-            +/- Round off<span>:</span>
-          </Typography>
-          <Typography
-            sx={{
-              flex: 1,
-              marginLeft: "20px",
-            }}
-          >
-            - 0.5
-          </Typography>
-        </Box>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box>
+              <TextField
+                disabled={!showOtherCharges}
+                onChange={(e) => {
+                  dispatch(
+                    handleChange({
+                      key: "otherCharges",
+                      value: +e.target.value,
+                    })
+                  );
+                }}
+                fullWidth
+                type="number"
+                variant="standard"
+              />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} mt="3px" alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography variant="body2" sx={{ flex: 1 }}>
+                +/- Round off
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1">{state.roundOff}</Typography>
+          </Grid>
+        </Grid>
       </Box>
       <Divider />
-      <Box sx={{ padding: "20px 30px" }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              flex: 1,
-              fontSize: "19px",
-            }}
-          >
-            Invoice Value<span>:</span>
-          </Typography>
-          <Typography
-            sx={{
-              flex: 1,
-              marginLeft: "20px",
-              fontSize: "24px",
-              fontWeight: "bold",
-            }}
-          >
-            50,500 /-
-          </Typography>
-        </Box>
-        <Typography
-          sx={{ fontSize: "17px", fontWeight: "500", marginTop: "20px" }}
-        >
+      <Box p={2}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography sx={{ flex: 1 }} variant="body1">
+                Invoice Value
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2">
+              {iCalcs.grandTotal()} /-
+            </Typography>
+          </Grid>
+        </Grid>
+        <Typography sx={{ mt: 3 }}>
           Rupees Five Thousand Five Hundred Only
         </Typography>
       </Box>

@@ -2,12 +2,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { logo } from "assets";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectInvoice } from "redux/reducers/createInvoiceSlice";
+import EditAddress from "./EditAddress";
 import InvoiceHeadings from "./InvoiceHeadings";
 
 function Addresses() {
   const { billingAddress, shippingAddress } = useSelector(selectInvoice);
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState<"billing" | "shipping">("billing");
 
   const getAddress = (address) => {
     let result = "";
@@ -27,7 +31,7 @@ function Addresses() {
   };
 
   return (
-    <Box sx={{ margin: "30px 0" }}>
+    <Box mt={4}>
       <Grid container spacing={2} alignItems="baseline" columnSpacing={4}>
         <Grid item xs={6}>
           <InvoiceHeadings title={"Billing Address"} />
@@ -41,6 +45,10 @@ function Addresses() {
               <Button
                 startIcon={<EditIcon fontSize="small" />}
                 color="secondary"
+                onClick={() => {
+                  setType("billing");
+                  setOpen(true);
+                }}
               >
                 Edit
               </Button>
@@ -74,6 +82,10 @@ function Addresses() {
               <Button
                 startIcon={<EditIcon fontSize="small" />}
                 color="secondary"
+                onClick={() => {
+                  setType("shipping");
+                  setOpen(true);
+                }}
               >
                 Edit
               </Button>
@@ -99,6 +111,7 @@ function Addresses() {
           </Box>
         </Grid>
       </Grid>
+      <EditAddress type={type} open={open} setOpen={setOpen} />
     </Box>
   );
 }
