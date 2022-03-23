@@ -26,7 +26,9 @@ function TaskItem({ data }: Props) {
   const [timerId, setTimerId] = useState<number | null>(null);
 
   useEffect(() => {
-    const existingTimer = data?.taskLogHours?.find((item: any) => item.status === "started");
+    const existingTimer = data?.taskLogHours?.find(
+      (item: any) => item.status === "started"
+    );
 
     if (existingTimer) {
       setShowTimer(true);
@@ -79,7 +81,9 @@ function TaskItem({ data }: Props) {
       <Box
         px={2}
         onClick={() => {
-          navigate(`/task-board/${data?.id}?clientId=${data?.client?.clientId}`);
+          navigate(
+            `/task-board/${data?.id}?clientId=${data?.client?.clientId}#details`
+          );
         }}
         py={1}
         sx={{ cursor: "pointer" }}
@@ -95,24 +99,47 @@ function TaskItem({ data }: Props) {
         <Box mt={2}>
           <Typography variant="body1" gutterBottom color="primary">
             {data?.name} -{" "}
-            <span style={{ color: data?.category?.color }}>{data?.category?.name}</span>
+            <span style={{ color: data?.category?.color }}>
+              {data?.category?.name}
+            </span>
           </Typography>
           <Box display="flex" justifyContent="space-between">
             <div>
               <Typography variant="caption" color="gray">
-                Due Date: {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
+                Due Date:{" "}
+                {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
               </Typography>
             </div>
-            {data?.recurring && <img style={{ textAlign: "right" }} src={icons.recurring} alt="" />}
+            {data?.recurring && (
+              <img
+                style={{ textAlign: "right" }}
+                src={icons.recurring}
+                alt=""
+              />
+            )}
           </Box>
           <Typography variant="caption" color="gray">
             Sub Tasks: ({data?.subTasks.length})
           </Typography>
         </Box>
       </Box>
-      <Box display="flex" px={1} py={1} mt={1} gap="10px" borderTop="1px solid rgba(0,0,0,0.1)">
-        {data?.priority !== "none" && <PriorityText variant="body2" text={data?.priority} />}
-        <Box onClick={handleEndTimer} display="flex" alignItems="center" gap="5px">
+      <Box
+        display="flex"
+        px={1}
+        py={1}
+        mt={1}
+        gap="10px"
+        borderTop="1px solid rgba(0,0,0,0.1)"
+      >
+        {data?.priority !== "none" && (
+          <PriorityText variant="body2" text={data?.priority} />
+        )}
+        <Box
+          onClick={handleEndTimer}
+          display="flex"
+          alignItems="center"
+          gap="5px"
+        >
           {showTimer ? (
             <>
               <StopCircleOutlinedIcon

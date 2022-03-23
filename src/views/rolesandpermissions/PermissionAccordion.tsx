@@ -5,17 +5,21 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Switch from "@mui/material/Switch";
 import { Box } from "@mui/system";
+import _ from "lodash";
 import { useState } from "react";
 
 interface IPermissionAccordion {
   permissions: number[];
   handlePermissionChange: (id: number) => void;
-  item: any;
+  label: string;
+  data: any;
 }
 
 const PermissonsAccordion = (props: IPermissionAccordion) => {
-  const { permissions, handlePermissionChange, item } = props;
+  const { permissions, data, handlePermissionChange, label } = props;
   const [open, setOpen] = useState<boolean>(true);
+
+  console.log(permissions);
 
   return (
     <Accordion expanded={open} onChange={() => setOpen(!open)}>
@@ -24,12 +28,12 @@ const PermissonsAccordion = (props: IPermissionAccordion) => {
         aria-controls="panel1bh-content"
         id="panel1bh-header"
       >
-        <Typography variant="body1" sx={{ width: "33%", flexShrink: 0 }}>
-          {item?.name}
+        <Typography variant="subtitle2" sx={{ width: "33%", flexShrink: 0 }}>
+          {label}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {item?.children?.map((item: any, index: number) => (
+        {data?.map((item: any, index: number) => (
           <Box
             sx={{
               borderBottom: "1px dashed rgba(0,0,0,0.1)",
@@ -41,7 +45,9 @@ const PermissonsAccordion = (props: IPermissionAccordion) => {
             key={index}
           >
             <Box flex={1}>
-              <Typography variant="body2">{item?.name}</Typography>
+              <Typography variant="body2">
+                {_.startCase(_.lowerCase(item?.name))}
+              </Typography>
             </Box>
             <Box>
               <Switch
