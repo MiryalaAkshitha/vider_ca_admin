@@ -1,9 +1,13 @@
 import loadable from "@loadable/component";
+import GlobalDrawers from "GlobalDrawers";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Invoicing = loadable(() => import("pages/invoicing"));
+const CreateInvoice = loadable(
+  () => import("views/invoicing/createInvoice/index")
+);
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
@@ -70,7 +74,10 @@ function RoutesContainer() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
-          <Route path="invoicing" element={<Invoicing />} />
+          <Route path="invoicing">
+            <Route index element={<Invoicing />} />
+            <Route path="create" element={<CreateInvoice />} />
+          </Route>
           <Route path="storage" element={<Storage />}>
             <Route path="my-storage" element={<MyStorage />} />
             <Route path="all-clients-storage" element={<AllClientsStorage />} />
@@ -128,6 +135,7 @@ function RoutesContainer() {
         <Route path="/join" element={<Join />} />
         <Route path="due-diligence/:taskId" element={<DueDiligencePreview />} />
       </Routes>
+      <GlobalDrawers />
     </Router>
   );
 }

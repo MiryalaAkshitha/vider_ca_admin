@@ -1,63 +1,44 @@
 import { Box } from "@mui/system";
-import { getClientInfo, updateClientInfo } from "api/services/client-info";
+import { getKybForms } from "api/services/client-info";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import AddedSections from "./AddedSections";
 import FormsContainer from "./FormsContainer";
 import KybDetails from "./KybDetails";
 
 function KybInfo() {
-  const snack = useSnack();
   const params = useParams();
   const clientId = params.clientId || "";
-  const [state, setState] = useState<any[]>([]);
-  const [forms, setForms] = useState<any[]>([]);
+  const [selectedForm, setSelectedForm] = useState<any>(null);
 
-  const { isLoading }: ResType = useQuery(
-    ["client-info", { clientId, type: "kyb" }],
-    getClientInfo,
+  const { data, isLoading }: ResType = useQuery(
+    ["kyb-info", { clientId }],
+    getKybForms,
     {
-      onSuccess: (res: any) => {
-        const data = res.data;
-        setState(data);
-        const forms = new Set(data.map((item: any) => item?.form));
-        setForms(Array.from(forms));
+      onSuccess: (res) => {
+        setSelectedForm(res.data[0]);
       },
     }
   );
 
-  const { mutate, isLoading: updateKybLoading } = useMutation(
-    updateClientInfo,
-    {
-      onSuccess: () => {
-        snack.success("Kyb Info Updated");
-      },
-      onError: (err: any) => {
-        snack.error(err.response.data.message);
-      },
-    }
-  );
-
-  const onUpdate = () => {
-    mutate({
-      data: state,
-      clientId,
-    });
-  };
-
-  if (isLoading || updateKybLoading) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <>
       <Box px={4} py={2} display="flex" justifyContent="space-between" gap={4}>
         <Box sx={{ maxWidth: 1000, width: "100%" }}>
-          <KybDetails state={state} setState={setState} forms={forms} />
+          <KybDetails selectedForm={selectedForm} />
         </Box>
         <Box sx={{ maxWidth: 500, width: "100%" }}>
-          <FormsContainer onUpdate={onUpdate} />
+          <AddedSections
+            selectedForm={selectedForm}
+            setSelectedForm={setSelectedForm}
+            data={data?.data}
+          />
+          <FormsContainer />
         </Box>
       </Box>
     </>

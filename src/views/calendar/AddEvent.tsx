@@ -13,10 +13,11 @@ import { getTasks } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
+import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, InputChangeType, ResType, SubmitType } from "types";
+import { InputChangeType, ResType, SubmitType } from "types";
 import { getTitle } from "utils";
 import { Reminders } from "utils/constants";
 
@@ -33,7 +34,8 @@ interface IState {
   members: Array<any>;
 }
 
-function AddEvent({ open, setOpen }: DialogProps) {
+function AddEvent() {
+  const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [reminderChecked, setReminderChecked] = useState<boolean>(false);
@@ -54,7 +56,7 @@ function AddEvent({ open, setOpen }: DialogProps) {
     ["clients", {}],
     getClients,
     {
-      enabled: open,
+      enabled: queryParams.createEvent === "true",
     }
   );
 
@@ -62,14 +64,15 @@ function AddEvent({ open, setOpen }: DialogProps) {
     ["tasks", {}],
     getTasks,
     {
-      enabled: open,
+      enabled: queryParams.createEvent === "true",
     }
   );
 
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
       snack.success("Event Created");
-      setOpen(false);
+      delete queryParams.createEvent;
+      setQueryParams({ ...queryParams });
       queryClient.invalidateQueries("events");
     },
     onError: (err: any) => {
@@ -90,7 +93,14 @@ function AddEvent({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create an Event">
+    <DrawerWrapper
+      open={queryParams.createEvent === "true"}
+      setOpen={() => {
+        delete queryParams.createEvent;
+        setQueryParams({ ...queryParams });
+      }}
+      title="Create an Event"
+    >
       {clientsLoading || tasksLoading ? (
         <Loader />
       ) : (

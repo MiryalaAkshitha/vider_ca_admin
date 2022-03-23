@@ -31,10 +31,10 @@ interface IState {
 }
 
 interface Props extends DialogProps {
-  data: any;
+  task: any;
 }
 
-function LinkEvent({ open, setOpen, data }: Props) {
+function LinkEvent({ open, setOpen, task }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [reminderChecked, setReminderChecked] = useState<boolean>(false);
@@ -70,8 +70,8 @@ function LinkEvent({ open, setOpen, data }: Props) {
     e.preventDefault();
     mutate({
       ...state,
-      task: data?.id,
-      client: data?.client?.id,
+      task: task?.id,
+      client: task?.client?.id,
     });
   };
 
@@ -85,7 +85,7 @@ function LinkEvent({ open, setOpen, data }: Props) {
             setState({ ...state, members: value });
           }}
           value={state.members}
-          options={data?.members || []}
+          options={task?.members || []}
           getOptionLabel={(option: any) => {
             return option?.fullName;
           }}

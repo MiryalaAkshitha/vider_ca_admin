@@ -73,21 +73,23 @@ function PasswordCard({ data }: Props) {
             <Typography gutterBottom variant="body2" color="rgba(0,0,0,0.5)">
               Website Url
             </Typography>
-            <Typography
-              sx={{ wordBreak: "break-all" }}
-              gutterBottom
-              color="primary"
-              variant="body1"
-            >
+            <Box sx={{ whiteSpace: "nowrap", overflow: "hidden" }}>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={data?.websiteUrl}
                 style={{ textDecoration: "none" }}
               >
-                {data?.websiteUrl}
+                <Typography
+                  sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                  gutterBottom
+                  color="primary"
+                  variant="body1"
+                >
+                  {data?.websiteUrl}
+                </Typography>
               </a>
-            </Typography>
+            </Box>
           </Grid>
           <Grid item xs={2}>
             <Typography gutterBottom variant="body2" color="rgba(0,0,0,0.5)">

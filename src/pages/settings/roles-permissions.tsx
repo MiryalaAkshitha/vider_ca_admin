@@ -11,6 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import AddRole from "views/rolesandpermissions/AddRole";
+import CreatePermissions from "views/rolesandpermissions/CreatePermissions";
 import EditRole from "views/rolesandpermissions/EditRole";
 
 function RolesAndPermissions() {
@@ -20,6 +21,7 @@ function RolesAndPermissions() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [permissionOpen, setPermissionOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const [selectedData, setSelectedData] = useState<any>({});
 
@@ -56,6 +58,17 @@ function RolesAndPermissions() {
         >
           Create Role
         </Button>
+      </Box>
+      <Box textAlign="right" mt={2}>
+        <Button
+          onClick={() => setPermissionOpen(true)}
+          variant="outlined"
+          startIcon={<Add />}
+          color="secondary"
+        >
+          Create Permissions
+        </Button>
+        <Typography variant="body2">(For internal use only)</Typography>
       </Box>
       <Box maxWidth={1000} mt={2}>
         <Table
@@ -127,6 +140,7 @@ function RolesAndPermissions() {
       </Box>
       <AddRole open={open} setOpen={setOpen} />
       <EditRole open={editOpen} setOpen={setEditOpen} data={selectedData} />
+      <CreatePermissions open={permissionOpen} setOpen={setPermissionOpen} />
     </>
   );
 }

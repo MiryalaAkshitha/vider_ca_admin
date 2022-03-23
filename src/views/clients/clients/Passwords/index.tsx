@@ -1,12 +1,12 @@
-import Loader from "components/Loader";
+import { Add } from "@mui/icons-material";
+import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClientPasswords } from "api/services/client-info";
+import Loader from "components/Loader";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import { Fab } from "@mui/material";
-import { useState } from "react";
-import { Add } from "@mui/icons-material";
 import AddPassword from "./AddPassword";
 import PasswordCard from "./PasswodCard";
 

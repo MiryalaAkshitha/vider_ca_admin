@@ -120,18 +120,18 @@ export const clientMenu: Array<{ title: string; path: string }> = [
   },
 ];
 
-export const taskViewMenu: string[] = [
-  "Details",
-  "Due Diligence",
-  "Description",
-  "Checklists",
-  "Milestones",
-  "Comments",
-  "Expenditure",
-  "Sub Tasks",
-  "Attachments",
-  "Log Hours",
-  "Events",
+export const taskViewMenu:Array<{id: string, label:string}> = [
+  {id:"details", label:"Details"},
+  {id:"dd", label:"Due Diligence"},
+  {id:"description", label:"Description"},
+  {id:"checklists", label:"Checklists"},
+  {id:"milestones", label:"Milestones"},
+  {id:"comments", label:"Comments"},
+  {id:"expenditure", label:"Expenditure"},
+  {id:"subtasks", label:"Sub Tasks"},
+  {id:"attachments", label:"Attachments"},
+  {id:"loghours", label:"Log Hours"},
+  {id:"events", label:"Events"},
 ];
 
 export const CLIENT_CATEGORIES: Array<{

@@ -95,6 +95,14 @@ const getCompletedTasks = ({ queryKey }) => {
   });
 };
 
+const getDeletedTasks = ({ queryKey }) => {
+  return http.get(`/tasks/deleted-tasks`, {
+    params: {
+      clientId: queryKey[1].clientId,
+    },
+  });
+};
+
 const getTerminatedTasks = ({ queryKey }) => {
   return http.get(`/tasks/terminated-tasks`, {
     params: {
@@ -126,4 +134,5 @@ export {
   issueOrReceiveDsc,
   getTerminatedTasks,
   getCompletedTasks,
+  getDeletedTasks,
 };

@@ -1,13 +1,15 @@
+import { DeleteOutlined } from "@mui/icons-material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import { Box, Button } from "@mui/material";
-import { getTask, updateTask } from "api/services/tasks";
+import { deleteTask, getTask, updateTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
+import { useConfirm } from "components/ConfirmDialogProvider";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ResType } from "types";
 import { taskViewMenu } from "utils/constants";
 import {
@@ -30,11 +32,12 @@ import TerminationDialog from "views/taskboard/taskview/TerminationDialog";
 
 function TaskDetails() {
   useTitle("Task Details");
+  const confirm = useConfirm();
   const snack = useSnack();
+  const navigate = useNavigate();
   const params: any = useParams();
   const [staticState, setStaticState] = useState<any>({});
   const [state, setState] = useState<any>({});
-  const [selected, setSelected] = useState<any>("");
   const [open, setOpen] = useState(false);
 
   const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
@@ -45,12 +48,37 @@ function TaskDetails() {
     cacheTime: 0,
   });
 
-  useEffect(() => {
-    setSelected("Details");
-  }, [params.taskId]);
+  let isClicked = false;
 
-  const handleActiveItem = (item: string) => {
-    setSelected(item);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isClicked) return;
+      let elements = document.querySelectorAll(`[data-target]`);
+      let inViewElements = Array.from(elements).filter((item) => {
+        return item.getBoundingClientRect().y < 200;
+      });
+      window.location.hash =
+        inViewElements[inViewElements.length - 1]?.getAttribute(
+          "data-target"
+        ) || "";
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isClicked]);
+
+  const handleActiveItem = (item: any) => {
+    window.location.hash = item.id;
+    isClicked = true;
+    let element: HTMLElement | null = document.querySelector(
+      `[data-target=${item.id}]`
+    );
+    let elementTop = element ? element.offsetTop - 150 : 0;
+    window.scrollTo({
+      top: elementTop,
+    });
   };
 
   const { mutate } = useMutation(updateTask, {
@@ -64,6 +92,15 @@ function TaskDetails() {
     },
   });
 
+  const { mutate: taskDelete } = useMutation(deleteTask, {
+    onSuccess: (res) => {
+      navigate("/task-board");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
   const handleUpdate = () => {
     mutate({
       id: staticState?.id,
@@ -71,9 +108,20 @@ function TaskDetails() {
     });
   };
 
+  const handleDelete = () => {
+    confirm({
+      msg: "Are you sure you want to delete this task?",
+      action: () => {
+        taskDelete({
+          id: staticState?.id,
+        });
+      },
+    });
+  };
+
   const taskMenu = () => {
     if (staticState?.parentTask) {
-      return taskViewMenu.filter((item) => item !== "Sub Tasks");
+      return taskViewMenu.filter((item) => item.id !== "subtasks");
     }
     return taskViewMenu;
   };
@@ -90,26 +138,34 @@ function TaskDetails() {
           justifyContent="space-between"
         >
           <BreadCrumbs page="taskView" />
-          <Button
-            onClick={() => setOpen(true)}
-            startIcon={<CancelPresentationIcon color="secondary" />}
-          >
-            Terminate task
-          </Button>
+          <Box display="flex" gap={1}>
+            <Button
+              onClick={() => setOpen(true)}
+              startIcon={<CancelPresentationIcon color="secondary" />}
+            >
+              Terminate task
+            </Button>
+            <Button
+              onClick={handleDelete}
+              startIcon={<DeleteOutlined color="secondary" />}
+            >
+              Delete task
+            </Button>
+          </Box>
         </Box>
         <StyledProfileNav>
           {taskMenu().map((item, index) => (
             <StyledProfileNavItem
               onClick={() => handleActiveItem(item)}
               key={index}
-              active={selected === item}
+              active={window.location.hash?.replace("#", "") === item.id}
             >
-              {item}
+              {item.label}
             </StyledProfileNavItem>
           ))}
         </StyledProfileNav>
       </Box>
-      <TaskSection selected={selected} setSelected={setSelected} id="Details">
+      <TaskSection id="details">
         <Details
           state={state}
           staticState={staticState}
@@ -117,68 +173,40 @@ function TaskDetails() {
           handleUpdate={handleUpdate}
         />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Due Diligence"
-      >
+      <TaskSection id="dd">
         <DueDiligence />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Description"
-      >
+      <TaskSection id="description">
         <Description
           state={state}
           setState={setState}
           handleUpdate={handleUpdate}
         />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Checklists"
-      >
+      <TaskSection id="checklists">
         <Checklists />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Milestones"
-      >
+      <TaskSection id="milestones">
         <Milestones />
       </TaskSection>
-      <TaskSection selected={selected} setSelected={setSelected} id="Comments">
+      <TaskSection id="comments">
         <Comments />
       </TaskSection>
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Expenditure"
-      >
+      <TaskSection id="expenditure">
         <Expenditure />
       </TaskSection>
       {!staticState?.parentTask && (
-        <TaskSection
-          selected={selected}
-          setSelected={setSelected}
-          id="Sub Tasks"
-        >
+        <TaskSection id="subtasks">
           <SubTasks task={staticState} />
         </TaskSection>
       )}
-      <TaskSection
-        selected={selected}
-        setSelected={setSelected}
-        id="Attachments"
-      >
+      <TaskSection id="attachments">
         <Attachments />
       </TaskSection>
-      <TaskSection selected={selected} setSelected={setSelected} id="Log Hours">
+      <TaskSection id="loghours">
         <LogHours task={staticState} />
       </TaskSection>
-      <TaskSection selected={selected} setSelected={setSelected} id="Events">
+      <TaskSection id="events">
         <Events task={state} />
       </TaskSection>
       <TerminationDialog open={open} setOpen={setOpen} />
@@ -187,41 +215,22 @@ function TaskDetails() {
 }
 
 interface Props {
-  selected: string;
   id: string;
   children: any;
-  setSelected: (item: string) => void;
 }
 
-const TaskSection = ({ children, selected, setSelected, id }: Props) => {
+const TaskSection = ({
+  children,
+
+  id,
+}: Props) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (selected === id) {
-      if (elementRef.current) {
-        const elementTop = elementRef.current.offsetTop;
-        const top = elementTop - 140;
-        window.scrollTo({ top });
-      }
-    }
-  }, [selected, id]);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (elementRef.current) {
-  //       let elementTop = elementRef.current.getBoundingClientRect().y;
-  //       if (elementTop < 200) {
-  //         setSelected(id);
-  //       }
-  //     }
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [id, setSelected]);
-
-  return <StyledTaskSection ref={elementRef}>{children}</StyledTaskSection>;
+  return (
+    <StyledTaskSection data-target={id} ref={elementRef}>
+      {children}
+    </StyledTaskSection>
+  );
 };
 
 export default TaskDetails;

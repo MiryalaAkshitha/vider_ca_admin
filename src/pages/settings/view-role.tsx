@@ -4,6 +4,7 @@ import { getPermissions, getRole, updateRole } from "api/services/roles";
 import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
+import _ from "lodash";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
@@ -28,7 +29,9 @@ function ViewRole() {
     getRole,
     {
       onSuccess: (res: any) => {
-        setPermissons(res.data?.permissions?.map((item: any) => item?.id));
+        setPermissons(
+          res.data?.permissions?.map((item: any) => item?.id) || []
+        );
       },
     }
   );
@@ -109,17 +112,20 @@ function ViewRole() {
         </Box>
       </Box>
       <Box mt={3} maxWidth={800}>
-        <Typography sx={{ mb: 2 }} variant="body1">
+        <Typography sx={{ mb: 2 }} variant="subtitle1">
           Permissions
         </Typography>
-        {permissionsData?.data?.map((item, index) => (
-          <PermissonsAccordion
-            item={item}
-            key={index}
-            permissions={permissions}
-            handlePermissionChange={handlePermissionChange}
-          />
-        ))}
+        {Object.keys(_.groupBy(permissionsData?.data, "label"))?.map(
+          (key, index) => (
+            <PermissonsAccordion
+              label={key}
+              data={_.groupBy(permissionsData?.data, "label")[key]}
+              permissions={permissions}
+              key={index}
+              handlePermissionChange={handlePermissionChange}
+            />
+          )
+        )}
       </Box>
     </div>
   );

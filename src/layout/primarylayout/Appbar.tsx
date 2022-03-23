@@ -1,5 +1,11 @@
+import {
+  AddCircleOutlineRounded,
+  LanguageOutlined,
+  NotificationsOutlined
+} from "@mui/icons-material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { IconButton } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled, useTheme } from "@mui/material/styles";
@@ -7,19 +13,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { selectTitle } from "redux/reducers/globalSlice";
 import AccountMenu from "./AccountMenu";
 import ConfigurationMenu from "./ConfigurationMenu";
-import { useSelector } from "react-redux";
-import { selectTitle } from "redux/reducers/globalSlice";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { Link } from "react-router-dom";
-import {
-  AddCircleOutlineRounded,
-  LanguageOutlined,
-  NotificationsOutlined,
-} from "@mui/icons-material";
-import GlobalCreateModal from "./GlobalCreateModal";
-import AddCreateTask from "./AddCreateTask";
+import GlobalAdd from "./GlobalAdd";
 import Notifications from "./Notifications";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -35,7 +34,8 @@ function Appbar() {
   const [configAnchorEl, setConfigAnchorEl] = useState<null | HTMLElement>(
     null
   );
-  const [openGlobalDialog, setOpenGlobalDialog] = useState<boolean>(false);
+  const [globalAddAnchorEl, setGlobalAddAnchorEl] =
+    useState<HTMLElement | null>(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] =
     useState<null | HTMLElement>(null);
 
@@ -59,7 +59,10 @@ function Appbar() {
             <IconButton onClick={(e) => setConfigAnchorEl(e.currentTarget)}>
               <MenuOutlinedIcon color="primary" />
             </IconButton>
-            <IconButton onClick={() => setOpenGlobalDialog(true)}>
+            <IconButton
+              title="Global Add"
+              onClick={(e) => setGlobalAddAnchorEl(e.currentTarget)}
+            >
               <AddCircleOutlineRounded color="primary" />
             </IconButton>
             <IconButton
@@ -88,9 +91,10 @@ function Appbar() {
         anchorEl={configAnchorEl}
         setAnchorEl={setConfigAnchorEl}
       />
-      <GlobalCreateModal open={openGlobalDialog} setOpen={setOpenGlobalDialog}>
-        <AddCreateTask setOpen={setOpenGlobalDialog} />
-      </GlobalCreateModal>
+      <GlobalAdd
+        anchorEl={globalAddAnchorEl}
+        setAnchorEl={setGlobalAddAnchorEl}
+      />
       <Notifications
         notificationsAnchorEl={notificationsAnchorEl}
         setNotificationsAnchorEl={setNotificationsAnchorEl}

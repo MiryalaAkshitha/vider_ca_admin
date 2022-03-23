@@ -5,7 +5,7 @@ import { getUsers } from "api/services/users";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 
-function useCreateTaskInitialData({ enabled }: { enabled: boolean }) {
+function useCreateTaskInitialData({ enabled = true }: { enabled?: boolean }) {
   const { data: categories, isLoading: categoriesLoading }: ResType = useQuery(
     "categories",
     getCategories,

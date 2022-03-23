@@ -214,6 +214,10 @@ const terminateTask = ({ id, reason }: any) => {
   return http.post(`/tasks/${id}/terminate`, { reason });
 };
 
+const deleteTask = ({ id }: any) => {
+  return http.post(`/tasks/${id}/delete`);
+};
+
 export {
   getTasks,
   getTasksAsOptions,
@@ -256,4 +260,5 @@ export {
   addPin,
   removePin,
   terminateTask,
+  deleteTask,
 };

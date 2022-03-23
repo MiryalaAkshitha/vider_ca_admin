@@ -82,7 +82,7 @@ function TaskItem({ data }: Props) {
         px={2}
         onClick={() => {
           navigate(
-            `/task-board/${data?.id}?clientId=${data?.client?.clientId}`
+            `/task-board/${data?.id}?clientId=${data?.client?.clientId}#details`
           );
         }}
         py={1}
@@ -110,7 +110,6 @@ function TaskItem({ data }: Props) {
                 {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
               </Typography>
             </div>
-            <Typography variant="caption" color="gray"></Typography>
             {data?.recurring && (
               <img
                 style={{ textAlign: "right" }}
@@ -119,6 +118,9 @@ function TaskItem({ data }: Props) {
               />
             )}
           </Box>
+          <Typography variant="caption" color="gray">
+            Sub Tasks: ({data?.subTasks.length})
+          </Typography>
         </Box>
       </Box>
       <Box

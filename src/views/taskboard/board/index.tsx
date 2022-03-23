@@ -97,12 +97,8 @@ function Board({ data }: Props) {
         destination
       );
       const sourceItem = state[source.droppableId][source.index];
-      const sourceItemsOrder = result[source.droppableId].map(
-        (item: any) => item.id
-      );
-      const destinationItemsOrder = result[destination.droppableId].map(
-        (item: any) => item.id
-      );
+      const sourceItemsOrder = result[source.droppableId].map((item: any) => item.id);
+      const destinationItemsOrder = result[destination.droppableId].map((item: any) => item.id);
       setState({
         ...state,
         ...result,
@@ -128,11 +124,7 @@ function Board({ data }: Props) {
   const handleReorderItems = async (source: any, destination: any) => {
     const prevState = state;
     try {
-      const result = reorder(
-        state[source.droppableId],
-        source.index,
-        destination.index
-      );
+      const result = reorder(state[source.droppableId], source.index, destination.index);
       const itemsOrder = result.map((item: any) => item.id);
       setState({
         ...state,
@@ -165,12 +157,7 @@ function Board({ data }: Props) {
     <>
       <Box mt={2} display="flex" gap={20}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <Grid
-            spacing={1}
-            container
-            flexWrap="nowrap"
-            justifyContent="space-between"
-          >
+          <Grid spacing={1} container flexWrap="nowrap" justifyContent="space-between">
             {Object.keys(state).map((key, index) => (
               <Grid item style={{ width: "100%" }} key={index}>
                 <Box
@@ -179,14 +166,9 @@ function Board({ data }: Props) {
                     padding: "10px",
                   }}
                 >
-                  <Box
-                    bgcolor={colors[index]}
-                    px={2}
-                    py="4px"
-                    borderRadius={20}
-                  >
+                  <Box bgcolor={colors[index]} px={2} py="4px" borderRadius={20}>
                     <Typography variant="body2" color="white">
-                      {getTitle(key)}
+                      {getTitle(key)} ({state[key].length})
                     </Typography>
                   </Box>
                 </Box>
@@ -201,11 +183,7 @@ function Board({ data }: Props) {
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
                       {state[key].map((item: any, index: number) => (
-                        <Draggable
-                          key={item?.uid}
-                          draggableId={item?.uid}
-                          index={index}
-                        >
+                        <Draggable key={item?.uid} draggableId={item?.uid} index={index}>
                           {(provided: any, snapshot: any) => (
                             <StyledDraggableItem
                               ref={provided.innerRef}

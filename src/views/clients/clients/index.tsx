@@ -8,6 +8,7 @@ import { getClients } from "api/services/client";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
+import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
@@ -60,7 +61,6 @@ function Clients() {
   const navigate = useNavigate();
   const [limit, setLimit] = useState<number>(50);
   const [offset, setOffset] = useState<number>(0);
-  const [open, setOpen] = useState<boolean>(false);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -77,6 +77,7 @@ function Clients() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selected, setSelected] = useState<any[]>([]);
   const selectionRef = useRef<any>({});
+  const { queryParams, setQueryParams } = useQueryParams();
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -179,8 +180,15 @@ function Clients() {
           },
         }}
       />
-      <FloatingButton onClick={() => setOpen(true)} />
-      <AddClient open={open} setOpen={setOpen} />
+      <FloatingButton
+        onClick={() => {
+          setQueryParams({
+            ...queryParams,
+            createClient: "true",
+          });
+        }}
+      />
+      <AddClient />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter
         filters={filters}

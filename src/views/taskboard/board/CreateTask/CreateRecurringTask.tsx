@@ -1,13 +1,13 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createRecurringTask } from "api/services/tasks";
-import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
+import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps, InputChangeType, SubmitType } from "types";
+import { InputChangeType, SubmitType } from "types";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
 import CustomDates from "./CustomDates";
 import CustomSelect from "./CustomSelect";
@@ -18,11 +18,12 @@ import SelectCategory from "./SelectCategory";
 import { RecurringStateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
-function CreateRecurringTask({ open, setOpen }: DialogProps) {
+function CreateRecurringTask() {
+  const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
   const { users, labels, categories, clients, loading } =
-    useCreateTaskInitialData({ enabled: open });
+    useCreateTaskInitialData({});
   const [state, setState] = useState<RecurringStateProps>(
     RecurringInitialState
   );
@@ -34,9 +35,10 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
   const { mutate, isLoading } = useMutation(createRecurringTask, {
     onSuccess: () => {
       snack.success("Recurring Task Created");
-      setOpen(false);
       setState(RecurringInitialState);
       queryClient.invalidateQueries("tasks");
+      delete queryParams.createTask;
+      setQueryParams({ ...queryParams });
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -61,7 +63,7 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create Recurring Task">
+    <>
       {loading ? (
         <Loader />
       ) : (
@@ -223,7 +225,7 @@ function CreateRecurringTask({ open, setOpen }: DialogProps) {
           </Box>
         </form>
       )}
-    </DrawerWrapper>
+    </>
   );
 }
 
