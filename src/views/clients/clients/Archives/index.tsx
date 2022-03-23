@@ -4,6 +4,7 @@ import TerminatedTasks from "./TerminatedTasks";
 import { Box, TextField } from "@mui/material";
 import SearchContainer from "components/SearchContainer";
 import { StyledClientFilterItem } from "views/taskboard/Filters/style";
+import DeletedTasks from "./DeletedTasks";
 
 function Archives() {
   const [active, setActive] = useState("completed");
@@ -13,6 +14,10 @@ function Archives() {
       search: "",
     },
     terminated: {
+      financialYear: "",
+      search: "",
+    },
+    deleted: {
       financialYear: "",
       search: "",
     },
@@ -37,6 +42,14 @@ function Archives() {
             onClick={() => setActive("terminated")}
           >
             Terminated Tasks
+          </StyledClientFilterItem>
+          <StyledClientFilterItem
+            variant="body1"
+            color="rgba(0,0,0,0.7)"
+            active={(active === "deleted")?.toString()}
+            onClick={() => setActive("deleted")}
+          >
+            Deleted Tasks
           </StyledClientFilterItem>
         </Box>
         <Box display="flex" gap="15px" alignItems="center">
@@ -83,6 +96,7 @@ function Archives() {
       </Box>
       {active === "completed" && <CompletedTasks filters={filters[active]} />}
       {active === "terminated" && <TerminatedTasks filters={filters[active]} />}
+      {active === "deleted" && <DeletedTasks filters={filters[active]} />}
     </Box>
   );
 }

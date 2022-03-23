@@ -1,13 +1,15 @@
+import { DeleteOutlined } from "@mui/icons-material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import { Box, Button } from "@mui/material";
-import { getTask, updateTask } from "api/services/tasks";
+import { deleteTask, getTask, updateTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
+import { useConfirm } from "components/ConfirmDialogProvider";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ResType } from "types";
 import { taskViewMenu } from "utils/constants";
 import {
@@ -30,7 +32,9 @@ import TerminationDialog from "views/taskboard/taskview/TerminationDialog";
 
 function TaskDetails() {
   useTitle("Task Details");
+  const confirm = useConfirm();
   const snack = useSnack();
+  const navigate = useNavigate();
   const params: any = useParams();
   const [staticState, setStaticState] = useState<any>({});
   const [state, setState] = useState<any>({});
@@ -88,10 +92,30 @@ function TaskDetails() {
     },
   });
 
+  const { mutate: taskDelete } = useMutation(deleteTask, {
+    onSuccess: (res) => {
+      navigate("/task-board");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
   const handleUpdate = () => {
     mutate({
       id: staticState?.id,
       data: state,
+    });
+  };
+
+  const handleDelete = () => {
+    confirm({
+      msg: "Are you sure you want to delete this task?",
+      action: () => {
+        taskDelete({
+          id: staticState?.id,
+        });
+      },
     });
   };
 
@@ -114,12 +138,20 @@ function TaskDetails() {
           justifyContent="space-between"
         >
           <BreadCrumbs page="taskView" />
-          <Button
-            onClick={() => setOpen(true)}
-            startIcon={<CancelPresentationIcon color="secondary" />}
-          >
-            Terminate task
-          </Button>
+          <Box display="flex" gap={1}>
+            <Button
+              onClick={() => setOpen(true)}
+              startIcon={<CancelPresentationIcon color="secondary" />}
+            >
+              Terminate task
+            </Button>
+            <Button
+              onClick={handleDelete}
+              startIcon={<DeleteOutlined color="secondary" />}
+            >
+              Delete task
+            </Button>
+          </Box>
         </Box>
         <StyledProfileNav>
           {taskMenu().map((item, index) => (
