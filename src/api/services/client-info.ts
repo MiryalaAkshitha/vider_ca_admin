@@ -1,23 +1,23 @@
 import { http } from "api/http";
 
-const addToClientInfo = (data: any) => {
-  return http.post("/client-info", data);
+const addKybForm = (data: any) => {
+  return http.post("/kyb-info", data);
 };
 
-const addFieldToClientInfo = (data: any) => {
-  return http.post("/client-info/add-field", data);
+const addKybField = (data: any) => {
+  return http.post("/kyb-info/add-field", data);
 };
 
-const updateClientInfo = ({ data }: any) => {
-  return http.put("/client-info", data);
+const updateKybfields = ({ data }: any) => {
+  return http.put("/kyb-info", data);
 };
 
-const deleteClientInfo = (data: any) => {
-  return http.delete("/client-info", { params: data });
+const deleteKybForm = (data: any) => {
+  return http.delete(`/kyb-info/${data.formId}`);
 };
 
-const getClientInfo = ({ queryKey }: any) => {
-  return http.get("/client-info", { params: { ...queryKey[1] } });
+const getKybForms = ({ queryKey }: any) => {
+  return http.get("/kyb-info", { params: { ...queryKey[1] } });
 };
 
 const getClientPasswords = ({ queryKey }: any) => {
@@ -37,13 +37,13 @@ const deleteClientPassword = (id: number) => {
 };
 
 export {
-  addToClientInfo,
-  getClientInfo,
-  updateClientInfo,
-  deleteClientInfo,
+  addKybForm,
+  getKybForms,
+  updateKybfields,
+  deleteKybForm,
   getClientPasswords,
   addClientPassword,
   updateClientPassword,
   deleteClientPassword,
-  addFieldToClientInfo,
+  addKybField,
 };

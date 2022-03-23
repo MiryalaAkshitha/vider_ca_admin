@@ -4,13 +4,13 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   MenuItem,
   Radio,
   RadioGroup,
   TextField,
-  IconButton,
 } from "@mui/material";
-import FileDrop from "components/FileDrop";
+import UploadImage from "components/UploadImage";
 import { useState } from "react";
 
 export function renderField(field: any, onChange?: (v: any) => void) {
@@ -79,7 +79,11 @@ export function renderField(field: any, onChange?: (v: any) => void) {
           {field?.name}
           <span style={{ color: "red" }}>{field.required && " *"}</span>
         </FormLabel>
-        <FileDrop name={field?.name} onChange={(v: any) => handleChange(v)} />
+        <UploadImage
+          sx={{ mt: 2 }}
+          name="image"
+          onChange={(v) => handleChange(v)}
+        />
       </>
     );
   }

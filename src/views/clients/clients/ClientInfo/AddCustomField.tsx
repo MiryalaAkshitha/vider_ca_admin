@@ -1,18 +1,17 @@
 import { Add, Delete } from "@mui/icons-material";
 import { Button, Grid, IconButton, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { addFieldToClientInfo } from "api/services/client-info";
+import { addKybField } from "api/services/client-info";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
 import { DialogProps, InputChangeType } from "types";
 import { FIELD_TYPES } from "utils/constants";
 
 interface Props extends DialogProps {
-  form: string;
+  form: any;
 }
 
 const initialState = {
@@ -27,14 +26,13 @@ const initialState = {
 function AddCustomField({ open, setOpen, form }: Props) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const params = useParams();
   const [state, setState] = useState({ ...initialState });
 
-  const { mutate, isLoading } = useMutation(addFieldToClientInfo, {
+  const { mutate, isLoading } = useMutation(addKybField, {
     onSuccess: () => {
-      snack.success("Field Created");
+      snack.success("Field added");
       setOpen(false);
-      queryClient.invalidateQueries("client-info");
+      queryClient.invalidateQueries("kyb-info");
       setState({ ...initialState });
     },
     onError: (err: any) => {
@@ -77,8 +75,7 @@ function AddCustomField({ open, setOpen, form }: Props) {
     e.preventDefault();
     mutate({
       ...state,
-      form,
-      client: params.clientId,
+      formId: form?.id,
     });
   };
 

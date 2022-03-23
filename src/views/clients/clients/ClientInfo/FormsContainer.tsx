@@ -1,6 +1,6 @@
-import { Button, Divider, List, ListItem, Typography } from "@mui/material";
+import { Divider, List, ListItemButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { addToClientInfo } from "api/services/client-info";
+import { addKybForm } from "api/services/client-info";
 import { getForms } from "api/services/forms";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
@@ -9,11 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 
-type Props = {
-  onUpdate: () => void;
-};
-
-function FormsContainer({ onUpdate }: Props) {
+function FormsContainer() {
   const params = useParams();
   const snack = useSnack();
   const queryClient = useQueryClient();
@@ -23,10 +19,10 @@ function FormsContainer({ onUpdate }: Props) {
     getForms
   );
 
-  const { mutate, isLoading: updateKybLoading } = useMutation(addToClientInfo, {
+  const { mutate, isLoading: updateKybLoading } = useMutation(addKybForm, {
     onSuccess: () => {
       snack.success("Form Added");
-      queryClient.invalidateQueries("client-info");
+      queryClient.invalidateQueries("kyb-info");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -44,31 +40,30 @@ function FormsContainer({ onUpdate }: Props) {
   if (updateKybLoading) return <Loader />;
 
   return (
-    <Box>
-      <Box textAlign="right" mb={2}>
+    <Box mt={2}>
+      {/* <Box textAlign="right" mb={2}>
         <Button onClick={onUpdate} variant="outlined" color="secondary">
           Save Details
         </Button>
-      </Box>
+      </Box> */}
       <Typography color="primary" variant="subtitle2">
         Add Fields
       </Typography>
-      <Box mt={2} bgcolor="rgba(24, 47, 83, 0.06)">
+      <Box mt={1} bgcolor="rgba(24, 47, 83, 0.06)">
         {isLoading ? (
           <Loader />
         ) : (
           <List sx={{ p: 2 }}>
             {data?.data.map((item: any, index: number) => (
               <Fragment key={index}>
-                <ListItem
+                <ListItemButton
                   onClick={() => addForm(item)}
                   sx={{ py: "12px" }}
-                  button
                 >
                   <Typography color="primary" variant="body1">
                     + {item?.name}
                   </Typography>
-                </ListItem>
+                </ListItemButton>
                 {index !== data?.data?.length - 1 && <Divider />}
               </Fragment>
             ))}
