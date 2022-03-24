@@ -9,11 +9,10 @@ import EditEvent from "./EditEvent";
 
 interface EditEventProps extends AccountMenuProps {
   event: any;
-  task: any;
 }
 
 function EditEventPopover(props: EditEventProps) {
-  const { anchorEl, setAnchorEl, event, task } = props;
+  const { anchorEl, setAnchorEl, event } = props;
   const snack = useSnack();
   const confirm = useConfirm();
   const queryClient = useQueryClient();
@@ -62,12 +61,7 @@ function EditEventPopover(props: EditEventProps) {
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
         <MenuItem onClick={handleDelete}>Remove</MenuItem>
       </Menu>
-      <EditEvent
-        open={editOpen}
-        setOpen={setEditOpen}
-        event={event}
-        task={task}
-      />
+      <EditEvent open={editOpen} setOpen={setEditOpen} event={event} />
     </>
   );
 }

@@ -16,17 +16,42 @@ import { CustomSelect, CustomTextField } from "./Fields";
 import useTaskViewData from "./useTaskDetailsData";
 import { Link } from "react-router-dom";
 import useQueryParams from "hooks/useQueryParams";
+import { useContext, useEffect, useState } from "react";
+import { TaskDataContext } from "context/TaskDataContext";
+import useSnack from "hooks/useSnack";
+import { useMutation, useQueryClient } from "react-query";
+import { updateTask } from "api/services/tasks";
 
-interface Props {
-  state: any;
-  staticState: any;
-  setState: (state: any) => void;
-  handleUpdate: () => void;
-}
-
-function Details({ state, staticState, setState, handleUpdate }: Props) {
+function Details() {
+  const queryClient = useQueryClient();
+  const snack = useSnack();
   const { users, loading, categories, labels } = useTaskViewData();
   const { queryParams } = useQueryParams();
+  const { taskData }: any = useContext(TaskDataContext);
+  const [state, setState] = useState<any>({});
+
+  useEffect(() => {
+    if (taskData) {
+      setState(taskData);
+    }
+  }, [taskData]);
+
+  const { mutate } = useMutation(updateTask, {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries("tasks");
+      snack.success("Task Details Updated");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleUpdate = () => {
+    mutate({
+      id: taskData?.id,
+      data: state,
+    });
+  };
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {
@@ -356,7 +381,7 @@ function Details({ state, staticState, setState, handleUpdate }: Props) {
         </Grid>
         <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }} mt={4}>
           <Button
-            onClick={() => setState(staticState)}
+            onClick={() => setState(taskData)}
             size="large"
             variant="outlined"
             color="secondary"

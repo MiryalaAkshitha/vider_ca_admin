@@ -14,7 +14,7 @@ import LogHoursList from "./LogHoursList";
 import LogHoursTopbar from "./LogHoursTopbar";
 import Timeline from "./Timeline";
 
-function LogHours({ task }) {
+function LogHours() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -43,7 +43,7 @@ function LogHours({ task }) {
 
   return (
     <>
-      <Timeline task={task} data={data} />
+      <Timeline data={data} />
       <Box mt={4} display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
           Log Hours{" "}

@@ -11,7 +11,7 @@ import { ResType } from "types";
 import EventCard from "./EventCard";
 import LinkEvent from "./LinkEvent";
 
-function Events({ task }: any) {
+function Events() {
   const params: any = useParams();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -43,7 +43,7 @@ function Events({ task }: any) {
           <Grid container spacing={2}>
             {data?.data?.map((item: any, index: number) => (
               <Grid item xs={4} key={index}>
-                <EventCard task={task} data={item} />
+                <EventCard data={item} />
               </Grid>
             ))}
           </Grid>
@@ -57,7 +57,7 @@ function Events({ task }: any) {
           />
         )}
       </Box>
-      <LinkEvent open={open} setOpen={setOpen} task={task} />
+      <LinkEvent open={open} setOpen={setOpen} />
     </>
   );
 }

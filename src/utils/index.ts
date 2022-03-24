@@ -20,3 +20,21 @@ export const getFileSize = (size: number) => {
     return `${(size / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
 };
+
+export const getHoursOptions = () => {
+  return Array.from(Array(24).keys()).map((_, index) => {
+    return {
+      label: index <= 9 ? `0${index}` : index?.toString(),
+      value: index <= 9 ? `0${index}` : index?.toString(),
+    };
+  });
+};
+
+export const getMinutesOptions = () => {
+  return Array.from(Array(60).keys()).map((_, index) => {
+    return {
+      label: index <= 9 ? `0${index}` : index?.toString(),
+      value: index <= 9 ? `0${index}` : index?.toString(),
+    };
+  });
+};

@@ -1,12 +1,14 @@
 import { Box, Typography } from "@mui/material";
+import { TaskDataContext } from "context/TaskDataContext";
 import moment from "moment";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getTitle } from "utils";
 import { TaskStatus } from "utils/constants";
 import { StyledTimline } from "views/taskboard/styles";
 import ViewRemark from "./ViewRemark";
 
-function Timeline({ data, task }: any) {
+function Timeline({ data }: any) {
+  const { taskData }: any = useContext(TaskDataContext);
   const [open, setOpen] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
   return (
@@ -39,7 +41,7 @@ function Timeline({ data, task }: any) {
                   <Typography
                     onClick={() => {
                       setOpen(true);
-                      setContent(task?.remarks);
+                      setContent(taskData?.remarks);
                     }}
                     sx={{ cursor: "pointer" }}
                     variant="caption"
@@ -53,7 +55,7 @@ function Timeline({ data, task }: any) {
                     <Typography
                       onClick={() => {
                         setOpen(true);
-                        setContent(task?.terminationReason);
+                        setContent(taskData?.terminationReason);
                       }}
                       sx={{ cursor: "pointer" }}
                       variant="caption"

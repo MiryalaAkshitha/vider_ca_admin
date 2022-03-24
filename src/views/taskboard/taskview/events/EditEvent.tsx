@@ -10,8 +10,9 @@ import {
 import { updateEvent } from "api/services/events";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
+import { TaskDataContext } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 import { getTitle } from "utils";
@@ -31,11 +32,11 @@ interface IState {
 }
 
 interface Props extends DialogProps {
-  task: any;
   event: any;
 }
 
-function EditEvent({ open, setOpen, task, event }: Props) {
+function EditEvent({ open, setOpen, event }: Props) {
+  const { taskData }: any = useContext(TaskDataContext);
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [reminderChecked, setReminderChecked] = useState<boolean>(false);
@@ -100,7 +101,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
           isOptionEqualToValue={(option, value) => {
             return option.id === value.id;
           }}
-          options={task?.members || []}
+          options={taskData?.members || []}
           getOptionLabel={(option: any) => {
             return option?.fullName;
           }}

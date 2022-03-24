@@ -1,13 +1,13 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { MoreVert } from "@mui/icons-material";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Box, IconButton, Typography } from "@mui/material";
 import Members from "components/Members";
 import moment from "moment";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { MoreVert } from "@mui/icons-material";
-import EditEventPopover from "./EditEventPopover";
 import { useState } from "react";
+import EditEventPopover from "./EditEventPopover";
 
-function EventCard({ data, task }: any) {
+function EventCard({ data }: any) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   return (
@@ -69,7 +69,6 @@ function EventCard({ data, task }: any) {
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
         event={data}
-        task={task}
       />
     </>
   );

@@ -3,11 +3,13 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { noSubTasks } from "assets";
 import NoItems from "components/NoItems";
-import { useState } from "react";
+import { TaskDataContext } from "context/TaskDataContext";
+import { useContext, useState } from "react";
 import AddSubTask from "./AddSubTask";
 import SubTasksList from "./SubTasksList";
 
-function SubTasks({ task }) {
+function SubTasks() {
+  const { taskData }: any = useContext(TaskDataContext);
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -16,7 +18,7 @@ function SubTasks({ task }) {
         <Typography variant="subtitle1" color="primary">
           Sub Tasks
         </Typography>
-        {task?.subTasks?.length ? (
+        {taskData?.subTasks?.length ? (
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
@@ -27,8 +29,8 @@ function SubTasks({ task }) {
         ) : null}
       </Box>
       <Box mt={4}>
-        {task?.subTasks?.length ? (
-          <SubTasksList data={task?.subTasks} />
+        {taskData?.subTasks?.length ? (
+          <SubTasksList data={taskData?.subTasks} />
         ) : (
           <NoItems
             img={noSubTasks}

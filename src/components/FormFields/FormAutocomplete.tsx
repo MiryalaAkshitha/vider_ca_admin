@@ -8,9 +8,10 @@ interface Props {
   control: any;
   options: Array<{ label: string; value: string }>;
   multiple?: boolean;
+  trigger?: () => void;
 }
 
-function CustomAutoComplete(props: Props) {
+function FormAutoComplete(props: Props) {
   const {
     name,
     size = "small",
@@ -18,6 +19,7 @@ function CustomAutoComplete(props: Props) {
     label = "",
     options,
     multiple = false,
+    trigger,
   } = props;
 
   return (
@@ -31,32 +33,41 @@ function CustomAutoComplete(props: Props) {
               size={size}
               multiple={multiple}
               disablePortal
-              id={name}
               onChange={(_, value) => {
-                field.onChange(value);
+                field.onChange(
+                  typeof field.value === "object" ? value : value?.value
+                );
+                if (trigger) {
+                  trigger();
+                }
               }}
               value={field.value}
               options={options}
-              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(option, value) => {
+                return option.value === value.value || option.value === value;
+              }}
+              getOptionLabel={(option) => option.label || option}
               fullWidth
               renderInput={(params) => (
-                <TextField
-                  onBlur={field.onBlur}
-                  error={Boolean(error)}
-                  {...params}
-                  label={label}
-                />
+                <>
+                  <TextField
+                    {...params}
+                    onBlur={field.onBlur}
+                    error={Boolean(error)}
+                    label={label}
+                  />
+                  {error && (
+                    <Typography
+                      variant="caption"
+                      sx={{ pl: "2px" }}
+                      color="rgb(211, 47, 47)"
+                    >
+                      {error.message}
+                    </Typography>
+                  )}
+                </>
               )}
             />
-            {error && (
-              <Typography
-                variant="caption"
-                sx={{ pl: "2px" }}
-                color="rgb(211, 47, 47)"
-              >
-                {label} is required.
-              </Typography>
-            )}
           </>
         )}
       />
@@ -64,4 +75,4 @@ function CustomAutoComplete(props: Props) {
   );
 }
 
-export default CustomAutoComplete;
+export default FormAutoComplete;

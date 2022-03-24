@@ -4,7 +4,7 @@ import ComingSoon from "components/ComingSoon";
 function Dashboard() {
   return (
     <Box p={2}>
-      <ComingSoon title="Dashboard Comming Soon" />
+      <ComingSoon title="Dashboard" />
     </Box>
   );
 }

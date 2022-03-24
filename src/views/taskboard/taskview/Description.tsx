@@ -1,14 +1,41 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { updateTask } from "api/services/tasks";
+import { TaskDataContext } from "context/TaskDataContext";
+import useSnack from "hooks/useSnack";
 import ReactQuill from "lib/react-quill";
+import { useContext, useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 
-interface Props {
-  state: any;
-  setState: (state: any) => void;
-  handleUpdate: () => void;
-}
+function Description() {
+  const queryClient = useQueryClient();
+  const snack = useSnack();
+  const [state, setState] = useState<any>({});
+  const { taskData }: any = useContext(TaskDataContext);
 
-function Description({ state, setState, handleUpdate }: Props) {
+  useEffect(() => {
+    if (taskData) {
+      setState(taskData);
+    }
+  }, [taskData]);
+
+  const { mutate } = useMutation(updateTask, {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries("tasks");
+      snack.success("Task Details Updated");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleUpdate = () => {
+    mutate({
+      id: taskData?.id,
+      data: state,
+    });
+  };
+
   return (
     <>
       <Typography variant="subtitle1" color="primary">

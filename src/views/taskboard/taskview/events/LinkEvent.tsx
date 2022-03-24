@@ -10,8 +10,9 @@ import {
 import { createEvent } from "api/services/events";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
+import { TaskDataContext } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 import { getTitle } from "utils";
@@ -30,11 +31,8 @@ interface IState {
   members: Array<any>;
 }
 
-interface Props extends DialogProps {
-  task: any;
-}
-
-function LinkEvent({ open, setOpen, task }: Props) {
+function LinkEvent({ open, setOpen }: DialogProps) {
+  const { taskData }: any = useContext(TaskDataContext);
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [reminderChecked, setReminderChecked] = useState<boolean>(false);
@@ -70,8 +68,8 @@ function LinkEvent({ open, setOpen, task }: Props) {
     e.preventDefault();
     mutate({
       ...state,
-      task: task?.id,
-      client: task?.client?.id,
+      task: taskData?.id,
+      client: taskData?.client?.id,
     });
   };
 
@@ -85,7 +83,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
             setState({ ...state, members: value });
           }}
           value={state.members}
-          options={task?.members || []}
+          options={taskData?.members || []}
           getOptionLabel={(option: any) => {
             return option?.fullName;
           }}

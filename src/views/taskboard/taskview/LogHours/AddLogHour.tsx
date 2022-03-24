@@ -1,34 +1,25 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { addLogHour } from "api/services/tasks";
 import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import FormDate from "components/FormFields/FormDate";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { DialogProps, ResType, SubmitType } from "types";
-
-interface StateProps {
-  users: any[];
-  completedDate: string;
-  hours: string;
-  minutes: string;
-}
+import { DialogProps, ResType } from "types";
+import { getHoursOptions, getMinutesOptions } from "utils";
+import { addLogHourDefaultValues, AddLogHourSchema } from "utils/vallidations";
 
 function AddLogHour({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const [state, setState] = useState<StateProps>({
-    users: [],
-    completedDate: "",
-    hours: "00",
-    minutes: "00",
-  });
 
   const { data, isLoading }: ResType = useQuery("users", getUsers, {
     enabled: open,
@@ -38,12 +29,6 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     onSuccess: () => {
       snack.success("Log Hour Added");
       setOpen(false);
-      setState({
-        users: [],
-        completedDate: "",
-        hours: "00",
-        minutes: "00",
-      });
       queryClient.invalidateQueries("loghours");
     },
     onError: (err: any) => {
@@ -51,26 +36,20 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleChange = (e: any) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
+  const { control, trigger, handleSubmit } = useForm({
+    defaultValues: addLogHourDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(
+      AddLogHourSchema({ taskCreatedDate: "2022-03-01T00:00:00.753Z" })
+    ),
+  });
 
-  const handleSubmit = (e: SubmitType) => {
-    e.preventDefault();
-    if (!state.users.length) {
-      snack.error("Please select atleast one user");
-      return;
-    }
-    if (state.hours === "00" && state.minutes === "00") {
-      snack.error("Please enter duration");
-      return;
-    }
-    const { hours, minutes, ...apiData } = {
-      ...state,
-      duration: moment
-        .duration(`${state.hours}:${state.minutes}`)
-        .asMilliseconds(),
-    };
+  const onSubmit = (data: any) => {
+    const { hours, minutes, ...apiData } = data;
+    apiData.users = data.users.map((user: any) => user.value);
+    apiData.duration = moment
+      .duration(`${data.hours}:${data.minutes}`)
+      .asMilliseconds();
     mutate({
       taskId: params.taskId,
       data: apiData,
@@ -82,69 +61,33 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       {isLoading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <Autocomplete
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormAutoComplete
+            control={control}
+            label="Users"
             multiple
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, users: value });
-            }}
-            value={state.users || []}
-            options={data?.data || []}
-            getOptionLabel={(option: any) => {
-              return option?.fullName;
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Users"
-              />
-            )}
+            name="users"
+            options={data?.data?.map((item: any) => ({
+              label: item.fullName,
+              value: item.id,
+            }))}
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            value={state.completedDate}
-            name="completedDate"
-            type="date"
-            label="Date"
-            InputLabelProps={{ shrink: true }}
-            required
-          />
+          <Box mt={2}>
+            <FormDate control={control} label="Date" name="completedDate" />
+          </Box>
           <Box sx={{ mt: 3, display: "flex", gap: 1 }}>
-            <Autocomplete
-              value={state.hours}
-              disableClearable
-              sx={{ minWidth: 100 }}
-              onChange={(_, value) => {
-                setState({ ...state, hours: value });
-              }}
-              size="small"
-              options={Array.from(Array(24).keys()).map((_, index) =>
-                index <= 9 ? `0${index}` : index?.toString()
-              )}
-              renderInput={(params) => <TextField {...params} label="Hours" />}
+            <FormAutoComplete
+              control={control}
+              label="Hours"
+              name="hours"
+              trigger={() => trigger("minutes")}
+              options={getHoursOptions()}
             />
-            <Autocomplete
-              value={state.minutes}
-              size="small"
-              disableClearable
-              onChange={(_, value) => {
-                setState({ ...state, minutes: value });
-              }}
-              sx={{ minWidth: 100 }}
-              options={Array.from(Array(60).keys()).map((_, index) =>
-                index <= 9 ? `0${index}` : index?.toString()
-              )}
-              renderInput={(params) => (
-                <TextField {...params} label="Minutes" />
-              )}
+            <FormAutoComplete
+              control={control}
+              label="Minutes"
+              name="minutes"
+              options={getMinutesOptions()}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>

@@ -1,22 +1,7 @@
-import { DeleteOutlined } from "@mui/icons-material";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
-import { Box, Button } from "@mui/material";
-import { deleteTask, getTask, updateTask } from "api/services/tasks";
-import BreadCrumbs from "components/BreadCrumbs";
-import { useConfirm } from "components/ConfirmDialogProvider";
-import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
+import TaskDataProvider, { TaskDataContext } from "context/TaskDataContext";
 import useTitle from "hooks/useTitle";
-import { useEffect, useRef, useState } from "react";
-import { useMutation, useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
-import { ResType } from "types";
-import { taskViewMenu } from "utils/constants";
-import {
-  StyledProfileNav,
-  StyledProfileNavItem,
-  StyledTaskSection,
-} from "views/clients/clients/styles";
+import { useEffect, useRef } from "react";
+import { StyledTaskSection } from "views/clients/clients/styles";
 import Attachments from "views/taskboard/taskview/attachments";
 import Checklists from "views/taskboard/taskview/Checklists";
 import Comments from "views/taskboard/taskview/comments";
@@ -28,31 +13,13 @@ import Expenditure from "views/taskboard/taskview/expenditure";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
-import TerminationDialog from "views/taskboard/taskview/TerminationDialog";
+import TaskHeader from "./TaskHeader";
 
 function TaskDetails() {
   useTitle("Task Details");
-  const confirm = useConfirm();
-  const snack = useSnack();
-  const navigate = useNavigate();
-  const params: any = useParams();
-  const [staticState, setStaticState] = useState<any>({});
-  const [state, setState] = useState<any>({});
-  const [open, setOpen] = useState(false);
-
-  const { isLoading }: ResType = useQuery(["task", params.taskId], getTask, {
-    onSuccess: (res: any) => {
-      setStaticState(res?.data);
-      setState(res?.data);
-    },
-    cacheTime: 0,
-  });
-
-  let isClicked = false;
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isClicked) return;
       let elements = document.querySelectorAll(`[data-target]`);
       let inViewElements = Array.from(elements).filter((item) => {
         return item.getBoundingClientRect().y < 200;
@@ -67,11 +34,10 @@ function TaskDetails() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isClicked]);
+  }, []);
 
   const handleActiveItem = (item: any) => {
     window.location.hash = item.id;
-    isClicked = true;
     let element: HTMLElement | null = document.querySelector(
       `[data-target=${item.id}]`
     );
@@ -81,109 +47,17 @@ function TaskDetails() {
     });
   };
 
-  const { mutate } = useMutation(updateTask, {
-    onSuccess: (res) => {
-      setStaticState(res.data);
-      setState(res.data);
-      snack.success("Task Details Updated");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const { mutate: taskDelete } = useMutation(deleteTask, {
-    onSuccess: (res) => {
-      navigate("/task-board");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const handleUpdate = () => {
-    mutate({
-      id: staticState?.id,
-      data: state,
-    });
-  };
-
-  const handleDelete = () => {
-    confirm({
-      msg: "Are you sure you want to delete this task?",
-      action: () => {
-        taskDelete({
-          id: staticState?.id,
-        });
-      },
-    });
-  };
-
-  const taskMenu = () => {
-    if (staticState?.parentTask) {
-      return taskViewMenu.filter((item) => item.id !== "subtasks");
-    }
-    return taskViewMenu;
-  };
-
-  if (isLoading) return <Loader minHeight="60vh" />;
-
   return (
-    <>
-      <Box position="sticky" top={55} zIndex={2}>
-        <Box
-          p={2}
-          bgcolor="white"
-          display="flex"
-          justifyContent="space-between"
-        >
-          <BreadCrumbs page="taskView" />
-          <Box display="flex" gap={1}>
-            <Button
-              onClick={() => setOpen(true)}
-              startIcon={<CancelPresentationIcon color="secondary" />}
-            >
-              Terminate task
-            </Button>
-            <Button
-              onClick={handleDelete}
-              startIcon={<DeleteOutlined color="secondary" />}
-            >
-              Delete task
-            </Button>
-          </Box>
-        </Box>
-        <StyledProfileNav>
-          {taskMenu().map((item, index) => (
-            <StyledProfileNavItem
-              onClick={() => handleActiveItem(item)}
-              key={index}
-              active={
-                window.location.hash?.replace("#", "") === item.id ? 1 : 0
-              }
-            >
-              {item.label}
-            </StyledProfileNavItem>
-          ))}
-        </StyledProfileNav>
-      </Box>
+    <TaskDataProvider>
+      <TaskHeader onChange={(v: string) => handleActiveItem(v)} />
       <TaskSection id="details">
-        <Details
-          state={state}
-          staticState={staticState}
-          setState={setState}
-          handleUpdate={handleUpdate}
-        />
+        <Details />
       </TaskSection>
       <TaskSection id="dd">
         <DueDiligence />
       </TaskSection>
       <TaskSection id="description">
-        <Description
-          state={state}
-          setState={setState}
-          handleUpdate={handleUpdate}
-        />
+        <Description />
       </TaskSection>
       <TaskSection id="checklists">
         <Checklists />
@@ -197,22 +71,27 @@ function TaskDetails() {
       <TaskSection id="expenditure">
         <Expenditure />
       </TaskSection>
-      {!staticState?.parentTask && (
-        <TaskSection id="subtasks">
-          <SubTasks task={staticState} />
-        </TaskSection>
-      )}
+      <TaskDataContext.Consumer>
+        {(value: any) => {
+          if (!value?.taskData?.parentTask) {
+            return (
+              <TaskSection id="subtasks">
+                <SubTasks />
+              </TaskSection>
+            );
+          }
+        }}
+      </TaskDataContext.Consumer>
       <TaskSection id="attachments">
         <Attachments />
       </TaskSection>
       <TaskSection id="loghours">
-        <LogHours task={staticState} />
+        <LogHours />
       </TaskSection>
       <TaskSection id="events">
-        <Events task={state} />
+        <Events />
       </TaskSection>
-      <TerminationDialog open={open} setOpen={setOpen} />
-    </>
+    </TaskDataProvider>
   );
 }
 
@@ -221,13 +100,8 @@ interface Props {
   children: any;
 }
 
-const TaskSection = ({
-  children,
-
-  id,
-}: Props) => {
+const TaskSection = ({ children, id }: Props) => {
   const elementRef = useRef<HTMLDivElement | null>(null);
-
   return (
     <StyledTaskSection data-target={id} ref={elementRef}>
       {children}
