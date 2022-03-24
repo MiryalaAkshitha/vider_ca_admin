@@ -169,7 +169,9 @@ function KybDetails({ selectedForm }: IKybDetailsProps) {
                         <Box sx={{ whiteSpace: "nowrap", overflow: "hidden" }}>
                           {field?.fileUrl ? (
                             <a
+                              target="_blank"
                               href={field?.fileUrl}
+                              rel="noopener noreferrer"
                               style={{ textDecoration: "none" }}
                             >
                               <Typography

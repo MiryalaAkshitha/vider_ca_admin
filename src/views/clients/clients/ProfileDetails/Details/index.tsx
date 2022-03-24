@@ -67,7 +67,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             disabled
             label="Client Id"
             name="clientId"
-            value={data?.clientId}
+            value={data?.clientId || ""}
             fullWidth
             variant="outlined"
             size="small"
@@ -124,7 +124,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             name="displayName"
             onChange={handleChange}
             onBlur={onUpdate}
-            value={data?.displayName}
+            value={data?.displayName || ""}
             fullWidth
             variant="outlined"
             size="small"
@@ -137,7 +137,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             onBlur={onUpdate}
             name="tradeName"
             onChange={handleChange}
-            value={data?.tradeName}
+            value={data?.tradeName || ""}
             fullWidth
             variant="outlined"
             size="small"
@@ -150,7 +150,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             name="authorizedPerson"
             onChange={handleChange}
             onBlur={onUpdate}
-            value={data?.authorizedPerson}
+            value={data?.authorizedPerson || ""}
             fullWidth
             variant="outlined"
             size="small"
@@ -161,7 +161,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextFieldWithCopy
             label="PAN Number"
             name="panNumber"
-            value={data?.panNumber}
+            value={data?.panNumber || ""}
             onChange={handleChange}
             onBlur={onUpdate}
           />
@@ -170,7 +170,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextFieldWithCopy
             label="GST Number"
             name="gstNumber"
-            value={data?.gstNumber}
+            value={data?.gstNumber || ""}
             onChange={handleChange}
             onBlur={onUpdate}
           />
@@ -179,7 +179,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextFieldWithCopy
             label="Mobile Number"
             name="mobileNumber"
-            value={data?.mobileNumber}
+            value={data?.mobileNumber || ""}
             onChange={handleChange}
             onBlur={onUpdate}
           />
@@ -188,7 +188,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextFieldWithCopy
             label="Alternate Mobile Number"
             name="alternateMobileNumber"
-            value={data?.alternateMobileNumber}
+            value={data?.alternateMobileNumber || ""}
             onChange={handleChange}
             onBlur={onUpdate}
           />
@@ -197,7 +197,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextFieldWithCopy
             label="Email"
             name="email"
-            value={data?.email}
+            value={data?.email || ""}
             onChange={handleChange}
             onBlur={onUpdate}
           />
@@ -207,7 +207,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             label="Date of birth"
             name="dob"
             onChange={handleChange}
-            value={data?.dob}
+            value={data?.dob || ""}
             fullWidth
             type="date"
             variant="outlined"
@@ -220,7 +220,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextFieldWithCopy
             label="Address"
             name="address"
-            value={data?.address}
+            value={data?.address || ""}
             onChange={handleChange}
             onBlur={onUpdate}
           />
@@ -229,7 +229,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextField
             label="City"
             name="city"
-            value={data?.city}
+            value={data?.city || ""}
             fullWidth
             variant="outlined"
             size="small"
@@ -260,7 +260,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
           <TextField
             label="Pincode"
             name="pincode"
-            value={data?.pincode}
+            value={data?.pincode || ""}
             fullWidth
             variant="outlined"
             onChange={handleChange}
@@ -348,7 +348,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             onBlur={onUpdate}
             name="localDirectoryPath"
             onChange={handleChange}
-            value={data?.localDirectoryPath}
+            value={data?.localDirectoryPath || ""}
             fullWidth
             variant="outlined"
             size="small"
@@ -369,7 +369,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
                   <TextFieldWithCopy
                     label="Pan Number"
                     name="panNumber"
-                    value={data?.panNumber}
+                    value={data?.panNumber || ""}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -385,7 +385,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
                 label="First Name"
                 disabled
                 name="firstName"
-                value={data?.firstName}
+                value={data?.firstName || ""}
                 fullWidth
                 variant="outlined"
                 size="small"
@@ -397,7 +397,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
                 label="Middle Name"
                 disabled
                 name="middleName"
-                value={data?.middleName}
+                value={data?.middleName || ""}
                 fullWidth
                 variant="outlined"
                 size="small"
@@ -409,7 +409,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
                 label="Last Name"
                 disabled
                 name="lastName"
-                value={data?.lastName}
+                value={data?.lastName || ""}
                 fullWidth
                 variant="outlined"
                 size="small"
@@ -424,7 +424,7 @@ function Details({ data, apiData, setState, onUpdate }: IDetailsProps) {
             name="notes"
             sx={{ mt: 2 }}
             onChange={handleChange}
-            value={data?.notes}
+            value={data?.notes || ""}
             fullWidth
             placeholder="Write something here…"
             multiline

@@ -103,8 +103,8 @@ function Folder({ data }: Props) {
           }}
           onContextMenu={handleContextMenu}
           draggable={true}
-          dragging={dragging}
-          dropping={dropping}
+          dragging={dragging ? 1 : 0}
+          dropping={dropping ? 1 : 0}
           onDragStart={onDragStart}
           onDragEnd={onDragEnd}
           onDrop={handleDrop}

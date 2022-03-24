@@ -26,7 +26,6 @@ function DueDiligencePreview() {
     getDDForms,
     {
       onSuccess: (data: any) => {
-        console.log(data);
         const sorted = data?.data?.map((item: any) => ({
           ...item,
           dueDiligenceFormFields: item.dueDiligenceFormFields?.sort(

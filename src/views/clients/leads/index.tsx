@@ -59,11 +59,10 @@ function Leads() {
       <Nav />
       <Box mb={2}>
         <SearchContainer
+          value={search}
           debounced
           minWidth="400px"
-          onChange={(v) => {
-            setSearch(v);
-          }}
+          onChange={setSearch}
           placeHolder="Search"
         />
       </Box>

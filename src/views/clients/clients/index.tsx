@@ -108,6 +108,7 @@ function Clients() {
         <Grid item xs={5}>
           <Box display="flex" gap={2} alignItems="center">
             <SearchContainer
+              value={filters.search}
               debounced
               minWidth="400px"
               onChange={(v) => {

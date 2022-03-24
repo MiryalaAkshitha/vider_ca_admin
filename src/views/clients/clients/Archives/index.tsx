@@ -30,7 +30,7 @@ function Archives() {
           <StyledClientFilterItem
             variant="body1"
             color="rgba(0,0,0,0.7)"
-            active={(active === "completed")?.toString()}
+            active={active === "completed" ? 1 : 0}
             onClick={() => setActive("completed")}
           >
             Completed Tasks
@@ -38,7 +38,7 @@ function Archives() {
           <StyledClientFilterItem
             variant="body1"
             color="rgba(0,0,0,0.7)"
-            active={(active === "terminated")?.toString()}
+            active={active === "terminated" ? 1 : 0}
             onClick={() => setActive("terminated")}
           >
             Terminated Tasks
@@ -46,7 +46,7 @@ function Archives() {
           <StyledClientFilterItem
             variant="body1"
             color="rgba(0,0,0,0.7)"
-            active={(active === "deleted")?.toString()}
+            active={active === "deleted" ? 1 : 0}
             onClick={() => setActive("deleted")}
           >
             Deleted Tasks

@@ -18,7 +18,6 @@ function Description({ state, setState, handleUpdate }: Props) {
         <ReactQuill
           value={state?.description || ""}
           onChange={(v: any) => {
-            console.log(v);
             setState({
               ...state,
               description: v,

@@ -30,7 +30,7 @@ function ClientProfile() {
               key={index}
             >
               <StyledProfileNavItem
-                active={location.pathname.includes(item.path)}
+                active={location.pathname.includes(item.path) ? 1 : 0}
               >
                 {item.title}
               </StyledProfileNavItem>

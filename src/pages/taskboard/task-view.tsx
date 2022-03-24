@@ -158,7 +158,9 @@ function TaskDetails() {
             <StyledProfileNavItem
               onClick={() => handleActiveItem(item)}
               key={index}
-              active={window.location.hash?.replace("#", "") === item.id}
+              active={
+                window.location.hash?.replace("#", "") === item.id ? 1 : 0
+              }
             >
               {item.label}
             </StyledProfileNavItem>

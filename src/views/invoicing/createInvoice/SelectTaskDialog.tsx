@@ -63,7 +63,11 @@ const SelectTaskDialog = ({ open, setOpen }) => {
         open={open}
         setOpen={setOpen}
       >
-        <SearchContainer placeHolder="Search" onChange={setSearch} />
+        <SearchContainer
+          value={search}
+          placeHolder="Search"
+          onChange={setSearch}
+        />
         <Table
           sx={{ mt: 3 }}
           columns={[

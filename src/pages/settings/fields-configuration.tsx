@@ -36,6 +36,7 @@ function Fields() {
       <Grid container>
         <Grid item xs={6}>
           <SearchContainer
+            value={search}
             placeHolder="Search by field name"
             onChange={(v) => setSearch(v)}
           />

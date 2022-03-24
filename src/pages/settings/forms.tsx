@@ -41,6 +41,7 @@ function Forms() {
           <Grid item xs={6}>
             <Box display="flex" gap={2}>
               <SearchContainer
+                value={search}
                 placeHolder="Search by form name"
                 onChange={(v) => setSearch(v)}
               />

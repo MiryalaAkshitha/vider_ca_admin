@@ -15,7 +15,7 @@ function Nav() {
       <StyledClientFilterItem
         variant="body1"
         color="rgba(0,0,0,0.7)"
-        active={(location.pathname === "/clients")?.toString()}
+        active={location.pathname === "/clients" ? 1 : 0}
         onClick={() => handleClick("/clients")}
       >
         Clients
@@ -23,7 +23,7 @@ function Nav() {
       <StyledClientFilterItem
         variant="body1"
         color="rgba(0,0,0,0.7)"
-        active={(location.pathname === "/leads")?.toString()}
+        active={location.pathname === "/leads" ? 1 : 0}
         onClick={() => handleClick("/leads")}
       >
         Leads
@@ -31,7 +31,7 @@ function Nav() {
       <StyledClientFilterItem
         variant="body1"
         color="rgba(0,0,0,0.7)"
-        active={(location.pathname === "/dsc-register")?.toString()}
+        active={location.pathname === "/dsc-register" ? 1 : 0}
         onClick={() => handleClick("/dsc-register")}
       >
         DSC Register

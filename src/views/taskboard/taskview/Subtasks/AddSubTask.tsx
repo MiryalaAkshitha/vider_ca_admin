@@ -17,7 +17,7 @@ interface StateProps {
   name: string;
   description: string;
   dueDate: string;
-  priority: string | null;
+  priority: string;
   members: any[];
 }
 
@@ -29,7 +29,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
     name: "",
     description: "",
     dueDate: "",
-    priority: null,
+    priority: "",
     members: [],
   });
 
@@ -78,6 +78,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             label="Task Name"
             name="name"
             required
+            value={state.name}
           />
           <TextField
             sx={{ mt: 3 }}
@@ -90,6 +91,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             label="Due Date"
             InputLabelProps={{ shrink: true }}
             required
+            value={state.dueDate}
           />
           <TextField
             variant="outlined"
@@ -99,6 +101,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             select
             required
             name="priority"
+            value={state.priority}
             onChange={(e) => {
               setState({ ...state, priority: e.target.value });
             }}
@@ -140,6 +143,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             size="small"
             multiline
             rows={4}
+            value={state.description}
             label="Description"
             name="description"
           />

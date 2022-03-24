@@ -22,7 +22,7 @@ function Nav() {
       <StyledClientFilterItem
         variant="body1"
         color="rgba(0,0,0,0.7)"
-        active={(location.pathname === "/storage/my-storage")?.toString()}
+        active={location.pathname === "/storage/my-storage" ? 1 : 0}
         onClick={() => handleClick("/storage/my-storage")}
       >
         My Storage
@@ -30,9 +30,7 @@ function Nav() {
       <StyledClientFilterItem
         variant="body1"
         color="rgba(0,0,0,0.7)"
-        active={(
-          location.pathname === "/storage/all-clients-storage"
-        )?.toString()}
+        active={location.pathname === "/storage/all-clients-storage" ? 1 : 0}
         onClick={() => handleClick("/storage/all-clients-storage")}
       >
         All Clients

@@ -23,7 +23,6 @@ function SearchContainer(props: SearchContainerProps) {
     debounced,
     minWidth = "600px",
     onFocus,
-    value,
     defaultValue = "",
     autoFocus = false,
   } = props;
@@ -42,7 +41,6 @@ function SearchContainer(props: SearchContainerProps) {
         onChange={(e) => {
           debounced ? handleChange(e) : onChange(e.target.value);
         }}
-        {...(value !== undefined && { value: value })}
         size="small"
         placeholder={placeHolder}
         InputProps={{ endAdornment: <Search /> }}

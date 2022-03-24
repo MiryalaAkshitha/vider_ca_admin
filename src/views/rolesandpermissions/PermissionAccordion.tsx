@@ -19,8 +19,6 @@ const PermissonsAccordion = (props: IPermissionAccordion) => {
   const { permissions, data, handlePermissionChange, label } = props;
   const [open, setOpen] = useState<boolean>(true);
 
-  console.log(permissions);
-
   return (
     <Accordion expanded={open} onChange={() => setOpen(!open)}>
       <AccordionSummary

@@ -8,7 +8,7 @@ export const StyledProfileNav = styled("div")(({ theme }) => ({
   gap: 30,
 }));
 
-export const StyledProfileNavItem = styled(Typography)<{ active: boolean }>(
+export const StyledProfileNavItem = styled(Typography)<{ active: number }>(
   ({ theme, active }) => ({
     padding: "15px 0px",
     position: "relative",
@@ -29,7 +29,7 @@ export const StyledProfileNavItem = styled(Typography)<{ active: boolean }>(
   })
 );
 
-export const StyledFile = styled("div")<{ dragging: boolean }>(
+export const StyledFile = styled("div")<{ dragging: number }>(
   ({ dragging }) => ({
     border: `1px solid ${dragging ? "red" : "#DDDDDD"}`,
     borderRadius: "4px",
@@ -45,8 +45,8 @@ export const StyledFileTitle = styled(Typography)(() => ({
 }));
 
 export const StyledFolder = styled("div")<{
-  dragging: boolean;
-  dropping: boolean;
+  dragging: number;
+  dropping: number;
 }>(({ dragging, dropping }) => ({
   border: `1px solid ${
     dragging ? "red" : dropping ? "#182F53" : "rgba(0,0,0,0.08)"
@@ -115,7 +115,7 @@ export const StyledOrganizationImageOverlay = styled("div")<{ hover: boolean }>(
   })
 );
 
-export const StyledProfileImageOverlay = styled("div")<{ hover: boolean }>(
+export const StyledProfileImageOverlay = styled("div")<{ hover: number }>(
   ({ hover }) => ({
     position: "absolute",
     right: 0,
@@ -170,8 +170,8 @@ export const StyledRecurTasksContainer = styled("div")(() => ({
 }));
 
 export const StyledRecurProfileItem = styled("div")<{
-  active: boolean | undefined;
-  last: boolean | undefined;
+  active: number | undefined;
+  last: number | undefined;
 }>(({ active, last }) => ({
   cursor: "pointer",
   padding: "13px 10px",

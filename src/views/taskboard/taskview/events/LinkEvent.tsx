@@ -23,8 +23,8 @@ interface IState {
   date: string;
   startTime: string;
   endTime: string;
-  reminder: string | null;
-  reminderNotes: string | null;
+  reminder: string;
+  reminderNotes: string;
   client: number | null;
   task: any;
   members: Array<any>;
@@ -44,8 +44,8 @@ function LinkEvent({ open, setOpen, task }: Props) {
     date: "",
     startTime: "",
     endTime: "",
-    reminder: null,
-    reminderNotes: null,
+    reminder: "",
+    reminderNotes: "",
     client: null,
     task: null,
     members: [],
@@ -89,6 +89,9 @@ function LinkEvent({ open, setOpen, task }: Props) {
           getOptionLabel={(option: any) => {
             return option?.fullName;
           }}
+          isOptionEqualToValue={(option, value) => {
+            return option.id === value.id;
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -106,6 +109,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           size="small"
           fullWidth
           required
+          value={state.title || ""}
           name="title"
           onChange={handleChange}
         />
@@ -115,6 +119,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           variant="outlined"
           size="small"
           fullWidth
+          value={state.location || ""}
           name="location"
           onChange={handleChange}
         />
@@ -126,6 +131,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           size="small"
           fullWidth
           required
+          value={state.date || ""}
           InputLabelProps={{ shrink: true }}
           name="date"
           onChange={handleChange}
@@ -138,6 +144,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
               sx={{ mt: 3 }}
               variant="outlined"
               size="small"
+              value={state.startTime || ""}
               InputLabelProps={{ shrink: true }}
               fullWidth
               required
@@ -152,6 +159,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
               sx={{ mt: 3 }}
               variant="outlined"
               size="small"
+              value={state.endTime || ""}
               InputLabelProps={{ shrink: true }}
               fullWidth
               required
@@ -169,6 +177,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
           variant="outlined"
           size="small"
           name="reminderNotes"
+          value={state.reminderNotes || ""}
           onChange={handleChange}
           fullWidth
         />
@@ -193,6 +202,7 @@ function LinkEvent({ open, setOpen, task }: Props) {
               required
               name="reminder"
               label="Reminder"
+              value={state.reminder}
               onChange={handleChange}
             >
               {Object.values(Reminders).map((item, index) => (

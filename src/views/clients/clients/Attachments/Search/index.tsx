@@ -52,6 +52,7 @@ function Search({ type }: Props) {
           debounced
           placeHolder="Search"
           onChange={(v) => handleSearch(v)}
+          value={search}
         />
         {search && (
           <StyledSearchList>

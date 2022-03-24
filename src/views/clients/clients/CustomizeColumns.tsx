@@ -26,7 +26,6 @@ function CustomizeColumns(props: ClientFilterProps) {
   };
 
   const handleReset = () => {
-    console.log(defaultColumns);
     setColumns(defaultColumns);
     setOpen(false);
   };

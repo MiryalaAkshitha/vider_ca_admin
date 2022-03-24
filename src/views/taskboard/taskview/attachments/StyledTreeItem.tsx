@@ -1,6 +1,6 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { Checkbox } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { icons } from "assets";
@@ -19,7 +19,7 @@ function StyledTreeItem(props: Props) {
 
   return (
     <StyledTreeItemRoot
-      nodeId={nodeId}
+      nodeId={nodeId?.toString()}
       collapseIcon={item?.type === "folder" && <ArrowDropDownIcon />}
       expandIcon={<ArrowRightIcon />}
       label={<TreeLabel item={item} onFileChange={onFileChange} />}
@@ -64,30 +64,24 @@ const TreeLabel = ({ item, onFileChange }: TreeLabelProps) => {
           </Typography>
         </Box>
       ) : (
-        <label htmlFor={item?.id}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              p: 0.5,
-              pr: 0,
-              cursor: "pointer",
-            }}
-          >
-            <Checkbox
-              id={item?.id}
-              sx={{ ml: -1 }}
-              size="small"
-              onChange={() => onFileChange(item?.id)}
-            />
-            <Typography
-              variant="body2"
-              sx={{ fontWeight: "inherit", flexGrow: 1 }}
-            >
-              {item?.name}
-            </Typography>
-          </Box>
-        </label>
+        <FormControlLabel
+          control={
+            <Checkbox size="small" onChange={() => onFileChange(item?.id)} />
+          }
+          componentsProps={{
+            typography: {
+              sx: {
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              },
+            },
+          }}
+          label={item?.name}
+          sx={{
+            width: "100%",
+            whiteSpace: "nowrap",
+          }}
+        />
       )}
     </>
   );

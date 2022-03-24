@@ -45,8 +45,8 @@ function EditEvent({ open, setOpen, task, event }: Props) {
     date: "",
     startTime: "",
     endTime: "",
-    reminder: null,
-    reminderNotes: null,
+    reminder: "",
+    reminderNotes: "",
     client: null,
     task: null,
     members: [],
@@ -96,7 +96,10 @@ function EditEvent({ open, setOpen, task, event }: Props) {
           onChange={(_, value) => {
             setState({ ...state, members: value });
           }}
-          value={state.members}
+          value={state.members || []}
+          isOptionEqualToValue={(option, value) => {
+            return option.id === value.id;
+          }}
           options={task?.members || []}
           getOptionLabel={(option: any) => {
             return option?.fullName;
@@ -119,7 +122,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
           fullWidth
           required
           name="title"
-          value={state.title}
+          value={state.title || ""}
           onChange={handleChange}
         />
         <TextField
@@ -127,7 +130,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
           sx={{ mt: 3 }}
           variant="outlined"
           size="small"
-          value={state.location}
+          value={state.location || ""}
           fullWidth
           name="location"
           onChange={handleChange}
@@ -140,7 +143,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
           size="small"
           fullWidth
           required
-          value={state.date}
+          value={state.date || ""}
           InputLabelProps={{ shrink: true }}
           name="date"
           onChange={handleChange}
@@ -156,7 +159,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
               InputLabelProps={{ shrink: true }}
               fullWidth
               required
-              value={state.startTime}
+              value={state.startTime || ""}
               name="startTime"
               onChange={handleChange}
             />
@@ -172,7 +175,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
               fullWidth
               required
               name="endTime"
-              value={state.endTime}
+              value={state.endTime || ""}
               onChange={handleChange}
             />
           </Grid>
@@ -185,7 +188,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
           sx={{ mt: 3 }}
           variant="outlined"
           size="small"
-          value={state.reminderNotes}
+          value={state.reminderNotes || ""}
           name="reminderNotes"
           onChange={handleChange}
           fullWidth
@@ -210,7 +213,7 @@ function EditEvent({ open, setOpen, task, event }: Props) {
               sx={{ mt: 3 }}
               required
               name="reminder"
-              value={state.reminder}
+              value={state.reminder || ""}
               label="Reminder"
               onChange={handleChange}
             >

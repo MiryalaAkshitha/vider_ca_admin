@@ -11,7 +11,11 @@ interface Props {
 
 const RecurringProfileItem = ({ active, last, data, onClick }: Props) => {
   return (
-    <StyledRecurProfileItem active={active} last={last} onClick={onClick}>
+    <StyledRecurProfileItem
+      active={active ? 1 : 0}
+      last={last ? 1 : 0}
+      onClick={onClick}
+    >
       <Typography color="primary" variant="subtitle2" gutterBottom>
         {data?.name}
       </Typography>

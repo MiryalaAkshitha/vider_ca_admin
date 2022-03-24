@@ -31,7 +31,6 @@ function EditForm({ open, setOpen, data }: EditFormProps) {
       queryClient.invalidateQueries("forms");
     },
     onError: (err: any) => {
-      console.log(err);
       snack.error(err.response.data.message);
     },
   });

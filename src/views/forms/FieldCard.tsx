@@ -29,7 +29,6 @@ function FieldCard(props: Props) {
       queryClient.invalidateQueries("fields");
     },
     onError: (err: any) => {
-      console.log(err.response.data);
       snack.error(err.response.data.message);
       setAnchorEl(null);
     },

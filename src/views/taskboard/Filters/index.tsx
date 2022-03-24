@@ -23,7 +23,7 @@ function Filters() {
   const { queryParams, setQueryParams } = useQueryParams();
   const view = (queryParams.view as ViewType) || "grid";
   const [openFilters, setOpenFilters] = useState<boolean>(false);
-  const { appliedFilters } = useSelector(selectTaskBoard);
+  const { search, appliedFilters } = useSelector(selectTaskBoard);
 
   const handleView = (view: ViewType) => {
     setQueryParams({
@@ -47,9 +47,9 @@ function Filters() {
         <ClientFilter />
         <SearchContainer
           minWidth="400px"
-          defaultValue={queryParams.search}
-          placeHolder="Search"
+          defaultValue={search}
           debounced
+          placeHolder="Search"
           onChange={(v) => {
             dispatch(handleSearch(v));
           }}

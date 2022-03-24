@@ -50,9 +50,10 @@ function FieldsContainer() {
         </Typography>
       </Box>
       <SearchContainer
+        value={search}
         maxWidth="100%"
         placeHolder="Search for a field"
-        onChange={(v) => setSearch(v)}
+        onChange={setSearch}
       />
       <Box>
         {data?.data

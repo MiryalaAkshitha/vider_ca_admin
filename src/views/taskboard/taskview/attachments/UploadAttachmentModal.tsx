@@ -1,4 +1,4 @@
-import { Dialog, Tab, Tabs, Typography } from "@mui/material";
+import { Dialog, Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
 import { addAttachment } from "api/services/tasks";
 import FileDrop from "components/FileDrop";
@@ -97,11 +97,7 @@ function TabPanel(props: any) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }

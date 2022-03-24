@@ -30,6 +30,7 @@ function Users() {
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" gap={2}>
           <SearchContainer
+            value={search}
             placeHolder="Search by Name"
             onChange={(v) => setSearch(v)}
           />

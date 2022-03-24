@@ -10,16 +10,11 @@ function Members({ data }: MembersProps) {
     <Box
       sx={{
         display: "flex",
-        "& > div:not(:first-child)": {
+        "& > div:not(:first-of-type)": {
           marginLeft: "-10px",
         },
       }}
     >
-      {/* {data.map((x, i) => {
-        if (x.title === "") {
-          console.log(x);
-        }
-      })} */}
       {data.map((member, i) => (
         <Member title={member.title} src={member.src} key={i} />
       ))}

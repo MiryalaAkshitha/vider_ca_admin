@@ -21,7 +21,6 @@ const EditAddress = ({ open, setOpen, type }: Props) => {
   const { data, isLoading }: ResType = useQuery("states", getStates);
 
   function onChange(e: InputChangeType) {
-    console.log(type);
     dispatch(
       handleAddressChange({
         type,

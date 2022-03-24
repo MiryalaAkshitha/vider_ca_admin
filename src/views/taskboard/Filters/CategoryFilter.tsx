@@ -42,6 +42,7 @@ function CategoryFilter() {
         }}
         value={selectedFilters.category || []}
         options={options || []}
+        isOptionEqualToValue={(option, value) => option.value === value.value}
         getOptionLabel={(option: any) => option?.label}
         renderInput={(params) => (
           <TextField
@@ -62,6 +63,7 @@ function CategoryFilter() {
             dispatch(handleCategories({ value: value, key: "subCategory" }));
           }}
           value={selectedFilters.subCategory || []}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
           options={getSubCategories() || []}
           sx={{ mt: 3 }}
           getOptionLabel={(option: any) => option?.label}

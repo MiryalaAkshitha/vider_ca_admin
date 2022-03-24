@@ -49,7 +49,7 @@ function File({ data }: Props) {
         draggable={true}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        dragging={dragging}
+        dragging={dragging ? 1 : 0}
       >
         <Box
           width="100%"

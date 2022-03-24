@@ -37,7 +37,7 @@ function ProfileImage({ src, onChange }: any) {
           onMouseLeave={() => setHover(false)}
         >
           <StyledProfileImage src={url ?? src ?? icons.user} alt="" />
-          <StyledProfileImageOverlay hover={hover}>
+          <StyledProfileImageOverlay hover={hover ? 1 : 0}>
             <Typography variant="caption" color="white">
               Change
             </Typography>

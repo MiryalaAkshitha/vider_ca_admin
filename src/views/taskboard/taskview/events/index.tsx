@@ -42,8 +42,8 @@ function Events({ task }: any) {
         {data?.data?.length ? (
           <Grid container spacing={2}>
             {data?.data?.map((item: any, index: number) => (
-              <Grid item xs={4}>
-                <EventCard task={task} data={item} key={index} />
+              <Grid item xs={4} key={index}>
+                <EventCard task={task} data={item} />
               </Grid>
             ))}
           </Grid>
