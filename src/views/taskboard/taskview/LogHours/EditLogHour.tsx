@@ -47,21 +47,30 @@ function UpdateLogHour({ open, setOpen, logHourData }: IProps) {
   });
 
   useEffect(() => {
+    let hours = moment
+      .utc(moment.duration(logHourData?.duration).asMilliseconds())
+      .format("HH");
+    let minutes = moment
+      .utc(moment.duration(logHourData?.duration).asMilliseconds())
+      .format("mm");
+
     reset({
       ...logHourData,
-      hours: moment
-        .utc(moment.duration(logHourData?.duration).asMilliseconds())
-        .format("HH"),
-      minutes: moment
-        .utc(moment.duration(logHourData?.duration).asMilliseconds())
-        .format("mm"),
+      hours: {
+        label: hours,
+        value: hours,
+      },
+      minutes: {
+        label: minutes,
+        value: minutes,
+      },
     });
   }, [logHourData, reset]);
 
   const onSubmit = (data: any) => {
     const { hours, minutes, user, ...apiData } = data;
     apiData.duration = moment
-      .duration(`${data.hours}:${data.minutes}`)
+      .duration(`${data.hours?.value}:${data.minutes?.value}`)
       .asMilliseconds();
     mutate({
       id: logHourData.id,

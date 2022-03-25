@@ -56,11 +56,9 @@ function AddLogHour({ open, setOpen }: DialogProps) {
 
   const onSubmit = (data: any) => {
     const { hours, minutes, ...apiData } = data;
-    console.log(apiData, hours, minutes);
-    return;
     apiData.users = data.users.map((user: any) => user.value);
     apiData.duration = moment
-      .duration(`${data.hours}:${data.minutes}`)
+      .duration(`${data.hours?.value}:${data.minutes?.value}`)
       .asMilliseconds();
     mutate({
       taskId: params.taskId,

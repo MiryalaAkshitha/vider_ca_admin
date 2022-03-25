@@ -34,12 +34,7 @@ function LinkEvent({ open, setOpen }: DialogProps) {
     },
   });
 
-  const {
-    control,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, watch, handleSubmit } = useForm({
     defaultValues: linkEventDefaultValues,
     mode: "onChange",
     resolver: yupResolver(
