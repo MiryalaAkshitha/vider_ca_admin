@@ -99,7 +99,7 @@ function LogHourItem({ logHour, onSelect, selectedItems }: Props) {
         </MenuItem>
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
-      <EditLogHour open={open} setOpen={setOpen} selectedItem={selectedItem} />
+      <EditLogHour open={open} setOpen={setOpen} logHourData={selectedItem} />
     </>
   );
 }

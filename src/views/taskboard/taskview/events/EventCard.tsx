@@ -30,13 +30,8 @@ function EventCard({ data }: any) {
                 </Typography>
                 <Typography variant="caption" color="rgba(0,0,0,0.7)">
                   {moment(data?.date).format("MMM DD, YYYY")},{" "}
-                  {moment(data?.date)
-                    .add(data?.startTime, "minutes")
-                    .format("h:mm a")}{" "}
-                  -{" "}
-                  {moment(data?.date)
-                    .add(data?.endTime, "minutes")
-                    .format("h:mm a")}
+                  {moment(data?.startTime).format("h:mm a")} -{" "}
+                  {moment(data?.endTime).format("h:mm a")}
                 </Typography>
               </div>
               <Members
@@ -56,7 +51,7 @@ function EventCard({ data }: any) {
             </Box>
             <Box display="flex" justifyContent="space-between" gap={1}>
               <Typography variant="body2" color="rgba(0,0,0,0.7)">
-                {data?.reminderNotes}
+                {data?.notes}
               </Typography>
               <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
                 <MoreVert />

@@ -4,9 +4,9 @@ import { Box, Button } from "@mui/material";
 import { deleteTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
 import { useConfirm } from "components/ConfirmDialogProvider";
-import { TaskDataContext } from "context/TaskDataContext";
+import { useTaskData } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { taskViewMenu } from "utils/constants";
@@ -20,7 +20,7 @@ function TaskHeader({ onChange }: any) {
   const confirm = useConfirm();
   const snack = useSnack();
   const navigate = useNavigate();
-  const { taskData }: any = useContext(TaskDataContext);
+  const taskData: any = useTaskData();
   const [open, setOpen] = useState(false);
 
   const { mutate: taskDelete } = useMutation(deleteTask, {

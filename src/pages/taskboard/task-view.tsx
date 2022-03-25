@@ -73,7 +73,7 @@ function TaskDetails() {
       </TaskSection>
       <TaskDataContext.Consumer>
         {(value: any) => {
-          if (!value?.taskData?.parentTask) {
+          if (!value?.parentTask) {
             return (
               <TaskSection id="subtasks">
                 <SubTasks />

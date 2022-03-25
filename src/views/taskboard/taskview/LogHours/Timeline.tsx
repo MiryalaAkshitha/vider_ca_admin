@@ -1,14 +1,14 @@
 import { Box, Typography } from "@mui/material";
-import { TaskDataContext } from "context/TaskDataContext";
+import { useTaskData } from "context/TaskDataContext";
 import moment from "moment";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { getTitle } from "utils";
 import { TaskStatus } from "utils/constants";
 import { StyledTimline } from "views/taskboard/styles";
 import ViewRemark from "./ViewRemark";
 
 function Timeline({ data }: any) {
-  const { taskData }: any = useContext(TaskDataContext);
+  const taskData: any = useTaskData();
   const [open, setOpen] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
   return (

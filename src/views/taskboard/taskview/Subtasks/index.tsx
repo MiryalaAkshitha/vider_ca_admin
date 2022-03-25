@@ -3,13 +3,13 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { noSubTasks } from "assets";
 import NoItems from "components/NoItems";
-import { TaskDataContext } from "context/TaskDataContext";
-import { useContext, useState } from "react";
+import { useTaskData } from "context/TaskDataContext";
+import { useState } from "react";
 import AddSubTask from "./AddSubTask";
 import SubTasksList from "./SubTasksList";
 
 function SubTasks() {
-  const { taskData }: any = useContext(TaskDataContext);
+  const taskData: any = useTaskData();
   const [open, setOpen] = useState<boolean>(false);
 
   return (

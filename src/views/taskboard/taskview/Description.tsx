@@ -1,17 +1,17 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { updateTask } from "api/services/tasks";
-import { TaskDataContext } from "context/TaskDataContext";
+import { useTaskData } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
 import ReactQuill from "lib/react-quill";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
 function Description() {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [state, setState] = useState<any>({});
-  const { taskData }: any = useContext(TaskDataContext);
+  const taskData: any = useTaskData();
 
   useEffect(() => {
     if (taskData) {

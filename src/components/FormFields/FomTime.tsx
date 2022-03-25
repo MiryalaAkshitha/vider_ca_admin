@@ -1,3 +1,4 @@
+import { TimePicker } from "@mui/lab";
 import { TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
 
@@ -6,11 +7,10 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
-  multiline?: boolean;
 }
 
-function FormInput(props: Props) {
-  const { name, size = "small", control, label = "", multiline } = props;
+function FormTime(props: Props) {
+  const { name, size = "small", control, label = "" } = props;
 
   return (
     <>
@@ -19,15 +19,19 @@ function FormInput(props: Props) {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <TextField
-              error={Boolean(error)}
-              variant="outlined"
+            <TimePicker
               label={label}
-              fullWidth
-              multiline={multiline}
-              rows={multiline ? 3 : 1}
-              size={size}
-              {...field}
+              value={field.value}
+              onChange={field.onChange}
+              renderInput={(params) => (
+                <TextField
+                  fullWidth
+                  size={size}
+                  {...params}
+                  error={Boolean(error)}
+                  onBlur={field.onBlur}
+                />
+              )}
             />
             {error && (
               <Typography
@@ -45,4 +49,4 @@ function FormInput(props: Props) {
   );
 }
 
-export default FormInput;
+export default FormTime;

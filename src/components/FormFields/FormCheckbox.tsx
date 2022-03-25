@@ -8,8 +8,8 @@ interface Props {
   control: any;
 }
 
-function CustomCheckboxField(props: Props) {
-  const { name, size = "small", control, label = "" } = props;
+function FormCheckbox(props: Props) {
+  const { name, size = "medium", control, label = "" } = props;
 
   return (
     <>
@@ -45,4 +45,4 @@ function CustomCheckboxField(props: Props) {
   );
 }
 
-export default CustomCheckboxField;
+export default FormCheckbox;

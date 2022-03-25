@@ -7,27 +7,27 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { updateTask } from "api/services/tasks";
 import Loader from "components/Loader";
+import { useTaskData } from "context/TaskDataContext";
+import useQueryParams from "hooks/useQueryParams";
+import useSnack from "hooks/useSnack";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { Link } from "react-router-dom";
 import { getTitle } from "utils";
 import { PriorityEnum, TaskStatus } from "utils/constants";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField } from "./Fields";
 import useTaskViewData from "./useTaskDetailsData";
-import { Link } from "react-router-dom";
-import useQueryParams from "hooks/useQueryParams";
-import { useContext, useEffect, useState } from "react";
-import { TaskDataContext } from "context/TaskDataContext";
-import useSnack from "hooks/useSnack";
-import { useMutation, useQueryClient } from "react-query";
-import { updateTask } from "api/services/tasks";
 
 function Details() {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const { users, loading, categories, labels } = useTaskViewData();
   const { queryParams } = useQueryParams();
-  const { taskData }: any = useContext(TaskDataContext);
+  const taskData: any = useTaskData();
   const [state, setState] = useState<any>({});
 
   useEffect(() => {

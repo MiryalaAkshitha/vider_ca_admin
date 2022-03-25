@@ -7,6 +7,7 @@ import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
+import { useTaskData } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useForm } from "react-hook-form";
@@ -14,12 +15,16 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { DialogProps, ResType } from "types";
 import { getHoursOptions, getMinutesOptions } from "utils";
-import { addLogHourDefaultValues, AddLogHourSchema } from "utils/vallidations";
+import {
+  addLogHourDefaultValues,
+  AddLogHourSchema,
+} from "validations/addLogHour";
 
 function AddLogHour({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
+  const taskData: any = useTaskData();
 
   const { data, isLoading }: ResType = useQuery("users", getUsers, {
     enabled: open,
@@ -36,16 +41,23 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     },
   });
 
-  const { control, trigger, handleSubmit } = useForm({
+  const {
+    control,
+    trigger,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: addLogHourDefaultValues,
     mode: "onChange",
     resolver: yupResolver(
-      AddLogHourSchema({ taskCreatedDate: "2022-03-01T00:00:00.753Z" })
+      AddLogHourSchema({ taskCreatedDate: taskData?.createdAt })
     ),
   });
 
   const onSubmit = (data: any) => {
     const { hours, minutes, ...apiData } = data;
+    console.log(apiData, hours, minutes);
+    return;
     apiData.users = data.users.map((user: any) => user.value);
     apiData.duration = moment
       .duration(`${data.hours}:${data.minutes}`)
@@ -55,6 +67,8 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       data: apiData,
     });
   };
+
+  console.log(errors);
 
   return (
     <DrawerWrapper open={open} title="Add Log Hour" setOpen={setOpen}>

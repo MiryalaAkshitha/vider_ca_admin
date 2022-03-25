@@ -1,12 +1,12 @@
 import { getTask } from "api/services/tasks";
 import Loader from "components/Loader";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { createContext } from "react";
 
-export const TaskDataContext = createContext({ taskData: null });
+export const TaskDataContext = createContext(null);
 
 function TaskDataProvider({ children }) {
   const params = useParams();
@@ -22,10 +22,12 @@ function TaskDataProvider({ children }) {
   if (isLoading) return <Loader minHeight="60vh" />;
 
   return (
-    <TaskDataContext.Provider value={{ taskData }}>
+    <TaskDataContext.Provider value={taskData}>
       {children}
     </TaskDataContext.Provider>
   );
 }
+
+export const useTaskData = () => useContext(TaskDataContext);
 
 export default TaskDataProvider;

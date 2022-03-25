@@ -34,9 +34,7 @@ function FormAutoComplete(props: Props) {
               multiple={multiple}
               disablePortal
               onChange={(_, value) => {
-                field.onChange(
-                  typeof field.value === "object" ? value : value?.value
-                );
+                field.onChange(value);
                 if (trigger) {
                   trigger();
                 }
@@ -44,9 +42,9 @@ function FormAutoComplete(props: Props) {
               value={field.value}
               options={options}
               isOptionEqualToValue={(option, value) => {
-                return option.value === value.value || option.value === value;
+                return option.value === value.value;
               }}
-              getOptionLabel={(option) => option.label || option}
+              getOptionLabel={(option) => option.label}
               fullWidth
               renderInput={(params) => (
                 <>
@@ -62,7 +60,7 @@ function FormAutoComplete(props: Props) {
                       sx={{ pl: "2px" }}
                       color="rgb(211, 47, 47)"
                     >
-                      {error.message}
+                      {error.message || (error as any)?.value?.message}
                     </Typography>
                   )}
                 </>

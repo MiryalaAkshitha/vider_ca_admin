@@ -17,7 +17,7 @@ import { CLIENT_CATEGORIES } from "utils/constants";
 import {
   createClientDefaultValues,
   CreateClientSchema,
-} from "utils/vallidations";
+} from "validations/createCllient";
 
 function AddClient() {
   const { queryParams, setQueryParams } = useQueryParams();

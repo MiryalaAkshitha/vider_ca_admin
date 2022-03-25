@@ -1,47 +1,33 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { updateLogHour } from "api/services/tasks";
-import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
-import Loader from "components/Loader";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import FormDate from "components/FormFields/FormDate";
 import LoadingButton from "components/LoadingButton";
+import { useTaskData } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, ResType, SubmitType } from "types";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import { DialogProps } from "types";
+import { getHoursOptions, getMinutesOptions } from "utils";
+import {
+  editLogHourDefaultValues,
+  EditLogHourSchema,
+} from "validations/editLogHour";
 
-interface StateProps {
-  user: any;
-  completedDate: string;
-  duration: string;
+interface IProps extends DialogProps {
+  logHourData: any;
 }
 
-interface Props extends DialogProps {
-  selectedItem: any;
-}
-
-function EditLogHour({ open, setOpen, selectedItem }: Props) {
+function UpdateLogHour({ open, setOpen, logHourData }: IProps) {
   const queryClient = useQueryClient();
   const snack = useSnack();
-  const [state, setState] = useState<StateProps>({
-    user: null,
-    completedDate: "",
-    duration: "",
-  });
+  const taskData: any = useTaskData();
 
-  const { data, isLoading }: ResType = useQuery("users", getUsers, {
-    enabled: open,
-  });
-
-  useEffect(() => {
-    setState({
-      ...selectedItem,
-      duration: moment.utc(+selectedItem?.duration).format("HH:mm"),
-    });
-  }, [selectedItem]);
-
-  const { mutate, isLoading: updateLoading } = useMutation(updateLogHour, {
+  const { mutate, isLoading: createLoading } = useMutation(updateLogHour, {
     onSuccess: () => {
       snack.success("Log Hour Updated");
       setOpen(false);
@@ -52,93 +38,73 @@ function EditLogHour({ open, setOpen, selectedItem }: Props) {
     },
   });
 
-  const handleChange = (e: any) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
+  const { control, trigger, handleSubmit, reset } = useForm({
+    defaultValues: editLogHourDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(
+      EditLogHourSchema({ taskCreatedDate: taskData?.createdAt })
+    ),
+  });
 
-  const handleSubmit = (e: SubmitType) => {
-    e.preventDefault();
-    if (!state.user) {
-      snack.error("Please select user");
-      return;
-    }
-    if (!state.duration.match(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)) {
-      snack.error("Please enter duration in HH:MM format");
-      return;
-    }
-    const apiData: any = { ...state };
-    apiData.duration = moment.duration(apiData.duration).asMilliseconds();
+  useEffect(() => {
+    reset({
+      ...logHourData,
+      hours: moment
+        .utc(moment.duration(logHourData?.duration).asMilliseconds())
+        .format("HH"),
+      minutes: moment
+        .utc(moment.duration(logHourData?.duration).asMilliseconds())
+        .format("mm"),
+    });
+  }, [logHourData, reset]);
 
+  const onSubmit = (data: any) => {
+    const { hours, minutes, user, ...apiData } = data;
+    apiData.duration = moment
+      .duration(`${data.hours}:${data.minutes}`)
+      .asMilliseconds();
     mutate({
-      id: selectedItem?.id,
-      data: apiData,
+      id: logHourData.id,
+      data: {
+        ...apiData,
+      },
     });
   };
 
   return (
-    <DrawerWrapper open={open} title="Edit Log Hour" setOpen={setOpen}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <Autocomplete
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, user: value });
-            }}
-            value={state?.user}
-            options={data?.data || []}
-            getOptionLabel={(option: any) => {
-              return option?.fullName;
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Users"
-              />
-            )}
+    <DrawerWrapper open={open} title="Update Log Hour" setOpen={setOpen}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box>
+          <FormDate control={control} label="Date" name="completedDate" />
+        </Box>
+        <Box sx={{ mt: 3, display: "flex", gap: 1 }}>
+          <FormAutoComplete
+            control={control}
+            label="Hours"
+            name="hours"
+            trigger={() => trigger("minutes")}
+            options={getHoursOptions()}
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
+          <FormAutoComplete
+            control={control}
+            label="Minutes"
+            name="minutes"
+            options={getMinutesOptions()}
+          />
+        </Box>
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+          <LoadingButton
+            loading={createLoading}
             fullWidth
-            onChange={handleChange}
-            size="small"
-            name="completedDate"
-            type="date"
-            label="Date"
-            value={state?.completedDate}
-            InputLabelProps={{ shrink: true }}
-            required
+            loadingColor="white"
+            title="Update Log Hour"
+            color="secondary"
+            type="submit"
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            label="Duration (HH:MM)"
-            value={state?.duration}
-            name="duration"
-            required
-          />
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={updateLoading}
-              fullWidth
-              loadingColor="white"
-              title="Update Log Hour"
-              color="secondary"
-              type="submit"
-            />
-          </Box>
-        </form>
-      )}
+        </Box>
+      </form>
     </DrawerWrapper>
   );
 }
 
-export default EditLogHour;
+export default UpdateLogHour;
