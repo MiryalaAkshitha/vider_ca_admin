@@ -26,8 +26,8 @@ function Calendar() {
   const eventsData =
     data?.data?.map((item: any) => ({
       title: item?.title,
-      start: `${item?.date}T${item?.startTime}`,
-      end: `${item?.date}T${item?.endTime}`,
+      start: `${item?.date}T${moment(item?.startTime).format("HH:mm")}`,
+      end: `${item?.date}T${moment(item?.endTime).format("HH:mm")}`,
     })) || [];
 
   const tasksData =

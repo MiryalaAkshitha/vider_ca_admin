@@ -1,34 +1,23 @@
-import { MenuItem, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { getRoles } from "api/services/roles";
-import { createUser } from "api/services/users";
+import { inviteUser } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
+import FormInput from "components/FormFields/FormInput";
+import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DialogProps, InputChangeType, ResType, SubmitType } from "types";
-import PasswordField from "views/login/PasswordField";
-
-type State = {
-  fullName: string;
-  email: string;
-  mobile: string;
-  password: string;
-  role: number | null;
-};
+import { useForm } from "react-hook-form";
+import { useMutation, useQuery } from "react-query";
+import { DialogProps, ResType } from "types";
+import {
+  inviteUserDefaultValues,
+  inviteUserSchema,
+} from "validations/inviteUser";
 
 function AddMember({ open, setOpen }: DialogProps) {
-  const queryClient = useQueryClient();
   const snack = useSnack();
-  const [state, setState] = useState<State>({
-    fullName: "",
-    email: "",
-    mobile: "",
-    password: "",
-    role: null,
-  });
 
   const { data, isLoading: dataLoading }: ResType = useQuery(
     "roles",
@@ -36,24 +25,23 @@ function AddMember({ open, setOpen }: DialogProps) {
     { enabled: open }
   );
 
-  const { mutate, isLoading } = useMutation(createUser, {
+  const { mutate, isLoading } = useMutation(inviteUser, {
     onSuccess: () => {
-      snack.success("User Created");
+      snack.success("An invitation has been sent to the user");
       setOpen(false);
-      queryClient.invalidateQueries("users");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
   });
 
-  const handleChange = (e: InputChangeType) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
+  const { control, handleSubmit } = useForm({
+    defaultValues: inviteUserDefaultValues,
+    resolver: yupResolver(inviteUserSchema()),
+  });
 
-  const handleSubmit = (e: SubmitType) => {
-    e.preventDefault();
-    mutate(state);
+  const onSubmit = (data) => {
+    mutate(data);
   };
 
   return (
@@ -61,67 +49,38 @@ function AddMember({ open, setOpen }: DialogProps) {
       {dataLoading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            required
-            label="Full Name"
-            name="fullName"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            required
-            label="Email"
-            name="email"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            required
-            label="Mobile"
-            name="mobile"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            required
-            label="Role"
-            value={state.role || ""}
-            onChange={handleChange}
-            name="role"
-            select
-          >
-            {data?.data?.map((item: any) => (
-              <MenuItem value={item?.id} key={item?.id}>
-                {item?.name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <PasswordField
-            sx={{ mt: 3 }}
-            label="Password"
-            value={state.password}
-            onChange={handleChange}
-          />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box mb={2}>
+            <FormInput control={control} name="fullName" label="Full Name" />
+          </Box>
+          <Box mb={2}>
+            <FormInput control={control} name="email" label="Email" />
+          </Box>
+          <Box mb={2}>
+            <FormInput
+              control={control}
+              name="mobileNumber"
+              label="Mobile Number"
+            />
+          </Box>
+          <Box>
+            <FormSelect
+              control={control}
+              name="role"
+              label="role"
+              options={data?.data?.map((item: any) => ({
+                label: item.name,
+                value: item.name,
+              }))}
+            />
+          </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
               fullWidth
               type="submit"
               loadingColor="white"
-              title="Create Member"
+              title="Invite User"
               color="secondary"
             />
           </Box>

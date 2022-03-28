@@ -6,4 +6,5 @@ export const StyledUserCard = styled("div")(() => ({
   padding: "30px 10px",
   textAlign: "center",
   cursor: "pointer",
+  position: "relative",
 }));

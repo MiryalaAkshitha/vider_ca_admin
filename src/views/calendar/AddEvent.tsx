@@ -57,22 +57,33 @@ function AddEvent() {
     },
   });
 
-  const { control, watch, handleSubmit, getFieldState } = useForm({
+  const { control, watch, handleSubmit } = useForm({
     defaultValues: addCalendarEventDefaultValues,
     mode: "onChange",
-    resolver: yupResolver(
-      AddCalendarEventSchema({
-        taskCreatedDate: "2022-01-01",
-      })
-    ),
+    resolver: yupResolver(AddCalendarEventSchema()),
   });
 
   const onSubmit = (data: any) => {
     const { reminderCheck, ...apiData } = data;
+    apiData.client = apiData?.client?.value;
+    apiData.task = apiData?.task?.value;
     mutate({
       ...apiData,
     });
   };
+
+  let clientTasks = tasks?.data
+    ?.filter(
+      (item: any) => item?.client?.id === parseInt(watch<any>("client")?.value)
+    )
+    ?.map((item: any) => ({
+      label: item.name,
+      value: item.id,
+    }));
+
+  let taskMembers =
+    tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)
+      ?.members || [];
 
   return (
     <DrawerWrapper
@@ -102,17 +113,24 @@ function AddEvent() {
                 control={control}
                 label="Task"
                 name="task"
-                options={tasks?.data
-                  ?.filter(
-                    (item) => item?.client?.id === +getFieldState("client")
-                  )
-                  ?.map((item: any) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))}
+                options={clientTasks}
               />
             </Box>
           )}
+          <Box mt={2}>
+            {watch("task") && (
+              <FormAutoComplete
+                control={control}
+                label="Members"
+                multiple
+                name="members"
+                options={taskMembers?.map((item: any) => ({
+                  label: item.fullName,
+                  value: item.id,
+                }))}
+              />
+            )}
+          </Box>
           <Box mt={2}>
             <FormInput name="title" control={control} label="Title" />
           </Box>

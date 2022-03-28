@@ -22,6 +22,7 @@ const Categories = loadable(() => import("pages/settings/categories"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const Teams = loadable(() => import("pages/settings/teams"));
+const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("views/clients/leads"));
 const DscRegister = loadable(() => import("views/clients/dscregister"));
@@ -111,7 +112,10 @@ function RoutesContainer() {
           <Route path="storage-management" element={<StorageManagement />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
-          <Route path="teams" element={<Teams />} />
+          <Route path="teams">
+            <Route index element={<Teams />} />
+            <Route path=":teamId" element={<ViewTeam />} />
+          </Route>
           <Route path="labels" element={<Labels />} />
           <Route path="roles-permissions">
             <Route index element={<RolesAndPermissions />} />

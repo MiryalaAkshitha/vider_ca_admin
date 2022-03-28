@@ -1,4 +1,4 @@
-import { boolean, date, mixed, object, ref, string } from "yup";
+import { boolean, date, mixed, object, ref, string, number, array } from "yup";
 
 let addCalendarEventDefaultValues = {
   client: null,
@@ -11,20 +11,35 @@ let addCalendarEventDefaultValues = {
   reminderCheck: false,
   reminder: "",
   notes: "",
+  members: [],
 };
 
-let AddCalendarEventSchema = ({ taskCreatedDate }) => {
+let AddCalendarEventSchema = () => {
   return object()
     .nullable()
     .shape({
-      client: object().shape({
-        label: string().required(),
-        value: string().required(),
-      }),
-      task: object().nullable().shape({
-        label: string().required(),
-        value: string().required(),
-      }),
+      client: object()
+        .nullable()
+        .shape({
+          label: string().required(),
+          value: number().required(),
+        })
+        .required("Client is required"),
+      task: object()
+        .nullable()
+        .shape({
+          label: string().required(),
+          value: number().required(),
+        })
+        .required("Task is required"),
+      members: array()
+        .of(
+          object().shape({
+            label: string().required(),
+            value: string().required(),
+          })
+        )
+        .min(1, "Select atleast one member"),
       title: string()
         .required("Event name is required")
         .min(3, "Event name should be atleast 3 characters"),
@@ -33,7 +48,7 @@ let AddCalendarEventSchema = ({ taskCreatedDate }) => {
         .nullable()
         .typeError("Invalid date")
         .required("Date is required")
-        .min(taskCreatedDate, "Date should be greater than task created date"),
+        .min(new Date(), "Date should be greater than task created date"),
       startTime: date()
         .nullable()
         .typeError("Invalid start time")

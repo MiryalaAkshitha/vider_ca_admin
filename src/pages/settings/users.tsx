@@ -1,8 +1,8 @@
-import { Add } from "@mui/icons-material";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getRoles } from "api/services/roles";
 import { getUsers } from "api/services/users";
+import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import { useState } from "react";
@@ -31,7 +31,7 @@ function Users() {
         <Box display="flex" gap={2}>
           <SearchContainer
             value={search}
-            placeHolder="Search by Name"
+            placeHolder="Search by Name or tags"
             onChange={(v) => setSearch(v)}
           />
           <TextField
@@ -50,16 +50,6 @@ function Users() {
             ))}
           </TextField>
         </Box>
-        <Box>
-          <Button
-            variant="outlined"
-            onClick={() => setOpen(true)}
-            color="secondary"
-            startIcon={<Add />}
-          >
-            Add Member
-          </Button>
-        </Box>
       </Box>
       <Grid container spacing={3} sx={{ maxWidth: 1400, mt: 2 }}>
         {data?.data
@@ -76,11 +66,16 @@ function Users() {
           })
           ?.map((user: any, index: number) => (
             <Grid item xs={3} key={index}>
-              <UserCard data={user} />
+              <UserCard data={user} type="user" />
             </Grid>
           ))}
       </Grid>
       <AddMember open={open} setOpen={setOpen} />
+      <FloatingButton
+        onClick={() => {
+          setOpen(true);
+        }}
+      />
     </>
   );
 }

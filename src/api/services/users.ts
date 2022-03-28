@@ -16,8 +16,8 @@ const signin = (data: any) => {
   return http.post("/users/signin", data);
 };
 
-const createUser = (data: any) => {
-  return http.post("/users", data);
+const inviteUser = (data: any) => {
+  return http.post("/users/invite-user", data);
 };
 
 const joinUser = (data: any) => {
@@ -28,4 +28,42 @@ const getUsers = (data: any) => {
   return http.get("/users", data);
 };
 
-export { signup, signin, createUser, getUsers, sendOtp, verifyOtp, joinUser };
+const getTeams = () => {
+  return http.get("/teams");
+};
+
+const getTeam = ({ queryKey }) => {
+  return http.get(`/teams/${queryKey[1]}`);
+};
+
+const createTeam = (data: any) => {
+  return http.post("/teams", data);
+};
+
+const removeFromTeam = ({ teamId, userId }) => {
+  return http.post(`/teams/${teamId}/remove-member`, { userId });
+};
+
+const updateTeam = ({ id, data }) => {
+  return http.put(`/teams/${id}`, data);
+};
+
+const deleteTeam = ({ id }) => {
+  return http.delete(`/teams/${id}`);
+};
+
+export {
+  signup,
+  signin,
+  inviteUser,
+  getUsers,
+  sendOtp,
+  verifyOtp,
+  joinUser,
+  getTeams,
+  createTeam,
+  updateTeam,
+  deleteTeam,
+  getTeam,
+  removeFromTeam,
+};
