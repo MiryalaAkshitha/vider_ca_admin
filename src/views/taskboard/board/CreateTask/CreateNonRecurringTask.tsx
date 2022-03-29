@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { createTask } from "api/services/tasks";
@@ -13,6 +14,12 @@ import { PriorityEnum } from "utils/constants";
 import { initialState } from "./initialState";
 import { StateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
+import FormSelect from 'components/FormFields/FormSelect'
+import { useForm } from "react-hook-form";
+import { CreateNonRecurringClientSchema, createNonRecurringTaskDefaultValues } from "validations/createTask";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import FormInput from "components/FormFields/FormInput";
+import FormDate from "components/FormFields/FormDate";
 
 function CreateNonRecurringTask() {
   const { queryParams, setQueryParams } = useQueryParams();
@@ -43,24 +50,24 @@ function CreateNonRecurringTask() {
     },
   });
 
-  const handleSubmit = (e: SubmitType) => {
-    e.preventDefault();
-    const apiData = { ...state };
+  const { watch, control, handleSubmit } = useForm({
+    defaultValues: createNonRecurringTaskDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(CreateNonRecurringClientSchema),
+  });
 
-    if (!apiData.client?.length) {
-      snack.error("Please select atleast one client");
-      return;
-    }
-    apiData.members = apiData.members.map((member: any) => member.id);
-    apiData.labels = apiData.labels.map((label: any) => label.id);
-    apiData.category = apiData.category?.id;
-    apiData.subCategory = apiData.subCategory?.id;
-    apiData.taskLeader = apiData.taskLeader?.id;
-    mutate(apiData);
+
+  const onFormSubmit = (data: any) => {
+    data.client = data.client?.map((client: any) => parseInt(client.value));
+    data.members = data.members?.map((member: any) => parseInt(member.value));
+    data.labels = data.labels?.map((label: any) =>  parseInt(label.value));
+    data.category = parseInt(data.category);
+    data.subCategory = data.subCategory?.id;
+    mutate(data);
   };
 
   let subCategories = categories?.data.find(
-    (item) => item.id === state.category?.id
+      (item) => item.value === watch("category")
   )?.subCategories;
 
   return (
@@ -68,230 +75,122 @@ function CreateNonRecurringTask() {
       {loading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, client: value?.map((item) => item?.id) });
-            }}
-            options={clients?.data[0] || []}
-            getOptionLabel={(option: any) => option?.displayName}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Client"
-              />
-            )}
-          />
-          <Autocomplete
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, category: value });
-            }}
-            sx={{ mt: 3 }}
-            options={categories?.data || []}
-            value={state.category}
-            getOptionLabel={(option: any) => option?.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Category"
-              />
-            )}
-          />
-          {subCategories?.length ? (
-            <Autocomplete
-              id="tags-standard"
-              onChange={(_, value) => {
-                setState({ ...state, subCategory: value });
-              }}
-              options={subCategories || []}
-              value={state.subCategory}
-              sx={{ mt: 3 }}
-              getOptionLabel={(option: any) => option?.name}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  label="Sub Category"
-                />
-              )}
+        <form onSubmit={handleSubmit(onFormSubmit)}>
+          <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Client"
+              multiple
+              name="client"
+              options={clients?.data[0]?.map((item: any) => ({
+                label: item.displayName,
+                value: item.id,
+              }))}
             />
-          ) : null}
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            label="Name"
-            name="name"
-            required
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            type="date"
-            value={state.startDate || ""}
-            InputLabelProps={{ shrink: true }}
-            label="Start Date"
-            name="startDate"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            type="date"
-            value={state.dueDate || ""}
-            InputLabelProps={{ shrink: true }}
-            label="Due Date"
-            name="dueDate"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            type="date"
-            value={state.expectedCompletionDate || ""}
-            InputLabelProps={{ shrink: true }}
-            label="Expected Completion Date"
-            name="expectedCompletionDate"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            required
-            size="small"
-            type="number"
-            inputProps={{ min: 1999, max: 2050 }}
-            value={state.financialYear || ""}
-            label="Financial Year"
+          </Box>
+          <Box mt={2}>
+            <FormSelect
+              control={control}
+              name="category"
+              label="Category"
+              options={categories?.data.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Box>
+         {subCategories && (
+            <Box mt={2}>
+              <FormSelect
+                control={control}
+                name="subCategory"
+                label="Sub Category"
+                options={subCategories.map((item: any) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
+              />
+            </Box>
+          )}
+           <Box mt={2}>
+            <FormInput name="name" control={control} label="Name" />
+          </Box>
+          <Box mt={2}>
+             <FormDate name="startDate" control={control} label="Start Date" />
+          </Box>
+          <Box mt={2}>
+             <FormDate name="dueDate" control={control} label="Due Date" />
+          </Box>
+          <Box mt={2}>
+             <FormDate name="expectedCompletionDate" control={control} label="Expected Completion Date" />
+          </Box>
+          <Box mt={2}>
+           <FormSelect
+            control={control}
             name="financialYear"
-            select
-            SelectProps={{ native: true }}
-          >
-            <option value=""></option>
-            {Array.from(Array(50).keys()).map((_, index) => (
-              <option value={`${2000 + index}-${2000 + index + 1}`} key={index}>
-                {2000 + index}-{2000 + index + 1}
-              </option>
-            ))}
-          </TextField>
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            onChange={(_, value) => setState({ ...state, labels: value })}
-            value={state?.labels || []}
-            options={labels?.data || []}
-            sx={{ mt: 3 }}
-            getOptionLabel={(option: any) => option?.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Labels"
-              />
-            )}
-          />
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, members: value });
-            }}
-            value={state.members || []}
-            options={users?.data || []}
-            sx={{ mt: 3 }}
-            getOptionLabel={(option: any) => {
-              return option?.fullName;
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Members"
-              />
-            )}
-          />
-          <Autocomplete
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, taskLeader: value });
-            }}
-            sx={{ mt: 3 }}
-            options={users?.data || []}
-            value={state.taskLeader}
-            getOptionLabel={(option: any) => option?.fullName}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Task Leader"
-              />
-            )}
-          />
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            sx={{ mt: 3 }}
-            select
-            required
+            label="Finanacial Year"
+            options={
+              Array.from(Array(50).keys()).map((_, index) => (
+                {
+                  label: `${(2000 + index)}-${(2000 + index + 1)}`,
+                  value: `${(2000 + index)}-${(2000 + index + 1)}`
+                }
+              ))
+            }
+            />
+          </Box>
+          <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Labels"
+              multiple
+              name="labels"
+              options={labels?.data.map((item: any) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Members"
+              multiple
+              name="members"
+              options={users?.data.map((item: any) =>  ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+           <FormSelect
+            control={control}
+            name="taskLeader"
+            label="Task Leader"
+            options={users?.data.map((item: any) => ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+           <FormSelect
+            control={control}
             name="priority"
-            value={state.priority || ""}
             label="Priority"
-            onChange={handleChange}
-          >
-            {Object.values(PriorityEnum).map((item, index) => (
-              <MenuItem key={index} value={item}>
-                {getTitle(item)}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            onChange={handleChange}
-            name="feeAmount"
-            label="Fee Amount"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            size="small"
-            onChange={handleChange}
-            name="description"
-            multiline
-            rows={4}
-            label="Description"
-          />
+            options={Object.values(PriorityEnum).map((item, index) => ({
+                  label: getTitle(item),
+                  value: item
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <FormInput control={control} name="feeAmount" label="Fee Amount" />
+          </Box>
+           <Box mt={2}>
+            <FormInput control={control} name="description" label="Description" multiline />
+          </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}

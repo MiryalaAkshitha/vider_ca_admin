@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { createRecurringTask } from "api/services/tasks";
 import Loader from "components/Loader";
@@ -10,13 +10,18 @@ import { useMutation, useQueryClient } from "react-query";
 import { InputChangeType, SubmitType } from "types";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
 import CustomDates from "./CustomDates";
-import CustomSelect from "./CustomSelect";
-import CustomTextField from "./CustomTextField";
 import FrequencyDates from "./FrequencyDates";
 import { RecurringInitialState } from "./initialState";
-import SelectCategory from "./SelectCategory";
 import { RecurringStateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
+import FormSelect from 'components/FormFields/FormSelect'
+import { useForm } from "react-hook-form";
+import { CreateRecurringClientSchema, createRecurringTaskDefaultValues } from "validations/createTask";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import FormInput from "components/FormFields/FormInput";
+import FormDate from "components/FormFields/FormDate"
+import FormCheckbox from "components/FormFields/FormCheckbox";
+import { getTitle } from "utils";
 
 function CreateRecurringTask() {
   const { queryParams, setQueryParams } = useQueryParams();
@@ -27,6 +32,14 @@ function CreateRecurringTask() {
   const [state, setState] = useState<RecurringStateProps>(
     RecurringInitialState
   );
+
+  const { watch, control, handleSubmit } = useForm({
+    defaultValues: createRecurringTaskDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(CreateRecurringClientSchema({
+      taskCreatedDate: "2022-01-01",
+    })),
+  });
 
   const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -45,174 +58,171 @@ function CreateRecurringTask() {
     },
   });
 
-  const handleSubmit = (e: SubmitType) => {
-    e.preventDefault();
-    let apiData = { ...state };
+  const onFormSubmit = (data: any) => {
 
-    if (!apiData.client?.length) {
-      snack.error("Please select atleast one client");
+    if(watch("frequency") === RecurringFrequency.CUSTOM && !state?.customDates.length) {
+      snack.error("Please add atleast one custom date, click plus button");
       return;
     }
 
-    apiData.members = apiData.members.map((member: any) => member.id);
-    apiData.labels = apiData.labels.map((label: any) => label.id);
-    apiData.category = apiData.category?.id;
-    apiData.subCategory = apiData.subCategory?.id;
-    apiData.taskLeader = apiData.taskLeader?.id;
-    mutate(apiData);
+    data.client = data.client?.map((client: any) => parseInt(client.value));
+    data.members = data.members?.map((member: any) => parseInt(member.value));
+    data.labels = data.labels?.map((label: any) =>  parseInt(label.value));
+    data.category = parseInt(data.category);
+    data.subCategory = data.subCategory?.id;
+    data.customDates = state?.customDates;
+    data.dueDay = parseInt(data?.dueDay?.value);
+    mutate(data);
   };
+
+  const renderFrequencyDateInputs = () => {
+    if(watch("frequency")) {
+      if(watch("frequency") !== RecurringFrequency.CUSTOM)
+      return (
+        <FrequencyDates state={state} setState={setState}
+          recurringStartDate={<FormDate name="recurringStartDate" control={control} label="Recurring Start Date" />}
+          dueDate={<FormAutoComplete
+            control={control}
+            label="Due Day"
+            name="dueDay"
+            options={Array.from(Array(31), (v, i) => i + 1).map(
+              (item: any) => ({
+                label: item,
+                value: item
+              })
+            )}
+            />
+          }
+          recurringEndDate = {
+            <FormDate name="recurringEndDate" control={control} label="Recurring End Date" />
+          }
+          neverExpires={
+            <FormCheckbox
+              name="neverExpires"
+              control={control}
+              label="Never Expires"
+            />
+          }
+        />
+      )
+
+    return (
+          <CustomDates state={state} setState={setState} />
+      )
+    }
+  }
 
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <Autocomplete
-            id="tags-standard"
-            multiple
-            onChange={(_, value) => {
-              setState({ ...state, client: value?.map((v: any) => v.id) });
-            }}
-            options={clients?.data[0] || []}
-            getOptionLabel={(option: any) => option?.displayName}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Client"
-              />
-            )}
-          />
-          <SelectCategory
-            state={state}
-            setState={setState}
-            categories={categories?.data}
-          />
-          <CustomTextField label="Name" name="name" onChange={handleChange} />
-          <CustomSelect
-            name="frequency"
-            options={Object.values(RecurringFrequency).map((item) => ({
-              label: item,
-              value: item,
-            }))}
-            value={state.frequency}
-            label="Frequency"
-            onChange={handleChange}
-          />
-
-          {state.frequency && state.frequency !== RecurringFrequency.CUSTOM && (
-            <FrequencyDates state={state} setState={setState} />
-          )}
-          {state.frequency && state.frequency === RecurringFrequency.CUSTOM && (
-            <CustomDates state={state} setState={setState} />
-          )}
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            required
-            size="small"
-            type="number"
-            inputProps={{ min: 1999, max: 2050 }}
-            value={state.financialYear || ""}
-            label="Financial Year"
+        <form onSubmit={handleSubmit(onFormSubmit)}>
+          <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Client"
+              multiple
+              name="client"
+              options={clients?.data[0]?.map((item: any) => ({
+                label: item.displayName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <FormSelect
+              control={control}
+              name="category"
+              label="Category"
+              options={categories?.data.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <FormInput name="name" control={control} label="Name" />
+          </Box>
+          <Box mt={2}>
+            <FormSelect
+              control={control}
+              name="frequency"
+              label="Frequency"
+              options={Object.values(RecurringFrequency).map((item) => ({
+                label: getTitle(item),
+                value: item
+              }))}
+            />
+          </Box>
+          {renderFrequencyDateInputs()}
+          <Box mt={2}>
+           <FormSelect
+            control={control}
             name="financialYear"
-            select
-            SelectProps={{ native: true }}
-          >
-            <option value=""></option>
-            {Array.from(Array(50).keys()).map((_, index) => (
-              <option value={`${2000 + index}-${2000 + index + 1}`} key={index}>
-                {2000 + index}-{2000 + index + 1}
-              </option>
-            ))}
-          </TextField>
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            onChange={(_, value) => setState({ ...state, labels: value })}
-            value={state?.labels || []}
-            options={labels?.data || []}
-            sx={{ mt: 3 }}
-            getOptionLabel={(option: any) => option?.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Labels"
-              />
-            )}
-          />
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, members: value });
-            }}
-            value={state.members || []}
-            options={users?.data || []}
-            sx={{ mt: 3 }}
-            getOptionLabel={(option: any) => {
-              return option?.fullName;
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Members"
-              />
-            )}
-          />
-          <Autocomplete
-            id="tags-standard"
-            onChange={(_, value) => {
-              setState({ ...state, taskLeader: value });
-            }}
-            sx={{ mt: 3 }}
-            options={users?.data || []}
-            value={state.taskLeader}
-            getOptionLabel={(option: any) => option?.fullName}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Task Leader"
-              />
-            )}
-          />
-          <CustomSelect
-            label="Priority"
+            label="Finanacial Year"
+            options={
+              Array.from(Array(50).keys()).map((_, index) => (
+                {
+                  label: `${(2000 + index)}-${(2000 + index + 1)}`,
+                  value: `${(2000 + index)}-${(2000 + index + 1)}`
+                }
+              ))
+            }
+            />
+          </Box>
+           <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Labels"
+              multiple
+              name="labels"
+              options={labels?.data.map((item: any) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Members"
+              multiple
+              name="members"
+              options={users?.data.map((item: any) =>  ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+           <FormSelect
+            control={control}
+            name="taskLeader"
+            label="Task Leader"
+            options={users?.data.map((item: any) => ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+           <Box mt={2}>
+           <FormSelect
+            control={control}
             name="priority"
-            onChange={handleChange}
-            value={state.priority}
-            options={Object.values(PriorityEnum)?.map((item) => ({
-              label: item,
-              value: item,
-            }))}
-          />
-          <CustomTextField
-            name="feeAmount"
-            label="Fee Amount"
-            onChange={handleChange}
-          />
-          <CustomTextField
-            name="description"
-            label="Description"
-            onChange={handleChange}
-            rows={5}
-            required={false}
-            multiline
-          />
+            label="Priority"
+            options={Object.values(PriorityEnum).map((item, index) => ({
+                  label: item,
+                  value: item
+              }))}
+            />
+          </Box>
+            <Box mt={2}>
+            <FormInput control={control} name="feeAmount" label="Fee Amount" />
+          </Box>
+           <Box mt={2}>
+            <FormInput control={control} name="description" label="Description" multiline />
+          </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
