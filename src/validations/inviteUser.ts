@@ -10,9 +10,11 @@ let inviteUserDefaultValues = {
 let inviteUserSchema = () => {
   return object().shape({
     fullName: string().required("Full name is required"),
-    email: string().required("Email is required"),
+    email: string().email().required("Email is required"),
     role: string().required("Role is required"),
-    mobileNumber: string().required("Mobile number is required"),
+    mobileNumber: string()
+      .matches(/^[0-9]{10}$/, "Mobile number is invalid")
+      .required("Mobile number is required"),
   });
 };
 

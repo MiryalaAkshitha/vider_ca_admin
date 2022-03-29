@@ -6,6 +6,7 @@ import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { StyledUserCard } from "./styles";
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
 };
 
 function UserCard({ data, type, teamId }: Props) {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const snack = useSnack();
   const confirm = useConfirm();
@@ -47,7 +49,11 @@ function UserCard({ data, type, teamId }: Props) {
 
   return (
     <>
-      <StyledUserCard>
+      <StyledUserCard
+        onClick={() => {
+          navigate(`/settings/users/${data.id}/profile`);
+        }}
+      >
         <Avatar
           sx={{ width: 80, mb: 2, height: 80, mx: "auto" }}
           src={data?.imageUrl || icons.user}
@@ -77,12 +83,17 @@ function UserCard({ data, type, teamId }: Props) {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        {type === "user" && (
-          <>
-            <MenuItem>Edit</MenuItem>
-            <MenuItem>Remove</MenuItem>
-          </>
-        )}
+        {type === "user" &&
+          ["Edit", "Remove"].map((item) => (
+            <MenuItem
+              key={item}
+              onClick={() => {
+                setAnchorEl(null);
+              }}
+            >
+              {item}
+            </MenuItem>
+          ))}
         {type === "team" && (
           <MenuItem onClick={handleRemoveFromTeam}>Remove from team</MenuItem>
         )}

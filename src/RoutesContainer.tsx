@@ -21,6 +21,10 @@ const TaskBoard = loadable(() => import("pages/taskboard"));
 const Categories = loadable(() => import("pages/settings/categories"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
+const ViewUser = loadable(() => import("pages/settings/ViewUser"));
+const UserProfile = loadable(() => import("views/users/Profile"));
+const UserTasks = loadable(() => import("views/users/Tasks"));
+const UserExpenditure = loadable(() => import("views/users/Expenditure"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
 const Clients = loadable(() => import("pages/clients"));
@@ -108,7 +112,14 @@ function RoutesContainer() {
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="categories" element={<Categories />} />
-          <Route path="users" element={<Users />} />
+          <Route path="users">
+            <Route index element={<Users />} />
+            <Route path=":userId" element={<ViewUser />}>
+              <Route path="profile" element={<UserProfile />} />
+              <Route path="tasks" element={<UserTasks />} />
+              <Route path="expenditure" element={<UserExpenditure />} />
+            </Route>
+          </Route>
           <Route path="storage-management" element={<StorageManagement />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
