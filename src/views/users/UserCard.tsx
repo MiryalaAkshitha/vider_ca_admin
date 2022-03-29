@@ -84,7 +84,7 @@ function UserCard({ data, type, teamId }: Props) {
         onClose={() => setAnchorEl(null)}
       >
         {type === "user" &&
-          ["Edit", "Remove"].map((item) => (
+          ["Remove"].map((item) => (
             <MenuItem
               key={item}
               onClick={() => {

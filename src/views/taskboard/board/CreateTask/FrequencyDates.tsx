@@ -3,7 +3,7 @@ import {
   Checkbox,
   FormControlLabel,
   TextField,
-  Box
+  Box,
 } from "@mui/material";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { RecurringStateProps } from "./types";
@@ -17,7 +17,14 @@ interface IProps {
   neverExpires: React.ReactElement;
 }
 
-function FrequencyDates({ state, setState, recurringStartDate, dueDate, recurringEndDate, neverExpires }: IProps) {
+function FrequencyDates({
+  state,
+  setState,
+  recurringStartDate,
+  dueDate,
+  recurringEndDate,
+  neverExpires,
+}: IProps) {
   // const [neverExpires, setNeverExpires] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,18 +33,10 @@ function FrequencyDates({ state, setState, recurringStartDate, dueDate, recurrin
 
   return (
     <>
-      <Box mt={2}>
-        {recurringStartDate}
-      </Box>
-      <Box mt={2}>
-        {dueDate}
-      </Box>
-      <Box mt={2}>
-        {recurringEndDate}
-      </Box>
-      <Box mt={2}>
-       {neverExpires}
-      </Box>
+      <Box mt={2}>{recurringStartDate}</Box>
+      <Box mt={2}>{dueDate}</Box>
+      <Box mt={2}>{recurringEndDate}</Box>
+      <Box mt={2}>{neverExpires}</Box>
     </>
   );
 }

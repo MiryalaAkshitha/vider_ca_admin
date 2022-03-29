@@ -15,7 +15,7 @@ function ViewUser() {
 
   return (
     <>
-      <Box sx={{ position: "sticky", top: 55, bgcolor: "white", zIndex: 2 }}>
+      <Box sx={{ position: "sticky", top: 65, bgcolor: "white", zIndex: 2 }}>
         <Box>
           <Button
             onClick={() => {
@@ -26,7 +26,7 @@ function ViewUser() {
             User Profile
           </Button>
         </Box>
-        <StyledProfileNav sx={{ mt: 2 }}>
+        <StyledProfileNav sx={{ mt: 2, mx: -3 }}>
           {userProfileMenu.map((item, index) => (
             <RouterLink
               to={`/settings/users/${params.userId}${item.path}`}

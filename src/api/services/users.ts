@@ -52,6 +52,14 @@ const deleteTeam = ({ id }) => {
   return http.delete(`/teams/${id}`);
 };
 
+const getProfile = ({ queryKey }) => {
+  return http.get("/users/profile", { params: { userId: queryKey[1] } });
+};
+
+const updateProfile = (data: any) => {
+  return http.patch(`/users/profile`, data);
+};
+
 export {
   signup,
   signin,
@@ -66,4 +74,6 @@ export {
   deleteTeam,
   getTeam,
   removeFromTeam,
+  getProfile,
+  updateProfile,
 };

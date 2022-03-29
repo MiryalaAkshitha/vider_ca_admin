@@ -12,7 +12,7 @@ function MainContent({ children }: Props) {
       sx={{
         flexGrow: 1,
         p: 3,
-        ml: "250px",
+        ml: "240px",
       }}
     >
       <Toolbar />

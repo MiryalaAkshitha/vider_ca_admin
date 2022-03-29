@@ -77,10 +77,12 @@ export const StyledProfileImageContainer = styled("div")(() => ({
   height: 70,
   position: "relative",
   borderRadius: "50%",
+  overflow: "hidden",
+  display: "inline-flex",
 }));
 
 export const StyledOrganizationImageContainer = styled("div")(() => ({
-  width: "auto",
+  width: 70,
   height: 70,
   position: "relative",
 }));
@@ -94,7 +96,6 @@ export const StyledOrganizationImage = styled("img")(() => ({
 export const StyledProfileImage = styled("img")(() => ({
   width: "100%",
   height: "100%",
-  borderRadius: "50%",
   objectFit: "cover",
 }));
 

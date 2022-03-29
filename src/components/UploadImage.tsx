@@ -16,6 +16,7 @@ export const UploadContainer = styled("div")(() => ({
   minHeight: 150,
   textAlign: "center",
   cursor: "pointer",
+  padding: "10px 0px",
 }));
 
 interface UploadProps {
@@ -23,13 +24,15 @@ interface UploadProps {
   onChange: (v: string) => void;
   sx?: SystemStyleObject;
   label?: string;
+  widthoutIcon?: boolean;
 }
 
 function UploadImage({
   onChange,
-  name,
+  name = "upload",
   sx,
   label = "Drag and drop or Browse",
+  widthoutIcon = false,
 }: UploadProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState<File | null>(null);
@@ -89,10 +92,10 @@ function UploadImage({
         type="file"
         onChange={handleChange}
         name="upload"
-        id="file"
+        id={name}
         style={{ display: "none" }}
       />
-      <label htmlFor="file">
+      <label htmlFor={name}>
         <UploadContainer
           sx={sx}
           onDrop={(e) => handleDrop(e)}
@@ -105,7 +108,9 @@ function UploadImage({
               <CircularProgress />
             ) : (
               <>
-                <CloudUploadOutlinedIcon color="disabled" fontSize="large" />
+                {!widthoutIcon && (
+                  <CloudUploadOutlinedIcon color="disabled" fontSize="large" />
+                )}
                 <Typography color="GrayText" sx={{ textAlign: "center" }}>
                   {label}
                 </Typography>
