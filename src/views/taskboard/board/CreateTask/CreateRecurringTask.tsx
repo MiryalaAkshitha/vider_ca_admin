@@ -33,11 +33,18 @@ function CreateRecurringTask() {
     RecurringInitialState
   );
 
+  const getCategories = () => (categories?.data.map((item: any) => item));
+
+  const isSubCategoriesExist = (category) => {
+    return getCategories().find((item: any) => item.id === parseInt(category))?.subCategories?.length
+  }
+
   const { watch, control, handleSubmit } = useForm({
     defaultValues: createRecurringTaskDefaultValues,
     mode: "onChange",
     resolver: yupResolver(CreateRecurringClientSchema({
       taskCreatedDate: "2022-01-01",
+      isSubCategoriesExist
     })),
   });
 
@@ -75,6 +82,27 @@ function CreateRecurringTask() {
     mutate(data);
   };
 
+   const renderSubCategories = () => {
+    let subCategories = categories?.data.find(
+      (item) => item.id === watch("category"))?.subCategories;
+
+    if(subCategories?.length)
+      return (
+        <Box mt={2}>
+          <FormSelect
+            control={control}
+            name="subCategory"
+            label="Sub Category"
+            options={subCategories.map((item: any) => ({
+              label: item.name,
+              value: item.id,
+            }))}
+          />
+        </Box>
+      )
+    return null;
+  }
+
   const renderFrequencyDateInputs = () => {
     if(watch("frequency")) {
       if(watch("frequency") !== RecurringFrequency.CUSTOM)
@@ -107,7 +135,7 @@ function CreateRecurringTask() {
       )
 
     return (
-          <CustomDates state={state} setState={setState} />
+        <CustomDates state={state} setState={setState} />
       )
     }
   }
@@ -141,6 +169,7 @@ function CreateRecurringTask() {
               }))}
             />
           </Box>
+          {renderSubCategories()}
           <Box mt={2}>
             <FormInput name="name" control={control} label="Name" />
           </Box>

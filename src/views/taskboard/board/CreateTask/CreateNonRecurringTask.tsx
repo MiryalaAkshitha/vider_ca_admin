@@ -50,10 +50,16 @@ function CreateNonRecurringTask() {
     },
   });
 
+  const getCategories = () => (categories?.data.map((item: any) => item));
+
+  const isSubCategoriesExist = (category) => {
+    return getCategories().find((item: any) => item.id === parseInt(category))?.subCategories?.length
+  }
+
   const { watch, control, handleSubmit } = useForm({
     defaultValues: createNonRecurringTaskDefaultValues,
     mode: "onChange",
-    resolver: yupResolver(CreateNonRecurringClientSchema),
+    resolver: yupResolver(CreateNonRecurringClientSchema(isSubCategoriesExist)),
   });
 
 
@@ -66,9 +72,26 @@ function CreateNonRecurringTask() {
     mutate(data);
   };
 
-  let subCategories = categories?.data.find(
-      (item) => item.value === watch("category")
-  )?.subCategories;
+  const renderSubCategories = () => {
+    let subCategories = categories?.data.find(
+      (item) => item.id === watch("category"))?.subCategories;
+
+    if(subCategories?.length)
+      return (
+        <Box mt={2}>
+          <FormSelect
+            control={control}
+            name="subCategory"
+            label="Sub Category"
+            options={subCategories.map((item: any) => ({
+              label: item.name,
+              value: item.id,
+            }))}
+          />
+        </Box>
+      )
+    return null;
+  }
 
   return (
     <>
@@ -99,20 +122,8 @@ function CreateNonRecurringTask() {
               }))}
             />
           </Box>
-         {subCategories && (
-            <Box mt={2}>
-              <FormSelect
-                control={control}
-                name="subCategory"
-                label="Sub Category"
-                options={subCategories.map((item: any) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
-              />
-            </Box>
-          )}
-           <Box mt={2}>
+          {renderSubCategories()}
+          <Box mt={2}>
             <FormInput name="name" control={control} label="Name" />
           </Box>
           <Box mt={2}>
