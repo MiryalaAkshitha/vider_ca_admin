@@ -1,27 +1,29 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { createRecurringTask } from "api/services/tasks";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import FormCheckbox from "components/FormFields/FormCheckbox";
+import FormDate from "components/FormFields/FormDate";
+import FormInput from "components/FormFields/FormInput";
+import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { InputChangeType, SubmitType } from "types";
+import { getTitle } from "utils";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
+import {
+  CreateRecurringClientSchema,
+  createRecurringTaskDefaultValues,
+} from "validations/createTask";
 import CustomDates from "./CustomDates";
 import FrequencyDates from "./FrequencyDates";
 import { RecurringInitialState } from "./initialState";
 import { RecurringStateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
-import FormSelect from 'components/FormFields/FormSelect'
-import { useForm } from "react-hook-form";
-import { CreateRecurringClientSchema, createRecurringTaskDefaultValues } from "validations/createTask";
-import FormAutoComplete from "components/FormFields/FormAutocomplete";
-import FormInput from "components/FormFields/FormInput";
-import FormDate from "components/FormFields/FormDate"
-import FormCheckbox from "components/FormFields/FormCheckbox";
-import { getTitle } from "utils";
 
 function CreateRecurringTask() {
   const { queryParams, setQueryParams } = useQueryParams();
@@ -33,24 +35,23 @@ function CreateRecurringTask() {
     RecurringInitialState
   );
 
-  const getCategories = () => (categories?.data.map((item: any) => item));
+  const getCategories = () => categories?.data.map((item: any) => item);
 
   const isSubCategoriesExist = (category) => {
-    return getCategories().find((item: any) => item.id === parseInt(category))?.subCategories?.length
-  }
+    return getCategories().find((item: any) => item.id === parseInt(category))
+      ?.subCategories?.length;
+  };
 
   const { watch, control, handleSubmit } = useForm({
     defaultValues: createRecurringTaskDefaultValues,
     mode: "onChange",
-    resolver: yupResolver(CreateRecurringClientSchema({
-      taskCreatedDate: "2022-01-01",
-      isSubCategoriesExist
-    })),
+    resolver: yupResolver(
+      CreateRecurringClientSchema({
+        taskCreatedDate: "2022-01-01",
+        isSubCategoriesExist,
+      })
+    ),
   });
-
-  const handleChange = (e: InputChangeType) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
 
   const { mutate, isLoading } = useMutation(createRecurringTask, {
     onSuccess: () => {
@@ -66,15 +67,17 @@ function CreateRecurringTask() {
   });
 
   const onFormSubmit = (data: any) => {
-
-    if(watch("frequency") === RecurringFrequency.CUSTOM && !state?.customDates.length) {
+    if (
+      watch("frequency") === RecurringFrequency.CUSTOM &&
+      !state?.customDates.length
+    ) {
       snack.error("Please add atleast one custom date, click plus button");
       return;
     }
 
     data.client = data.client?.map((client: any) => parseInt(client.value));
     data.members = data.members?.map((member: any) => parseInt(member.value));
-    data.labels = data.labels?.map((label: any) =>  parseInt(label.value));
+    data.labels = data.labels?.map((label: any) => parseInt(label.value));
     data.category = parseInt(data.category);
     data.subCategory = data.subCategory?.id;
     data.customDates = state?.customDates;
@@ -82,11 +85,12 @@ function CreateRecurringTask() {
     mutate(data);
   };
 
-   const renderSubCategories = () => {
+  const renderSubCategories = () => {
     let subCategories = categories?.data.find(
-      (item) => item.id === watch("category"))?.subCategories;
+      (item) => item.id === watch("category")
+    )?.subCategories;
 
-    if(subCategories?.length)
+    if (subCategories?.length)
       return (
         <Box mt={2}>
           <FormSelect
@@ -99,46 +103,57 @@ function CreateRecurringTask() {
             }))}
           />
         </Box>
-      )
+      );
     return null;
-  }
+  };
 
   const renderFrequencyDateInputs = () => {
-    if(watch("frequency")) {
-      if(watch("frequency") !== RecurringFrequency.CUSTOM)
-      return (
-        <FrequencyDates state={state} setState={setState}
-          recurringStartDate={<FormDate name="recurringStartDate" control={control} label="Recurring Start Date" />}
-          dueDate={<FormAutoComplete
-            control={control}
-            label="Due Day"
-            name="dueDay"
-            options={Array.from(Array(31), (v, i) => i + 1).map(
-              (item: any) => ({
-                label: item,
-                value: item
-              })
-            )}
-            />
-          }
-          recurringEndDate = {
-            <FormDate name="recurringEndDate" control={control} label="Recurring End Date" />
-          }
-          neverExpires={
-            <FormCheckbox
-              name="neverExpires"
-              control={control}
-              label="Never Expires"
-            />
-          }
-        />
-      )
+    if (watch("frequency")) {
+      if (watch("frequency") !== RecurringFrequency.CUSTOM)
+        return (
+          <FrequencyDates
+            state={state}
+            setState={setState}
+            recurringStartDate={
+              <FormDate
+                name="recurringStartDate"
+                control={control}
+                label="Recurring Start Date"
+              />
+            }
+            dueDate={
+              <FormAutoComplete
+                control={control}
+                label="Due Day"
+                name="dueDay"
+                options={Array.from(Array(31), (v, i) => i + 1).map(
+                  (item: any) => ({
+                    label: item,
+                    value: item,
+                  })
+                )}
+              />
+            }
+            recurringEndDate={
+              <FormDate
+                name="recurringEndDate"
+                control={control}
+                label="Recurring End Date"
+              />
+            }
+            neverExpires={
+              <FormCheckbox
+                name="neverExpires"
+                control={control}
+                label="Never Expires"
+              />
+            }
+          />
+        );
 
-    return (
-        <CustomDates state={state} setState={setState} />
-      )
+      return <CustomDates state={state} setState={setState} />;
     }
-  }
+  };
 
   return (
     <>
@@ -180,27 +195,23 @@ function CreateRecurringTask() {
               label="Frequency"
               options={Object.values(RecurringFrequency).map((item) => ({
                 label: getTitle(item),
-                value: item
+                value: item,
               }))}
             />
           </Box>
           {renderFrequencyDateInputs()}
           <Box mt={2}>
-           <FormSelect
-            control={control}
-            name="financialYear"
-            label="Finanacial Year"
-            options={
-              Array.from(Array(50).keys()).map((_, index) => (
-                {
-                  label: `${(2000 + index)}-${(2000 + index + 1)}`,
-                  value: `${(2000 + index)}-${(2000 + index + 1)}`
-                }
-              ))
-            }
+            <FormSelect
+              control={control}
+              name="financialYear"
+              label="Finanacial Year"
+              options={Array.from(Array(50).keys()).map((_, index) => ({
+                label: `${2000 + index}-${2000 + index + 1}`,
+                value: `${2000 + index}-${2000 + index + 1}`,
+              }))}
             />
           </Box>
-           <Box mt={2}>
+          <Box mt={2}>
             <FormAutoComplete
               control={control}
               label="Labels"
@@ -218,39 +229,44 @@ function CreateRecurringTask() {
               label="Members"
               multiple
               name="members"
-              options={users?.data.map((item: any) =>  ({
+              options={users?.data.map((item: any) => ({
                 label: item.fullName,
                 value: item.id,
               }))}
             />
           </Box>
           <Box mt={2}>
-           <FormSelect
-            control={control}
-            name="taskLeader"
-            label="Task Leader"
-            options={users?.data.map((item: any) => ({
+            <FormSelect
+              control={control}
+              name="taskLeader"
+              label="Task Leader"
+              options={users?.data.map((item: any) => ({
                 label: item.fullName,
                 value: item.id,
               }))}
             />
           </Box>
-           <Box mt={2}>
-           <FormSelect
-            control={control}
-            name="priority"
-            label="Priority"
-            options={Object.values(PriorityEnum).map((item, index) => ({
-                  label: item,
-                  value: item
+          <Box mt={2}>
+            <FormSelect
+              control={control}
+              name="priority"
+              label="Priority"
+              options={Object.values(PriorityEnum).map((item, index) => ({
+                label: item,
+                value: item,
               }))}
             />
           </Box>
-            <Box mt={2}>
+          <Box mt={2}>
             <FormInput control={control} name="feeAmount" label="Fee Amount" />
           </Box>
-           <Box mt={2}>
-            <FormInput control={control} name="description" label="Description" multiline />
+          <Box mt={2}>
+            <FormInput
+              control={control}
+              name="description"
+              label="Description"
+              multiline
+            />
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton

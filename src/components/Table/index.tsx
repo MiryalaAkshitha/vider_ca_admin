@@ -37,7 +37,7 @@ interface TableProps {
   columns: Array<ColumnType>;
   sx?: SystemStyleObject;
   data: any[];
-  loading: boolean;
+  loading?: boolean;
   onRowClick?: (v: any) => void;
   pagination?: PaginationType;
   selection?: SelectionType;

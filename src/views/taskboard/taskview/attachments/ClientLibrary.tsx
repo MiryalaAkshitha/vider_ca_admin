@@ -4,11 +4,12 @@ import { getStorageTree } from "api/services/storage";
 import { addAttachmentsFromStorage } from "api/services/tasks";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
+import { useTaskData } from "context/TaskDataContext";
 import useSnack from "hooks/useSnack";
 import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { StorageResponse } from "types";
 import { GreyButton } from "views/taskboard/styles";
 import StyledTreeItem from "./StyledTreeItem";
@@ -20,12 +21,12 @@ type Props = {
 function ClientLibrary({ setOpen }: Props) {
   const queryClient = useQueryClient();
   const params: any = useParams();
-  const [searchParams] = useSearchParams();
   const snack = useSnack();
   const [selectedFiles, setSelectedFiles] = useState<number[]>([]);
+  const taskData: any = useTaskData();
 
   const { data, isLoading }: StorageResponse = useQuery(
-    ["storage-tree", searchParams.get("clientId")],
+    ["storage-tree", taskData?.client?.id],
     getStorageTree
   );
 

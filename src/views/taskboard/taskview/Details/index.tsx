@@ -10,7 +10,6 @@ import { Box } from "@mui/system";
 import { updateTask } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useTaskData } from "context/TaskDataContext";
-import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -26,7 +25,6 @@ function Details() {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const { users, loading, categories, labels } = useTaskViewData();
-  const { queryParams } = useQueryParams();
   const taskData: any = useTaskData();
   const [state, setState] = useState<any>({});
 
@@ -98,7 +96,7 @@ function Details() {
                     style={{
                       color: "#4a89dc",
                     }}
-                    to={`/task-board/${state?.parentTask?.id}?clienId=${queryParams.clientId}`}
+                    to={`/task-board/${state?.parentTask?.id}`}
                   >
                     {" "}
                     {state?.parentTask?.name}

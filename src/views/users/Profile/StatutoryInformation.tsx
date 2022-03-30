@@ -1,10 +1,10 @@
-import { Download, DownloadOutlined } from "@mui/icons-material";
+import { DownloadOutlined } from "@mui/icons-material";
 import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { updateProfile } from "api/services/users";
 import UploadImage from "components/UploadImage";
 import useSnack from "hooks/useSnack";
 import { useEffect, useState } from "react";
-import { useQueryClient, useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import SectionWrapper from "./SectionWrapper";
 
 const StatutoryInformation = ({ data }) => {

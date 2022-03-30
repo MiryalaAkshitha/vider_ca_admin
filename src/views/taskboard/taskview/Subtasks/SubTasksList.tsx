@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import FormattedDate from "components/FormattedDate";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
-import useQueryParams from "hooks/useQueryParams";
 import { useNavigate } from "react-router-dom";
 import { getTitle } from "utils";
 import { StyledSubTaskTable } from "views/taskboard/styles";
@@ -14,10 +13,9 @@ type Props = {
 
 function SubTasksList({ data }: Props) {
   const navigate = useNavigate();
-  const { queryParams } = useQueryParams();
 
   const handleClick = (item: any) => {
-    navigate(`/task-board/${item?.id}/?clientId=${queryParams.clientId}`);
+    navigate(`/task-board/${item?.id}/#details`);
   };
 
   return (

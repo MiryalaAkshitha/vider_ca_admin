@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getTitle = (key: string) => {
   key = key || "";
   return key
@@ -37,4 +39,20 @@ export const getMinutesOptions = () => {
       value: index <= 9 ? `0${index}` : index?.toString(),
     };
   });
+};
+
+export const formattedDate = (date: string) => {
+  return moment(date).format("YYYY-MM-DD");
+};
+
+export const formattedDatetime = (date: string) => {
+  return moment(date).format("YYYY-MM-DD HH:mm A");
+};
+
+export const getTotalLogHoursDuration = (logs: any[]) => {
+  let total = logs.reduce((acc, cur) => {
+    return acc + +cur.duration;
+  }, 0);
+
+  return moment.utc(total).format("HH:mm");
 };

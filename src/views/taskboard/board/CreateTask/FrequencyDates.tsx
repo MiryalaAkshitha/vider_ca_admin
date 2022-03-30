@@ -1,11 +1,5 @@
-import {
-  Autocomplete,
-  Checkbox,
-  FormControlLabel,
-  TextField,
-  Box
-} from "@mui/material";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Box } from "@mui/material";
+import React, { Dispatch, SetStateAction } from "react";
 import { RecurringStateProps } from "./types";
 
 interface IProps {
@@ -17,21 +11,18 @@ interface IProps {
   neverExpires: React.ReactElement;
 }
 
-function FrequencyDates({ state, setState, recurringStartDate, dueDate, recurringEndDate, neverExpires }: IProps) {
+function FrequencyDates({
+  recurringStartDate,
+  dueDate,
+  recurringEndDate,
+  neverExpires,
+}: IProps) {
   return (
     <>
-      <Box mt={2}>
-        {recurringStartDate}
-      </Box>
-      <Box mt={2}>
-        {dueDate}
-      </Box>
-      <Box mt={2}>
-        {recurringEndDate}
-      </Box>
-      <Box mt={2}>
-       {neverExpires}
-      </Box>
+      <Box mt={2}>{recurringStartDate}</Box>
+      <Box mt={2}>{dueDate}</Box>
+      <Box mt={2}>{recurringEndDate}</Box>
+      <Box mt={2}>{neverExpires}</Box>
     </>
   );
 }

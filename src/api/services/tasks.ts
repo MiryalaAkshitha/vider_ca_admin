@@ -50,6 +50,16 @@ const createRecurringTask = (data: any) => {
 const getTasks = ({ queryKey }) => {
   return http.get("/tasks", {
     params: {
+      queryType: "ORGANIZATION",
+      ...queryKey[1],
+    },
+  });
+};
+
+const getUserTasks = ({ queryKey }) => {
+  return http.get("/tasks", {
+    params: {
+      queryType: "USER",
       ...queryKey[1],
     },
   });
@@ -261,4 +271,5 @@ export {
   removePin,
   terminateTask,
   deleteTask,
+  getUserTasks,
 };

@@ -81,9 +81,7 @@ function TaskItem({ data }: Props) {
       <Box
         px={2}
         onClick={() => {
-          navigate(
-            `/task-board/${data?.id}?clientId=${data?.client?.clientId}#details`
-          );
+          navigate(`/task-board/${data?.id}#details`);
         }}
         py={1}
         sx={{ cursor: "pointer" }}
