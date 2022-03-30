@@ -1,7 +1,15 @@
 import { http } from "api/http";
 
 const getExpenditure = ({ queryKey }) => {
-  return http.get("/task_expenditure", { params: { ...queryKey[1] } });
+  return http.get("/task_expenditure", {
+    params: { ...queryKey[1], type: "TASK" },
+  });
+};
+
+const getUserExpenditure = ({ queryKey }) => {
+  return http.get("/task_expenditure", {
+    params: { ...queryKey[1], type: "USER" },
+  });
 };
 
 const addExpenditure = (data: any) => {
@@ -16,4 +24,20 @@ const deleteExpenditure = (id: number) => {
   return http.delete(`/task_expenditure/${id}`);
 };
 
-export { getExpenditure, addExpenditure, updateExpenditure, deleteExpenditure };
+const approveExpenditure = ({ id }) => {
+  return http.patch(`task_expenditure/${id}/approve`);
+};
+
+const rejectExpenditure = ({ id, data }) => {
+  return http.patch(`task_expenditure/${id}/reject`, { reason: data.reason });
+};
+
+export {
+  getExpenditure,
+  addExpenditure,
+  updateExpenditure,
+  deleteExpenditure,
+  getUserExpenditure,
+  approveExpenditure,
+  rejectExpenditure,
+};

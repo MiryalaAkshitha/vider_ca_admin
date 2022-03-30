@@ -2,18 +2,19 @@ import { Grid, Typography } from "@mui/material";
 
 function TotalAmounts({ data, taskFee }) {
   const pureAgentExpenditure = data
-    ?.filter((item: any) => item.type === "pure_agent")
+    ?.filter((item: any) => item.type === "PURE_AGENT")
     ?.reduce((acc: any, curr: any) => {
       return acc + parseInt(curr.amount);
     }, 0);
 
   const additionalExpenditure = data
-    ?.filter((item: any) => item.type === "additional_charges")
+    ?.filter((item: any) => item.type === "ADDITIONAL")
     ?.reduce((acc: any, curr: any) => {
       return acc + parseInt(curr.amount);
     }, 0);
 
-  const totalAmount = +taskFee + pureAgentExpenditure + additionalExpenditure;
+  const totalAmount =
+    +taskFee || 0 + pureAgentExpenditure + additionalExpenditure;
 
   return (
     <Grid
@@ -31,7 +32,7 @@ function TotalAmounts({ data, taskFee }) {
           Fee
         </Typography>
         <Typography variant="subtitle2" gutterBottom color="black">
-          {taskFee}/-
+          {taskFee ? `${taskFee}/-` : "NA"}
         </Typography>
       </Grid>
       <Grid item xs={3}>

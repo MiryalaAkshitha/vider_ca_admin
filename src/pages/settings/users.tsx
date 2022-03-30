@@ -23,6 +23,16 @@ function Users() {
     getRoles
   );
 
+  const getData = () => {
+    let result = data?.data || [];
+    if (search) {
+      result = result?.filter((user: any) => {
+        return user.fullName.toLowerCase().includes(search.toLowerCase());
+      });
+    }
+    return result;
+  };
+
   if (isLoading || rolesLoading) return <Loader />;
 
   return (
@@ -52,23 +62,11 @@ function Users() {
         </Box>
       </Box>
       <Grid container spacing={3} sx={{ maxWidth: 1400, mt: 2 }}>
-        {data?.data
-          ?.filter((item: any) => {
-            return (
-              item?.fullName?.toLowerCase().indexOf(search.toLowerCase()) > -1
-            );
-          })
-          ?.filter((item: any) => {
-            return (
-              item?.roles[0]?.name?.toLowerCase().indexOf(role.toLowerCase()) >
-              -1
-            );
-          })
-          ?.map((user: any, index: number) => (
-            <Grid item xs={3} key={index}>
-              <UserCard data={user} type="user" />
-            </Grid>
-          ))}
+        {getData()?.map((user: any, index: number) => (
+          <Grid item xs={3} key={index}>
+            <UserCard data={user} type="user" />
+          </Grid>
+        ))}
       </Grid>
       <AddMember open={open} setOpen={setOpen} />
       <FloatingButton

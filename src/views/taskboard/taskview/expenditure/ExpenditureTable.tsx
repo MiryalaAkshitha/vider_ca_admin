@@ -97,7 +97,6 @@ const columns = [
             overflow: "hidden",
           }}
         >
-          {/* <AttachmentIcon color="secondary" /> */}
           {rowData?.attachment}
         </a>
       ) : (
