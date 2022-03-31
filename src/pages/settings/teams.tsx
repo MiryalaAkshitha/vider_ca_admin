@@ -7,8 +7,8 @@ import SearchContainer from "components/SearchContainer";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import AddTeam from "views/teams/AddTeam";
-import TeamCard from "views/teams/TeamCard";
+import AddTeam from "views/settings/teams/AddTeam";
+import TeamCard from "views/settings/teams/TeamCard";
 
 function Users() {
   const [open, setOpen] = useState<boolean>(false);

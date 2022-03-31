@@ -8,8 +8,8 @@ import SearchContainer from "components/SearchContainer";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import AddMember from "views/users/AddMember";
-import UserCard from "views/users/UserCard";
+import AddMember from "views/settings/users/AddMember";
+import UserCard from "views/settings/users/UserCard";
 
 function Users() {
   const [open, setOpen] = useState<boolean>(false);

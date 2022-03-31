@@ -6,8 +6,8 @@ export interface IMenuItem {
 
 export const menuItems: Array<IMenuItem> = [
   {
-    title: "Categories",
-    path: "/settings/categories",
+    title: "Organization profile",
+    path: "/settings/organization-profile",
   },
   {
     title: "Manage Users",
@@ -28,43 +28,44 @@ export const menuItems: Array<IMenuItem> = [
     ],
   },
   {
-    title: "Forms Configuration",
-    path: "",
-    children: [
-      {
-        title: "Forms",
-        path: "/settings/forms",
-      },
-      {
-        title: "Fields",
-        path: "/settings/fields-configuration",
-      },
-    ],
+    title: "Categories",
+    path: "/settings/categories",
   },
   {
     title: "Labels",
     path: "/settings/labels",
   },
-  {
-    title: "Storage Management",
-    path: "/settings/storage-management",
-  },
-  {
-    title: "Deleted Tasks & Clients",
-    path: "/",
-    children: [
-      {
-        title: "Clients",
-        path: "/settings/deleted-clients",
-      },
-      {
-        title: "Tasks",
-        path: "/settings/deleted-tasks",
-      },
-    ],
-  },
-  {
-    title: "Organization profile",
-    path: "/settings/organization-profile",
-  },
+  // {
+  //   title: "Forms Configuration",
+  //   path: "",
+  //   children: [
+  //     {
+  //       title: "Forms",
+  //       path: "/settings/forms",
+  //     },
+  //     {
+  //       title: "Fields",
+  //       path: "/settings/fields-configuration",
+  //     },
+  //   ],
+  // },
+
+  // {
+  //   title: "Storage Management",
+  //   path: "/settings/storage-management",
+  // },
+  // {
+  //   title: "Deleted Tasks & Clients",
+  //   path: "/",
+  //   children: [
+  //     {
+  //       title: "Clients",
+  //       path: "/settings/deleted-clients",
+  //     },
+  //     {
+  //       title: "Tasks",
+  //       path: "/settings/deleted-tasks",
+  //     },
+  //   ],
+  // },
 ];

@@ -10,8 +10,8 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
-import AddLabel from "views/labels/AddLabel";
-import { StyledLabel } from "views/labels/styles";
+import AddLabel from "views/settings/labels/AddLabel";
+import { StyledLabel } from "views/settings/labels/styles";
 
 function Tags() {
   const queryClient = useQueryClient();

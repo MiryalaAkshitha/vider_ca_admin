@@ -2,7 +2,7 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { StyledLabel } from "views/labels/styles";
+import { StyledLabel } from "views/settings/labels/styles";
 import ProfileImage from "./ProfileImage";
 
 interface IProfileProps {

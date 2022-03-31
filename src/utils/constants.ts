@@ -444,3 +444,56 @@ export const STATES = [
 ];
 
 export const CONTACT_PERSON_ROLES = ["Accountant", "Admin", "Staff"];
+
+export const ORGANIZATION_CATEGORIES = [
+  {
+    label: "CA",
+    value: "CA",
+  },
+  {
+    label: "CMS",
+    value: "CMS",
+  },
+  {
+    label: "CS",
+    value: "CS",
+  },
+  {
+    label: "Law",
+    value: "Law",
+  },
+];
+
+export const ORGANIZATION_TYPES = [
+  {
+    label: "Sole Proprietorship",
+    value: "SOLE_PROPRIETORSHIP",
+  },
+  {
+    label: "Partnership Firm",
+    value: "PARTNERSHIP_FIRM",
+  },
+  {
+    label: "LLP",
+    value: "LLP",
+  },
+  {
+    label: "Private Limited Company",
+    value: "PRIVATE_LIMITED_COMPANY",
+  },
+];
+
+export const LICENSE_TYPES = [
+  {
+    label: "Organization Incorporation",
+    value: "ORGANIZATION_INCORPORATION",
+  },
+  {
+    label: "Professional Tax",
+    value: "PROFESSIONAL_TAX",
+  },
+  {
+    label: "Trade License",
+    value: "TRADE_LICENSE",
+  },
+];

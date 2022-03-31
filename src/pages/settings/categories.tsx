@@ -7,8 +7,8 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import AddCategory from "views/categories/AddCategory";
-import CategoryCard from "views/categories/CategoryCard";
+import AddCategory from "views/settings/categories/AddCategory";
+import CategoryCard from "views/settings/categories/CategoryCard";
 
 function Cateogries() {
   const [open, setOpen] = useState<boolean>(false);

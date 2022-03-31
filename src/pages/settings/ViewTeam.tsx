@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { ResType } from "types";
-import UserCard from "views/users/UserCard";
+import UserCard from "views/settings/users/UserCard";
 
 function ViewTeam() {
   const navigate = useNavigate();

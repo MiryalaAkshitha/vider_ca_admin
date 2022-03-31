@@ -39,6 +39,7 @@ import noDueDiligence from "./images/noDueDiligence.svg";
 import noEvents from "./images/noEvents.svg";
 import signup from "./images/signup.png";
 import newlogo from "./images/newlogo.png";
+import emptyLicenses from "./images/emptyLicenses.png";
 
 export {
   quote,
@@ -55,6 +56,7 @@ export {
   noEvents,
   signup,
   newlogo,
+  emptyLicenses,
 };
 
 export const icons = {

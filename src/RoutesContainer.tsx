@@ -22,9 +22,11 @@ const Categories = loadable(() => import("pages/settings/categories"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const ViewUser = loadable(() => import("pages/settings/ViewUser"));
-const UserProfile = loadable(() => import("views/users/Profile"));
-const UserTasks = loadable(() => import("views/users/Tasks"));
-const UserExpenditure = loadable(() => import("views/users/Expenditure"));
+const UserProfile = loadable(() => import("views/settings/users/Profile"));
+const UserTasks = loadable(() => import("views/settings/users/Tasks"));
+const UserExpenditure = loadable(
+  () => import("views/settings/users/Expenditure")
+);
 const Teams = loadable(() => import("pages/settings/teams"));
 const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
 const Clients = loadable(() => import("pages/clients"));
@@ -44,7 +46,7 @@ const ProfileDetails = loadable(
   () => import("views/clients/clients/ProfileDetails")
 );
 const OrganizationProfile = loadable(
-  () => import("pages/settings/organizationProfile/ProfileDetails")
+  () => import("pages/settings/organization-profile")
 );
 const ViewRole = loadable(() => import("pages/settings/view-role"));
 const Forms = loadable(() => import("pages/settings/forms"));
