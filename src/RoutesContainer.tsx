@@ -71,6 +71,11 @@ const StorageManagement = loadable(() => {
 const DueDiligencePreview = loadable(() => {
   return import("pages/taskboard/due-diligence-preview");
 });
+const CreateForms = loadable(() => import("pages/forms"));
+const OrganisationForms = loadable(() => import("views/create-forms/OrganisationForms"));
+const ClientForms = loadable(() => import("views/create-forms/ClientForms"));
+const FormSettings = loadable(() => import("views/create-forms/FormSettings"));
+
 
 function RoutesContainer() {
   return (
@@ -90,6 +95,11 @@ function RoutesContainer() {
             <Route path="all-clients-storage" element={<AllClientsStorage />} />
           </Route>
           <Route path="broadcast" element={<BroadCast />} />
+          <Route path="forms" element={<CreateForms />}>
+            <Route index element={<OrganisationForms />}/>
+            <Route path="client-forms" element={<ClientForms />}/>
+            <Route path="form-settings" element={<FormSettings />}/>
+          </Route>
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />
