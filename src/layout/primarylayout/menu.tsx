@@ -49,4 +49,9 @@ export const menuItems: Array<IMenuItem> = [
     path: "/broadcast",
     icon: icons.broadcast,
   },
+  {
+    title: "Forms",
+    path: "/forms",
+    icon: icons.formIcon
+  }
 ];

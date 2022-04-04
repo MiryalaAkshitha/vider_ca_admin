@@ -17,6 +17,7 @@ import man from "./icons/man.svg";
 import profile from "./icons/profile.svg";
 import date from "./icons/calendar.png";
 import shuffle from "./icons/shuffle.svg";
+import formIcon from "./icons/formIcon.svg";
 import empty from "./images/empty.svg";
 import user from "./icons/user.png";
 import folder from "./icons/folder.png";
@@ -40,6 +41,8 @@ import noEvents from "./images/noEvents.svg";
 import signup from "./images/signup.png";
 import newlogo from "./images/newlogo.png";
 import emptyLicenses from "./images/emptyLicenses.png";
+import createFormLanding from "./images/createFormLanding.png";
+import clientFormCard from "./images/clientFormCard.png";
 
 export {
   quote,
@@ -57,6 +60,8 @@ export {
   signup,
   newlogo,
   emptyLicenses,
+  createFormLanding,
+  clientFormCard
 };
 
 export const icons = {
@@ -87,4 +92,5 @@ export const icons = {
   video,
   audio,
   recurring,
+  formIcon
 };

@@ -7,6 +7,7 @@ interface SearchContainerProps {
   placeHolder?: string;
   onChange: (v: string) => void;
   onFocus?: (e: any) => void;
+  width?: string,
   maxWidth?: string;
   debounced?: boolean;
   minWidth?: string;
@@ -20,6 +21,7 @@ function SearchContainer(props: SearchContainerProps) {
     placeHolder,
     onChange,
     maxWidth = "600px",
+    width = "50px",
     debounced,
     minWidth = "600px",
     onFocus,
@@ -34,7 +36,7 @@ function SearchContainer(props: SearchContainerProps) {
   return (
     <Box>
       <TextField
-        sx={{ maxWidth, minWidth }}
+        sx={{ maxWidth, width, minWidth }}
         color="primary"
         defaultValue={defaultValue}
         autoFocus={autoFocus}
