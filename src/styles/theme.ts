@@ -69,6 +69,13 @@ export const theme: ThemeOptions = createTheme({
         },
       },
     },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: "0px 5px 20px #0000001A",
+        },
+      },
+    },
     MuiPopover: {
       styleOverrides: {
         paper: {

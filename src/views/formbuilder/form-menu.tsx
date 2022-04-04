@@ -1,5 +1,3 @@
-
-
 interface IFormMenu {
   title: string;
   path: string;
@@ -7,22 +5,22 @@ interface IFormMenu {
   children?: Array<IFormMenu>;
 }
 
-const formMenu : Array<IFormMenu> = [
+const formMenu: Array<IFormMenu> = [
   {
-    title: "Organisation Forms",
+    title: "My Forms",
     path: "",
-    pathName: "/forms"
+    pathName: "/forms",
   },
   {
-    title: "Client Forms",
-    path: "client-forms",
-    pathName: "/forms/client-forms"
+    title: "Standard forms",
+    path: "standard-forms",
+    pathName: "/forms/standard-forms",
   },
   {
     title: "Form Settings",
     path: "form-settings",
-    pathName: "/forms/form-settings"
-  }
+    pathName: "/forms/form-settings",
+  },
 ];
 
 export default formMenu;

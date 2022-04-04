@@ -1,27 +1,20 @@
 import { Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import FormNav from "./FormNav";
-import { styled } from "@mui/styles";
-
-const StyledGrid = styled(Grid)(() => ({
-  width: "85%",
-  height: "90vh",
-}));
+import FormNav from "../../views/formbuilder/FormNav";
 
 const Forms = () => {
   return (
-    <Grid container direction={"row"} style={{ height: "100%" }}>
-      <Grid item style={{ borderRight: "1px solid #2222221A" }}>
+    <Grid
+      container
+      direction={"row"}
+      style={{ height: "100%", flexWrap: "nowrap" }}
+    >
+      <Grid item style={{ borderRight: "1px solid #2222221A", height: "90vh" }}>
         <FormNav />
       </Grid>
-      <StyledGrid
-        item
-        direction={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
+      <Grid item sx={{ flex: 1 }}>
         <Outlet />
-      </StyledGrid>
+      </Grid>
     </Grid>
   );
 };

@@ -39,17 +39,15 @@ function AddForm() {
       title="Add New Form"
     >
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <Box mt={2}>
-          <FormSelect
-            control={control}
-            label="Form Type"
-            name="formType"
-            options={Object.values(FormType).map((item) => ({
-              label: item,
-              value: item,
-            }))}
-          />
-        </Box>
+        <FormSelect
+          control={control}
+          label="Form Type"
+          name="formType"
+          options={Object.values(FormType).map((item) => ({
+            label: item,
+            value: item,
+          }))}
+        />
         <Box mt={2}>
           <FormInput control={control} name="formName" label="Form Name" />
         </Box>

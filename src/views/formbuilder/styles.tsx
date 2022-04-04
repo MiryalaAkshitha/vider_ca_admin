@@ -1,5 +1,5 @@
+import { IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
-import { Card, Typography, IconButton } from "@mui/material";
 
 const baseStyles = {
   fontStyle: "normal",
@@ -7,14 +7,6 @@ const baseStyles = {
   fontFamily: "muli_regular",
   color: "#222222",
 };
-
-export const StyledCard = styled(Card)(() => ({
-  position: "relative",
-  width: "31rem",
-  height: "98px",
-  margin: "1rem 0",
-  boxShadow: "0px 5px 20px #182F531A",
-}));
 
 export const FormBoldText = styled(Typography)(() => ({
   ...baseStyles,
@@ -47,6 +39,6 @@ export const ClientFormNormalText = styled(Typography)(() => ({
 
 export const StyledMoreIcon = styled(IconButton)(() => ({
   position: "absolute",
-  right: "0",
-  top: "0",
+  right: 10,
+  top: 10,
 }));

@@ -7,6 +7,7 @@ interface EmptyPageProps {
   btnAction?: () => void;
   minHeight?: string;
   title?: string;
+  desc?: string;
 }
 
 function EmptyPage(props: EmptyPageProps) {
@@ -15,6 +16,7 @@ function EmptyPage(props: EmptyPageProps) {
     btnAction,
     minHeight = "80vh",
     title = "List is empty",
+    desc = "",
   } = props;
   return (
     <Box
@@ -23,14 +25,18 @@ function EmptyPage(props: EmptyPageProps) {
         minHeight,
         justifyContent: "center",
         alignItems: "center",
-      }}>
-      <Box textAlign='center'>
-        <img src={empty} alt='' />
-        <Typography mt={2} mb={3} variant='subtitle2'>
+      }}
+    >
+      <Box textAlign="center">
+        <img src={empty} alt="" />
+        <Typography mt={2} variant="subtitle2">
           {title}
         </Typography>
+        <Typography mb={2} variant="body2">
+          {desc}
+        </Typography>
         {btnTitle && (
-          <Button variant='contained' color='secondary' onClick={btnAction}>
+          <Button variant="contained" color="secondary" onClick={btnAction}>
             {btnTitle}
           </Button>
         )}
