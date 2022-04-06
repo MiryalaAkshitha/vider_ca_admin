@@ -1,7 +1,7 @@
 import {
   AddCircleOutlineRounded,
   LanguageOutlined,
-  NotificationsOutlined
+  NotificationsOutlined,
 } from "@mui/icons-material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -16,10 +16,12 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectTitle } from "redux/reducers/globalSlice";
-import AccountMenu from "./AccountMenu";
-import ConfigurationMenu from "./ConfigurationMenu";
-import GlobalAdd from "./GlobalAdd";
-import Notifications from "./Notifications";
+import AccountMenu from "../AccountMenu";
+import ConfigurationMenu from "../ConfigurationMenu";
+import GlobalAdd from "../GlobalAdd";
+import Notifications from "../Notifications";
+
+import BaseAppbar from "./BaseAppbar";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: theme.transitions.create(["width", "margin"], {
@@ -41,15 +43,34 @@ function Appbar() {
 
   const title = useSelector(selectTitle);
 
+  const createAnchors = () => (
+    <>
+      <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+      <ConfigurationMenu
+        anchorEl={configAnchorEl}
+        setAnchorEl={setConfigAnchorEl}
+      />
+      <GlobalAdd
+        anchorEl={globalAddAnchorEl}
+        setAnchorEl={setGlobalAddAnchorEl}
+      />
+      <Notifications
+        notificationsAnchorEl={notificationsAnchorEl}
+        setNotificationsAnchorEl={setNotificationsAnchorEl}
+      />
+    </>
+  );
+
   return (
     <>
-      <AppBar
+      <BaseAppbar
         sx={{
           width: { sm: `calc(100% - ${theme.spacing(9)} + 1px)`, height: 60 },
           ml: { sm: `calc(${theme.spacing(9)} + 1px)` },
         }}
         color="default"
         position="fixed"
+        anchors={createAnchors()}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6" noWrap component="div">
@@ -85,20 +106,7 @@ function Appbar() {
             </IconButton>
           </Box>
         </Toolbar>
-      </AppBar>
-      <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-      <ConfigurationMenu
-        anchorEl={configAnchorEl}
-        setAnchorEl={setConfigAnchorEl}
-      />
-      <GlobalAdd
-        anchorEl={globalAddAnchorEl}
-        setAnchorEl={setGlobalAddAnchorEl}
-      />
-      <Notifications
-        notificationsAnchorEl={notificationsAnchorEl}
-        setNotificationsAnchorEl={setNotificationsAnchorEl}
-      />
+      </BaseAppbar>
     </>
   );
 }

@@ -31,6 +31,21 @@ import zip from "./icons/filetypes/zip.png";
 import video from "./icons/filetypes/video.png";
 import audio from "./icons/filetypes/audio.png";
 import recurring from "./icons/recurring.svg";
+import singleLine from "./icons/singleLine.svg";
+import email from "./icons/email.svg";
+import multiLine from "./icons/multiLine.svg";
+import name from "./icons/name.svg";
+import checkBox from "./icons/checkBox.svg";
+import fileUpload from "./icons/fileUpload.svg";
+import imageUpload from "./icons/imageUpload.svg";
+import termsAndConditions from "./icons/termsAndConditions.svg";
+import currency from "./icons/currency.svg";
+import signature from "./icons/signature.svg";
+import dropDown from "./icons/dropDown.svg";
+import decisionBox from "./icons/decisionBox.svg";
+import fieldDate from "./icons/date.svg";
+import mobileNumber from "./icons/mobileNumber.svg";
+import numbers from "./icons/number.svg";
 import profileImage from "./images/profile.jpg";
 import noAttachments from "./images/no_attachments.svg";
 import noSubTasks from "./images/noSubTasks.svg";
@@ -92,5 +107,20 @@ export const icons = {
   video,
   audio,
   recurring,
-  formIcon
+  formIcon,
+  singleLine,
+  multiLine,
+  email,
+  name,
+  fileUpload,
+  imageUpload,
+  termsAndConditions,
+  currency,
+  signature,
+  dropDown,
+  decisionBox,
+  mobileNumber,
+  numbers,
+  fieldDate,
+  checkBox
 };

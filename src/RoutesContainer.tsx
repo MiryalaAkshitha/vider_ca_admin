@@ -75,6 +75,7 @@ const CreateForms = loadable(() => import("pages/forms"));
 const MyForms = loadable(() => import("pages/forms/MyForms"));
 const StandardForms = loadable(() => import("pages/forms/StandardForms"));
 const FormSettings = loadable(() => import("pages/forms/FormSettings"));
+const CreateForm = loadable(() => import("pages/forms/CreateForm"));
 
 function RoutesContainer() {
   return (
@@ -160,6 +161,7 @@ function RoutesContainer() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="due-diligence/:taskId" element={<DueDiligencePreview />} />
+        <Route path="/forms/:formId" element={<CreateForm />} />
       </Routes>
       <GlobalDrawers />
     </Router>

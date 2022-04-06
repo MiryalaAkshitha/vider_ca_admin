@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27.083" height="27.083" viewBox="0 0 27.083 27.083">
+  <g id="Group_5666" data-name="Group 5666" transform="translate(-285.56 -476.561)">
+    <g id="coin" transform="translate(285.56 476.561)">
+      <path id="Vector" d="M14.67,0V4.175c0,3.521-3.284,6.376-7.335,6.376S0,7.7,0,4.175V0C0,3.521,3.284,6.037,7.335,6.037S14.67,3.521,14.67,0Z" transform="translate(6.207 14.275)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"/>
+      <path id="Vector-2" data-name="Vector" d="M14.67,6.376a5.308,5.308,0,0,1-.779,2.787,7.542,7.542,0,0,1-6.556,3.25A7.542,7.542,0,0,1,.779,9.163,5.308,5.308,0,0,1,0,6.376a5.974,5.974,0,0,1,2.144-4.5A7.869,7.869,0,0,1,7.335,0a7.92,7.92,0,0,1,5.191,1.862A6.016,6.016,0,0,1,14.67,6.376Z" transform="translate(6.207 2.257)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"/>
+      <path id="Vector-3" data-name="Vector" d="M14.67,6.376v5.642c0,3.521-3.284,6.037-7.335,6.037S0,15.539,0,12.018V6.376C0,2.855,3.284,0,7.335,0a7.92,7.92,0,0,1,5.191,1.862A6.016,6.016,0,0,1,14.67,6.376Z" transform="translate(6.207 2.257)" fill="none" stroke="#222" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"/>
+      <g id="Vector-4" data-name="Vector" transform="translate(0 0)" fill="none" opacity="0">
+        <path d="M0,0H27.083V27.083H0Z" stroke="none"/>
+        <path d="M 1.299999237060547 1.299999237060547 L 1.299999237060547 25.78349876403809 L 25.78349876403809 25.78349876403809 L 25.78349876403809 1.299999237060547 L 1.299999237060547 1.299999237060547 M -1.9073486328125e-06 -1.9073486328125e-06 L 27.08349990844727 -1.9073486328125e-06 L 27.08349990844727 27.08349990844727 L -1.9073486328125e-06 27.08349990844727 L -1.9073486328125e-06 -1.9073486328125e-06 Z" stroke="none" fill="#707070"/>
+      </g>
+    </g>
+  </g>
+</svg>
