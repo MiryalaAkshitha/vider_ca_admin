@@ -1,4 +1,4 @@
-import { IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
 
 const baseStyles = {
@@ -41,4 +41,12 @@ export const StyledMoreIcon = styled(IconButton)(() => ({
   position: "absolute",
   right: 10,
   top: 10,
+}));
+
+export const StyledCard = styled(Box)(() => ({
+  boxShadow: "0px 3px 12px #0000001A",
+  borderRadius: 10,
+  padding: 15,
+  cursor: "pointer",
+  position: "relative",
 }));

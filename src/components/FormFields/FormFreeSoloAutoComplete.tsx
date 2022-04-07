@@ -6,7 +6,7 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
-  options: Array<{ label: string; value: string }>;
+  options: Array<string>;
   multiple?: boolean;
   freeSolo?: boolean;
   filteredOptions?: boolean;
@@ -22,7 +22,6 @@ function FormFreeSoloAutoComplete(props: Props) {
     options,
     multiple = false,
     freeSolo = false,
-    filteredOptions = false,
     trigger,
   } = props;
 
@@ -39,14 +38,6 @@ function FormFreeSoloAutoComplete(props: Props) {
               disablePortal
               freeSolo={freeSolo}
               onChange={(_, value: any) => {
-                // let newValue = value.map((item) => {
-                //   if (typeof item === "string")
-                //     return {
-                //       label: item,
-                //       value: item,
-                //     };
-                //   return item;
-                // });
                 field.onChange(value);
                 if (trigger) {
                   trigger();

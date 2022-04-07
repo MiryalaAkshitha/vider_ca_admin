@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import FormNav from "../../views/formbuilder/FormNav";
+import FormNav from "../../views/forms/FormNav";
 
 const Forms = () => {
   return (

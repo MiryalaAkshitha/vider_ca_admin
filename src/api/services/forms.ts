@@ -16,6 +16,14 @@ const getForms = ({ queryKey }: any) => {
   return http.get("/forms", { params: { ...queryKey[1] } });
 };
 
+const getForm = ({ queryKey }: any) => {
+  return http.get(`/forms/${queryKey[1]}`);
+};
+
+const addPage = ({ formId, name }: any) => {
+  return http.post(`/forms/${formId}/pages`, { name });
+};
+
 const createField = (data: any) => {
   return http.post(`/forms/fields`, data);
 };
@@ -51,4 +59,6 @@ export {
   saveFormFields,
   getFormFields,
   updateField,
+  getForm,
+  addPage,
 };

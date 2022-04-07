@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import { createDDForm } from "api/services/tasks";
+import { addPage } from "api/services/forms";
 import DialogWrapper from "components/DialogWrapper";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
@@ -13,22 +13,22 @@ function AddPage({ open, setOpen }: DialogProps) {
   const snack = useSnack();
   const [name, setName] = useState("");
 
-  const { mutate } = useMutation(createDDForm, {
+  const { mutate } = useMutation(addPage, {
     onSuccess: () => {
-      snack.success("Page created successfully");
+      snack.success("Page added");
       setName("");
-      queryClient.invalidateQueries("dd-forms");
+      queryClient.invalidateQueries("form-details");
       setOpen(false);
     },
     onError: () => {
-      snack.error("Error creating form");
+      snack.error("Error creating page");
       setOpen(false);
     },
   });
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    mutate({ data: { name, taskId: params.taskId } });
+    mutate({ formId: params.formId, name });
     setOpen(false);
   };
 

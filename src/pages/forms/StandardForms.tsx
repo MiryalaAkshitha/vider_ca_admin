@@ -1,25 +1,11 @@
-import useQueryParams from "hooks/useQueryParams";
-import AddForm from "views/formbuilder/AddForm";
-import EmptyPage from "components/EmptyPage";
+import { Typography } from "@mui/material";
 
-const OrganisationForms = () => {
-  const { queryParams, setQueryParams } = useQueryParams();
+const StandardForms = () => {
   return (
     <>
-      <EmptyPage
-        title="There are no forms available"
-        btnTitle="Create Form"
-        btnAction={() => {
-          setQueryParams({
-            ...queryParams,
-            createForm: "true",
-          });
-        }}
-        desc="Click on create form to add a new form"
-      />
-      <AddForm />
+      <Typography>Standard forms</Typography>
     </>
   );
 };
 
-export default OrganisationForms;
+export default StandardForms;

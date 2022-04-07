@@ -37,7 +37,6 @@ const DscRegisterView = loadable(
 );
 const ClientView = loadable(() => import("pages/clients/client-view"));
 const TasksView = loadable(() => import("pages/taskboard/task-view"));
-const DueDiligence = loadable(() => import("pages/taskboard/due-diligence"));
 const Attachments = loadable(() => import("views/clients/clients/Attachments"));
 const KybInfo = loadable(() => import("views/clients/clients/ClientInfo"));
 const Passwords = loadable(() => import("views/clients/clients/Passwords"));
@@ -49,8 +48,6 @@ const OrganizationProfile = loadable(
   () => import("pages/settings/organization-profile")
 );
 const ViewRole = loadable(() => import("pages/settings/view-role"));
-const Forms = loadable(() => import("pages/settings/forms"));
-const Fields = loadable(() => import("pages/settings/fields"));
 const Storage = loadable(() => import("pages/storage"));
 const MyStorage = loadable(() => import("views/storage/MyStorage"));
 const AllClientsStorage = loadable(
@@ -58,9 +55,6 @@ const AllClientsStorage = loadable(
 );
 const RecurringProfile = loadable(() => {
   return import("views/clients/clients/RecurringProfile");
-});
-const FieldsConfiguration = loadable(() => {
-  return import("pages/settings/fields-configuration");
 });
 const RolesAndPermissions = loadable(() => {
   return import("pages/settings/roles-permissions");
@@ -103,7 +97,6 @@ function RoutesContainer() {
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
             <Route path=":taskId" element={<TasksView />} />
-            <Route path=":taskId/due-diligence" element={<DueDiligence />} />
           </Route>
           <Route path="clients">
             <Route index element={<Clients />} />
@@ -144,14 +137,6 @@ function RoutesContainer() {
             <Route index element={<RolesAndPermissions />} />
             <Route path=":role" element={<ViewRole />} />
           </Route>
-          <Route path="forms">
-            <Route index element={<Forms />}></Route>
-            <Route path=":formId/fields" element={<Fields />} />
-          </Route>
-          <Route
-            path="fields-configuration"
-            element={<FieldsConfiguration />}
-          />
           <Route
             path="organization-profile"
             element={<OrganizationProfile />}

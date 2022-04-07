@@ -8,6 +8,7 @@ interface EmptyPageProps {
   minHeight?: string;
   title?: string;
   desc?: string;
+  noImage?: boolean;
 }
 
 function EmptyPage(props: EmptyPageProps) {
@@ -17,6 +18,7 @@ function EmptyPage(props: EmptyPageProps) {
     minHeight = "80vh",
     title = "List is empty",
     desc = "",
+    noImage = false,
   } = props;
   return (
     <Box
@@ -28,7 +30,7 @@ function EmptyPage(props: EmptyPageProps) {
       }}
     >
       <Box textAlign="center">
-        <img src={empty} alt="" />
+        {!noImage && <img src={empty} alt="" />}
         <Typography mt={2} variant="subtitle2">
           {title}
         </Typography>

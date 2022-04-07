@@ -21,7 +21,7 @@ function Appbar() {
               color="primary"
               startIcon={<ArrowBack />}
             >
-              Form Name
+              Form Details
             </Button>
           </Box>
           <Box display="flex" gap={2}>

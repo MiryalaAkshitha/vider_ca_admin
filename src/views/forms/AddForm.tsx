@@ -1,25 +1,30 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
-import { createForm } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
+import FormInput from "components/FormFields/FormInput";
+import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
-import { useState } from "react";
+import useQueryParams from "hooks/useQueryParams";
+import { useForm } from "react-hook-form";
+import {
+  createFormDefaultValues,
+  CreateFormSchema,
+} from "validations/createForm";
+import { FormType } from "utils/constants";
+import FormFreeSoloAutoComplete from "components/FormFields/FormFreeSoloAutoComplete";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps } from "types";
+import { createForm } from "api/services/forms";
+import useSnack from "hooks/useSnack";
 
-function CreateForm({ open, setOpen }: DialogProps) {
+function AddForm() {
   const snack = useSnack();
+  const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
-  const [state, setState] = useState({
-    name: "",
-    tags: [""],
-  });
 
-  const { mutate, isLoading } = useMutation(createForm, {
+  const { mutate } = useMutation(createForm, {
     onSuccess: () => {
-      snack.success("Form Created");
-      setOpen(false);
+      delete queryParams.createForm;
+      setQueryParams({ ...queryParams });
       queryClient.invalidateQueries("forms");
     },
     onError: (err: any) => {
@@ -27,53 +32,70 @@ function CreateForm({ open, setOpen }: DialogProps) {
     },
   });
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    mutate(state);
+  const { control, handleSubmit } = useForm({
+    defaultValues: createFormDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(CreateFormSchema()),
+  });
+
+  const onFormSubmit = (data: any) => {
+    mutate(data);
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create Form">
-      <form onSubmit={handleSubmit}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          name="name"
-          required
-          size="small"
-          label="Name"
-          onChange={(e) => setState({ ...state, name: e.target.value })}
-          type="text"
+    <DrawerWrapper
+      open={queryParams.createForm === "true"}
+      setOpen={() => {
+        delete queryParams.createForm;
+        setQueryParams({
+          ...queryParams,
+        });
+      }}
+      title="Add New Form"
+    >
+      <form onSubmit={handleSubmit(onFormSubmit)}>
+        <FormSelect
+          control={control}
+          label="Form Type"
+          name="type"
+          options={Object.values(FormType).map((item) => ({
+            label: item,
+            value: item,
+          }))}
         />
-        <Autocomplete
-          multiple
-          id="tags-standard"
-          sx={{ mt: 3 }}
-          options={["kyb", "passwords", "ddforms"]}
-          onChange={(_, v) => setState({ ...state, tags: v })}
-          getOptionLabel={(option) => option}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              fullWidth
-              variant="outlined"
-              size="small"
-              label="Tags"
-            />
-          )}
-        />
-        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-          <LoadingButton
-            loading={isLoading}
-            type="submit"
-            loadingColor="white"
-            title="Create Form"
-            color="secondary"
+        <Box mt={2}>
+          <FormInput control={control} name="name" label="Form Name" />
+        </Box>
+        <Box mt={2}>
+          <FormFreeSoloAutoComplete
+            control={control}
+            label="Tags"
+            name="tags"
+            options={["Tag1", "Tag2"]}
+            multiple
+            freeSolo
           />
         </Box>
+        <Box mt={2}>
+          <FormInput
+            control={control}
+            name="description"
+            label="Form Description"
+            multiline
+          />
+        </Box>
+        <LoadingButton
+          loading={false}
+          fullWidth
+          sx={{ mt: 3 }}
+          type="submit"
+          loadingColor="white"
+          title="Create Form"
+          color="secondary"
+        />
       </form>
     </DrawerWrapper>
   );
 }
 
-export default CreateForm;
+export default AddForm;

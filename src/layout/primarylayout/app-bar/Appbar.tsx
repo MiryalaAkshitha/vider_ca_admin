@@ -7,8 +7,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { IconButton } from "@mui/material";
-import MuiAppBar from "@mui/material/AppBar";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
@@ -20,15 +19,7 @@ import AccountMenu from "../AccountMenu";
 import ConfigurationMenu from "../ConfigurationMenu";
 import GlobalAdd from "../GlobalAdd";
 import Notifications from "../Notifications";
-
 import BaseAppbar from "./BaseAppbar";
-
-const AppBar = styled(MuiAppBar)(({ theme }) => ({
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-}));
 
 function Appbar() {
   const theme = useTheme();

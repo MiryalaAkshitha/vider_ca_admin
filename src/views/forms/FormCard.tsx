@@ -1,109 +1,64 @@
-import MoreVertRounded from "@mui/icons-material/MoreVertRounded";
-import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { deleteForm } from "api/services/forms";
-import { useConfirm } from "components/ConfirmDialogProvider";
-import CustomCard from "components/CustomCard";
-import useSnack from "hooks/useSnack";
-import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Box, Menu, MenuItem, Typography } from "@mui/material";
+import { clientFormCard } from "assets";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import EditForm from "./EditForm";
+import { StyledCard, StyledMoreIcon } from "./styles";
 
-type Props = {
-  data: any;
-};
-
-function FormCard(props: Props) {
-  const { data } = props;
-  const confirm = useConfirm();
-  const snack = useSnack();
+const FormCard = ({ data }: any) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [editOpen, setEditOpen] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
-  const { mutate } = useMutation(deleteForm, {
-    onSuccess: () => {
-      snack.success("Form Removed");
-      setAnchorEl(null);
-      queryClient.invalidateQueries("forms");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-      setAnchorEl(null);
-    },
-  });
-
-  const handleEdit = () => {
-    setEditOpen(true);
-    setAnchorEl(null);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDelete = () => {
-    setAnchorEl(null);
-    confirm({
-      msg: "Are you sure you want to delete this form",
-      action: () => {
-        mutate(data.id);
-      },
-    });
-  };
 
   return (
     <>
-      <CustomCard sx={{ minHeight: 120 }}>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="subtitle2" color="primary">
-            {data?.name}
-          </Typography>
-          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-            <MoreVertRounded />
-          </IconButton>
-        </Box>
-        <Box display="flex" gap={2} mt={1}>
-          {data?.tags?.map((item: string, index: number) => (
-            <Box
-              px="10px"
-              py="1px"
-              minWidth={80}
-              textAlign="center"
-              borderRadius={2}
-              key={index}
-              border="1px solid rgb(24, 47, 83, 0.2)"
-            >
-              <Typography color="primary" variant="caption">
-                {item}
+      <StyledCard
+        sx={{ minHeight: 130 }}
+        onClick={() => navigate(`/forms/${data._id}`)}
+      >
+        <StyledMoreIcon
+          onClick={(e) => {
+            e.stopPropagation();
+            setAnchorEl(e.currentTarget);
+          }}
+        >
+          <MoreVertIcon />
+        </StyledMoreIcon>
+
+        <Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+            <div>
+              <img src={clientFormCard} alt="Client Form Document" />
+            </div>
+            <Box>
+              <Typography variant="subtitle2">{data?.name}</Typography>
+              <Typography variant="body2" color="rgba(0,0,0,0.6)">
+                {data?.description}
               </Typography>
             </Box>
-          ))}
+          </Box>
         </Box>
-      </CustomCard>
+      </StyledCard>
       <Menu
-        id="long-menu"
-        PaperProps={{
-          sx: { minWidth: 120 },
-        }}
+        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
       >
-        <MenuItem
-          onClick={() => navigate(`/settings/forms/${data?.id}/fields`)}
-        >
-          Fields
-        </MenuItem>
-        <MenuItem onClick={handleDelete}>Remove</MenuItem>
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        <MenuItem>Edit</MenuItem>
+        <MenuItem>Preview</MenuItem>
+        <MenuItem>Duplicate</MenuItem>
+        <MenuItem>Delete</MenuItem>
       </Menu>
-      <EditForm open={editOpen} setOpen={setEditOpen} data={data} />
     </>
   );
-}
+};
 
 export default FormCard;
