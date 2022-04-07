@@ -11,6 +11,7 @@ import {
   CreateFormSchema,
 } from "validations/createForm";
 import { FormType } from "utils/constants";
+import FormFreeSoloAutoComplete from "components/FormFields/FormFreeSoloAutoComplete";
 
 function AddForm() {
   const { queryParams, setQueryParams } = useQueryParams();
@@ -50,6 +51,16 @@ function AddForm() {
         />
         <Box mt={2}>
           <FormInput control={control} name="formName" label="Form Name" />
+        </Box>
+        <Box mt={2}>
+          <FormFreeSoloAutoComplete
+            control={control}
+            label="Tags"
+            name="tags"
+            options={[]}
+            multiple
+            freeSolo
+          />
         </Box>
         <Box mt={2}>
           <FormInput

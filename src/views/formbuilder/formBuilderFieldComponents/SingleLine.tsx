@@ -66,20 +66,10 @@ const SingleLine = (props) => {
       </Box>
       <Box mt={2} sx={{ display: "flex" }}>
         <Box mr={1}>
-          <FormInput
-            name="min"
-            label="Min"
-            control={control}
-            style={{ margin: "5px" }}
-          />
+          <FormInput name="min" label="Min" control={control} />
         </Box>
         <Box mr={1}>
-          <FormInput
-            name="max"
-            label="Max"
-            control={control}
-            style={{ margin: "5px" }}
-          />
+          <FormInput name="max" label="Max" control={control} />
         </Box>
       </Box>
       <Box mt={2}>
