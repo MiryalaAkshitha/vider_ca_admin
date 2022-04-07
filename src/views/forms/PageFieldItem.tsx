@@ -1,12 +1,12 @@
-import useSnack from "hooks/useSnack";
 import { Delete, Edit } from "@mui/icons-material";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { deleteDDFormField } from "api/services/tasks";
 import { useConfirm } from "components/ConfirmDialogProvider";
+import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { renderField } from "views/clients/clients/ClientInfo/renderField";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
+import RenderField from "./RenderField";
 
 const PageFieldItem = ({ provided, snapshot, item }: any) => {
   const queryClient = useQueryClient();
@@ -46,9 +46,8 @@ const PageFieldItem = ({ provided, snapshot, item }: any) => {
         isdragging={snapshot.isDragging ? 1 : 0}
         draggablestyle={provided.draggableProps.style}
       >
-        {/* <div className="field">{renderField(item)}</div> */}
         <div className="field">
-          <Typography>{item?.label}</Typography>
+          <RenderField item={item} />
         </div>
         <div>
           <div className="actions">

@@ -11,7 +11,7 @@ import { ResType } from "types";
 import AddPage from "views/forms/AddPage";
 import availableFields from "../../views/forms/availableFields";
 import CreateFormDrawer from "../../views/forms/CreateFormDrawer";
-import Pages from "./Pages";
+import Pages from "../../views/forms/Pages";
 
 const CreateForm = () => {
   const params = useParams();
