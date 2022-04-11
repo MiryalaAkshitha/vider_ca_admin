@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
 import RenderField from "./RenderField";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const PageFieldItem = ({ provided, snapshot, item }: any) => {
   const queryClient = useQueryClient();
@@ -49,15 +50,16 @@ const PageFieldItem = ({ provided, snapshot, item }: any) => {
         <div className="field">
           <RenderField item={item} />
         </div>
-        <div>
-          <div className="actions">
-            <IconButton onClick={() => setOpen(true)} sx={{ borderRadius: 0 }}>
-              <Edit color="secondary" fontSize="small" />
-            </IconButton>
-            <IconButton onClick={handleDelete} sx={{ borderRadius: 0 }}>
-              <Delete color="secondary" fontSize="small" />
-            </IconButton>
-          </div>
+        <div className="actions">
+          <IconButton onClick={() => setOpen(true)} sx={{ borderRadius: 0 }}>
+            <Edit color="secondary" fontSize="small" />
+          </IconButton>
+          <IconButton onClick={handleDelete} sx={{ borderRadius: 0 }}>
+            <ContentCopyIcon color="secondary" fontSize="small" />
+          </IconButton>
+          <IconButton onClick={handleDelete} sx={{ borderRadius: 0 }}>
+            <Delete color="secondary" fontSize="small" />
+          </IconButton>
         </div>
       </StyledDraggebleFormField>
     </>

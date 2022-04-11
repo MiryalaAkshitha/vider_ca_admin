@@ -132,19 +132,20 @@ export const StyledSubTaskTable = styled("table")({
 export const StyledDraggebleFormField = styled("div")<{
   isdragging: 0 | 1;
   active: 1 | 0;
-}>(({ isdragging, theme, active }) => ({
-  display: "flex",
+}>(({ isdragging, active }) => ({
+  padding: "15px 10px",
+  border: "1px solid transparent",
+  borderBottom: "1px solid #22222226",
+  transition: "0.3s",
+  ...((isdragging || active) && {
+    border: `1px dashed 
+         rgba(0,0,0,0.5)`,
+    borderBottom: "1px dashed rgba(0,0,0,0.5) !important",
+  }),
+  position: "relative",
   "& .field": {
     userSelect: "none",
     padding: "10px 5px",
-    transition: "0.3s",
-    flex: 1,
-    border:
-      active || isdragging
-        ? `1px dashed ${
-            isdragging ? theme.palette.primary.main : "rgba(0,0,0,0.3)"
-          }`
-        : "1px dashed transparent",
     position: "relative",
     "&:before": {
       content: '""',
@@ -154,18 +155,20 @@ export const StyledDraggebleFormField = styled("div")<{
       height: "100%",
       background: "transparent",
       top: 0,
-      zIndex: 2,
+      zIndex: 3,
     },
   },
   "& .actions": {
+    position: "absolute",
+    left: "100%",
+    top: -1,
     display: "flex",
     flexDirection: "column",
     background: "white",
-    boxShadow: "0px 0px 10px  rgba(0,0,0,0.1)",
+    boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
     opacity: active || isdragging ? 1 : 0,
     transition: "0.3s",
-    border: "1px dashed rgba(0,0,0,0.3)",
-    borderLeft: "none",
+    border: "1px dashed rgba(0,0,0,0.5)",
   },
 }));
 

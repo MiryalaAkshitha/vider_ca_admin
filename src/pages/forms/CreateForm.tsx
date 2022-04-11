@@ -35,7 +35,7 @@ const CreateForm = () => {
     <>
       <FormAppbar />
       {data?.data?.pages?.length > 0 ? (
-        <Grid container spacing={2} sx={{ pt: "4.5rem", px: "1rem" }}>
+        <Grid container spacing={2} sx={{ pt: 10, pb: 4, px: 2 }}>
           <Grid item xs={7}>
             <Pages data={data?.data} setPageOpen={setPageOpen} />
           </Grid>

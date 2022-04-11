@@ -8,6 +8,9 @@ interface Props {
   control: any;
   multiline?: boolean;
   placeholder?: string;
+  required?: boolean;
+  showCharacterCount?: boolean;
+  countType?: "WORDS" | "CHARACTERS";
 }
 
 function FormbuilderTextField(props: Props) {
@@ -18,12 +21,23 @@ function FormbuilderTextField(props: Props) {
     label = "",
     multiline,
     placeholder = "",
+    required = false,
+    showCharacterCount = false,
+    countType = "WORDS",
   } = props;
+
+  const getCount = (value: string) => {
+    if (countType === "WORDS") {
+      return value?.split(" ").length;
+    } else {
+      return value?.length;
+    }
+  };
 
   return (
     <>
       <Typography gutterBottom sx={{ display: "block" }} variant="caption">
-        {label}
+        {label} {required && <span style={{ color: "red" }}>*</span>}
       </Typography>
       <Controller
         name={name}
@@ -40,6 +54,11 @@ function FormbuilderTextField(props: Props) {
               size={size}
               {...field}
             />
+            {showCharacterCount && (
+              <Typography mt={1} variant="body2">
+                Character count: {getCount(field.value) || 0}
+              </Typography>
+            )}
             {error && (
               <Typography
                 variant="caption"

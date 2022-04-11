@@ -43,36 +43,39 @@ function PageFields({ data, value }: Props) {
   };
 
   return (
-    <Box p={2} maxWidth={600}>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="form-fields">
-          {(provided: any, snapshot: any) => (
-            <Box
-              ref={(ref) => {
-                provided.innerRef(ref);
-              }}
-            >
-              {data[value]?.fields?.map((item: any, index: number) => (
-                <Draggable
-                  key={item?._id?.toString()}
-                  draggableId={item?._id?.toString()}
-                  index={index}
-                >
-                  {(provided: any, snapshot: any) => (
-                    <PageFieldItem
-                      provided={provided}
-                      snapshot={snapshot}
-                      item={item}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </Box>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </Box>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="form-fields">
+        {(provided: any, snapshot: any) => (
+          <Box
+            ref={(ref) => {
+              provided.innerRef(ref);
+            }}
+            sx={{
+              "& > div:last-child": {
+                borderBottom: "1px solid transparent",
+              },
+            }}
+          >
+            {data[value]?.fields?.map((item: any, index: number) => (
+              <Draggable
+                key={item?._id?.toString()}
+                draggableId={item?._id?.toString()}
+                index={index}
+              >
+                {(provided: any, snapshot: any) => (
+                  <PageFieldItem
+                    provided={provided}
+                    snapshot={snapshot}
+                    item={item}
+                  />
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </Box>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }
 
