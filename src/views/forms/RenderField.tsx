@@ -8,21 +8,15 @@ import FormBuilderPhone from "./formBuilderFields/FormBuilderPhone";
 import FormBuilderRadio from "./formBuilderFields/FormBuilderRadio";
 import FormBuilderSelect from "./formBuilderFields/FormBuilderSelect";
 import FormBuilderMultiselect from "./formBuilderFields/FormBuilderMultiselect";
+import FormBuilderUpload from "./formBuilderFields/FormBuilderUpload";
 
-function RenderField({ item }: any) {
-  const { control } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      Email: "",
-    },
-  });
-
+function RenderField({ item, control }: any) {
   switch (item.fieldType) {
     case FormBuilderFieldTypes.EMAIL:
       return (
         <FormbuilderTextField
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
           placeholder={item?.placeholder}
           required={item?.required}
@@ -32,7 +26,7 @@ function RenderField({ item }: any) {
       return (
         <FormbuilderTextField
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
           placeholder={item?.placeholder}
           required={item?.required}
@@ -42,7 +36,7 @@ function RenderField({ item }: any) {
       return (
         <FormbuilderTextField
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
           multiline
           placeholder={item?.placeholder}
@@ -53,14 +47,15 @@ function RenderField({ item }: any) {
       );
     case FormBuilderFieldTypes.DECISION_BOX:
       return (
-        <DecisionBox control={control} name={item?.label} label={item?.label} />
+        <DecisionBox control={control} name={item?._id} label={item?.label} />
       );
     case FormBuilderFieldTypes.RADIO:
       return (
         <FormBuilderRadio
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
+          required={item?.required}
           options={item?.options?.map((item: any) => ({
             label: item?.label,
             value: item?.value,
@@ -71,8 +66,9 @@ function RenderField({ item }: any) {
       return (
         <FormBuilderSelect
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
+          required={item?.required}
           options={item?.options?.map((item: any) => ({
             label: item?.label,
             value: item?.value,
@@ -83,7 +79,7 @@ function RenderField({ item }: any) {
       return (
         <FormBuilderMultiselect
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
           options={item?.options?.map((item: any) => ({
             label: item?.label,
@@ -95,7 +91,7 @@ function RenderField({ item }: any) {
       return (
         <FormBuilderDate
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
           required={item?.required}
         />
@@ -104,8 +100,9 @@ function RenderField({ item }: any) {
       return (
         <FormBuilderCheckbox
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
+          required={item?.required}
           options={item?.options?.map((item: any) => ({
             label: item?.label,
             value: item?.value,
@@ -116,9 +113,20 @@ function RenderField({ item }: any) {
       return (
         <FormBuilderPhone
           control={control}
-          name={item?.label}
+          name={item?._id}
           label={item?.label}
           required={item?.required}
+        />
+      );
+    case FormBuilderFieldTypes.FILE_UPLOAD:
+      return (
+        <FormBuilderUpload
+          accepted={item?.uploadFileTypes}
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          maxFileSize={item?.fileMaxSize}
+          max={item?.fileUploadLimit?.max}
         />
       );
     default:

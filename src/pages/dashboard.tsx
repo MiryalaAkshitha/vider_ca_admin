@@ -1,25 +1,28 @@
 import { Box } from "@mui/system";
 import ComingSoon from "components/ComingSoon";
 import { useForm } from "react-hook-form";
-import FormBuilderPhone from "views/forms/formBuilderFields/FormBuilderPhone";
 import FormBuilderUpload from "views/forms/formBuilderFields/FormBuilderUpload";
 
 function Dashboard() {
-  const { control } = useForm({
+  const { watch, control } = useForm({
     mode: "onChange",
-
     defaultValues: {
-      aadhar: "",
+      aadhar: [],
     },
   });
+
+  console.log(watch("aadhar"));
+
   return (
     <Box p={2}>
       <form>
         <FormBuilderUpload
-          accepted={["image/png"]}
+          accepted={["image/png", "application/pdf", "image/jpg", "image/jpeg"]}
           name="aadhar"
           label="Aadhar"
           control={control}
+          maxFileSize={{ type: "MB", size: 1 }}
+          max={2}
         />
       </form>
       <ComingSoon title="Dashboard" />

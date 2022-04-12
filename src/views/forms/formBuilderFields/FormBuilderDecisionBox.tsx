@@ -24,7 +24,9 @@ function DecisionBox(props: Props) {
                 <Checkbox
                   size={size}
                   checked={field.value}
-                  onChange={field.onChange}
+                  onChange={(e) => {
+                    field.onChange(e.target.checked);
+                  }}
                 />
               }
               label={label}

@@ -24,28 +24,12 @@ const addPage = ({ formId, name }: any) => {
   return http.post(`/forms/${formId}/pages`, { name });
 };
 
-const createField = (data: any) => {
-  return http.post(`/forms/fields`, data);
+const updatePage = ({ formId, pageId, data }: any) => {
+  return http.patch(`/forms/${formId}/pages/${pageId}`, data);
 };
 
-const getFields = () => {
-  return http.get("/forms/fields");
-};
-
-const deleteField = (id: any) => {
-  return http.delete(`/forms/fields/${id}`);
-};
-
-const updateField = ({ id, data }: any) => {
-  return http.put(`/forms/fields/${id}`, data);
-};
-
-const saveFormFields = (data: any) => {
-  return http.post("/forms/form-fields", data);
-};
-
-const getFormFields = ({ queryKey }: any) => {
-  return http.get("/forms/form-fields", { params: { formId: queryKey[1] } });
+const deleteField = ({ formId, pageId, fieldId }: any) => {
+  return http.delete(`/forms/${formId}/pages/${pageId}/fields/${fieldId}`);
 };
 
 export {
@@ -53,12 +37,8 @@ export {
   createForm,
   updateForm,
   deleteForm,
-  createField,
-  getFields,
-  deleteField,
-  saveFormFields,
-  getFormFields,
-  updateField,
   getForm,
   addPage,
+  updatePage,
+  deleteField,
 };

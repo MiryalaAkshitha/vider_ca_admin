@@ -15,6 +15,7 @@ interface Props {
   control: any;
   options: Array<{ label: string; value: string }>;
   row?: boolean;
+  required?: boolean;
 }
 
 function FormBuilderCheckbox(props: Props) {
@@ -25,6 +26,7 @@ function FormBuilderCheckbox(props: Props) {
     label = "",
     options,
     row = false,
+    required = false,
   } = props;
 
   return (
@@ -41,7 +43,8 @@ function FormBuilderCheckbox(props: Props) {
                     sx={{ display: "block", color: "black" }}
                     variant="caption"
                   >
-                    {label}
+                    {label}{" "}
+                    {required && <span style={{ color: "red" }}>*</span>}
                   </Typography>
                 }
               />

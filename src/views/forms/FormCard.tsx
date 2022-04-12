@@ -14,7 +14,7 @@ const FormCard = ({ data }: any) => {
     <>
       <StyledCard
         sx={{ minHeight: 130 }}
-        onClick={() => navigate(`/forms/${data._id}`)}
+        onClick={() => navigate(`/forms/builder/${data._id}`)}
       >
         <StyledMoreIcon
           onClick={(e) => {

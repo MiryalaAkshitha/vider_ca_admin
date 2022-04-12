@@ -1,5 +1,5 @@
 import { Add, PlayArrow } from "@mui/icons-material";
-import { Box, Button, Tabs, Tab } from "@mui/material";
+import { Box, Button, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import PageFields from "views/forms/PageFields";
 
@@ -24,6 +24,7 @@ function Pages({ data, setPageOpen }: any) {
         </Button>
         <a
           rel="noopener noreferrer"
+          href={`/forms/${data._id}/?preview=true`}
           style={{ textDecoration: "none" }}
           target="_blank"
         >
@@ -43,7 +44,7 @@ function Pages({ data, setPageOpen }: any) {
           ))}
         </Tabs>
       </Box>
-      <PageFields data={data?.pages} value={value} />
+      <PageFields data={data?.pages[value]} />
     </Box>
   );
 }

@@ -62,14 +62,12 @@ const RolesAndPermissions = loadable(() => {
 const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
 });
-const DueDiligencePreview = loadable(() => {
-  return import("pages/taskboard/due-diligence-preview");
-});
-const CreateForms = loadable(() => import("pages/forms"));
+const Forms = loadable(() => import("pages/forms"));
 const MyForms = loadable(() => import("pages/forms/MyForms"));
 const StandardForms = loadable(() => import("pages/forms/StandardForms"));
 const FormSettings = loadable(() => import("pages/forms/FormSettings"));
 const CreateForm = loadable(() => import("pages/forms/CreateForm"));
+const ViewForm = loadable(() => import("pages/forms/view"));
 
 function RoutesContainer() {
   return (
@@ -89,7 +87,7 @@ function RoutesContainer() {
             <Route path="all-clients-storage" element={<AllClientsStorage />} />
           </Route>
           <Route path="broadcast" element={<BroadCast />} />
-          <Route path="forms" element={<CreateForms />}>
+          <Route path="forms" element={<Forms />}>
             <Route index element={<MyForms />} />
             <Route path="standard-forms" element={<StandardForms />} />
             <Route path="form-settings" element={<FormSettings />} />
@@ -145,8 +143,8 @@ function RoutesContainer() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-        <Route path="due-diligence/:taskId" element={<DueDiligencePreview />} />
-        <Route path="/forms/:formId" element={<CreateForm />} />
+        <Route path="/forms/builder/:formId" element={<CreateForm />} />
+        <Route path="/forms/:formId" element={<ViewForm />} />
       </Routes>
       <GlobalDrawers />
     </Router>

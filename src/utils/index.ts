@@ -21,6 +21,7 @@ export const getFileSize = (size: number) => {
   if (size < 1024 * 1024 * 1024 * 1024) {
     return `${(size / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
+  return 0;
 };
 
 export const getHoursOptions = () => {
@@ -55,4 +56,18 @@ export const getTotalLogHoursDuration = (logs: any[]) => {
   }, 0);
 
   return moment.utc(total).format("HH:mm");
+};
+
+export const covertToKb = (size: number, type: "KB" | "MB" | "GB") => {
+  if (type === "KB") {
+    return size;
+  }
+  if (type === "MB") {
+    return size * 1024;
+  }
+  return 0;
+};
+
+export const fileSizeInKb = (size: number) => {
+  return size / 1024;
 };
