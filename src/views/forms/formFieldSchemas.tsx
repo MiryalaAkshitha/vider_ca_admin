@@ -71,6 +71,7 @@ let numberDefaultValues = {
   entryType: "",
   unitSelection: "",
   unitTitle: "",
+  unitTitleAddOn: "",
 };
 
 let numberSchema = {
@@ -78,6 +79,7 @@ let numberSchema = {
   entryType: strReq("Entry Type"),
   unitSelection: strReq("Unit Selection"),
   unitTitle: strNotReq(),
+  unitTitleAddon: strNotReq(),
 };
 
 let dateDefaultValues = {
@@ -245,6 +247,35 @@ let decisionBoxSchema = object().shape({
   selectionType: strReq("Selection Type"),
 });
 
+let addressDefaultValues = {
+  ...baseDefaultValues,
+  addressComponents: [],
+};
+
+let addressSchema = object().shape({
+  ...baseSchema,
+  addressComponents: array().of(
+    object().nullable().shape({
+      label: strNotReq(),
+      value: strNotReq(),
+      isVisible: boolean().notRequired(),
+      isMandatory: boolean().notRequired(),
+    })
+  ),
+});
+
+let termsAndConditionsDefaultValues = {
+  termsAndConditions: "",
+  declaration: "",
+  fieldType: "",
+};
+
+let termsAndConditionsSchema = object().shape({
+  termsAndConditions: strReq("Terms and Conditions"),
+  declaration: string().nullable().notRequired(),
+  fieldType: string().nullable().notRequired(),
+});
+
 export default {
   singleLineDefaultValues,
   singleLineSchema,
@@ -272,4 +303,8 @@ export default {
   signatureSchema,
   decisionBoxDefaultValues,
   decisionBoxSchema,
+  addressDefaultValues,
+  addressSchema,
+  termsAndConditionsDefaultValues,
+  termsAndConditionsSchema,
 };

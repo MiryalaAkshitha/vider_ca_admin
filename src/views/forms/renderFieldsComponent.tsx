@@ -11,6 +11,8 @@ import ImageUpload from "./formBuilderFieldComponents/ImageUpload";
 import Checkbox from "./formBuilderFieldComponents/Checkbox";
 import Signature from "./formBuilderFieldComponents/Signature";
 import Dropdown from "./formBuilderFieldComponents/Dropdown";
+import Address from "./formBuilderFieldComponents/Address";
+import TermsAndConditions from "./formBuilderFieldComponents/TermsAndConditions";
 
 export enum FormBuilderFieldTypes {
   NAME = "NAME",
@@ -119,6 +121,24 @@ const renderFieldsComponent = (item, control, handleSubmit, watch) => {
   if (item.type === FormBuilderFieldTypes.DROPDOWN)
     return (
       <Dropdown
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.ADDRESS)
+    return (
+      <Address
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.TERMS_AND_CONDITIONS)
+    return (
+      <TermsAndConditions
         item={item}
         control={control}
         handleSubmit={handleSubmit}

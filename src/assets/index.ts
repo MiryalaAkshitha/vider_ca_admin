@@ -33,6 +33,7 @@ import audio from "./icons/filetypes/audio.png";
 import recurring from "./icons/recurring.svg";
 import singleLine from "./icons/singleLine.svg";
 import email from "./icons/email.svg";
+import address from  "./icons/address.svg";
 import multiLine from "./icons/multiLine.svg";
 import name from "./icons/name.svg";
 import checkBox from "./icons/checkBox.svg";
@@ -122,5 +123,6 @@ export const icons = {
   mobileNumber,
   numbers,
   fieldDate,
-  checkBox
+  checkBox,
+  address
 };

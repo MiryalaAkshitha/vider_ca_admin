@@ -7,10 +7,11 @@ interface Props {
   size?: "small" | "medium";
   control: any;
   options: Array<{ label: string; value: string }>;
+  style?: any;
 }
 
 function FormSelect(props: Props) {
-  const { name, size = "small", options, control, label = "" } = props;
+  const { name, size = "small", options, control, label = "", style } = props;
 
   return (
     <>
@@ -26,6 +27,7 @@ function FormSelect(props: Props) {
               select
               fullWidth
               size={size}
+              style={style}
               {...field}
             >
               {options.map((item, index) => (
