@@ -160,7 +160,8 @@ function Upload(props: UploadProps) {
       />
       <Box
         sx={{
-          border: "1px dotted grey",
+          border: "1px solid rgba(0,0,0,0.5)",
+          borderRadius: "4px",
         }}
       >
         <label htmlFor={id}>
@@ -198,7 +199,7 @@ function Upload(props: UploadProps) {
               display: "flex",
               gap: 1,
               flexWrap: "wrap",
-              borderTop: "1px dotted grey",
+              borderTop: "1px solid grey",
               p: 1,
             }}
           >
