@@ -14,7 +14,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FormRadioAddable from "components/FormFields/FormRadioAddable";
+// import FormRadioAddable from "components/FormFields/FormRadioAddable";
 
 const Number = (props) => {
   const { control } = props;
@@ -233,14 +233,14 @@ const Number = (props) => {
       </Box>
       <Box mt={2} px={1}>
         <Typography variant="caption">Title Elements</Typography>
-        {
+        {/* {
           <FormRadioAddable
             control={control}
             options={titleElements}
             deleteIcon={<DeleteIcon />}
             addIcon={<AddCircleIcon />}
           />
-        }
+        } */}
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton

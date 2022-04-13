@@ -1,4 +1,5 @@
-import { array, boolean, object, string } from "yup";
+import moment from "moment";
+import { array, boolean, date, number, object, string } from "yup";
 import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
 class GenerateSchema {
@@ -47,6 +48,26 @@ class GenerateSchema {
 
         case FormBuilderFieldTypes.DROPDOWN_MULTIPLE:
           this.dropdownMultipleSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.DATE:
+          this.dateSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.PHONE:
+          this.phoneSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.FILE_UPLOAD:
+          this.fileUploadSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.IMAGE_UPLOAD:
+          this.fileUploadSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.CURRENCY:
+          this.currencySchema(item);
           break;
 
         default:
@@ -190,6 +211,114 @@ class GenerateSchema {
         validation = validation.min(min, `${label} must be at least ${min}`);
         validation = validation.max(max, `${label} must be at most ${max}`);
       }
+    }
+
+    this.schema[attribute] = validation;
+  }
+
+  dateSchema(item: any) {
+    let attribute = item._id?.toString();
+    let label = item.label;
+    let min = item?.dateRange?.startDate;
+    let max = item?.dateRange?.endDate;
+    let validation = date().nullable();
+
+    if (item.required) {
+      validation = validation.required(`${item.label} is required`);
+
+      if (item?.allowedDates === "CUSTOM") {
+        validation = validation.min(min, `${label} must be after ${min}`);
+        validation = validation.max(max, `${label} must be before ${max}`);
+      }
+
+      if (item?.allowedDays && item?.allowedDays?.length > 0) {
+        validation = validation.test(
+          attribute,
+          `${label} must be one of ${item?.allowedDays?.join(", ")}`,
+          (value) => {
+            return item?.allowedDays?.includes(
+              moment(value).format("dddd")?.toUpperCase()
+            );
+          }
+        );
+      }
+    }
+
+    this.schema[attribute] = validation;
+  }
+
+  phoneSchema(item: any) {
+    let attribute = item._id?.toString();
+    let label = item.label;
+    let min = item?.range?.min;
+    let max = item?.range?.max;
+
+    let validation = object().shape({
+      code: (() => {
+        let result: any;
+        if (item?.includeCountryCode) {
+          result = string()
+            .required(`${item.label} is required`)
+            .default(item?.defaultCountryCode);
+        } else {
+          result = string().notRequired().default("");
+        }
+        return result;
+      })(),
+      number: (() => {
+        let result = string().default("");
+
+        if (item?.required) {
+          result = result.required(`${item.label} is required`);
+        }
+
+        result = result.matches(/^[0-9]*$/, `${item.label} must be a number`);
+
+        if (item?.range) {
+          result = result.min(min, `${label} must be at least ${min}`);
+          result = result.max(max, `${label} must be at most ${max}`);
+        }
+
+        return result;
+      })(),
+    });
+
+    this.schema[attribute] = validation;
+  }
+
+  fileUploadSchema(item: any) {
+    let attribute = item._id?.toString();
+    let label = item.label;
+    let min = item?.range?.min;
+    let max = item?.range?.max;
+    let validation = array(string()).nullable();
+
+    if (item.required) {
+      validation = validation.required(`${item.label} is required`);
+    }
+
+    if (item?.range) {
+      validation = validation.min(min, `${label} must be at least ${min}`);
+      validation = validation.max(max, `${label} must be at most ${max}`);
+    }
+
+    this.schema[attribute] = validation;
+  }
+
+  currencySchema(item: any) {
+    let attribute = item._id?.toString();
+    let label = item.label;
+    let min = item?.range?.min;
+    let max = item?.range?.max;
+    let validation = number();
+
+    if (item.required) {
+      validation = validation.required(`${item.label} is required`);
+    }
+
+    if (item?.range) {
+      validation = validation.min(min, `${label} must be at least ${min}`);
+      validation = validation.max(max, `${label} must be at most ${max}`);
     }
 
     this.schema[attribute] = validation;

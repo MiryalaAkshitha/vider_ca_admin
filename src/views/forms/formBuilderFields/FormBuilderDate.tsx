@@ -25,7 +25,7 @@ function FormBuilderDate(props: Props) {
             <DesktopDatePicker
               mask="____/__/__"
               inputFormat="yyyy/MM/dd"
-              value={field.value}
+              value={field.value || null}
               onChange={field.onChange}
               renderInput={(params) => (
                 <TextField

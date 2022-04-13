@@ -1,72 +1,14 @@
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import CloudUploadOutlined from "@mui/icons-material/CloudUploadOutlined";
 import { Box, CircularProgress, styled, Typography } from "@mui/material";
 import { http } from "api/http";
-import { useRef, useState } from "react";
-import { Controller } from "react-hook-form";
-import { covertToKb, fileSizeInKb, getFileSize } from "utils";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { icons } from "assets";
+import useSnack from "hooks/useSnack";
+import { useState } from "react";
+import { covertToKb, fileSizeInKb, getFileSize } from "utils";
 import { FILETYPES } from "utils/constants";
 
-interface Props {
-  label?: string;
-  name: string;
-  control: any;
-  required?: boolean;
-  max: number;
-  maxFileSize: {
-    type: "KB" | "MB" | "GB";
-    size: number;
-  };
-  accepted: string[];
-}
-
-function FormBuilderUpload(props: Props) {
-  const {
-    name,
-    control,
-    label = "",
-    required = false,
-    accepted,
-    max,
-    maxFileSize,
-  } = props;
-
-  return (
-    <>
-      <Typography gutterBottom sx={{ display: "block" }} variant="caption">
-        {label} {required && <span style={{ color: "red" }}>*</span>}
-      </Typography>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <>
-            <Upload
-              name={field.name}
-              value={field.value}
-              max={max}
-              maxFileSize={maxFileSize}
-              accepted={accepted}
-              onChange={field.onChange}
-            />
-            {error && (
-              <Typography
-                variant="caption"
-                sx={{ pl: "2px" }}
-                color="rgb(211, 47, 47)"
-              >
-                {error.message}
-              </Typography>
-            )}
-          </>
-        )}
-      />
-    </>
-  );
-}
-
-export const UploadContainer = styled("div")(() => ({
+const UploadContainer = styled("div")(() => ({
   display: "flex",
   borderRadius: "8px",
   alignItems: "center",
@@ -79,7 +21,7 @@ export const UploadContainer = styled("div")(() => ({
 }));
 
 interface UploadProps {
-  name: string;
+  id: string;
   onChange: (v: any) => void;
   value: any;
   max: number;
@@ -88,12 +30,23 @@ interface UploadProps {
     size: number;
   };
   accepted: string[];
+  setError: (v: string) => void;
 }
 
 type State = Array<{ file: File; key: string; url: string }>;
 
 function Upload(props: UploadProps) {
-  let { onChange, name = "upload", value, max, accepted, maxFileSize } = props;
+  let {
+    onChange,
+    id = "upload",
+    value,
+    max,
+    accepted,
+    maxFileSize,
+    setError,
+  } = props;
+
+  const snack = useSnack();
   const [loading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState<State>([]);
 
@@ -103,12 +56,12 @@ function Upload(props: UploadProps) {
     if (!files.length) return;
 
     if (files.length > max) {
-      alert(`you can only upload ${max} file(s)`);
+      setError(`you can only upload ${max} file(s)`);
       return;
     }
 
     if (files.length + value.length > max) {
-      alert(`you can only upload ${max} file(s)`);
+      setError(`you can only upload ${max} file(s)`);
       return;
     }
 
@@ -117,7 +70,9 @@ function Upload(props: UploadProps) {
         return accepted.includes(file.type);
       });
       if (acceptedFiles.length !== files.length) {
-        alert("Only files of type " + accepted.join(", ") + " can be uploaded");
+        setError(
+          "Only files of type " + accepted.join(", ") + " can be uploaded"
+        );
         return;
       }
     }
@@ -130,7 +85,7 @@ function Upload(props: UploadProps) {
         );
       });
       if (exceededFiles.length) {
-        alert(
+        setError(
           "File size should not exceed " +
             maxFileSize.size +
             " " +
@@ -140,6 +95,7 @@ function Upload(props: UploadProps) {
       }
     }
 
+    setError("");
     setLoading(true);
     try {
       let result: any = [];
@@ -153,7 +109,7 @@ function Upload(props: UploadProps) {
       setState([...state, ...result]);
       onChange([...state, ...result].map(({ key }) => key));
     } catch (err: any) {
-      alert("something went wrong");
+      snack.error("something went wrong");
     } finally {
       setLoading(false);
     }
@@ -198,8 +154,8 @@ function Upload(props: UploadProps) {
         type="file"
         multiple
         onChange={handleChange}
-        name="upload"
-        id={name}
+        name={id}
+        id={id}
         style={{ display: "none" }}
       />
       <Box
@@ -207,7 +163,7 @@ function Upload(props: UploadProps) {
           border: "1px dotted grey",
         }}
       >
-        <label htmlFor={name}>
+        <label htmlFor={id}>
           <UploadContainer
             onDrop={(e) => handleDrop(e)}
             onDragOver={(e) => handleDragOver(e)}
@@ -306,4 +262,4 @@ function Upload(props: UploadProps) {
   );
 }
 
-export default FormBuilderUpload;
+export default Upload;

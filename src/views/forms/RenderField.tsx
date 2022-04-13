@@ -9,6 +9,7 @@ import FormBuilderRadio from "./formBuilderFields/FormBuilderRadio";
 import FormBuilderSelect from "./formBuilderFields/FormBuilderSelect";
 import FormBuilderMultiselect from "./formBuilderFields/FormBuilderMultiselect";
 import FormBuilderUpload from "./formBuilderFields/FormBuilderUpload";
+import FormBuilderCurrency from "./formBuilderFields/FormBuilderCurrency";
 
 function RenderField({ item, control }: any) {
   switch (item.fieldType) {
@@ -117,6 +118,8 @@ function RenderField({ item, control }: any) {
           name={item?._id}
           label={item?.label}
           required={item?.required}
+          includeCountryCode={item?.includeCountryCode}
+          allowedCountries={item?.allowedCountries}
         />
       );
     case FormBuilderFieldTypes.FILE_UPLOAD:
@@ -124,10 +127,21 @@ function RenderField({ item, control }: any) {
         <FormBuilderUpload
           accepted={item?.uploadFileTypes}
           name={item?._id}
+          id={item?.label + "_" + item?._id}
           label={item?.label}
           control={control}
           maxFileSize={item?.fileMaxSize}
-          max={item?.fileUploadLimit?.max}
+          max={item?.range?.max}
+        />
+      );
+    case FormBuilderFieldTypes.CURRENCY:
+      return (
+        <FormBuilderCurrency
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          required={item?.required}
+          code={item?.currencyType}
         />
       );
     default:

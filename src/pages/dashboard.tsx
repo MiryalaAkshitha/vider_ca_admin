@@ -19,6 +19,7 @@ function Dashboard() {
         <FormBuilderUpload
           accepted={["image/png", "application/pdf", "image/jpg", "image/jpeg"]}
           name="aadhar"
+          id="aa123"
           label="Aadhar"
           control={control}
           maxFileSize={{ type: "MB", size: 1 }}

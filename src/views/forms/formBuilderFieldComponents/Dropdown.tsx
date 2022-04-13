@@ -5,7 +5,7 @@ import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FormRadioAddable from "components/FormFields/FormRadioAddable";
+// import FormRadioAddable from "components/FormFields/FormRadioAddable";
 
 const Dropdown = (props) => {
   const { control } = props;
@@ -55,12 +55,12 @@ const Dropdown = (props) => {
       </Box>
       <Box mt={2}>
         <Typography>Dropdown Components</Typography>
-        <FormRadioAddable
+        {/* <FormRadioAddable
           control={control}
           options={["Option 1", "Option 2", "Option 3", "Option 4"]}
           deleteIcon={<DeleteIcon />}
           addIcon={<AddCircleIcon />}
-        />
+        /> */}
       </Box>
       <Box mt={2}>
         <FormSelect
