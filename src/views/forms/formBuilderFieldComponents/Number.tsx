@@ -84,7 +84,18 @@ const Number = (props) => {
           control={control}
         />
       </Box>
-      <Box>Add the Coupled Input and Dropdown</Box>
+      <Box mt={2} sx={{ display: "flex" }}>
+        <FormInput control={control} name="unitTitle" label="Unit Title" />
+        <FormSelect
+          style={{ width: "35%" }}
+          control={control}
+          name="unitTitleAddOn"
+          options={[
+            { label: "Prefix", value: "prefix" },
+            { label: "Suffix", value: "suffix" },
+          ]}
+        />
+      </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton
           loading={false}
