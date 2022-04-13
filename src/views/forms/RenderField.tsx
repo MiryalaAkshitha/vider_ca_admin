@@ -142,6 +142,7 @@ function RenderField({ item, control }: any) {
           control={control}
           required={item?.required}
           code={item?.currencyType}
+          currencyDisplay={item?.currencyDisplay}
         />
       );
     default:

@@ -1,5 +1,6 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { currencies } from "utils/currencies";
 
 interface Props {
   label?: string;
@@ -10,6 +11,7 @@ interface Props {
   placeholder?: string;
   required?: boolean;
   code: string;
+  currencyDisplay: "SYMBOL" | "CODE";
 }
 
 function FormBuilderCurrency(props: Props) {
@@ -21,7 +23,12 @@ function FormBuilderCurrency(props: Props) {
     placeholder = "",
     required = false,
     code,
+    currencyDisplay,
   } = props;
+
+  let currencySymbol = currencies.find(
+    (currency) => currency.code === code
+  )?.symbol;
 
   return (
     <>
@@ -34,6 +41,11 @@ function FormBuilderCurrency(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+              {currencyDisplay === "SYMBOL" && (
+                <Typography variant="subtitle2" sx={{ pl: "4px" }}>
+                  {currencySymbol}
+                </Typography>
+              )}
               <TextField
                 sx={{ flex: 1 }}
                 error={Boolean(error)}
@@ -47,9 +59,11 @@ function FormBuilderCurrency(props: Props) {
                   field.onChange(+e.target.value);
                 }}
               />
-              <Typography variant="subtitle2" sx={{ pl: "4px" }}>
-                {code}
-              </Typography>
+              {currencyDisplay === "CODE" && (
+                <Typography variant="subtitle2" sx={{ pl: "4px" }}>
+                  {code}
+                </Typography>
+              )}
             </Box>
             {error && (
               <Typography
