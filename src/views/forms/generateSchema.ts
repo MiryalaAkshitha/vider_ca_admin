@@ -45,6 +45,10 @@ class GenerateSchema {
           this.checkboxSchema(item);
           break;
 
+        case FormBuilderFieldTypes.DROPDOWN_MULTIPLE:
+          this.dropdownMultipleSchema(item);
+          break;
+
         default:
           break;
       }
@@ -162,6 +166,30 @@ class GenerateSchema {
     if (item?.range) {
       validation = validation.min(min, `${label} must be at least ${min}`);
       validation = validation.max(max, `${label} must be at most ${max}`);
+    }
+
+    this.schema[attribute] = validation;
+  }
+
+  dropdownMultipleSchema(item: any) {
+    let attribute = item._id?.toString();
+    let label = item.label;
+    let min = item?.range?.min;
+    let max = item?.range?.max;
+    let validation = array(
+      object().shape({
+        label: string().required(),
+        value: string().required(),
+      })
+    ).nullable();
+
+    if (item.required) {
+      validation = validation.required(`${item.label} is required`);
+
+      if (item?.range) {
+        validation = validation.min(min, `${label} must be at least ${min}`);
+        validation = validation.max(max, `${label} must be at most ${max}`);
+      }
     }
 
     this.schema[attribute] = validation;

@@ -81,6 +81,7 @@ function RenderField({ item, control }: any) {
           control={control}
           name={item?._id}
           label={item?.label}
+          required={item?.required}
           options={item?.options?.map((item: any) => ({
             label: item?.label,
             value: item?.value,
