@@ -6,10 +6,11 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
+  sx?: any;
 }
 
 function FormCheckbox(props: Props) {
-  const { name, size = "medium", control, label = "" } = props;
+  const { name, size = "medium", control, label = "", sx } = props;
 
   return (
     <>
@@ -19,7 +20,7 @@ function FormCheckbox(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <FormControlLabel
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", ...sx }}
               control={
                 <Checkbox
                   size={size}

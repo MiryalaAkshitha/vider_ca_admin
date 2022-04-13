@@ -13,7 +13,7 @@ const CreateFormDrawer = (props) => {
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title={item.title}>
       <form onSubmit={handleSubmit((data) => console.log(data))}>
-        {renderFieldsComponent(item, control, handleSubmit)}
+        {renderFieldsComponent(item, control, handleSubmit, watch)}
       </form>
     </DrawerWrapper>
   );

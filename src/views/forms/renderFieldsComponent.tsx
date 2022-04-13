@@ -3,6 +3,14 @@ import MultiLine from "./formBuilderFieldComponents/MultiLine";
 import SingleLine from "./formBuilderFieldComponents/SingleLine";
 import Number from "./formBuilderFieldComponents/Number";
 import Date from "./formBuilderFieldComponents/Date";
+import Name from "./formBuilderFieldComponents/Name";
+import MobileNumber from "./formBuilderFieldComponents/MobileNumber";
+import Currency from "./formBuilderFieldComponents/Currency";
+import FileUpload from "./formBuilderFieldComponents/FileUpload";
+import ImageUpload from "./formBuilderFieldComponents/ImageUpload";
+import Checkbox from "./formBuilderFieldComponents/Checkbox";
+import Signature from "./formBuilderFieldComponents/Signature";
+import Dropdown from "./formBuilderFieldComponents/Dropdown";
 
 export enum FormBuilderFieldTypes {
   NAME = "NAME",
@@ -28,7 +36,7 @@ export enum FormBuilderFieldTypes {
   TERMS_AND_CONDITIONS = "TERMS_AND_CONDITIONS",
 }
 
-const renderFieldsComponent = (item, control, handleSubmit) => {
+const renderFieldsComponent = (item, control, handleSubmit, watch) => {
   if (item.type === FormBuilderFieldTypes.SINGLE_LINE)
     return (
       <SingleLine item={item} control={control} handleSubmit={handleSubmit} />
@@ -43,6 +51,80 @@ const renderFieldsComponent = (item, control, handleSubmit) => {
     return <Number item={item} control={control} handleSubmit={handleSubmit} />;
   if (item.type === FormBuilderFieldTypes.DATE)
     return <Date item={item} control={control} handleSubmit={handleSubmit} />;
+  if (item.type === FormBuilderFieldTypes.NAME)
+    return <Name item={item} control={control} handleSubmit={handleSubmit} />;
+  if (item.type === FormBuilderFieldTypes.PHONE)
+    return (
+      <MobileNumber
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.CURRENCY)
+    return (
+      <Currency
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.FILE_UPLOAD)
+    return (
+      <FileUpload
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.CHECKBOX)
+    return (
+      <Checkbox
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.IMAGE_UPLOAD)
+    return (
+      <ImageUpload
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.FILE_UPLOAD)
+    return (
+      <FileUpload
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.SIGNATURE)
+    return (
+      <Signature
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.DROPDOWN)
+    return (
+      <Dropdown
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
   return null;
 };
 

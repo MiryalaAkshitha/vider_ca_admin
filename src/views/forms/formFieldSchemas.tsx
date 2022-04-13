@@ -105,6 +105,146 @@ let dateSchema = object().shape({
   to: strNotReq(),
 });
 
+let nameDefaultValues = {
+  ...baseDefaultValues,
+  entryType: "",
+  nameComponents: [],
+  titleElements: [],
+};
+
+let nameSchema = {
+  ...baseSchema,
+  entryType: strNotReq(),
+  nameComponents: object().notRequired(),
+  titleElements: object().notRequired(),
+};
+
+let mobileNumberDefaultValues = {
+  ...baseDefaultValues,
+  entryType: "",
+  min: "",
+  max: "",
+  showCountryCodes: boolean,
+  selectCountries: [],
+};
+
+let mobileNumberSchema = object().shape({
+  ...baseSchema,
+  entryType: strNotReq(),
+  min: strNotReq(),
+  max: strNotReq(),
+  showCountryCodes: boolean().notRequired(),
+  selectCountries: mixed().when("showCountryCodes", {
+    is: (showCountryCodes) => showCountryCodes,
+    then: array()
+      .of(
+        object().nullable().shape({
+          label: string().required(),
+          value: string().required(),
+        })
+      )
+      .min(1, "Select atleast one country"),
+    otherwise: object().nullable().notRequired(),
+  }),
+});
+
+let currencyDefaultValues = {
+  ...baseDefaultValues,
+  entryType: "",
+  currency: "",
+  thousandSeparator: "",
+};
+
+let currencySchema = object().shape({
+  ...baseSchema,
+  entryType: strReq("Entry Type"),
+  currency: strReq("Currency"),
+  thousandSeparator: strReq("Thousand Separator"),
+});
+
+let fileUploadDefaultValues = {
+  ...baseDefaultValues,
+  uploadType: "",
+  uploadLimit: "",
+  sizeType: "",
+  maxFileSize: "",
+};
+
+let fileUploadSchema = object().shape({
+  ...baseSchema,
+  uploadType: strReq("Upload Type"),
+  uploadLimit: strReq("Upload Limit"),
+  sizeType: strReq("Size Type"),
+  maxFileSize: strReq("Maximum File Size"),
+});
+
+let checkboxDefaultValues = {
+  fieldName: "",
+  fieldInstructions: "",
+  fieldSize: "",
+  fieldType: "",
+  options: [],
+  selectType: "",
+  display: "",
+};
+
+let checkboxSchema = object().shape({
+  fieldName: strNotReq(),
+  fieldInstructions: strNotReq(),
+  fieldSize: strNotReq(),
+  fieldType: strNotReq(),
+  options: array().of(
+    object().nullable().shape({
+      label: string().required(),
+      value: string().required(),
+    })
+  ),
+  selectType: strNotReq(),
+  display: strNotReq(),
+});
+
+let imageUploadDefaultValues = {
+  ...baseDefaultValues,
+  uploadLimit: "",
+  sizeType: "",
+  maxFileSize: "",
+};
+
+let imageUploadSchema = object().shape({
+  fieldName: strNotReq(),
+  fieldInstructions: strNotReq(),
+  fieldSize: strNotReq(),
+  fieldType: strNotReq(),
+  uploadLimit: strReq("Upload Limit"),
+  sizeType: strReq("Size Type"),
+  maxFileSize: strReq("Maximum File Size"),
+});
+
+let signatureDefaultValues = {
+  fieldName: "",
+};
+
+let signatureSchema = object().shape({
+  fieldName: strReq("Signature"),
+});
+
+let decisionBoxDefaultValues = {
+  ...baseDefaultValues,
+  dropDownComponents: [],
+  selectionType: "",
+};
+
+let decisionBoxSchema = object().shape({
+  ...baseSchema,
+  dropDownComponents: array().of(
+    object().nullable().shape({
+      label: string().required(),
+      value: string().required(),
+    })
+  ),
+  selectionType: strReq("Selection Type"),
+});
+
 export default {
   singleLineDefaultValues,
   singleLineSchema,
@@ -116,4 +256,20 @@ export default {
   numberSchema,
   dateDefaultValues,
   dateSchema,
+  nameDefaultValues,
+  nameSchema,
+  mobileNumberDefaultValues,
+  mobileNumberSchema,
+  currencyDefaultValues,
+  currencySchema,
+  fileUploadDefaultValues,
+  fileUploadSchema,
+  checkboxDefaultValues,
+  checkboxSchema,
+  imageUploadDefaultValues,
+  imageUploadSchema,
+  signatureDefaultValues,
+  signatureSchema,
+  decisionBoxDefaultValues,
+  decisionBoxSchema,
 };
