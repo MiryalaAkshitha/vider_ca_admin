@@ -1,11 +1,33 @@
 import { Box, Typography } from "@mui/material";
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
+import FormRadioAddable from "components/FormFields/FormRadioAddable";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
+import { useState } from "react";
 
 const Checkbox = (props) => {
-  const { control } = props;
+  const { control, watch } = props;
+
+  const checkboxElement = { label: "", value: "" };
+  const [checkboxElements, setCheckboxElements] = useState([
+    { label: "", value: "" },
+  ]);
+
+  const onAdd = () => {
+    const newCheckboxElements = [...checkboxElements, checkboxElement];
+    setCheckboxElements(newCheckboxElements);
+  };
+
+  const onDelete = (item, index) => {
+    if (checkboxElements.length > 1) {
+      const newCheckboxElements = checkboxElements.filter(
+        (_, idx) => idx !== index
+      );
+      setCheckboxElements(newCheckboxElements);
+    }
+  };
+
   return (
     <>
       <Box mt={2}>
@@ -13,8 +35,9 @@ const Checkbox = (props) => {
       </Box>
       <Box mt={2}>
         <FormInput
-          name="feildInstructions"
-          label="Feild Instructions"
+          name="fieldInstructions"
+          label="Field Instructions"
+          multiline
           control={control}
         />
       </Box>
@@ -44,19 +67,35 @@ const Checkbox = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <Typography>Checkbox Elements</Typography>
+        <Typography>Dropdown Components</Typography>
+        <FormRadioAddable
+          control={control}
+          options={checkboxElements}
+          onAdd={onAdd}
+          onDelete={onDelete}
+        />
       </Box>
       <Box mt={2}>
         <FormSelect
           control={control}
-          name="selectType"
-          label="Select Type"
+          name="selectionType"
+          label="Selection Type"
           options={[
             { label: "Single", value: "single" },
             { label: "Multiple", value: "multiple" },
           ]}
         />
       </Box>
+      {watch("selectionType") === "multiple" && (
+        <Box mt={2} sx={{ display: "flex" }}>
+          <Box mr={1}>
+            <FormInput name="min" label="Min" control={control} />
+          </Box>
+          <Box mr={1}>
+            <FormInput name="max" label="Max" control={control} />
+          </Box>
+        </Box>
+      )}
       <Box mt={2}>
         <FormSelect
           control={control}

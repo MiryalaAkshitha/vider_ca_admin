@@ -13,8 +13,9 @@ const FileUpload = (props) => {
       </Box>
       <Box mt={2}>
         <FormInput
-          name="feildInstructions"
-          label="Feild Instructions"
+          name="fieldInstructions"
+          label="Field Instructions"
+          multiline
           control={control}
         />
       </Box>

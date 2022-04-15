@@ -13,6 +13,8 @@ import Signature from "./formBuilderFieldComponents/Signature";
 import Dropdown from "./formBuilderFieldComponents/Dropdown";
 import Address from "./formBuilderFieldComponents/Address";
 import TermsAndConditions from "./formBuilderFieldComponents/TermsAndConditions";
+import DecisionBox from "./formBuilderFieldComponents/DecisonBox";
+import RadioBox from "./formBuilderFieldComponents/RadioBox";
 
 export enum FormBuilderFieldTypes {
   NAME = "NAME",
@@ -152,6 +154,24 @@ const renderFieldsComponent = (item, control, handleSubmit, watch) => {
   if (item.type === FormBuilderFieldTypes.TERMS_AND_CONDITIONS)
     return (
       <TermsAndConditions
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.DECISION_BOX)
+    return (
+      <DecisionBox
+        item={item}
+        control={control}
+        handleSubmit={handleSubmit}
+        watch={watch}
+      />
+    );
+  if (item.type === FormBuilderFieldTypes.RADIO)
+    return (
+      <RadioBox
         item={item}
         control={control}
         handleSubmit={handleSubmit}

@@ -13,8 +13,9 @@ const Email = (props) => {
       </Box>
       <Box mt={2}>
         <FormInput
-          name="feildInstructions"
-          label="Feild Instructions"
+          name="fieldInstructions"
+          label="Field Instructions"
+          multiline
           control={control}
         />
       </Box>
@@ -51,22 +52,15 @@ const Email = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="entryType"
-          label="Entry Type"
-          options={[
-            { label: "Entry Type 1", value: "Entry Type 1" },
-            { label: "Entry Type 2", value: "Entry Type 2" },
-          ]}
-        />
+        <Typography variant="caption">Character Limit</Typography>
       </Box>
-      <Box mt={2}>
-        <FormInput
-          control={control}
-          name="maxCharacterLimit"
-          label="Max Character Limit"
-        />
+      <Box mt={2} sx={{ display: "flex" }}>
+        <Box mr={1}>
+          <FormInput name="min" label="Min" control={control} />
+        </Box>
+        <Box mr={1}>
+          <FormInput name="max" label="Max" control={control} />
+        </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton

@@ -15,8 +15,9 @@ const Date = (props) => {
       </Box>
       <Box mt={2}>
         <FormInput
-          name="feildInstructions"
-          label="Feild Instructions"
+          name="fieldInstructions"
+          label="Field Instructions"
+          multiline
           control={control}
         />
       </Box>
@@ -49,17 +50,6 @@ const Date = (props) => {
           options={[
             { label: "Mandatory", value: "mandatory" },
             { label: "Non Madatory", value: "non mandatory" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="dateFormat"
-          label="Date Format"
-          options={[
-            { label: "Format 1", value: "Format 1" },
-            { label: "Format 2", value: "Format 2" },
           ]}
         />
       </Box>

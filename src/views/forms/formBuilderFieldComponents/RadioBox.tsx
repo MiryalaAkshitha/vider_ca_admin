@@ -3,9 +3,31 @@ import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
+import FormRadioAddable from "components/FormFields/FormRadioAddable";
+import { useState } from "react";
 
-const FileUpload = (props) => {
+const RadioBox = (props) => {
   const { control } = props;
+
+  const radioBoxComponent = { label: "", value: "" };
+  const [radioBoxComponents, setRadioBoxComponents] = useState([
+    { label: "", value: "" },
+  ]);
+
+  const onAdd = () => {
+    const newRadioBoxComponents = [...radioBoxComponents, radioBoxComponent];
+    setRadioBoxComponents(newRadioBoxComponents);
+  };
+
+  const onDelete = (item, index) => {
+    if (radioBoxComponents.length > 1) {
+      const newRadioBoxComponents = radioBoxComponents.filter(
+        (_, idx) => idx !== index
+      );
+      setRadioBoxComponents(newRadioBoxComponents);
+    }
+  };
+
   return (
     <>
       <Box mt={2}>
@@ -52,43 +74,12 @@ const FileUpload = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
+        <Typography>RadioBox Components</Typography>
+        <FormRadioAddable
           control={control}
-          name="uploadType"
-          label="Select File Upload Type"
-          options={[
-            { label: "Upload Type 1", value: "Upload Type 1" },
-            { label: "Upload Type 2", value: "Upload Type 2" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="uploadLimit"
-          label="Maximum File Upload Limit"
-          options={[
-            { label: "Upload Limit 1", value: "Upload Limit 1" },
-            { label: "Upload Limit 2", value: "Upload Limit 2" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="sizeType"
-          label="File Size Limit"
-          options={[
-            { label: "File Size Limit 1", value: "File Size Limit 1" },
-            { label: "File Size Limit 2", value: "File Size Limit 2" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormInput
-          name="maxFileSize"
-          label="Maximum File Size"
-          control={control}
+          options={radioBoxComponents}
+          onAdd={onAdd}
+          onDelete={onDelete}
         />
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
@@ -105,4 +96,4 @@ const FileUpload = (props) => {
   );
 };
 
-export default FileUpload;
+export default RadioBox;

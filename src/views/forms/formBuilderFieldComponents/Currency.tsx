@@ -4,7 +4,7 @@ import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 
-const SingleLine = (props) => {
+const Currency = (props) => {
   const { control } = props;
   return (
     <>
@@ -13,8 +13,9 @@ const SingleLine = (props) => {
       </Box>
       <Box mt={2}>
         <FormInput
-          name="feildInstructions"
-          label="Feild Instructions"
+          name="fieldInstructions"
+          label="Field Instructions"
+          multiline
           control={control}
         />
       </Box>
@@ -47,17 +48,6 @@ const SingleLine = (props) => {
           options={[
             { label: "Mandatory", value: "mandatory" },
             { label: "Non Madatory", value: "non mandatory" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="entryType"
-          label="Entry Type"
-          options={[
-            { label: "Entry Type 1", value: "Entry Type 1" },
-            { label: "Entry Type 2", value: "Entry Type 2" },
           ]}
         />
       </Box>
@@ -98,4 +88,4 @@ const SingleLine = (props) => {
   );
 };
 
-export default SingleLine;
+export default Currency;

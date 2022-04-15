@@ -4,7 +4,7 @@ import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 
-const Number = (props) => {
+const DecisionBox = (props) => {
   const { control } = props;
   return (
     <>
@@ -23,43 +23,29 @@ const Number = (props) => {
         <FormRadio
           row
           control={control}
-          name="fieldSize"
-          label="Field Size"
+          name="intialStatus"
+          label="Intial Status"
           options={[
-            { label: "Small", value: "small" },
-            { label: "Medium", value: "medium" },
-            { label: "Large", value: "large" },
+            { label: "Checked", value: "checked" },
+            { label: "Unchecked", value: "unchecked" },
           ]}
         />
       </Box>
-      <Box mt={2}>
-        <FormInput
-          name="placeHolderText"
-          label="PlaceHolder Text"
-          control={control}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormRadio
-          row
-          control={control}
-          name="fieldType"
-          label="Field Type"
-          options={[
-            { label: "Mandatory", value: "mandatory" },
-            { label: "Non Mandatory", value: "non mandatory" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <Typography variant="caption">Character Limit</Typography>
-      </Box>
-      <Box mt={2} sx={{ display: "flex" }}>
-        <Box mr={1}>
-          <FormInput name="min" label="Min" control={control} />
+      <Box>
+        <Typography>State Display Message</Typography>
+        <Box mt={1}>
+          <FormInput
+            label="When checked"
+            name="whenChecked"
+            control={control}
+          />
         </Box>
-        <Box mr={1}>
-          <FormInput name="max" label="Max" control={control} />
+        <Box mt={1}>
+          <FormInput
+            label="When Unchecked"
+            name="whenC=Unchecked"
+            control={control}
+          />
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
@@ -76,4 +62,4 @@ const Number = (props) => {
   );
 };
 
-export default Number;
+export default DecisionBox;

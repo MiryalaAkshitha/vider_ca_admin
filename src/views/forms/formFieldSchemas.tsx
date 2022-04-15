@@ -57,13 +57,15 @@ let multiLineSchema = object().shape({
 let emailDefaultValues = {
   ...baseDefaultValues,
   entryType: "",
-  maxCharacterLimit: "",
+  min: "",
+  max: "",
 };
 
 let emailSchema = object().shape({
   ...baseSchema,
   entryType: strReq("Entry Type"),
-  maxCharacterLimit: strReq("Max Character Limit"),
+  min: strReq("Min Character Limit"),
+  max: strReq("Max Character Limit"),
 });
 
 let numberDefaultValues = {
@@ -117,8 +119,13 @@ let nameDefaultValues = {
 let nameSchema = {
   ...baseSchema,
   entryType: strNotReq(),
-  nameComponents: object().notRequired(),
-  titleElements: object().notRequired(),
+  nameComponents: array().of(object().nullable().shape({})),
+  titleElements: array().of(
+    object().nullable().shape({
+      label: strNotReq(),
+      value: strNotReq(),
+    })
+  ),
 };
 
 let mobileNumberDefaultValues = {
@@ -230,13 +237,15 @@ let signatureSchema = object().shape({
   fieldName: strReq("Signature"),
 });
 
-let decisionBoxDefaultValues = {
+let dropDownDefaultValues = {
   ...baseDefaultValues,
   dropDownComponents: [],
   selectionType: "",
+  min: "",
+  max: "",
 };
 
-let decisionBoxSchema = object().shape({
+let dropDownSchema = object().shape({
   ...baseSchema,
   dropDownComponents: array().of(
     object().nullable().shape({
@@ -245,6 +254,14 @@ let decisionBoxSchema = object().shape({
     })
   ),
   selectionType: strReq("Selection Type"),
+  min: mixed().when("selectionType", {
+    is: (selectionType) => selectionType === "multiple",
+    then: strReq("Min"),
+  }),
+  max: mixed().when("selectionType", {
+    is: (selectionType) => selectionType === "multiple",
+    then: strReq("Max "),
+  }),
 });
 
 let addressDefaultValues = {
@@ -276,6 +293,37 @@ let termsAndConditionsSchema = object().shape({
   fieldType: string().nullable().notRequired(),
 });
 
+let decisionBoxDefaultValues = {
+  fieldName: "",
+  fieldInstructions: "",
+  intialStatus: "",
+  whenChecked: "",
+  whenUnchecked: "",
+};
+
+let decisionBoxSchema = object().shape({
+  feildName: strNotReq(),
+  fieldInstructions: strNotReq(),
+  intialStatus: strNotReq(),
+  whenChecked: strNotReq(),
+  whenUnchecked: strNotReq(),
+});
+
+let radioBoxDefaultValues = {
+  ...baseDefaultValues,
+  radioComponents: [],
+};
+
+let radioBoxSchema = object().shape({
+  ...baseSchema,
+  dropDownComponents: array().of(
+    object().nullable().shape({
+      label: string().required(),
+      value: string().required(),
+    })
+  ),
+});
+
 export default {
   singleLineDefaultValues,
   singleLineSchema,
@@ -301,6 +349,10 @@ export default {
   imageUploadSchema,
   signatureDefaultValues,
   signatureSchema,
+  dropDownDefaultValues,
+  dropDownSchema,
+  radioBoxDefaultValues,
+  radioBoxSchema,
   decisionBoxDefaultValues,
   decisionBoxSchema,
   addressDefaultValues,

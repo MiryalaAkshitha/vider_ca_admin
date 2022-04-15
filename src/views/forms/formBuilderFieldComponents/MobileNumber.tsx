@@ -17,8 +17,9 @@ const MobileNumber = (props) => {
       </Box>
       <Box mt={2}>
         <FormInput
-          name="feildInstructions"
-          label="Feild Instructions"
+          name="fieldInstructions"
+          label="Field Instructions"
+          multiline
           control={control}
         />
       </Box>
@@ -55,15 +56,7 @@ const MobileNumber = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="entryType"
-          label="Entry Type"
-          options={[
-            { label: "Entry Type 1", value: "Entry Type 1" },
-            { label: "Entry Type 2", value: "Entry Type 2" },
-          ]}
-        />
+        <Typography variant="caption">Character Limit</Typography>
       </Box>
       <Box mt={2} sx={{ display: "flex" }}>
         <Box mr={1}>
