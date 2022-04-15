@@ -9,6 +9,7 @@ import RenderField from "views/forms/RenderField";
 function ViewPageFields({ data, active, onContinue }: any) {
   const {
     control,
+    watch,
     formState: { errors },
     handleSubmit,
   } = useForm({
@@ -18,10 +19,10 @@ function ViewPageFields({ data, active, onContinue }: any) {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
-    return;
     onContinue(data);
   };
+
+  console.log(watch("62590cdb1d72dec9481ddc52" as any)?.toString().length);
 
   useEffect(() => {
     if (_.isEmpty(errors)) return;

@@ -38,10 +38,7 @@ function FormBuilderRadio(props: Props) {
           <FormControl size={size} fullWidth>
             <FormLabel
               children={
-                <Typography
-                  sx={{ display: "block", color: "black" }}
-                  variant="caption"
-                >
+                <Typography variant="body2" sx={{ color: "black" }}>
                   {label} {required && <span style={{ color: "red" }}>*</span>}
                 </Typography>
               }

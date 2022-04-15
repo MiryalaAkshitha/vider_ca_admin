@@ -70,6 +70,22 @@ class GenerateSchema {
           this.currencySchema(item);
           break;
 
+        case FormBuilderFieldTypes.NAME:
+          this.nameSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.ADDRESS:
+          this.nameSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.NUMBER:
+          this.numberSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.TERMS_AND_CONDITIONS:
+          this.termsAndConditionsSchema(item);
+          break;
+
         default:
           break;
       }
@@ -221,7 +237,7 @@ class GenerateSchema {
     let label = item.label;
     let min = item?.dateRange?.startDate;
     let max = item?.dateRange?.endDate;
-    let validation = date().nullable();
+    let validation = date().nullable().typeError("Date is not valid");
 
     if (item.required) {
       validation = validation.required(`${item.label} is required`);
@@ -322,6 +338,78 @@ class GenerateSchema {
     }
 
     this.schema[attribute] = validation;
+  }
+
+  nameSchema(item: any) {
+    let attribute = item._id?.toString();
+    let validation: any = {};
+
+    item.inputs.forEach((input: any) => {
+      let inputValidation = string().default("");
+
+      if (input.required) {
+        inputValidation = inputValidation.required(
+          `${input.label} is required`
+        );
+      }
+      validation[input._id?.toString()] = inputValidation;
+    });
+
+    let finalValidation = object().shape(validation);
+
+    if (item.required) {
+      finalValidation = finalValidation?.required(`${item.label} is required`);
+    }
+
+    this.schema[attribute] = finalValidation;
+  }
+
+  numberSchema(item: any) {
+    let attribute = item._id?.toString();
+    let label = item.label;
+    let min = item?.range?.min;
+    let max = item?.range?.max;
+    let validation = number();
+
+    if (item.required) {
+      validation = validation.required(`${item.label} is required`);
+    }
+
+    if (item?.range) {
+      if (item?.range?.type === "VALUES") {
+        validation = validation.min(min, `${label} must be at least ${min}`);
+        validation = validation.max(max, `${label} must be at most ${max}`);
+      }
+      if (item?.range?.type === "DIGITS") {
+        validation = validation.test(
+          attribute,
+          `${label} must be minimum ${min} digits`,
+          (value: any) => {
+            return value?.toString().length >= min;
+          }
+        );
+
+        validation = validation.test(
+          attribute,
+          `${label} must not exceed ${max} digits`,
+          (value: any) => {
+            return value?.toString().length <= max;
+          }
+        );
+      }
+    }
+
+    this.schema[attribute] = validation;
+  }
+
+  termsAndConditionsSchema(item: any) {
+    let validation = boolean().required().default(false);
+
+    if (item.required) {
+      validation = validation.isTrue(`This is required`);
+    }
+
+    this.schema[item._id?.toString()] = validation;
   }
 }
 

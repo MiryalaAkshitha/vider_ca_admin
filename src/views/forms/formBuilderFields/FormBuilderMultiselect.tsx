@@ -24,7 +24,7 @@ function FormBuilderMultiselect(props: Props) {
 
   return (
     <>
-      <Typography gutterBottom sx={{ display: "block" }} variant="caption">
+      <Typography gutterBottom variant="body2">
         {label} {required && <span style={{ color: "red" }}>*</span>}
       </Typography>
       <Controller

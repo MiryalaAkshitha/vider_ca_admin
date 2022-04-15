@@ -1,16 +1,24 @@
-import { DesktopDatePicker } from "@mui/lab";
 import { TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+
 interface Props {
   label?: string;
   name: string;
   size?: "small" | "medium";
   control: any;
+  placeholder?: string;
   required?: boolean;
 }
 
-function FormBuilderDate(props: Props) {
-  const { name, size = "small", control, label = "", required = false } = props;
+function FormBuilderNumber(props: Props) {
+  const {
+    name,
+    size = "small",
+    control,
+    label = "",
+    placeholder = "",
+    required = false,
+  } = props;
 
   return (
     <>
@@ -22,21 +30,20 @@ function FormBuilderDate(props: Props) {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <DesktopDatePicker
-              mask="____/__/__"
-              inputFormat="yyyy/MM/dd"
-              value={field.value || null}
-              onChange={field.onChange}
-              renderInput={(params) => (
-                <TextField
-                  fullWidth
-                  size={size}
-                  {...params}
-                  error={Boolean(error)}
-                  onBlur={field.onBlur}
-                />
-              )}
+            <TextField
+              sx={{ flex: 1 }}
+              error={Boolean(error)}
+              variant="outlined"
+              placeholder={placeholder}
+              fullWidth
+              size={size}
+              type="number"
+              value={field.value}
+              onChange={(e) => {
+                field.onChange(+e.target.value);
+              }}
             />
+
             {error && (
               <Typography
                 variant="caption"
@@ -53,4 +60,4 @@ function FormBuilderDate(props: Props) {
   );
 }
 
-export default FormBuilderDate;
+export default FormBuilderNumber;

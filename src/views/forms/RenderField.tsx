@@ -1,15 +1,17 @@
-import { useForm } from "react-hook-form";
-import DecisionBox from "./formBuilderFields/FormBuilderDecisionBox";
 import FormBuilderCheckbox from "./formBuilderFields/FormBuilderCheckbox";
+import FormBuilderCurrency from "./formBuilderFields/FormBuilderCurrency";
 import FormBuilderDate from "./formBuilderFields/FormBuilderDate";
-import FormbuilderTextField from "./formBuilderFields/FormBuilderTextField";
-import { FormBuilderFieldTypes } from "./renderFieldsComponent";
+import DecisionBox from "./formBuilderFields/FormBuilderDecisionBox";
+import FormBuilderFieldWithInputs from "./formBuilderFields/FormBuilderFieldWithInputs";
+import FormBuilderMultiselect from "./formBuilderFields/FormBuilderMultiselect";
+import FormBuilderNumber from "./formBuilderFields/FormBuilderNumber";
 import FormBuilderPhone from "./formBuilderFields/FormBuilderPhone";
 import FormBuilderRadio from "./formBuilderFields/FormBuilderRadio";
 import FormBuilderSelect from "./formBuilderFields/FormBuilderSelect";
-import FormBuilderMultiselect from "./formBuilderFields/FormBuilderMultiselect";
+import FormBuilderTermsAndConditions from "./formBuilderFields/FormBuilderTermsAndConditions";
+import FormbuilderTextField from "./formBuilderFields/FormBuilderTextField";
 import FormBuilderUpload from "./formBuilderFields/FormBuilderUpload";
-import FormBuilderCurrency from "./formBuilderFields/FormBuilderCurrency";
+import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
 function RenderField({ item, control }: any) {
   switch (item.fieldType) {
@@ -143,6 +145,44 @@ function RenderField({ item, control }: any) {
           required={item?.required}
           code={item?.currencyType}
           currencyDisplay={item?.currencyDisplay}
+        />
+      );
+    case FormBuilderFieldTypes.NAME:
+      return (
+        <FormBuilderFieldWithInputs
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          required={item?.required}
+          inputs={item?.inputs}
+        />
+      );
+    case FormBuilderFieldTypes.ADDRESS:
+      return (
+        <FormBuilderFieldWithInputs
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          required={item?.required}
+          inputs={item?.inputs}
+        />
+      );
+    case FormBuilderFieldTypes.NUMBER:
+      return (
+        <FormBuilderNumber
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          required={item?.required}
+        />
+      );
+    case FormBuilderFieldTypes.TERMS_AND_CONDITIONS:
+      return (
+        <FormBuilderTermsAndConditions
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          termsAndConditions={item?.termsAndConditions}
         />
       );
     default:

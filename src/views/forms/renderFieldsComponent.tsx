@@ -38,6 +38,19 @@ export enum FormBuilderFieldTypes {
   TERMS_AND_CONDITIONS = "TERMS_AND_CONDITIONS",
 }
 
+export enum FormBuilderInputTypes {
+  ADDRESS_LINE1 = "ADDRESS_LINE1",
+  ADDRESS_LINE2 = "ADDRESS_LINE2",
+  CITY = "CITY",
+  STATE = "STATE",
+  ZIP = "ZIP",
+  COUNTRY = "COUNTRY",
+  TITLE = "TITLE",
+  FIRST_NAME = "FIRST_NAME",
+  LAST_NAME = "LAST_NAME",
+  MIDDLE_NAME = "MIDDLE_NAME",
+}
+
 const renderFieldsComponent = (item, control, handleSubmit, watch) => {
   if (item.type === FormBuilderFieldTypes.SINGLE_LINE)
     return (

@@ -39,10 +39,7 @@ function FormBuilderCheckbox(props: Props) {
             <FormControl size={size} fullWidth>
               <FormLabel
                 children={
-                  <Typography
-                    sx={{ display: "block", color: "black" }}
-                    variant="caption"
-                  >
+                  <Typography sx={{ color: "black" }} variant="body2">
                     {label}{" "}
                     {required && <span style={{ color: "red" }}>*</span>}
                   </Typography>

@@ -160,7 +160,7 @@ function Upload(props: UploadProps) {
       />
       <Box
         sx={{
-          border: "1px solid rgba(0,0,0,0.5)",
+          border: "1px solid rgba(0,0,0,0.2)",
           borderRadius: "4px",
         }}
       >
