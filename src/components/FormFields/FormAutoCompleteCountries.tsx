@@ -26,10 +26,8 @@ function FormAutoComplete(props: Props) {
     size = "small",
     control,
     label = "",
-    options,
     multiple = false,
     trigger,
-    renderOption,
   } = props;
 
   return (

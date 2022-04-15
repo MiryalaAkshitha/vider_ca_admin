@@ -9,9 +9,12 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
+import { ItemTypes } from "../utils/itemTypes";
 import RenderField from "../utils/RenderField";
+import { useRef } from "react";
+import { useDrag, useDrop } from "react-dnd";
 
-const PageFieldItem = ({ provided, snapshot, item, page }: any) => {
+const PageFieldItem = ({ item, page, index }: any) => {
   const params = useParams();
   const queryClient = useQueryClient();
   const confirm = useConfirm();
@@ -66,18 +69,78 @@ const PageFieldItem = ({ provided, snapshot, item, page }: any) => {
     });
   };
 
+  const ref: any = useRef(null);
+  const [{ handlerId }, drop] = useDrop({
+    accept: ItemTypes.BOX,
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item: any, monitor: any) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      // Don't replace items with themselves
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      // Determine rectangle on screen
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      // Dragging downwards
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      // Dragging upwards
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      console.log(dragIndex, hoverIndex);
+
+      // Time to actually perform the action
+      // moveCard(dragIndex, hoverIndex);
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      item.index = hoverIndex;
+    },
+  });
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemTypes.BOX,
+    item: () => {
+      return { id: item?._id, index };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  drag(drop(ref));
+
   const { control } = useForm();
 
   return (
     <StyledDraggebleFormField
+      ata-handler-id={handlerId}
+      ref={ref}
       active={active ? 1 : 0}
       onMouseOver={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-      isdragging={snapshot.isDragging ? 1 : 0}
-      draggablestyle={provided.draggableProps.style}
+      isdragging={0}
     >
       <div className="field">
         <RenderField item={item} control={control} />

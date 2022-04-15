@@ -5,14 +5,15 @@ import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import FormAppbar from "layout/primarylayout/app-bar/FormAppbar";
 import { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import AddPage from "views/forms/pages/AddPage";
 import Fields from "views/forms/fields";
+import AddPage from "views/forms/pages/AddPage";
 import { reorder } from "views/taskboard/board/utils";
 import Pages from "../../views/forms/pages";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const CreateForm = () => {
   const params = useParams();
@@ -73,7 +74,7 @@ const CreateForm = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DndProvider backend={HTML5Backend}>
       <FormAppbar />
       {data?.data?.pages?.length > 0 ? (
         <Grid container spacing={2} sx={{ pt: 10, pb: 4, px: 2 }}>
@@ -98,7 +99,7 @@ const CreateForm = () => {
         />
       )}
       <AddPage open={pageOpen} setOpen={setPageOpen} />
-    </DragDropContext>
+    </DndProvider>
   );
 };
 

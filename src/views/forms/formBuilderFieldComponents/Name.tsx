@@ -1,20 +1,18 @@
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, Typography } from "@mui/material";
+import Icon from "@mui/material/Icon";
+import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
-import FormSelect from "components/FormFields/FormSelect";
+import FormRadioAddable from "components/FormFields/FormRadioAddable";
 import LoadingButton from "components/LoadingButton";
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { reorder } from "views/taskboard/board/utils";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
-import Icon from "@mui/material/Icon";
-import FormInputWithAdornment from "components/FormFields/FormInputWithAdornment";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import FormCheckbox from "components/FormFields/FormCheckbox";
-import FormRadioAddable from "components/FormFields/FormRadioAddable";
 
-const Number = (props) => {
+const Number = (props: any) => {
   const { control } = props;
   const [active, setActive] = useState<boolean>(false);
   const [data, setData] = useState([

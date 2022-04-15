@@ -1,10 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 
-const FileUpload = (props) => {
+const FileUpload = (props: any) => {
   const { control } = props;
   return (
     <>

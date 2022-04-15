@@ -183,7 +183,7 @@ function Upload(props: UploadProps) {
                       style={{
                         pointerEvents: "none",
                       }}
-                      href=""
+                      href="https://vider.in"
                     >
                       choose files
                     </a>

@@ -2,6 +2,7 @@ import { Box, Typography, Divider, Grid } from "@mui/material";
 import { useState } from "react";
 import availableFields from "../utils/availableFields";
 import CreateField from "./CreateField";
+import Field from "./Field";
 
 function Fields() {
   const [open, setOpen] = useState(false);
@@ -45,40 +46,10 @@ function Fields() {
         <Box>
           <Divider />
         </Box>
-        <Grid container sx={{ p: 1 }}>
+        <Grid container sx={{ p: 2 }} spacing={2}>
           {availableFields.map((item) => (
-            <Grid
-              item
-              xs={4}
-              sx={{
-                p: "6px",
-              }}
-            >
-              <Box
-                sx={{
-                  background: "#FFFFFF 0% 0% no-repeat padding-box",
-                  border: "1px solid #22222233",
-                  borderRadius: "5px",
-                  alignItems: "center",
-                  display: "flex",
-                  gap: 1,
-                  py: "13px",
-                  px: "10px",
-                  minHeight: "30px",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleOpen(item)}
-              >
-                <Box>
-                  <img
-                    src={item.icon}
-                    alt={item.title}
-                    width={20}
-                    height={20}
-                  />
-                </Box>
-                <Typography variant="caption">{item.title}</Typography>
-              </Box>
+            <Grid item xs={4}>
+              <Field item={item} handleOpen={handleOpen} />
             </Grid>
           ))}
         </Grid>

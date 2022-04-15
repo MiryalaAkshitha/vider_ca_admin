@@ -1,12 +1,8 @@
 import { Add, PlayArrow } from "@mui/icons-material";
 import { Box, Button, Tab, Tabs } from "@mui/material";
-import { useRef } from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
 import PageFieldItem from "./PageFieldItem";
 
 function Pages({ data, setPageOpen, value, setValue }: any) {
-  const listContainerRef = useRef<HTMLElement | null>(null);
-
   return (
     <Box
       sx={{
@@ -46,39 +42,17 @@ function Pages({ data, setPageOpen, value, setValue }: any) {
         </Tabs>
       </Box>
       <Box>
-        <Droppable droppableId="page-form-fields">
-          {(provided: any, snapshot: any) => (
-            <Box
-              ref={(ref: any) => {
-                listContainerRef.current = ref;
-                provided.innerRef(ref);
-              }}
-              sx={{
-                "& > div:last-child": {
-                  borderBottom: "1px solid transparent",
-                },
-              }}
-            >
-              {data?.pages[value]?.fields?.map((item: any, index: number) => (
-                <Draggable
-                  key={item?._id?.toString()}
-                  draggableId={item?._id?.toString()}
-                  index={index}
-                >
-                  {(provided: any, snapshot: any) => (
-                    <PageFieldItem
-                      provided={provided}
-                      page={data}
-                      snapshot={snapshot}
-                      item={item}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </Box>
-          )}
-        </Droppable>
+        <Box
+          sx={{
+            "& > div:last-child": {
+              borderBottom: "1px solid transparent",
+            },
+          }}
+        >
+          {data?.pages[value]?.fields?.map((item: any, index: number) => (
+            <PageFieldItem page={data} item={item} key={index} index={index} />
+          ))}
+        </Box>
       </Box>
     </Box>
   );

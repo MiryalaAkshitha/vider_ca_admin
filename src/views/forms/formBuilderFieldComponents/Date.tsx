@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
@@ -6,7 +6,7 @@ import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 
-const Date = (props) => {
+const Date = (props: any) => {
   const { control } = props;
   return (
     <>

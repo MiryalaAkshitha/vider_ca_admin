@@ -1,4 +1,4 @@
-import { TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import ReactQuill from "lib/react-quill";
 import { Controller } from "react-hook-form";
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 function FormEditor(props: Props) {
-  const { name, control, label = "", id } = props;
+  const { name, control, id } = props;
 
   return (
     <>
