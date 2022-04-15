@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import DrawerWrapper from "components/DrawerWrapper";
 import { useForm } from "react-hook-form";
-import renderFieldsComponent from "./renderFieldsComponent";
+import { renderFieldsComponent } from "../utils/renderFieldsComponent";
 
 const CreateFormDrawer = (props) => {
   const { open, setOpen, item } = props;

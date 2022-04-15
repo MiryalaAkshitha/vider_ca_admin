@@ -1,16 +1,16 @@
-import FormBuilderCheckbox from "./formBuilderFields/FormBuilderCheckbox";
-import FormBuilderCurrency from "./formBuilderFields/FormBuilderCurrency";
-import FormBuilderDate from "./formBuilderFields/FormBuilderDate";
-import DecisionBox from "./formBuilderFields/FormBuilderDecisionBox";
-import FormBuilderFieldWithInputs from "./formBuilderFields/FormBuilderFieldWithInputs";
-import FormBuilderMultiselect from "./formBuilderFields/FormBuilderMultiselect";
-import FormBuilderNumber from "./formBuilderFields/FormBuilderNumber";
-import FormBuilderPhone from "./formBuilderFields/FormBuilderPhone";
-import FormBuilderRadio from "./formBuilderFields/FormBuilderRadio";
-import FormBuilderSelect from "./formBuilderFields/FormBuilderSelect";
-import FormBuilderTermsAndConditions from "./formBuilderFields/FormBuilderTermsAndConditions";
-import FormbuilderTextField from "./formBuilderFields/FormBuilderTextField";
-import FormBuilderUpload from "./formBuilderFields/FormBuilderUpload";
+import FormBuilderCheckbox from "../formBuilderFields/FormBuilderCheckbox";
+import FormBuilderCurrency from "../formBuilderFields/FormBuilderCurrency";
+import FormBuilderDate from "../formBuilderFields/FormBuilderDate";
+import DecisionBox from "../formBuilderFields/FormBuilderDecisionBox";
+import FormBuilderFieldWithInputs from "../formBuilderFields/FormBuilderFieldWithInputs";
+import FormBuilderMultiselect from "../formBuilderFields/FormBuilderMultiselect";
+import FormBuilderNumber from "../formBuilderFields/FormBuilderNumber";
+import FormBuilderPhone from "../formBuilderFields/FormBuilderPhone";
+import FormBuilderRadio from "../formBuilderFields/FormBuilderRadio";
+import FormBuilderSelect from "../formBuilderFields/FormBuilderSelect";
+import FormBuilderTermsAndConditions from "../formBuilderFields/FormBuilderTermsAndConditions";
+import FormbuilderTextField from "../formBuilderFields/FormBuilderTextField";
+import FormBuilderUpload from "../formBuilderFields/FormBuilderUpload";
 import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
 function RenderField({ item, control }: any) {

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ResType } from "types";
-import ViewPageFields from "./ViewPageFields";
+import ViewPageFields from "../../views/forms/AccessFormFields";
 
 function ViewForm() {
   const snack = useSnack();

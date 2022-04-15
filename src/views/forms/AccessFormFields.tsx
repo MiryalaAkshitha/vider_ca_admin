@@ -3,8 +3,8 @@ import { Box, Button } from "@mui/material";
 import _ from "lodash";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { dynamicSchema } from "views/forms/generateSchema";
-import RenderField from "views/forms/RenderField";
+import { dynamicSchema } from "views/forms/utils/generateSchema";
+import RenderField from "views/forms/utils/RenderField";
 
 function ViewPageFields({ data, active, onContinue }: any) {
   const {

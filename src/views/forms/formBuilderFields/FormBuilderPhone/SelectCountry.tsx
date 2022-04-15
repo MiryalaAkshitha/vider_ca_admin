@@ -1,7 +1,6 @@
-import { Box, Menu, MenuItem, TextField, Typography } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { Controller } from "react-hook-form";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Box, Menu, MenuItem, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import countries from "utils/countries";
 
 const SelectCountryCode = ({ value, onChange, setWidth, allowedCountries }) => {
@@ -10,7 +9,7 @@ const SelectCountryCode = ({ value, onChange, setWidth, allowedCountries }) => {
 
   useEffect(() => {
     setWidth(codeRef.current?.offsetWidth || 0);
-  }, [value, codeRef.current]);
+  }, [value, codeRef, setWidth]);
 
   let countryCode = countries.find((country) => country.phone === value);
 

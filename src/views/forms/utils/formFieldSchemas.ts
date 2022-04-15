@@ -324,7 +324,7 @@ let radioBoxSchema = object().shape({
   ),
 });
 
-export default {
+const schemas = {
   singleLineDefaultValues,
   singleLineSchema,
   multiLineDefaultValues,
@@ -360,3 +360,5 @@ export default {
   termsAndConditionsDefaultValues,
   termsAndConditionsSchema,
 };
+
+export default schemas;

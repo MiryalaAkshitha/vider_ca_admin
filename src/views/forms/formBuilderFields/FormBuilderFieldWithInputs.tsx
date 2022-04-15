@@ -1,7 +1,7 @@
 import { Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
 import countries from "utils/countries";
-import { FormBuilderInputTypes } from "../renderFieldsComponent";
+import { FormBuilderInputTypes } from "../utils/renderFieldsComponent";
 
 interface Props {
   label?: string;

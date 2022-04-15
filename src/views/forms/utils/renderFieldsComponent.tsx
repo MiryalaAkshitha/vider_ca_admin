@@ -1,20 +1,20 @@
-import Email from "./formBuilderFieldComponents/Email";
-import MultiLine from "./formBuilderFieldComponents/MultiLine";
-import SingleLine from "./formBuilderFieldComponents/SingleLine";
-import Number from "./formBuilderFieldComponents/Number";
-import Date from "./formBuilderFieldComponents/Date";
-import Name from "./formBuilderFieldComponents/Name";
-import MobileNumber from "./formBuilderFieldComponents/MobileNumber";
-import Currency from "./formBuilderFieldComponents/Currency";
-import FileUpload from "./formBuilderFieldComponents/FileUpload";
-import ImageUpload from "./formBuilderFieldComponents/ImageUpload";
-import Checkbox from "./formBuilderFieldComponents/Checkbox";
-import Signature from "./formBuilderFieldComponents/Signature";
-import Dropdown from "./formBuilderFieldComponents/Dropdown";
-import Address from "./formBuilderFieldComponents/Address";
-import TermsAndConditions from "./formBuilderFieldComponents/TermsAndConditions";
-import DecisionBox from "./formBuilderFieldComponents/DecisonBox";
-import RadioBox from "./formBuilderFieldComponents/RadioBox";
+import Email from "../formBuilderFieldComponents/Email";
+import MultiLine from "../formBuilderFieldComponents/MultiLine";
+import SingleLine from "../formBuilderFieldComponents/SingleLine";
+import Number from "../formBuilderFieldComponents/Number";
+import Date from "../formBuilderFieldComponents/Date";
+import Name from "../formBuilderFieldComponents/Name";
+import MobileNumber from "../formBuilderFieldComponents/MobileNumber";
+import Currency from "../formBuilderFieldComponents/Currency";
+import FileUpload from "../formBuilderFieldComponents/FileUpload";
+import ImageUpload from "../formBuilderFieldComponents/ImageUpload";
+import Checkbox from "../formBuilderFieldComponents/Checkbox";
+import Signature from "../formBuilderFieldComponents/Signature";
+import Dropdown from "../formBuilderFieldComponents/Dropdown";
+import Address from "../formBuilderFieldComponents/Address";
+import TermsAndConditions from "../formBuilderFieldComponents/TermsAndConditions";
+import DecisionBox from "../formBuilderFieldComponents/DecisonBox";
+import RadioBox from "../formBuilderFieldComponents/RadioBox";
 
 export enum FormBuilderFieldTypes {
   NAME = "NAME",
@@ -53,7 +53,7 @@ export enum FormBuilderInputTypes {
   MIDDLE_NAME = "MIDDLE_NAME",
 }
 
-const renderFieldsComponent = (item, control, handleSubmit, watch) => {
+export const renderFieldsComponent = (item, control, handleSubmit, watch) => {
   if (item.type === FormBuilderFieldTypes.SINGLE_LINE)
     return (
       <SingleLine item={item} control={control} handleSubmit={handleSubmit} />
@@ -180,5 +180,3 @@ const renderFieldsComponent = (item, control, handleSubmit, watch) => {
     );
   return null;
 };
-
-export default renderFieldsComponent;

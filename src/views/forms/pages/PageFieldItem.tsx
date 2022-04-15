@@ -9,14 +9,13 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
-import RenderField from "./RenderField";
+import RenderField from "../utils/RenderField";
 
 const PageFieldItem = ({ provided, snapshot, item, page }: any) => {
   const params = useParams();
   const queryClient = useQueryClient();
   const confirm = useConfirm();
   const snack = useSnack();
-  const [open, setOpen] = useState<boolean>(false);
   const [active, setActive] = useState<boolean>(false);
 
   const { mutate } = useMutation(deleteField, {
@@ -84,7 +83,7 @@ const PageFieldItem = ({ provided, snapshot, item, page }: any) => {
         <RenderField item={item} control={control} />
       </div>
       <div className="actions">
-        <IconButton onClick={() => setOpen(true)} sx={{ borderRadius: 0 }}>
+        <IconButton sx={{ borderRadius: 0 }}>
           <Edit color="secondary" fontSize="small" />
         </IconButton>
         <IconButton onClick={handleCloneField} sx={{ borderRadius: 0 }}>

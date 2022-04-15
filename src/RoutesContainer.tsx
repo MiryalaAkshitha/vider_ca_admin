@@ -66,8 +66,8 @@ const Forms = loadable(() => import("pages/forms"));
 const MyForms = loadable(() => import("pages/forms/MyForms"));
 const StandardForms = loadable(() => import("pages/forms/StandardForms"));
 const FormSettings = loadable(() => import("pages/forms/FormSettings"));
-const CreateForm = loadable(() => import("pages/forms/CreateForm"));
-const ViewForm = loadable(() => import("pages/forms/view"));
+const CreateForm = loadable(() => import("pages/forms/FormBuilder"));
+const ViewForm = loadable(() => import("pages/forms/AccessForm"));
 
 function RoutesContainer() {
   return (

@@ -2,7 +2,7 @@ import { List, ListItemButton, Typography } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import RouterLink from "components/RouterLink";
 import { useLocation } from "react-router-dom";
-import formMenu from "./form-menu";
+import formMenu from "./utils/form-menu";
 
 const FormNav = () => {
   const location = useLocation();
