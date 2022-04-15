@@ -57,13 +57,15 @@ let multiLineSchema = object().shape({
 let emailDefaultValues = {
   ...baseDefaultValues,
   entryType: "",
-  maxCharacterLimit: "",
+  min: "",
+  max: "",
 };
 
 let emailSchema = object().shape({
   ...baseSchema,
   entryType: strReq("Entry Type"),
-  maxCharacterLimit: strReq("Max Character Limit"),
+  min: strReq("Min Character Limit"),
+  max: strReq("Max Character Limit"),
 });
 
 let numberDefaultValues = {
@@ -117,8 +119,13 @@ let nameDefaultValues = {
 let nameSchema = {
   ...baseSchema,
   entryType: strNotReq(),
-  nameComponents: object().notRequired(),
-  titleElements: object().notRequired(),
+  nameComponents: array().of(object().nullable().shape({})),
+  titleElements: array().of(
+    object().nullable().shape({
+      label: strNotReq(),
+      value: strNotReq(),
+    })
+  ),
 };
 
 let mobileNumberDefaultValues = {
@@ -245,6 +252,14 @@ let decisionBoxSchema = object().shape({
     })
   ),
   selectionType: strReq("Selection Type"),
+  min: mixed().when("selectionType", {
+    is: (selectionType) => selectionType === "multiple",
+    then: strReq("Min"),
+  }),
+  max: mixed().when("selectionType", {
+    is: (selectionType) => selectionType === "multiple",
+    then: strReq("Max "),
+  }),
 });
 
 let addressDefaultValues = {

@@ -10,6 +10,7 @@ import {
 import { Controller } from "react-hook-form";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FormInput from "./FormInput";
 
 interface Props {
   label?: string;
@@ -18,8 +19,8 @@ interface Props {
   control: any;
   options: any;
   row?: boolean;
-  deleteIcon: any;
-  addIcon: any;
+  onAdd: any;
+  onDelete: any;
 }
 
 function FormRadioAddable(props: Props) {
@@ -30,8 +31,8 @@ function FormRadioAddable(props: Props) {
     label = "",
     options,
     row = false,
-    deleteIcon,
-    addIcon,
+    onAdd,
+    onDelete,
   } = props;
 
   return (
@@ -48,35 +49,45 @@ function FormRadioAddable(props: Props) {
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 {...field}
               >
-                {["Option 1", "Option 2", "Option 3", "Option 4"].map(
-                  (item, index) => (
-                    <>
+                {options.map((item, index) => (
+                  <>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: 1,
+                      }}
+                    >
                       <Box
                         sx={{
                           display: "flex",
                           justifyContent: "space-between",
+                          width: "90%",
+                          alignItems: "center",
                         }}
                       >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            width: "90%",
-                          }}
-                        >
+                        <Box sx={{ display: "flex" }}>
                           <FormControlLabel
                             key={index}
-                            value={item}
+                            value={item.label}
                             control={<Radio />}
-                            label={item}
+                            label=""
                           />
-                          {deleteIcon}
+                          <FormInput
+                            control={control}
+                            name="titleElement"
+                            // onChange={(i, j) => console.log(i, j)}
+                          />
                         </Box>
-                        {addIcon}
+                        <Box>
+                          <DeleteIcon onClick={() => onDelete(item, index)} />
+                        </Box>
                       </Box>
-                    </>
-                  )
-                )}
+                      <AddCircleIcon onClick={() => onAdd(item, index)} />
+                    </Box>
+                  </>
+                ))}
               </RadioGroup>
             </FormControl>
             {error && (

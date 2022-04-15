@@ -47,7 +47,7 @@ const Number = (props) => {
           label="Field Type"
           options={[
             { label: "Mandatory", value: "mandatory" },
-            { label: "Non Madatory", value: "non mandatory" },
+            { label: "Non Mandatory", value: "non mandatory" },
           ]}
         />
       </Box>
@@ -61,30 +61,6 @@ const Number = (props) => {
         <Box mr={1}>
           <FormInput name="max" label="Max" control={control} />
         </Box>
-      </Box>
-      <Box mt={2}>
-        <FormRadio
-          row
-          name="unitSelection"
-          label="Unit Selection"
-          options={[
-            { label: "Yes", value: "Yes" },
-            { label: "No", value: "No" },
-          ]}
-          control={control}
-        />
-      </Box>
-      <Box mt={2} sx={{ display: "flex" }}>
-        <FormInput control={control} name="unitTitle" label="Unit Title" />
-        <FormSelect
-          style={{ width: "35%" }}
-          control={control}
-          name="unitTitleAddOn"
-          options={[
-            { label: "Prefix", value: "prefix" },
-            { label: "Suffix", value: "suffix" },
-          ]}
-        />
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton

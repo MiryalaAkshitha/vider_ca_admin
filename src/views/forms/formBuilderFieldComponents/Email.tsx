@@ -52,11 +52,15 @@ const Email = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormInput
-          control={control}
-          name="maxCharacterLimit"
-          label="Max Character Limit"
-        />
+        <Typography variant="caption">Character Limit</Typography>
+      </Box>
+      <Box mt={2} sx={{ display: "flex" }}>
+        <Box mr={1}>
+          <FormInput name="min" label="Min" control={control} />
+        </Box>
+        <Box mr={1}>
+          <FormInput name="max" label="Max" control={control} />
+        </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton

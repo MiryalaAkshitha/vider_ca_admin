@@ -112,13 +112,6 @@ const availableFields = [
     defaultValues: schemas.termsAndConditionsDefaultValues,
     schema: schemas.termsAndConditionsSchema,
   },
-  {
-    icon: icons.signature,
-    title: "Signature",
-    type: FormBuilderFieldTypes.SIGNATURE,
-    defaultValues: schemas.signatureDefaultValues,
-    schema: schemas.signatureSchema,
-  },
 ];
 
 export default availableFields;

@@ -62,7 +62,6 @@ const Address = (props) => {
   ]);
 
   const handleVisibility = (label) => {
-    console.log(label);
     const newData = data.map((item) => {
       if (item.label === label) {
         return {
@@ -209,12 +208,18 @@ const Address = (props) => {
                             <DragIndicatorIcon />
                           </Icon>
                         </Box>
-                        <FormInputWithAdornment
-                          endAdornment={renderAdornment(item)}
-                          name="item"
-                          label={item.label}
-                          control={control}
-                        />
+                        <Box
+                          sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            px: "10px",
+                          }}
+                        >
+                          <Typography>{item.label}</Typography>
+                          <Box>{renderAdornment(item)}</Box>
+                        </Box>
                         <FormCheckbox
                           name="mandatoryCheck"
                           control={control}

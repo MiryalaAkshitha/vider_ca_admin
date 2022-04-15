@@ -55,6 +55,9 @@ const MobileNumber = (props) => {
           ]}
         />
       </Box>
+      <Box mt={2}>
+        <Typography variant="caption">Character Limit</Typography>
+      </Box>
       <Box mt={2} sx={{ display: "flex" }}>
         <Box mr={1}>
           <FormInput name="min" label="Min" control={control} />

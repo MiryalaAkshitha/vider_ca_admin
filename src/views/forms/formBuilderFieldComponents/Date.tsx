@@ -54,17 +54,6 @@ const Date = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="dateFormat"
-          label="Date Format"
-          options={[
-            { label: "Format 1", value: "Format 1" },
-            { label: "Format 2", value: "Format 2" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
         <FormAutoComplete
           multiple
           control={control}

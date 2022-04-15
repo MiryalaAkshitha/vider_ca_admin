@@ -12,9 +12,7 @@ import FormInputWithAdornment from "components/FormFields/FormInputWithAdornment
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import FormCheckbox from "components/FormFields/FormCheckbox";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
-// import FormRadioAddable from "components/FormFields/FormRadioAddable";
+import FormRadioAddable from "components/FormFields/FormRadioAddable";
 
 const Number = (props) => {
   const { control } = props;
@@ -45,15 +43,24 @@ const Number = (props) => {
       isVisible: false,
     },
   ]);
+  const titleElement = { label: "", value: "" };
   const [titleElements, setTitleElements] = useState([
-    "Mr.",
-    "Mrs.",
-    "Ms.",
-    "",
+    { label: "", value: "" },
   ]);
 
+  const onAdd = () => {
+    const newTitleElements = [...titleElements, titleElement];
+    setTitleElements(newTitleElements);
+  };
+
+  const onDelete = (item, index) => {
+    if (titleElements.length > 1) {
+      const newTitleElements = titleElements.filter((_, idx) => idx !== index);
+      setTitleElements(newTitleElements);
+    }
+  };
+
   const handleVisibility = (label) => {
-    console.log(label);
     const newData = data.map((item) => {
       if (item.label === label) {
         return {
@@ -200,12 +207,18 @@ const Number = (props) => {
                             <DragIndicatorIcon />
                           </Icon>
                         </Box>
-                        <FormInputWithAdornment
-                          endAdornment={renderAdornment(item)}
-                          name="item"
-                          label={item.label}
-                          control={control}
-                        />
+                        <Box
+                          sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            px: "10px",
+                          }}
+                        >
+                          <Typography>{item.label}</Typography>
+                          <Box>{renderAdornment(item)}</Box>
+                        </Box>
                         <FormCheckbox
                           name="mandatoryCheck"
                           control={control}
@@ -223,14 +236,12 @@ const Number = (props) => {
       </Box>
       <Box mt={2} px={1}>
         <Typography variant="caption">Title Elements</Typography>
-        {/* {
-          <FormRadioAddable
-            control={control}
-            options={titleElements}
-            deleteIcon={<DeleteIcon />}
-            addIcon={<AddCircleIcon />}
-          />
-        } */}
+        <FormRadioAddable
+          control={control}
+          options={titleElements}
+          onAdd={onAdd}
+          onDelete={onDelete}
+        />
       </Box>
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton
