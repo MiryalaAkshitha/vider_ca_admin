@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   Radio,
   RadioGroup,
   Typography,
@@ -74,17 +75,15 @@ function FormRadioAddable(props: Props) {
                             control={<Radio />}
                             label=""
                           />
-                          <FormInput
-                            control={control}
-                            name="titleElement"
-                            // onChange={(i, j) => console.log(i, j)}
-                          />
+                          <FormInput control={control} name="titleElement" />
                         </Box>
-                        <Box>
-                          <DeleteIcon onClick={() => onDelete(item, index)} />
-                        </Box>
+                        <IconButton onClick={() => onDelete(item, index)}>
+                          <DeleteIcon />
+                        </IconButton>
                       </Box>
-                      <AddCircleIcon onClick={() => onAdd(item, index)} />
+                      <IconButton onClick={() => onAdd(item, index)}>
+                        <AddCircleIcon />
+                      </IconButton>
                     </Box>
                   </>
                 ))}

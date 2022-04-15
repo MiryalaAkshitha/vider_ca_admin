@@ -74,8 +74,8 @@ const availableFields = [
     icon: icons.dropDown,
     title: "Drop Down",
     type: FormBuilderFieldTypes.DROPDOWN,
-    defaultValues: createNonRecurringTaskDefaultValues,
-    schema: CreateNonRecurringClientSchema(() => {}),
+    defaultValues: schemas.dropDownDefaultValues,
+    schema: schemas.dropDownSchema,
   },
   {
     icon: icons.checkBox,
@@ -111,6 +111,13 @@ const availableFields = [
     type: FormBuilderFieldTypes.TERMS_AND_CONDITIONS,
     defaultValues: schemas.termsAndConditionsDefaultValues,
     schema: schemas.termsAndConditionsSchema,
+  },
+  {
+    icon: icons.checkBox,
+    title: "Radio Box",
+    type: FormBuilderFieldTypes.RADIO,
+    defaultValues: schemas.radioBoxDefaultValues,
+    schema: schemas.radioBoxSchema,
   },
 ];
 

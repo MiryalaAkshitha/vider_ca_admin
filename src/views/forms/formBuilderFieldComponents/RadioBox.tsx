@@ -3,9 +3,31 @@ import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
+import FormRadioAddable from "components/FormFields/FormRadioAddable";
+import { useState } from "react";
 
-const Currency = (props) => {
+const RadioBox = (props) => {
   const { control } = props;
+
+  const radioBoxComponent = { label: "", value: "" };
+  const [radioBoxComponents, setRadioBoxComponents] = useState([
+    { label: "", value: "" },
+  ]);
+
+  const onAdd = () => {
+    const newRadioBoxComponents = [...radioBoxComponents, radioBoxComponent];
+    setRadioBoxComponents(newRadioBoxComponents);
+  };
+
+  const onDelete = (item, index) => {
+    if (radioBoxComponents.length > 1) {
+      const newRadioBoxComponents = radioBoxComponents.filter(
+        (_, idx) => idx !== index
+      );
+      setRadioBoxComponents(newRadioBoxComponents);
+    }
+  };
+
   return (
     <>
       <Box mt={2}>
@@ -52,28 +74,14 @@ const Currency = (props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
+        <Typography>RadioBox Components</Typography>
+        <FormRadioAddable
           control={control}
-          name="currency"
-          label="Select Currency"
-          options={[
-            { label: "Currency 1", value: "Currency 1" },
-            { label: "Currency 2", value: "Currency 2" },
-          ]}
+          options={radioBoxComponents}
+          onAdd={onAdd}
+          onDelete={onDelete}
         />
       </Box>
-      <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="thousandSeparator"
-          label="Thousand Separator"
-          options={[
-            { label: "Thousand Separator 1", value: "Thousand Separator 1" },
-            { label: "Thousand Separator 2", value: "Thousand Separator 2" },
-          ]}
-        />
-      </Box>
-
       <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
         <LoadingButton
           loading={false}
@@ -88,4 +96,4 @@ const Currency = (props) => {
   );
 };
 
-export default Currency;
+export default RadioBox;

@@ -237,13 +237,15 @@ let signatureSchema = object().shape({
   fieldName: strReq("Signature"),
 });
 
-let decisionBoxDefaultValues = {
+let dropDownDefaultValues = {
   ...baseDefaultValues,
   dropDownComponents: [],
   selectionType: "",
+  min: "",
+  max: "",
 };
 
-let decisionBoxSchema = object().shape({
+let dropDownSchema = object().shape({
   ...baseSchema,
   dropDownComponents: array().of(
     object().nullable().shape({
@@ -291,6 +293,37 @@ let termsAndConditionsSchema = object().shape({
   fieldType: string().nullable().notRequired(),
 });
 
+let decisionBoxDefaultValues = {
+  fieldName: "",
+  fieldInstructions: "",
+  intialStatus: "",
+  whenChecked: "",
+  whenUnchecked: "",
+};
+
+let decisionBoxSchema = object().shape({
+  feildName: strNotReq(),
+  fieldInstructions: strNotReq(),
+  intialStatus: strNotReq(),
+  whenChecked: strNotReq(),
+  whenUnchecked: strNotReq(),
+});
+
+let radioBoxDefaultValues = {
+  ...baseDefaultValues,
+  radioComponents: [],
+};
+
+let radioBoxSchema = object().shape({
+  ...baseSchema,
+  dropDownComponents: array().of(
+    object().nullable().shape({
+      label: string().required(),
+      value: string().required(),
+    })
+  ),
+});
+
 export default {
   singleLineDefaultValues,
   singleLineSchema,
@@ -316,6 +349,10 @@ export default {
   imageUploadSchema,
   signatureDefaultValues,
   signatureSchema,
+  dropDownDefaultValues,
+  dropDownSchema,
+  radioBoxDefaultValues,
+  radioBoxSchema,
   decisionBoxDefaultValues,
   decisionBoxSchema,
   addressDefaultValues,
