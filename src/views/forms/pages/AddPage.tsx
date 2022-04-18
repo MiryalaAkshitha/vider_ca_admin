@@ -4,36 +4,43 @@ import DialogWrapper from "components/DialogWrapper";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { DialogProps, SubmitType } from "types";
+import { selectForms, setAddPageOpen } from "redux/reducers/formsSlice";
+import { SubmitType } from "types";
 
-function AddPage({ open, setOpen }: DialogProps) {
+function AddPage() {
   const queryClient = useQueryClient();
   const params = useParams();
   const snack = useSnack();
   const [name, setName] = useState("");
+  const { addPageOpen } = useSelector(selectForms);
+  const dispatch = useDispatch();
 
   const { mutate } = useMutation(addPage, {
     onSuccess: () => {
       snack.success("Page added");
       setName("");
       queryClient.invalidateQueries("form-details");
-      setOpen(false);
+      dispatch(setAddPageOpen(false));
     },
     onError: () => {
       snack.error("Error creating page");
-      setOpen(false);
+      dispatch(setAddPageOpen(false));
     },
   });
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     mutate({ formId: params.formId, name });
-    setOpen(false);
   };
 
   return (
-    <DialogWrapper title="New Page" open={open} setOpen={setOpen}>
+    <DialogWrapper
+      title="New Page"
+      open={addPageOpen}
+      setOpen={(v) => dispatch(setAddPageOpen(v))}
+    >
       <form onSubmit={handleSubmit}>
         <TextField
           autoFocus

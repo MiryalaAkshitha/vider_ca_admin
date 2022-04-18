@@ -4,22 +4,31 @@ import { IconButton } from "@mui/material";
 import { deleteField, updatePage } from "api/services/forms";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  moveFields,
+  selectForms,
+  setTodoIndex,
+} from "redux/reducers/formsSlice";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
+import CreateField from "../fields/CreateField";
 import { ItemTypes } from "../utils/itemTypes";
 import RenderField from "../utils/RenderField";
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
 
-const PageFieldItem = ({ item, page, index }: any) => {
+const PageFieldItem = ({ item, index }: any) => {
   const params = useParams();
   const queryClient = useQueryClient();
   const confirm = useConfirm();
   const snack = useSnack();
   const [active, setActive] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const { data, activePage } = useSelector(selectForms);
+  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteField, {
     onSuccess: () => {
@@ -31,9 +40,9 @@ const PageFieldItem = ({ item, page, index }: any) => {
     },
   });
 
-  const { mutate: cloneField } = useMutation(updatePage, {
+  const { mutate: updatePageFields } = useMutation(updatePage, {
     onSuccess: () => {
-      snack.success("Field added");
+      snack.success("Page fields added");
       queryClient.invalidateQueries("form-details");
     },
     onError: (err: any) => {
@@ -47,7 +56,7 @@ const PageFieldItem = ({ item, page, index }: any) => {
       action: () => {
         mutate({
           formId: params.formId,
-          pageId: page?._id,
+          pageId: data.pages[activePage]?._id,
           fieldId: item._id,
         });
       },
@@ -56,13 +65,13 @@ const PageFieldItem = ({ item, page, index }: any) => {
 
   const handleCloneField = () => {
     let { _id, ...newItem } = item;
-    let fields = [...page?.fields];
+    let fields = [...data.pages[activePage]?.fields];
     let index = fields.findIndex((field: any) => field._id === item._id);
     fields.splice(index + 1, 0, newItem);
 
-    cloneField({
+    updatePageFields({
       formId: params.formId,
-      pageId: page?._id,
+      pageId: data.pages[activePage]?._id,
       data: {
         fields,
       },
@@ -81,48 +90,57 @@ const PageFieldItem = ({ item, page, index }: any) => {
       if (!ref.current) {
         return;
       }
+
       const dragIndex = item.index;
       const hoverIndex = index;
-      // Don't replace items with themselves
+
+      if (item.type === "outside") {
+        dispatch(setTodoIndex(hoverIndex));
+        return;
+      }
+
       if (dragIndex === hoverIndex) {
         return;
       }
-      // Determine rectangle on screen
+
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // Get vertical middle
       const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // Determine mouse position
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 1.5;
       const clientOffset = monitor.getClientOffset();
-      // Get pixels to the top
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-      // Dragging downwards
+
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
-      // Dragging upwards
+
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
 
-      console.log(dragIndex, hoverIndex);
+      dispatch(
+        moveFields({
+          from: dragIndex,
+          to: hoverIndex,
+        })
+      );
 
-      // Time to actually perform the action
-      // moveCard(dragIndex, hoverIndex);
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
       item.index = hoverIndex;
     },
   });
+
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.BOX,
     item: () => {
-      return { id: item?._id, index };
+      return { data: item, type: "inside", index };
+    },
+    end: (item, monitor) => {
+      updatePageFields({
+        formId: params.formId,
+        pageId: data.pages[activePage]?._id,
+        data: {
+          fields: data.pages[activePage].fields,
+        },
+      });
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -134,29 +152,38 @@ const PageFieldItem = ({ item, page, index }: any) => {
   const { control } = useForm();
 
   return (
-    <StyledDraggebleFormField
-      ata-handler-id={handlerId}
-      ref={ref}
-      active={active ? 1 : 0}
-      onMouseOver={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
-      isdragging={0}
-    >
-      <div className="field">
-        <RenderField item={item} control={control} />
-      </div>
-      <div className="actions">
-        <IconButton sx={{ borderRadius: 0 }}>
-          <Edit color="secondary" fontSize="small" />
-        </IconButton>
-        <IconButton onClick={handleCloneField} sx={{ borderRadius: 0 }}>
-          <ContentCopyIcon color="secondary" fontSize="small" />
-        </IconButton>
-        <IconButton onClick={handleDelete} sx={{ borderRadius: 0 }}>
-          <Delete color="secondary" fontSize="small" />
-        </IconButton>
-      </div>
-    </StyledDraggebleFormField>
+    <>
+      <StyledDraggebleFormField
+        data-handler-id={handlerId}
+        ref={ref}
+        active={active ? 1 : 0}
+        onMouseOver={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        isdragging={isDragging ? 1 : 0}
+        focused={0}
+      >
+        <div className="field">
+          <RenderField item={item} control={control} />
+        </div>
+        <div className="actions" onMouseOver={(e) => e.stopPropagation()}>
+          <IconButton
+            sx={{ borderRadius: 0 }}
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <Edit color="secondary" fontSize="small" />
+          </IconButton>
+          <IconButton onClick={handleCloneField} sx={{ borderRadius: 0 }}>
+            <ContentCopyIcon color="secondary" fontSize="small" />
+          </IconButton>
+          <IconButton onClick={handleDelete} sx={{ borderRadius: 0 }}>
+            <Delete color="secondary" fontSize="small" />
+          </IconButton>
+        </div>
+      </StyledDraggebleFormField>
+      <CreateField open={open} setOpen={setOpen} item={item} />
+    </>
   );
 };
 

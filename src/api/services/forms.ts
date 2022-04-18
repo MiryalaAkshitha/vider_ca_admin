@@ -32,6 +32,10 @@ const deleteField = ({ formId, pageId, fieldId }: any) => {
   return http.delete(`/forms/${formId}/pages/${pageId}/fields/${fieldId}`);
 };
 
+const addField = ({ formId, pageId, data }: any) => {
+  return http.post(`/forms/${formId}/pages/${pageId}/fields`, data);
+};
+
 export {
   getForms,
   createForm,
@@ -41,4 +45,5 @@ export {
   addPage,
   updatePage,
   deleteField,
+  addField,
 };

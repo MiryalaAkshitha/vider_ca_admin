@@ -46,7 +46,7 @@ function FormBuilderCheckbox(props: Props) {
                 }
               />
               <FormGroup row={row}>
-                {options.map((item, index) => (
+                {options?.map((item, index) => (
                   <FormControlLabel
                     key={index}
                     control={

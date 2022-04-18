@@ -28,7 +28,7 @@ function FormBuilderFieldWithInputs(props: Props) {
     }
 
     if (input.inputType === FormBuilderInputTypes.COUNTRY) {
-      if (input.allowedCountries.length) {
+      if (input?.allowedCountries?.length) {
         return countries
           .filter((item: any) => {
             return input.allowedCountries.includes(item.code);

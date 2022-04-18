@@ -132,8 +132,10 @@ export const StyledSubTaskTable = styled("table")({
 export const StyledDraggebleFormField = styled("div")<{
   isdragging: 0 | 1;
   active: 1 | 0;
-}>(({ isdragging, active }) => ({
+  focused: 1 | 0;
+}>(({ isdragging, active, focused }) => ({
   padding: "15px 10px",
+  minHeight: "100px",
   border: "1px solid transparent",
   borderBottom: "1px solid #22222226",
   transition: "0.3s",
@@ -141,6 +143,9 @@ export const StyledDraggebleFormField = styled("div")<{
     border: `1px dashed 
          rgba(0,0,0,0.5)`,
     borderBottom: "1px dashed rgba(0,0,0,0.5) !important",
+  }),
+  ...(focused && {
+    background: "rgba(24, 47, 83, 0.08)",
   }),
   position: "relative",
   "& .field": {
@@ -167,6 +172,7 @@ export const StyledDraggebleFormField = styled("div")<{
     background: "white",
     boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
     opacity: active || isdragging ? 1 : 0,
+    visibility: active || isdragging ? "visible" : "hidden",
     transition: "0.3s",
     border: "1px dashed rgba(0,0,0,0.5)",
   },

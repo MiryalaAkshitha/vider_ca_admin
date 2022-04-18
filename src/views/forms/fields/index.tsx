@@ -1,20 +1,10 @@
-import { Box, Typography, Divider, Grid } from "@mui/material";
-import { useState } from "react";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import availableFields from "../utils/availableFields";
-import CreateField from "./CreateField";
 import Field from "./Field";
 
 function Fields() {
-  const [open, setOpen] = useState(false);
-  const [item, setItem] = useState({});
-
-  const handleOpen = (item: any) => {
-    setOpen(true);
-    setItem(item);
-  };
-
   return (
-    <>
+    <Box sx={{ position: "sticky", top: 80 }}>
       <Box
         sx={{
           border: "1px solid #22222226",
@@ -49,13 +39,12 @@ function Fields() {
         <Grid container sx={{ p: 2 }} spacing={2}>
           {availableFields.map((item) => (
             <Grid item xs={4}>
-              <Field item={item} handleOpen={handleOpen} />
+              <Field item={item} />
             </Grid>
           ))}
         </Grid>
       </Box>
-      <CreateField open={open} setOpen={setOpen} item={item} />
-    </>
+    </Box>
   );
 }
 
