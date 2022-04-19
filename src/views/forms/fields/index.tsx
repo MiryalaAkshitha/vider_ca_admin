@@ -1,4 +1,5 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Droppable } from "react-beautiful-dnd";
 import availableFields from "../utils/availableFields";
 import Field from "./Field";
 
@@ -36,13 +37,22 @@ function Fields() {
         <Box>
           <Divider />
         </Box>
-        <Grid container sx={{ p: 2 }} spacing={2}>
-          {availableFields.map((item) => (
-            <Grid item xs={4}>
-              <Field item={item} />
-            </Grid>
-          ))}
-        </Grid>
+        <Droppable
+          droppableId="formbuilder-available-fields"
+          isDropDisabled={true}
+        >
+          {(provided: any) => (
+            <div ref={provided.innerRef}>
+              <Grid container sx={{ p: 2 }} spacing={2}>
+                {availableFields.map((item, index) => (
+                  <Grid item xs={4} key={index}>
+                    <Field item={item} index={index} />
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+          )}
+        </Droppable>
       </Box>
     </Box>
   );

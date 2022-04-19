@@ -1,71 +1,56 @@
 import { Add, PlayArrow } from "@mui/icons-material";
 import { Box, Button, Tab, Tabs } from "@mui/material";
-import { useEffect, useRef } from "react";
-import { useDrop } from "react-dnd";
+import { useRef } from "react";
+import { Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectForms,
   setActivePage,
   setAddPageOpen,
 } from "redux/reducers/formsSlice";
-import { ItemTypes } from "../utils/itemTypes";
 import PageFieldItem from "./PageFieldItem";
 
 function Pages() {
   const dispatch = useDispatch();
   const { activePage, data } = useSelector(selectForms);
 
-  const [, drop] = useDrop({
-    accept: ItemTypes.BOX,
-    drop: () => ({ name: "container" }),
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  });
-
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (!elementRef.current) return;
+  // useEffect(() => {
+  //   if (!elementRef.current) return;
 
-    const config = {
-      childList: true,
-      subtree: true,
-    };
+  //   const config = {
+  //     childList: true,
+  //     subtree: true,
+  //   };
 
-    let elementScrollHeight = elementRef.current.scrollHeight;
-    elementRef.current.scrollTo({
-      top: elementScrollHeight,
-      behavior: "smooth",
-    });
+  //   let elementScrollHeight = elementRef.current.scrollHeight;
 
-    const callback = (mutationList: MutationRecord[]) => {
-      elementScrollHeight = elementRef!.current!.scrollHeight;
+  //   const callback = (mutationList: MutationRecord[]) => {
+  //     elementScrollHeight = elementRef!.current!.scrollHeight;
 
-      for (const mutation of mutationList) {
-        if (mutation.type === "childList") {
-          for (const addedNode of Array.from(mutation.addedNodes)) {
-            let element = addedNode as HTMLElement;
+  //     for (const mutation of mutationList) {
+  //       if (mutation.type === "childList") {
+  //         for (const addedNode of Array.from(mutation.addedNodes)) {
+  //           let element = addedNode as HTMLElement;
+  //           if (element.getAttribute("data-handler-id")) {
+  //             window.scrollTo({
+  //               top: elementScrollHeight,
+  //               behavior: "smooth",
+  //             });
+  //           }
+  //         }
+  //       }
+  //     }
+  //   };
 
-            // if (element.getAttribute("data-handler-id")) {
-            //   window.scrollTo({
-            //     top: elementScrollHeight,
-            //     behavior: "smooth",
-            //   });
-            // }
-          }
-        }
-      }
-    };
+  //   const observer = new MutationObserver(callback);
 
-    const observer = new MutationObserver(callback);
-
-    observer.observe(elementRef.current, config);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  //   observer.observe(elementRef.current, config);
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, []);
 
   return (
     <Box
@@ -74,6 +59,7 @@ function Pages() {
         border: "1px solid #22222226",
         borderRadius: "10px",
         mr: 10,
+        mb: 10,
       }}
     >
       <Box textAlign="right" pt={2} pr={1}>
@@ -102,13 +88,12 @@ function Pages() {
           aria-label="basic tabs example"
         >
           {data?.pages?.map((item: any, index: number) => (
-            <Tab label={item?.name} {...a11yProps(index)} key={item?.id} />
+            <Tab label={item?.name} {...a11yProps(index)} key={item?._id} />
           ))}
         </Tabs>
       </Box>
       <Box>
         <Box
-          ref={drop}
           sx={{
             minHeight: 300,
             "& > div:last-child": {
@@ -116,9 +101,28 @@ function Pages() {
             },
           }}
         >
-          {data?.pages[activePage]?.fields?.map((item: any, index: number) => (
-            <PageFieldItem item={item} key={index} index={index} />
-          ))}
+          <Droppable droppableId="formbuilder-page-fields">
+            {(provided: any) => (
+              <>
+                <Box
+                  ref={(ref) => {
+                    provided.innerRef(ref);
+                  }}
+                  sx={{
+                    pt: 5,
+                    pb: 10,
+                  }}
+                >
+                  {data?.pages[activePage]?.fields?.map(
+                    (item: any, index: number) => (
+                      <PageFieldItem item={item} key={index} index={index} />
+                    )
+                  )}
+                  {provided.placeholder}
+                </Box>
+              </>
+            )}
+          </Droppable>
         </Box>
       </Box>
     </Box>

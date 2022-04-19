@@ -5,18 +5,12 @@ interface IForms {
   activePage: number;
   addPageOpen: boolean;
   data: any;
-  addedIndex: number | null;
-  todoIndex: number | null;
-  focused: number | null;
 }
 
 const initialState: IForms = {
   activePage: 0,
   addPageOpen: false,
   data: null,
-  addedIndex: null,
-  todoIndex: null,
-  focused: null,
 };
 
 export const formsSlice = createSlice({
@@ -25,6 +19,9 @@ export const formsSlice = createSlice({
   reducers: {
     setData(state, action) {
       state.data = action.payload;
+    },
+    setFields(state, action) {
+      state.data.pages[state.activePage].fields = action.payload;
     },
     setAddPageOpen(state, action) {
       state.addPageOpen = action.payload;
@@ -40,16 +37,10 @@ export const formsSlice = createSlice({
       fields.splice(to, 0, field);
       state.data.pages[state.activePage].fields = fields;
     },
-    setTodoIndex(state, action: PayloadAction<number>) {
-      state.todoIndex = action.payload;
-    },
     addField(state, action) {
-      const fields = state.data.pages[state.activePage].fields;
-      fields.splice(state.todoIndex, 0, action.payload);
-      state.data.pages[state.activePage].fields = fields;
-    },
-    setFocused(state, action: PayloadAction<number | null>) {
-      state.focused = action.payload;
+      // const fields = state.data.pages[state.activePage].fields;
+      // fields.splice(state.todoIndex, 0, action.payload);
+      // state.data.pages[state.activePage].fields = fields;
     },
   },
 });
@@ -61,9 +52,8 @@ export const {
   setAddPageOpen,
   setActivePage,
   moveFields,
-  setTodoIndex,
   addField,
-  setFocused,
+  setFields,
 } = formsSlice.actions;
 
 export default formsSlice.reducer;

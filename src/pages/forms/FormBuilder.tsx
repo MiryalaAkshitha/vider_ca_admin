@@ -1,27 +1,34 @@
 import { Grid } from "@mui/material";
-import { getForm } from "api/services/forms";
+import { getForm, updatePage } from "api/services/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
+import useSnack from "hooks/useSnack";
 import FormAppbar from "layout/primarylayout/app-bar/FormAppbar";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { useQuery } from "react-query";
+import { DragDropContext } from "react-beautiful-dnd";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
+  moveFields,
   selectForms,
   setAddPageOpen,
   setData,
+  setFields,
 } from "redux/reducers/formsSlice";
 import { ResType } from "types";
 import Fields from "views/forms/fields";
 import AddPage from "views/forms/pages/AddPage";
 import Pages from "../../views/forms/pages";
+import { reorder } from "views/taskboard/board/utils";
+import availableFields from "views/forms/utils/availableFields";
+import { prepareField } from "views/forms/utils/prepareField";
 
 const CreateForm = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { data } = useSelector(selectForms);
+  const { data, activePage } = useSelector(selectForms);
+  const queryClient = useQueryClient();
+  const snack = useSnack();
 
   const { isLoading }: ResType = useQuery(
     ["form-details", params.formId],
@@ -34,10 +41,64 @@ const CreateForm = () => {
     }
   );
 
+  const { mutate: updatePageFields } = useMutation(updatePage, {
+    onSuccess: () => {
+      snack.success("Page fields added");
+      queryClient.invalidateQueries("form-details");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const onDragEnd = (result: any) => {
+    const { source, destination } = result;
+
+    if (!destination) return;
+
+    if (destination.droppableId === "formbuilder-available-fields") return;
+
+    if (source.droppableId === destination.droppableId) {
+      if (source.index === destination.index) return;
+      let reordered = reorder(
+        data?.pages[activePage]?.fields,
+        source.index,
+        destination.index
+      );
+      dispatch(
+        moveFields({
+          from: source.index,
+          to: destination.index,
+        })
+      );
+      updatePageFields({
+        formId: params.formId,
+        pageId: data.pages[activePage]?._id,
+        data: {
+          fields: reordered,
+        },
+      });
+    } else {
+      let fields = [...data?.pages[activePage]?.fields];
+      let newField = prepareField(availableFields[source.index]);
+      fields.splice(destination.index, 0, newField);
+
+      dispatch(setFields(fields));
+
+      updatePageFields({
+        formId: params.formId,
+        pageId: data.pages[activePage]?._id,
+        data: {
+          fields,
+        },
+      });
+    }
+  };
+
   if (isLoading) return <Loader />;
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <FormAppbar />
       {data?.pages?.length > 0 ? (
         <Grid container spacing={2} sx={{ pt: 10, pb: 4, px: 2 }}>
@@ -57,7 +118,7 @@ const CreateForm = () => {
         />
       )}
       <AddPage />
-    </DndProvider>
+    </DragDropContext>
   );
 };
 

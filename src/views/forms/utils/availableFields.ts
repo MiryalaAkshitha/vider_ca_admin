@@ -5,9 +5,11 @@ import {
 } from "validations/createTask";
 import schemas from "./formFieldSchemas";
 import { FormBuilderFieldTypes } from "./renderFieldsComponent";
+import { v4 as uuidv4 } from "uuid";
 
 const availableFields = [
   {
+    id: uuidv4(),
     icon: icons.singleLine,
     label: "Single Line",
     fieldType: FormBuilderFieldTypes.SINGLE_LINE,
@@ -15,6 +17,7 @@ const availableFields = [
     schema: schemas.singleLineSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.multiLine,
     label: "Multi Line",
     fieldType: FormBuilderFieldTypes.MULTI_LINE,
@@ -22,6 +25,7 @@ const availableFields = [
     schema: schemas.multiLineSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.numbers,
     label: "Number",
     fieldType: FormBuilderFieldTypes.NUMBER,
@@ -29,6 +33,7 @@ const availableFields = [
     schema: schemas.numberSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.name,
     label: "Name",
     fieldType: FormBuilderFieldTypes.NAME,
@@ -36,6 +41,7 @@ const availableFields = [
     schema: schemas.nameSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.address,
     label: "Address",
     fieldType: FormBuilderFieldTypes.ADDRESS,
@@ -43,6 +49,7 @@ const availableFields = [
     schema: schemas.addressSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.mobileNumber,
     label: "Mobile Number",
     fieldType: FormBuilderFieldTypes.PHONE,
@@ -50,6 +57,7 @@ const availableFields = [
     schema: schemas.mobileNumberSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.email,
     label: "Email",
     fieldType: FormBuilderFieldTypes.EMAIL,
@@ -57,6 +65,7 @@ const availableFields = [
     schema: schemas.emailSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.fieldDate,
     label: "Date",
     fieldType: FormBuilderFieldTypes.DATE,
@@ -64,6 +73,7 @@ const availableFields = [
     schema: schemas.dateSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.decisionBox,
     label: "Decision Box",
     fieldType: FormBuilderFieldTypes.DECISION_BOX,
@@ -71,6 +81,7 @@ const availableFields = [
     schema: schemas.decisionBoxSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.dropDown,
     label: "Drop Down",
     fieldType: FormBuilderFieldTypes.DROPDOWN,
@@ -78,6 +89,7 @@ const availableFields = [
     schema: CreateNonRecurringClientSchema(() => {}),
   },
   {
+    id: uuidv4(),
     icon: icons.checkBox,
     label: "Check Box",
     fieldType: FormBuilderFieldTypes.CHECKBOX,
@@ -85,6 +97,7 @@ const availableFields = [
     schema: schemas.checkboxSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.checkBox,
     label: "Radio",
     fieldType: FormBuilderFieldTypes.RADIO,
@@ -92,6 +105,7 @@ const availableFields = [
     schema: schemas.radioBoxSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.currency,
     label: "Currency",
     fieldType: FormBuilderFieldTypes.CURRENCY,
@@ -99,6 +113,7 @@ const availableFields = [
     schema: schemas.currencySchema,
   },
   {
+    id: uuidv4(),
     icon: icons.fileUpload,
     label: "File Upload",
     fieldType: FormBuilderFieldTypes.FILE_UPLOAD,
@@ -106,6 +121,7 @@ const availableFields = [
     schema: schemas.fileUploadSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.imageUpload,
     label: "Image Upload",
     fieldType: FormBuilderFieldTypes.IMAGE_UPLOAD,
@@ -113,6 +129,7 @@ const availableFields = [
     schema: schemas.imageUploadSchema,
   },
   {
+    id: uuidv4(),
     icon: icons.termsAndConditions,
     label: "Terms & Conditions",
     fieldType: FormBuilderFieldTypes.TERMS_AND_CONDITIONS,
