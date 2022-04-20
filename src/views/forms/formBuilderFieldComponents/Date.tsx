@@ -1,25 +1,24 @@
 import { Box } from "@mui/material";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
-import LoadingButton from "components/LoadingButton";
 
-const Date = (props: any) => {
-  const { control } = props;
+interface Props {
+  item: any;
+  control: any;
+  watch: any;
+}
+
+const Date = (props: Props) => {
+  const { control, watch } = props;
+
   return (
     <>
       <Box mt={2}>
-        <FormInput name="feildName" label="Feild Name" control={control} />
-      </Box>
-      <Box mt={2}>
-        <FormInput
-          name="fieldInstructions"
-          label="Field Instructions"
-          multiline
-          control={control}
-        />
+        <FormInput name="label" label="Field Name" control={control} />
       </Box>
       <Box mt={2}>
         <FormRadio
@@ -28,28 +27,9 @@ const Date = (props: any) => {
           name="fieldSize"
           label="Field Size"
           options={[
-            { label: "Small", value: "small" },
-            { label: "Medium", value: "medium" },
-            { label: "Large", value: "large" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormInput
-          name="placeHolderText"
-          label="PlaceHolder Text"
-          control={control}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormRadio
-          row
-          control={control}
-          name="fieldType"
-          label="Field Type"
-          options={[
-            { label: "Mandatory", value: "mandatory" },
-            { label: "Non Madatory", value: "non mandatory" },
+            { label: "Small", value: "SMALL" },
+            { label: "Medium", value: "MEDIUM" },
+            { label: "Large", value: "LARGE" },
           ]}
         />
       </Box>
@@ -60,13 +40,13 @@ const Date = (props: any) => {
           name="allowedDays"
           label="Allowed Days"
           options={[
-            { label: "Sunday", value: "Sunday" },
-            { label: "Monday", value: "Monday" },
-            { label: "Tuesday", value: "Tuesday" },
-            { label: "Wednesday", value: "Wednesday" },
-            { label: "Thursday", value: "Thursday" },
-            { label: "Friday", value: "Friday" },
-            { label: "Saturday", value: "Saturday" },
+            { label: "Sunday", value: "SUNDAY" },
+            { label: "Monday", value: "MONDAY" },
+            { label: "Tuesday", value: "TUESDAY" },
+            { label: "Wednesday", value: "WEDNESSDAY" },
+            { label: "Thursday", value: "THURSDAY" },
+            { label: "Friday", value: "FRIDAY" },
+            { label: "Saturday", value: "SATURDAY" },
           ]}
         />
       </Box>
@@ -76,28 +56,25 @@ const Date = (props: any) => {
           name="allowedDates"
           label="Allowed Dates"
           options={[
-            { label: "Custom 1", value: "Custom 1" },
-            { label: "Custom 2", value: "Custom 2" },
+            { label: "All", value: "ALL" },
+            { label: "Past Dates", value: "PAST" },
+            { label: "Future Dates", value: "FUTURE" },
+            { label: "Custom", value: "CUSTOM" },
           ]}
         />
       </Box>
-      <Box mt={2} sx={{ display: "flex" }}>
-        <Box mr={1}>
-          <FormDate name="fromDate" control={control} label="From" />
+      {watch("allowedDates") === "CUSTOM" && (
+        <Box mt={2} sx={{ display: "flex", gap: 1 }}>
+          <Box>
+            <FormDate name="startDate" control={control} label="From Date" />
+          </Box>
+          <Box>
+            <FormDate name="endDate" control={control} label="End Date" />
+          </Box>
         </Box>
-        <Box>
-          <FormDate name="startDate" control={control} label="To" />
-        </Box>
-      </Box>
-      <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-        <LoadingButton
-          loading={false}
-          fullWidth
-          type="submit"
-          loadingColor="white"
-          title="Create Field"
-          color="secondary"
-        />
+      )}
+      <Box mt={2}>
+        <FormCheckbox control={control} name="required" label="Mandatory" />
       </Box>
     </>
   );

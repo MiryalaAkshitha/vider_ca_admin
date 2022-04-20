@@ -8,11 +8,11 @@ import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectForms } from "redux/reducers/formsSlice";
+import { selectForms, setFocused } from "redux/reducers/formsSlice";
 import { StyledDraggebleFormField } from "views/taskboard/styles";
-import CreateField from "../fields/CreateField";
+import FieldProperties from "../fields/FieldProperties";
 import RenderField from "../utils/RenderField";
 
 const PageFieldItem = ({ item, index }: any) => {
@@ -21,8 +21,9 @@ const PageFieldItem = ({ item, index }: any) => {
   const confirm = useConfirm();
   const snack = useSnack();
   const [active, setActive] = useState<boolean>(false);
-  const { data, activePage } = useSelector(selectForms);
+  const { data, activePage, focused } = useSelector(selectForms);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const { mutate } = useMutation(deleteField, {
     onSuccess: () => {
@@ -87,7 +88,7 @@ const PageFieldItem = ({ item, index }: any) => {
             onMouseOver={() => setActive(true)}
             onMouseLeave={() => setActive(false)}
             isdragging={snapshot.isDragging ? 1 : 0}
-            focused={0}
+            focused={focused === item?._id ? 1 : 0}
           >
             <div className="field">
               <RenderField item={item} control={control} />
@@ -97,6 +98,7 @@ const PageFieldItem = ({ item, index }: any) => {
                 sx={{ borderRadius: 0 }}
                 onClick={() => {
                   setOpen(true);
+                  dispatch(setFocused(item?._id));
                 }}
               >
                 <Edit color="secondary" fontSize="small" />
@@ -111,7 +113,7 @@ const PageFieldItem = ({ item, index }: any) => {
           </StyledDraggebleFormField>
         )}
       </Draggable>
-      <CreateField open={open} setOpen={setOpen} item={item} />
+      <FieldProperties open={open} setOpen={setOpen} item={item} />
     </>
   );
 };

@@ -36,7 +36,10 @@ function FormBuilderSelect(props: Props) {
               select
               fullWidth
               size={size}
-              {...field}
+              value={field.value || ""}
+              onChange={(e) => {
+                field.onChange(e.target.value);
+              }}
             >
               {options.map((item, index) => (
                 <MenuItem key={index} value={item.value}>

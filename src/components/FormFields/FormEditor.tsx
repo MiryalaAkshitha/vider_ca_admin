@@ -19,7 +19,13 @@ function FormEditor(props: Props) {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <ReactQuill {...field} id={id} />
+            <ReactQuill
+              onChange={(value: string) => {
+                field.onChange(value);
+              }}
+              value={field.value}
+              id={id}
+            />
             {error && (
               <Typography
                 variant="caption"

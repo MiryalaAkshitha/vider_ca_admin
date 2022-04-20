@@ -37,6 +37,11 @@ export function prepareField(item: any) {
       return {
         ...field,
         options,
+        range: {
+          min: 1,
+          max: 1,
+          type: "VALUES",
+        },
       };
 
     case FormBuilderFieldTypes.RADIO:
@@ -123,6 +128,14 @@ export function prepareField(item: any) {
       return {
         ...field,
         inputs: addressInputs,
+      };
+
+    case FormBuilderFieldTypes.DECISION_BOX:
+      return {
+        ...field,
+        defaultValue: false,
+        checkedText: "",
+        uncheckedText: "",
       };
 
     default:

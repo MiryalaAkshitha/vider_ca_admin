@@ -1,61 +1,38 @@
 import { Box, Typography } from "@mui/material";
+import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
-import FormRadio from "components/FormFields/FormRadio";
-import LoadingButton from "components/LoadingButton";
 
 const DecisionBox = (props) => {
   const { control } = props;
   return (
     <>
       <Box mt={2}>
-        <FormInput name="feildName" label="Feild Name" control={control} />
+        <FormInput name="label" label="Field Name" control={control} />
       </Box>
       <Box mt={2}>
-        <FormInput
-          name="fieldInstructions"
-          label="Field Instructions"
-          multiline
-          control={control}
-        />
+        <Typography variant="body2" color="rgba(0,0,0,0.7)">
+          Initial status
+        </Typography>
+        <FormCheckbox control={control} name="defaultValue" label="Checked" />
       </Box>
       <Box mt={2}>
-        <FormRadio
-          row
-          control={control}
-          name="intialStatus"
-          label="Intial Status"
-          options={[
-            { label: "Checked", value: "checked" },
-            { label: "Unchecked", value: "unchecked" },
-          ]}
-        />
-      </Box>
-      <Box>
-        <Typography>State Display Message</Typography>
-        <Box mt={1}>
+        <Typography mb="10px" variant="body2" color="rgba(0,0,0,0.7)">
+          State Display Message
+        </Typography>
+        <Box>
           <FormInput
             label="When checked"
-            name="whenChecked"
+            name="checkedText"
             control={control}
           />
         </Box>
-        <Box mt={1}>
+        <Box mt={2}>
           <FormInput
             label="When Unchecked"
-            name="whenC=Unchecked"
+            name="uncheckedText"
             control={control}
           />
         </Box>
-      </Box>
-      <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-        <LoadingButton
-          loading={false}
-          fullWidth
-          type="submit"
-          loadingColor="white"
-          title="Create Field"
-          color="secondary"
-        />
       </Box>
     </>
   );

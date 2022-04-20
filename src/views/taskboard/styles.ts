@@ -139,15 +139,23 @@ export const StyledDraggebleFormField = styled("div")<{
   border: "1px solid transparent",
   borderBottom: "1px solid #22222226",
   transition: "0.3s",
+  position: "relative",
   ...((isdragging || active) && {
     border: `1px dashed 
-         rgba(0,0,0,0.5)`,
-    borderBottom: "1px dashed rgba(0,0,0,0.5) !important",
+         rgba(0,0,0,0.5) !important`,
   }),
   ...(focused && {
-    background: "rgba(24, 47, 83, 0.08)",
+    background: "rgba(233, 107, 116, 0.06)",
+    "&:before": {
+      content: '""',
+      position: "absolute",
+      left: -2,
+      top: 0,
+      width: 2,
+      height: "100%",
+      background: "#E44652",
+    },
   }),
-  position: "relative",
   "& .field": {
     userSelect: "none",
     padding: "10px 5px",

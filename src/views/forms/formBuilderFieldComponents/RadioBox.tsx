@@ -1,98 +1,30 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
-import FormRadio from "components/FormFields/FormRadio";
-import FormRadioAddable from "components/FormFields/FormRadioAddable";
-import LoadingButton from "components/LoadingButton";
-import { useState } from "react";
+import FormOptions from "components/FormFields/FormOptions";
 
-const RadioBox = (props) => {
+interface Props {
+  item: any;
+  control: any;
+  watch: any;
+}
+
+const Radio = (props: Props) => {
   const { control } = props;
-
-  const radioBoxComponent = { label: "", value: "" };
-  const [radioBoxComponents, setRadioBoxComponents] = useState([
-    { label: "", value: "" },
-  ]);
-
-  const onAdd = () => {
-    const newRadioBoxComponents = [...radioBoxComponents, radioBoxComponent];
-    setRadioBoxComponents(newRadioBoxComponents);
-  };
-
-  const onDelete = (item, index) => {
-    if (radioBoxComponents.length > 1) {
-      const newRadioBoxComponents = radioBoxComponents.filter(
-        (_, idx) => idx !== index
-      );
-      setRadioBoxComponents(newRadioBoxComponents);
-    }
-  };
 
   return (
     <>
       <Box mt={2}>
-        <FormInput name="feildName" label="Feild Name" control={control} />
+        <FormInput name="label" label="Field Name" control={control} />
       </Box>
       <Box mt={2}>
-        <FormInput
-          name="fieldInstructions"
-          label="Field Instructions"
-          multiline
-          control={control}
-        />
+        <FormOptions name="options" control={control} label="Options" />
       </Box>
       <Box mt={2}>
-        <FormRadio
-          row
-          control={control}
-          name="fieldSize"
-          label="Field Size"
-          options={[
-            { label: "Small", value: "small" },
-            { label: "Medium", value: "medium" },
-            { label: "Large", value: "large" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormInput
-          name="placeHolderText"
-          label="PlaceHolder Text"
-          control={control}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormRadio
-          row
-          control={control}
-          name="fieldType"
-          label="Field Type"
-          options={[
-            { label: "Mandatory", value: "mandatory" },
-            { label: "Non Madatory", value: "non mandatory" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <Typography>RadioBox Components</Typography>
-        <FormRadioAddable
-          control={control}
-          options={radioBoxComponents}
-          onAdd={onAdd}
-          onDelete={onDelete}
-        />
-      </Box>
-      <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-        <LoadingButton
-          loading={false}
-          fullWidth
-          type="submit"
-          loadingColor="white"
-          title="Create Field"
-          color="secondary"
-        />
+        <FormCheckbox control={control} name="required" label="Mandatory" />
       </Box>
     </>
   );
 };
 
-export default RadioBox;
+export default Radio;

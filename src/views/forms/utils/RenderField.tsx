@@ -25,6 +25,7 @@ function RenderField({ item, control }: any) {
           required={item?.required}
         />
       );
+
     case FormBuilderFieldTypes.SINGLE_LINE:
       return (
         <FormbuilderTextField
@@ -35,6 +36,7 @@ function RenderField({ item, control }: any) {
           required={item?.required}
         />
       );
+
     case FormBuilderFieldTypes.MULTI_LINE:
       return (
         <FormbuilderTextField
@@ -48,10 +50,12 @@ function RenderField({ item, control }: any) {
           countType={item?.range?.type}
         />
       );
+
     case FormBuilderFieldTypes.DECISION_BOX:
       return (
         <DecisionBox control={control} name={item?._id} label={item?.label} />
       );
+
     case FormBuilderFieldTypes.RADIO:
       return (
         <FormBuilderRadio
@@ -65,6 +69,7 @@ function RenderField({ item, control }: any) {
           }))}
         />
       );
+
     case FormBuilderFieldTypes.DROPDOWN:
       return (
         <FormBuilderSelect
@@ -78,6 +83,7 @@ function RenderField({ item, control }: any) {
           }))}
         />
       );
+
     case FormBuilderFieldTypes.DROPDOWN_MULTIPLE:
       return (
         <FormBuilderMultiselect
@@ -91,6 +97,7 @@ function RenderField({ item, control }: any) {
           }))}
         />
       );
+
     case FormBuilderFieldTypes.DATE:
       return (
         <FormBuilderDate
@@ -100,6 +107,7 @@ function RenderField({ item, control }: any) {
           required={item?.required}
         />
       );
+
     case FormBuilderFieldTypes.CHECKBOX:
       return (
         <FormBuilderCheckbox
@@ -113,6 +121,7 @@ function RenderField({ item, control }: any) {
           }))}
         />
       );
+
     case FormBuilderFieldTypes.PHONE:
       return (
         <FormBuilderPhone
@@ -124,6 +133,7 @@ function RenderField({ item, control }: any) {
           allowedCountries={item?.allowedCountries}
         />
       );
+
     case FormBuilderFieldTypes.FILE_UPLOAD:
       return (
         <FormBuilderUpload
@@ -136,6 +146,7 @@ function RenderField({ item, control }: any) {
           max={item?.range?.max}
         />
       );
+
     case FormBuilderFieldTypes.IMAGE_UPLOAD:
       return (
         <FormBuilderUpload
@@ -148,6 +159,7 @@ function RenderField({ item, control }: any) {
           max={item?.range?.max}
         />
       );
+
     case FormBuilderFieldTypes.CURRENCY:
       return (
         <FormBuilderCurrency
@@ -159,6 +171,7 @@ function RenderField({ item, control }: any) {
           currencyDisplay={item?.currencyDisplay}
         />
       );
+
     case FormBuilderFieldTypes.NAME:
       return (
         <FormBuilderFieldWithInputs
@@ -169,6 +182,7 @@ function RenderField({ item, control }: any) {
           inputs={item?.inputs}
         />
       );
+
     case FormBuilderFieldTypes.ADDRESS:
       return (
         <FormBuilderFieldWithInputs
@@ -179,6 +193,7 @@ function RenderField({ item, control }: any) {
           inputs={item?.inputs}
         />
       );
+
     case FormBuilderFieldTypes.NUMBER:
       return (
         <FormBuilderNumber
@@ -188,6 +203,7 @@ function RenderField({ item, control }: any) {
           required={item?.required}
         />
       );
+
     case FormBuilderFieldTypes.TERMS_AND_CONDITIONS:
       return (
         <FormBuilderTermsAndConditions
@@ -197,6 +213,7 @@ function RenderField({ item, control }: any) {
           termsAndConditions={item?.termsAndConditions}
         />
       );
+
     default:
       return <h1>Not matched</h1>;
   }

@@ -36,6 +36,10 @@ const addField = ({ formId, pageId, data }: any) => {
   return http.post(`/forms/${formId}/pages/${pageId}/fields`, data);
 };
 
+const updateField = ({ formId, pageId, fieldId, data }: any) => {
+  return http.patch(`/forms/${formId}/pages/${pageId}/fields/${fieldId}`, data);
+};
+
 export {
   getForms,
   createForm,
@@ -46,4 +50,5 @@ export {
   updatePage,
   deleteField,
   addField,
+  updateField,
 };

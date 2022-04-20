@@ -56,9 +56,6 @@ function Field({ item, index }: any) {
             </Box>
             <Typography variant="caption">{item.label}</Typography>
           </StyledField>
-          {/* {snapshot.isDragging && ( */}
-
-          {/* )} */}
         </>
       )}
     </Draggable>

@@ -1,6 +1,6 @@
 import { Add, PlayArrow } from "@mui/icons-material";
-import { Box, Button, Tab, Tabs } from "@mui/material";
-import { useRef } from "react";
+import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
+import { useEffect, useRef } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,41 +16,21 @@ function Pages() {
 
   const elementRef = useRef<HTMLDivElement | null>(null);
 
+  const didMountRef = useRef(false);
+
   // useEffect(() => {
-  //   if (!elementRef.current) return;
+  //   if (didMountRef.current) {
+  //     if (!elementRef.current) return;
 
-  //   const config = {
-  //     childList: true,
-  //     subtree: true,
-  //   };
+  //     let elementScrollHeight = elementRef.current.scrollHeight;
 
-  //   let elementScrollHeight = elementRef.current.scrollHeight;
-
-  //   const callback = (mutationList: MutationRecord[]) => {
-  //     elementScrollHeight = elementRef!.current!.scrollHeight;
-
-  //     for (const mutation of mutationList) {
-  //       if (mutation.type === "childList") {
-  //         for (const addedNode of Array.from(mutation.addedNodes)) {
-  //           let element = addedNode as HTMLElement;
-  //           if (element.getAttribute("data-handler-id")) {
-  //             window.scrollTo({
-  //               top: elementScrollHeight,
-  //               behavior: "smooth",
-  //             });
-  //           }
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   const observer = new MutationObserver(callback);
-
-  //   observer.observe(elementRef.current, config);
-  //   return () => {
-  //     observer.disconnect();
-  //   };
-  // }, []);
+  //     window.scrollTo({
+  //       top: elementScrollHeight,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  //   didMountRef.current = true;
+  // }, [data]);
 
   return (
     <Box
@@ -95,14 +75,14 @@ function Pages() {
       <Box>
         <Box
           sx={{
-            minHeight: 300,
+            minHeight: 500,
             "& > div:last-child": {
               borderBottom: "1px solid transparent",
             },
           }}
         >
           <Droppable droppableId="formbuilder-page-fields">
-            {(provided: any) => (
+            {(provided: any, snapshot: any) => (
               <>
                 <Box
                   ref={(ref) => {
@@ -111,14 +91,42 @@ function Pages() {
                   sx={{
                     pt: 5,
                     pb: 10,
+                    "& > div:first-of-type": {
+                      borderTop: "1px solid #22222226",
+                    },
                   }}
                 >
                   {data?.pages[activePage]?.fields?.map(
                     (item: any, index: number) => (
-                      <PageFieldItem item={item} key={index} index={index} />
+                      <PageFieldItem
+                        item={item}
+                        key={item?._id}
+                        index={index}
+                      />
                     )
                   )}
                   {provided.placeholder}
+                  {data?.pages[activePage]?.fields?.length === 0 &&
+                    !snapshot?.isDraggingOver && (
+                      <Box
+                        sx={{
+                          p: 2,
+                          textAlign: "center",
+                          background: "rgba(0,0,0,0.04)",
+                          border: "1px dashed rgba(0,0,0,0.1)",
+                          width: "70%",
+                          margin: "0 auto",
+                        }}
+                      >
+                        <Typography variant="subtitle2" gutterBottom>
+                          Start creating
+                        </Typography>
+                        <Typography variant="body1" color="rgba(0,0,0,0.5)">
+                          Drag and drop fields from the right panel to add them
+                          to your form.
+                        </Typography>
+                      </Box>
+                    )}
                 </Box>
               </>
             )}

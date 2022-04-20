@@ -42,7 +42,7 @@ function FormBuilderMultiselect(props: Props) {
                   trigger();
                 }
               }}
-              value={field.value}
+              value={Array.isArray(field.value) ? field.value : []}
               options={options}
               isOptionEqualToValue={(option, value) => {
                 return option.value === value.value;

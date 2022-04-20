@@ -5,12 +5,14 @@ interface IForms {
   activePage: number;
   addPageOpen: boolean;
   data: any;
+  focused: string | null;
 }
 
 const initialState: IForms = {
   activePage: 0,
   addPageOpen: false,
   data: null,
+  focused: null,
 };
 
 export const formsSlice = createSlice({
@@ -29,6 +31,9 @@ export const formsSlice = createSlice({
     setActivePage(state, action) {
       state.activePage = action.payload;
     },
+    setFocused(state, action) {
+      state.focused = action.payload;
+    },
     moveFields(state, action: PayloadAction<{ from: number; to: number }>) {
       const { from, to } = action.payload;
       const fields = state.data.pages[state.activePage].fields;
@@ -36,11 +41,6 @@ export const formsSlice = createSlice({
       fields.splice(from, 1);
       fields.splice(to, 0, field);
       state.data.pages[state.activePage].fields = fields;
-    },
-    addField(state, action) {
-      // const fields = state.data.pages[state.activePage].fields;
-      // fields.splice(state.todoIndex, 0, action.payload);
-      // state.data.pages[state.activePage].fields = fields;
     },
   },
 });
@@ -52,8 +52,8 @@ export const {
   setAddPageOpen,
   setActivePage,
   moveFields,
-  addField,
   setFields,
+  setFocused,
 } = formsSlice.actions;
 
 export default formsSlice.reducer;
