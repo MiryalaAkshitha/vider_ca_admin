@@ -1,10 +1,23 @@
 import React, { useState } from "react";
-import { Box, Collapse, Divider, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import {
+  Box,
+  Collapse,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { StyledListItem, StyledListItemButton } from "../styles";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-const DashboardMenuItem = ({ setValue, dropDownOption, dropDown, title, icon }) => {
+const DashboardMenuItem = ({
+  setValue,
+  dropDownOption,
+  dropDown,
+  title,
+  icon,
+}) => {
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
@@ -13,7 +26,9 @@ const DashboardMenuItem = ({ setValue, dropDownOption, dropDown, title, icon }) 
 
   return (
     <React.Fragment>
-      <StyledListItem onClick={() => (dropDownOption ? handleClick() : setValue(title))}>
+      <StyledListItem
+        onClick={() => (dropDownOption ? handleClick() : setValue(title))}
+      >
         <Box
           sx={{
             display: "flex",
@@ -37,7 +52,10 @@ const DashboardMenuItem = ({ setValue, dropDownOption, dropDown, title, icon }) 
           {dropDown.map((data, index) => {
             return (
               <React.Fragment key={index}>
-                <StyledListItemButton onClick={() => setValue(data)} sx={{ pl: 7 }}>
+                <StyledListItemButton
+                  onClick={() => setValue(data)}
+                  sx={{ pl: 7 }}
+                >
                   <Typography>{data}</Typography>
                 </StyledListItemButton>
               </React.Fragment>

@@ -35,6 +35,10 @@ export const menuItems: Array<IMenuItem> = [
     title: "Labels",
     path: "/settings/labels",
   },
+  {
+    title: "Billing Entities",
+    path: "/settings/billing-entities",
+  },
   // {
   //   title: "Forms Configuration",
   //   path: "",

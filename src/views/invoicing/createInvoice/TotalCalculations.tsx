@@ -27,37 +27,28 @@ function TotalCalculations() {
         backgroundColor: "#f3f5fa",
       }}
     >
-      <Box p={2}>
+      <Box p={2} sx={{ color: "gray", fontSize: "12px" }}>
+        Payment summary
+      </Box>
+      <Divider />
+
+      <Box p={4}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={6}>
             <Box display="flex" gap={1}>
               <Typography sx={{ flex: 1 }} variant="body1">
-                Sub Total
+                Total Taxable Value
               </Typography>
               <span>:</span>
             </Box>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="subtitle2">
-              {iCalcs.totalAmount()} /-
+              {iCalcs.totalTaxableAmount()} /-
             </Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={2} mt="3px" alignItems="center">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1}>
-              <Typography variant="body2">
-                Pure Agent/Additional Charges
-              </Typography>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body1">
-              {iCalcs.additionalCharges()}/-
-            </Typography>
-          </Grid>
-        </Grid>
+
         <Grid container spacing={2} mt="3px" alignItems="center">
           <Grid item xs={6}>
             <Box display="flex" gap={1} alignItems="center">
@@ -95,6 +86,7 @@ function TotalCalculations() {
                 SelectProps={{ native: true }}
               >
                 <option value="0">0%</option>
+                <option value="2">2%</option>
                 <option value="5">5%</option>
                 <option value="10">10% </option>
               </TextField>
@@ -108,6 +100,72 @@ function TotalCalculations() {
             </Box>
           </Grid>
         </Grid>
+
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography sx={{ flex: 1 }} variant="body1">
+                Net Value
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2">
+              {iCalcs.netTotalTaxable()} /-
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography sx={{ flex: 1 }} variant="body1">
+                Total IGST
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2">
+              {iCalcs.totalIgstAmount()} /-
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Divider />
+
+      <Box p={4}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography sx={{ flex: 1 }} variant="body1">
+                Sub Total
+              </Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2">
+              {iCalcs.totalAmount()} /-
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} mt="3px" alignItems="center">
+          <Grid item xs={6}>
+            <Box display="flex" gap={1}>
+              <Typography variant="body2">Pure Agent</Typography>
+              <span>:</span>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1">
+              {iCalcs.additionalCharges()}/-
+            </Typography>
+          </Grid>
+        </Grid>
+
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <Box display="flex" gap={1} alignItems="center">
@@ -121,7 +179,7 @@ function TotalCalculations() {
                       color="secondary"
                     />
                   }
-                  label="Other Charges"
+                  label="Additional Charges"
                 />
               </FormGroup>
               <span>:</span>

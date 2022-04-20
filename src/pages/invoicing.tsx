@@ -1,19 +1,37 @@
-import { Add } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
 import useTitle from "hooks/useTitle";
 import { useNavigate } from "react-router-dom";
 import DashboardInvoice from "views/invoicing/dashboard/DashboardInvoice";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { useState } from "react";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 function Invoicing() {
   useTitle("Invoice");
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleNewReceipt = () => {};
+
+  const handleNewEstimate = () => {};
+  const handleNewInvoice = () => {
+    navigate("/invoicing/create-invoice");
+  };
   return (
     <Box>
       <DashboardInvoice />
+
       <Fab
-        onClick={() => navigate("/invoicing/create")}
+        onClick={(e) => {
+          e.stopPropagation();
+          setAnchorEl(e.currentTarget);
+        }}
         size="medium"
         color="secondary"
         sx={{
@@ -24,8 +42,27 @@ function Invoicing() {
         }}
         aria-label="add"
       >
-        <Add />
+        <AddIcon />
       </Fab>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        onClick={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <MenuItem onClick={handleNewReceipt}>+ New Receipt</MenuItem>
+        <MenuItem onClick={handleNewInvoice}>+ New Invoice</MenuItem>
+        <MenuItem onClick={handleNewEstimate}>+ New Estimate</MenuItem>
+      </Menu>
     </Box>
   );
 }

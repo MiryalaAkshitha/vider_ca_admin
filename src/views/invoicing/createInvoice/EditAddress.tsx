@@ -14,7 +14,7 @@ interface Props extends DialogProps {
   type: "billing" | "shipping";
 }
 
-const EditAddress = ({ open, setOpen, type }: Props) => {
+const EditAddress = ({ open, setOpen, type }) => {
   const { billingAddress, shippingAddress } = useSelector(selectInvoice);
   const dispatch = useDispatch();
 
@@ -30,7 +30,14 @@ const EditAddress = ({ open, setOpen, type }: Props) => {
     );
   }
 
-  let address = type === "billing" ? billingAddress : shippingAddress;
+  let address;
+  if (type === "billing") {
+    address = billingAddress;
+  } else if (type === "shippingAddress") {
+    address = shippingAddress;
+  } else {
+    address = billingAddress;
+  }
 
   return (
     <>

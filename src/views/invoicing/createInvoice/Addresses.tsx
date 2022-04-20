@@ -7,11 +7,24 @@ import { useSelector } from "react-redux";
 import { selectInvoice } from "redux/reducers/createInvoiceSlice";
 import EditAddress from "./EditAddress";
 import InvoiceHeadings from "./InvoiceHeadings";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 
 function Addresses() {
   const { billingAddress, shippingAddress } = useSelector(selectInvoice);
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState<"billing" | "shipping">("billing");
+  const [type, setType] = useState("");
+
+  const [currency, setCurrency] = useState("");
+
+  const handleChange = (event) => {
+    setCurrency(event.target.value);
+  };
 
   const getAddress = (address) => {
     let result = "";
@@ -32,6 +45,43 @@ function Addresses() {
 
   return (
     <Box mt={4}>
+      <Grid item xs={6}>
+        <InvoiceHeadings title={"Billed By"} />
+        <Box p={2}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <img src={logo} alt="" />
+            <Button
+              startIcon={<EditIcon fontSize="small" />}
+              color="secondary"
+              onClick={() => {
+                setType("Billed");
+                setOpen(true);
+              }}
+            >
+              Edit
+            </Button>
+          </Box>
+          <AddressDetail
+            title="Business Name"
+            value={billingAddress?.businessName}
+          />
+          <AddressDetail title="Address" value={getAddress(billingAddress)} />
+          <AddressDetail title="Email" value={billingAddress?.email} />
+          <AddressDetail
+            title="Mobile Number"
+            value={billingAddress?.mobileNumber}
+          />
+          <AddressDetail
+            title="GST Treatment"
+            value={billingAddress?.gstTreatment}
+          />
+          <AddressDetail title="GSTIN" value={billingAddress?.gstIn} />
+        </Box>
+      </Grid>
       <Grid container spacing={2} alignItems="baseline" columnSpacing={4}>
         <Grid item xs={6}>
           <InvoiceHeadings title={"Billing Address"} />
@@ -69,6 +119,21 @@ function Addresses() {
             />
             <AddressDetail title="GSTIN" value={billingAddress?.gstIn} />
           </Box>
+
+          <FormControl fullWidth size="small">
+            <InputLabel id="invoiceCustomer">Place of Supply</InputLabel>
+            <Select
+              labelId="invoiceCustomer"
+              id="invoiceCustomer"
+              label="PlaceofSupply"
+              defaultValue="customer1"
+              onChange={(e) => {}}
+            >
+              <MenuItem>Telangana</MenuItem>
+              <MenuItem>Andhra Pradesh</MenuItem>
+              <MenuItem>Tamil Nadu</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={6}>
           <InvoiceHeadings title={"Shipping Address"} />

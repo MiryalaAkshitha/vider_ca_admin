@@ -6,9 +6,11 @@ import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { selectInvoice } from "redux/reducers/createInvoiceSlice";
 import { InvoiceCalculations } from "./calculations";
+import { useNavigate } from "react-router-dom";
 
 function BottomBar() {
   const snack = useSnack();
+  const navigate = useNavigate();
   const state = useSelector(selectInvoice);
 
   const { mutate } = useMutation(createInvoice, {
@@ -44,6 +46,10 @@ function BottomBar() {
     });
   };
 
+  const PreviewPage = () => {
+    navigate(`/invoicing/preview`);
+  };
+
   return (
     <Paper
       elevation={3}
@@ -65,14 +71,23 @@ function BottomBar() {
           <Button
             onClick={onSubmit}
             size="large"
+            variant="contained"
+            color="inherit"
+          >
+            Save as Draft
+          </Button>
+          <Button
+            onClick={onSubmit}
+            size="large"
             color="secondary"
             variant="contained"
+            sx={{ marginLeft: "25px" }}
           >
             Save and send
           </Button>
         </Box>
         <Box>
-          <Button size="large" color="secondary">
+          <Button size="large" color="secondary" onClick={PreviewPage}>
             Preview
           </Button>
         </Box>
