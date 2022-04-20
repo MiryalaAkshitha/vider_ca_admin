@@ -46,12 +46,40 @@ const CreateInvoice = () => {
               textTransform: "uppercase",
             }}
           >
-            Tax Invoice
+            INVOICE
           </Typography>
         </Box>
-        <Box maxWidth={500}>
+        <Box maxWidth={600}>
           <FormControl size="small" fullWidth>
-            <InputLabel id="invoiceCustomer">Customer</InputLabel>
+            <InputLabel id="invoiceCustomer">Select Billing Entity</InputLabel>
+            <Select
+              labelId="invoiceCustomer"
+              id="invoiceCustomer"
+              value={client}
+              label="SelectBillingEntity"
+              defaultValue="customer1"
+              onChange={(e) => {
+                let client = data.data[0]?.find(
+                  (client: any) => client.id === e.target.value
+                );
+                dispatch(
+                  handleClientChange({
+                    client,
+                  })
+                );
+              }}
+            >
+              {data?.data[0]?.map((client: any, index: number) => (
+                <MenuItem value={client?.id} key={index}>
+                  {client?.displayName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+        <Box maxWidth={600} sx={{ mt: "25px" }}>
+          <FormControl size="small" fullWidth>
+            <InputLabel id="invoiceCustomer">Select Client</InputLabel>
             <Select
               labelId="invoiceCustomer"
               id="invoiceCustomer"
@@ -77,6 +105,7 @@ const CreateInvoice = () => {
             </Select>
           </FormControl>
         </Box>
+
         <Addresses />
         <InvoiceDetails />
         <Particulars />

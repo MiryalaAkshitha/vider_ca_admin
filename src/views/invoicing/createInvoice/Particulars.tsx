@@ -239,30 +239,6 @@ function Particulars() {
                   </Button>
                 </Box>
               </TableCell>
-              {state.particulars.length !== 0 && (
-                <>
-                  <TableCell>
-                    <Typography variant="body2">
-                      Total taxable amount:
-                    </Typography>
-                    <Typography variant="subtitle2">
-                      {iCalcs.totalTaxableAmount()} /-
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">Total IGST:</Typography>
-                    <Typography variant="subtitle2">
-                      {iCalcs.totalIgstAmount()} /-
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2">Total amount:</Typography>
-                    <Typography variant="subtitle2">
-                      {iCalcs.totalAmount()} /-
-                    </Typography>
-                  </TableCell>
-                </>
-              )}
             </TableRow>
           </TableBody>
         </Table>

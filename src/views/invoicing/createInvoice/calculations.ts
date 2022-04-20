@@ -40,14 +40,19 @@ export class InvoiceCalculations {
       0
     );
   }
+  netTotalTaxable(){
+    let result = this.totalTaxableAmount() - this.tdsAmount();
+    return +result.toFixed(2);
+  }
   totalIgstAmount() {
-    return this.state.particulars.reduce(
+    let result = this.state.particulars.reduce(
       (acc, particular) => acc + this.getIgstAmount(particular),
       0
     );
+    return +result.toFixed(2);
   }
   totalAmount() {
-    let result = this.totalTaxableAmount() + this.totalIgstAmount();
+    let result = this.netTotalTaxable() + this.totalIgstAmount();
     return +result.toFixed(2);
   }
 
@@ -59,7 +64,7 @@ export class InvoiceCalculations {
   }
 
   tdsAmount() {
-    let result = this.totalTaxableAmount() + this.additionalCharges();
+    let result = this.totalTaxableAmount();
     return (result * this.state.tdsPercent) / 100;
   }
 
@@ -67,7 +72,6 @@ export class InvoiceCalculations {
     let result =
       this.totalAmount() +
       this.additionalCharges() +
-      this.tdsAmount() +
       this.state.otherCharges;
     let roundOff = Math.round(+result.toFixed(2)) - +result.toFixed(2);
     store.dispatch(

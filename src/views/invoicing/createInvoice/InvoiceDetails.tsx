@@ -4,8 +4,12 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Box,
   TextField,
 } from "@mui/material";
+import { add, getDay } from "date-fns";
+import moment from "moment";
+import { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleChange, selectInvoice } from "redux/reducers/createInvoiceSlice";
 import InvoiceHeadings from "./InvoiceHeadings";
@@ -22,13 +26,33 @@ function InvoiceDetails() {
       })
     );
   };
+  let due = invoiceDate;
+
+  if (terms == "dueOnReceipt") {
+    due = invoiceDate;
+  } else if (terms == "net15") {
+    due = invoiceDate;
+  }
+
+  console.log(invoiceDate);
+  console.log(terms);
 
   return (
     <Grid container mt={5}>
       <Grid item xs={12}>
         <InvoiceHeadings title="Invoice Details" />
         <Grid container sx={{ padding: "30px 0" }}>
-          <Grid container columnSpacing={3}>
+          <Box sx={{ width: "40%" }}>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              size="small"
+              label="Invoice number"
+              variant="outlined"
+            />
+          </Box>
+
+          <Grid container columnSpacing={3} sx={{ mt: "25px" }}>
             <Grid item xs={4}>
               <TextField
                 size="small"
@@ -56,10 +80,18 @@ function InvoiceDetails() {
                   }}
                   label="Terms"
                 >
-                  <MenuItem value="term0">Net 30</MenuItem>
-                  <MenuItem value={"term1"}>Vider Soft</MenuItem>
-                  <MenuItem value={"term2"}>Vider Softawre</MenuItem>
-                  <MenuItem value={"term3"}>Vider Software Solutions</MenuItem>
+                  <MenuItem value="dueOnReceipt">Due on Receipt</MenuItem>
+                  <MenuItem value="net15">Net 15</MenuItem>
+                  <MenuItem value="net30">Net 30</MenuItem>
+                  <MenuItem value="net45">Net 45</MenuItem>
+                  <MenuItem value="net60">Net 60</MenuItem>
+                  <MenuItem value={"dueEndMonth"}>
+                    Due end of the month
+                  </MenuItem>
+                  <MenuItem value={"dueEndNextMonth"}>
+                    Due end of the next month
+                  </MenuItem>
+                  <MenuItem value={"CustomDate"}>Custom Due Date</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -72,7 +104,7 @@ function InvoiceDetails() {
                 label="Due Date"
                 size="small"
                 variant="outlined"
-                value={invoiceDueDate}
+                value={due}
                 onChange={(e) => {
                   handleDetailChange("invoiceDueDate", e.target.value);
                 }}

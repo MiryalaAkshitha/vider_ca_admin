@@ -8,6 +8,7 @@ const Invoicing = loadable(() => import("pages/invoicing"));
 const CreateInvoice = loadable(
   () => import("views/invoicing/createInvoice/index")
 );
+const Preview = loadable(() => import("views/invoicing/createInvoice/Preview"));
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
@@ -19,6 +20,13 @@ const Layout = loadable(() => import("layout/primarylayout"));
 const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/taskboard"));
 const Categories = loadable(() => import("pages/settings/categories"));
+const BillingEntities = loadable(
+  () => import("pages/settings/billing-entities")
+);
+const ViewBillingEntityUser = loadable(
+  () => import("pages/settings/viewBillingEntityUser")
+);
+
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const ViewUser = loadable(() => import("pages/settings/ViewUser"));
@@ -80,7 +88,8 @@ function RoutesContainer() {
           <Route path="reports" element={<Reports />} />
           <Route path="invoicing">
             <Route index element={<Invoicing />} />
-            <Route path="create" element={<CreateInvoice />} />
+            <Route path="create-invoice" element={<CreateInvoice />} />
+            <Route path="preview" element={<Preview />} />
           </Route>
           <Route path="storage" element={<Storage />}>
             <Route path="my-storage" element={<MyStorage />} />
@@ -115,6 +124,11 @@ function RoutesContainer() {
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="categories" element={<Categories />} />
+          <Route path="billing-entities">
+            <Route index element={<BillingEntities />} />
+            <Route path=":billingId" element={<ViewBillingEntityUser />} />
+          </Route>
+
           <Route path="users">
             <Route index element={<Users />} />
             <Route path=":userId" element={<ViewUser />}>
