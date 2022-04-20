@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, MenuItem, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 interface Props {
@@ -6,10 +6,38 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
+  includeFormat?: boolean;
+  formats?: "multiline" | "fileSize";
 }
 
 function FormLimitRange(props: Props) {
-  const { name, size = "small", control, label = "" } = props;
+  const {
+    name,
+    size = "small",
+    control,
+    label = "",
+    includeFormat,
+    formats = "",
+  } = props;
+
+  let formatOptions = () => {
+    if (formats === "multiline") {
+      return [
+        { label: "Characters", value: "CHARACTERS" },
+        { label: "Words", value: "WORDS" },
+      ];
+    } else if (formats === "fileSize") {
+      return [
+        { label: "kb", value: "KB" },
+        { label: "Mb", value: "MB" },
+      ];
+    } else {
+      return [
+        { label: "Values", value: "VALUES" },
+        { label: "Digits", value: "DIGITS" },
+      ];
+    }
+  };
 
   return (
     <>
@@ -21,8 +49,8 @@ function FormLimitRange(props: Props) {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Box display="flex" gap={1}>
-              <div>
+            <Box display="flex" gap={1} width="100%">
+              <Box flex={1}>
                 <TextField
                   error={Boolean((error as any)?.min?.message)}
                   variant="outlined"
@@ -47,8 +75,8 @@ function FormLimitRange(props: Props) {
                     {(error as any)?.min?.message}
                   </Typography>
                 )}
-              </div>
-              <div>
+              </Box>
+              <Box flex={1}>
                 <TextField
                   error={Boolean((error as any)?.max?.message)}
                   variant="outlined"
@@ -73,7 +101,30 @@ function FormLimitRange(props: Props) {
                     {(error as any)?.max?.message}
                   </Typography>
                 )}
-              </div>
+              </Box>
+              {includeFormat && (
+                <Box flex={1}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    label="Format"
+                    onChange={(e) => {
+                      field.onChange({
+                        ...field.value,
+                        type: e.target.value,
+                      });
+                    }}
+                    select
+                    value={field?.value?.type || ""}
+                  >
+                    {formatOptions().map((item, index) => (
+                      <MenuItem value={item.value} key={index}>
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              )}
             </Box>
           </>
         )}

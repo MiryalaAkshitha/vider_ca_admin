@@ -137,20 +137,7 @@ function RenderField({ item, control }: any) {
     case FormBuilderFieldTypes.FILE_UPLOAD:
       return (
         <FormBuilderUpload
-          accepted={item?.uploadFileTypes}
-          name={item?._id}
-          id={item?.label + "_" + item?._id}
-          label={item?.label}
-          control={control}
-          maxFileSize={item?.fileMaxSize}
-          max={item?.range?.max}
-        />
-      );
-
-    case FormBuilderFieldTypes.IMAGE_UPLOAD:
-      return (
-        <FormBuilderUpload
-          accepted={item?.uploadFileTypes}
+          accepted={item?.uploadFileTypes?.map((item: any) => item?.value)}
           name={item?._id}
           id={item?.label + "_" + item?._id}
           label={item?.label}

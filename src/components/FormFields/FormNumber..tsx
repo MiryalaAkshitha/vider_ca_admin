@@ -1,4 +1,4 @@
-import { TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 interface Props {
@@ -6,11 +6,10 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
-  multiline?: boolean;
 }
 
-function FormInput(props: Props) {
-  const { name, size = "small", control, label = "", multiline } = props;
+function FormNumber(props: Props) {
+  const { name, size = "small", control, label = "" } = props;
 
   return (
     <>
@@ -18,14 +17,13 @@ function FormInput(props: Props) {
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <>
+          <Box>
             <TextField
               error={Boolean(error)}
               variant="outlined"
               label={label}
               fullWidth
-              multiline={multiline}
-              rows={multiline ? 3 : 1}
+              type="number"
               size={size}
               {...field}
             />
@@ -38,11 +36,11 @@ function FormInput(props: Props) {
                 {error.message}
               </Typography>
             )}
-          </>
+          </Box>
         )}
       />
     </>
   );
 }
 
-export default FormInput;
+export default FormNumber;

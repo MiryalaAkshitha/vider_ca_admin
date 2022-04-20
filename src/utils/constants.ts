@@ -227,7 +227,7 @@ export const CLIENT_CATEGORIES: Array<{
 
 export enum FormType {
   INTERNAL = "INTERNAL",
-  EXTERNAL = "EXTERNAL"
+  EXTERNAL = "EXTERNAL",
 }
 
 export enum RecurringFrequency {

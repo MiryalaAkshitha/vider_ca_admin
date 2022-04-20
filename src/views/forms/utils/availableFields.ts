@@ -95,12 +95,6 @@ const availableFields = [
   },
   {
     id: uuidv4(),
-    icon: icons.imageUpload,
-    label: "Image Upload",
-    fieldType: FormBuilderFieldTypes.IMAGE_UPLOAD,
-  },
-  {
-    id: uuidv4(),
     icon: icons.termsAndConditions,
     label: "Terms & Conditions",
     fieldType: FormBuilderFieldTypes.TERMS_AND_CONDITIONS,

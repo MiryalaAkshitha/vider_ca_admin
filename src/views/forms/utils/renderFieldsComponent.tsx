@@ -7,7 +7,6 @@ import Dropdown from "../formBuilderFieldComponents/Dropdown";
 import DropDownMultiple from "../formBuilderFieldComponents/DropdownMultiple";
 import Email from "../formBuilderFieldComponents/Email";
 import FileUpload from "../formBuilderFieldComponents/FileUpload";
-import ImageUpload from "../formBuilderFieldComponents/ImageUpload";
 import MobileNumber from "../formBuilderFieldComponents/MobileNumber";
 import MultiLine from "../formBuilderFieldComponents/MultiLine";
 import Name from "../formBuilderFieldComponents/Name";
@@ -52,6 +51,20 @@ export enum FormBuilderInputTypes {
   MIDDLE_NAME = "MIDDLE_NAME",
 }
 
+export enum FormBuilderFileTypes {
+  JPEG = "image/jpeg",
+  PNG = "image/png",
+  SVG = "image/svg+xml",
+  JPG = "image/jpg",
+  TEXT = "text/plain",
+  CSV = "text/csv",
+  MP4 = "video/mp4",
+  AUDIO = "audio/mpeg",
+  WEBM = "video/webm",
+  PDF = "application/pdf",
+  ZIP = "application/zip",
+}
+
 export const renderFieldsComponent = (item: any, control: any, watch: any) => {
   switch (item.fieldType) {
     case FormBuilderFieldTypes.SINGLE_LINE:
@@ -80,9 +93,6 @@ export const renderFieldsComponent = (item: any, control: any, watch: any) => {
 
     case FormBuilderFieldTypes.CHECKBOX:
       return <Checkbox item={item} control={control} watch={watch} />;
-
-    case FormBuilderFieldTypes.IMAGE_UPLOAD:
-      return <ImageUpload item={item} control={control} watch={watch} />;
 
     case FormBuilderFieldTypes.FILE_UPLOAD:
       return <FileUpload item={item} control={control} watch={watch} />;

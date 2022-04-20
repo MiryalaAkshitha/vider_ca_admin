@@ -64,6 +64,13 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
       };
     }
 
+    if (item?.fieldType === FormBuilderFieldTypes.FILE_UPLOAD) {
+      apiData.fileMaxSize = {
+        size: apiData.fileMaxSize,
+        type: apiData.fileMaxSizeType,
+      };
+    }
+
     mutate({
       formId: params.formId,
       pageId: data?.pages?.[activePage]?._id,

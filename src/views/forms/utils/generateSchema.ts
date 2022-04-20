@@ -161,6 +161,18 @@ class GenerateSchema {
     if (item.required) {
       validation = validation.required(`${item.label} is required`);
     }
+
+    if (item?.range) {
+      validation = validation.min(
+        item.range.min,
+        `${item.label} must be at least ${item.range.min} characters`
+      );
+      validation = validation.max(
+        item.range.max,
+        `${item.label} must be at most ${item.range.max} characters`
+      );
+    }
+
     this.schema[item._id?.toString()] = validation;
   }
 

@@ -52,6 +52,18 @@ class GenerateAddFieldDefaultValues {
         this.decisionBoxDefaultValues();
         break;
 
+      case FormBuilderFieldTypes.NUMBER:
+        this.numberDefaultValues();
+        break;
+
+      case FormBuilderFieldTypes.MULTI_LINE:
+        this.multilineDefaultValues();
+        break;
+
+      case FormBuilderFieldTypes.FILE_UPLOAD:
+        this.fileUploadDefaultValues();
+        break;
+
       default:
         break;
     }
@@ -147,6 +159,52 @@ class GenerateAddFieldDefaultValues {
       defaultValue: this.item.defaultValue || false,
       checkedText: this.item.decisionText?.checkedText || "",
       uncheckedText: this.item.decisionText?.uncheckedText || "",
+    };
+  }
+
+  numberDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      required: this.item.required,
+      fieldSize: this.item.fieldSize,
+      placeHolder: this.item.placeHolder || "",
+      instructions: this.item.instructions || "",
+      range: this.item.range || {
+        min: 1,
+        max: 1,
+        type: "VALUES",
+      },
+    };
+  }
+
+  multilineDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      required: this.item.required,
+      fieldSize: this.item.fieldSize,
+      placeHolder: this.item.placeHolder || "",
+      instructions: this.item.instructions || "",
+      showCharacterCount: this.item.showCharacterCount || false,
+      range: this.item.range || {
+        min: 1,
+        max: 1,
+        type: "CHARACTERS",
+      },
+    };
+  }
+
+  fileUploadDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      required: this.item.required,
+      uploadFileTypes: this.item.uploadFileTypes || [],
+      fileMaxSize: this.item?.fileMaxSize?.size || 1,
+      fileMaxSizeType: this.item?.fileMaxSize?.type || "KB",
+      range: this.item.range || {
+        min: 1,
+        max: 1,
+        type: "FILES",
+      },
     };
   }
 }

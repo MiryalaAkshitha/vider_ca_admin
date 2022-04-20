@@ -1,6 +1,13 @@
 import { array, boolean, date, number, object, string } from "yup";
 import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
+interface RangeProps {
+  minMin?: number;
+  minMax?: number;
+  maxMin?: number;
+  maxMax?: number;
+}
+
 class GenerateAddFieldSchema {
   schema: any = {};
   item: any;
@@ -52,6 +59,18 @@ class GenerateAddFieldSchema {
         this.decisionBoxSchema();
         break;
 
+      case FormBuilderFieldTypes.NUMBER:
+        this.numberSchema();
+        break;
+
+      case FormBuilderFieldTypes.MULTI_LINE:
+        this.multilineSchema();
+        break;
+
+      case FormBuilderFieldTypes.FILE_UPLOAD:
+        this.fileUploadSchema();
+        break;
+
       default:
         break;
     }
@@ -65,13 +84,17 @@ class GenerateAddFieldSchema {
     };
   }
 
-  rangeSchema() {
+  rangeSchema(rangeProps?: RangeProps) {
+    rangeProps = rangeProps || {
+      minMin: 1,
+      minMax: 100,
+      maxMin: 1,
+      maxMax: 255,
+    };
+    const { minMin = 1, maxMin = 1 } = rangeProps;
     return object().shape({
-      min: number().required().min(1, "Minimum value is 1"),
-      max: number()
-        .required()
-        .min(1, "Minimum value is 1")
-        .max(255, "Maximum value is 255"),
+      min: number().required().min(minMin, `Minimum value is ${minMin}`),
+      max: number().required().min(maxMin, `Minimum value is ${maxMin}`),
       type: string().required(),
     });
   }
@@ -167,6 +190,42 @@ class GenerateAddFieldSchema {
       defaultValue: boolean().required(),
       checkedText: string().notRequired(),
       uncheckedText: string().notRequired(),
+    };
+  }
+
+  numberSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      required: boolean().required(),
+      fieldSize: string().required(),
+      placeHolder: string().notRequired(),
+      instructions: string().notRequired(),
+      range: this.rangeSchema(),
+    };
+  }
+
+  multilineSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      required: boolean().required(),
+      fieldSize: string().required(),
+      placeHolder: string().notRequired(),
+      instructions: string().notRequired(),
+      showCharacterCount: boolean().required(),
+      range: this.rangeSchema(),
+    };
+  }
+
+  fileUploadSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      required: boolean().required(),
+      range: this.rangeSchema(),
+      fileMaxSize: number()
+        .required()
+        .typeError("Size must be a number")
+        .min(1, "Minimum size is 1"),
+      fileMaxSizeType: string().required(),
     };
   }
 }

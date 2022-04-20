@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Typography } from "@mui/material";
+import { Box, MenuItem, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 interface Props {
@@ -19,7 +19,7 @@ function FormSelect(props: Props) {
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <>
+          <Box>
             <TextField
               error={Boolean(error)}
               variant="outlined"
@@ -39,13 +39,13 @@ function FormSelect(props: Props) {
             {error && (
               <Typography
                 variant="caption"
-                sx={{ pl: "2px" }}
+                sx={{ pl: "2px", display: "block" }}
                 color="rgb(211, 47, 47)"
               >
                 {error.message}
               </Typography>
             )}
-          </>
+          </Box>
         )}
       />
     </>

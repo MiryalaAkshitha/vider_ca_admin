@@ -16,16 +16,35 @@ export function prepareField(item: any) {
 
   switch (item?.fieldType) {
     case FormBuilderFieldTypes.SINGLE_LINE:
-      return field;
+      return {
+        ...field,
+        range: {
+          min: 1,
+          max: 1,
+          type: "CHARACTERS",
+        },
+      };
 
     case FormBuilderFieldTypes.MULTI_LINE:
       return {
         ...field,
+        range: {
+          min: 1,
+          max: 1,
+          type: "CHARACTERS",
+        },
         showCharacterCount: false,
       };
 
     case FormBuilderFieldTypes.EMAIL:
-      return field;
+      return {
+        ...field,
+        range: {
+          min: 1,
+          max: 1,
+          type: "CHARACTERS",
+        },
+      };
 
     case FormBuilderFieldTypes.DROPDOWN:
       return {
@@ -53,6 +72,11 @@ export function prepareField(item: any) {
     case FormBuilderFieldTypes.CHECKBOX:
       return {
         ...field,
+        range: {
+          min: 1,
+          max: 1,
+          type: "CHOICES",
+        },
         options,
       };
 
@@ -98,23 +122,8 @@ export function prepareField(item: any) {
           type: "FILES",
         },
         fileMaxSize: {
-          size: 4,
-          type: "MB",
-        },
-      };
-
-    case FormBuilderFieldTypes.IMAGE_UPLOAD:
-      return {
-        ...field,
-        uploadFielTypes: [],
-        range: {
-          min: 1,
-          max: 1,
-          type: "FILES",
-        },
-        fileMaxSize: {
-          size: 4,
-          type: "MB",
+          size: 150,
+          type: "KB",
         },
       };
 
@@ -136,6 +145,16 @@ export function prepareField(item: any) {
         defaultValue: false,
         checkedText: "",
         uncheckedText: "",
+      };
+
+    case FormBuilderFieldTypes.NUMBER:
+      return {
+        ...field,
+        range: {
+          min: 1,
+          max: 1,
+          type: "VALUES",
+        },
       };
 
     default:

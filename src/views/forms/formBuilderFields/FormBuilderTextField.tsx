@@ -57,7 +57,8 @@ function FormbuilderTextField(props: Props) {
             />
             {showCharacterCount && (
               <Typography mt={1} variant="body2">
-                Character count: {getCount(field.value) || 0}
+                {countType === "WORDS" ? "Words" : "Characters"} count:{" "}
+                {getCount(field.value) || 0}
               </Typography>
             )}
             {error && (

@@ -142,6 +142,7 @@ function Upload(props: UploadProps) {
   };
 
   const removeFile = (index: number) => {
+    setError("");
     const newState = [...state];
     newState.splice(index, 1);
     setState(newState);
