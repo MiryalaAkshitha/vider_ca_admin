@@ -3,7 +3,6 @@ import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
 import FormLimitRange from "components/FormFields/FormLimitRange";
 import FormRadio from "components/FormFields/FormRadio";
-import FormSelect from "components/FormFields/FormSelect";
 
 interface Props {
   item: any;

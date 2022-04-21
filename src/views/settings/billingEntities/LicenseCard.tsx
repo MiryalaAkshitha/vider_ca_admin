@@ -10,23 +10,19 @@ import {
 import { deleteOrganizationLicense } from "api/services/organization";
 import { useConfirm } from "components/ConfirmDialogProvider";
 import useSnack from "hooks/useSnack";
-import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { StyledAttachment } from "../organization/styles";
 
 function LicenseCard() {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const confirm = useConfirm();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteOrganizationLicense, {
     onSuccess: () => {
       snack.success("License has been deleted");
       queryClient.invalidateQueries("organization_licenses");
-      setOpen(false);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -85,22 +81,6 @@ function LicenseCard() {
             <Typography variant="body2" gutterBottom>
               Attachment
             </Typography>
-
-            <StyledAttachment
-              sx={{
-                p: 1,
-              }}
-            >
-              <a target="_blank" rel="noopener noreferrer">
-                <Typography
-                  gutterBottom
-                  variant="body2"
-                  color="rgba(0,0,0,0.8)"
-                >
-                  {}
-                </Typography>
-              </a>
-            </StyledAttachment>
           </Grid>
         </Grid>
         <IconButton
@@ -127,7 +107,7 @@ function LicenseCard() {
             horizontal: "right",
           }}
         >
-          <MenuItem onClick={() => setOpen(true)}>Edit</MenuItem>
+          <MenuItem>Edit</MenuItem>
           <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
       </Box>

@@ -1,5 +1,4 @@
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import FloatingButton from "components/FloatingButton";
@@ -7,7 +6,6 @@ import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Actions from "./Actions";
 import AddBillingEntities from "./AddBillingEntities";
 
@@ -27,15 +25,6 @@ const BillingEntityTable = ({ data, isLoading }) => {
       },
     },
   ];
-
-  const navigate = useNavigate();
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selected, setSelected] = useState<any[]>([]);
-
-  const handleRowClick = (v: any) => {
-    navigate(`/settings/billing-entities/${v.id}`);
-  };
 
   return (
     <>
@@ -57,20 +46,6 @@ const BillingEntityTable = ({ data, isLoading }) => {
               >
                 Filters
               </Button>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box display="flex" gap={2}>
-              {selected.length > 0 && (
-                <Button
-                  onClick={(e) => setAnchorEl(e.currentTarget)}
-                  variant="outlined"
-                  color="secondary"
-                  endIcon={<KeyboardArrowDownOutlinedIcon />}
-                >
-                  Actions
-                </Button>
-              )}
             </Box>
           </Grid>
         </Grid>

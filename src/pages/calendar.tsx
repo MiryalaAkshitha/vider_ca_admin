@@ -1,6 +1,6 @@
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Box } from "@mui/material";
 import { getEvents } from "api/services/events";
@@ -49,15 +49,11 @@ function Calendar() {
 
   if (isLoading || tasksLoading) return <Loader />;
 
-  const clickedevent = (value) => {
-    if (value.event.backgroundColor === "#88B151") {
-      const gotId = value.event.id;
-      {
-        events.data.map(
-          (item: any) => item?.id === gotId && (setOpen(true), setData(item))
-        );
-      }
-    }
+  const clickedevent = (value: any) => {
+    if (value.event.backgroundColor !== "#88B151") return;
+    let event = events?.data?.find((item: any) => item.id === +value.event.id);
+    setOpen(true);
+    setData(event);
   };
 
   return (

@@ -18,19 +18,19 @@ function Pages() {
 
   const didMountRef = useRef(false);
 
-  // useEffect(() => {
-  //   if (didMountRef.current) {
-  //     if (!elementRef.current) return;
+  useEffect(() => {
+    if (didMountRef.current) {
+      if (!elementRef.current) return;
 
-  //     let elementScrollHeight = elementRef.current.scrollHeight;
+      // let elementScrollHeight = elementRef.current.scrollHeight;
 
-  //     window.scrollTo({
-  //       top: elementScrollHeight,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  //   didMountRef.current = true;
-  // }, [data]);
+      // window.scrollTo({
+      //   top: elementScrollHeight,
+      //   behavior: "smooth",
+      // });
+    }
+    didMountRef.current = true;
+  }, [data]);
 
   return (
     <Box

@@ -1,16 +1,14 @@
+import { MoreVert } from "@mui/icons-material";
 import {
+  Box,
   Grid,
-  Menu,
   IconButton,
+  Menu,
   MenuItem,
   Typography,
-  Box,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import { useState } from "react";
-import { MoreVert } from "@mui/icons-material";
 import { emptyLicenses } from "assets";
+import { useState } from "react";
 
 const BankAccountDetailsCard = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
