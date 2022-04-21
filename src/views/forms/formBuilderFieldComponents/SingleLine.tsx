@@ -45,15 +45,17 @@ const SingleLine = (props: Props) => {
           ]}
         />
       </Box>
-      <FormSelect
-        control={control}
-        name="validationFormat"
-        label="Validation Type"
-        options={[
-          { label: "Pan Number", value: "[A-Z]{5}[0-9]{4}[A-Z]{1}" },
-          { label: "Aadhar Number", value: "^d{4}sd{4}sd{4}$" },
-        ]}
-      />
+      <Box mt={2}>
+        <FormSelect
+          control={control}
+          name="validationFormat"
+          label="Validation Type"
+          options={[
+            { label: "Pan Number", value: "[A-Z]{5}[0-9]{4}[A-Z]{1}" },
+            { label: "Aadhar Number", value: "^d{4}sd{4}sd{4}$" },
+          ]}
+        />
+      </Box>
       <Box mt={2}>
         <FormLimitRange
           name="range"

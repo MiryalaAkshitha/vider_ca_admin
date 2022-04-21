@@ -320,13 +320,12 @@ class GenerateSchema {
 
         if (item?.required) {
           result = result.required(`${item.label} is required`);
-        }
+          result = result.matches(/^[0-9]*$/, `${item.label} must be a number`);
 
-        result = result.matches(/^[0-9]*$/, `${item.label} must be a number`);
-
-        if (item?.range) {
-          result = result.min(min, `${label} must be at least ${min}`);
-          result = result.max(max, `${label} must be at most ${max}`);
+          if (item?.range) {
+            result = result.min(min, `${label} must be at least ${min}`);
+            result = result.max(max, `${label} must be at most ${max}`);
+          }
         }
 
         return result;

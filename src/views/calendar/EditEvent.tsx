@@ -29,7 +29,6 @@ function EditEvent({ data, open, setOpen }) {
   const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
-  console.log(data);
 
   useEffect(() => {
     reset({
