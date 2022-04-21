@@ -232,7 +232,6 @@ class GenerateAddFieldSchema {
     this.schema = {
       label: string().required("Field name is required"),
       required: boolean().required(),
-      fieldSize: string().required(),
       range: this.rangeSchema(),
       fileMaxSize: number()
         .required()

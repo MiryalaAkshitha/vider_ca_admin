@@ -52,7 +52,7 @@ function Pages() {
         </Button>
         <a
           rel="noopener noreferrer"
-          href={`/forms/${data._id}/?preview=true`}
+          href={`/forms/access/${data._id}/?preview=true`}
           style={{ textDecoration: "none" }}
           target="_blank"
         >

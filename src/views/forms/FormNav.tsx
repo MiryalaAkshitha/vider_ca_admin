@@ -5,19 +5,14 @@ import { useLocation } from "react-router-dom";
 
 const formMenu = [
   {
-    title: "My Forms",
+    title: "Form templates",
     path: "",
     pathName: "/forms",
   },
   {
-    title: "Standard forms",
-    path: "standard-forms",
-    pathName: "/forms/standard-forms",
-  },
-  {
-    title: "Form Settings",
-    path: "form-settings",
-    pathName: "/forms/form-settings",
+    title: "Form validations",
+    path: "form-validations",
+    pathName: "/forms/form-validations",
   },
 ];
 

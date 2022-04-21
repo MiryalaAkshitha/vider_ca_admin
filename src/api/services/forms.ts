@@ -40,6 +40,22 @@ const updateField = ({ formId, pageId, fieldId, data }: any) => {
   return http.patch(`/forms/${formId}/pages/${pageId}/fields/${fieldId}`, data);
 };
 
+const getFormValidations = () => {
+  return http.get("/form-validations");
+};
+
+const createFormValidation = ({ data }) => {
+  return http.post("/form-validations", data);
+};
+
+const updateFormValidation = ({ id, data }) => {
+  return http.patch(`/form-validations/${id}`, data);
+};
+
+const deleteFormValidation = ({ id }) => {
+  return http.delete(`/form-validations/${id}`);
+};
+
 export {
   getForms,
   createForm,
@@ -51,4 +67,8 @@ export {
   deleteField,
   addField,
   updateField,
+  getFormValidations,
+  createFormValidation,
+  deleteFormValidation,
+  updateFormValidation,
 };

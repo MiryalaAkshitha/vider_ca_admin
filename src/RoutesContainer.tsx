@@ -71,11 +71,10 @@ const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
 });
 const Forms = loadable(() => import("pages/forms"));
-const MyForms = loadable(() => import("pages/forms/MyForms"));
-const StandardForms = loadable(() => import("pages/forms/StandardForms"));
-const FormSettings = loadable(() => import("pages/forms/FormSettings"));
-const CreateForm = loadable(() => import("pages/forms/FormBuilder"));
-const ViewForm = loadable(() => import("pages/forms/AccessForm"));
+const FormTemplates = loadable(() => import("pages/forms/FormTemplates"));
+const FormValidations = loadable(() => import("pages/forms/FormValidations"));
+const FormBuilder = loadable(() => import("pages/forms/FormBuilder"));
+const AccessForm = loadable(() => import("pages/forms/AccessForm"));
 
 function RoutesContainer() {
   return (
@@ -97,9 +96,8 @@ function RoutesContainer() {
           </Route>
           <Route path="broadcast" element={<BroadCast />} />
           <Route path="forms" element={<Forms />}>
-            <Route index element={<MyForms />} />
-            <Route path="standard-forms" element={<StandardForms />} />
-            <Route path="form-settings" element={<FormSettings />} />
+            <Route index element={<FormTemplates />} />
+            <Route path="form-validations" element={<FormValidations />} />
           </Route>
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
@@ -157,8 +155,8 @@ function RoutesContainer() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/forms/builder/:formId" element={<CreateForm />} />
-        <Route path="/forms/:formId" element={<ViewForm />} />
+        <Route path="/forms/builder/:formId" element={<FormBuilder />} />
+        <Route path="/forms/access/:formId" element={<AccessForm />} />
       </Routes>
       <GlobalDrawers />
     </Router>
