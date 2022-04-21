@@ -8,11 +8,7 @@ import {
   handleAddressChange,
   selectInvoice,
 } from "redux/reducers/createInvoiceSlice";
-import { DialogProps, InputChangeType, ResType } from "types";
-
-interface Props extends DialogProps {
-  type: "billing" | "shipping";
-}
+import { InputChangeType, ResType } from "types";
 
 const EditAddress = ({ open, setOpen, type }) => {
   const { billingAddress, shippingAddress } = useSelector(selectInvoice);

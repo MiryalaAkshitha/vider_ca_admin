@@ -14,21 +14,11 @@ import UploadImage from "components/UploadImage";
 import { StyledAttachment } from "../organization/styles";
 
 const AddEntityDocuments = ({ open, setOpen, state, setState }) => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: createEntityDocumentDefaultValues,
     mode: "onChange",
     resolver: yupResolver(CreateEntityDocumentSchema),
   });
-
-  const handleChange = (e: any) => {
-    setState((draft: any) => {
-      draft[e.target.name] = e.target.value;
-    });
-  };
 
   const onFormSubmit = (data: any) => {
     console.log(data);

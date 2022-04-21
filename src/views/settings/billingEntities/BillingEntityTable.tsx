@@ -1,24 +1,15 @@
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import {
-  Button,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
-import useQueryParams from "hooks/useQueryParams";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import useTitle from "hooks/useTitle";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AddBillingEntities from "./AddBillingEntities";
 import Actions from "./Actions";
+import AddBillingEntities from "./AddBillingEntities";
 
 const BillingEntityTable = ({ data, isLoading }) => {
   useTitle("BillingEntity");
@@ -41,8 +32,6 @@ const BillingEntityTable = ({ data, isLoading }) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selected, setSelected] = useState<any[]>([]);
-  const selectionRef = useRef<any>({});
-  const { queryParams, setQueryParams } = useQueryParams();
 
   const handleRowClick = (v: any) => {
     navigate(`/settings/billing-entities/${v.id}`);

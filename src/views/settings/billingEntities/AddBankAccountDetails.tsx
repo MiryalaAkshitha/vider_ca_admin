@@ -32,7 +32,7 @@ const AddBankAccountDetails = ({ open, setOpen, state, setState }) => {
     },
   });
 
-  const { control, handleSubmit, watch } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: createBankdetailsDefaultValues,
     mode: "onChange",
     resolver: yupResolver(CreatebankDetailsSchema),

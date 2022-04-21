@@ -15,9 +15,6 @@ import { emptyLicenses } from "assets";
 const BankAccountDetailsCard = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const Item = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(1),
-  }));
   return (
     <>
       <Grid

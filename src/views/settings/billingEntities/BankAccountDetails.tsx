@@ -1,14 +1,9 @@
-import NoItems from "components/NoItems";
-import SectionWrapper from "../organization/SectionWrapper";
-import { useState } from "react";
-import AddBankAccountDetails from "./AddBankAccountDetails";
-import { useImmer } from "use-immer";
-import { useQuery } from "react-query";
-import { ResType } from "types";
-import { emptyLicenses } from "assets";
-import BankAccountDetailsCard from "./BankAccountDetailsCard";
-import { Box, Typography, Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
+import { useImmer } from "use-immer";
+import AddBankAccountDetails from "./AddBankAccountDetails";
+import BankAccountDetailsCard from "./BankAccountDetailsCard";
 
 const BankAccountDetails = () => {
   const [open, setOpen] = useState<boolean>(false);
