@@ -1,21 +1,29 @@
 import { Box } from "@mui/material";
+import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
+import FormLimitRange from "components/FormFields/FormLimitRange";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
-import LoadingButton from "components/LoadingButton";
+import { currencies } from "utils/currencies";
 
-const Currency = (props: any) => {
+interface Props {
+  item: any;
+  control: any;
+  watch: any;
+}
+
+const Currency = (props: Props) => {
   const { control } = props;
+
   return (
     <>
       <Box mt={2}>
-        <FormInput name="feildName" label="Feild Name" control={control} />
+        <FormInput name="label" label="Field Name" control={control} />
       </Box>
       <Box mt={2}>
         <FormInput
-          name="fieldInstructions"
-          label="Field Instructions"
-          multiline
+          name="placeHolder"
+          label="PlaceHolder Text"
           control={control}
         />
       </Box>
@@ -26,63 +34,40 @@ const Currency = (props: any) => {
           name="fieldSize"
           label="Field Size"
           options={[
-            { label: "Small", value: "small" },
-            { label: "Medium", value: "medium" },
-            { label: "Large", value: "large" },
+            { label: "Small", value: "SMALL" },
+            { label: "Medium", value: "MEDIUM" },
+            { label: "Large", value: "LARGE" },
           ]}
         />
       </Box>
       <Box mt={2}>
-        <FormInput
-          name="placeHolderText"
-          label="PlaceHolder Text"
+        <FormSelect
           control={control}
+          name="currencyType"
+          label="Currency"
+          options={currencies?.map((currency: any) => ({
+            label: currency.name,
+            value: currency.code,
+          }))}
         />
       </Box>
       <Box mt={2}>
         <FormRadio
           row
           control={control}
-          name="fieldType"
-          label="Field Type"
+          name="currencyDisplay"
+          label="Currency Display"
           options={[
-            { label: "Mandatory", value: "mandatory" },
-            { label: "Non Madatory", value: "non mandatory" },
+            { label: "Code", value: "CODE" },
+            { label: "Symbol", value: "SYMBOL" },
           ]}
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="currency"
-          label="Select Currency"
-          options={[
-            { label: "Currency 1", value: "Currency 1" },
-            { label: "Currency 2", value: "Currency 2" },
-          ]}
-        />
+        <FormLimitRange name="range" control={control} label="Limit" />
       </Box>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="thousandSeparator"
-          label="Thousand Separator"
-          options={[
-            { label: "Thousand Separator 1", value: "Thousand Separator 1" },
-            { label: "Thousand Separator 2", value: "Thousand Separator 2" },
-          ]}
-        />
-      </Box>
-
-      <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-        <LoadingButton
-          loading={false}
-          fullWidth
-          type="submit"
-          loadingColor="white"
-          title="Create Field"
-          color="secondary"
-        />
+        <FormCheckbox control={control} name="required" label="Mandatory" />
       </Box>
     </>
   );

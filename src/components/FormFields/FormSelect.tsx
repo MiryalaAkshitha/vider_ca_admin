@@ -28,6 +28,15 @@ function FormSelect(props: Props) {
               fullWidth
               size={size}
               style={style}
+              SelectProps={{
+                MenuProps: {
+                  PaperProps: {
+                    sx: {
+                      maxHeight: 300,
+                    },
+                  },
+                },
+              }}
               {...field}
             >
               {options.map((item, index) => (

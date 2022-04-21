@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormDate from "components/FormFields/FormDate";
@@ -40,15 +40,26 @@ const Date = (props: Props) => {
           name="allowedDays"
           label="Allowed Days"
           options={[
-            { label: "Sunday", value: "SUNDAY" },
-            { label: "Monday", value: "MONDAY" },
-            { label: "Tuesday", value: "TUESDAY" },
-            { label: "Wednesday", value: "WEDNESSDAY" },
-            { label: "Thursday", value: "THURSDAY" },
-            { label: "Friday", value: "FRIDAY" },
-            { label: "Saturday", value: "SATURDAY" },
+            { label: "Sunday", value: "Sunday" },
+            { label: "Monday", value: "Monday" },
+            { label: "Tuesday", value: "Tuesday" },
+            { label: "Wednesday", value: "Wednessday" },
+            { label: "Thursday", value: "Thursday" },
+            { label: "Friday", value: "Friday" },
+            { label: "Saturday", value: "Saturday" },
           ]}
         />
+        <Typography
+          sx={{
+            display: "block",
+            color: "rgba(0,0,0,0.6)",
+            mt: "3px",
+            ml: "2px",
+          }}
+          variant="caption"
+        >
+          By default all days are allowed
+        </Typography>
       </Box>
       <Box mt={2}>
         <FormSelect

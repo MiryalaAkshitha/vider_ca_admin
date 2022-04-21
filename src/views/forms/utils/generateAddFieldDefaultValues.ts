@@ -1,4 +1,3 @@
-import { getTitle } from "utils";
 import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
 class GenerateAddFieldDefaultValues {
@@ -64,6 +63,10 @@ class GenerateAddFieldDefaultValues {
         this.fileUploadDefaultValues();
         break;
 
+      case FormBuilderFieldTypes.CURRENCY:
+        this.currencyDefaultValues();
+        break;
+
       default:
         break;
     }
@@ -91,9 +94,9 @@ class GenerateAddFieldDefaultValues {
       required: this.item.required,
       fieldSize: this.item.fieldSize,
       allowedDays:
-        this.item.allowedDays?.map((item: string) => ({
-          label: getTitle(item?.toLowerCase()),
-          value: item,
+        this.item.allowedDays?.map((item: any) => ({
+          label: item?.label,
+          value: item?.value,
         })) || [],
       allowedDates: this.item.allowedDates || "",
       startDate: this.item?.dateRange?.startDate || null,
@@ -204,6 +207,22 @@ class GenerateAddFieldDefaultValues {
         min: 1,
         max: 1,
         type: "FILES",
+      },
+    };
+  }
+
+  currencyDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      required: this.item.required,
+      fieldSize: this.item.fieldSize,
+      placeHolder: this.item.placeHolder || "",
+      currencyType: this.item.currencyType || "",
+      currencyDisplay: this.item.currencyDisplay || "",
+      range: this.item.range || {
+        min: 1,
+        max: 1,
+        type: "VALUES",
       },
     };
   }

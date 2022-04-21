@@ -10,7 +10,7 @@ export function prepareField(item: any) {
   let options = [1, 2, 3].map((item) => {
     return {
       label: `Option ${item}`,
-      value: `${item}`,
+      value: `Option ${item}`,
     };
   });
 
@@ -110,6 +110,11 @@ export function prepareField(item: any) {
         ...field,
         currencyType: "USD",
         currencyDisplay: "CODE",
+        range: {
+          min: 1,
+          max: 1,
+          type: "VALUES",
+        },
       };
 
     case FormBuilderFieldTypes.FILE_UPLOAD:

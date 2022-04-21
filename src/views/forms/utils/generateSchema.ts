@@ -255,18 +255,40 @@ class GenerateSchema {
       validation = validation.required(`${item.label} is required`);
 
       if (item?.allowedDates === "CUSTOM") {
-        validation = validation.min(min, `${label} must be after ${min}`);
-        validation = validation.max(max, `${label} must be before ${max}`);
+        validation = validation.min(
+          min,
+          `${label} must be ${moment(min).format("YYYY-MM-DD")} or after`
+        );
+        validation = validation.max(
+          max,
+          `${label} must be before ${moment(max).format("YYYY-MM-DD")}`
+        );
+      }
+
+      if (item?.allowedDates === "FUTURE") {
+        validation = validation.min(
+          moment().format("YYYY-MM-DD"),
+          `${label} must be today or after today`
+        );
+      }
+
+      if (item?.allowedDates === "PAST") {
+        validation = validation.max(
+          moment().format("YYYY-MM-DD"),
+          `${label} must be before today`
+        );
       }
 
       if (item?.allowedDays && item?.allowedDays?.length > 0) {
         validation = validation.test(
           attribute,
-          `${label} must be one of ${item?.allowedDays?.join(", ")}`,
+          `${label} must be one of ${item?.allowedDays
+            ?.map((item: any) => item?.label)
+            ?.join(", ")}`,
           (value) => {
-            return item?.allowedDays?.includes(
-              moment(value).format("dddd")?.toUpperCase()
-            );
+            return item?.allowedDays
+              ?.map((item: any) => item?.value)
+              ?.includes(moment(value).format("dddd"));
           }
         );
       }
@@ -338,7 +360,7 @@ class GenerateSchema {
     let label = item.label;
     let min = item?.range?.min;
     let max = item?.range?.max;
-    let validation = number();
+    let validation = number().typeError("Currency must be a number");
 
     if (item.required) {
       validation = validation.required(`${item.label} is required`);

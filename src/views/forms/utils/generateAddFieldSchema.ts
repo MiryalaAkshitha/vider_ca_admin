@@ -71,6 +71,10 @@ class GenerateAddFieldSchema {
         this.fileUploadSchema();
         break;
 
+      case FormBuilderFieldTypes.CURRENCY:
+        this.currencySchema();
+        break;
+
       default:
         break;
     }
@@ -220,12 +224,24 @@ class GenerateAddFieldSchema {
     this.schema = {
       label: string().required("Field name is required"),
       required: boolean().required(),
+      fieldSize: string().required(),
       range: this.rangeSchema(),
       fileMaxSize: number()
         .required()
         .typeError("Size must be a number")
         .min(1, "Minimum size is 1"),
       fileMaxSizeType: string().required(),
+    };
+  }
+
+  currencySchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      required: boolean().required(),
+      range: this.rangeSchema(),
+      placeHolder: string().notRequired(),
+      currencyType: string().required(),
+      currencyDisplay: string().required(),
     };
   }
 }

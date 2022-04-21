@@ -54,7 +54,6 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
           endDate: apiData.endDate,
         };
       }
-      apiData.allowedDays = apiData.allowedDays?.map((item: any) => item.value);
     }
 
     if (item?.fieldType === FormBuilderFieldTypes.DECISION_BOX) {
