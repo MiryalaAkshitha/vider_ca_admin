@@ -15,20 +15,12 @@ interface Props {
   size?: "small" | "medium";
   control: any;
   options?: Array<{ label: string; value: string; phone: string }>;
-  multiple?: boolean;
   trigger?: () => void;
   renderOption?: any;
 }
 
 function FormAutoComplete(props: Props) {
-  const {
-    name,
-    size = "small",
-    control,
-    label = "",
-    multiple = false,
-    trigger,
-  } = props;
+  const { name, size = "small", control, label = "", trigger } = props;
 
   return (
     <>
@@ -39,7 +31,7 @@ function FormAutoComplete(props: Props) {
           <>
             <Autocomplete
               size={size}
-              multiple={multiple}
+              multiple
               disablePortal
               onChange={(_, value) => {
                 field.onChange(value);
@@ -47,12 +39,15 @@ function FormAutoComplete(props: Props) {
                   trigger();
                 }
               }}
-              value={field.value}
+              value={Array.isArray(field.value) ? field.value : field.value}
               options={countries.map(({ code, label, phone }) => ({
                 label,
-                value: code,
+                code,
                 phone,
               }))}
+              isOptionEqualToValue={(option, value) => {
+                return option?.phone === value?.phone;
+              }}
               getOptionLabel={(country) => country.label}
               renderOption={(props, country) => {
                 return (
@@ -64,8 +59,8 @@ function FormAutoComplete(props: Props) {
                     <img
                       loading="lazy"
                       width="20"
-                      src={`https://flagcdn.com/w20/${country.value.toLowerCase()}.png`}
-                      srcSet={`https://flagcdn.com/w40/${country.value.toLowerCase()}.png 2x`}
+                      src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
+                      srcSet={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png 2x`}
                       alt=""
                     />
                     {country.label} ({country.value}) +{country.phone}
@@ -77,8 +72,8 @@ function FormAutoComplete(props: Props) {
                   <Chip
                     avatar={
                       <Avatar
-                        alt={country.value}
-                        src={`https://flagcdn.com/w20/${country.value.toLowerCase()}.png`}
+                        alt={country.code}
+                        src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
                       />
                     }
                     label={country.label}

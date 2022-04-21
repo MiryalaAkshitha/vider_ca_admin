@@ -70,6 +70,13 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
       };
     }
 
+    if (item?.fieldType === FormBuilderFieldTypes.NAME) {
+      let title = apiData.inputs?.find(
+        (item: any) => item.inputType === "TITLE"
+      );
+      title.options = apiData.titleOptions;
+    }
+
     mutate({
       formId: params.formId,
       pageId: data?.pages?.[activePage]?._id,

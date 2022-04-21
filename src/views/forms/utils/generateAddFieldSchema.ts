@@ -75,6 +75,14 @@ class GenerateAddFieldSchema {
         this.currencySchema();
         break;
 
+      case FormBuilderFieldTypes.PHONE:
+        this.phoneSchema();
+        break;
+
+      case FormBuilderFieldTypes.NAME:
+        this.nameSchema();
+        break;
+
       default:
         break;
     }
@@ -239,9 +247,62 @@ class GenerateAddFieldSchema {
       label: string().required("Field name is required"),
       required: boolean().required(),
       range: this.rangeSchema(),
+      fieldSize: string().required(),
       placeHolder: string().notRequired(),
       currencyType: string().required(),
       currencyDisplay: string().required(),
+    };
+  }
+
+  phoneSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      required: boolean().required(),
+      placeHolder: string().notRequired(),
+      fieldSize: string().required(),
+      range: this.rangeSchema(),
+      includeCountryCode: boolean().required(),
+      allowedCountries: array().required(),
+      defaultCountryCode: string().required(),
+    };
+  }
+
+  nameSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      instructions: string().notRequired(),
+      fieldSize: string().required(),
+      inputs: array(
+        object().shape({
+          label: string().required("Field name is required"),
+          inputType: string().required(),
+          inputSize: string().required(),
+          required: boolean().required(),
+          hide: boolean().required(),
+        })
+      )
+        .required()
+        .min(1, "Add at least one input"),
+      titleOptions: array().min(1, "Add at least one option"),
+    };
+  }
+
+  addressSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      instructions: string().notRequired(),
+      fieldSize: string().required(),
+      inputs: array(
+        object().shape({
+          label: string().required("Field name is required"),
+          inputType: string().required(),
+          inputSize: string().required(),
+          required: boolean().required(),
+          hide: boolean().required(),
+        })
+      )
+        .required()
+        .min(1, "Add at least one input"),
     };
   }
 }

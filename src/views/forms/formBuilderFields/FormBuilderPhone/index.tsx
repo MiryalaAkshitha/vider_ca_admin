@@ -13,6 +13,7 @@ interface Props {
   required?: boolean;
   includeCountryCode?: boolean;
   allowedCountries?: Array<string>;
+  defaultCountryCode?: string;
 }
 
 function FormBuilderPhone(props: Props) {
@@ -26,6 +27,7 @@ function FormBuilderPhone(props: Props) {
     required = false,
     includeCountryCode = false,
     allowedCountries = [],
+    defaultCountryCode = "91",
   } = props;
   const [width, setWidth] = useState(0);
 
@@ -42,7 +44,7 @@ function FormBuilderPhone(props: Props) {
             <Box sx={{ position: "relative" }}>
               {includeCountryCode && (
                 <SelectCountryCode
-                  value={field.value?.code || "91"}
+                  value={field.value?.code || defaultCountryCode}
                   allowedCountries={allowedCountries}
                   setWidth={setWidth}
                   onChange={(v: any) => {

@@ -1,4 +1,5 @@
 import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import React from "react";
 import { Controller } from "react-hook-form";
 import countries from "utils/countries";
 import { FormBuilderInputTypes } from "../utils/renderFieldsComponent";
@@ -13,43 +14,7 @@ interface Props {
 }
 
 function FormBuilderFieldWithInputs(props: Props) {
-  const {
-    name,
-    size = "small",
-    control,
-    label = "",
-    required = false,
-    inputs,
-  } = props;
-
-  const getOptions = (input: any) => {
-    if (input.inputType === FormBuilderInputTypes.TITLE) {
-      return input.options;
-    }
-
-    if (input.inputType === FormBuilderInputTypes.COUNTRY) {
-      if (input?.allowedCountries?.length) {
-        return countries
-          .filter((item: any) => {
-            return input.allowedCountries.includes(item.code);
-          })
-          .map((item: any) => {
-            return {
-              label: item.label,
-              value: item.code,
-            };
-          });
-      }
-      return countries.map((item: any) => {
-        return {
-          label: item.label,
-          value: item.code,
-        };
-      });
-    }
-
-    return input.options;
-  };
+  const { name, control, label = "", required = false, inputs } = props;
 
   return (
     <>
@@ -62,57 +27,13 @@ function FormBuilderFieldWithInputs(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <Grid container spacing={2}>
-              {inputs.map((input, index) => (
-                <Grid item xs={6}>
-                  {input.inputType === FormBuilderInputTypes.TITLE ||
-                  input.inputType === FormBuilderInputTypes.COUNTRY ? (
-                    <TextField
-                      key={index}
-                      variant="outlined"
-                      fullWidth
-                      size={size}
-                      select
-                      value={field.value ? field.value[input?._id] : ""}
-                      onChange={(e) => {
-                        let value = field.value || {};
-                        field.onChange({
-                          ...value,
-                          [input._id]: e.target.value,
-                        });
-                      }}
-                      placeholder={input.placeholder || ""}
-                    >
-                      {getOptions(input)?.map((option: any, index: number) => (
-                        <MenuItem key={index} value={option?.value}>
-                          {option?.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  ) : (
-                    <TextField
-                      key={index}
-                      variant="outlined"
-                      fullWidth
-                      size={size}
-                      onChange={(e) => {
-                        let value = field.value || {};
-                        field.onChange({
-                          ...value,
-                          [input._id]: e.target.value,
-                        });
-                      }}
-                      placeholder={input.placeholder || ""}
-                    />
-                  )}
-                  <Typography
-                    sx={{ display: "block", mt: "3px" }}
-                    variant="caption"
-                    color="rgba(0,0,0,0.6)"
-                  >
-                    {input.label}
-                  </Typography>
-                </Grid>
-              ))}
+              {inputs.map((input, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    {getInput(input, field)}
+                  </React.Fragment>
+                );
+              })}
             </Grid>
             {error && (
               <Typography
@@ -129,5 +50,111 @@ function FormBuilderFieldWithInputs(props: Props) {
     </>
   );
 }
+
+const getInput = (input: any, field: any) => {
+  let isTitle = input.inputType === "TITLE" && !input.hide;
+  let isCountry = input.inputType === "COUNTRY" && !input.hide;
+
+  if (isTitle || isCountry) {
+    return (
+      <Grid item xs={6}>
+        <TextField
+          variant="outlined"
+          fullWidth
+          size="small"
+          select
+          SelectProps={{
+            MenuProps: {
+              PaperProps: {
+                sx: {
+                  maxHeight: "300px",
+                },
+              },
+            },
+          }}
+          value={
+            field?.value && field.value[input?._id]
+              ? field.value[input?._id]
+              : ""
+          }
+          onChange={(e) => {
+            let value = field.value || {};
+            field.onChange({
+              ...value,
+              [input._id]: e.target.value,
+            });
+          }}
+          placeholder={input.placeholder || ""}
+        >
+          {getOptions(input)?.map((option: any, index: number) => (
+            <MenuItem key={index} value={option?.value}>
+              {option?.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <Typography
+          sx={{ display: "block", mt: "3px" }}
+          variant="caption"
+          color="rgba(0,0,0,0.6)"
+        >
+          {input.label}{" "}
+          {input?.required && <span style={{ color: "red" }}>*</span>}
+        </Typography>
+      </Grid>
+    );
+  } else {
+    if (!input.hide) {
+      return (
+        <Grid item xs={6}>
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="small"
+            value={
+              field?.value && field.value[input?._id]
+                ? field.value[input?._id]
+                : ""
+            }
+            onChange={(e) => {
+              let value = field.value || {};
+              field.onChange({
+                ...value,
+                [input._id]: e.target.value,
+              });
+            }}
+            placeholder={input.placeholder || ""}
+          />
+          <Typography
+            sx={{ display: "block", mt: "3px" }}
+            variant="caption"
+            color="rgba(0,0,0,0.6)"
+          >
+            {input.label}{" "}
+            {input?.required && <span style={{ color: "red" }}>*</span>}
+          </Typography>
+        </Grid>
+      );
+    } else {
+      return null;
+    }
+  }
+};
+
+const getOptions = (input: any) => {
+  if (input.inputType === FormBuilderInputTypes.TITLE) {
+    return input.options;
+  }
+
+  if (input.inputType === FormBuilderInputTypes.COUNTRY) {
+    return countries.map((item: any) => {
+      return {
+        label: item.label,
+        value: item.code,
+      };
+    });
+  }
+
+  return input.options;
+};
 
 export default FormBuilderFieldWithInputs;

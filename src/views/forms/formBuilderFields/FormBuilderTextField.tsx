@@ -53,7 +53,7 @@ function FormbuilderTextField(props: Props) {
               rows={multiline ? 3 : 1}
               size={size}
               onChange={field.onChange}
-              value={field.value || ""}
+              value={field.value ? field?.value : ""}
             />
             {showCharacterCount && (
               <Typography mt={1} variant="body2">

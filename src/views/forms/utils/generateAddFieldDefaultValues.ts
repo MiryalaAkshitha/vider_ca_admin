@@ -67,6 +67,18 @@ class GenerateAddFieldDefaultValues {
         this.currencyDefaultValues();
         break;
 
+      case FormBuilderFieldTypes.PHONE:
+        this.phoneDefaultValues();
+        break;
+
+      case FormBuilderFieldTypes.NAME:
+        this.nameDefaultValues();
+        break;
+
+      case FormBuilderFieldTypes.ADDRESS:
+        this.addressDefaultValues();
+        break;
+
       default:
         break;
     }
@@ -224,6 +236,46 @@ class GenerateAddFieldDefaultValues {
         max: 1,
         type: "VALUES",
       },
+    };
+  }
+
+  phoneDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      required: this.item.required,
+      fieldSize: this.item.fieldSize,
+      placeHolder: this.item.placeHolder || "",
+      includeCountryCode: this.item.includeCountryCode || false,
+      allowedCountries: this.item.allowedCountries || [],
+      defaultCountryCode: this.item.defaultCountryCode || "91",
+      range: this.item.range || {
+        min: 1,
+        max: 1,
+        type: "VALUES",
+      },
+    };
+  }
+
+  nameDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      fieldSize: this.item.fieldSize,
+      fieldType: this.item.fieldType,
+      instructions: this.item.instructions || "",
+      inputs: this.item.inputs,
+      titleOptions:
+        this.item.inputs.find((item: any) => item.inputType === "TITLE")
+          ?.options || [],
+    };
+  }
+
+  addressDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      fieldSize: this.item.fieldSize,
+      fieldType: this.item.fieldType,
+      instructions: this.item.instructions || "",
+      inputs: this.item.inputs,
     };
   }
 }

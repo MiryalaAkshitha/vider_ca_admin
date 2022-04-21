@@ -131,6 +131,7 @@ function RenderField({ item, control }: any) {
           required={item?.required}
           includeCountryCode={item?.includeCountryCode}
           allowedCountries={item?.allowedCountries}
+          defaultCountryCode={item?.defaultCountryCode}
         />
       );
 

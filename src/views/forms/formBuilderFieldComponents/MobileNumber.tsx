@@ -2,21 +2,23 @@ import { Box, Typography } from "@mui/material";
 import FormAutoCompleteCountries from "components/FormFields/FormAutoCompleteCountries";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
+import FormLimitRange from "components/FormFields/FormLimitRange";
 import FormRadio from "components/FormFields/FormRadio";
-import LoadingButton from "components/LoadingButton";
+import FormSelect from "components/FormFields/FormSelect";
+import countries from "utils/countries";
 
 const MobileNumber = (props: any) => {
   const { control, watch } = props;
+
   return (
     <>
       <Box mt={2}>
-        <FormInput name="feildName" label="Feild Name" control={control} />
+        <FormInput name="label" label="Field Name" control={control} />
       </Box>
       <Box mt={2}>
         <FormInput
-          name="fieldInstructions"
-          label="Field Instructions"
-          multiline
+          name="placeHolder"
+          label="PlaceHolder Text"
           control={control}
         />
       </Box>
@@ -27,72 +29,58 @@ const MobileNumber = (props: any) => {
           name="fieldSize"
           label="Field Size"
           options={[
-            { label: "Small", value: "small" },
-            { label: "Medium", value: "medium" },
-            { label: "Large", value: "large" },
+            { label: "Small", value: "SMALL" },
+            { label: "Medium", value: "MEDIUM" },
+            { label: "Large", value: "LARGE" },
           ]}
         />
       </Box>
       <Box mt={2}>
-        <FormInput
-          name="placeHolderText"
-          label="PlaceHolder Text"
-          control={control}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormRadio
-          row
-          control={control}
-          name="fieldType"
-          label="Field Type"
-          options={[
-            { label: "Mandatory", value: "mandatory" },
-            { label: "Non Madatory", value: "non mandatory" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <Typography variant="caption">Character Limit</Typography>
-      </Box>
-      <Box mt={2} sx={{ display: "flex" }}>
-        <Box mr={1}>
-          <FormInput name="min" label="Min" control={control} />
-        </Box>
-        <Box mr={1}>
-          <FormInput name="max" label="Max" control={control} />
-        </Box>
+        <FormLimitRange name="range" control={control} label="Limit" />
       </Box>
       <Box mt={2} sx={{ width: "40%" }}>
         <FormCheckbox
           control={control}
           label="Show Country Codes"
-          name="showCountryCodes"
+          name="includeCountryCode"
         />
       </Box>
-      {watch("showCountryCodes") && (
-        <Box mt={2}>
-          <FormAutoCompleteCountries
-            multiple
-            control={control}
-            label="Select Countries"
-            name="selectCountries"
-          />
-        </Box>
+      {watch("includeCountryCode") && (
+        <>
+          <Box mt={2}>
+            <FormAutoCompleteCountries
+              control={control}
+              label="Select Countries"
+              name="allowedCountries"
+            />
+            <Typography
+              sx={{
+                display: "block",
+                color: "rgba(0,0,0,0.6)",
+                mt: "3px",
+                ml: "2px",
+              }}
+              variant="caption"
+            >
+              By default all countries all selected if you don't select any
+            </Typography>
+          </Box>
+          <Box mt={2}>
+            <FormSelect
+              control={control}
+              label="Default country"
+              name="defaultCountryCode"
+              options={countries.map((item) => ({
+                label: item.label,
+                value: item.phone,
+              }))}
+            />
+          </Box>
+          <Box mt={2}>
+            <FormCheckbox control={control} name="required" label="Mandatory" />
+          </Box>
+        </>
       )}
-      <Typography variant="body2" sx={{ mt: 2 }}>
-        By default all countries are selected
-      </Typography>
-      <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-        <LoadingButton
-          loading={false}
-          fullWidth
-          type="submit"
-          loadingColor="white"
-          title="Create Field"
-          color="secondary"
-        />
-      </Box>
     </>
   );
 };

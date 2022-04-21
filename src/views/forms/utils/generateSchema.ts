@@ -379,6 +379,8 @@ class GenerateSchema {
     let validation: any = {};
 
     item.inputs.forEach((input: any) => {
+      if (input.hide) return;
+
       let inputValidation = string().default("");
 
       if (input.required) {

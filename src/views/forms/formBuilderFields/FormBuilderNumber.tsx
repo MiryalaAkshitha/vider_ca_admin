@@ -43,7 +43,6 @@ function FormBuilderNumber(props: Props) {
                 field.onChange(+e.target.value);
               }}
             />
-
             {error && (
               <Typography
                 variant="caption"

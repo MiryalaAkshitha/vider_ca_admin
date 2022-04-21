@@ -91,9 +91,10 @@ export function prepareField(item: any) {
       return {
         ...field,
         includeCountryCode: false,
+        defaultCountryCode: "91",
         allowedCountries: [],
         range: {
-          min: 0,
+          min: 1,
           max: 20,
           type: "VALUES",
         },
@@ -172,6 +173,7 @@ let nameInputs = [
     label: "Title",
     inputType: "TITLE",
     required: false,
+    hide: false,
     options: [
       {
         label: "Mr.",
@@ -191,16 +193,19 @@ let nameInputs = [
     label: "First Name",
     inputType: "FIRST_NAME",
     required: false,
+    hide: false,
   },
   {
     label: "Last Name",
     inputType: "LAST_NAME",
     required: false,
+    hide: false,
   },
   {
     label: "Middle Name",
     inputType: "MIDDLE_NAME",
     required: false,
+    hide: false,
   },
 ];
 
@@ -209,25 +214,36 @@ let addressInputs = [
     label: "Street",
     inputType: "ADDRESS_LINE1",
     required: false,
+    hide: false,
   },
   {
     label: "Area",
     inputType: "ADDRESS_LINE2",
     required: false,
+    hide: false,
   },
   {
     label: "City",
     inputType: "CITY",
     required: false,
+    hide: false,
   },
   {
     label: "State",
     inputType: "STATE",
     required: false,
+    hide: false,
+  },
+  {
+    label: "Pincode",
+    inputType: "PINCODE",
+    required: false,
+    hide: false,
   },
   {
     label: "Country",
     inputType: "COUNTRY",
     required: false,
+    hide: false,
   },
 ];
