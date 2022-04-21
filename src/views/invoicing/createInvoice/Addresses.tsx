@@ -1,5 +1,13 @@
 import EditIcon from "@mui/icons-material/Edit";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { logo } from "assets";
 import { useState } from "react";
@@ -7,24 +15,11 @@ import { useSelector } from "react-redux";
 import { selectInvoice } from "redux/reducers/createInvoiceSlice";
 import EditAddress from "./EditAddress";
 import InvoiceHeadings from "./InvoiceHeadings";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
 
 function Addresses() {
   const { billingAddress, shippingAddress } = useSelector(selectInvoice);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
-
-  const [currency, setCurrency] = useState("");
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
 
   const getAddress = (address) => {
     let result = "";

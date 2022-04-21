@@ -1,12 +1,10 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Fab } from "@mui/material";
+import { Fab, Menu, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
 import useTitle from "hooks/useTitle";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardInvoice from "views/invoicing/dashboard/DashboardInvoice";
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import { useState } from "react";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 function Invoicing() {
   useTitle("Invoice");
@@ -20,9 +18,11 @@ function Invoicing() {
   const handleNewReceipt = () => {};
 
   const handleNewEstimate = () => {};
+
   const handleNewInvoice = () => {
     navigate("/invoicing/create-invoice");
   };
+
   return (
     <Box>
       <DashboardInvoice />

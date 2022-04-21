@@ -1,40 +1,15 @@
-import {
-  FormControl,
-  Grid,
-  Divider,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
-import InvoiceHeadings from "./InvoiceHeadings";
-import { Box } from "@mui/system";
-import { getClients } from "api/services/client";
-import Loader from "components/Loader";
-import useTitle from "hooks/useTitle";
-import { useQuery } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  handleClientChange,
-  selectInvoice,
-} from "redux/reducers/createInvoiceSlice";
-import { ResType } from "types";
-import Addresses from "./Addresses";
-import BankDetails from "./BankDetails";
-import BottomBar from "./BottomBar";
-import DraggableListItems from "./DraggableListItems";
-import InvoiceDetails from "./InvoiceDetails";
-import OtherParticulars from "./OtherParticulars";
-import Particulars from "./Particulars";
+import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { logo } from "assets";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Box } from "@mui/system";
+import { logo } from "assets";
+import InvoiceHeadings from "./InvoiceHeadings";
 
 const Preview = () => {
   return (

@@ -1,15 +1,12 @@
 import {
+  Box,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Select,
-  Box,
   TextField,
 } from "@mui/material";
-import { add, getDay } from "date-fns";
-import moment from "moment";
-import { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleChange, selectInvoice } from "redux/reducers/createInvoiceSlice";
 import InvoiceHeadings from "./InvoiceHeadings";
@@ -26,16 +23,15 @@ function InvoiceDetails() {
       })
     );
   };
-  let due = invoiceDate;
+  let due = invoiceDueDate;
 
-  if (terms == "dueOnReceipt") {
+  if (terms === "dueOnReceipt") {
     due = invoiceDate;
-  } else if (terms == "net15") {
+  } else if (terms === "net15") {
     due = invoiceDate;
   }
 
   console.log(invoiceDate);
-  console.log(terms);
 
   return (
     <Grid container mt={5}>
