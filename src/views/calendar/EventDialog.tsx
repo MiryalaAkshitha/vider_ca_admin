@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
-import AddEventData from "./AddEventData";
+import EditEvent from "./EditEvent";
 
 const EventDialog = ({ open, setOpen, data }) => {
   const [state, setState] = useState(false);
@@ -25,7 +25,12 @@ const EventDialog = ({ open, setOpen, data }) => {
 
   return (
     <>
-      <Dialog fullWidth open={open} onClose={() => setOpen(false)}>
+      <Dialog
+        sx={{ zIndex: "3" }}
+        fullWidth
+        open={open}
+        onClose={() => setOpen(false)}
+      >
         <Box p={2} sx={{ cursor: "pointer" }}>
           <Box
             sx={{
@@ -113,7 +118,7 @@ const EventDialog = ({ open, setOpen, data }) => {
         </Box>
       </Dialog>
 
-      <AddEventData data={value} open={state} setOpen={setState} />
+      <EditEvent data={value} open={state} setOpen={setState} />
     </>
   );
 };

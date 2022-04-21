@@ -27,6 +27,7 @@ function Calendar() {
     ["tasks"],
     getTasks
   );
+
   const eventsData =
     events?.data?.map((item: any) => ({
       title: item?.title,
@@ -57,7 +58,7 @@ function Calendar() {
   };
 
   return (
-    <Box p={3} sx={{ fontFamily: "muli_regular" }}>
+    <Box p={3} sx={{ fontFamily: "muli_regular", zIndex: "none" }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
