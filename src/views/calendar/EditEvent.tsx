@@ -30,6 +30,12 @@ function EditEvent({ data, open, setOpen }) {
   const queryClient = useQueryClient();
   const snack = useSnack();
 
+  const { control, watch, handleSubmit, reset } = useForm({
+    defaultValues: addCalendarEventDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(AddCalendarEventSchema()),
+  });
+
   useEffect(() => {
     reset({
       title: data?.title ? data.title : " ",
@@ -39,7 +45,7 @@ function EditEvent({ data, open, setOpen }) {
       endTime: data?.endTime ? data?.endTime : " ",
       notes: data?.notes ? data.notes : " ",
     });
-  }, []);
+  }, [data, reset]);
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
     ["clients", {}],
@@ -57,7 +63,7 @@ function EditEvent({ data, open, setOpen }) {
     }
   );
 
-  const { mutate, isLoading: createLoading } = useMutation(createEvent, {
+  let { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
       snack.success("Event Created");
       delete queryParams.createEvent;
@@ -67,12 +73,6 @@ function EditEvent({ data, open, setOpen }) {
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
-  });
-
-  const { control, watch, handleSubmit, reset } = useForm({
-    defaultValues: addCalendarEventDefaultValues,
-    mode: "onChange",
-    resolver: yupResolver(AddCalendarEventSchema()),
   });
 
   const onSubmit = (data: any) => {

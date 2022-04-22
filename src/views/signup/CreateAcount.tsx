@@ -13,6 +13,7 @@ import {
   selectSignup,
 } from "redux/reducers/signUpSlice";
 import PasswordField from "views/login/PasswordField";
+import BackgroundWrapper from "./BackgroundWrapper";
 
 function CreateAccount() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function CreateAccount() {
   };
 
   return (
-    <>
+    <BackgroundWrapper>
       <Typography sx={{ mb: 2, textAlign: "center" }} variant="subtitle1">
         Create a new account
       </Typography>
@@ -109,7 +110,7 @@ function CreateAccount() {
           Already have an account - Sign in
         </Button>
       </Box>
-    </>
+    </BackgroundWrapper>
   );
 }
 

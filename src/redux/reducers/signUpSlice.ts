@@ -26,7 +26,7 @@ export interface ISignup {
 }
 
 const initialState: ISignup = {
-  step: "signup",
+  step: "details",
   token: "",
   fullName: "",
   email: "",
