@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { selectSignup } from "redux/reducers/signUpSlice";
-import OrganizationDetails from "views/settings/organization/OrganizationDetails";
 import CreateAccount from "views/signup/CreateAcount";
 import OrgDetails from "views/signup/OrgDetails";
 import Otp from "views/signup/Otp";

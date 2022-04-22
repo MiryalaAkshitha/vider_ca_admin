@@ -1,4 +1,4 @@
-import { MenuItem, TextField } from "@mui/material";
+import { MenuItem, styled, TextField } from "@mui/material";
 import { getTitle } from "utils";
 
 interface TextFieldProps {
@@ -26,7 +26,6 @@ export function CustomTextField(props: TextFieldProps) {
         },
       }}
       name={name}
-      size="medium"
       type={type}
       fullWidth
       value={value}
@@ -45,19 +44,9 @@ interface SelectProps {
 
 export function CustomSelect({ value, options, onChange, name }: SelectProps) {
   return (
-    <TextField
-      sx={{
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-          {
-            borderWidth: 1,
-          },
-        "& fieldset": {
-          border: 0,
-        },
-      }}
+    <StyledTextField
       select
       name={name}
-      size="medium"
       fullWidth
       value={value}
       onChange={onChange}
@@ -67,6 +56,20 @@ export function CustomSelect({ value, options, onChange, name }: SelectProps) {
           {getTitle(option.label)}
         </MenuItem>
       ))}
-    </TextField>
+    </StyledTextField>
   );
 }
+
+export const StyledTextField = styled(TextField)(() => ({
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderWidth: 0,
+    },
+    "&.Mui-focused fieldset": {
+      borderWidth: 1,
+    },
+    "&.Mui-disabled": {
+      WebkitTextFillColor: "black",
+    },
+  },
+}));

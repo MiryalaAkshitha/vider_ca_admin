@@ -1,24 +1,15 @@
-import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import {
-  Autocomplete,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
+import { Autocomplete, Box, Button, Grid } from "@mui/material";
 import { updateTask } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useTaskData } from "context/TaskData";
 import useSnack from "hooks/useSnack";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Link } from "react-router-dom";
 import { getTitle } from "utils";
 import { PriorityEnum, TaskStatus } from "utils/constants";
 import DetailSection from "./DetailSection";
-import { CustomSelect, CustomTextField } from "./Fields";
+import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
+import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
 
 function Details() {
@@ -72,49 +63,7 @@ function Details() {
 
   return (
     <>
-      <Box
-        display="flex"
-        p={3}
-        bgcolor="#FBF9F2"
-        justifyContent="space-between"
-      >
-        <Box display="flex" gap={2} alignItems="center">
-          <Box bgcolor="white" p={2} borderRadius={2}>
-            <AssignmentOutlinedIcon fontSize="medium" />
-          </Box>
-          <div>
-            <Typography variant="subtitle2" color="primary">
-              {state?.name}{" "}
-            </Typography>
-            <Typography variant="body2" color="gray">
-              Created by {state?.user?.fullName} on{" "}
-              {moment(state?.createdAt).format("MMM Do YYYY, hh:mm a")}{" "}
-              {state?.parentTask && (
-                <>
-                  - Sub task of{" "}
-                  <Link
-                    style={{
-                      color: "#4a89dc",
-                    }}
-                    to={`/task-board/${state?.parentTask?.id}`}
-                  >
-                    {" "}
-                    {state?.parentTask?.name}
-                  </Link>
-                </>
-              )}
-            </Typography>
-          </div>
-        </Box>
-        <Box textAlign="right">
-          <Typography variant="body2" color="gray">
-            Task ID
-          </Typography>
-          <Typography variant="subtitle2" color="primary">
-            {state?.taskId}
-          </Typography>
-        </Box>
-      </Box>
+      <Info state={state} />
       <Box mt={4}>
         <Grid container alignItems="center" spacing={2}>
           <Grid item xs={12}>
@@ -130,21 +79,7 @@ function Details() {
                 isOptionEqualToValue={(option, value) => {
                   return option?.id === value?.id;
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="medium"
-                    sx={{
-                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                        {
-                          borderWidth: 1,
-                        },
-                      "& fieldset": {
-                        border: 0,
-                      },
-                    }}
-                  />
-                )}
+                renderInput={(params) => <StyledTextField {...params} />}
               />
             </DetailSection>
           </Grid>
@@ -267,22 +202,7 @@ function Details() {
                 getOptionLabel={(option) => {
                   return option?.fullName;
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="medium"
-                    variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                        {
-                          borderWidth: 1,
-                        },
-                      "& fieldset": {
-                        border: 0,
-                      },
-                    }}
-                  />
-                )}
+                renderInput={(params) => <StyledTextField {...params} />}
               />
             </DetailSection>
           </Grid>
@@ -290,7 +210,6 @@ function Details() {
             <DetailSection label="Labels">
               <Autocomplete
                 multiple
-                id="tags-standard"
                 onChange={(_, value) => setState({ ...state, labels: value })}
                 options={labels?.data ? labels?.data : []}
                 value={state?.labels ? state.labels : []}
@@ -298,22 +217,7 @@ function Details() {
                 isOptionEqualToValue={(option, value) => {
                   return option?.id === value?.id;
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="medium"
-                    variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                        {
-                          borderWidth: 1,
-                        },
-                      "& fieldset": {
-                        border: 0,
-                      },
-                    }}
-                  />
-                )}
+                renderInput={(params) => <StyledTextField {...params} />}
               />
             </DetailSection>
           </Grid>
@@ -329,22 +233,7 @@ function Details() {
                     (_, index) => `${2000 + index}-${2000 + index + 1}`
                   ) || []
                 }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="medium"
-                    variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                        {
-                          borderWidth: 1,
-                        },
-                      "& fieldset": {
-                        border: 0,
-                      },
-                    }}
-                  />
-                )}
+                renderInput={(params) => <StyledTextField {...params} />}
               />
             </DetailSection>
           </Grid>
