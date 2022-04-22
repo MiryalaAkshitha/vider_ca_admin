@@ -18,6 +18,7 @@ import {
 import { ResType } from "types";
 import Fields from "views/forms/fields";
 import AddPage from "views/forms/pages/AddPage";
+import EditPage from "views/forms/pages/EditPage";
 import Pages from "../../views/forms/pages";
 import { reorder } from "views/taskboard/board/utils";
 import availableFields from "views/forms/utils/availableFields";
@@ -118,6 +119,7 @@ const CreateForm = () => {
         />
       )}
       <AddPage />
+      <EditPage />
     </DragDropContext>
   );
 };

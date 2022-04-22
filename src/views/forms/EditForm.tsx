@@ -1,12 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
-import { createForm } from "api/services/forms";
+import { updateForm } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormFreeSoloAutoComplete from "components/FormFields/FormFreeSoloAutoComplete";
 import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -16,13 +17,33 @@ import {
   CreateFormSchema,
 } from "validations/createForm";
 
-function AddForm({ open, setOpen }: DialogProps) {
+interface Props extends DialogProps {
+  data: any;
+}
+
+function EditForm({ open, setOpen, data }: Props) {
   const snack = useSnack();
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(createForm, {
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: createFormDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(CreateFormSchema()),
+  });
+
+  useEffect(() => {
+    reset({
+      type: data.type || "",
+      name: data.name || "",
+      tags: data.tags || [],
+      description: data.description || "",
+    });
+  }, [data, reset]);
+
+  const { mutate } = useMutation(updateForm, {
     onSuccess: () => {
       setOpen(false);
+      snack.success("Form updated");
       queryClient.invalidateQueries("forms");
     },
     onError: (err: any) => {
@@ -30,18 +51,15 @@ function AddForm({ open, setOpen }: DialogProps) {
     },
   });
 
-  const { control, handleSubmit } = useForm({
-    defaultValues: createFormDefaultValues,
-    mode: "onChange",
-    resolver: yupResolver(CreateFormSchema()),
-  });
-
-  const onFormSubmit = (data: any) => {
-    mutate(data);
+  const onFormSubmit = (result: any) => {
+    mutate({
+      id: data._id,
+      data: result,
+    });
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add New Form">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Edit form">
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <FormSelect
           control={control}
@@ -79,7 +97,7 @@ function AddForm({ open, setOpen }: DialogProps) {
           sx={{ mt: 3 }}
           type="submit"
           loadingColor="white"
-          title="Create Form"
+          title="Update form"
           color="secondary"
         />
       </form>
@@ -87,4 +105,4 @@ function AddForm({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddForm;
+export default EditForm;

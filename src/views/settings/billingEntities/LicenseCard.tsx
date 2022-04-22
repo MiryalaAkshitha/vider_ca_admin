@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { deleteOrganizationLicense } from "api/services/organization";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

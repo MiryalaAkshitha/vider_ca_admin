@@ -11,7 +11,7 @@ import {
   approveExpenditure,
   getUserExpenditure,
 } from "api/services/expenditure";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";

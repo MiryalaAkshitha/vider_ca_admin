@@ -2,7 +2,7 @@ import { Avatar, AvatarProps, Tooltip } from "@mui/material";
 import { Box } from "@mui/system";
 
 interface MembersProps {
-  data: Array<{ title?: string; src?: string }>;
+  data: Array<{ title: string; src?: string }>;
 }
 
 function Members({ data }: MembersProps) {
@@ -25,22 +25,33 @@ function Members({ data }: MembersProps) {
 export default Members;
 
 interface Props extends AvatarProps {
-  title?: string;
+  title: string;
   src?: string;
 }
 
-const Member = function ({ title, src, ...props }: Props) {
+const Member = function ({ title = "", src, ...props }: Props) {
   return (
-    <>
-      <Tooltip title={title ? title : "no title"}>
-        {title ? (
-          <Avatar {...props} sx={{ border: "2px solid white" }}>
-            {title[0]}
-          </Avatar>
-        ) : (
-          <Avatar {...props} src={src}></Avatar>
-        )}
-      </Tooltip>
-    </>
+    <Tooltip title={title}>
+      {src ? (
+        <Avatar
+          sx={{
+            border: "2px solid white",
+            boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
+          }}
+          {...props}
+          src={src}
+        ></Avatar>
+      ) : (
+        <Avatar
+          {...props}
+          sx={{
+            border: "2px solid white",
+            boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
+          }}
+        >
+          {title[0]}
+        </Avatar>
+      )}
+    </Tooltip>
   );
 };

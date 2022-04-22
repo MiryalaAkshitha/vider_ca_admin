@@ -37,7 +37,7 @@ function CreateRecurringTask() {
 
   const getCategories = () => categories?.data.map((item: any) => item);
 
-  const isSubCategoriesExist = (category) => {
+  const isSubCategoriesExist = (category: any) => {
     return getCategories().find((item: any) => item.id === parseInt(category))
       ?.subCategories?.length;
   };
@@ -87,7 +87,7 @@ function CreateRecurringTask() {
 
   const renderSubCategories = () => {
     let subCategories = categories?.data.find(
-      (item) => item.id === watch("category")
+      (item: any) => item.id === watch("category")
     )?.subCategories;
 
     if (subCategories?.length)
@@ -251,7 +251,7 @@ function CreateRecurringTask() {
               control={control}
               name="priority"
               label="Priority"
-              options={Object.values(PriorityEnum).map((item, index) => ({
+              options={Object.values(PriorityEnum).map((item) => ({
                 label: item,
                 value: item,
               }))}

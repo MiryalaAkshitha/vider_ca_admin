@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { deleteChecklist, updateChecklist } from "api/services/tasks";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

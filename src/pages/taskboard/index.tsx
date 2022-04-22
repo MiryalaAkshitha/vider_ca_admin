@@ -1,7 +1,7 @@
-import { Add } from "@mui/icons-material";
-import { Fab, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getTasks } from "api/services/tasks";
+import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import useQueryParams from "hooks/useQueryParams";
 import { useQuery } from "react-query";
@@ -63,20 +63,15 @@ function TaskBoard() {
           </Typography>
         </Box>
       )}
-      <Fab
+      <FloatingButton
         onClick={() => {
           setQueryParams({
             ...queryParams,
             createTask: "true",
           });
         }}
-        size="medium"
-        color="secondary"
-        sx={{ position: "fixed", bottom: 40, right: 40, borderRadius: "8px" }}
-        aria-label="add"
-      >
-        <Add />
-      </Fab>
+        position="right"
+      />
     </Box>
   );
 }

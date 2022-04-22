@@ -156,8 +156,8 @@ function TaskItem({ data }: Props) {
         </Box>
         <Box flex={1} display="flex" justifyContent="flex-end">
           <Members
-            data={data?.members?.map((item) => ({
-              src: "",
+            data={data?.members?.map((item: any) => ({
+              src: item?.imageUrl,
               title: item?.fullName,
             }))}
           />

@@ -43,3 +43,16 @@ export const StyledMoreHorButton = styled(Button)(({ theme }) => ({
   color: "rgba(0,0,0,0.5)",
   marginTop: 5,
 }));
+
+export const StyledAppliedFilterItem = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: 10,
+  background: "white",
+  border: "1px solid rgba(0,0,0,0.1)",
+  borderRadius: "4px",
+  boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+  padding: "5px 8px",
+  justifyContent: "space-between",
+  alignItems: "center",
+  cursor: "pointer",
+}));

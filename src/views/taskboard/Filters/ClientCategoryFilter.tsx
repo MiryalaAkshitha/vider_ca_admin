@@ -12,10 +12,12 @@ function ClientCategoryFilter() {
 
   let getSubCategories = (): any[] => {
     let result: any[] = [];
+
     selectedFilters.clientCategory.forEach((item: any) => {
       if (!item.subCategories) return;
       result = result.concat(item.subCategories);
     });
+
     return result?.flat();
   };
 

@@ -4,6 +4,7 @@ import { RootState } from "redux/store";
 interface IForms {
   activePage: number;
   addPageOpen: boolean;
+  editPageOpen: boolean;
   data: any;
   focused: string | null;
 }
@@ -11,6 +12,7 @@ interface IForms {
 const initialState: IForms = {
   activePage: 0,
   addPageOpen: false,
+  editPageOpen: false,
   data: null,
   focused: null,
 };
@@ -27,6 +29,9 @@ export const formsSlice = createSlice({
     },
     setAddPageOpen(state, action) {
       state.addPageOpen = action.payload;
+    },
+    setEditPageOpen(state, action) {
+      state.editPageOpen = action.payload;
     },
     setActivePage(state, action) {
       state.activePage = action.payload;
@@ -54,6 +59,7 @@ export const {
   moveFields,
   setFields,
   setFocused,
+  setEditPageOpen,
 } = formsSlice.actions;
 
 export default formsSlice.reducer;

@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
 import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
-import PermissonsAccordion from "views/rolesandpermissions/PermissionAccordion";
+import PermissonsAccordion from "views/settings/rolesandpermissions/PermissionAccordion";
 
 type PermissionsDataResponse = UseQueryResult<DataResponse, Error>;
 

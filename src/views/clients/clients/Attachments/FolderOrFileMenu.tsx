@@ -4,7 +4,7 @@ import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import FileOpenOutlinedIcon from "@mui/icons-material/FileOpenOutlined";
 import { ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { removeFile } from "api/services/storage";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

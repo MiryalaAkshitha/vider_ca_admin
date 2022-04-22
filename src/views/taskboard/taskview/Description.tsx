@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { updateTask } from "api/services/tasks";
-import { useTaskData } from "context/TaskDataContext";
+import { useTaskData } from "context/TaskData";
 import useSnack from "hooks/useSnack";
 import ReactQuill from "lib/react-quill";
 import { useEffect, useState } from "react";

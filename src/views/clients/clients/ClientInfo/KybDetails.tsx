@@ -2,7 +2,7 @@ import { Add, Delete, Edit, Save } from "@mui/icons-material";
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteKybForm, updateKybfields } from "api/services/client-info";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

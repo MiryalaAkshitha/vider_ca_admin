@@ -30,13 +30,14 @@ const initialState = {
 };
 
 function Board({ data }: Props) {
-  const queryClient = useQueryClient();
   const snack = useSnack();
+  const queryClient = useQueryClient();
+  const listContainerRef = useRef<HTMLElement | null>(null);
+
   const [state, setState] = useState<IState>(initialState);
   const [openRemarks, setOpenRemarks] = useState<boolean>(false);
   const [remarksPromise, setRemarksPromise] = useState<Function[]>([]);
   const [onHoldTaskId, setOnHoldTaskId] = useState<number | null>(null);
-  const listContainerRef = useRef<HTMLElement | null>(null);
 
   const { mutateAsync: reorderItems } = useMutation(reorderTasks, {
     onSuccess: () => {
@@ -89,18 +90,18 @@ function Board({ data }: Props) {
 
   const handleUpdateTaskStatus = async (source: any, destination: any) => {
     const prevState = state;
+    const sourceId = source.droppableId;
+    const destinationId = destination.droppableId;
     try {
       const result: any = move(
-        state[source.droppableId],
-        state[destination.droppableId],
+        state[sourceId],
+        state[destinationId],
         source,
         destination
       );
-      const sourceItem = state[source.droppableId][source.index];
-      const sourceItemsOrder = result[source.droppableId].map(
-        (item: any) => item.id
-      );
-      const destinationItemsOrder = result[destination.droppableId].map(
+      const sourceItem = state[sourceId][source.index];
+      const sourceItemsOrder = result[sourceId].map((item: any) => item.id);
+      const destinationItemsOrder = result[destinationId].map(
         (item: any) => item.id
       );
       setState({
@@ -108,14 +109,14 @@ function Board({ data }: Props) {
         ...result,
       });
 
-      if (destination.droppableId === TaskStatus.ON_HOLD) {
+      if (destinationId === TaskStatus.ON_HOLD) {
         setOnHoldTaskId(sourceItem.id);
         await handleRemarks();
       }
 
       await updateTaskStatus({
         id: sourceItem.id,
-        status: destination.droppableId,
+        status: destinationId,
         sourceItemsOrder,
         destinationItemsOrder,
       });
@@ -126,16 +127,13 @@ function Board({ data }: Props) {
 
   const handleReorderItems = async (source: any, destination: any) => {
     const prevState = state;
+    let sourceId = source.droppableId;
     try {
-      const result = reorder(
-        state[source.droppableId],
-        source.index,
-        destination.index
-      );
+      const result = reorder(state[sourceId], source.index, destination.index);
       const itemsOrder = result.map((item: any) => item.id);
       setState({
         ...state,
-        [source.droppableId]: result,
+        [sourceId]: result,
       });
       await reorderItems(itemsOrder);
     } catch (err) {

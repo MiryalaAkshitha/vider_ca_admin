@@ -1,7 +1,7 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
 import { deleteExpenditure } from "api/services/expenditure";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";

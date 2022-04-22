@@ -1,5 +1,5 @@
 import loadable from "@loadable/component";
-import GlobalDrawers from "GlobalDrawers";
+import GlobalDrawers from "./GlobalDrawers";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const BroadCast = loadable(() => import("pages/broadcast"));

@@ -62,7 +62,7 @@ function CreateNonRecurringTask() {
 
   const renderSubCategories = () => {
     let subCategories = categories?.data.find(
-      (item) => item.id === watch("category")
+      (item: any) => item.id === watch("category")
     )?.subCategories;
 
     if (subCategories?.length)

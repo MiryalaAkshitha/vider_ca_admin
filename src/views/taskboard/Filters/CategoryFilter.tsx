@@ -16,10 +16,12 @@ function CategoryFilter() {
 
   let getSubCategories = (): any[] => {
     let result: any[] = [];
+
     selectedFilters.category.forEach((item: any) => {
       if (!item.subCategories) return;
       result = result.concat(item.subCategories);
     });
+
     return result?.flat()?.map((item: any) => ({
       label: item.name,
       value: item.id,

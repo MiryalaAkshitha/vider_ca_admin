@@ -1,6 +1,6 @@
 import { Menu, MenuItem } from "@mui/material";
 import { deleteTeam } from "api/services/users";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";

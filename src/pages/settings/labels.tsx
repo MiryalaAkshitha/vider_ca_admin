@@ -2,7 +2,7 @@ import { Add, Delete } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteLabel, getLabels } from "api/services/labels";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import Loader from "components/Loader";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Category } from "./CategoryCard";
 import EditCategory from "./EditCategory";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 
 interface EditCategoryPopoverProps extends AccountMenuProps {
   data: Category;

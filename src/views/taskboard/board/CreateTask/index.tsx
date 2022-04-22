@@ -11,43 +11,41 @@ const CreateTask = () => {
   const [type, setType] = useState("non_recurring");
 
   return (
-    <>
-      <DrawerWrapper
-        open={queryParams.createTask === "true"}
-        setOpen={() => {
-          delete queryParams.createTask;
-          setQueryParams({ ...queryParams });
-        }}
-        title="Create Task"
+    <DrawerWrapper
+      open={queryParams.createTask === "true"}
+      setOpen={() => {
+        delete queryParams.createTask;
+        setQueryParams({ ...queryParams });
+      }}
+      title="Create Task"
+    >
+      <RadioGroup
+        onChange={(e) => setType(e.target.value)}
+        row
+        aria-labelledby="typeOfTask"
+        name="type"
+        sx={{ mb: 2 }}
+        value={type}
       >
-        <RadioGroup
-          onChange={(e) => setType(e.target.value)}
-          row
-          aria-labelledby="typeOfTask"
-          name="type"
-          sx={{ mb: 2 }}
-          value={type}
-        >
-          <FormControlLabel
-            value="non_recurring"
-            control={<Radio />}
-            label={<Typography>Non-recurring</Typography>}
-          />
-          <FormControlLabel
-            value="recurring"
-            control={<Radio />}
-            label={<Typography>Recurring</Typography>}
-          />
-        </RadioGroup>
-        <Box>
-          {type === "non_recurring" ? (
-            <CreateNonRecurringTask />
-          ) : type === "recurring" ? (
-            <CreateRecurringTask />
-          ) : null}
-        </Box>
-      </DrawerWrapper>
-    </>
+        <FormControlLabel
+          value="non_recurring"
+          control={<Radio />}
+          label={<Typography>Non-recurring</Typography>}
+        />
+        <FormControlLabel
+          value="recurring"
+          control={<Radio />}
+          label={<Typography>Recurring</Typography>}
+        />
+      </RadioGroup>
+      <Box>
+        {type === "non_recurring" ? (
+          <CreateNonRecurringTask />
+        ) : type === "recurring" ? (
+          <CreateRecurringTask />
+        ) : null}
+      </Box>
+    </DrawerWrapper>
   );
 };
 

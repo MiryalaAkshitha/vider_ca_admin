@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { deleteClientPassword } from "api/services/client-info";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useState } from "react";

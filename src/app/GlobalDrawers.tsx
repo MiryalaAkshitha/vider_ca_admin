@@ -3,7 +3,6 @@ import useQueryParams from "hooks/useQueryParams";
 const AddClient = loadable(() => import("views/clients/clients/AddClient"));
 const AddEvent = loadable(() => import("views/calendar/AddEvent"));
 const AddTask = loadable(() => import("views/taskboard/board/CreateTask"));
-const AddForm = loadable(() => import("views/forms/AddForm"));
 
 function GlobalDrawers() {
   const { queryParams } = useQueryParams();
@@ -19,9 +18,6 @@ function GlobalDrawers() {
         }
         if (queryParams.createTask === "true") {
           return <AddTask />;
-        }
-        if (queryParams.createForm === "true") {
-          <AddForm />;
         }
         return null;
       })()}

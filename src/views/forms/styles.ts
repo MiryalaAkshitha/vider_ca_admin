@@ -42,3 +42,27 @@ export const DummyStyledField = styled("div")(() => ({
   minHeight: "30px",
   cursor: "pointer",
 }));
+
+export const StyledPagesContainer = styled("div")(() => ({
+  border: "1px solid #22222226",
+  borderRadius: "10px",
+  marginRight: 50,
+  marginBottom: 60,
+}));
+
+export const StyledPagesDroppable = styled("div")(() => ({
+  paddingTop: 20,
+  paddingBottom: 50,
+  "& > div:first-of-type": {
+    borderTop: "1px solid #22222226",
+  },
+}));
+
+export const StyledEmptyPagePlaceholder = styled("div")(() => ({
+  padding: "10px",
+  textAlign: "center",
+  background: "rgba(0,0,0,0.04)",
+  border: "1px dashed rgba(0,0,0,0.1)",
+  width: "70%",
+  margin: "0 auto",
+}));

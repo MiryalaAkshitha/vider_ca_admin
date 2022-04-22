@@ -2,7 +2,7 @@ import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteRole, getRoles } from "api/services/roles";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import Table from "components/Table";
 import useSnack from "hooks/useSnack";
 import moment from "moment";
@@ -10,9 +10,9 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResType } from "types";
-import AddRole from "views/rolesandpermissions/AddRole";
-import CreatePermissions from "views/rolesandpermissions/CreatePermissions";
-import EditRole from "views/rolesandpermissions/EditRole";
+import AddRole from "views/settings/rolesandpermissions/AddRole";
+import CreatePermissions from "views/settings/rolesandpermissions/CreatePermissions";
+import EditRole from "views/settings/rolesandpermissions/EditRole";
 
 function RolesAndPermissions() {
   const location = useLocation();

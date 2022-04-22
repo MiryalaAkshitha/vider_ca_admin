@@ -2,7 +2,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { IconButton } from "@mui/material";
 import { deleteField, updatePage } from "api/services/forms";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";

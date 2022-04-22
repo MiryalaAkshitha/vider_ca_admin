@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { createFormValidation } from "api/services/forms";
+import { updateFormValidation } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
@@ -28,11 +28,11 @@ function EditFormValidation({ open, setOpen, data }: Props) {
     });
   }, [data]);
 
-  const { mutate } = useMutation(createFormValidation, {
+  const { mutate } = useMutation(updateFormValidation, {
     onSuccess: () => {
       setOpen(false);
       queryClient.invalidateQueries("form-validations");
-      snack.success("Form validation created");
+      snack.success("Form validation updated");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -47,6 +47,7 @@ function EditFormValidation({ open, setOpen, data }: Props) {
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     mutate({
+      id: data?._id,
       data: state,
     });
   };
@@ -60,6 +61,7 @@ function EditFormValidation({ open, setOpen, data }: Props) {
           size="small"
           fullWidth
           required
+          value={state.name}
           onChange={handleChange}
         />
         <TextField
@@ -69,6 +71,7 @@ function EditFormValidation({ open, setOpen, data }: Props) {
           size="small"
           sx={{ mt: 2 }}
           fullWidth
+          value={state.format}
           onChange={handleChange}
         />
         <TextField
@@ -79,6 +82,7 @@ function EditFormValidation({ open, setOpen, data }: Props) {
           sx={{ mt: 2 }}
           multiline
           rows={3}
+          value={state.message}
           required
           onChange={handleChange}
         />
@@ -88,7 +92,7 @@ function EditFormValidation({ open, setOpen, data }: Props) {
           sx={{ mt: 3 }}
           type="submit"
           loadingColor="white"
-          title="Create Form Validation"
+          title="Update Form Validation"
           color="secondary"
         />
       </form>

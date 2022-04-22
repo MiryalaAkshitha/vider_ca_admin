@@ -1,23 +1,23 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { deleteFormValidation } from "api/services/forms";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
+import { useMenu } from "context/MenuPopover";
 import useSnack from "hooks/useSnack";
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
-import { StyledCard } from "./styles";
+import { StyledCard } from "../styles";
+import EditFormValidation from "./EditFormValidation";
 
 const FormValidationCard = ({ data }: any) => {
+  const queryClient = useQueryClient();
   const snack = useSnack();
   const confirm = useConfirm();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const queryClient = useQueryClient();
+  const menu = useMenu();
+  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteFormValidation, {
     onSuccess: () => {
-      setAnchorEl(null);
       queryClient.invalidateQueries("form-validations");
       snack.success("Form validation deleted");
     },
@@ -37,6 +37,23 @@ const FormValidationCard = ({ data }: any) => {
     });
   };
 
+  const handleMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    menu({
+      target: e.currentTarget,
+      options: [
+        {
+          label: "Edit",
+          action: () => setOpen(true),
+        },
+        {
+          label: "Delete",
+          action: handleDelete,
+        },
+      ],
+    });
+  };
+
   return (
     <>
       <StyledCard sx={{ display: "flex", gap: 2, alignItems: "center" }}>
@@ -47,32 +64,12 @@ const FormValidationCard = ({ data }: any) => {
           </Typography>
         </Box>
         <Box>
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              setAnchorEl(e.currentTarget);
-            }}
-          >
+          <IconButton onClick={handleMenu}>
             <MoreVertIcon />
           </IconButton>
         </Box>
       </StyledCard>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <MenuItem>Edit</MenuItem>
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
-      </Menu>
+      <EditFormValidation data={data} open={open} setOpen={setOpen} />
     </>
   );
 };

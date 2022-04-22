@@ -8,8 +8,12 @@ const updateForm = ({ data, id }: any) => {
   return http.put(`/forms/${id}`, data);
 };
 
-const deleteForm = (id: any) => {
+const deleteForm = ({ id }: any) => {
   return http.delete(`/forms/${id}`);
+};
+
+const cloneForm = ({ id }: any) => {
+  return http.post(`/forms/${id}/clone`);
 };
 
 const getForms = ({ queryKey }: any) => {
@@ -22,6 +26,10 @@ const getForm = ({ queryKey }: any) => {
 
 const addPage = ({ formId, name }: any) => {
   return http.post(`/forms/${formId}/pages`, { name });
+};
+
+const deletePage = ({ formId, pageId }: any) => {
+  return http.delete(`/forms/${formId}/pages/${pageId}`);
 };
 
 const updatePage = ({ formId, pageId, data }: any) => {
@@ -49,7 +57,7 @@ const createFormValidation = ({ data }) => {
 };
 
 const updateFormValidation = ({ id, data }) => {
-  return http.patch(`/form-validations/${id}`, data);
+  return http.put(`/form-validations/${id}`, data);
 };
 
 const deleteFormValidation = ({ id }) => {
@@ -71,4 +79,6 @@ export {
   createFormValidation,
   deleteFormValidation,
   updateFormValidation,
+  cloneForm,
+  deletePage,
 };

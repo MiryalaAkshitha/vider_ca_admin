@@ -2,7 +2,7 @@ import { MoreVertRounded } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { removeFromTeam } from "api/services/users";
 import { icons } from "assets";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

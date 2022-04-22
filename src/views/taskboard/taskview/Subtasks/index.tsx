@@ -3,7 +3,7 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { noSubTasks } from "assets";
 import NoItems from "components/NoItems";
-import { useTaskData } from "context/TaskDataContext";
+import { useTaskData } from "context/TaskData";
 import { useState } from "react";
 import AddSubTask from "./AddSubTask";
 import SubTasksList from "./SubTasksList";

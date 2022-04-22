@@ -3,7 +3,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Box } from "@mui/material";
-import { useConfirm } from "components/ConfirmDialogProvider";
+import { useConfirm } from "context/ConfirmDialog";
 import useSnack from "hooks/useSnack";
 import { bulkDelete, bulkUpdate } from "api/services/client";
 import { useMutation, useQueryClient } from "react-query";
