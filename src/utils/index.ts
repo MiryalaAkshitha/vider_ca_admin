@@ -71,3 +71,9 @@ export const covertToKb = (size: number, type: "KB" | "MB" | "GB") => {
 export const fileSizeInKb = (size: number) => {
   return size / 1024;
 };
+
+export const getFinancialYears = () => {
+  return Array.from(Array(50).keys()).map((_, index) => {
+    return `${2000 + index}-${2000 + index + 1}`;
+  });
+};

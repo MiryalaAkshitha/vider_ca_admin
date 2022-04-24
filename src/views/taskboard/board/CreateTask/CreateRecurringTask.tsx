@@ -2,27 +2,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
 import { createRecurringTask } from "api/services/tasks";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
-import FormCheckbox from "components/FormFields/FormCheckbox";
-import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
 import { PriorityEnum, RecurringFrequency } from "utils/constants";
 import {
-  CreateRecurringClientSchema,
   createRecurringTaskDefaultValues,
-} from "validations/createTask";
+  createRecurringTaskSchema,
+} from "validations/createRecurringTask";
 import CustomDates from "./CustomDates";
 import FrequencyDates from "./FrequencyDates";
-import { RecurringInitialState } from "./initialState";
-import { RecurringStateProps } from "./types";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
 function CreateRecurringTask() {
@@ -31,24 +26,20 @@ function CreateRecurringTask() {
   const snack = useSnack();
   const { users, labels, categories, clients, loading } =
     useCreateTaskInitialData({});
-  const [state, setState] = useState<RecurringStateProps>(
-    RecurringInitialState
-  );
 
-  const getCategories = () => categories?.data.map((item: any) => item);
-
-  const isSubCategoriesExist = (category: any) => {
-    return getCategories().find((item: any) => item.id === parseInt(category))
-      ?.subCategories?.length;
+  const subCategoriesExist = (category: any) => {
+    let foundCategory = categories?.data?.find(
+      (item: any) => item.id === parseInt(category)
+    );
+    return foundCategory?.subCategories?.length;
   };
 
   const { watch, control, handleSubmit } = useForm({
     defaultValues: createRecurringTaskDefaultValues,
     mode: "onChange",
     resolver: yupResolver(
-      CreateRecurringClientSchema({
-        taskCreatedDate: "2022-01-01",
-        isSubCategoriesExist,
+      createRecurringTaskSchema({
+        subCategoriesExist,
       })
     ),
   });
@@ -56,7 +47,6 @@ function CreateRecurringTask() {
   const { mutate, isLoading } = useMutation(createRecurringTask, {
     onSuccess: () => {
       snack.success("Recurring Task Created");
-      setState(RecurringInitialState);
       queryClient.invalidateQueries("tasks");
       delete queryParams.createTask;
       setQueryParams({ ...queryParams });
@@ -67,21 +57,15 @@ function CreateRecurringTask() {
   });
 
   const onFormSubmit = (data: any) => {
-    if (
-      watch("frequency") === RecurringFrequency.CUSTOM &&
-      !state?.customDates.length
-    ) {
-      snack.error("Please add atleast one custom date, click plus button");
-      return;
-    }
-
     data.client = data.client?.map((client: any) => parseInt(client.value));
     data.members = data.members?.map((member: any) => parseInt(member.value));
     data.labels = data.labels?.map((label: any) => parseInt(label.value));
     data.category = parseInt(data.category);
     data.subCategory = data.subCategory?.id;
-    data.customDates = state?.customDates;
     data.dueDay = parseInt(data?.dueDay?.value);
+    data.taskLeader = parseInt(data?.taskLeader);
+    data.recurringEndDate = data?.neverExpires ? null : data.recurringEndDate;
+    data.feeAmount = data?.feeAmount ? parseFloat(data?.feeAmount) : null;
     mutate(data);
   };
 
@@ -90,7 +74,7 @@ function CreateRecurringTask() {
       (item: any) => item.id === watch("category")
     )?.subCategories;
 
-    if (subCategories?.length)
+    if (subCategories?.length) {
       return (
         <Box mt={2}>
           <FormSelect
@@ -104,55 +88,13 @@ function CreateRecurringTask() {
           />
         </Box>
       );
-    return null;
+    }
   };
 
-  const renderFrequencyDateInputs = () => {
-    if (watch("frequency")) {
-      if (watch("frequency") !== RecurringFrequency.CUSTOM)
-        return (
-          <FrequencyDates
-            state={state}
-            setState={setState}
-            recurringStartDate={
-              <FormDate
-                name="recurringStartDate"
-                control={control}
-                label="Recurring Start Date"
-              />
-            }
-            dueDate={
-              <FormAutoComplete
-                control={control}
-                label="Due Day"
-                name="dueDay"
-                options={Array.from(Array(31), (v, i) => i + 1).map(
-                  (item: any) => ({
-                    label: item,
-                    value: item,
-                  })
-                )}
-              />
-            }
-            recurringEndDate={
-              <FormDate
-                name="recurringEndDate"
-                control={control}
-                label="Recurring End Date"
-              />
-            }
-            neverExpires={
-              <FormCheckbox
-                name="neverExpires"
-                control={control}
-                label="Never Expires"
-              />
-            }
-          />
-        );
-
-      return <CustomDates state={state} setState={setState} />;
-    }
+  const frequencyIsNotCustom = () => {
+    return (
+      watch("frequency") && watch("frequency") !== RecurringFrequency.CUSTOM
+    );
   };
 
   return (
@@ -199,7 +141,10 @@ function CreateRecurringTask() {
               }))}
             />
           </Box>
-          {renderFrequencyDateInputs()}
+          {frequencyIsNotCustom() && <FrequencyDates control={control} />}
+          {watch("frequency") === RecurringFrequency.CUSTOM && (
+            <CustomDates control={control} />
+          )}
           <Box mt={2}>
             <FormSelect
               control={control}

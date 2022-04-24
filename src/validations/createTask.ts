@@ -1,114 +1,5 @@
-import { object, date, string, boolean, array, mixed } from "yup";
-import { RecurringFrequency } from "utils/constants";
-
-let createRecurringTaskDefaultValues = {
-  client: [],
-  category: "",
-  subCategory: "",
-  name: "",
-  frequency: "",
-  customDates: [],
-  recurringStartDate: null,
-  dueDay: null,
-  recurringEndDate: null,
-  neverExpires: true,
-  financialYear: "",
-  labels: [],
-  members: [],
-  taskLeader: "",
-  priority: "",
-  feeAmount: "",
-  description: "",
-};
-
-let CreateRecurringClientSchema = ({ taskCreatedDate, isSubCategoriesExist }) =>
-  object().shape({
-    client: array()
-      .of(
-        object().nullable().shape({
-          label: string().required(),
-          value: string().required(),
-        })
-      )
-      .min(1, "Select atleast one member"),
-    category: string().required("Category name is required"),
-    subCategory: mixed().when("category", {
-      is: (category) => isSubCategoriesExist(category),
-      then: string().required("Sub Category is required"),
-      otherwise: string().nullable().notRequired(),
-    }),
-    name: string()
-      .required("Name is required")
-      .min(3, "Name should be atleast 3 characters"),
-    financialYear: string().required("Financial Year is required"),
-    frequency: string().required("Frequency is required"),
-    customDates: array()
-      .of(
-        object().nullable().shape({
-          startDate: string().notRequired(),
-          dueDate: string().notRequired(),
-        })
-      )
-      .notRequired(),
-    dueDay: mixed().when("frequency", {
-      is: (frequency) => frequency !== `${RecurringFrequency.CUSTOM}`,
-      then: object()
-        .nullable()
-        .shape({
-          label: string().required(),
-          value: string().required(),
-        })
-        .required("Due Day input is required"),
-      otherwise: object().nullable().notRequired(),
-    }),
-    recurringStartDate: mixed().when("frequency", {
-      is: (frequency) => frequency !== `${RecurringFrequency.CUSTOM}`,
-      then: date()
-        .nullable()
-        .typeError("Invalid date")
-        .required("Recurring Start Date is required")
-        .min(
-          taskCreatedDate,
-          "Recurring Start Date should be greater than task created date"
-        ),
-      otherwise: date().nullable().notRequired(),
-    }),
-    neverExpires: boolean().required(
-      "Never Expires input is required or Select Recurring End Date"
-    ),
-    recurringEndDate: mixed().when("neverExpires", {
-      is: (neverExpires) => !neverExpires,
-      then: date()
-        .nullable()
-        .typeError("Invalid Error")
-        .min(
-          taskCreatedDate,
-          "Start Date should be greater than task created date"
-        )
-        .required("Recurring End Date is required"),
-      otherwise: date().nullable().notRequired(),
-    }),
-    members: array()
-      .of(
-        object().nullable().shape({
-          label: string().notRequired(),
-          value: string().notRequired(),
-        })
-      )
-      .notRequired(),
-    labels: array()
-      .of(
-        object().nullable().shape({
-          label: string().notRequired(),
-          value: string().notRequired(),
-        })
-      )
-      .notRequired(),
-    taskLeader: string().nullable().notRequired(),
-    priority: string().nullable().notRequired(),
-    feeAmount: string().nullable().notRequired(),
-    description: string().nullable().notRequired(),
-  });
+import moment from "moment";
+import { array, date, mixed, object, ref, string } from "yup";
 
 let createNonRecurringTaskDefaultValues = {
   client: [],
@@ -122,12 +13,12 @@ let createNonRecurringTaskDefaultValues = {
   labels: [],
   members: [],
   taskLeader: "",
-  priority: "",
+  priority: "none",
   feeAmount: "",
   description: "",
 };
 
-let CreateNonRecurringClientSchema = (isSubCategoriesExist) =>
+let CreateNonRecurringClientSchema = ({ subcategoriesExist }: any) =>
   object().shape({
     client: array()
       .of(
@@ -137,20 +28,35 @@ let CreateNonRecurringClientSchema = (isSubCategoriesExist) =>
         })
       )
       .min(1, "Select atleast one member"),
-    category: string().required("Category name is required"),
+    category: string().nullable().required("Category is required"),
     subCategory: mixed().when("category", {
-      is: (category) => isSubCategoriesExist(category),
+      is: (category: any) => subcategoriesExist(category),
       then: string().required("Sub Category is required"),
-      otherwise: string().nullable().notRequired(),
+      otherwise: string().notRequired(),
     }),
     name: string()
       .required("Name is required")
       .min(3, "Name should be atleast 3 characters"),
-    startDate: date().nullable().typeError("Invalid Error").notRequired(),
-    dueDate: date().nullable().typeError("Invalid Error").notRequired(),
+    startDate: date()
+      .nullable()
+      .typeError("Invalid date")
+      .min(
+        moment().format("YYYY-MM-DD"),
+        "Start date should be greater than today"
+      )
+      .notRequired(),
+    dueDate: date()
+      .nullable()
+      .typeError("Invalid date")
+      .min(ref("startDate"), "Due date should be later than start date.")
+      .notRequired(),
     expectedCompletionDate: date()
       .nullable()
       .typeError("Invalid Error")
+      .min(
+        ref("startDate"),
+        "Expected completed date should be later than start date."
+      )
       .notRequired(),
     financialYear: string().required("Financial Year is required"),
     members: array()
@@ -169,15 +75,13 @@ let CreateNonRecurringClientSchema = (isSubCategoriesExist) =>
         })
       )
       .notRequired(),
-    taskLeader: string().nullable().notRequired(),
+    taskLeader: string().notRequired(),
     priority: string().nullable().notRequired(),
-    feeAmount: string().nullable().notRequired(),
+    feeAmount: string()
+      .nullable()
+      .notRequired()
+      .matches(/^[0-9]*$/, `Fee amount must be a number`),
     description: string().nullable().notRequired(),
   });
 
-export {
-  createRecurringTaskDefaultValues,
-  CreateRecurringClientSchema,
-  createNonRecurringTaskDefaultValues,
-  CreateNonRecurringClientSchema,
-};
+export { createNonRecurringTaskDefaultValues, CreateNonRecurringClientSchema };

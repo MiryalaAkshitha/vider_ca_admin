@@ -5,7 +5,7 @@ import { useTaskData } from "context/TaskData";
 import useSnack from "hooks/useSnack";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { getTitle } from "utils";
+import { getFinancialYears, getTitle } from "utils";
 import { PriorityEnum, TaskStatus } from "utils/constants";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
@@ -36,7 +36,9 @@ function Details() {
   });
 
   const handleUpdate = () => {
-    mutate({
+    let apiData = { ...state };
+
+    apiData.financialYear = mutate({
       id: taskData?.id,
       data: state,
     });
@@ -227,12 +229,9 @@ function Details() {
                 onChange={(_, value) =>
                   setState({ ...state, financialYear: value })
                 }
-                value={state?.financialYear}
-                options={
-                  Array.from(Array(50).keys()).map(
-                    (_, index) => `${2000 + index}-${2000 + index + 1}`
-                  ) || []
-                }
+                getOptionLabel={(option) => option}
+                value={state?.financialYear || ""}
+                options={getFinancialYears()}
                 renderInput={(params) => <StyledTextField {...params} />}
               />
             </DetailSection>

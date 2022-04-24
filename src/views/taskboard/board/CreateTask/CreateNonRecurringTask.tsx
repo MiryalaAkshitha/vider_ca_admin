@@ -4,6 +4,7 @@ import { createTask } from "api/services/tasks";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
+import FormNumber from "components/FormFields/FormNumber.";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -11,7 +12,7 @@ import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import { getTitle } from "utils";
+import { getFinancialYears, getTitle } from "utils";
 import { PriorityEnum } from "utils/constants";
 import {
   CreateNonRecurringClientSchema,
@@ -40,7 +41,7 @@ function CreateNonRecurringTask() {
 
   const getCategories = () => categories?.data.map((item: any) => item);
 
-  const isSubCategoriesExist = (category) => {
+  const subcategoriesExist = (category: any) => {
     return getCategories().find((item: any) => item.id === parseInt(category))
       ?.subCategories?.length;
   };
@@ -48,7 +49,9 @@ function CreateNonRecurringTask() {
   const { watch, control, handleSubmit } = useForm({
     defaultValues: createNonRecurringTaskDefaultValues,
     mode: "onChange",
-    resolver: yupResolver(CreateNonRecurringClientSchema(isSubCategoriesExist)),
+    resolver: yupResolver(
+      CreateNonRecurringClientSchema({ subcategoriesExist })
+    ),
   });
 
   const onFormSubmit = (data: any) => {
@@ -56,7 +59,9 @@ function CreateNonRecurringTask() {
     data.members = data.members?.map((member: any) => parseInt(member.value));
     data.labels = data.labels?.map((label: any) => parseInt(label.value));
     data.category = parseInt(data.category);
-    data.subCategory = data.subCategory?.id;
+    data.subCategory = parseInt(data.subCategory);
+    data.taskLeader = parseInt(data.taskLeader);
+    data.feeAmount = data?.feeAmount ? parseFloat(data?.feeAmount) : null;
     mutate(data);
   };
 
@@ -65,7 +70,7 @@ function CreateNonRecurringTask() {
       (item: any) => item.id === watch("category")
     )?.subCategories;
 
-    if (subCategories?.length)
+    if (subCategories?.length) {
       return (
         <Box mt={2}>
           <FormSelect
@@ -79,6 +84,7 @@ function CreateNonRecurringTask() {
           />
         </Box>
       );
+    }
     return null;
   };
 
@@ -105,7 +111,7 @@ function CreateNonRecurringTask() {
               control={control}
               name="category"
               label="Category"
-              options={categories?.data.map((item) => ({
+              options={categories?.data.map((item: any) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -133,9 +139,9 @@ function CreateNonRecurringTask() {
               control={control}
               name="financialYear"
               label="Finanacial Year"
-              options={Array.from(Array(50).keys()).map((_, index) => ({
-                label: `${2000 + index}-${2000 + index + 1}`,
-                value: `${2000 + index}-${2000 + index + 1}`,
+              options={getFinancialYears().map((item) => ({
+                label: item,
+                value: item,
               }))}
             />
           </Box>
@@ -186,7 +192,7 @@ function CreateNonRecurringTask() {
             />
           </Box>
           <Box mt={2}>
-            <FormInput control={control} name="feeAmount" label="Fee Amount" />
+            <FormNumber control={control} name="feeAmount" label="Fee Amount" />
           </Box>
           <Box mt={2}>
             <FormInput

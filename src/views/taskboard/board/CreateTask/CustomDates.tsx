@@ -1,15 +1,14 @@
-import useSnack from "hooks/useSnack";
 import { Add, Delete } from "@mui/icons-material";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { Dispatch, SetStateAction, useState } from "react";
+import useSnack from "hooks/useSnack";
+import { useState } from "react";
+import { Controller } from "react-hook-form";
 import { InputChangeType } from "types";
 import { StyledDates } from "views/taskboard/styles";
-import { RecurringStateProps } from "./types";
 
 interface IProps {
-  state: RecurringStateProps;
-  setState: Dispatch<SetStateAction<RecurringStateProps>>;
+  control: any;
 }
 
 interface IState {
@@ -17,7 +16,7 @@ interface IState {
   dueDate: string;
 }
 
-const CustomDates = ({ state, setState }: IProps) => {
+const CustomDates = ({ control }: IProps) => {
   const snack = useSnack();
   const [customDates, setCustomDates] = useState<IState>({
     startDate: "",
@@ -31,91 +30,110 @@ const CustomDates = ({ state, setState }: IProps) => {
     });
   };
 
-  const addCustomDate = () => {
+  const addCustomDate = (field: any) => {
     const { startDate, dueDate } = customDates;
     if (!startDate || !dueDate) {
       snack.error("Please enter start date and due date");
       return;
     }
-    setState({
-      ...state,
-      customDates: [...state.customDates, customDates],
-    });
+
+    field.onChange([
+      ...field?.value,
+      {
+        startDate,
+        dueDate,
+      },
+    ]);
   };
 
-  const deleteCustomDate = (index: number) => {
-    const newCustomDates = [...state.customDates];
+  const deleteCustomDate = (field: any, index: number) => {
+    const newCustomDates = [...field.value];
     newCustomDates.splice(index, 1);
-    setState({ ...state, customDates: newCustomDates });
+    field.onChange(newCustomDates);
   };
 
   return (
-    <>
-      {state.customDates.map((item, index) => (
-        <StyledDates index={index} key={index}>
-          <Box gap={1} display="flex" sx={{ paddingLeft: "30px" }}>
-            <TextField
-              variant="outlined"
-              fullWidth
-              onChange={handleCustomDateChange}
-              size="small"
-              type="date"
-              disabled
-              value={item.startDate || ""}
-              InputLabelProps={{ shrink: true }}
-              label="Start Date"
-              name="startDate"
-            />
-            <TextField
-              variant="outlined"
-              fullWidth
-              onChange={handleCustomDateChange}
-              size="small"
-              type="date"
-              disabled
-              value={item.dueDate || ""}
-              InputLabelProps={{ shrink: true }}
-              label="Due Date"
-              name="dueDate"
-            />
-            <div>
-              <IconButton onClick={() => deleteCustomDate(index)}>
-                <Delete />
+    <Controller
+      name="customDates"
+      control={control}
+      render={({ field, fieldState: { error } }) => (
+        <>
+          {field?.value?.map((item: any, index: number) => (
+            <StyledDates index={index} key={index}>
+              <Box gap={1} display="flex" sx={{ paddingLeft: "30px" }}>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleCustomDateChange}
+                  size="small"
+                  type="date"
+                  disabled
+                  value={item.startDate || ""}
+                  InputLabelProps={{ shrink: true }}
+                  label="Start Date"
+                  name="startDate"
+                />
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleCustomDateChange}
+                  size="small"
+                  type="date"
+                  disabled
+                  value={item.dueDate || ""}
+                  InputLabelProps={{ shrink: true }}
+                  label="Due Date"
+                  name="dueDate"
+                />
+                <div>
+                  <IconButton onClick={() => deleteCustomDate(field, index)}>
+                    <Delete />
+                  </IconButton>
+                </div>
+              </Box>
+            </StyledDates>
+          ))}
+          <StyledDates index={12}>
+            <Box gap={1} display="flex" sx={{ paddingLeft: "30px" }}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                onChange={handleCustomDateChange}
+                size="small"
+                type="date"
+                value={customDates.startDate || ""}
+                InputLabelProps={{ shrink: true }}
+                label="Start Date"
+                name="startDate"
+              />
+              <TextField
+                variant="outlined"
+                fullWidth
+                onChange={handleCustomDateChange}
+                size="small"
+                type="date"
+                value={customDates.dueDate || ""}
+                InputLabelProps={{ shrink: true }}
+                label="Due Date"
+                name="dueDate"
+              />
+              <IconButton onClick={() => addCustomDate(field)}>
+                <Add />
               </IconButton>
-            </div>
-          </Box>
-        </StyledDates>
-      ))}
-      <StyledDates index={12}>
-        <Box gap={1} display="flex" sx={{ paddingLeft: "30px" }}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={handleCustomDateChange}
-            size="small"
-            type="date"
-            value={customDates.startDate || ""}
-            InputLabelProps={{ shrink: true }}
-            label="Start Date"
-            name="startDate"
-          />
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={handleCustomDateChange}
-            size="small"
-            type="date"
-            value={customDates.dueDate || ""}
-            InputLabelProps={{ shrink: true }}
-            label="Due Date"
-            name="dueDate"
-          />
-          <IconButton onClick={addCustomDate}>
-            <Add />
-          </IconButton>
-        </Box>
-      </StyledDates>
-    </>
+            </Box>
+          </StyledDates>
+          {error && (
+            <Typography
+              variant="caption"
+              sx={{ pl: "2px", mt: "3px", display: "block" }}
+              color="rgb(211, 47, 47)"
+            >
+              {error.message}
+            </Typography>
+          )}
+        </>
+      )}
+    />
   );
 };
 

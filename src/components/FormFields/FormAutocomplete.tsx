@@ -6,7 +6,7 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
-  options: Array<{ label: string; value: string }>;
+  options: Array<{ label: string; value: any }>;
   multiple?: boolean;
   trigger?: () => void;
 }
