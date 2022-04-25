@@ -9,18 +9,46 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
+import { deleteEvent } from "api/services/events";
+import { useConfirm } from "context/ConfirmDialog";
+import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { getTitle } from "utils";
 import EditEvent from "./EditEvent";
 
 const EventDialog = ({ open, setOpen, data }) => {
-  const [state, setState] = useState(false);
-  const [value, setValue] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const confirm = useConfirm();
+  const snack = useSnack();
+  const queryClient = useQueryClient();
 
   const EditEventClicked = () => {
-    setState(true);
+    setEditOpen(true);
     setOpen(false);
-    setValue(data);
+  };
+
+  let { mutate } = useMutation(deleteEvent, {
+    onSuccess: () => {
+      snack.success("Event deleted");
+      setOpen(false);
+      queryClient.invalidateQueries("events");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleDelete = () => {
+    confirm({
+      msg: "Are you sure you want to delete this event?",
+      action: () => {
+        mutate({
+          id: data.id,
+        });
+      },
+    });
   };
 
   return (
@@ -47,7 +75,7 @@ const EventDialog = ({ open, setOpen, data }) => {
               <IconButton onClick={EditEventClicked}>
                 <EditOutlinedIcon fontSize="small" />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={handleDelete}>
                 <DeleteOutlineOutlinedIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -59,7 +87,7 @@ const EventDialog = ({ open, setOpen, data }) => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ color: "#182F53" }}>
-                  {moment(data.date).format("MMMM d, YYYY")} (
+                  {moment(data.date).format("MMMM DD, YYYY")} (
                   {moment(data.startTime).format("hh:mm a")} -
                   {moment(data.endTime).format("hh:mm a")})
                 </Typography>
@@ -67,58 +95,57 @@ const EventDialog = ({ open, setOpen, data }) => {
               <Grid item xs={6}>
                 <Typography variant="caption">Client</Typography>
                 <Typography variant="body1">
-                  {data?.client ? data.client : <>Na</>}
+                  {data?.client ? data.client?.displayName : "Na"}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="caption">Task</Typography>
                 <Typography variant="body1">
-                  {data?.task ? data.task : <>Na</>}
+                  {data?.task ? data.task?.name : "Na"}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="caption" component="div">
                   Members
                 </Typography>
-
-                {data?.members?.map((item) => (
-                  <Typography variant="body1" component="span">
-                    {item?.fullName ? item.fullName : <>Na</>},
+                {data?.members?.map((item: any, index: number) => (
+                  <Typography variant="body1" component="span" key={index}>
+                    {item?.fullName ? item.fullName : "Na"},
                   </Typography>
                 ))}
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="caption">Location</Typography>
                 <Typography variant="body1">
-                  {data?.location ? data.location : <>Na</>}
+                  {data?.location ? data.location : "Na"}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="caption">Notes</Typography>
                 <Typography variant="body1">
-                  {data?.notes ? data.notes : <>Na</>}
+                  {data?.notes ? data.notes : "Na"}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sx={{ fontWeight: 600 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <AccessAlarmOutlinedIcon fontSize="small" />
-
-                  <Typography variant="body1" sx={{ padding: "5px" }}>
-                    {data?.reminder ? data.reminder : <>No Reminder added</>}
-                  </Typography>
-                </Box>
-              </Grid>
+              {data?.reminder && (
+                <Grid item xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AccessAlarmOutlinedIcon fontSize="small" />
+                    <Typography variant="body1" sx={{ padding: "5px" }}>
+                      {getTitle(data.reminder)}
+                    </Typography>
+                  </Box>
+                </Grid>
+              )}
             </Grid>
           </Box>
         </Box>
       </Dialog>
-
-      <EditEvent data={value} open={state} setOpen={setState} />
+      <EditEvent data={data} open={editOpen} setOpen={setEditOpen} />
     </>
   );
 };

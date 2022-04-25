@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid } from "@mui/material";
 import { getClients } from "api/services/client";
-import { createEvent } from "api/services/events";
+import { updateEvent } from "api/services/events";
 import { getTasks } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormTime from "components/FormFields/FomTime";
@@ -12,8 +12,8 @@ import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useQueryParams from "hooks/useQueryParams";
 import useSnack from "hooks/useSnack";
+import moment from "moment";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -26,7 +26,6 @@ import {
 } from "validations/addCalendarEvent";
 
 function EditEvent({ data, open, setOpen }) {
-  const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const snack = useSnack();
 
@@ -38,12 +37,26 @@ function EditEvent({ data, open, setOpen }) {
 
   useEffect(() => {
     reset({
-      title: data?.title ? data.title : " ",
-      location: data?.location ? data?.location : " ",
-      date: data?.date ? data?.date : " ",
-      startTime: data?.startTime ? data?.startTime : " ",
-      endTime: data?.endTime ? data?.endTime : " ",
-      notes: data?.notes ? data.notes : " ",
+      ...data,
+      client: data?.client
+        ? {
+            label: data?.client?.displayName,
+            value: data?.client?.id,
+          }
+        : "",
+      task: data?.task
+        ? {
+            label: data?.task?.name,
+            value: data?.task?.id,
+          }
+        : "",
+      members:
+        data?.members?.map((member: any) => ({
+          label: member.fullName,
+          value: member.id,
+        })) || [],
+      reminderCheck: Boolean(data.reminder),
+      reminder: data.reminder || "",
     });
   }, [data, reset]);
 
@@ -51,7 +64,7 @@ function EditEvent({ data, open, setOpen }) {
     ["clients", {}],
     getClients,
     {
-      enabled: queryParams.createEvent === "true",
+      enabled: open,
     }
   );
 
@@ -59,15 +72,14 @@ function EditEvent({ data, open, setOpen }) {
     ["tasks", {}],
     getTasks,
     {
-      enabled: queryParams.createEvent === "true",
+      enabled: open,
     }
   );
 
-  let { mutate, isLoading: createLoading } = useMutation(createEvent, {
+  let { mutate, isLoading: createLoading } = useMutation(updateEvent, {
     onSuccess: () => {
-      snack.success("Event Created");
-      delete queryParams.createEvent;
-      setQueryParams({ ...queryParams });
+      snack.success("Event updated");
+      setOpen(false);
       queryClient.invalidateQueries("events");
     },
     onError: (err: any) => {
@@ -75,12 +87,19 @@ function EditEvent({ data, open, setOpen }) {
     },
   });
 
-  const onSubmit = (data: any) => {
-    const { reminderCheck, ...apiData } = data;
+  const onSubmit = (result: any) => {
+    const { reminderCheck, ...apiData } = result;
     apiData.client = apiData?.client?.value;
     apiData.task = apiData?.task?.value;
+    apiData.members = apiData?.members?.map((user: any) => user.value);
+    apiData.reminder = reminderCheck ? apiData.reminder : "";
+    apiData.date = moment(apiData.date).format("YYYY-MM-DD");
+
     mutate({
-      ...apiData,
+      id: data?.id,
+      data: {
+        ...apiData,
+      },
     });
   };
 
@@ -107,10 +126,12 @@ function EditEvent({ data, open, setOpen }) {
             control={control}
             label="Client"
             name="client"
-            options={clients?.data[0]?.map((item: any) => ({
-              label: item.displayName,
-              value: item.id,
-            }))}
+            options={
+              clients?.data[0]?.map((item: any) => ({
+                label: item.displayName,
+                value: item.id,
+              })) || []
+            }
           />
           {watch("client") && (
             <Box mt={2}>
@@ -129,10 +150,12 @@ function EditEvent({ data, open, setOpen }) {
                 label="Members"
                 multiple
                 name="members"
-                options={taskMembers?.map((item: any) => ({
-                  label: item.fullName,
-                  value: item.id,
-                }))}
+                options={
+                  taskMembers?.map((item: any) => ({
+                    label: item.fullName,
+                    value: item.id,
+                  })) || []
+                }
               />
             )}
           </Box>

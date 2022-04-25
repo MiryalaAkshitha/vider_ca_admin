@@ -14,7 +14,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import AddEvent from "views/calendar/AddEvent";
-import EventDialog from "views/calendar/EventDialog";
+import ViewEvent from "views/calendar/ViewEvent";
 
 function Calendar() {
   const [open, setOpen] = useState(false);
@@ -31,8 +31,6 @@ function Calendar() {
   const eventsData =
     events?.data?.map((item: any) => ({
       title: item?.title,
-      // start: `${item?.date}T${moment(item?.startTime).format("HH:mm")}`,
-      // end: `${item?.date}T${moment(item?.endTime).format("HH:mm")}`,
       date: moment(item?.date).format("YYYY-MM-DD"),
       backgroundColor: "#88B151",
       textColor: "white",
@@ -75,7 +73,6 @@ function Calendar() {
         displayEventEnd={true}
         eventTextColor="black"
       />
-
       <FloatingButton
         onClick={() =>
           setQueryParams({
@@ -85,7 +82,7 @@ function Calendar() {
         }
       />
       <AddEvent />
-      <EventDialog open={open} setOpen={setOpen} data={data} />
+      <ViewEvent open={open} setOpen={setOpen} data={data} />
     </Box>
   );
 }

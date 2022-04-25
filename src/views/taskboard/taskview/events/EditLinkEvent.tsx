@@ -11,6 +11,7 @@ import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
 import useSnack from "hooks/useSnack";
+import moment from "moment";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
@@ -51,10 +52,11 @@ function EditEvent({ open, setOpen, event }: Props) {
     reset({
       ...event,
       members: event.members.map((user: any) => ({
-        value: user.id,
         label: user.fullName,
+        value: user.id,
       })),
       reminderCheck: Boolean(event.reminder),
+      reminder: event.reminder || "",
       notes: event.notes || "",
     });
   }, [event, reset]);
@@ -62,6 +64,9 @@ function EditEvent({ open, setOpen, event }: Props) {
   const onSubmit = (data: any) => {
     const { reminderCheck, ...apiData } = data;
     apiData.members = data.members.map((user: any) => user.value);
+    apiData.reminder = reminderCheck ? apiData.reminder : "";
+    apiData.date = moment(apiData.date).format("YYYY-MM-DD");
+
     mutate({
       id: event.id,
       data: {

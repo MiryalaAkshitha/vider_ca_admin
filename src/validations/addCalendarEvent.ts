@@ -1,6 +1,7 @@
-import { boolean, date, mixed, object, ref, string, number, array } from "yup";
+import moment from "moment";
+import { array, boolean, date, mixed, number, object, ref, string } from "yup";
 
-let addCalendarEventDefaultValues = {
+let addCalendarEventDefaultValues: any = {
   client: null,
   task: null,
   title: "",
@@ -48,7 +49,10 @@ let AddCalendarEventSchema = () => {
         .nullable()
         .typeError("Invalid date")
         .required("Date is required")
-        .min(new Date(), "Date should be greater than task created date"),
+        .min(
+          moment().format("YYYY-MM-DD"),
+          "Date should be greater than today"
+        ),
       startTime: date()
         .nullable()
         .typeError("Invalid start time")

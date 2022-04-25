@@ -5,7 +5,7 @@ import useSnack from "hooks/useSnack";
 import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import EditEvent from "./EditEvent";
+import EditLinkEvent from "./EditLinkEvent";
 
 interface EditEventProps extends AccountMenuProps {
   event: any;
@@ -61,7 +61,7 @@ function EditEventPopover(props: EditEventProps) {
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
         <MenuItem onClick={handleDelete}>Remove</MenuItem>
       </Menu>
-      <EditEvent open={editOpen} setOpen={setEditOpen} event={event} />
+      <EditLinkEvent open={editOpen} setOpen={setEditOpen} event={event} />
     </>
   );
 }

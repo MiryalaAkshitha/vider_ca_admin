@@ -67,6 +67,8 @@ function AddEvent() {
     const { reminderCheck, ...apiData } = data;
     apiData.client = apiData?.client?.value;
     apiData.task = apiData?.task?.value;
+    apiData.members = data.members.map((user: any) => user.value);
+    apiData.reminder = data.reminderCheck ? data.reminder : "";
     mutate({
       ...apiData,
     });
