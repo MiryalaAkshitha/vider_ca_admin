@@ -8,7 +8,7 @@ import CreateRecurringTask from "./CreateRecurringTask";
 
 const CreateTask = () => {
   const { queryParams, setQueryParams } = useQueryParams();
-  const [type, setType] = useState("recurring");
+  const [type, setType] = useState("non_recurring");
 
   return (
     <DrawerWrapper
