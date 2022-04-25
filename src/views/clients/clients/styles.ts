@@ -178,6 +178,10 @@ export const StyledRecurProfileItem = styled("div")<{
   padding: "13px 10px",
   backgroundColor: active ? "rgb(24, 47, 83, 0.08)" : "white",
   borderBottom: last ? "none" : "1px solid rgba(0,0,0,0.1)",
+  position: "relative",
+  display: "flex",
+  justifyContent: "space-between",
+  gap: 10,
 }));
 
 export const StyledTaskSection = styled("div")(({ theme }) => ({

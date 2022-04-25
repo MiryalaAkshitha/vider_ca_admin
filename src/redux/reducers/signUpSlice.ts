@@ -46,10 +46,7 @@ export const signupSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    handleStep(
-      state,
-      action: PayloadAction<"signup" | "otp" | "details" | "team">
-    ) {
+    handleStep(state, action: PayloadAction<"signup" | "otp" | "details">) {
       state.step = action.payload;
     },
     handleFieldChange(

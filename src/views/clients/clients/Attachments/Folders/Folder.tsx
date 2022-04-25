@@ -93,29 +93,27 @@ function Folder({ data }: Props) {
 
   return (
     <>
-      <>
-        <StyledFolder
-          onClick={() => {
-            setQueryParams({
-              ...queryParams,
-              folderId: data?.uid,
-            });
-          }}
-          onContextMenu={handleContextMenu}
-          draggable={true}
-          dragging={dragging ? 1 : 0}
-          dropping={dropping ? 1 : 0}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-        >
-          <img src={icons.folder} alt="" />
-          <Typography variant="body2">{data?.name}</Typography>
-        </StyledFolder>
-      </>
+      <StyledFolder
+        onClick={() => {
+          setQueryParams({
+            ...queryParams,
+            folderId: data?.uid,
+          });
+        }}
+        onContextMenu={handleContextMenu}
+        draggable={true}
+        dragging={dragging ? 1 : 0}
+        dropping={dropping ? 1 : 0}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+      >
+        <img src={icons.folder} alt="" />
+        <Typography variant="body2">{data?.name}</Typography>
+      </StyledFolder>
       <FolderMenu
         contextMenu={contextMenu}
         setContextMenu={setContextMenu}
