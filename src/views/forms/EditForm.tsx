@@ -4,14 +4,12 @@ import { updateForm } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormFreeSoloAutoComplete from "components/FormFields/FormFreeSoloAutoComplete";
 import FormInput from "components/FormFields/FormInput";
-import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import useSnack from "hooks/useSnack";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
-import { FormType } from "utils/constants";
 import {
   createFormDefaultValues,
   CreateFormSchema,
@@ -33,7 +31,6 @@ function EditForm({ open, setOpen, data }: Props) {
 
   useEffect(() => {
     reset({
-      type: data.type || "",
       name: data.name || "",
       tags: data.tags || [],
       description: data.description || "",
@@ -61,16 +58,7 @@ function EditForm({ open, setOpen, data }: Props) {
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Edit form">
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <FormSelect
-          control={control}
-          label="Form Type"
-          name="type"
-          options={Object.values(FormType).map((item) => ({
-            label: item,
-            value: item,
-          }))}
-        />
-        <Box mt={2}>
+        <Box>
           <FormInput control={control} name="name" label="Form Name" />
         </Box>
         <Box mt={2}>

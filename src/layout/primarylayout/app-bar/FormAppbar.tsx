@@ -11,7 +11,7 @@ function Appbar() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <Box mb={12}>
       <BaseAppbar occupy={true}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box display="flex" alignItems="center" gap={3}>
@@ -31,7 +31,7 @@ function Appbar() {
           </Box>
         </Toolbar>
       </BaseAppbar>
-    </>
+    </Box>
   );
 }
 

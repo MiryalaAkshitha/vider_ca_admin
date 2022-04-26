@@ -1,7 +1,6 @@
 import { array, object, string } from "yup";
 
 let createFormDefaultValues = {
-  type: "",
   name: "",
   description: "",
   tags: [],
@@ -9,7 +8,6 @@ let createFormDefaultValues = {
 
 let CreateFormSchema = () =>
   object().shape({
-    type: string().required("Form Type name is required"),
     name: string()
       .required("Form Name is required")
       .min(3, "Form Name should be atleast 3 characters"),

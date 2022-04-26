@@ -7,7 +7,7 @@ import Checklists from "views/taskboard/taskview/Checklists";
 import Comments from "views/taskboard/taskview/comments";
 import Description from "views/taskboard/taskview/Description";
 import Details from "views/taskboard/taskview/Details";
-import DueDiligence from "views/taskboard/taskview/duediligence";
+import IPro from "views/taskboard/taskview/iPro";
 import Events from "views/taskboard/taskview/events";
 import Expenditure from "views/taskboard/taskview/expenditure";
 import LogHours from "views/taskboard/taskview/LogHours";
@@ -53,8 +53,8 @@ function TaskDetails() {
       <TaskSection id="details">
         <Details />
       </TaskSection>
-      <TaskSection id="dd">
-        <DueDiligence />
+      <TaskSection id="iPro">
+        <IPro />
       </TaskSection>
       <TaskSection id="description">
         <Description />

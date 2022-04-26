@@ -100,9 +100,9 @@ const CreateForm = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <FormAppbar />
+      {data?.type === "TEMPLATE" && <FormAppbar />}
       {data?.pages?.length > 0 ? (
-        <Grid container spacing={2} sx={{ pt: 10, pb: 4, px: 2 }}>
+        <Grid container spacing={2} sx={{ pb: 4, px: 2 }}>
           <Grid item xs={7}>
             <Pages />
           </Grid>

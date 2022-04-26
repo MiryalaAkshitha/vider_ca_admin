@@ -1,6 +1,6 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box, Chip, Typography } from "@mui/material";
-import { deleteForm } from "api/services/forms";
+import { cloneForm, deleteForm } from "api/services/forms";
 import { clientFormCard } from "assets";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
@@ -29,16 +29,15 @@ const FormCard = ({ data }: any) => {
     },
   });
 
-  const handleDelete = () => {
-    confirm({
-      msg: "Are you sure you want to delete this form?",
-      action: () => {
-        mutate({
-          id: data._id,
-        });
-      },
-    });
-  };
+  const { mutate: handleCloneForm } = useMutation(cloneForm, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("forms");
+      snack.success("Form created");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
 
   const handleMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -54,8 +53,28 @@ const FormCard = ({ data }: any) => {
           action: () => window.open(`/forms/access/${data._id}?preview=true`),
         },
         {
+          label: "Duplicate",
+          action: () => {
+            handleCloneForm({
+              id: data._id,
+              data: {
+                type: "TEMPLATE",
+              },
+            });
+          },
+        },
+        {
           label: "Delete",
-          action: handleDelete,
+          action: () => {
+            confirm({
+              msg: "Are you sure you want to delete this form?",
+              action: () => {
+                mutate({
+                  id: data._id,
+                });
+              },
+            });
+          },
         },
       ],
     });

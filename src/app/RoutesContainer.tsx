@@ -71,10 +71,17 @@ const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
 });
 const Forms = loadable(() => import("pages/forms"));
+const TaskForms = loadable(() => import("pages/forms/TaskForms"));
 const FormTemplates = loadable(() => import("pages/forms/FormTemplates"));
 const FormValidations = loadable(() => import("pages/forms/FormValidations"));
 const FormBuilder = loadable(() => import("pages/forms/FormBuilder"));
 const AccessForm = loadable(() => import("pages/forms/AccessForm"));
+const ViewIproForm = loadable(() => import("pages/taskboard/view-ipro"));
+const ViewIproFormEntry = loadable(
+  () => import("pages/taskboard/view-ipro-entry")
+);
+const IProAuditLog = loadable(() => import("pages/taskboard/ipro-audit-log"));
+const IProShareLink = loadable(() => import("pages/taskboard/ipro-share-link"));
 
 function RoutesContainer() {
   return (
@@ -98,6 +105,7 @@ function RoutesContainer() {
           <Route path="forms" element={<Forms />}>
             <Route index element={<FormTemplates />} />
             <Route path="form-validations" element={<FormValidations />} />
+            <Route path="task-forms" element={<TaskForms />} />
           </Route>
           <Route path="task-board">
             <Route index element={<TaskBoard />} />
@@ -157,6 +165,12 @@ function RoutesContainer() {
         <Route path="/join" element={<Join />} />
         <Route path="/forms/builder/:formId" element={<FormBuilder />} />
         <Route path="/forms/access/:formId" element={<AccessForm />} />
+        <Route path="/tasks/:taskId/iPro/:formId" element={<ViewIproForm />}>
+          <Route path="view" element={<ViewIproFormEntry />} />
+          <Route path="edit" element={<FormBuilder />} />
+          <Route path="audit-log" element={<IProAuditLog />} />
+          <Route path="share-link" element={<IProShareLink />} />
+        </Route>
       </Routes>
       <GlobalDrawers />
     </Router>

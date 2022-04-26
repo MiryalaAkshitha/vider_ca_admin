@@ -11,10 +11,10 @@ import { ResType } from "types";
 import AddForm from "views/forms/AddForm";
 import FormCard from "views/forms/FormCard";
 
-const MyForms = () => {
+const TaskForms = () => {
   const [open, setOpen] = useState(false);
   const { data, isLoading }: ResType = useQuery(
-    ["forms", { type: "TEMPLATE" }],
+    ["task-forms", { type: "TASKS" }],
     getForms
   );
   const [search, setSearch] = useState("");
@@ -26,15 +26,7 @@ const MyForms = () => {
   if (!data?.data?.length) {
     return (
       <>
-        <EmptyPage
-          title="There are no forms available"
-          btnTitle="Create Form"
-          btnAction={() => {
-            console.log("something");
-            setOpen(true);
-          }}
-          desc="Click on create form to add a new form"
-        />
+        <EmptyPage title="There are no task forms available" />
         <AddForm open={open} setOpen={setOpen} />
       </>
     );
@@ -60,4 +52,4 @@ const MyForms = () => {
   );
 };
 
-export default MyForms;
+export default TaskForms;

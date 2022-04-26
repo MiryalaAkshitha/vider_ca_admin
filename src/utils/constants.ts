@@ -137,7 +137,7 @@ export const userProfileMenu: Array<{ title: string; path: string }> = [
 
 export const taskViewMenu: Array<{ id: string; label: string }> = [
   { id: "details", label: "Details" },
-  { id: "dd", label: "Due Diligence" },
+  { id: "iPro", label: "IPro" },
   { id: "description", label: "Description" },
   { id: "checklists", label: "Checklists" },
   { id: "milestones", label: "Milestones" },

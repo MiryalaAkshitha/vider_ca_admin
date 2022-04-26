@@ -1,35 +1,34 @@
-import Loader from "components/Loader";
-import Timeline from "@mui/lab/Timeline";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineOppositeContent,
+  TimelineSeparator,
+  TimelineDot,
+  TimelineConnector,
+  TimelineContent,
+} from "@mui/lab";
 import { Box, Typography } from "@mui/material";
-import { getActivity } from "api/services/common";
+import { getFormActivity } from "api/services/forms";
+import Loader from "components/Loader";
+import moment from "moment";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import moment from "moment";
 import { getTitle } from "utils";
-import { StyledTimelineIcon } from "../../styles";
+import { StyledTimelineIcon } from "views/clients/clients/styles";
 
-function Activity() {
+function IProAuditLog() {
   const params = useParams();
 
-  const { isLoading, data }: ResType = useQuery(
-    ["activity", { type: "clients", typeId: params.clientId }],
-    getActivity
+  const { data, isLoading }: ResType = useQuery(
+    ["form-activity", params.formId],
+    getFormActivity
   );
 
   if (isLoading) return <Loader />;
 
   return (
-    <Box width={1000} mt={4}>
-      <Typography variant="subtitle1" gutterBottom color="primary">
-        Activity Log
-      </Typography>
+    <Box maxWidth={1000} margin="auto">
       <Timeline>
         {data?.data?.map((item: any, index: number) => (
           <TimelineItem key={index}>
@@ -79,4 +78,4 @@ function Activity() {
   );
 }
 
-export default Activity;
+export default IProAuditLog;

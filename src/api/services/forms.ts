@@ -12,8 +12,8 @@ const deleteForm = ({ id }: any) => {
   return http.delete(`/forms/${id}`);
 };
 
-const cloneForm = ({ id }: any) => {
-  return http.post(`/forms/${id}/clone`);
+const cloneForm = ({ id, data }: any) => {
+  return http.post(`/forms/${id}/clone`, data);
 };
 
 const getForms = ({ queryKey }: any) => {
@@ -64,6 +64,10 @@ const deleteFormValidation = ({ id }) => {
   return http.delete(`/form-validations/${id}`);
 };
 
+const getFormActivity = ({ queryKey }: any) => {
+  return http.get(`/forms/${queryKey[1]}/activity`);
+};
+
 export {
   getForms,
   createForm,
@@ -81,4 +85,5 @@ export {
   updateFormValidation,
   cloneForm,
   deletePage,
+  getFormActivity,
 };

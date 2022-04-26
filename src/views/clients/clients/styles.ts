@@ -219,3 +219,21 @@ export const StyledSearchList = styled(Paper)(() => ({
   overflowY: "auto",
   zIndex: 1,
 }));
+
+export const StyledTimelineIcon = styled("div")(() => ({
+  background: "#0D47A11A",
+  padding: "10px 20px",
+  width: 240,
+  position: "relative",
+  "&:before": {
+    content: "''",
+    position: "absolute",
+    bottom: 0,
+    width: 0,
+    height: 0,
+    left: "100%",
+    borderLeft: "20px solid #0D47A11A",
+    borderTop: "35px solid transparent",
+    borderBottom: "35px solid transparent",
+  },
+}));

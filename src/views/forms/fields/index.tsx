@@ -5,7 +5,7 @@ import Field from "./Field";
 
 function Fields() {
   return (
-    <Box sx={{ position: "sticky", top: 80 }}>
+    <Box sx={{ position: "sticky", top: 140 }}>
       <Box
         sx={{
           border: "1px solid #22222226",

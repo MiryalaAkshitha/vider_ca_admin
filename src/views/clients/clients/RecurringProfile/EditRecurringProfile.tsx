@@ -85,6 +85,20 @@ function EditRecurringProfile({ open, setOpen, data }: Props) {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled
+              fullWidth
+              label="Task Category"
+              value={data?.taskData?.categoryName}
+              size="small"
+              sx={{
+                "& .MuiOutlinedInput-input.Mui-disabled": {
+                  WebkitTextFillColor: "black",
+                },
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               fullWidth
               label="Start Date"
               value={data.startDate}
