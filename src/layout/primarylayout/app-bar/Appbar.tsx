@@ -18,6 +18,7 @@ import { selectTitle } from "redux/reducers/globalSlice";
 import AccountMenu from "../AccountMenu";
 import ConfigurationMenu from "../ConfigurationMenu";
 import GlobalAdd from "../GlobalAdd";
+import LocalNotifications from "../LocalNotifications";
 import Notifications from "../Notifications";
 import BaseAppbar from "./BaseAppbar";
 
@@ -30,6 +31,8 @@ function Appbar() {
   const [globalAddAnchorEl, setGlobalAddAnchorEl] =
     useState<HTMLElement | null>(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] =
+    useState<null | HTMLElement>(null);
+  const [localNotificationsAnchorEl, setLocalNotificationsAnchorEl] =
     useState<null | HTMLElement>(null);
 
   const title = useSelector(selectTitle);
@@ -48,6 +51,10 @@ function Appbar() {
       <Notifications
         notificationsAnchorEl={notificationsAnchorEl}
         setNotificationsAnchorEl={setNotificationsAnchorEl}
+      />
+      <LocalNotifications
+        localNotificationsAnchorEl={localNotificationsAnchorEl}
+        setLocalNotificationsAnchorEl={setLocalNotificationsAnchorEl}
       />
     </>
   );
@@ -84,7 +91,11 @@ function Appbar() {
             >
               <LanguageOutlined color="primary" />
             </IconButton>
-            <IconButton>
+            <IconButton
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                setLocalNotificationsAnchorEl(e.currentTarget);
+              }}
+            >
               <NotificationsOutlined color="primary" />
             </IconButton>
             <Link to="/settings/categories">

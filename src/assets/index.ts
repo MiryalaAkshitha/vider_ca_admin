@@ -5,6 +5,16 @@ import whiteLogo from "./images/white_logo.svg";
 import dashboard from "./icons/dashboard.svg";
 import taskboard from "./icons/taskboard.svg";
 import calendar from "./icons/calendar.svg";
+import checklist_PosterImage from "./icons/checklist_PosterImage.png";
+import handshake_PosterImage from "./icons/handshake_PosterImage.png";
+import socialmedia_PosterImage from"./icons/socialmedia_PosterImage.png";
+import calendar_PosterImage from"./icons/calendar_PosterImage.png";
+import taskCompleted from"./icons/taskCompleted.svg";
+import totalClients from"./icons/totalClients.svg";
+import taskInprogress from"./icons/taskInprogress.svg";
+import taskTodo from"./icons/taskTodo.svg";
+import taskUnderReview from"./icons/taskUnderReview.svg";
+import totalTasks from"./icons/totalTasks.svg";
 import invoicing from "./icons/invoicing.svg";
 import clients from "./icons/clients.svg";
 import storage from "./icons/storage.svg";
@@ -81,6 +91,16 @@ export {
 };
 
 export const icons = {
+  totalTasks,
+  totalClients,
+  taskCompleted,
+  taskInprogress,
+  taskTodo,
+  taskUnderReview,
+  checklist_PosterImage,
+  handshake_PosterImage,
+  socialmedia_PosterImage,
+  calendar_PosterImage,
   folder,
   dashboard,
   taskboard,

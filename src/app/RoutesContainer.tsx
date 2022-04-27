@@ -9,6 +9,9 @@ const CreateInvoice = loadable(
   () => import("views/invoicing/createInvoice/index")
 );
 const Preview = loadable(() => import("views/invoicing/createInvoice/Preview"));
+const CreateEstimate = loadable(
+  () => import("views/invoicing/createEstimate/index")
+);
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
@@ -96,6 +99,7 @@ function RoutesContainer() {
             <Route index element={<Invoicing />} />
             <Route path="create-invoice" element={<CreateInvoice />} />
             <Route path="preview" element={<Preview />} />
+            <Route path="create-estimate" element={<CreateEstimate />} />
           </Route>
           <Route path="storage" element={<Storage />}>
             <Route path="my-storage" element={<MyStorage />} />

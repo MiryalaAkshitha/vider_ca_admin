@@ -1,12 +1,10 @@
-import { Box } from "@mui/system";
-import ComingSoon from "components/ComingSoon";
+import Dashboard from "views/dashboard/OrgDashboard";
 
-function Dashboard() {
+const OrgDashboard = () => {
   return (
-    <Box p={2}>
-      <ComingSoon title="Dashboard" />
-    </Box>
+    <>
+      <Dashboard />
+    </>
   );
-}
-
-export default Dashboard;
+};
+export default OrgDashboard;

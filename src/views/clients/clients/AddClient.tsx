@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import FormRadio from "components/FormFields/FormRadio";
 import {
   createClientDefaultValues,
   CreateClientSchema,
@@ -50,10 +50,6 @@ function AddClient() {
     resolver: yupResolver(CreateClientSchema),
   });
 
-  let subCategories = CLIENT_CATEGORIES.find(
-    (item) => item.value === watch("category")
-  )?.subCategories;
-
   const onFormSubmit = (data: any) => {
     mutate(data);
   };
@@ -73,37 +69,15 @@ function AddClient() {
         <Loader />
       ) : (
         <form onSubmit={handleSubmit(onFormSubmit)}>
-          <FormSelect
-            control={control}
-            name="category"
-            label="Category"
-            options={CLIENT_CATEGORIES.map((item) => ({
-              label: item.label,
-              value: item.value,
-            }))}
-          />
-          {subCategories && (
-            <Box mt={2}>
-              <FormSelect
-                control={control}
-                name="subCategory"
-                label="Sub Category"
-                options={subCategories.map((item) => ({
-                  label: item.label,
-                  value: item.value,
-                }))}
-              />
-            </Box>
-          )}
           <Box mt={2}>
             <FormInput
               control={control}
-              name="displayName"
-              label="Display Name"
+              name="mobileNumber"
+              label="Client Mobile number"
             />
           </Box>
           <Box mt={2}>
-            <FormInput control={control} name="tradeName" label="Trade Name" />
+            <FormInput control={control} name="email" label="Client Mail Id" />
           </Box>
           <Box mt={2}>
             <FormSelect
@@ -117,15 +91,35 @@ function AddClient() {
             />
           </Box>
           <Box mt={2}>
-            <FormInput
+            <FormRadio
+              row
               control={control}
-              name="mobileNumber"
-              label="Mobile Number"
+              name="gstRegistered"
+              label="Is this firm registered for GST?"
+              options={[
+                { value: "yes", label: "Yes" },
+                { value: "no", label: "No" },
+              ]}
             />
           </Box>
-          <Box mt={2}>
-            <FormInput control={control} name="email" label="Email" />
-          </Box>
+          {watch("gstRegistered") === "yes" && (
+            <Box mt={2}>
+              <FormInput
+                control={control}
+                name="gstNumber"
+                label="GST Number"
+              />
+            </Box>
+          )}
+          {watch("gstRegistered") === "no" && (
+            <Box mt={2}>
+              <FormInput
+                control={control}
+                name="panNumber"
+                label="PAN Number"
+              />
+            </Box>
+          )}
           <LoadingButton
             loading={isLoading}
             fullWidth

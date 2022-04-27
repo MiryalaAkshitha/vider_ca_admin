@@ -17,7 +17,9 @@ function Invoicing() {
 
   const handleNewReceipt = () => {};
 
-  const handleNewEstimate = () => {};
+  const handleNewEstimate = () => {
+    navigate("/invoicing/create-estimate");
+  };
 
   const handleNewInvoice = () => {
     navigate("/invoicing/create-invoice");

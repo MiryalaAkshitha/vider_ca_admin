@@ -8,6 +8,8 @@ let createClientDefaultValues = {
   clientManager: "",
   email: "",
   mobileNumber: "",
+  gstRegistered: "",
+  panNumber: "",
 };
 
 let CreateClientSchema = object().shape({
@@ -23,6 +25,9 @@ let CreateClientSchema = object().shape({
   category: string().required("Category is required"),
   subCategory: string().notRequired(),
   email: string().email("Invalid email address").required("Email is required"),
+  gstRegistered: string().notRequired(),
+  panNumber: string().required("Enter Pan Number"),
+  gstNumber: string().required("Enter GST Number"),
   mobileNumber: string()
     .required("Mobile number is required")
     .min(10, "Mobile number should be atleast 10 digits")
