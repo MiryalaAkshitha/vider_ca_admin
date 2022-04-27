@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import { getForm } from "api/services/forms";
+import { getForm, updatePage } from "api/services/forms";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ResType } from "types";
+import { FormBuilderFieldTypes } from "views/forms/utils/renderFieldsComponent";
 import ViewPageFields from "../../views/forms/AccessFormFields";
 
 function ViewForm() {
@@ -33,15 +34,69 @@ function ViewForm() {
     }
   );
 
-  const handleNext = (pageData: any) => {
-    if (active === data?.pages?.length - 1) {
-      return;
+  const { mutate: updatePageFields } = useMutation(updatePage, {
+    onSuccess: () => {
+      snack.success("Values saved");
+      if (active === data?.pages?.length - 1) {
+        return;
+      }
+      setActive(active + 1);
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleSubmit = (pageData: any) => {
+    let finalData = {
+      ...formData,
+      [data?.pages[active]._id]: pageData,
+    };
+
+    let activePageData = finalData[data?.pages[active]._id];
+    let activeFields = [...data?.pages[active].fields];
+
+    for (let key in activePageData) {
+      const value = activePageData[key];
+      const field = activeFields?.find((field: any) => field._id === key);
+      const type = field?.fieldType;
+
+      if (!field) continue;
+
+      let hasInputs =
+        type === FormBuilderFieldTypes.NAME ||
+        type === FormBuilderFieldTypes.ADDRESS;
+
+      if (!hasInputs) {
+        field.value = value || null;
+        continue;
+      }
+
+      Object.keys(value).forEach((inputKey) => {
+        let input = field.inputs?.find((input: any) => input._id === inputKey);
+
+        if (!input) return;
+
+        input.value = value[inputKey] || null;
+      });
     }
+
+    updatePageFields({
+      formId: params.formId,
+      pageId: data?.pages[active]?._id,
+      data: {
+        fields: activeFields,
+      },
+    });
+  };
+
+  const handleNext = (pageData: any) => {
     setFormData({
       ...formData,
       [data?.pages[active]._id]: pageData,
     });
-    setActive(active + 1);
+
+    handleSubmit(pageData);
   };
 
   if (isLoading) return <Loader />;

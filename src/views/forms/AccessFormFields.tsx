@@ -5,16 +5,12 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { dynamicSchema } from "views/forms/utils/generateSchema";
 import RenderField from "views/forms/utils/RenderField";
+import { generateDefaultValues } from "./utils/generateDefaultValues";
 
 function ViewPageFields({ data, active, onContinue }: any) {
-  const {
-    control,
-    watch,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
+  const { control, formState, handleSubmit } = useForm({
     mode: "onChange",
-    defaultValues: {},
+    defaultValues: generateDefaultValues(data?.pages[active]?.fields),
     resolver: yupResolver(dynamicSchema(data?.pages[active]?.fields)),
   });
 
@@ -22,13 +18,12 @@ function ViewPageFields({ data, active, onContinue }: any) {
     onContinue(data);
   };
 
-  console.log(watch("62590cdb1d72dec9481ddc52" as any)?.toString().length);
-
   useEffect(() => {
+    const { errors } = formState;
     if (_.isEmpty(errors)) return;
     let firstError = Object.keys(errors)[0];
     document.getElementById(firstError)?.scrollIntoView();
-  }, [errors]);
+  }, [formState]);
 
   return (
     <>

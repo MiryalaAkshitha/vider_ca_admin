@@ -51,6 +51,9 @@ function FormBuilderCheckbox(props: Props) {
                     key={index}
                     control={
                       <Checkbox
+                        checked={(
+                          field?.value?.map((item: any) => item?.value) || []
+                        ).includes(item.value)}
                         onChange={(e) => {
                           let value = field.value || [];
                           if (e.target.checked) {
