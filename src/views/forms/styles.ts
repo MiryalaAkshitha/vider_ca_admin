@@ -66,3 +66,39 @@ export const StyledEmptyPagePlaceholder = styled("div")(() => ({
   width: "70%",
   margin: "0 auto",
 }));
+
+export const StyledPreviewRibbon = styled("div")(({ theme }) => ({
+  padding: "10px",
+  width: "200px",
+  textAlign: "center",
+  position: "absolute",
+  right: -70,
+  top: 20,
+  transform: "rotate(45deg)",
+  background: theme.palette.secondary.main,
+}));
+
+export const StyledAccessFormContainer = styled("div")(() => ({
+  paddingBottom: "50px",
+  maxWidth: 1000,
+  margin: "auto",
+  position: "relative",
+  overflow: "hidden",
+  background: "white",
+  border: "1px solid #E0E0E0",
+  borderRadius: 10,
+}));
+
+export const StyledAccessFormAppbar = styled("div")(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  background: "white",
+  borderBottom: "1px solid #E0E0E0",
+  position: "fixed",
+  width: "100%",
+  padding: "15px 10px",
+  top: 0,
+  left: 0,
+  zIndex: 100,
+}));

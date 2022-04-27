@@ -13,6 +13,8 @@ const SelectCountryCode = ({ value, onChange, setWidth, allowedCountries }) => {
 
   let countryCode = countries.find((country) => country.phone === value);
 
+  let finalCountries = allowedCountries?.length ? allowedCountries : countries;
+
   return (
     <>
       <Box
@@ -59,7 +61,7 @@ const SelectCountryCode = ({ value, onChange, setWidth, allowedCountries }) => {
           },
         }}
       >
-        {allowedCountries?.map((country: any, index: number) => (
+        {finalCountries?.map((country: any, index: number) => (
           <MenuItem
             key={index}
             onClick={() => {

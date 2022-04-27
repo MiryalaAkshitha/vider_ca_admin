@@ -1,17 +1,25 @@
-import { Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import { getForm, updatePage } from "api/services/forms";
+import { logo } from "assets";
 import Loader from "components/Loader";
 import useSnack from "hooks/useSnack";
+import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ResType } from "types";
+import {
+  StyledAccessFormAppbar,
+  StyledAccessFormContainer,
+  StyledPreviewRibbon,
+} from "views/forms/styles";
 import { FormBuilderFieldTypes } from "views/forms/utils/renderFieldsComponent";
-import ViewPageFields from "../../views/forms/AccessFormFields";
+import AccessFormFields from "../../views/forms/AccessFormFields";
+import TaskDetails from "./TaskDetails";
 
 function ViewForm() {
   const snack = useSnack();
@@ -102,49 +110,65 @@ function ViewForm() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box py={3} px={2}>
-      <Paper
-        elevation={1}
-        sx={{
-          py: 8,
-          maxWidth: 1000,
-          margin: "auto",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
+    <Box
+      sx={{
+        background: "rgba(233, 107, 116, 0.04)",
+        minHeight: "100vh",
+        pt: 10,
+      }}
+    >
+      <StyledAccessFormAppbar>
+        <Box display="flex" gap={2} alignItems="center">
+          <img src={logo} alt="" />
+          <Typography variant="subtitle2" color="primary">
+            {data?.name}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="body2">
+            Last updated: {moment(data?.updatedAt).format("YYYY-MM-DD HH:mm A")}
+          </Typography>
+        </Box>
+      </StyledAccessFormAppbar>
+      <StyledAccessFormContainer>
+        {Boolean(data?.taskId) && <TaskDetails taskId={data?.taskId} />}
         {searchParams.get("preview") === "true" && (
-          <Box
-            sx={{
-              p: 1,
-              width: "200px",
-              textAlign: "center",
-              position: "absolute",
-              right: -70,
-              top: 20,
-              transform: "rotate(45deg)",
-              background: (theme) => theme.palette.secondary.main,
-            }}
-          >
+          <StyledPreviewRibbon>
             <Typography color="white" variant="caption">
               Preview
             </Typography>
-          </Box>
+          </StyledPreviewRibbon>
         )}
-        <Stepper activeStep={active} alternativeLabel>
-          {data?.pages?.map((item: any, index: number) => (
-            <Step key={index}>
-              <StepLabel
-                sx={{ cursor: "pointer" }}
-                onClick={() => setActive(index)}
-              >
-                {item?.name}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <ViewPageFields data={data} active={active} onContinue={handleNext} />
-      </Paper>
+        {data?.pages?.length > 1 && (
+          <Stepper
+            sx={{ py: 3, borderBottom: "1px solid #E0E0E0" }}
+            activeStep={active}
+            alternativeLabel
+          >
+            {data?.pages?.map((item: any, index: number) => (
+              <Step key={item?._id}>
+                <StepLabel
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => setActive(index)}
+                >
+                  {item?.name}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        )}
+        {data?.pages?.map((item: any, index: number) => {
+          if (active !== index) return null;
+          return (
+            <AccessFormFields
+              key={item?._id}
+              data={item?.fields}
+              active={active}
+              onContinue={handleNext}
+            />
+          );
+        })}
+      </StyledAccessFormContainer>
     </Box>
   );
 }

@@ -78,8 +78,9 @@ function AddIproForm({ open, setOpen }: DialogProps) {
                 ))}
               </Grid>
             </Box>
-            <Box onClick={handleClick} mt={5} mb={3} textAlign="center">
+            <Box mt={5} mb={3} textAlign="center">
               <Button
+                onClick={handleClick}
                 disabled={!selected}
                 variant="contained"
                 color="secondary"

@@ -33,8 +33,6 @@ interface UploadProps {
   setError: (v: string) => void;
 }
 
-type State = Array<{ file: File; key: string; url: string }>;
-
 function Upload(props: UploadProps) {
   let {
     onChange,
@@ -48,7 +46,6 @@ function Upload(props: UploadProps) {
 
   const snack = useSnack();
   const [loading, setLoading] = useState<boolean>(false);
-  const [state, setState] = useState<State>([]);
 
   const handleFile = async (files: File[]) => {
     value = Array.isArray(value) ? value : [];
@@ -104,10 +101,14 @@ function Upload(props: UploadProps) {
         const formData = new FormData();
         formData.append("file", file);
         const res: any = await http.post("/common/upload", formData);
-        result.push({ file, key: res.data.key, url: res.data.Location });
+        result.push({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          url: res.data.Location,
+        });
       }
-      setState([...state, ...result]);
-      onChange([...state, ...result].map(({ key }) => key));
+      onChange([...value, ...result]);
     } catch (err: any) {
       snack.error("something went wrong");
     } finally {
@@ -143,10 +144,9 @@ function Upload(props: UploadProps) {
 
   const removeFile = (index: number) => {
     setError("");
-    const newState = [...state];
-    newState.splice(index, 1);
-    setState(newState);
-    onChange(newState.map(({ key }) => key));
+    const newValue = [...value];
+    newValue.splice(index, 1);
+    onChange(newValue);
   };
 
   return (
@@ -194,7 +194,7 @@ function Upload(props: UploadProps) {
             </div>
           </UploadContainer>
         </label>
-        {state.length > 0 && (
+        {value?.length > 0 && (
           <Box
             sx={{
               display: "flex",
@@ -204,59 +204,63 @@ function Upload(props: UploadProps) {
               p: 1,
             }}
           >
-            {state.map(
-              ({ file, url }: { file: File; url: string }, index: number) => (
+            {value.map((item: any, index: number) => (
+              <Box
+                key={index}
+                sx={{
+                  border: "1px solid rgba(0,0,0,0.1)",
+                  borderRadius: "8px",
+                  padding: "5px",
+                  display: "flex",
+                  gap: 2,
+                  maxWidth: "300px",
+                }}
+              >
                 <Box
-                  key={index}
                   sx={{
-                    border: "1px solid rgba(0,0,0,0.1)",
-                    borderRadius: "8px",
-                    padding: "5px",
                     display: "flex",
-                    gap: 2,
-                    maxWidth: "300px",
+                    gap: 1,
+                    flex: 1,
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      gap: 1,
-                      flex: 1,
-                    }}
-                  >
-                    <Box>
-                      <a href={url} target="_blank" rel="noopener noreferrer">
-                        <img
-                          src={file.type === FILETYPES.PDF ? icons.pdf : url}
-                          alt={file.name}
-                          style={{
-                            width: 50,
-                            height: 40,
-                            objectFit: "contain",
-                          }}
-                        />
-                      </a>
-                    </Box>
-                    <Box>
-                      <Typography variant="body2">{file.name}</Typography>
-                      <Typography variant="caption" color="rgba(0,0,0,0.5)">
-                        {getFileSize(file.size)}
-                      </Typography>
-                    </Box>
+                  <Box>
+                    <a
+                      href={item?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={
+                          item?.type === FILETYPES.PDF ? icons.pdf : item?.url
+                        }
+                        alt={item?.name}
+                        style={{
+                          width: 50,
+                          height: 40,
+                          objectFit: "contain",
+                        }}
+                      />
+                    </a>
                   </Box>
-                  <Box mt="4px">
-                    <CloseRoundedIcon
-                      onClick={() => removeFile(index)}
-                      sx={{
-                        fontSize: "15px",
-                        color: "rgba(0,0,0,0.6)",
-                        cursor: "pointer",
-                      }}
-                    />
+                  <Box>
+                    <Typography variant="body2">{item?.name}</Typography>
+                    <Typography variant="caption" color="rgba(0,0,0,0.5)">
+                      {getFileSize(item?.size)}
+                    </Typography>
                   </Box>
                 </Box>
-              )
-            )}
+                <Box mt="4px">
+                  <CloseRoundedIcon
+                    onClick={() => removeFile(index)}
+                    sx={{
+                      fontSize: "15px",
+                      color: "rgba(0,0,0,0.6)",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Box>
+              </Box>
+            ))}
           </Box>
         )}
       </Box>

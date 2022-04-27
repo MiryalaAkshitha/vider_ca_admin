@@ -62,10 +62,6 @@ class GenerateSchema {
           this.fileUploadSchema(item);
           break;
 
-        case FormBuilderFieldTypes.IMAGE_UPLOAD:
-          this.fileUploadSchema(item);
-          break;
-
         case FormBuilderFieldTypes.CURRENCY:
           this.currencySchema(item);
           break;
@@ -340,7 +336,7 @@ class GenerateSchema {
     let label = item.label;
     let min = item?.range?.min;
     let max = item?.range?.max;
-    let validation = array(string()).nullable();
+    let validation = array();
 
     if (item.required) {
       validation = validation.required(`${item.label} is required`);

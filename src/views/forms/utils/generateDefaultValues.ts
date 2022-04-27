@@ -72,6 +72,17 @@ export function generateDefaultValues(data: any) {
     if (type === FormBuilderFieldTypes.TERMS_AND_CONDITIONS) {
       result[field._id] = field.value || false;
     }
+
+    if (type === FormBuilderFieldTypes.FILE_UPLOAD) {
+      result[field._id] = field.value || [];
+    }
+
+    if (type === FormBuilderFieldTypes.PHONE) {
+      result[field._id] = field.value || {
+        code: field?.includeCountryCode ? field?.defaultCountryCode : "",
+        number: "",
+      };
+    }
   }
 
   return result;

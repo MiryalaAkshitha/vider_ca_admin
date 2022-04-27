@@ -17,9 +17,10 @@ import {
 
 interface Props extends DialogProps {
   data: any;
+  queryKey?: string;
 }
 
-function EditForm({ open, setOpen, data }: Props) {
+function EditForm({ open, setOpen, data, queryKey = "forms" }: Props) {
   const snack = useSnack();
   const queryClient = useQueryClient();
 
@@ -41,7 +42,7 @@ function EditForm({ open, setOpen, data }: Props) {
     onSuccess: () => {
       setOpen(false);
       snack.success("Form updated");
-      queryClient.invalidateQueries("forms");
+      queryClient.invalidateQueries(queryKey);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

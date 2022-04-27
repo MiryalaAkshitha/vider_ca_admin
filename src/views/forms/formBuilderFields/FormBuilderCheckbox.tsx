@@ -48,12 +48,16 @@ function FormBuilderCheckbox(props: Props) {
               <FormGroup row={row}>
                 {options?.map((item, index) => (
                   <FormControlLabel
+                    name={name}
                     key={index}
                     control={
                       <Checkbox
-                        checked={(
-                          field?.value?.map((item: any) => item?.value) || []
-                        ).includes(item.value)}
+                        checked={
+                          field?.value?.length &&
+                          field?.value
+                            ?.map((item: any) => item?.value)
+                            .includes(item.value)
+                        }
                         onChange={(e) => {
                           let value = field.value || [];
                           if (e.target.checked) {

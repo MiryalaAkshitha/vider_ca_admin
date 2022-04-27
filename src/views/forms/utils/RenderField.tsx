@@ -145,6 +145,7 @@ function RenderField({ item, control }: any) {
           control={control}
           maxFileSize={item?.fileMaxSize}
           max={item?.range?.max}
+          required={item?.required}
         />
       );
 
