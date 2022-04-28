@@ -1,34 +1,33 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { getForms } from "api/services/forms";
-import { noDueDiligence } from "assets";
+import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
-import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import SelectFormTemplate from "./SelectFormTemplate";
-import IProAddedFormCard from "./IProAddedFormCard";
+import SelectFormTemplate from "views/taskboard/taskview/iPro/SelectFormTemplate";
+import KybFormCard from "./KybFormCard";
 
-function DueDiligence() {
+function KybInfo() {
   const params: any = useParams();
   const [open, setOpen] = useState(false);
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-forms", { type: "TASK", taskId: params.taskId }],
+    ["client-forms", { type: "CLIENT", clientId: params.clientId }],
     getForms
   );
 
   if (isLoading) return <Loader />;
 
   return (
-    <>
-      <Box display="flex" justifyContent="space-between">
-        <Typography variant="subtitle1" color="primary">
-          IPro
-        </Typography>
-        {data?.data?.length ? (
+    <Box px={4} py={2}>
+      {data?.data?.length ? (
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Typography variant="subtitle2" color="primary">
+            Added forms
+          </Typography>
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
@@ -36,23 +35,23 @@ function DueDiligence() {
           >
             Add form
           </Button>
-        ) : null}
-      </Box>
-      <Box mt={2}>
+        </Box>
+      ) : null}
+      <Box mt={1}>
         {data?.data?.length ? (
           <Grid container spacing={2}>
             {data?.data?.map((item: any, index: number) => (
               <Grid item xs={6} key={index}>
-                <IProAddedFormCard data={item} />
+                <KybFormCard data={item} />
               </Grid>
             ))}
           </Grid>
         ) : (
-          <NoItems
-            img={noDueDiligence}
-            title="Add a form to your task"
-            desc="Add a form template for the task and share it with your clients"
-            btnTitle="Add form"
+          <EmptyPage
+            minHeight="70vh"
+            title="There is no KYB Info form added"
+            desc="Click on Add KYB form to add a new form template"
+            btnTitle="Add KYB Form"
             btnAction={() => setOpen(true)}
           />
         )}
@@ -60,12 +59,12 @@ function DueDiligence() {
       <SelectFormTemplate
         open={open}
         setOpen={setOpen}
-        queryKey="task-forms"
-        type="TASK"
-        typeId={params.taskId}
+        queryKey="client-forms"
+        type="CLIENT"
+        typeId={params.clientId}
       />
-    </>
+    </Box>
   );
 }
 
-export default DueDiligence;
+export default KybInfo;

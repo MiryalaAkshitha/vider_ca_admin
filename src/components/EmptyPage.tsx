@@ -30,7 +30,7 @@ function EmptyPage(props: EmptyPageProps) {
       }}
     >
       <Box textAlign="center">
-        {!noImage && <img src={empty} alt="" />}
+        {!noImage && <img src={empty} style={{ maxWidth: 300 }} alt="" />}
         <Typography mt={2} variant="subtitle2">
           {title}
         </Typography>

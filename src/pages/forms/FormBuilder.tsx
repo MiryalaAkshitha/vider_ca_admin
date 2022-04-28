@@ -24,7 +24,7 @@ import { reorder } from "views/taskboard/board/utils";
 import availableFields from "views/forms/utils/availableFields";
 import { prepareField } from "views/forms/utils/prepareField";
 
-const CreateForm = () => {
+const FormBuilder = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const { data, activePage } = useSelector(selectForms);
@@ -124,4 +124,4 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+export default FormBuilder;

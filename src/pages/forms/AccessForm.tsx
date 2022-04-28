@@ -115,6 +115,7 @@ function ViewForm() {
         background: "rgba(233, 107, 116, 0.04)",
         minHeight: "100vh",
         pt: 10,
+        pb: 5,
       }}
     >
       <StyledAccessFormAppbar>

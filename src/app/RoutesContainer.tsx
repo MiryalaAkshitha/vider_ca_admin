@@ -49,11 +49,16 @@ const DscRegisterView = loadable(
 const ClientView = loadable(() => import("pages/clients/client-view"));
 const TasksView = loadable(() => import("pages/taskboard/task-view"));
 const Attachments = loadable(() => import("views/clients/clients/Attachments"));
-const KybInfo = loadable(() => import("views/clients/clients/ClientInfo"));
+const KybInfo = loadable(() => import("views/clients/clients/KybInfo"));
 const Passwords = loadable(() => import("views/clients/clients/Passwords"));
 const Archives = loadable(() => import("views/clients/clients/Archives"));
 const ProfileDetails = loadable(
   () => import("views/clients/clients/ProfileDetails")
+);
+const KybFormDetails = loadable(() => import("pages/clients/kyb-form-details"));
+const EditKybDetails = loadable(() => import("pages/clients/kyb-form-edit"));
+const KybFormAuditLog = loadable(
+  () => import("pages/clients/kyb-form-audit-log")
 );
 const OrganizationProfile = loadable(
   () => import("pages/settings/organization-profile")
@@ -175,6 +180,18 @@ function RoutesContainer() {
           <Route path="audit-log" element={<IProAuditLog />} />
           <Route path="share-link" element={<IProShareLink />} />
         </Route>
+        <Route
+          path="/clients/:clientId/kyb-info/:formId"
+          element={<KybFormDetails />}
+        />
+        <Route
+          path="/clients/:clientId/kyb-info/:formId/edit"
+          element={<EditKybDetails />}
+        />
+        <Route
+          path="/clients/:clientId/kyb-info/:formId/audit-log"
+          element={<KybFormAuditLog />}
+        />
       </Routes>
       <GlobalDrawers />
     </Router>

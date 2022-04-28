@@ -33,9 +33,6 @@ function Dashboard() {
         </Grid>
 
         <Grid item xs={4}>
-          <Typography mb={1} variant="caption">
-            User
-          </Typography>
           <Paper sx={{ padding: "25px" }}>
             <Grid container>
               <Grid item xs={5}>

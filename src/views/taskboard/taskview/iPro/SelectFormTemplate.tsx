@@ -7,16 +7,22 @@ import useFilteredData from "hooks/useFilteredData";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
 import { DialogProps, ResType } from "types";
-import IProFormCard from "./IProFormCard";
+import SelectableFormCard from "./SelectableFormCard";
 
-function AddIproForm({ open, setOpen }: DialogProps) {
+interface Props extends DialogProps {
+  queryKey: string;
+  type: string;
+  typeId: string;
+}
+
+function SelectFormTemplate(props: Props) {
+  const { queryKey, type, typeId, open, setOpen } = props;
+
   const [search, setSearch] = useState("");
   const snack = useSnack();
   const queryClient = useQueryClient();
   const [selected, setSelected] = useState("");
-  const params = useParams();
 
   const { data, isLoading }: ResType = useQuery(
     ["task-templates", { type: "TEMPLATE" }],
@@ -28,7 +34,7 @@ function AddIproForm({ open, setOpen }: DialogProps) {
 
   const { mutate } = useMutation(cloneForm, {
     onSuccess: () => {
-      queryClient.invalidateQueries("task-forms");
+      queryClient.invalidateQueries(queryKey);
       setOpen(false);
       snack.success("Form added");
     },
@@ -41,8 +47,8 @@ function AddIproForm({ open, setOpen }: DialogProps) {
     mutate({
       id: selected,
       data: {
-        type: "TASK",
-        taskId: params.taskId,
+        type: type,
+        [type === "TASK" ? "taskId" : "clientId"]: typeId,
       },
     });
   };
@@ -68,7 +74,7 @@ function AddIproForm({ open, setOpen }: DialogProps) {
               <Grid container spacing={3}>
                 {filteredData?.map((item: any, index: number) => (
                   <Grid item xs={6} key={index}>
-                    <IProFormCard
+                    <SelectableFormCard
                       item={item}
                       index={index}
                       selected={selected}
@@ -95,4 +101,4 @@ function AddIproForm({ open, setOpen }: DialogProps) {
   );
 }
 
-export default AddIproForm;
+export default SelectFormTemplate;

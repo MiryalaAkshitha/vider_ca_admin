@@ -7,7 +7,8 @@ interface Props {
   setSelected: (v: string) => void;
 }
 
-function IProFormCard({ index, item, selected, setSelected }: Props) {
+function SelectableFormCard(props: Props) {
+  const { index, item, selected, setSelected } = props;
   return (
     <Box
       sx={{
@@ -41,4 +42,4 @@ function IProFormCard({ index, item, selected, setSelected }: Props) {
   );
 }
 
-export default IProFormCard;
+export default SelectableFormCard;
