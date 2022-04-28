@@ -1,27 +1,27 @@
 import {
   Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
   TimelineItem,
   TimelineOppositeContent,
   TimelineSeparator,
-  TimelineDot,
-  TimelineConnector,
-  TimelineContent,
 } from "@mui/lab";
-import { Box, Typography, AppBar, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { getFormActivity } from "api/services/forms";
 import Loader from "components/Loader";
+import useQueryParams from "hooks/useQueryParams";
 import moment from "moment";
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle } from "utils";
+import KybAppbar from "views/clients/clients/KybInfo/KybAppbar";
 import { StyledTimelineIcon } from "views/clients/clients/styles";
-import Toolbar from "@mui/material/Toolbar";
-import { ArrowBack } from "@mui/icons-material";
 
 function KybFormAuditLog() {
   const params = useParams();
-  const navigate = useNavigate();
+  const { queryParams } = useQueryParams();
 
   const { data, isLoading }: ResType = useQuery(
     ["form-activity", params.formId],
@@ -32,16 +32,7 @@ function KybFormAuditLog() {
 
   return (
     <Box pt={10}>
-      <AppBar color="default" position="fixed">
-        <Toolbar>
-          <Button
-            onClick={() => navigate(`/clients/${params?.clientId}/kyb-info`)}
-            startIcon={<ArrowBack />}
-          >
-            Kyb Info
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <KybAppbar name={queryParams?.formName} page="Audit log" />
       <Box maxWidth={1000} margin="auto">
         <Timeline>
           {data?.data?.map((item: any, index: number) => (

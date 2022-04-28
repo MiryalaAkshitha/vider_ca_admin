@@ -1,11 +1,10 @@
 import { Box } from "@mui/system";
-import { getClient, updateClient } from "api/services/client";
-import Loader from "components/Loader";
+import { updateClient } from "api/services/client";
+import { useClientData } from "context/ClientData";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import { ResType } from "types";
 import Activity from "./Acitivity";
 import Details from "./Details";
 import Profile from "./Profile";
@@ -15,17 +14,11 @@ function ProfileDetails() {
   const params = useParams();
   const snack = useSnack();
   const [state, setState] = useState<any>({});
+  const { data } = useClientData();
 
-  const { data, isLoading }: ResType = useQuery(
-    ["client", params.clientId],
-    getClient,
-    {
-      onSuccess: (res: any) => {
-        setState(res.data);
-      },
-      cacheTime: 0,
-    }
-  );
+  useEffect(() => {
+    setState(data?.data);
+  }, [data]);
 
   const { mutate } = useMutation(updateClient, {
     onSuccess: () => {
@@ -41,8 +34,6 @@ function ProfileDetails() {
     const { imageUrl, ...data } = state;
     mutate({ data, id: params.clientId });
   };
-
-  if (isLoading) return <Loader />;
 
   return (
     <Box px={4} pt={2} pb={10}>

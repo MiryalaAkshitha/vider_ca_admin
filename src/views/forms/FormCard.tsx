@@ -5,10 +5,9 @@ import { clientFormCard } from "assets";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
 import useSnack from "hooks/useSnack";
-import React, { useState } from "react";
+import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import EditForm from "./EditForm";
 import { StyledCard, StyledMoreIcon } from "./styles";
 
 const FormCard = ({ data }: any) => {
@@ -17,7 +16,6 @@ const FormCard = ({ data }: any) => {
   const menu = useMenu();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteForm, {
     onSuccess: () => {
@@ -46,7 +44,7 @@ const FormCard = ({ data }: any) => {
       options: [
         {
           label: "Edit",
-          action: () => setOpen(true),
+          action: () => navigate(`/forms/builder/${data._id}`),
         },
         {
           label: "Preview",
@@ -82,10 +80,7 @@ const FormCard = ({ data }: any) => {
 
   return (
     <>
-      <StyledCard
-        sx={{ minHeight: 130 }}
-        onClick={() => navigate(`/forms/builder/${data._id}`)}
-      >
+      <StyledCard sx={{ minHeight: 130 }}>
         <StyledMoreIcon onClick={handleMenu}>
           <MoreVertIcon />
         </StyledMoreIcon>
@@ -108,7 +103,6 @@ const FormCard = ({ data }: any) => {
           </Box>
         </Box>
       </StyledCard>
-      <EditForm open={open} setOpen={setOpen} data={data} />
     </>
   );
 };

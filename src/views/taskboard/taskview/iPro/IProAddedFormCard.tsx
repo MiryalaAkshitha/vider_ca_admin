@@ -1,14 +1,12 @@
-import { Box, Grid, IconButton, Typography } from "@mui/material";
-import { useMenu } from "context/MenuPopover";
-import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useNavigate, useParams } from "react-router-dom";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { deleteForm } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
+import { useMenu } from "context/MenuPopover";
 import useSnack from "hooks/useSnack";
-import { useQueryClient, useMutation } from "react-query";
-import { useState } from "react";
-import EditForm from "views/forms/EditForm";
+import moment from "moment";
+import { useMutation, useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface Props {
   data: any;
@@ -21,7 +19,6 @@ function IProAddedFormCard({ data }: Props) {
   const snack = useSnack();
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteForm, {
     onSuccess: () => {
@@ -47,7 +44,7 @@ function IProAddedFormCard({ data }: Props) {
         {
           label: "Edit",
           action: () => {
-            setOpen(true);
+            navigate(`/tasks/${params.taskId}/iPro/${data?._id}/edit`);
           },
         },
         {
@@ -115,12 +112,6 @@ function IProAddedFormCard({ data }: Props) {
           <MoreVertIcon />
         </IconButton>
       </Box>
-      <EditForm
-        open={open}
-        setOpen={setOpen}
-        data={data}
-        queryKey="task-forms"
-      />
     </>
   );
 }

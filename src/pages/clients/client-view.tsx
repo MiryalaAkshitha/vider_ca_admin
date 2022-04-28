@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
-import BreadCrumbs from "components/BreadCrumbs";
+import { Box, Breadcrumbs, Typography } from "@mui/material";
+import { LinkRouter } from "components/BreadCrumbs";
 import RouterLink from "components/RouterLink";
-import useQueryParams from "hooks/useQueryParams";
+import ClientDataProvider, { ClientDataContext } from "context/ClientData";
 import useTitle from "hooks/useTitle";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { clientMenu } from "utils/constants";
@@ -12,21 +12,31 @@ import {
 
 function ClientProfile() {
   const params = useParams();
-  const { queryParams } = useQueryParams();
   const location = useLocation();
 
   useTitle("Clients");
 
   return (
-    <div>
+    <ClientDataProvider>
       <Box sx={{ position: "sticky", top: 55, bgcolor: "white", zIndex: 2 }}>
-        <Box p={2}>
-          <BreadCrumbs page="clientProfile" />
-        </Box>
+        <ClientDataContext.Consumer>
+          {({ data }) => (
+            <Box p={2}>
+              <Breadcrumbs>
+                <LinkRouter underline="hover" color="inherit" to="/clients">
+                  Clients
+                </LinkRouter>
+                <Typography>
+                  {data?.data?.displayName} - {data?.data?.clientId}
+                </Typography>
+              </Breadcrumbs>
+            </Box>
+          )}
+        </ClientDataContext.Consumer>
         <StyledProfileNav>
           {clientMenu.map((item, index) => (
             <RouterLink
-              to={`/clients/${params.clientId}${item.path}?displayName=${queryParams.displayName}&clientId=${queryParams.clientId}`}
+              to={`/clients/${params.clientId}${item.path}`}
               key={index}
             >
               <StyledProfileNavItem
@@ -39,7 +49,7 @@ function ClientProfile() {
         </StyledProfileNav>
       </Box>
       <Outlet />
-    </div>
+    </ClientDataProvider>
   );
 }
 

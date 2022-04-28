@@ -1,18 +1,18 @@
-import { ArrowBack } from "@mui/icons-material";
-import { AppBar, Box, Button, Tab, Tabs } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
+import { Box, Tab, Tabs } from "@mui/material";
 import { getForm } from "api/services/forms";
 import Loader from "components/Loader";
+import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import KybAppbar from "views/clients/clients/KybInfo/KybAppbar";
 import KybFormFields from "views/clients/clients/KybInfo/KybFormFields";
 
 function KybFormDetails() {
   const params = useParams();
-  const navigate = useNavigate();
   const [activePage, setActivePage] = useState(0);
+  const { queryParams } = useQueryParams();
 
   const { data, isLoading }: ResType = useQuery(
     ["form-details", params.formId],
@@ -30,17 +30,8 @@ function KybFormDetails() {
 
   return (
     <Box pt={10}>
-      <AppBar color="default" position="fixed">
-        <Toolbar>
-          <Button
-            onClick={() => navigate(`/clients/${params?.clientId}/kyb-info`)}
-            startIcon={<ArrowBack />}
-          >
-            Kyb Info
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <Box px={3} pb={15}>
+      <KybAppbar name={queryParams?.formName} page="Form Details" />
+      <Box px={3} pb={15} maxWidth={1200}>
         <Tabs
           value={activePage}
           onChange={(e, val) => setActivePage(val)}

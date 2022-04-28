@@ -1,25 +1,14 @@
-import { ArrowBack } from "@mui/icons-material";
-import { AppBar, Box, Button } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
+import { Box } from "@mui/material";
+import useQueryParams from "hooks/useQueryParams";
 import FormBuilder from "pages/forms/FormBuilder";
-import { useNavigate, useParams } from "react-router-dom";
+import KybAppbar from "views/clients/clients/KybInfo/KybAppbar";
 
 function KybFormEdit() {
-  const params = useParams();
-  const navigate = useNavigate();
+  const { queryParams } = useQueryParams();
 
   return (
     <Box pt={10}>
-      <AppBar color="default" position="fixed">
-        <Toolbar>
-          <Button
-            onClick={() => navigate(`/clients/${params?.clientId}/kyb-info`)}
-            startIcon={<ArrowBack />}
-          >
-            Kyb Info
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <KybAppbar name={queryParams?.formName} page="Edit" />
       <FormBuilder />
     </Box>
   );

@@ -9,7 +9,7 @@ interface LinkRouterProps extends LinkProps {
   replace?: boolean;
 }
 
-const LinkRouter = (props: LinkRouterProps) => (
+export const LinkRouter = (props: LinkRouterProps) => (
   <Link {...props} component={RouterLink as any} />
 );
 

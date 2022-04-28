@@ -23,6 +23,7 @@ import Pages from "../../views/forms/pages";
 import { reorder } from "views/taskboard/board/utils";
 import availableFields from "views/forms/utils/availableFields";
 import { prepareField } from "views/forms/utils/prepareField";
+import FormInfo from "views/forms/FormInfo";
 
 const FormBuilder = () => {
   const params = useParams();
@@ -107,6 +108,7 @@ const FormBuilder = () => {
             <Pages />
           </Grid>
           <Grid item xs={5}>
+            <FormInfo data={data} />
             <Fields />
           </Grid>
         </Grid>

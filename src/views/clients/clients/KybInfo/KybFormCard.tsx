@@ -1,14 +1,12 @@
-import { Box, Grid, IconButton, Typography } from "@mui/material";
-import { useMenu } from "context/MenuPopover";
-import moment from "moment";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useNavigate, useParams } from "react-router-dom";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { deleteForm } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
+import { useMenu } from "context/MenuPopover";
 import useSnack from "hooks/useSnack";
-import { useQueryClient, useMutation } from "react-query";
-import { useState } from "react";
-import EditForm from "views/forms/EditForm";
+import moment from "moment";
+import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { StyledCard } from "views/forms/styles";
 
 interface Props {
@@ -18,11 +16,9 @@ interface Props {
 function KybFormCard({ data }: Props) {
   const menu = useMenu();
   const navigate = useNavigate();
-  const params = useParams();
   const snack = useSnack();
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteForm, {
     onSuccess: () => {
@@ -42,21 +38,19 @@ function KybFormCard({ data }: Props) {
         {
           label: "Form details",
           action: () => {
-            navigate(`/clients/${params.clientId}/kyb-info/${data?._id}`);
+            navigate(`${data?._id}?formName=${data?.name}`);
           },
         },
         {
           label: "Audit log",
           action: () => {
-            navigate(
-              `/clients/${params.clientId}/kyb-info/${data?._id}/audit-log`
-            );
+            navigate(`${data?._id}/audit-log?formName=${data?.name}`);
           },
         },
         {
           label: "Edit",
           action: () => {
-            navigate(`/clients/${params.clientId}/kyb-info/${data?._id}/edit`);
+            navigate(`${data?._id}/edit?formName=${data?.name}`);
           },
         },
         {
@@ -110,12 +104,6 @@ function KybFormCard({ data }: Props) {
           <MoreVertIcon />
         </IconButton>
       </StyledCard>
-      <EditForm
-        open={open}
-        setOpen={setOpen}
-        data={data}
-        queryKey="task-forms"
-      />
     </>
   );
 }
