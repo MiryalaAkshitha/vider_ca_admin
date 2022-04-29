@@ -25,7 +25,6 @@ function AddClient() {
   const [isGstverified, setIsGstverified] = useState(false);
   const [isPanCardverified, setIsPanCardverified] = useState(false);
   const [isloading, setLoading] = useState(false);
-
   const { queryParams, setQueryParams } = useQueryParams();
   const navigate = useNavigate();
   const snack = useSnack();
@@ -82,6 +81,7 @@ function AddClient() {
         }
       );
       const result: any = response.data;
+      console.log(result);
       reset({
         ...getValues(),
         legalName: result?.data?.lgnm,
@@ -125,7 +125,6 @@ function AddClient() {
       );
 
       const data: any = response?.data;
-      console.log(data);
       reset({
         ...getValues(),
         lastName: data?.data?.last_name,

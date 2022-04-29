@@ -8,11 +8,50 @@ import TextFieldWithCopy from "./TextFieldWithCopy";
 
 const OrganizationInformation = ({ data, onUpdate, handleChange }) => {
   const [isPanVerified, setPanVerified] = useState(false);
-  const [isloading, setLoading] = useState(false);
+  const [isGstverified, setIsGstverified] = useState(false);
+  const [isPanloading, setPanLoading] = useState(false);
+  const [isGstloading, setGstLoading] = useState(false);
+
+  const gstNumber = data.gstNumber;
   const panNumber = data.panNumber;
+  const verifyGst = async () => {
+    try {
+      setGstLoading(true);
+      let token: any = await axios({
+        url: "https://try.readme.io/https://api.sandbox.co.in/authenticate",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
+          "x-api-secret": "secret_live_QTFSCuejXj3hsLDlr2UcFw4VoZN4ujQ5",
+          "x-api-version": "1.0",
+        },
+      });
+      let response: any = await axios.get(
+        `https://api.sandbox.co.in/gsp/public/gstin/${gstNumber}`,
+        {
+          headers: {
+            Authorization: token?.data?.access_token,
+            "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
+          },
+        }
+      );
+      const result: any = response.data;
+      console.log(result);
+      {
+        result.data.sts === "Active"
+          ? setIsGstverified(true)
+          : alert("INVALID GST NUMBER");
+      }
+      setGstLoading(false);
+    } catch {
+      setGstLoading(false);
+      alert("Invalid GST Number");
+    }
+  };
   const verifyPan = async () => {
     try {
-      setLoading(true);
+      setPanLoading(true);
       let token: any = await axios({
         url: "https://try.readme.io/https://api.sandbox.co.in/authenticate",
         method: "POST",
@@ -42,9 +81,9 @@ const OrganizationInformation = ({ data, onUpdate, handleChange }) => {
           ? setPanVerified(true)
           : alert("INVALID PAN NUMBER");
       }
-      setLoading(false);
+      setPanLoading(false);
     } catch {
-      setLoading(false);
+      setPanLoading(false);
       alert("INVALID PAN NUMBER");
     }
   };
@@ -69,7 +108,19 @@ const OrganizationInformation = ({ data, onUpdate, handleChange }) => {
                 onChange={handleChange}
                 InputProps={{
                   endAdornment: (
-                    <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
+                    <>
+                      {isGstloading && <CircularProgress />}
+                      {isGstverified && !isGstloading ? (
+                        <CheckCircleIcon
+                          fontSize="small"
+                          sx={{ color: "green" }}
+                        />
+                      ) : (
+                        <Button color="error" size="small" onClick={verifyGst}>
+                          Verify GST
+                        </Button>
+                      )}
+                    </>
                   ),
                 }}
                 InputLabelProps={{ shrink: true }}
@@ -88,8 +139,8 @@ const OrganizationInformation = ({ data, onUpdate, handleChange }) => {
                 InputProps={{
                   endAdornment: (
                     <>
-                      {isloading && <CircularProgress />}
-                      {isPanVerified && !isloading ? (
+                      {isPanloading && <CircularProgress />}
+                      {isPanVerified && !isPanloading ? (
                         <CheckCircleIcon
                           fontSize="small"
                           sx={{ color: "green" }}
