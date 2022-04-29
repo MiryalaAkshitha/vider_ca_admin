@@ -6,6 +6,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import { logo } from "assets";
 import axios from "axios";
+import Loader from "components/Loader";
 import { useState } from "react";
 import { useImmer } from "use-immer";
 import GstDetails from "./GstDetails";
@@ -19,11 +20,13 @@ const OrgDetails = () => {
   const [data, setdata]: any = useImmer<any>({});
   const [gstNumber, setGstNumber] = useState("");
   const [panNumber, setPanNumber] = useState("");
+  const [isloading, setLoading] = useState<boolean>(false);
 
   const handlePanClick = async () => {
     if (!panNumber) {
       return;
     }
+    setLoading(true);
     let token: any = await axios({
       url: "https://try.readme.io/https://api.sandbox.co.in/authenticate",
       method: "POST",
@@ -62,12 +65,14 @@ const OrgDetails = () => {
       pinCode: data?.data?.pinCode,
     });
     setIsPanCardverified(true);
+    setLoading(false);
   };
 
   const handleGstClick = async () => {
     if (!gstNumber) {
       return;
     }
+    setLoading(true);
 
     let token: any = await axios({
       url: "https://try.readme.io/https://api.sandbox.co.in/authenticate",
@@ -86,10 +91,6 @@ const OrgDetails = () => {
         headers: {
           Authorization: token?.data?.access_token,
           "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
-          "x-api-secret": "secret_live_QTFSCuejXj3hsLDlr2UcFw4VoZN4ujQ5",
-        },
-        params: {
-          request_token: `eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJBUEkiLCJyZWZyZXNoX3Rva2VuIjoiZXlKaGJHY2lPaUpJVXpVeE1pSjkuZXlKaGRXUWlPaUpCVUVraUxDSnpkV0lpT2lKMFpXTm9RSFpwWkdWeUxtbHVJaXdpWVhCcFgydGxlU0k2SW10bGVWOXNhWFpsWDNSamEyNWtRazVQYTBodWQyTkNSMHQxVjNwMlFsQm9NbE0xYjJSSFZGWldJaXdpYVhOeklqb2lZWEJwTG5OaGJtUmliM2d1WTI4dWFXNGlMQ0psZUhBaU9qRTJPREkwTWpJM05UVXNJbWx1ZEdWdWRDSTZJbEpGUmxKRlUwaGZWRTlMUlU0aUxDSnBZWFFpT2pFMk5UQTRPRFkzTlRWOS4wcTNvNXNYMU5lcFE2ZzlKaDRnald1MFhkUUJHMWt6N3Bsb21xSUt6V2tCeHBCMWZOSUpvVDNuZEhud3RJd1hlLWJadHJDOThfSVNrbUMxZnpUc1FXQSIsInN1YiI6InRlY2hAdmlkZXIuaW4iLCJhcGlfa2V5Ijoia2V5X2xpdmVfdGNrbmRCTk9rSG53Y0JHS3VXenZCUGgyUzVvZEdUVlYiLCJpc3MiOiJhcGkuc2FuZGJveC5jby5pbiIsImV4cCI6MTY1MDk3MzE1NSwiaW50ZW50IjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNjUwODg2NzU1fQ.6cPoC43ri1TdxpK7AH7KV0ni6nZywzOCWQDdvPhlV8V5ySyaHNUvHu4kH3P3kKiPd-PY28fM9nLAIYYfaDHNGw`,
         },
       }
     );
@@ -109,6 +110,7 @@ const OrgDetails = () => {
       pinCode: result?.data?.pradr?.addr?.pncd,
     });
     setIsGstverified(true);
+    setLoading(false);
   };
 
   const RadioValue = (e: any) => {
@@ -212,10 +214,15 @@ const OrgDetails = () => {
               </Box>
             )}
           </Box>
+          {isloading && !isGstverified && isGstRegistered === "Yes" && (
+            <Loader />
+          )}
           {isGstverified && isGstRegistered === "Yes" && (
             <GstDetails state={state} setState={setState} />
           )}
-
+          {isloading && !isPanCardverified && isGstRegistered === "No" && (
+            <Loader />
+          )}
           {isPanCardverified && isGstRegistered === "No" && (
             <>
               <PanDetails state={data} setState={setdata} />

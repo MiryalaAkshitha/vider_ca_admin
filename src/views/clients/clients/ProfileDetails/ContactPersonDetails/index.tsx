@@ -15,22 +15,24 @@ function ContactPersonDetails({ data }: Props) {
   return (
     <>
       <Typography color="primary" variant="subtitle2" sx={{ mb: 3 }}>
-        Contact person details
+        Client user details
       </Typography>
-      <Box>
-        {data?.map((item: any, index: number) => (
-          <ContactPerson key={index} data={item} />
-        ))}
-      </Box>
-      <Box mt={3}>
-        <Button
-          onClick={() => setOpen(true)}
-          variant="outlined"
-          color="secondary"
-          startIcon={<Add />}
-        >
-          Add New
-        </Button>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box>
+          {data?.map((item: any, index: number) => (
+            <ContactPerson key={index} data={item} />
+          ))}
+        </Box>
+        <Box mt={3}>
+          <Button
+            onClick={() => setOpen(true)}
+            variant="outlined"
+            color="secondary"
+            startIcon={<Add />}
+          >
+            Add New
+          </Button>
+        </Box>
       </Box>
       <AddContactPerson open={open} setOpen={setOpen} />
     </>

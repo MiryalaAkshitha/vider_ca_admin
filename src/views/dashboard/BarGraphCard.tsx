@@ -70,10 +70,9 @@ const UserGraphCard = () => {
           )}
         </Box>
       </Box>
-      {console.log(barContainerRef?.current?.clientWidth)}
       <Paper sx={{ minHeight: 10, width: "100%", p: 1 }} ref={barContainerRef}>
         <BarChart layout="vertical" width={width - 20} height={400} data={data}>
-          <CartesianGrid stroke="#27527E29" />
+          <CartesianGrid stroke="#EBEBEB" />
           <XAxis type="number" />
           <YAxis dataKey="name" type="category" scale="band" />
           <Tooltip />

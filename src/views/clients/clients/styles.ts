@@ -73,8 +73,8 @@ export const StyledUploadStatusDrawer = styled("div")(() => ({
 }));
 
 export const StyledProfileImageContainer = styled("div")(() => ({
-  width: 70,
-  height: 70,
+  width: 90,
+  height: 90,
   position: "relative",
   borderRadius: "50%",
   overflow: "hidden",

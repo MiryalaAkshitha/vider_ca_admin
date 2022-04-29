@@ -1,37 +1,31 @@
+import EditIcon from "@mui/icons-material/Edit";
 import { http } from "api/http";
-import { icons } from "assets";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
-import {
-  StyledProfileImage,
-  StyledProfileImageContainer,
-} from "views/clients/clients/styles";
 
-function ProfileImage({ src, onChange }: any) {
+const EditProfile = ({ onChange }) => {
   const snack = useSnack();
   const [url, setUrl] = useState(null);
 
   const uploadImage = (e: any) => {
-    if (!e.target.files[0]) return;
+    if (!e.target.files) return;
     const formData = new FormData();
-    formData.append("file", e.target.files[0]);
+    formData.append("file", e.target.files);
     http
       .post("/common/upload", formData)
       .then((res: any) => {
         setUrl(res.data.Location);
         onChange(res.data.key);
+        alert("hello");
       })
       .catch((err) => {
         snack.error("error occurred");
       });
   };
-
   return (
     <>
       <label htmlFor="profile">
-        <StyledProfileImageContainer>
-          <StyledProfileImage src={url ?? src ?? icons.user} alt="" />
-        </StyledProfileImageContainer>
+        <EditIcon fontSize="small" sx={{ color: "red" }} />
       </label>
       <input
         onChange={uploadImage}
@@ -41,6 +35,5 @@ function ProfileImage({ src, onChange }: any) {
       />
     </>
   );
-}
-
-export default ProfileImage;
+};
+export default EditProfile;
