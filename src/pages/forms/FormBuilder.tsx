@@ -39,7 +39,6 @@ const FormBuilder = () => {
       onSuccess: (res) => {
         dispatch(setData(res?.data));
       },
-      cacheTime: 0,
     }
   );
 
