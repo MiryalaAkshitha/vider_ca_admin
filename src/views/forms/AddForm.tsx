@@ -35,7 +35,10 @@ function AddForm({ open, setOpen }: DialogProps) {
   });
 
   const onFormSubmit = (data: any) => {
-    mutate(data);
+    mutate({
+      ...data,
+      type: "TEMPLATE",
+    });
   };
 
   return (

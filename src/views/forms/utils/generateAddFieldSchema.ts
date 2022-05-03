@@ -83,6 +83,10 @@ class GenerateAddFieldSchema {
         this.nameSchema();
         break;
 
+      case FormBuilderFieldTypes.SIGNATURE:
+        this.signatureSchema();
+        break;
+
       default:
         break;
     }
@@ -302,6 +306,37 @@ class GenerateAddFieldSchema {
       )
         .required()
         .min(1, "Add at least one input"),
+    };
+  }
+
+  signatureSchema() {
+    this.schema = {
+      label: string().required("Field name is required"),
+      instructions: string().notRequired(),
+      signatureDocument: array().required().min(1, "Document is required"),
+      preview: boolean().required(),
+      selectPage: string().required(),
+      pageNumbers: string().when("pages", {
+        is: "SPECIFY",
+        then: (schema) =>
+          schema
+            .required("Page numbers are required")
+            .matches(/^[0-9,]+$/, "Page numbers must be comma separated"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+      signaturePosition: string().required(),
+      coSign: boolean().required(),
+      noOfSignatures: string().when("coSign", {
+        is: true,
+        then: (schema) => schema.required("Number of signatures is required"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+      signatureDetails: array(
+        object().shape({
+          name: string().required("Name is required"),
+          designation: string().required("Designation is required"),
+        })
+      ),
     };
   }
 }

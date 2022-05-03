@@ -41,9 +41,11 @@ function Pages() {
                 provided.innerRef(ref);
               }}
             >
-              {data?.pages[activePage]?.fields?.map((item: any) => (
-                <PageFieldItem item={item} key={item?._id} index={item?._id} />
-              ))}
+              {data?.pages[activePage]?.fields?.map(
+                (item: any, index: number) => (
+                  <PageFieldItem item={item} key={item?._id} index={index} />
+                )
+              )}
               {provided.placeholder}
               {data?.pages[activePage]?.fields?.length === 0 &&
                 !snapshot?.isDraggingOver && (

@@ -99,6 +99,12 @@ const availableFields = [
     label: "Terms & Conditions",
     fieldType: FormBuilderFieldTypes.TERMS_AND_CONDITIONS,
   },
+  {
+    id: uuidv4(),
+    icon: icons.termsAndConditions,
+    label: "Signature",
+    fieldType: FormBuilderFieldTypes.SIGNATURE,
+  },
 ];
 
 export default availableFields;

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { array, boolean, date, number, object, string } from "yup";
+import { array, boolean, date, mixed, number, object, string } from "yup";
 import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
 class GenerateSchema {
@@ -80,6 +80,10 @@ class GenerateSchema {
 
         case FormBuilderFieldTypes.TERMS_AND_CONDITIONS:
           this.termsAndConditionsSchema(item);
+          break;
+
+        case FormBuilderFieldTypes.SIGNATURE:
+          this.signatureSchema(item);
           break;
 
         default:
@@ -438,6 +442,16 @@ class GenerateSchema {
 
     if (item.required) {
       validation = validation.isTrue(`This is required`);
+    }
+
+    this.schema[item._id?.toString()] = validation;
+  }
+
+  signatureSchema(item: any) {
+    let validation = mixed().nullable();
+
+    if (item.required) {
+      validation = validation.required(`This is required`);
     }
 
     this.schema[item._id?.toString()] = validation;

@@ -8,10 +8,19 @@ interface Props {
   control: any;
   options: Array<{ label: string; value: string }>;
   style?: any;
+  onChange?: (value: any) => void;
 }
 
 function FormSelect(props: Props) {
-  const { name, size = "small", options, control, label = "", style } = props;
+  const {
+    name,
+    size = "small",
+    options,
+    control,
+    label = "",
+    style,
+    onChange,
+  } = props;
 
   return (
     <>
@@ -37,7 +46,11 @@ function FormSelect(props: Props) {
                   },
                 },
               }}
-              {...field}
+              value={field.value}
+              onChange={(e) => {
+                if (onChange) onChange(e.target.value);
+                field.onChange(e.target.value);
+              }}
             >
               {options.map((item, index) => (
                 <MenuItem key={index} value={item.value}>

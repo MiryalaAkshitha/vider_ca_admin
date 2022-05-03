@@ -39,6 +39,7 @@ function ViewForm() {
       onError: (err) => {
         snack.error(err.message);
       },
+      refetchOnWindowFocus: true,
     }
   );
 

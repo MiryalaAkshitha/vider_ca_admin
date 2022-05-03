@@ -68,6 +68,10 @@ const getFormActivity = ({ queryKey }: any) => {
   return http.get(`/forms/${queryKey[1]}/activity`);
 };
 
+const signField = ({ formId, fieldId, data }: any) => {
+  return http.post(`/forms/${formId}/fields/${fieldId}/esign`, data);
+};
+
 export {
   getForms,
   createForm,
@@ -86,4 +90,5 @@ export {
   cloneForm,
   deletePage,
   getFormActivity,
+  signField,
 };

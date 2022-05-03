@@ -33,12 +33,7 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
     },
   });
 
-  const {
-    watch,
-    formState: { errors },
-    control,
-    handleSubmit,
-  } = useForm({
+  const { watch, control, handleSubmit, setValue } = useForm({
     defaultValues: getAddFieldDefaultValues(item),
     mode: "onChange",
     resolver: yupResolver(getAddFieldSchema(item)),
@@ -85,13 +80,11 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
     });
   };
 
-  console.log(errors);
-
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Properties">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ "& div:first-of-type": { mt: 0 } }}>
-          {renderFieldsComponent(item, control, watch)}
+          {renderFieldsComponent(item, control, watch, setValue)}
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={false}

@@ -8,6 +8,7 @@ import FormBuilderNumber from "../formBuilderFields/FormBuilderNumber";
 import FormBuilderPhone from "../formBuilderFields/FormBuilderPhone";
 import FormBuilderRadio from "../formBuilderFields/FormBuilderRadio";
 import FormBuilderSelect from "../formBuilderFields/FormBuilderSelect";
+import FormBuilderSignature from "../formBuilderFields/FormBuilderSignature";
 import FormBuilderTermsAndConditions from "../formBuilderFields/FormBuilderTermsAndConditions";
 import FormbuilderTextField from "../formBuilderFields/FormBuilderTextField";
 import FormBuilderUpload from "../formBuilderFields/FormBuilderUpload";
@@ -200,6 +201,17 @@ function RenderField({ item, control }: any) {
           label={item?.label}
           control={control}
           termsAndConditions={item?.termsAndConditions}
+        />
+      );
+
+    case FormBuilderFieldTypes.SIGNATURE:
+      return (
+        <FormBuilderSignature
+          name={item?._id}
+          label={item?.label}
+          control={control}
+          item={item}
+          required={item?.required}
         />
       );
 

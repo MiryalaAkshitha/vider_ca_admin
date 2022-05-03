@@ -200,7 +200,7 @@ function Upload(props: UploadProps) {
               display: "flex",
               gap: 1,
               flexWrap: "wrap",
-              borderTop: "1px solid grey",
+              borderTop: "1px solid rgba(0,0,0,0.2)",
               p: 1,
             }}
           >

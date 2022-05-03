@@ -12,6 +12,7 @@ import MultiLine from "../formBuilderFieldComponents/MultiLine";
 import Name from "../formBuilderFieldComponents/Name";
 import Number from "../formBuilderFieldComponents/Number";
 import RadioBox from "../formBuilderFieldComponents/RadioBox";
+import Signature from "../formBuilderFieldComponents/Signature";
 import SingleLine from "../formBuilderFieldComponents/SingleLine";
 import TermsAndConditions from "../formBuilderFieldComponents/TermsAndConditions";
 
@@ -36,6 +37,7 @@ export enum FormBuilderFieldTypes {
   IMAGE_UPLOAD = "IMAGE_UPLOAD",
   FILE_UPLOAD = "FILE_UPLOAD",
   TERMS_AND_CONDITIONS = "TERMS_AND_CONDITIONS",
+  SIGNATURE = "SIGNATURE",
 }
 
 export enum FormBuilderInputTypes {
@@ -65,7 +67,12 @@ export enum FormBuilderFileTypes {
   ZIP = "application/zip",
 }
 
-export const renderFieldsComponent = (item: any, control: any, watch: any) => {
+export const renderFieldsComponent = (
+  item: any,
+  control: any,
+  watch: any,
+  setValue: any
+) => {
   switch (item.fieldType) {
     case FormBuilderFieldTypes.SINGLE_LINE:
       return <SingleLine item={item} control={control} />;
@@ -114,6 +121,16 @@ export const renderFieldsComponent = (item: any, control: any, watch: any) => {
 
     case FormBuilderFieldTypes.RADIO:
       return <RadioBox item={item} control={control} watch={watch} />;
+
+    case FormBuilderFieldTypes.SIGNATURE:
+      return (
+        <Signature
+          item={item}
+          control={control}
+          watch={watch}
+          setValue={setValue}
+        />
+      );
 
     default:
       return null;

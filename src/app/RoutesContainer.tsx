@@ -79,6 +79,7 @@ const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
 });
 const Forms = loadable(() => import("pages/forms"));
+const Esign = loadable(() => import("pages/forms/Esign"));
 const TaskForms = loadable(() => import("pages/forms/TaskForms"));
 const FormTemplates = loadable(() => import("pages/forms/FormTemplates"));
 const FormValidations = loadable(() => import("pages/forms/FormValidations"));
@@ -143,7 +144,6 @@ function RoutesContainer() {
             <Route index element={<BillingEntities />} />
             <Route path=":billingId" element={<ViewBillingEntityUser />} />
           </Route>
-
           <Route path="users">
             <Route index element={<Users />} />
             <Route path=":userId" element={<ViewUser />}>
@@ -191,6 +191,10 @@ function RoutesContainer() {
         <Route
           path="/clients/:clientId/kyb-info/:formId/audit-log"
           element={<KybFormAuditLog />}
+        />
+        <Route
+          path="/forms/:formId/fields/:fieldId/esign"
+          element={<Esign />}
         />
       </Routes>
       <GlobalDrawers />

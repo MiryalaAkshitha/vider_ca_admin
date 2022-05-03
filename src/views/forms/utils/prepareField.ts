@@ -72,6 +72,7 @@ export function prepareField(item: any) {
     case FormBuilderFieldTypes.CHECKBOX:
       return {
         ...field,
+        displayColumns: 1,
         range: {
           min: 1,
           max: 1,
@@ -121,7 +122,7 @@ export function prepareField(item: any) {
     case FormBuilderFieldTypes.FILE_UPLOAD:
       return {
         ...field,
-        uploadFielTypes: [],
+        uploadFileTypes: [],
         range: {
           min: 1,
           max: 1,
@@ -161,6 +162,24 @@ export function prepareField(item: any) {
           max: 1,
           type: "VALUES",
         },
+      };
+
+    case FormBuilderFieldTypes.SIGNATURE:
+      return {
+        ...field,
+        signatureType: 3,
+        signatureDocument: [
+          {
+            name: "sample.pdf",
+            type: "application/pdf",
+            size: 1234,
+            url: "https://www.google.com/samples/test.pdf",
+          },
+        ],
+        coSign: false,
+        preview: false,
+        signaturePosition: "Bottom-Right",
+        selectPage: "ALL",
       };
 
     default:

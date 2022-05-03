@@ -79,6 +79,10 @@ class GenerateAddFieldDefaultValues {
         this.addressDefaultValues();
         break;
 
+      case FormBuilderFieldTypes.SIGNATURE:
+        this.signatureDefaultValues();
+        break;
+
       default:
         break;
     }
@@ -276,6 +280,24 @@ class GenerateAddFieldDefaultValues {
       fieldType: this.item.fieldType,
       instructions: this.item.instructions || "",
       inputs: this.item.inputs,
+    };
+  }
+
+  signatureDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      instructions: this.item.instructions || "",
+      required: this.item.required,
+      signatureDocument: this.item.signatureDocument
+        ? this.item.signatureDocument
+        : [],
+      selectPage: this.item.selectPage || "",
+      pageNumbers: this.item.pageNumbers || "",
+      signaturePosition: this.item.signaturePosition || "",
+      preview: this.item.preview || false,
+      coSign: this.item.coSign || false,
+      noOfSignatures: this.item.noOfSignatures || "",
+      signatureDetails: this.item.signatureDetails || [],
     };
   }
 }
