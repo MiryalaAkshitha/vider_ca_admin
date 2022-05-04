@@ -66,13 +66,14 @@ export function prepareField(item: any) {
     case FormBuilderFieldTypes.RADIO:
       return {
         ...field,
+        displayColumns: "1_COLUMN",
         options,
       };
 
     case FormBuilderFieldTypes.CHECKBOX:
       return {
         ...field,
-        displayColumns: 1,
+        displayColumns: "1_COLUMN",
         range: {
           min: 1,
           max: 1,
@@ -180,6 +181,12 @@ export function prepareField(item: any) {
         preview: false,
         signaturePosition: "Bottom-Right",
         selectPage: "ALL",
+      };
+
+    case FormBuilderFieldTypes.SECTION:
+      return {
+        ...field,
+        description: "",
       };
 
     default:

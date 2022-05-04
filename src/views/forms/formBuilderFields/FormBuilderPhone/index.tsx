@@ -1,12 +1,13 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 import SelectCountryCode from "./SelectCountry";
 
 interface Props {
   label?: string;
   name: string;
-  size?: "small" | "medium";
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
   control: any;
   multiline?: boolean;
   placeholder?: string;
@@ -19,7 +20,7 @@ interface Props {
 function FormBuilderPhone(props: Props) {
   const {
     name,
-    size = "small",
+    fieldSize = "LARGE",
     control,
     label = "",
     multiline,
@@ -41,7 +42,7 @@ function FormBuilderPhone(props: Props) {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Box sx={{ position: "relative" }}>
+            <Box sx={{ position: "relative", width: getFieldSize(fieldSize) }}>
               {includeCountryCode && (
                 <SelectCountryCode
                   value={field.value?.code || defaultCountryCode}
@@ -62,7 +63,7 @@ function FormBuilderPhone(props: Props) {
                 placeholder={placeholder}
                 fullWidth
                 rows={multiline ? 3 : 1}
-                size={size}
+                size="small"
                 InputProps={{
                   sx: {
                     pl: `${width}px`,

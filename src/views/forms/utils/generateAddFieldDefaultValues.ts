@@ -83,6 +83,10 @@ class GenerateAddFieldDefaultValues {
         this.signatureDefaultValues();
         break;
 
+      case FormBuilderFieldTypes.SECTION:
+        this.sectionDefaultValues();
+        break;
+
       default:
         break;
     }
@@ -94,13 +98,13 @@ class GenerateAddFieldDefaultValues {
       placeHolder: this.item.placeHolder || "",
       required: this.item.required,
       fieldSize: this.item.fieldSize,
-      validationFormat: this.item.validationFormat || "",
       range: this.item.range || {
         min: 0,
         max: 255,
         type: "VALUES",
       },
       instructions: this.item.instructions || "",
+      validation: this.item.validation?.id || "",
     };
   }
 
@@ -132,7 +136,7 @@ class GenerateAddFieldDefaultValues {
     this.defaultValues = {
       label: this.item.label,
       required: this.item.required,
-      fieldSize: this.item.fieldSize,
+      displayColumns: this.item.displayColumns || "1_COLUMN",
       range: this.item.range || {
         min: 0,
         max: 10,
@@ -146,6 +150,7 @@ class GenerateAddFieldDefaultValues {
     this.defaultValues = {
       label: this.item.label,
       required: this.item.required,
+      displayColumns: this.item.displayColumns || "1_COLUMN",
       options: this.item.options || [],
     };
   }
@@ -155,6 +160,7 @@ class GenerateAddFieldDefaultValues {
       label: this.item.label,
       required: this.item.required,
       options: this.item.options || [],
+      fieldSize: this.item.fieldSize,
     };
   }
 
@@ -162,6 +168,7 @@ class GenerateAddFieldDefaultValues {
     this.defaultValues = {
       label: this.item.label,
       required: this.item.required,
+      fieldSize: this.item.fieldSize,
       options: this.item.options || [],
       range: this.item.range || {
         min: 0,
@@ -298,6 +305,13 @@ class GenerateAddFieldDefaultValues {
       coSign: this.item.coSign || false,
       noOfSignatures: this.item.noOfSignatures || "",
       signatureDetails: this.item.signatureDetails || [],
+    };
+  }
+
+  sectionDefaultValues() {
+    this.defaultValues = {
+      label: this.item.label,
+      description: this.item.description || "",
     };
   }
 }

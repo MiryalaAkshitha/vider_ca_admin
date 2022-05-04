@@ -1,23 +1,24 @@
 import { MenuItem, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 
 interface Props {
   label?: string;
   name: string;
-  size?: "small" | "medium";
   control: any;
   options: Array<{ label: string; value: string }>;
   required?: boolean;
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
 }
 
 function FormBuilderSelect(props: Props) {
   const {
     name,
-    size = "small",
     options,
     control,
     label = "",
     required = false,
+    fieldSize = "LARGE",
   } = props;
 
   return (
@@ -35,7 +36,10 @@ function FormBuilderSelect(props: Props) {
               variant="outlined"
               select
               fullWidth
-              size={size}
+              size="small"
+              sx={{
+                width: getFieldSize(fieldSize),
+              }}
               value={field.value || ""}
               onChange={(e) => {
                 field.onChange(e.target.value);

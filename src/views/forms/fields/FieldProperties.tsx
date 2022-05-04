@@ -20,7 +20,7 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
   const queryClient = useQueryClient();
   const snack = useSnack();
   const params = useParams();
-  const { data, activePage } = useSelector(selectForms);
+  const { data, activePage, validations } = useSelector(selectForms);
 
   const { mutate } = useMutation(updateField, {
     onSuccess: () => {
@@ -70,6 +70,19 @@ const FieldProperties = ({ open, setOpen, item }: any) => {
         (item: any) => item.inputType === "TITLE"
       );
       title.options = apiData.titleOptions;
+    }
+
+    if (item?.fieldType === FormBuilderFieldTypes.SINGLE_LINE) {
+      if (apiData.validation) {
+        let validation = validations?.find(
+          (item: any) => item?._id === apiData.validation
+        );
+        apiData.validation = {
+          id: validation?._id,
+          format: validation?.format,
+          message: validation?.message,
+        };
+      }
     }
 
     mutate({

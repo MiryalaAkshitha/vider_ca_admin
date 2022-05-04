@@ -1,5 +1,6 @@
-import { TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 
 interface Props {
   label?: string;
@@ -8,16 +9,19 @@ interface Props {
   control: any;
   placeholder?: string;
   required?: boolean;
+  instructions?: string;
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
 }
 
 function FormBuilderNumber(props: Props) {
   const {
     name,
-    size = "small",
+    fieldSize = "LARGE",
     control,
     label = "",
     placeholder = "",
     required = false,
+    instructions,
   } = props;
 
   return (
@@ -31,18 +35,25 @@ function FormBuilderNumber(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <TextField
-              sx={{ flex: 1 }}
+              sx={{ flex: 1, width: getFieldSize(fieldSize) }}
               error={Boolean(error)}
               variant="outlined"
               placeholder={placeholder}
               fullWidth
-              size={size}
+              size="small"
               type="number"
               value={field.value}
               onChange={(e) => {
                 field.onChange(+e.target.value);
               }}
             />
+            {instructions && (
+              <Box>
+                <Typography variant="caption" color="rgba(0,0,0,0.7)">
+                  <pre style={{ fontFamily: "inherit" }}>{instructions}</pre>
+                </Typography>
+              </Box>
+            )}
             {error && (
               <Typography
                 variant="caption"

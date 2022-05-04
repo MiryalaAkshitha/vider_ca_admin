@@ -7,6 +7,7 @@ import FormBuilderMultiselect from "../formBuilderFields/FormBuilderMultiselect"
 import FormBuilderNumber from "../formBuilderFields/FormBuilderNumber";
 import FormBuilderPhone from "../formBuilderFields/FormBuilderPhone";
 import FormBuilderRadio from "../formBuilderFields/FormBuilderRadio";
+import FormBuilderSection from "../formBuilderFields/FormBuilderSection";
 import FormBuilderSelect from "../formBuilderFields/FormBuilderSelect";
 import FormBuilderSignature from "../formBuilderFields/FormBuilderSignature";
 import FormBuilderTermsAndConditions from "../formBuilderFields/FormBuilderTermsAndConditions";
@@ -22,8 +23,10 @@ function RenderField({ item, control }: any) {
           control={control}
           name={item?._id}
           label={item?.label}
-          placeholder={item?.placeholder}
+          placeholder={item?.placeHolder}
           required={item?.required}
+          instructions={item?.instructions}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -33,8 +36,10 @@ function RenderField({ item, control }: any) {
           control={control}
           name={item?._id}
           label={item?.label}
-          placeholder={item?.placeholder}
+          placeholder={item?.placeHolder}
           required={item?.required}
+          instructions={item?.instructions}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -45,10 +50,12 @@ function RenderField({ item, control }: any) {
           name={item?._id}
           label={item?.label}
           multiline
-          placeholder={item?.placeholder}
+          placeholder={item?.placeHolder}
           required={item?.required}
           showCharacterCount={item?.showCharacterCount}
           countType={item?.range?.type}
+          instructions={item?.instructions}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -68,6 +75,7 @@ function RenderField({ item, control }: any) {
             label: item?.label,
             value: item?.value,
           }))}
+          displayColumns={item?.displayColumns}
         />
       );
 
@@ -82,6 +90,7 @@ function RenderField({ item, control }: any) {
             label: item?.label,
             value: item?.value,
           }))}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -96,6 +105,7 @@ function RenderField({ item, control }: any) {
             label: item?.label,
             value: item?.value,
           }))}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -106,6 +116,7 @@ function RenderField({ item, control }: any) {
           name={item?._id}
           label={item?.label}
           required={item?.required}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -120,6 +131,7 @@ function RenderField({ item, control }: any) {
             label: item?.label,
             value: item?.value,
           }))}
+          displayColumns={item?.displayColumns}
         />
       );
 
@@ -130,9 +142,11 @@ function RenderField({ item, control }: any) {
           name={item?._id}
           label={item?.label}
           required={item?.required}
+          placeholder={item?.placeHolder}
           includeCountryCode={item?.includeCountryCode}
           allowedCountries={item?.allowedCountries}
           defaultCountryCode={item?.defaultCountryCode}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -159,6 +173,7 @@ function RenderField({ item, control }: any) {
           required={item?.required}
           code={item?.currencyType}
           currencyDisplay={item?.currencyDisplay}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -170,6 +185,7 @@ function RenderField({ item, control }: any) {
           control={control}
           required={item?.required}
           inputs={item?.inputs}
+          instructions={item?.instructions}
         />
       );
 
@@ -181,6 +197,7 @@ function RenderField({ item, control }: any) {
           control={control}
           required={item?.required}
           inputs={item?.inputs}
+          instructions={item?.instructions}
         />
       );
 
@@ -191,6 +208,9 @@ function RenderField({ item, control }: any) {
           label={item?.label}
           control={control}
           required={item?.required}
+          placeholder={item?.placeHolder}
+          instructions={item?.instructions}
+          fieldSize={item?.fieldSize}
         />
       );
 
@@ -212,6 +232,14 @@ function RenderField({ item, control }: any) {
           control={control}
           item={item}
           required={item?.required}
+        />
+      );
+
+    case FormBuilderFieldTypes.SECTION:
+      return (
+        <FormBuilderSection
+          label={item?.label}
+          description={item?.description}
         />
       );
 

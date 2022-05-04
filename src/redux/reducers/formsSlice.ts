@@ -6,6 +6,7 @@ interface IForms {
   addPageOpen: boolean;
   editPageOpen: boolean;
   data: any;
+  validations: any;
   focused: string | null;
 }
 
@@ -15,6 +16,7 @@ const initialState: IForms = {
   editPageOpen: false,
   data: null,
   focused: null,
+  validations: null,
 };
 
 export const formsSlice = createSlice({
@@ -23,6 +25,9 @@ export const formsSlice = createSlice({
   reducers: {
     setData(state, action) {
       state.data = action.payload;
+    },
+    setValidations(state, action) {
+      state.validations = action.payload;
     },
     setFields(state, action) {
       state.data.pages[state.activePage].fields = action.payload;
@@ -60,6 +65,7 @@ export const {
   setFields,
   setFocused,
   setEditPageOpen,
+  setValidations,
 } = formsSlice.actions;
 
 export default formsSlice.reducer;

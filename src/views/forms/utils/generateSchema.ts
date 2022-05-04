@@ -96,6 +96,18 @@ class GenerateSchema {
     let validation = string();
     if (item.required) {
       validation = validation.required(`${item.label} is required`);
+
+      if (item?.validation) {
+        let format = item?.validation?.format;
+
+        let result1 = format.substring(1, format.length);
+        let result2 = result1.substring(0, result1.length - 1);
+
+        validation = validation.matches(
+          new RegExp(result2),
+          item?.validation?.message
+        );
+      }
     }
     if (item?.range) {
       validation = validation.min(
@@ -119,39 +131,40 @@ class GenerateSchema {
 
     if (item.required) {
       validation = validation.required(`${label} is required`);
+
+      if (item?.range && item?.range?.type === "CHARACTERS") {
+        validation = validation.min(
+          min,
+          `${label} must be at least ${min} characters`
+        );
+        validation = validation.max(
+          max,
+          `${label} must be at most ${max} characters`
+        );
+      }
+
+      if (item?.range && item?.range?.type === "WORDS") {
+        validation = validation.test(
+          attribute,
+          `${label} must be at least ${min} words`,
+          (value) => {
+            value = value || "";
+            const words = value.split(" ");
+            return words.length >= min;
+          }
+        );
+        validation = validation.test(
+          attribute,
+          `${label} must be at most ${max} words`,
+          (value) => {
+            value = value || "";
+            const words = value.split(" ");
+            return words.length <= max;
+          }
+        );
+      }
     }
 
-    if (item?.range && item?.range?.type === "CHARACTERS") {
-      validation = validation.min(
-        min,
-        `${label} must be at least ${min} characters`
-      );
-      validation = validation.max(
-        max,
-        `${label} must be at most ${max} characters`
-      );
-    }
-
-    if (item?.range && item?.range?.type === "WORDS") {
-      validation = validation.test(
-        attribute,
-        `${label} must be at least ${min} words`,
-        (value) => {
-          value = value || "";
-          const words = value.split(" ");
-          return words.length >= min;
-        }
-      );
-      validation = validation.test(
-        attribute,
-        `${label} must be at most ${max} words`,
-        (value) => {
-          value = value || "";
-          const words = value.split(" ");
-          return words.length <= max;
-        }
-      );
-    }
     this.schema[attribute] = validation;
   }
 
@@ -408,29 +421,29 @@ class GenerateSchema {
 
     if (item.required) {
       validation = validation.required(`${item.label} is required`);
-    }
 
-    if (item?.range) {
-      if (item?.range?.type === "VALUES") {
-        validation = validation.min(min, `${label} must be at least ${min}`);
-        validation = validation.max(max, `${label} must be at most ${max}`);
-      }
-      if (item?.range?.type === "DIGITS") {
-        validation = validation.test(
-          attribute,
-          `${label} must be minimum ${min} digits`,
-          (value: any) => {
-            return value?.toString().length >= min;
-          }
-        );
+      if (item?.range) {
+        if (item?.range?.type === "VALUES") {
+          validation = validation.min(min, `${label} must be at least ${min}`);
+          validation = validation.max(max, `${label} must be at most ${max}`);
+        }
+        if (item?.range?.type === "DIGITS") {
+          validation = validation.test(
+            attribute,
+            `${label} must be minimum ${min} digits`,
+            (value: any) => {
+              return value?.toString().length >= min;
+            }
+          );
 
-        validation = validation.test(
-          attribute,
-          `${label} must not exceed ${max} digits`,
-          (value: any) => {
-            return value?.toString().length <= max;
-          }
-        );
+          validation = validation.test(
+            attribute,
+            `${label} must not exceed ${max} digits`,
+            (value: any) => {
+              return value?.toString().length <= max;
+            }
+          );
+        }
       }
     }
 

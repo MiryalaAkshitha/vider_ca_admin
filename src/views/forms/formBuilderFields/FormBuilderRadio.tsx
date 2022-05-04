@@ -1,4 +1,5 @@
 import {
+  Box,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -14,8 +15,8 @@ interface Props {
   size?: "small" | "medium";
   control: any;
   options: Array<{ label: string; value: string }>;
-  row?: boolean;
   required?: boolean;
+  displayColumns?: string;
 }
 
 function FormBuilderRadio(props: Props) {
@@ -25,8 +26,8 @@ function FormBuilderRadio(props: Props) {
     control,
     label = "",
     options,
-    row = false,
     required = false,
+    displayColumns = "1_COLUMN",
   } = props;
 
   return (
@@ -44,17 +45,25 @@ function FormBuilderRadio(props: Props) {
               }
             />
             <RadioGroup
-              row={row}
-              aria-labelledby="demo-controlled-radio-buttons-group"
+              row={displayColumns !== "1_COLUMN"}
+              sx={{ flexWrap: "wrap" }}
               {...field}
             >
               {options.map((item, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={item.value}
-                  control={<Radio />}
-                  label={item.label}
-                />
+                <>
+                  <FormControlLabel
+                    key={index}
+                    value={item.value}
+                    control={<Radio />}
+                    label={item.label}
+                  />
+                  {displayColumns === "2_COLUMNS" && index % 2 !== 0 && (
+                    <Box sx={{ flexBasis: "100%", height: 0 }}></Box>
+                  )}
+                  {displayColumns === "3_COLUMNS" && (index + 1) % 3 === 0 && (
+                    <Box sx={{ flexBasis: "100%", height: 0 }}></Box>
+                  )}
+                </>
               ))}
             </RadioGroup>
           </FormControl>

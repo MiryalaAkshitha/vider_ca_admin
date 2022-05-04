@@ -12,6 +12,7 @@ import MultiLine from "../formBuilderFieldComponents/MultiLine";
 import Name from "../formBuilderFieldComponents/Name";
 import Number from "../formBuilderFieldComponents/Number";
 import RadioBox from "../formBuilderFieldComponents/RadioBox";
+import Section from "../formBuilderFieldComponents/Section";
 import Signature from "../formBuilderFieldComponents/Signature";
 import SingleLine from "../formBuilderFieldComponents/SingleLine";
 import TermsAndConditions from "../formBuilderFieldComponents/TermsAndConditions";
@@ -38,6 +39,7 @@ export enum FormBuilderFieldTypes {
   FILE_UPLOAD = "FILE_UPLOAD",
   TERMS_AND_CONDITIONS = "TERMS_AND_CONDITIONS",
   SIGNATURE = "SIGNATURE",
+  SECTION = "SECTION",
 }
 
 export enum FormBuilderInputTypes {
@@ -121,6 +123,9 @@ export const renderFieldsComponent = (
 
     case FormBuilderFieldTypes.RADIO:
       return <RadioBox item={item} control={control} watch={watch} />;
+
+    case FormBuilderFieldTypes.SECTION:
+      return <Section item={item} control={control} watch={watch} />;
 
     case FormBuilderFieldTypes.SIGNATURE:
       return (

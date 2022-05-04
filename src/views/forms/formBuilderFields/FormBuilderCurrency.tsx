@@ -1,11 +1,12 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 import { currencies } from "utils/currencies";
 
 interface Props {
   label?: string;
   name: string;
-  size?: "small" | "medium";
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
   control: any;
   multiline?: boolean;
   placeholder?: string;
@@ -17,7 +18,7 @@ interface Props {
 function FormBuilderCurrency(props: Props) {
   const {
     name,
-    size = "small",
+    fieldSize = "LARGE",
     control,
     label = "",
     placeholder = "",
@@ -40,7 +41,14 @@ function FormBuilderCurrency(props: Props) {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+                width: getFieldSize(fieldSize),
+              }}
+            >
               {currencyDisplay === "SYMBOL" && (
                 <Typography variant="subtitle2" sx={{ pl: "4px" }}>
                   {currencySymbol}
@@ -52,7 +60,7 @@ function FormBuilderCurrency(props: Props) {
                 variant="outlined"
                 placeholder={placeholder}
                 fullWidth
-                size={size}
+                size="small"
                 type="number"
                 value={field.value}
                 onChange={(e) => {

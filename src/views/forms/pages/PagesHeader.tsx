@@ -1,6 +1,6 @@
 import { Add, Delete, Edit, MoreVert, PlayArrow } from "@mui/icons-material";
 import { Box, Button, IconButton, Tab, Tabs } from "@mui/material";
-import { deletePage } from "api/services/forms";
+import { deletePage, duplicatePage } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
 import useSnack from "hooks/useSnack";
@@ -14,6 +14,7 @@ import {
   setAddPageOpen,
   setEditPageOpen,
 } from "redux/reducers/formsSlice";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 function PagesHeader() {
   const menu = useMenu();
@@ -23,6 +24,17 @@ function PagesHeader() {
   const confirm = useConfirm();
   const dispatch = useDispatch();
   const { activePage, data } = useSelector(selectForms);
+
+  const { mutate: pageDuplicate } = useMutation(duplicatePage, {
+    onSuccess: () => {
+      snack.success("Page added");
+      dispatch(setActivePage(activePage + 1));
+      queryClient.invalidateQueries("form-details");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
 
   const { mutate: pageDelete } = useMutation(deletePage, {
     onSuccess: () => {
@@ -34,6 +46,13 @@ function PagesHeader() {
       snack.error(err.response.data.message);
     },
   });
+
+  const handleDuplicate = () => {
+    pageDuplicate({
+      formId: params.formId,
+      pageId: data?.pages[activePage]?._id,
+    });
+  };
 
   const handleDelete = () => {
     confirm({
@@ -60,6 +79,11 @@ function PagesHeader() {
           label: "Edit Page",
           icon: <Edit fontSize="small" color="secondary" />,
           action: () => dispatch(setEditPageOpen(true)),
+        },
+        {
+          label: "Duplicate Page",
+          icon: <ContentCopyIcon fontSize="small" color="secondary" />,
+          action: handleDuplicate,
         },
         {
           label: "Delete Page",

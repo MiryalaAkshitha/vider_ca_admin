@@ -87,6 +87,10 @@ class GenerateAddFieldSchema {
         this.signatureSchema();
         break;
 
+      case FormBuilderFieldTypes.SECTION:
+        this.sectionSchema();
+        break;
+
       default:
         break;
     }
@@ -119,9 +123,9 @@ class GenerateAddFieldSchema {
     this.schema = {
       ...this.baseSchema(),
       placeHolder: string().notRequired(),
-      validationFormat: string().notRequired(),
       instructions: string().notRequired(),
       range: this.rangeSchema(),
+      validation: string().notRequired(),
     };
   }
 
@@ -184,16 +188,14 @@ class GenerateAddFieldSchema {
 
   dropdownValues() {
     this.schema = {
-      label: string().required("Field name is required"),
-      required: boolean().required(),
+      ...this.baseSchema(),
       options: array().required().min(1, "Add at least one option"),
     };
   }
 
   dropdownMultipleValues() {
     this.schema = {
-      label: string().required("Field name is required"),
-      required: boolean().required(),
+      ...this.baseSchema(),
       options: array().required().min(1, "Add at least one option"),
       range: this.rangeSchema(),
     };
@@ -337,6 +339,13 @@ class GenerateAddFieldSchema {
           designation: string().required("Designation is required"),
         })
       ),
+    };
+  }
+
+  sectionSchema() {
+    this.schema = {
+      label: string().required("Section name is required"),
+      description: string().notRequired(),
     };
   }
 }

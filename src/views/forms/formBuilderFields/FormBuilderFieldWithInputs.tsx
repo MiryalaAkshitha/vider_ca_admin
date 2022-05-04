@@ -1,4 +1,4 @@
-import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
 import countries from "utils/countries";
@@ -11,10 +11,18 @@ interface Props {
   control: any;
   required?: boolean;
   inputs: any[];
+  instructions?: string;
 }
 
 function FormBuilderFieldWithInputs(props: Props) {
-  const { name, control, label = "", required = false, inputs } = props;
+  const {
+    name,
+    control,
+    label = "",
+    required = false,
+    inputs,
+    instructions,
+  } = props;
 
   return (
     <>
@@ -35,6 +43,13 @@ function FormBuilderFieldWithInputs(props: Props) {
                 );
               })}
             </Grid>
+            {instructions && (
+              <Box>
+                <Typography variant="caption" color="rgba(0,0,0,0.7)">
+                  <pre style={{ fontFamily: "inherit" }}>{instructions}</pre>
+                </Typography>
+              </Box>
+            )}
             {error && (
               <Typography
                 variant="caption"

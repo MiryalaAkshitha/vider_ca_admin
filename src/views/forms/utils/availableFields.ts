@@ -105,6 +105,12 @@ const availableFields = [
     label: "Signature",
     fieldType: FormBuilderFieldTypes.SIGNATURE,
   },
+  {
+    id: uuidv4(),
+    icon: icons.termsAndConditions,
+    label: "Section",
+    fieldType: FormBuilderFieldTypes.SECTION,
+  },
 ];
 
 export default availableFields;

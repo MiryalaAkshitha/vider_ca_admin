@@ -28,6 +28,10 @@ const addPage = ({ formId, name }: any) => {
   return http.post(`/forms/${formId}/pages`, { name });
 };
 
+const duplicatePage = ({ formId, pageId }: any) => {
+  return http.post(`/forms/${formId}/pages/${pageId}/clone`);
+};
+
 const deletePage = ({ formId, pageId }: any) => {
   return http.delete(`/forms/${formId}/pages/${pageId}`);
 };
@@ -91,4 +95,5 @@ export {
   deletePage,
   getFormActivity,
   signField,
+  duplicatePage,
 };

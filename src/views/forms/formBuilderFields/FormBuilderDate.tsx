@@ -1,16 +1,23 @@
 import { DesktopDatePicker } from "@mui/lab";
 import { TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 interface Props {
   label?: string;
   name: string;
-  size?: "small" | "medium";
   control: any;
   required?: boolean;
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
 }
 
 function FormBuilderDate(props: Props) {
-  const { name, size = "small", control, label = "", required = false } = props;
+  const {
+    name,
+    control,
+    label = "",
+    required = false,
+    fieldSize = "LARGE",
+  } = props;
 
   return (
     <>
@@ -30,7 +37,10 @@ function FormBuilderDate(props: Props) {
               renderInput={(params) => (
                 <TextField
                   fullWidth
-                  size={size}
+                  size="small"
+                  sx={{
+                    width: getFieldSize(fieldSize),
+                  }}
                   {...params}
                   error={Boolean(error)}
                   onBlur={field.onBlur}

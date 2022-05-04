@@ -1,5 +1,6 @@
-import { TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 
 interface Props {
   label?: string;
@@ -11,6 +12,8 @@ interface Props {
   required?: boolean;
   showCharacterCount?: boolean;
   countType?: "WORDS" | "CHARACTERS";
+  instructions?: string;
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
 }
 
 function FormbuilderTextField(props: Props) {
@@ -24,6 +27,8 @@ function FormbuilderTextField(props: Props) {
     required = false,
     showCharacterCount = false,
     countType = "WORDS",
+    instructions,
+    fieldSize = "LARGE",
   } = props;
 
   const getCount = (value: string) => {
@@ -49,12 +54,22 @@ function FormbuilderTextField(props: Props) {
               variant="outlined"
               placeholder={placeholder}
               fullWidth
+              sx={{
+                width: getFieldSize(fieldSize),
+              }}
               multiline={multiline}
-              rows={multiline ? 3 : 1}
+              minRows={multiline ? 3 : 1}
               size={size}
               onChange={field.onChange}
               value={field.value ? field?.value : ""}
             />
+            {instructions && (
+              <Box>
+                <Typography variant="caption" color="rgba(0,0,0,0.7)">
+                  <pre style={{ fontFamily: "inherit" }}>{instructions}</pre>
+                </Typography>
+              </Box>
+            )}
             {showCharacterCount && (
               <Typography mt={1} variant="body2">
                 {countType === "WORDS" ? "Words" : "Characters"} count:{" "}
@@ -64,7 +79,7 @@ function FormbuilderTextField(props: Props) {
             {error && (
               <Typography
                 variant="caption"
-                sx={{ pl: "2px" }}
+                sx={{ pl: "2px", display: "block" }}
                 color="rgb(211, 47, 47)"
               >
                 {error.message}

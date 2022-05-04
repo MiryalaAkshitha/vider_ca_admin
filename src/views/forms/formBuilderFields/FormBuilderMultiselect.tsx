@@ -1,25 +1,26 @@
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { getFieldSize } from "utils";
 
 interface Props {
   label?: string;
   name: string;
-  size?: "small" | "medium";
   control: any;
   options: Array<{ label: string; value: string }>;
   trigger?: () => void;
   required?: boolean;
+  fieldSize: "SMALL" | "MEDIUM" | "LARGE";
 }
 
 function FormBuilderMultiselect(props: Props) {
   const {
     name,
-    size = "small",
     control,
     label = "",
     options,
     trigger,
     required = false,
+    fieldSize = "LARGE",
   } = props;
 
   return (
@@ -33,7 +34,10 @@ function FormBuilderMultiselect(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <Autocomplete
-              size={size}
+              size="small"
+              sx={{
+                width: getFieldSize(fieldSize),
+              }}
               multiple
               disablePortal
               onChange={(_, value) => {

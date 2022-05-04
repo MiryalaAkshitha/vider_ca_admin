@@ -1,9 +1,14 @@
 import { Box } from "@mui/material";
+import { getFormValidations } from "api/services/forms";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
 import FormLimitRange from "components/FormFields/FormLimitRange";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
+import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { setValidations } from "redux/reducers/formsSlice";
+import { ResType } from "types";
 
 interface Props {
   item: any;
@@ -12,6 +17,14 @@ interface Props {
 
 const SingleLine = (props: Props) => {
   const { control } = props;
+  const dispatch = useDispatch();
+
+  const { data }: ResType = useQuery("form-validations", getFormValidations, {
+    onSuccess: (res: any) => {
+      dispatch(setValidations(res?.data));
+    },
+  });
+
   return (
     <>
       <Box mt={2}>
@@ -48,12 +61,14 @@ const SingleLine = (props: Props) => {
       <Box mt={2}>
         <FormSelect
           control={control}
-          name="validationFormat"
+          name="validation"
           label="Validation Type"
-          options={[
-            { label: "Pan Number", value: "[A-Z]{5}[0-9]{4}[A-Z]{1}" },
-            { label: "Aadhar Number", value: "^d{4}sd{4}sd{4}$" },
-          ]}
+          options={
+            data?.data?.map((item: any) => ({
+              label: item.name,
+              value: item?._id,
+            })) || []
+          }
         />
       </Box>
       <Box mt={2}>
