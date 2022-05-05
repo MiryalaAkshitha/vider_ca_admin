@@ -56,6 +56,24 @@ function FormBuilderSignature(props: Props) {
                     {item?.signatureDocument[0]?.name}
                   </a>
                 </Typography>
+                {field?.value && (
+                  <Box display="flex" mt={1} gap={1} alignItems="center">
+                    <Typography> Signed document:</Typography>
+                    <Typography>
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={field?.value?.url}
+                        style={{
+                          color: "rgb(85, 26, 139)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {field?.value?.name}
+                      </a>
+                    </Typography>
+                  </Box>
+                )}
               </Box>
               <Box>
                 <Button onClick={handleClick} color="secondary">

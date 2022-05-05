@@ -1,5 +1,9 @@
 import { http } from "api/http";
 
+export let successUrl = `${process.env.REACT_APP_API_URL}/forms/esign/success`;
+export let failureUrl = `${process.env.REACT_APP_API_URL}/forms/esign/failure`;
+export let cancelUrl = `${process.env.REACT_APP_API_URL}/forms/esign/cancel`;
+
 const createForm = (data: any) => {
   return http.post("/forms", data);
 };

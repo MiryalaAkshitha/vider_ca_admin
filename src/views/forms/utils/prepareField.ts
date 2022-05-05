@@ -168,7 +168,7 @@ export function prepareField(item: any) {
     case FormBuilderFieldTypes.SIGNATURE:
       return {
         ...field,
-        signatureType: 3,
+        signatureType: 1,
         signatureDocument: [
           {
             name: "sample.pdf",

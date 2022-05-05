@@ -1,5 +1,10 @@
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
-import { signField } from "api/services/forms";
+import {
+  cancelUrl,
+  failureUrl,
+  signField,
+  successUrl,
+} from "api/services/forms";
 import { useEffect } from "react";
 import { useMutation } from "react-query";
 import { useParams } from "react-router-dom";
@@ -33,9 +38,9 @@ const Esign = () => {
       formId: params.formId,
       fieldId: params.fieldId,
       data: {
-        successUrl: "http://localhost:5000/forms/sign/redirect",
-        failureUrl: "http://localhost:5000/forms/sign/redirect",
-        cancelUrl: "http://localhost:5000/forms/sign/redirect",
+        successUrl: successUrl,
+        failureUrl: failureUrl,
+        cancelUrl: cancelUrl,
       },
     });
   }, []);

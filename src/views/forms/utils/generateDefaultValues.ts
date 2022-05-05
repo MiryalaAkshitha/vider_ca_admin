@@ -2,6 +2,7 @@ import { FormBuilderFieldTypes } from "./renderFieldsComponent";
 
 export function generateDefaultValues(data: any) {
   let result = {};
+
   for (let field of data) {
     const type = field?.fieldType;
     let hasInputs =
@@ -75,6 +76,10 @@ export function generateDefaultValues(data: any) {
 
     if (type === FormBuilderFieldTypes.FILE_UPLOAD) {
       result[field._id] = field.value || [];
+    }
+
+    if (type === FormBuilderFieldTypes.SIGNATURE) {
+      result[field._id] = field.value || null;
     }
 
     if (type === FormBuilderFieldTypes.PHONE) {

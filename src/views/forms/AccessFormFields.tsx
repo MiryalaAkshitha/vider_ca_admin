@@ -8,11 +8,16 @@ import RenderField from "views/forms/utils/RenderField";
 import { generateDefaultValues } from "./utils/generateDefaultValues";
 
 function AccessFormFields({ data, active, onContinue }: any) {
-  const { control, formState, handleSubmit } = useForm({
+  console.log("data", data);
+
+  const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",
-    defaultValues: generateDefaultValues(data),
     resolver: yupResolver(dynamicSchema(data)),
   });
+
+  useEffect(() => {
+    reset(generateDefaultValues(data));
+  }, [data, reset]);
 
   const onSubmit = (data: any) => {
     onContinue(data);
