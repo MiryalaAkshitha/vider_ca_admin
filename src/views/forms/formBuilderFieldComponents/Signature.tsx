@@ -56,7 +56,7 @@ const Singature = (props: Props) => {
           ]}
         />
       </Box>
-      {watch("pages") === "SPECIFY" && (
+      {watch("selectPage") === "SPECIFY" && (
         <Box mt={2}>
           <FormInput
             name="pageNumbers"
