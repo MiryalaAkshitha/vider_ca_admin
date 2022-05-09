@@ -168,7 +168,7 @@ export function prepareField(item: any) {
     case FormBuilderFieldTypes.SIGNATURE:
       return {
         ...field,
-        signatureType: 1,
+        signatureType: 0,
         signatureDocument: [
           {
             name: "sample.pdf",
@@ -179,8 +179,8 @@ export function prepareField(item: any) {
         ],
         coSign: false,
         preview: false,
-        signaturePosition: "Bottom-Right",
         selectPage: "ALL",
+        signaturePosition: "Bottom-Right",
       };
 
     case FormBuilderFieldTypes.SECTION:

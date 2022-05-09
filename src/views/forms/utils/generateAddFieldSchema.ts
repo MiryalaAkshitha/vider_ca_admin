@@ -317,6 +317,14 @@ class GenerateAddFieldSchema {
       instructions: string().notRequired(),
       signatureDocument: array().required().min(1, "Document is required"),
       preview: boolean().required(),
+      signatureSelectionMode: string().required(),
+      pageLevelCoordinates: string().when("signatureSelectionMode", {
+        is: "MANUAL",
+        then: (schema) => {
+          return schema.required("Page level coordinates are required");
+        },
+        otherwise: (schema) => schema.notRequired(),
+      }),
       selectPage: string().required(),
       pageNumbers: string().when("pages", {
         is: "SPECIFY",

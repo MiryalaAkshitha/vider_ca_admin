@@ -1,9 +1,12 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormInput from "components/FormFields/FormInput";
+import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
-import FormBuilderUpload from "../formBuilderFields/FormBuilderUpload";
+import FormBuilderUpload from "../../formBuilderFields/FormBuilderUpload";
+import SelectCoordingates from "./SelectCoordingates";
 
 interface Props {
   item: any;
@@ -13,7 +16,9 @@ interface Props {
 }
 
 const Singature = (props: Props) => {
-  const { control, watch, setValue } = props;
+  const { control, watch, setValue, item } = props;
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Box>
@@ -30,6 +35,13 @@ const Singature = (props: Props) => {
       <Box mt={2}>
         <FormCheckbox control={control} name="required" label="Mandatory" />
       </Box>
+      <Box mt={1}>
+        <FormCheckbox
+          control={control}
+          name="preview"
+          label="Preview required"
+        />
+      </Box>
       <Box mt={2}>
         <FormBuilderUpload
           id="signatureDocument"
@@ -42,55 +54,106 @@ const Singature = (props: Props) => {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
-          label="Select Page"
-          name="selectPage"
+        <FormRadio
+          row
+          label="Signature selection mode"
+          name="signatureSelectionMode"
           control={control}
           options={[
-            { label: "All", value: "ALL" },
-            { label: "First", value: "FIRST" },
-            { label: "Last", value: "LAST" },
-            { label: "Even", value: "EVEN" },
-            { label: "Odd", value: "ODD" },
-            { label: "Specify", value: "SPECIFY" },
+            { label: "Manually", value: "MANUAL" },
+            { label: "Automatically", value: "AUTOMATIC" },
           ]}
         />
       </Box>
-      {watch("selectPage") === "SPECIFY" && (
-        <Box mt={2}>
-          <FormInput
-            name="pageNumbers"
-            label="Page Numbers"
-            control={control}
-          />
-        </Box>
+      {watch("signatureSelectionMode") === "AUTOMATIC" ? (
+        <>
+          <Box mt={2}>
+            <FormSelect
+              label="Select Page"
+              name="selectPage"
+              control={control}
+              options={[
+                { label: "All", value: "ALL" },
+                { label: "First", value: "FIRST" },
+                { label: "Last", value: "LAST" },
+                { label: "Even", value: "EVEN" },
+                { label: "Odd", value: "ODD" },
+                { label: "Specify", value: "SPECIFY" },
+              ]}
+            />
+          </Box>
+          {watch("selectPage") === "SPECIFY" && (
+            <Box mt={2}>
+              <FormInput
+                name="pageNumbers"
+                label="Page Numbers"
+                control={control}
+              />
+            </Box>
+          )}
+          <Box mt={2}>
+            <FormSelect
+              label="Signature Position"
+              name="signaturePosition"
+              control={control}
+              options={[
+                { label: "Top left", value: "Top-Left" },
+                { label: "Top right", value: "Top-Right" },
+                { label: "Top center", value: "Top-Center" },
+                { label: "Bottom left", value: "Bottom-Left" },
+                { label: "Bottom right", value: "Bottom-Right" },
+                { label: "Bottom center", value: "Bottom-Center" },
+                { label: "Middel center", value: "Middle-Center" },
+                { label: "Middle left", value: "Middle-Left" },
+                { label: "Middle right", value: "Middle-Right" },
+              ]}
+            />
+          </Box>
+        </>
+      ) : (
+        <Controller
+          control={control}
+          name="pageLevelCoordinates"
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <>
+              <Button
+                sx={{
+                  mt: 2,
+                }}
+                onClick={() => setOpen(true)}
+                variant="outlined"
+              >
+                Select signature position
+              </Button>
+              {error && (
+                <Typography
+                  variant="caption"
+                  color="error"
+                  sx={{
+                    display: "block",
+                    mt: 2,
+                  }}
+                >
+                  {error.message}
+                </Typography>
+              )}
+              <SelectCoordingates
+                url={
+                  watch("signatureDocument")?.length
+                    ? watch("signatureDocument")[0].url
+                    : ""
+                }
+                value={value || ""}
+                onChange={onChange}
+                open={open}
+                setOpen={setOpen}
+              />
+            </>
+          )}
+        />
       )}
-      <Box mt={2}>
-        <FormSelect
-          label="Singature Position"
-          name="signaturePosition"
-          control={control}
-          options={[
-            { label: "Top left", value: "Top-Left" },
-            { label: "Top right", value: "Top-Right" },
-            { label: "Top center", value: "Top-Center" },
-            { label: "Bottom left", value: "Bottom-Left" },
-            { label: "Bottom right", value: "Bottom-Right" },
-            { label: "Bottom center", value: "Bottom-Center" },
-            { label: "Middel center", value: "Middle-Center" },
-            { label: "Middle left", value: "Middle-Left" },
-            { label: "Middle right", value: "Middle-Right" },
-          ]}
-        />
-      </Box>
-      <Box mt={2}>
-        <FormCheckbox
-          control={control}
-          name="preview"
-          label="Prevew required"
-        />
-      </Box>
-      <Box mt={1}>
+
+      {/* <Box mt={1}>
         <FormCheckbox
           control={control}
           name="coSign"
@@ -122,7 +185,8 @@ const Singature = (props: Props) => {
             ]}
           />
         </Box>
-      )}
+      )} */}
+
       {watch("coSign") && watch("noOfSignatures") && (
         <Box mt={2}>
           <SignatureField

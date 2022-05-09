@@ -298,6 +298,8 @@ class GenerateAddFieldDefaultValues {
       signatureDocument: this.item.signatureDocument
         ? this.item.signatureDocument
         : [],
+      signatureSelectionMode: this.item.signatureSelectionMode || "AUTOMATIC",
+      pageLevelCoordinates: this.item.pageLevelCoordinates || "",
       selectPage: this.item.selectPage || "",
       pageNumbers: this.item.pageNumbers || "",
       signaturePosition: this.item.signaturePosition || "",

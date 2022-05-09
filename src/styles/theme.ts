@@ -29,7 +29,6 @@ export const theme: ThemeOptions = createTheme({
         root: {
           textTransform: "capitalize",
           fontFamily: "muli_regular",
-          minWidth: 100,
         },
       },
     },
