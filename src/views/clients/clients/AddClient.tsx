@@ -37,7 +37,7 @@ function AddClient() {
     }
   );
 
-  const { mutate, isLoading } = useMutation(createClient, {
+  const { isLoading } = useMutation(createClient, {
     onSuccess: (res) => {
       snack.success("Client Created");
       navigate(
@@ -214,9 +214,7 @@ function AddClient() {
                   </Button>
                 </Typography>
               </Box>
-
               {watch("category") === "Individual" && isloading && <Loader />}
-
               {isPanCardverified &&
                 watch("category") === "Individual" &&
                 !isloading && (
@@ -239,7 +237,6 @@ function AddClient() {
                 )}
             </>
           )}
-
           {watch("category") === "Company" && watch("category") === "Company" && (
             <>
               <Box mt={2}>
@@ -295,7 +292,6 @@ function AddClient() {
               </Box>
             </>
           )}
-
           {watch("gstRegistered") === "yes" && watch("category") === "Company" && (
             <Box mt={2}>
               <FormInput
@@ -303,7 +299,6 @@ function AddClient() {
                 name="gstNumber"
                 label="GST Number"
               />
-
               <Typography
                 sx={{
                   marginTop: "15px",
@@ -412,7 +407,6 @@ function AddClient() {
                 </Box>
               </>
             )}
-
           <LoadingButton
             loading={isLoading}
             fullWidth

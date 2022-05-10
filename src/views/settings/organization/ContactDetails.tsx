@@ -30,7 +30,13 @@ function ContactDetails({ state, setState }) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField fullWidth label="Email" name="email" value={state.email} />
+          <TextField
+            fullWidth
+            disabled
+            label="Email"
+            name="email"
+            value={state.email}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField

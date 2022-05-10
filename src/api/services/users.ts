@@ -1,4 +1,40 @@
 import { http } from "api/http";
+import axios from "axios";
+
+const getSandboxToken = () => {
+  return axios({
+    url: process.env.REACT_APP_SANDBOX_AUTH_URL || "",
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "x-api-key": process.env.REACT_APP_SANDBOX_API_KEY || "",
+      "x-api-secret": process.env.REACT_APP_SANDBOX_API_SECRET || "",
+      "x-api-version": "1.0",
+    },
+  });
+};
+
+const getGstDetails = ({ token, gstNumber }) => {
+  return axios.get(`${process.env.REACT_APP_SANDBOX_GST_API}/${gstNumber}`, {
+    headers: {
+      Authorization: token,
+      "x-api-key": process.env.REACT_APP_SANDBOX_API_KEY || "",
+    },
+  });
+};
+
+const getPanDetails = ({ token, panNumber }) => {
+  return axios.get(`${process.env.REACT_APP_SANDBOX_PAN_API}/${panNumber}`, {
+    headers: {
+      Authorization: token,
+      "x-api-key": process.env.REACT_APP_SANDBOX_API_KEY || "",
+    },
+    params: {
+      consent: "y",
+      reason: "For KYC of User",
+    },
+  });
+};
 
 const signup = (data: any) => {
   return http.post("/users/signup", data);
@@ -61,6 +97,9 @@ const updateProfile = (data: any) => {
 };
 
 export {
+  getSandboxToken,
+  getGstDetails,
+  getPanDetails,
   signup,
   signin,
   inviteUser,

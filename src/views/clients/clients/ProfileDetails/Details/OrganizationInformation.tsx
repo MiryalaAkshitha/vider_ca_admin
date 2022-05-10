@@ -37,11 +37,10 @@ const OrganizationInformation = ({ data, onUpdate, handleChange }) => {
         }
       );
       const result: any = response.data;
-      console.log(result);
-      {
-        result.data.sts === "Active"
-          ? setIsGstverified(true)
-          : alert("INVALID GST NUMBER");
+      if (result.data.sts === "Active") {
+        setIsGstverified(true);
+      } else {
+        alert("INVALID GST NUMBER");
       }
       setGstLoading(false);
     } catch {
@@ -76,10 +75,10 @@ const OrganizationInformation = ({ data, onUpdate, handleChange }) => {
       );
 
       const data: any = response?.data;
-      {
-        data.data.status === "VALID"
-          ? setPanVerified(true)
-          : alert("INVALID PAN NUMBER");
+      if (data.data.status === "VALID") {
+        setPanVerified(true);
+      } else {
+        alert("INVALID PAN NUMBER");
       }
       setPanLoading(false);
     } catch {

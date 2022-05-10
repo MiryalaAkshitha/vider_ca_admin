@@ -28,7 +28,7 @@ function SelectCoordingates({ open, setOpen, url, value, onChange }) {
     setCoordinates(value);
   }, [value]);
 
-  function prevCoordinates(canvas: any, context: any, coordinates: any) {
+  const prevCoordinates = (canvas: any, context: any, coordinates: any) => {
     let data = coordinates.split(";");
     let result: any[] = [];
 
@@ -51,7 +51,7 @@ function SelectCoordingates({ open, setOpen, url, value, onChange }) {
       context.lineWidth = 1;
       context.stroke();
     });
-  }
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -101,7 +101,7 @@ function SelectCoordingates({ open, setOpen, url, value, onChange }) {
         });
       });
     });
-  }, [open, selectedPage, url]);
+  }, [open, selectedPage, url, coordinates, prevCoordinates]);
 
   let mousedown = false;
   let last_mousex = 0;

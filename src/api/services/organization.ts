@@ -8,6 +8,26 @@ const getOrganizationLicenses = () => {
   return http.get(`/users/organization/licenses`);
 };
 
+const getBankAccounts = ({ queryKey }) => {
+  return http.get(`/bank-accounts`, {
+    params: {
+      type: queryKey[1],
+    },
+  });
+};
+
+const createBankAccount = (data: any) => {
+  return http.post(`/bank-accounts`, data);
+};
+
+const updateBankAccount = ({ id, data }: any) => {
+  return http.put(`/bank-accounts/${id}`, data);
+};
+
+const deleteBankAccount = ({ id }: any) => {
+  return http.delete(`/bank-accounts/${id}`);
+};
+
 const createOrganizationLicense = ({ data }: any) => {
   return http.post(`/users/organization/licenses`, data);
 };
@@ -31,4 +51,8 @@ export {
   createOrganizationLicense,
   updateOrganizationLicense,
   deleteOrganizationLicense,
+  getBankAccounts,
+  createBankAccount,
+  updateBankAccount,
+  deleteBankAccount,
 };

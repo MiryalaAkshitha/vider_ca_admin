@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useNavigate } from "react-router-dom";
 import EditProfile from "./EditProfile";
 import ProfileImage from "./ProfileImage";
 
@@ -11,9 +10,6 @@ interface IProfileProps {
 }
 
 function Profile({ data, setState }: IProfileProps) {
-  const navigate = useNavigate();
-  console.log(data.category);
-
   return (
     <Box
       sx={{
@@ -44,7 +40,6 @@ function Profile({ data, setState }: IProfileProps) {
           />
         </Box>
       </Box>
-
       <ProfileImage
         src={data?.imageUrl}
         onChange={(v: string) => setState({ ...data, image: v })}

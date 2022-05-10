@@ -19,9 +19,18 @@ function AddressDetails({ state, setState }) {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Address"
-            name="address"
-            value={state.address}
+            label="Building Name"
+            name="buildingName"
+            value={state?.buildingName}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            label="Street"
+            name="street"
+            value={state?.street}
             onChange={handleChange}
           />
         </Grid>
@@ -30,7 +39,7 @@ function AddressDetails({ state, setState }) {
             fullWidth
             label="City"
             name="city"
-            value={state.city}
+            value={state?.city}
             onChange={handleChange}
           />
         </Grid>

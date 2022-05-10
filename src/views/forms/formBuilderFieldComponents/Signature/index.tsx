@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Singature = (props: Props) => {
-  const { control, watch, setValue, item } = props;
+  const { control, watch, setValue } = props;
   const [open, setOpen] = useState(false);
 
   return (

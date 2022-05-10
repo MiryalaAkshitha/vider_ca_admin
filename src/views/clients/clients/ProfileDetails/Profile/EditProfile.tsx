@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const EditProfile = ({ onChange }) => {
   const snack = useSnack();
-  const [url, setUrl] = useState(null);
+  const [, setUrl] = useState(null);
 
   const uploadImage = (e: any) => {
     if (!e.target.files) return;

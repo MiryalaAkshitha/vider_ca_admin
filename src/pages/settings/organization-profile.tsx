@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 import { useImmer } from "use-immer";
 import AddressDetails from "views/settings/organization/AddressDetails";
+import BankAccounts from "views/settings/organization/BankAccounts";
 import BottomBar from "views/settings/organization/BottomBar";
 import ContactDetails from "views/settings/organization/ContactDetails";
 import GstDetails from "views/settings/organization/GstDetails";
@@ -40,6 +41,8 @@ function OrganizationProfile() {
       <PrimaryContactDetails state={state} setState={setState} />
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />
       <AddressDetails state={state} setState={setState} />
+      <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />
+      <BankAccounts />
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />
       <OrganizationLicenses />
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />

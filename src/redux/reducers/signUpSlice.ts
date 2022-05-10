@@ -26,7 +26,7 @@ export interface ISignup {
 }
 
 const initialState: ISignup = {
-  step: "details",
+  step: "signup",
   token: "",
   fullName: "",
   email: "",
@@ -43,7 +43,7 @@ const initialState: ISignup = {
 };
 
 export const signupSlice = createSlice({
-  name: "global",
+  name: "signup",
   initialState,
   reducers: {
     handleStep(state, action: PayloadAction<"signup" | "otp" | "details">) {

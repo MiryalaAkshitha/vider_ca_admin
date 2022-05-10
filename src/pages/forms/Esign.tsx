@@ -43,7 +43,7 @@ const Esign = () => {
         cancelUrl: cancelUrl,
       },
     });
-  }, []);
+  }, [mutate, params]);
 
   if (error) {
     return (
