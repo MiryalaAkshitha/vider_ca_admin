@@ -50,8 +50,13 @@ export const menuItems: Array<IMenuItem> = [
     icon: icons.broadcast,
   },
   {
+    title: "Services",
+    path: "/services",
+    icon: icons.broadcast,
+  },
+  {
     title: "Forms",
     path: "/forms",
-    icon: icons.formIcon
-  }
+    icon: icons.formIcon,
+  },
 ];

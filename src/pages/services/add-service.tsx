@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { getCategories } from "api/services/categories";
 import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
@@ -30,7 +30,7 @@ function AddService() {
   if (isLoading) return <Loader />;
 
   return (
-    <>
+    <Box p={3}>
       <BreadCrumbs page="addService" />
       <Overview data={data} />
       <Divider sx={{ my: 5 }} />
@@ -39,7 +39,7 @@ function AddService() {
       <MileStones />
       <Divider sx={{ my: 5 }} />
       <KnowYourServices />
-    </>
+    </Box>
   );
 }
 

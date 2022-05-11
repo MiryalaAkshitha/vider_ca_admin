@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import AddContactPerson from "./AddContactPerson";
@@ -13,29 +13,30 @@ function ContactPersonDetails({ data }: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <>
-      <Typography color="primary" variant="subtitle2" sx={{ mb: 3 }}>
+    <Box mt={5}>
+      <Typography color="primary" variant="h6" sx={{ mb: 1 }}>
         Client user details
       </Typography>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box>
-          {data?.map((item: any, index: number) => (
+
+      <Grid container>
+        {data?.map((item: any, index: number) => (
+          <Grid item xl={4} lg={6}>
             <ContactPerson key={index} data={item} />
-          ))}
-        </Box>
-        <Box mt={3}>
-          <Button
-            onClick={() => setOpen(true)}
-            variant="outlined"
-            color="secondary"
-            startIcon={<Add />}
-          >
-            Add New
-          </Button>
-        </Box>
+          </Grid>
+        ))}
+      </Grid>
+      <Box mt={2}>
+        <Button
+          onClick={() => setOpen(true)}
+          variant="outlined"
+          color="secondary"
+          startIcon={<Add />}
+        >
+          Add New
+        </Button>
       </Box>
       <AddContactPerson open={open} setOpen={setOpen} />
-    </>
+    </Box>
   );
 }
 

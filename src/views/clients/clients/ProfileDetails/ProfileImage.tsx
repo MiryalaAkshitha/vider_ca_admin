@@ -1,15 +1,18 @@
 import { http } from "api/http";
 import { icons } from "assets";
 import useSnack from "hooks/useSnack";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   StyledProfileImage,
   StyledProfileImageContainer,
 } from "views/clients/clients/styles";
+import { Edit } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 function ProfileImage({ src, onChange }: any) {
   const snack = useSnack();
   const [url, setUrl] = useState(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const uploadImage = (e: any) => {
     if (!e.target.files[0]) return;
@@ -28,12 +31,26 @@ function ProfileImage({ src, onChange }: any) {
 
   return (
     <>
-      <label htmlFor="profile">
-        <StyledProfileImageContainer>
-          <StyledProfileImage src={url ?? src ?? icons.user} alt="" />
-        </StyledProfileImageContainer>
-      </label>
+      <StyledProfileImageContainer>
+        <StyledProfileImage src={url ?? src ?? icons.user} alt="" />
+        <IconButton
+          sx={{
+            position: "absolute",
+            top: -10,
+            right: -15,
+          }}
+        >
+          <Edit
+            fontSize="small"
+            onClick={() => {
+              inputRef.current?.click();
+            }}
+            sx={{ color: "red" }}
+          />
+        </IconButton>
+      </StyledProfileImageContainer>
       <input
+        ref={inputRef}
         onChange={uploadImage}
         type="file"
         style={{ display: "none" }}

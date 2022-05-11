@@ -2,7 +2,6 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
-import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useQuery, UseQueryResult } from "react-query";
@@ -30,8 +29,7 @@ function Services() {
   if (isLoading) return <Loader />;
 
   return (
-    <>
-      <BreadCrumbs page="services" />
+    <Box p={3}>
       <Box textAlign="right" mt={2}>
         <Link to="/services/add" style={{ textDecoration: "none" }}>
           <Button variant="outlined" startIcon={<Add />} color="secondary">
@@ -59,7 +57,7 @@ function Services() {
           </TextField>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{ mt: 5 }}>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid item xs={4}>
           <ServiceCard />
         </Grid>
@@ -73,7 +71,7 @@ function Services() {
           <ServiceCard />
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 }
 

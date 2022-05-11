@@ -27,7 +27,7 @@ function Activity() {
 
   return (
     <Box width={1000} mt={4}>
-      <Typography variant="subtitle1" gutterBottom color="primary">
+      <Typography variant="h6" gutterBottom color="primary">
         Activity Log
       </Typography>
       <Timeline>

@@ -5,7 +5,7 @@ import useSnack from "hooks/useSnack";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import ProfileImage from "views/clients/clients/ProfileDetails/Profile/ProfileImage";
+import ProfileImage from "views/clients/clients/ProfileDetails/ProfileImage";
 import Detail from "./Detail";
 import SectionWrapper from "./SectionWrapper";
 

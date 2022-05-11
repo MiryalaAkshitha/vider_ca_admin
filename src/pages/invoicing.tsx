@@ -28,7 +28,6 @@ function Invoicing() {
   return (
     <Box>
       <DashboardInvoice />
-
       <Fab
         onClick={(e) => {
           e.stopPropagation();
@@ -46,7 +45,6 @@ function Invoicing() {
       >
         <AddIcon />
       </Fab>
-
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

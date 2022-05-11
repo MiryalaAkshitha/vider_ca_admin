@@ -73,12 +73,15 @@ export const StyledUploadStatusDrawer = styled("div")(() => ({
 }));
 
 export const StyledProfileImageContainer = styled("div")(() => ({
-  width: 90,
-  height: 90,
   position: "relative",
-  borderRadius: "50%",
-  overflow: "hidden",
   display: "inline-flex",
+}));
+
+export const StyledProfileImage = styled("img")(() => ({
+  width: "100px",
+  height: "100px",
+  borderRadius: "50%",
+  objectFit: "cover",
 }));
 
 export const StyledOrganizationImageContainer = styled("div")(() => ({
@@ -88,12 +91,6 @@ export const StyledOrganizationImageContainer = styled("div")(() => ({
 }));
 
 export const StyledOrganizationImage = styled("img")(() => ({
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-}));
-
-export const StyledProfileImage = styled("img")(() => ({
   width: "100%",
   height: "100%",
   objectFit: "cover",
@@ -136,15 +133,15 @@ export const StyledProfileImageOverlay = styled("div")<{ hover: number }>(
 
 export const StyledContactPerson = styled("div")(() => ({
   display: "flex",
-  maxWidth: 700,
-  width: "100%",
-  gap: 10,
+  gap: 20,
   border: "1px solid lightgrey",
-  padding: "20px",
+  padding: "20px 10px",
+  paddingTop: 30,
   justifyContent: "space-between",
   borderRadius: 4,
   alignItems: "center",
   marginTop: "10px",
+  position: "relative",
 }));
 
 export const StyledRecurProfileContainer = styled("div")(() => ({

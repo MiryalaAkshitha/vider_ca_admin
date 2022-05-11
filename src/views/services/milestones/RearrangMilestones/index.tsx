@@ -30,20 +30,22 @@ function RearrangeMilestones({ open, setOpen }: DialogProps) {
         )
       );
     },
-    [mileStones]
+    [dispatch, mileStones]
   );
 
   return (
     <Dialog
-      maxWidth='sm'
+      maxWidth="sm"
       fullWidth
       PaperProps={{ sx: { px: 2, pt: 3, pb: 1, minHeight: 100 } }}
-      open={open}>
+      open={open}
+    >
       <Typography
-        color='primary'
+        color="primary"
         sx={{ mb: 3 }}
-        variant='subtitle1'
-        gutterBottom>
+        variant="subtitle1"
+        gutterBottom
+      >
         Re-arrange Milestones
       </Typography>
       <DndProvider backend={HTML5Backend}>
@@ -57,11 +59,12 @@ function RearrangeMilestones({ open, setOpen }: DialogProps) {
           />
         ))}
       </DndProvider>
-      <Box textAlign='right' mt={2}>
+      <Box textAlign="right" mt={2}>
         <Button
           onClick={() => setOpen(false)}
-          variant='outlined'
-          color='secondary'>
+          variant="outlined"
+          color="secondary"
+        >
           Close
         </Button>
       </Box>

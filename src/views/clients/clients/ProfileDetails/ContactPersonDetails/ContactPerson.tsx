@@ -1,8 +1,10 @@
 import { MoreVert } from "@mui/icons-material";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteContactPerson } from "api/services/client";
+import { useConfirm } from "context/ConfirmDialog";
+import { useMenu } from "context/MenuPopover";
 import useSnack from "hooks/useSnack";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -14,10 +16,11 @@ type Props = {
 };
 
 function ContactPerson({ data }: Props) {
+  const confirm = useConfirm();
+  const menu = useMenu();
   const queryClient = useQueryClient();
   const snack = useSnack();
   const [open, setOpen] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const { mutate } = useMutation(deleteContactPerson, {
     onSuccess: () => {
@@ -31,12 +34,33 @@ function ContactPerson({ data }: Props) {
   });
 
   const handleRemove = () => {
-    mutate(data?.id);
+    confirm({
+      msg: "Are you sure you want to delete this contact person?",
+      action: () => {
+        mutate(data?.id);
+      },
+    });
+  };
+
+  const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    menu({
+      target: event.currentTarget,
+      options: [
+        {
+          label: "Edit",
+          action: () => setOpen(true),
+        },
+        {
+          label: "Delete",
+          action: handleRemove,
+        },
+      ],
+    });
   };
 
   return (
     <StyledContactPerson>
-      <Box flex={1} display="flex" gap={2} alignItems="center">
+      <Box flex={1} display="flex" gap={1}>
         <div>
           <AccountCircleRoundedIcon color="disabled" sx={{ fontSize: 50 }} />
         </div>
@@ -61,26 +85,11 @@ function ContactPerson({ data }: Props) {
           {data?.email}
         </Typography>
       </Box>
-      <Box>
-        <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+      <Box position="absolute" right={5} top={5}>
+        <IconButton onClick={handleMenu}>
           <MoreVert />
         </IconButton>
       </Box>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-        onClick={() => setAnchorEl(null)}
-        transformOrigin={{ horizontal: "left", vertical: "top" }}
-        anchorOrigin={{ horizontal: "left", vertical: "top" }}
-      >
-        <MenuItem onClick={() => setOpen(true)}>
-          <Typography variant="body2">Edit</Typography>
-        </MenuItem>
-        <MenuItem onClick={handleRemove}>
-          <Typography variant="body2">Remove</Typography>
-        </MenuItem>
-      </Menu>
       <EditContactPerson open={open} data={data} setOpen={setOpen} />
     </StyledContactPerson>
   );

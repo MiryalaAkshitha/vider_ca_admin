@@ -55,47 +55,49 @@ function AddAccordionItem({
 
   return (
     <Dialog
-      maxWidth='sm'
+      maxWidth="sm"
       fullWidth
       PaperProps={{ sx: { px: 2, pt: 3, pb: 1, minHeight: 100 } }}
-      open={open}>
-      <Typography color='primary' variant='subtitle2' mb={3}>
+      open={open}
+    >
+      <Typography color="primary" variant="subtitle2" mb={3}>
         Add Accordion Item
       </Typography>
       <TextField
         onChange={handleChange}
         value={data.title}
         fullWidth
-        size='small'
-        name='title'
-        label='Accordion Name'
+        size="small"
+        name="title"
+        label="Accordion Name"
       />
       <FormControlLabel
         sx={{ mt: 2 }}
         control={<Checkbox onChange={handleNested} />}
-        label='Has nested accordions?'
+        label="Has nested accordions?"
       />
       {!nested && (
         <TextField
           sx={{ mt: 2 }}
           value={data.description}
           onChange={handleChange}
-          name='description'
+          name="description"
           multiline
           rows={3}
           fullWidth
-          size='small'
-          label='Accordion Description'
+          size="small"
+          label="Accordion Description"
         />
       )}
-      <Box display='flex' justifyContent='flex-end' gap={2} mt={3}>
+      <Box display="flex" justifyContent="flex-end" gap={2} mt={3}>
         <Button
           onClick={() => setOpen(false)}
-          variant='outlined'
-          color='secondary'>
+          variant="outlined"
+          color="secondary"
+        >
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color='secondary' variant='contained'>
+        <Button onClick={handleSubmit} color="secondary" variant="contained">
           Submit
         </Button>
       </Box>

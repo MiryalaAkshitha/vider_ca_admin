@@ -12,21 +12,21 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 
-const AdditionalInformation = ({
-  data,
-  handleChange,
-  handleCategoryChange,
-  onUpdate,
-  setState,
-  apiData,
-}) => {
+const AdditionalInformation = ({ data, setState, apiData }) => {
+  const handleChange = (e: any) => {
+    setState({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
 
   if (isLoading) return <Loader />;
 
   return (
-    <>
-      <Typography mt={3} color="primary" variant="subtitle2" sx={{ mb: 3 }}>
+    <Box mt={3}>
+      <Typography mt={3} color="primary" variant="h6" sx={{ mb: 2 }}>
         Additional Information
       </Typography>
       <Box>
@@ -43,16 +43,13 @@ const AdditionalInformation = ({
                 variant="outlined"
                 size="small"
                 InputLabelProps={{ shrink: true }}
-                onBlur={onUpdate}
               />
             </Grid>
           )}
-
           <Grid item xs={4}>
             <Autocomplete
               multiple
               id="tags-standard"
-              onBlur={onUpdate}
               onChange={(_, value) => {
                 setState({ ...data, labels: value });
               }}
@@ -74,7 +71,6 @@ const AdditionalInformation = ({
           <Grid item xs={4}>
             <TextField
               label="Client Status"
-              onBlur={onUpdate}
               name="active"
               onChange={(e) => {
                 setState({
@@ -104,7 +100,6 @@ const AdditionalInformation = ({
           <Grid item xs={4}>
             <TextField
               label="Local Directory Path"
-              onBlur={onUpdate}
               name="localDirectoryPath"
               onChange={handleChange}
               value={data?.localDirectoryPath || ""}
@@ -120,7 +115,6 @@ const AdditionalInformation = ({
             <TextField
               label="Notes"
               name="notes"
-              sx={{ mt: 2 }}
               onChange={handleChange}
               value={data?.notes || ""}
               placeholder="Write something here…"
@@ -134,7 +128,7 @@ const AdditionalInformation = ({
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 };
 export default AdditionalInformation;

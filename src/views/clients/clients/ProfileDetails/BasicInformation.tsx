@@ -6,17 +6,27 @@ import { ResType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
-const BasicInformation = ({
-  data,
-  handleCategoryChange,
-  handleChange,
-  onUpdate,
-}) => {
+const BasicInformation = ({ data, setState }) => {
+  const handleChange = (e: any) => {
+    setState({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCategoryChange = (e: any) => {
+    setState({
+      ...data,
+      category: e.target.value,
+      subCategory: null,
+    });
+  };
+
   const { data: users }: ResType = useQuery("users", getUsers);
 
   return (
-    <>
-      <Typography color="primary" variant="subtitle2" sx={{ mb: 3 }}>
+    <Box mt={2}>
+      <Typography color="primary" variant="h6" sx={{ mb: 2 }}>
         Basic Information
       </Typography>
       <Box>
@@ -35,8 +45,19 @@ const BasicInformation = ({
           </Grid>
           <Grid item xs={4}>
             <TextField
+              disabled
+              label="Display Name"
+              name="displayName"
+              value={data?.displayName || ""}
+              fullWidth
               variant="outlined"
-              onBlur={onUpdate}
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              variant="outlined"
               fullWidth
               size="small"
               select
@@ -59,9 +80,8 @@ const BasicInformation = ({
               label="Client Manager"
               name="clientManager"
               fullWidth
-              onBlur={onUpdate}
               variant="outlined"
-              value={data?.clientManager?.id || data?.clientManager}
+              value={data?.clientManager?.id || data?.clientManager || ""}
               size="small"
               onChange={handleChange}
               select
@@ -74,12 +94,11 @@ const BasicInformation = ({
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <TextField
               label="Authorized Person"
               name="authorizedPerson"
               onChange={handleChange}
-              onBlur={onUpdate}
               value={data?.authorizedPerson || ""}
               fullWidth
               variant="outlined"
@@ -87,12 +106,11 @@ const BasicInformation = ({
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <TextField
-              label="designation"
-              name="Designation"
+              label="Designation"
+              name="designation"
               onChange={handleChange}
-              onBlur={onUpdate}
               value={data?.designation || ""}
               fullWidth
               variant="outlined"
@@ -106,7 +124,6 @@ const BasicInformation = ({
               name="mobileNumber"
               value={data?.mobileNumber || ""}
               onChange={handleChange}
-              onBlur={onUpdate}
             />
           </Grid>
           <Grid item xs={4}>
@@ -115,7 +132,6 @@ const BasicInformation = ({
               name="alternateMobileNumber"
               value={data?.alternateMobileNumber || ""}
               onChange={handleChange}
-              onBlur={onUpdate}
             />
           </Grid>
           <Grid item xs={4}>
@@ -124,12 +140,47 @@ const BasicInformation = ({
               name="email"
               value={data?.email || ""}
               onChange={handleChange}
-              onBlur={onUpdate}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="First Name"
+              name="firstName"
+              onChange={handleChange}
+              value={data?.firstName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Last Name"
+              name="lastName"
+              onChange={handleChange}
+              value={data?.lastName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Full Name"
+              name="fullName"
+              onChange={handleChange}
+              value={data?.fullName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
             />
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 };
 export default BasicInformation;

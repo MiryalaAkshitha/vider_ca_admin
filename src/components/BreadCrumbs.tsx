@@ -47,7 +47,6 @@ const getRoutes = (page: string, params: any, query: any) => {
   switch (page) {
     case "addService":
       return [
-        { title: "Settings", path: "/settings" },
         { title: "Services", path: "/services" },
         { title: "Add Service", path: "/" },
       ];

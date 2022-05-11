@@ -91,6 +91,8 @@ const ViewIproFormEntry = loadable(
 );
 const IProAuditLog = loadable(() => import("pages/taskboard/ipro-audit-log"));
 const IProShareLink = loadable(() => import("pages/taskboard/ipro-share-link"));
+const Services = loadable(() => import("pages/services"));
+const AddService = loadable(() => import("pages/services/add-service"));
 
 function RoutesContainer() {
   return (
@@ -99,6 +101,10 @@ function RoutesContainer() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="services">
+            <Route index element={<Services />} />
+            <Route path="add" element={<AddService />} />
+          </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
           <Route path="invoicing">

@@ -1,5 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const FREQUENCY_TEXTS = [
+  "Monthly",
+  "Quarterly",
+  "Half-Yearly",
+  "Yearly",
+  "Custom",
+];
+
 export const MONTHS: string[] = [
   "January",
   "February",
