@@ -1,19 +1,30 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useState } from "react";
-import axios from "axios";
+import { Box } from "@mui/system";
+import { updateClient } from "api/services/client";
+import {
+  getGstDetails,
+  getPanDetails,
+  getSandboxToken,
+} from "api/services/users";
+import useSnack from "hooks/useSnack";
+import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
-const OrganizationInformation = ({ data, setState }) => {
-  const [isPanVerified, setPanVerified] = useState(false);
-  const [isGstverified, setIsGstverified] = useState(false);
-  const [isPanloading, setPanLoading] = useState(false);
-  const [isGstloading, setGstLoading] = useState(false);
+const OrganizationInformation = ({ data, apiData, setState }) => {
+  const snack = useSnack();
+  const queryClient = useQueryClient();
+  const [gstLoading, setGstLoading] = useState(false);
+  const [panLoading, setPanLoading] = useState(false);
+  const [panChanged, setPanChanged] = useState(false);
+  const [gstChanged, setGstChanged] = useState(false);
 
-  const gstNumber = data.gstNumber;
-  const panNumber = data.panNumber;
+  useEffect(() => {
+    setPanChanged(apiData.panNumber !== data.panNumber);
+    setGstChanged(apiData.gstNumber !== data.gstNumber);
+  }, [data]);
 
   const handleChange = (e: any) => {
     setState({
@@ -22,75 +33,128 @@ const OrganizationInformation = ({ data, setState }) => {
     });
   };
 
+  const { mutate } = useMutation(updateClient, {
+    onSuccess: () => {
+      snack.success("Verified Successfully");
+      queryClient.invalidateQueries("client");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
   const verifyGst = async () => {
+    if (!data.gstNumber) {
+      snack.error("Please enter GST Number");
+      return;
+    }
+
     try {
       setGstLoading(true);
-      let token: any = await axios({
-        url: "https://try.readme.io/https://api.sandbox.co.in/authenticate",
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
-          "x-api-secret": "secret_live_QTFSCuejXj3hsLDlr2UcFw4VoZN4ujQ5",
-          "x-api-version": "1.0",
-        },
+      let token: any = await getSandboxToken();
+
+      let response: any = await getGstDetails({
+        gstNumber: data.gstNumber,
+        token: token?.data?.access_token,
       });
-      let response: any = await axios.get(
-        `https://api.sandbox.co.in/gsp/public/gstin/${gstNumber}`,
-        {
-          headers: {
-            Authorization: token?.data?.access_token,
-            "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
-          },
-        }
-      );
+
       const result: any = response.data;
+
       if (result.data.sts === "Active") {
+        mutate({
+          id: data?.id,
+          data: {
+            ...data,
+            legalName: result?.data?.lgnm,
+            tradeName: result?.data?.tradeNam,
+            placeOfSupply: result?.data?.pradr?.addr?.stcd,
+            constitutionOfBusiness: result?.data?.ctb,
+            gstVerified: true,
+          },
+        });
       } else {
-        alert("INVALID GST NUMBER");
+        snack.error("GST Number is not active");
       }
+    } catch (e: any) {
+      snack.error(e.response.data.message);
+    } finally {
       setGstLoading(false);
-    } catch {
-      setGstLoading(false);
-      alert("Invalid GST Number");
     }
   };
+
   const verifyPan = async () => {
+    if (!data.panNumber) {
+      snack.error("Please enter PAN Number");
+      return;
+    }
+
     try {
       setPanLoading(true);
-      let token: any = await axios({
-        url: "https://try.readme.io/https://api.sandbox.co.in/authenticate",
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
-          "x-api-secret": "secret_live_QTFSCuejXj3hsLDlr2UcFw4VoZN4ujQ5",
-          "x-api-version": "1.0",
-        },
+      let token: any = await getSandboxToken();
+
+      let response: any = await getPanDetails({
+        panNumber: data?.panNumber,
+        token: token?.data?.access_token,
       });
-      const consent = "y";
-      const reason = "For KYC of User";
 
-      let response: any = await axios.get(
-        `https://api.sandbox.co.in/pans/${panNumber}?consent=${consent}&reason=${reason}`,
-        {
-          headers: {
-            Authorization: token?.data?.access_token,
-            "x-api-key": "key_live_tckndBNOkHnwcBGKuWzvBPh2S5odGTVV",
+      const result: any = response?.data;
+      if (result.data.status === "VALID") {
+        mutate({
+          id: data?.id,
+          data: {
+            ...data,
+            firstName: result?.data?.first_name,
+            lastName: result?.data?.last_name,
+            fullName: result?.data?.full_name,
+            panVerified: true,
           },
-        }
-      );
-
-      const data: any = response?.data;
-      if (data.data.status === "VALID") {
+        });
       } else {
-        alert("INVALID PAN NUMBER");
+        snack.error("Invalid PAN Number");
       }
+    } catch (e: any) {
+      snack.error(e.response.data.message);
+    } finally {
       setPanLoading(false);
-    } catch {
-      setPanLoading(false);
-      alert("INVALID PAN NUMBER");
     }
+  };
+
+  const GstAdornment = () => {
+    const showGstActive = data?.gstVerified && !gstChanged;
+    const showGstVerify = !data?.gstVerified || gstChanged;
+
+    return (
+      <>
+        {gstLoading && <CircularProgress size="1rem" />}
+        {showGstActive && !gstLoading && (
+          <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
+        )}
+        {showGstVerify && !gstLoading && (
+          <Button color="error" size="small" onClick={verifyGst}>
+            Verify
+          </Button>
+        )}
+      </>
+    );
+  };
+
+  const PanAdornment = () => {
+    const showPanActive = data?.panVerified && !panChanged;
+    const showPanVerify = !data?.panVerified || panChanged;
+
+    return (
+      <>
+        {panLoading && <CircularProgress size="1rem" />}
+        {showPanActive && !panLoading && (
+          <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
+        )}
+        {showPanVerify && !panLoading && (
+          <Button color="error" size="small" onClick={verifyPan}>
+            Verify
+          </Button>
+        )}
+      </>
+    );
   };
 
   return (
@@ -100,7 +164,7 @@ const OrganizationInformation = ({ data, setState }) => {
           Organisation Information
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               label="GST Number"
               fullWidth
@@ -110,26 +174,12 @@ const OrganizationInformation = ({ data, setState }) => {
               name="gstNumber"
               onChange={handleChange}
               InputProps={{
-                endAdornment: (
-                  <>
-                    {isGstloading && <CircularProgress />}
-                    {isGstverified && !isGstloading ? (
-                      <CheckCircleIcon
-                        fontSize="small"
-                        sx={{ color: "green" }}
-                      />
-                    ) : (
-                      <Button color="error" size="small" onClick={verifyGst}>
-                        Verify
-                      </Button>
-                    )}
-                  </>
-                ),
+                endAdornment: <GstAdornment />,
               }}
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               label="PAN Number"
               fullWidth
@@ -139,35 +189,62 @@ const OrganizationInformation = ({ data, setState }) => {
               name="panNumber"
               onChange={handleChange}
               InputProps={{
-                endAdornment: (
-                  <>
-                    {isPanloading && <CircularProgress />}
-                    {isPanVerified && !isPanloading ? (
-                      <CheckCircleIcon
-                        fontSize="small"
-                        sx={{ color: "green" }}
-                      />
-                    ) : (
-                      <Button color="error" size="small" onClick={verifyPan}>
-                        Verify
-                      </Button>
-                    )}
-                  </>
-                ),
+                endAdornment: <PanAdornment />,
               }}
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
           <Grid item xs={4}>
+            <TextField
+              label="First Name"
+              name="firstName"
+              disabled
+              onChange={handleChange}
+              value={data?.firstName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              disabled
+              label="Last Name"
+              name="lastName"
+              onChange={handleChange}
+              value={data?.lastName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Full Name"
+              name="fullName"
+              disabled
+              onChange={handleChange}
+              value={data?.fullName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
             <TextFieldWithCopy
+              disabled
               label="State Jurisdiction / Place of supply"
-              name="palceOfSupply"
+              name="placeOfSupply"
               value={data?.placeOfSupply || ""}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={4}>
             <TextField
+              disabled
               label="Legal name"
               name="legalName"
               onChange={handleChange}
@@ -180,6 +257,7 @@ const OrganizationInformation = ({ data, setState }) => {
           </Grid>
           <Grid item xs={4}>
             <TextField
+              disabled
               label="Trade Name"
               name="tradeName"
               onChange={handleChange}
@@ -192,6 +270,7 @@ const OrganizationInformation = ({ data, setState }) => {
           </Grid>
           <Grid item xs={4}>
             <TextField
+              disabled
               label="Constitution of Business"
               name="constitutionOfBusiness"
               onChange={handleChange}

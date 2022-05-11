@@ -22,6 +22,10 @@ const BasicInformation = ({ data, setState }) => {
     });
   };
 
+  let subCategories = CLIENT_CATEGORIES.find(
+    (item) => item.value === data?.category
+  )?.subCategories;
+
   const { data: users }: ResType = useQuery("users", getUsers);
 
   return (
@@ -75,6 +79,28 @@ const BasicInformation = ({ data, setState }) => {
               ))}
             </TextField>
           </Grid>
+          {subCategories && (
+            <Grid item xs={4}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                size="small"
+                select
+                onChange={handleChange}
+                value={data?.subCategory ?? ""}
+                InputLabelProps={{ shrink: true }}
+                required
+                name="subCategory"
+                label="Client Sub Category"
+              >
+                {subCategories?.map((item, index) => (
+                  <MenuItem key={index} value={item.value}>
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          )}
           <Grid item xs={4}>
             <TextField
               label="Client Manager"
@@ -140,42 +166,6 @@ const BasicInformation = ({ data, setState }) => {
               name="email"
               value={data?.email || ""}
               onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              label="First Name"
-              name="firstName"
-              onChange={handleChange}
-              value={data?.firstName || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              label="Last Name"
-              name="lastName"
-              onChange={handleChange}
-              value={data?.lastName || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              label="Full Name"
-              name="fullName"
-              onChange={handleChange}
-              value={data?.fullName || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              InputLabelProps={{ shrink: true }}
             />
           </Grid>
         </Grid>

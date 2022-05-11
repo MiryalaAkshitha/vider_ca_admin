@@ -11,13 +11,8 @@ interface TextFieldWithCopyProps {
   onBlur?: (e: any) => void;
 }
 
-function TextFieldWithCopy({
-  label,
-  value,
-  name,
-  onChange,
-  onBlur,
-}: TextFieldWithCopyProps) {
+function TextFieldWithCopy(props: TextFieldWithCopyProps) {
+  const { label, value, name, onChange, onBlur, disabled = false } = props;
   const snack = useSnack();
 
   const onCopy = () => {
@@ -41,6 +36,7 @@ function TextFieldWithCopy({
       size="small"
       onBlur={onBlur}
       value={value}
+      disabled={disabled}
       name={name}
       onChange={onChange}
       InputProps={{

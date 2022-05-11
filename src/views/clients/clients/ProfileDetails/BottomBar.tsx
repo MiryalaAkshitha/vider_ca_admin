@@ -14,7 +14,13 @@ function BottomBar({ data, state, setState }) {
   const [isStateChanged, setIsStateChanged] = useState(false);
 
   useEffect(() => {
-    setIsStateChanged(JSON.stringify(data) !== JSON.stringify(state));
+    let { panNumber, gstNumber, ...remData } = data;
+    let {
+      panNumber: statePanNumber,
+      gstNumber: stateGstNumber,
+      ...remStateData
+    } = state;
+    setIsStateChanged(JSON.stringify(remData) !== JSON.stringify(remStateData));
   }, [state, data]);
 
   const { mutate } = useMutation(updateClient, {

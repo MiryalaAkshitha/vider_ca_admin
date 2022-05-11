@@ -25,7 +25,11 @@ function ProfileDetails() {
         onChange={(v: string) => setState({ ...state, image: v })}
       />
       <BasicInformation data={state} setState={setState} />
-      <OrganizationInformation data={state} setState={setState} />
+      <OrganizationInformation
+        data={state}
+        setState={setState}
+        apiData={data?.data}
+      />
       <AddressDetails data={state} setState={setState} />
       <ContactPersonDetails data={data?.data?.contactPersons} />
       <AdditionalInformation
