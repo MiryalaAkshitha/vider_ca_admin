@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { deleteChecklistItem, updateChecklistItem } from "api/services/tasks";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledChecklistItem } from "./styles";
@@ -29,7 +29,7 @@ interface ISelected {
 const CheckListItem = ({ data, index }: Props) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<ISelected | null>(null);

@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Fab, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { uploadFile } from "api/services/storage";
@@ -17,7 +17,6 @@ import CreateFolderDialog from "./CreateFolderDialog";
 import UploadStatusDrawer from "./UploadStatusDrawer";
 
 function AddAttachment() {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const params = useParams();

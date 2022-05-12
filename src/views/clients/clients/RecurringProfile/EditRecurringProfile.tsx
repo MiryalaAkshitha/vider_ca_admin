@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { updateRecurringProfile } from "api/services/recurring";
 import DialogWrapper from "components/DialogWrapper";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -21,7 +21,6 @@ interface Props extends DialogProps {
 }
 
 function EditRecurringProfile({ open, setOpen, data }: Props) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const [state, setState] = useState<any>({});
 

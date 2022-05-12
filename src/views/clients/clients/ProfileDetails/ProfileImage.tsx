@@ -1,6 +1,6 @@
 import { http } from "api/http";
 import { icons } from "assets";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useRef, useState } from "react";
 import {
   StyledProfileImage,
@@ -10,7 +10,6 @@ import { Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 
 function ProfileImage({ src, onChange }: any) {
-  const snack = useSnack();
   const [url, setUrl] = useState(null);
   const inputRef = useRef<HTMLInputElement>(null);
 

@@ -1,9 +1,9 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { sendOtp, verifyOtp } from "api/services/users";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
-import OtpInput from "react-otp-input";
+import OtpInput from "lib/otp-input";
 import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +14,6 @@ import {
 import BackgroundWrapper from "./BackgroundWrapper";
 
 function Otp() {
-  const snack = useSnack();
   const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
   const { mobileNumber, token } = useSelector(selectSignup);

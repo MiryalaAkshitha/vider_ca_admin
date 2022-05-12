@@ -2,27 +2,23 @@ import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteRole, getRoles } from "api/services/roles";
-import { useConfirm } from "context/ConfirmDialog";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { useConfirm } from "context/ConfirmDialog";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useLocation, useNavigate } from "react-router-dom";
 import { ResType } from "types";
-import AddRole from "views/settings/rolesandpermissions/AddRole";
-import CreatePermissions from "views/settings/rolesandpermissions/CreatePermissions";
-import EditRole from "views/settings/rolesandpermissions/EditRole";
+import AddRole from "views/settings/roles-permissions/AddRole";
+import EditRole from "views/settings/roles-permissions/EditRole";
+import { useNavigate } from "react-router-dom";
 
 function RolesAndPermissions() {
-  const location = useLocation();
-  const snack = useSnack();
+  const navigate = useNavigate();
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
-  const [permissionOpen, setPermissionOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
   const [selectedData, setSelectedData] = useState<any>({});
 
   const { data, isLoading }: ResType = useQuery("roles", getRoles);
@@ -49,7 +45,15 @@ function RolesAndPermissions() {
 
   return (
     <>
-      <Box textAlign="right" mt={2}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mt={2}
+      >
+        <Typography variant="subtitle2" color="primary">
+          Roles
+        </Typography>
         <Button
           onClick={() => setOpen(true)}
           variant="outlined"
@@ -59,26 +63,31 @@ function RolesAndPermissions() {
           Create Role
         </Button>
       </Box>
-      <Box textAlign="right" mt={2}>
-        <Button
-          onClick={() => setPermissionOpen(true)}
-          variant="outlined"
-          startIcon={<Add />}
-          color="secondary"
-        >
-          Create Permissions
-        </Button>
-        <Typography variant="body2">(For internal use only)</Typography>
-      </Box>
-      <Box maxWidth={1000} mt={2}>
+      <Box mt={2}>
         <Table
           columns={[
             {
               title: "Role Name",
               key: "name",
               render: (item) => (
+                <>
+                  <Typography variant="body1" color="primary">
+                    {item?.name}
+                  </Typography>
+                  {item?.description && (
+                    <Typography variant="caption">
+                      ({item?.description})
+                    </Typography>
+                  )}
+                </>
+              ),
+            },
+            {
+              title: "Created By",
+              key: "createdBy",
+              render: (item) => (
                 <Typography variant="body1" color="primary">
-                  {item?.name}
+                  {item?.createdBy?.name || "N/A"}
                 </Typography>
               ),
             },
@@ -107,9 +116,9 @@ function RolesAndPermissions() {
                 return item?.name !== "Admin" ? (
                   <Box display="flex" gap={1}>
                     <IconButton
-                      onClick={() =>
-                        navigate(`${location.pathname}/${item?.name}`)
-                      }
+                      onClick={() => {
+                        navigate(`/settings/roles-permissions/${item?.id}`);
+                      }}
                       size="small"
                     >
                       <Visibility fontSize="small" />
@@ -140,7 +149,6 @@ function RolesAndPermissions() {
       </Box>
       <AddRole open={open} setOpen={setOpen} />
       <EditRole open={editOpen} setOpen={setEditOpen} data={selectedData} />
-      <CreatePermissions open={permissionOpen} setOpen={setPermissionOpen} />
     </>
   );
 }

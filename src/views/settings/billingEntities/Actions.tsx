@@ -3,7 +3,7 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteBillingEntity } from "api/services/billingEntity";
 
@@ -11,7 +11,7 @@ const Actions = ({ data }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const navigate = useNavigate();
-  const snack = useSnack();
+
   const queryClient = useQueryClient();
   const confirm = useConfirm();
 

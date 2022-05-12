@@ -11,12 +11,11 @@ import { CloseOutlined } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import UploadImage from "components/UploadImage";
 import { StyledAttachment } from "../organization/styles";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { createBankAccounts } from "api/services/billingEntity";
 
 const AddBankAccountDetails = ({ open, setOpen, state, setState }) => {
-  const snack = useSnack();
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(createBankAccounts, {

@@ -3,7 +3,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { deleteFormValidation } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledCard } from "../styles";
@@ -11,7 +11,7 @@ import EditFormValidation from "./EditFormValidation";
 
 const FormValidationCard = ({ data }: any) => {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const menu = useMenu();
   const [open, setOpen] = useState(false);

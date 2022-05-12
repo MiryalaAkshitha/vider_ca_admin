@@ -1,14 +1,14 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { updateBillingEntity } from "api/services/billingEntity";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { GreyButton } from "views/taskboard/styles";
 
 function BottomBar({ data, state, setState }) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [isStateChanged, setIsStateChanged] = useState(false);
 
   useEffect(() => {

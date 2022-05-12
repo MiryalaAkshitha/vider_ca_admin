@@ -10,7 +10,7 @@ import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -21,7 +21,6 @@ import { linkEventDefaultValues, LinkEventSchema } from "validations/addEvent";
 function LinkEvent({ open, setOpen }: DialogProps) {
   const taskData: any = useTaskData();
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {

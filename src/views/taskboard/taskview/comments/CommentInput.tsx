@@ -2,14 +2,13 @@ import { SendOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { addComment } from "api/services/tasks";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { Mention, MentionsInput } from "react-mentions";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 
 function CommentInput({ users }) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");
   const params: any = useParams();

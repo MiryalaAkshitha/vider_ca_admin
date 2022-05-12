@@ -5,7 +5,7 @@ import { deleteTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
 import { useConfirm } from "context/ConfirmDialog";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,6 @@ import TerminationDialog from "views/taskboard/taskview/TerminationDialog";
 
 function TaskHeader({ onChange }: any) {
   const confirm = useConfirm();
-  const snack = useSnack();
   const navigate = useNavigate();
   const taskData: any = useTaskData();
   const [open, setOpen] = useState(false);

@@ -5,7 +5,7 @@ import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
 import { useState } from "react";
@@ -63,7 +63,7 @@ function DscRegister() {
 const Actions = ({ data }) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [issueOrReceiveOpen, setIssueOrReceiveOpen] = useState(false);

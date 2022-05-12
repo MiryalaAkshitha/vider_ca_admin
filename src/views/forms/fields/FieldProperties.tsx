@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { updateField } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ import {
 
 const FieldProperties = ({ open, setOpen, item }: any) => {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const params = useParams();
   const { data, activePage, validations } = useSelector(selectForms);
 

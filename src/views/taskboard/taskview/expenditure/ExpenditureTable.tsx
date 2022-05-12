@@ -3,7 +3,7 @@ import { Box, IconButton } from "@mui/material";
 import { deleteExpenditure } from "api/services/expenditure";
 import { useConfirm } from "context/ConfirmDialog";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
@@ -22,7 +22,7 @@ function ExpenditureTable({ data }) {
 const Actions = ({ data }) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 

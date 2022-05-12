@@ -3,7 +3,7 @@ import { joinUser } from "api/services/users";
 import { newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
@@ -14,7 +14,6 @@ import { BackgroundImage, LogoContainer } from "views/login/styles";
 const Login = () => {
   const { queryParams } = useQueryParams();
   const navigate = useNavigate();
-  const snack = useSnack();
   const [open, setOpen] = useState<boolean>(false);
   const [state, setState] = useState({
     password: "",

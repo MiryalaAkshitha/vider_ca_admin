@@ -4,7 +4,7 @@ import { updateOrganizationLicense } from "api/services/organization";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -16,7 +16,7 @@ interface IProps extends DialogProps {
 
 function EditLicense({ open, setOpen, data }: IProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState({
     name: "",
     type: "",

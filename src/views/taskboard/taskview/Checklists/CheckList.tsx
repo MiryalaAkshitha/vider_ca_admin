@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { deleteChecklist, updateChecklist } from "api/services/tasks";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import AddChecklistItem from "./AddChecklistItem";
@@ -23,7 +23,7 @@ type Props = {
 const CheckList = ({ data }: Props) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [show, setShow] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

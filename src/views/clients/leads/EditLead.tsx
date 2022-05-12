@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { updateLead } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -25,7 +25,7 @@ interface Props extends DialogProps {
 
 function EditLead({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<StateProps>({
     category: "",
     subCategory: null,

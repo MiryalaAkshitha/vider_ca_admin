@@ -3,7 +3,7 @@ import { importClients } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import FileDrop from "components/FileDrop";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -11,7 +11,7 @@ import { FILETYPES } from "utils/constants";
 
 function ImportClients({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [files, setFiles] = useState<File[]>([]);
 
   const { mutate, isLoading } = useMutation(importClients, {

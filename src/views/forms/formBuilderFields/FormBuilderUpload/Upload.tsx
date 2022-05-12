@@ -3,7 +3,7 @@ import CloudUploadOutlined from "@mui/icons-material/CloudUploadOutlined";
 import { Box, CircularProgress, styled, Typography } from "@mui/material";
 import { http } from "api/http";
 import { icons } from "assets";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { covertToKb, fileSizeInKb, getFileSize } from "utils";
 import { FILETYPES } from "utils/constants";
@@ -44,7 +44,6 @@ function Upload(props: UploadProps) {
     setError,
   } = props;
 
-  const snack = useSnack();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleFile = async (files: File[]) => {

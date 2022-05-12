@@ -4,7 +4,7 @@ import { Box, Menu, MenuItem } from "@mui/material";
 import { getClients } from "api/services/client";
 import { getPins, removePin } from "api/services/tasks";
 import useQueryParams from "hooks/useQueryParams";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
@@ -53,7 +53,6 @@ const ClientFilterItem = ({ item }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate } = useMutation(removePin, {
     onSuccess: () => {

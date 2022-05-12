@@ -1,6 +1,6 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { IconButton, TextField } from "@mui/material";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 
 interface TextFieldWithCopyProps {
   value: string;
@@ -13,7 +13,6 @@ interface TextFieldWithCopyProps {
 
 function TextFieldWithCopy(props: TextFieldWithCopyProps) {
   const { label, value, name, onChange, onBlur, disabled = false } = props;
-  const snack = useSnack();
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(value).then(

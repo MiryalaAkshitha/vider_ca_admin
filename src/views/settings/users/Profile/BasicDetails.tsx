@@ -1,7 +1,7 @@
 import { DesktopDatePicker } from "@mui/lab";
 import { Avatar, Box, Grid, TextField, Typography } from "@mui/material";
 import { updateProfile } from "api/services/users";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -11,7 +11,7 @@ import SectionWrapper from "./SectionWrapper";
 
 const BasicDetails = ({ data }) => {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [editable, setEditable] = useState(false);
   const [state, setState] = useState({
     mobileNumber: "",
@@ -80,7 +80,7 @@ const ViewSection = ({ data }) => {
               {data?.fullName}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {data?.roles[0]?.name}
+              {data?.role?.name}
             </Typography>
           </div>
         </Box>

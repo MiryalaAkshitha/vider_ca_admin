@@ -22,7 +22,7 @@ export const menuItems: Array<IMenuItem> = [
         path: "/settings/teams",
       },
       {
-        title: "Roles and Permissions",
+        title: "Roles and permissions",
         path: "/settings/roles-permissions",
       },
     ],
@@ -38,38 +38,5 @@ export const menuItems: Array<IMenuItem> = [
   // {
   //   title: "Billing Entities",
   //   path: "/settings/billing-entities",
-  // },
-  // {
-  //   title: "Forms Configuration",
-  //   path: "",
-  //   children: [
-  //     {
-  //       title: "Forms",
-  //       path: "/settings/forms",
-  //     },
-  //     {
-  //       title: "Fields",
-  //       path: "/settings/fields-configuration",
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   title: "Storage Management",
-  //   path: "/settings/storage-management",
-  // },
-  // {
-  //   title: "Deleted Tasks & Clients",
-  //   path: "/",
-  //   children: [
-  //     {
-  //       title: "Clients",
-  //       path: "/settings/deleted-clients",
-  //     },
-  //     {
-  //       title: "Tasks",
-  //       path: "/settings/deleted-tasks",
-  //     },
-  //   ],
   // },
 ];

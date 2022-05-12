@@ -1,7 +1,7 @@
 import { Button, Dialog, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { renameFile } from "api/services/storage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -15,7 +15,7 @@ const RenameFileOrFolderDialog = (props: Props) => {
   const { open, itemId, itemName, setOpen } = props;
   const [name, setName] = useState<string>(itemName);
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { mutate } = useMutation(renameFile, {

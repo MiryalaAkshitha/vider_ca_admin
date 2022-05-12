@@ -9,6 +9,8 @@ import ContactPersonDetails from "./ContactPersonDetails";
 import AdditionalInformation from "./AdditionalInformation";
 import ProfileImage from "./ProfileImage";
 import OrganizationInformation from "./OrganizationInformation";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
 
 function ProfileDetails() {
   const [state, setState] = useState<any>({});
@@ -38,7 +40,9 @@ function ProfileDetails() {
         apiData={data?.data}
       />
       <Activity />
-      <BottomBar data={data?.data} setState={setState} state={state} />
+      <ValidateAccess name={Permissions.EDIT_CLIENT_PROFILE}>
+        <BottomBar data={data?.data} setState={setState} state={state} />
+      </ValidateAccess>
     </Box>
   );
 }

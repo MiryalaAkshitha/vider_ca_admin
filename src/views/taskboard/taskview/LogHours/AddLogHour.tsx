@@ -8,7 +8,7 @@ import FormDate from "components/FormFields/FormDate";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -23,7 +23,7 @@ import {
 function AddLogHour({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const taskData: any = useTaskData();
 
   const { data, isLoading }: ResType = useQuery("users", getUsers, {

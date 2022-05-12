@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { addClientPassword } from "api/services/client-info";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ interface StateProps {
 
 function AddPassword({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const params = useParams();
   const [state, setState] = useState<StateProps>({
     website: "",

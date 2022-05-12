@@ -4,7 +4,7 @@ import { useState } from "react";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Box } from "@mui/material";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { bulkDelete, bulkUpdate } from "api/services/client";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -18,7 +18,7 @@ interface Props {
 function Actions({ anchorEl, setAnchorEl, selected, clearSelection }: Props) {
   const queryClient = useQueryClient();
   const confirm = useConfirm();
-  const snack = useSnack();
+
   const [nestedAnchorEl, setNestedAnchorEl] = useState<HTMLElement | null>(
     null
   );

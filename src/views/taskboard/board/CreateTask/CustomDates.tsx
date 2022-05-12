@@ -1,7 +1,7 @@
 import { Add, Delete } from "@mui/icons-material";
 import { IconButton, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { InputChangeType } from "types";
@@ -17,7 +17,6 @@ interface IState {
 }
 
 const CustomDates = ({ control }: IProps) => {
-  const snack = useSnack();
   const [customDates, setCustomDates] = useState<IState>({
     startDate: "",
     dueDate: "",

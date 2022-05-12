@@ -1,6 +1,6 @@
 import { Grid, TextField } from "@mui/material";
 import { updateProfile } from "api/services/users";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import Detail from "./Detail";
@@ -8,7 +8,7 @@ import SectionWrapper from "./SectionWrapper";
 
 const BankDetails = ({ data }) => {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [editable, setEditable] = useState(false);
   const [state, setState] = useState({
     bankAccountHolderName: "",

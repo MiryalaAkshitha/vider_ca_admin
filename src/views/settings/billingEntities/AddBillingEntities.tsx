@@ -5,7 +5,7 @@ import DrawerWrapper from "components/DrawerWrapper";
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -15,7 +15,6 @@ import {
 } from "validations/createBilling";
 
 const AddBillingEntities = ({ open, setOpen }: DialogProps) => {
-  const snack = useSnack();
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(createBillingEntity, {

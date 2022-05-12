@@ -1,7 +1,7 @@
 import { Menu, MenuItem } from "@mui/material";
 import { deleteTeam } from "api/services/users";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -13,7 +13,7 @@ interface EditTeamPopoverProps extends AccountMenuProps {
 
 function EditTeamPopover(props: EditTeamPopoverProps) {
   const { anchorEl, setAnchorEl, data } = props;
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);

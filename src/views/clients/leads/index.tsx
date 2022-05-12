@@ -5,7 +5,7 @@ import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import useTitle from "hooks/useTitle";
 import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -21,7 +21,7 @@ function Leads() {
   useTitle("Leads");
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState<number>(5);
   const [offset, setOffset] = useState<number>(0);

@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { addAttachment } from "api/services/tasks";
 import FileDrop from "components/FileDrop";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
@@ -13,7 +13,7 @@ import ClientLibrary from "./ClientLibrary";
 
 function UploadAttachmentModal({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [files, setFiles] = useState<File[]>([]);
   const [value, setValue] = useState(0);
   const params: any = useParams();

@@ -7,12 +7,11 @@ import {
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 
 function CompanyDetails({ control, watch, setData }) {
   const [isloading, setLoading] = useState(false);
-  const snack = useSnack();
 
   const panValue = watch("panNumber");
   const gstValue = watch("gstNumber");

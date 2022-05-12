@@ -2,13 +2,12 @@ import { TextField } from "@mui/material";
 import { createFormValidation } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
 
 function AddFormValidation({ open, setOpen }: DialogProps) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const [state, setState] = useState({
     name: "",

@@ -2,14 +2,14 @@ import { DownloadOutlined } from "@mui/icons-material";
 import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
 import { updateProfile } from "api/services/users";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import SectionWrapper from "./SectionWrapper";
 
 const StatutoryInformation = ({ data }) => {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [editable, setEditable] = useState(false);
   const [state, setState] = useState({
     aadharNumber: "",

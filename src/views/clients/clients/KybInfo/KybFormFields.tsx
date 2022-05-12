@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Paper } from "@mui/material";
 import { updatePage } from "api/services/forms";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import _ from "lodash";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,6 @@ import { GreyButton } from "views/taskboard/styles";
 
 function KybFormFields({ data, pageId, onContinue }: any) {
   const params = useParams();
-  const snack = useSnack();
 
   const { control, formState, handleSubmit, reset } = useForm({
     mode: "onChange",

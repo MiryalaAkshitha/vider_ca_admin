@@ -4,7 +4,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { deleteMilestone } from "api/services/tasks";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditMilestone from "./EditMilestone";
@@ -17,7 +17,7 @@ type Props = {
 function MileStone({ data, index }: Props) {
   const queryClient = useQueryClient();
   const confirm = useConfirm();
-  const snack = useSnack();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<any | null>(null);

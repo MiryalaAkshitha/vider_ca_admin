@@ -4,14 +4,13 @@ import { cloneForm, deleteForm } from "api/services/forms";
 import { clientFormCard } from "assets";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { StyledCard, StyledMoreIcon } from "./styles";
 
 const FormCard = ({ data }: any) => {
-  const snack = useSnack();
   const confirm = useConfirm();
   const menu = useMenu();
   const navigate = useNavigate();

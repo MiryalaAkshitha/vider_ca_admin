@@ -72,7 +72,7 @@ function Dashboard() {
           </Paper>
         </Grid>
         <Grid item xs={8}>
-          <Grid container spacing={4}>
+          <Grid container spacing={2}>
             <Grid item xs={4}>
               <TasksCard img={icons.taskTodo} title="Tasks To-Do" value="14" />
             </Grid>

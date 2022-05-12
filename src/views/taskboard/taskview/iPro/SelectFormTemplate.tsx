@@ -4,7 +4,7 @@ import DialogWrapper from "components/DialogWrapper";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import useFilteredData from "hooks/useFilteredData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
@@ -20,7 +20,7 @@ function SelectFormTemplate(props: Props) {
   const { queryKey, type, typeId, open, setOpen } = props;
 
   const [search, setSearch] = useState("");
-  const snack = useSnack();
+
   const queryClient = useQueryClient();
   const [selected, setSelected] = useState("");
 

@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { deleteContactPerson } from "api/services/client";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledContactPerson } from "views/clients/clients/styles";
@@ -19,7 +19,7 @@ function ContactPerson({ data }: Props) {
   const confirm = useConfirm();
   const menu = useMenu();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [open, setOpen] = useState<boolean>(false);
 
   const { mutate } = useMutation(deleteContactPerson, {

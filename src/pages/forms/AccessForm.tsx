@@ -6,7 +6,7 @@ import Stepper from "@mui/material/Stepper";
 import { getForm, updatePage } from "api/services/forms";
 import { logo } from "assets";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -22,7 +22,6 @@ import AccessFormFields from "../../views/forms/AccessFormFields";
 import TaskDetails from "./TaskDetails";
 
 function ViewForm() {
-  const snack = useSnack();
   const [searchParams] = useSearchParams();
   const params = useParams();
   const [data, setData] = useState<any>(null);

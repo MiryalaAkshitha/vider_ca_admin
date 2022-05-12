@@ -9,7 +9,6 @@ import {
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addAccordionContent } from "redux/reducers/addServiceSlice";
 import { DialogProps } from "types";
 
 interface AddAccordionItemProps extends DialogProps {

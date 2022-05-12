@@ -10,11 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 
 function SelectCoordingates({ open, setOpen, url, value, onChange }) {
-  const snack = useSnack();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pageRef = useRef<any>(null);
   const renderContextRef = useRef<any>(null);

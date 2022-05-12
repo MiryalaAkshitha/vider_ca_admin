@@ -8,7 +8,7 @@ import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ import Details from "./Details";
 function AddClient() {
   const { queryParams, setQueryParams } = useQueryParams();
   const navigate = useNavigate();
-  const snack = useSnack();
+
   const open = queryParams.createClient === "true";
 
   const { data: users, isLoading: userLoading }: ResType = useQuery(

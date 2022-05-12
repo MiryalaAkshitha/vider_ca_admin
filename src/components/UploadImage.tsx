@@ -3,8 +3,8 @@ import { CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Box, SystemStyleObject } from "@mui/system";
 import { http } from "api/http";
-import { useSnackbar } from "notistack";
 import { useState } from "react";
+import { snack } from "./toast";
 
 export const UploadContainer = styled("div")(() => ({
   border: "1px dotted grey",
@@ -34,7 +34,6 @@ function UploadImage({
   label = "Drag and drop or Browse",
   widthoutIcon = false,
 }: UploadProps) {
-  const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,9 +49,7 @@ function UploadImage({
       const res: any = await http.post("/common/upload", formData);
       onChange(res.data.key);
     } catch (err: any) {
-      enqueueSnackbar(err.response.data.message, {
-        variant: "error",
-      });
+      snack.error(err.response.data.message);
     } finally {
       setTimeout(() => {
         setLoading(false);

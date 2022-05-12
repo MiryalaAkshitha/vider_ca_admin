@@ -2,7 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { getGstDetails, getSandboxToken, signup } from "api/services/users";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { ChangeEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { selectSignup } from "redux/reducers/signUpSlice";
 import { SubmitType } from "types";
 
 const GstDetails = () => {
-  const snack = useSnack();
   const [state, setState]: any = useState({});
   const [gstNumber, setGstNumber] = useState("");
   const [isVerified, setIsVerified] = useState(false);

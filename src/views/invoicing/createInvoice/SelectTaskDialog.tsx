@@ -5,7 +5,7 @@ import DialogWrapper from "components/DialogWrapper";
 import Members from "components/Members";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,6 @@ import {
 import { ResType } from "types";
 
 const SelectTaskDialog = ({ open, setOpen }) => {
-  const snack = useSnack();
   const { client } = useSelector(selectInvoice);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");

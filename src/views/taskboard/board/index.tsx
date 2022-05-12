@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { reorderTasks, updateStatus } from "api/services/tasks";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -30,7 +30,6 @@ const initialState = {
 };
 
 function Board({ data }: Props) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const listContainerRef = useRef<HTMLElement | null>(null);
 

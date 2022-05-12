@@ -6,7 +6,7 @@ import { endTimer, startTimer } from "api/services/tasks";
 import { icons } from "assets";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -20,7 +20,7 @@ type Props = {
 function TaskItem({ data }: Props) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const snack = useSnack();
+
   const [showTimer, setShowTimer] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timerId, setTimerId] = useState<number | null>(null);

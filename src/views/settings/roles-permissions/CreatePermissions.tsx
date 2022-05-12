@@ -4,14 +4,14 @@ import { Box } from "@mui/system";
 import { createPermissions } from "api/services/roles";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 
 function CreatePermissions({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [label, setLabel] = useState("");
   const [permissions, setPermissions] = useState<Array<string>>([]);
   const [value, setValue] = useState("");
@@ -19,7 +19,6 @@ function CreatePermissions({ open, setOpen }: DialogProps) {
   const { mutate, isLoading } = useMutation(createPermissions, {
     onSuccess: () => {
       snack.success("Permissions Created");
-      setOpen(false);
       queryClient.invalidateQueries("permissions");
     },
     onError: (err: any) => {
@@ -41,9 +40,7 @@ function CreatePermissions({ open, setOpen }: DialogProps) {
     }
     mutate({
       label,
-      permissions: permissions.map((item) => {
-        return item.toUpperCase().split(" ").join("_");
-      }),
+      permissions,
     });
   };
 

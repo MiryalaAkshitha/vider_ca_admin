@@ -5,7 +5,7 @@ import { deleteLabel, getLabels } from "api/services/labels";
 import { useConfirm } from "context/ConfirmDialog";
 import Loader from "components/Loader";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -16,7 +16,7 @@ import { StyledLabel } from "views/settings/labels/styles";
 function Tags() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
-  const snack = useSnack();
+
   const confirm = useConfirm();
 
   const { data, isLoading }: ResType = useQuery("labels", getLabels);

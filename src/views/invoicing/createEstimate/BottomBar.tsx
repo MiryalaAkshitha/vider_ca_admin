@@ -1,14 +1,13 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { createInvoice } from "api/services/invoicing";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { selectInvoice } from "redux/reducers/createInvoiceSlice";
 import { InvoiceCalculations } from "./calculations";
 
 function BottomBar() {
-  const snack = useSnack();
   const state = useSelector(selectInvoice);
 
   const { mutate } = useMutation(createInvoice, {

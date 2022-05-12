@@ -3,7 +3,7 @@ import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { deleteForm } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,7 +16,7 @@ function IProAddedFormCard({ data }: Props) {
   const menu = useMenu();
   const navigate = useNavigate();
   const params = useParams();
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const queryClient = useQueryClient();
 

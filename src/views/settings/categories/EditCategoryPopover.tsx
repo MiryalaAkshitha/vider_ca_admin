@@ -1,4 +1,4 @@
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { Menu, MenuItem } from "@mui/material";
 import { deleteCategory } from "api/services/categories";
 import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
@@ -14,7 +14,7 @@ interface EditCategoryPopoverProps extends AccountMenuProps {
 
 function EditCategoryPopover(props: EditCategoryPopoverProps) {
   const { anchorEl, setAnchorEl, data } = props;
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);

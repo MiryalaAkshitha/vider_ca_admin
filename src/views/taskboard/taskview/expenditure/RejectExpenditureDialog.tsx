@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { rejectExpenditure } from "api/services/expenditure";
 import DialogWrapper from "components/DialogWrapper";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -13,7 +13,6 @@ interface IProps extends DialogProps {
 function RejectExpenditureDialog({ open, setOpen, data }: IProps) {
   const [reason, setReason] = useState<string>("");
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate } = useMutation(rejectExpenditure, {
     onSuccess: () => {

@@ -3,13 +3,12 @@ import { Box } from "@mui/system";
 import { createLabel } from "api/services/labels";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 
 function AddLabel({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate, isLoading } = useMutation(createLabel, {
     onSuccess: () => {

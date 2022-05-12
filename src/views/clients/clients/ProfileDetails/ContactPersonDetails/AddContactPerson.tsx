@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { createContactPerson } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
@@ -32,7 +32,7 @@ const initialState: StateProps = {
 
 function AddContactPerson({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const params = useParams();
   const [state, setState] = useState(initialState);
   const formRef = useRef<HTMLFormElement>(null);

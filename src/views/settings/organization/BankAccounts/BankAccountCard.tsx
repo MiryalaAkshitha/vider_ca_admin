@@ -4,14 +4,14 @@ import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { deleteBankAccount } from "api/services/organization";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { MouseEvent, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditBankAccount from "./EditBankAccount";
 
 const BankAccountDetailsCard = ({ data }) => {
   const confirm = useConfirm();
-  const snack = useSnack();
+
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const menu = useMenu();

@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import { addChecklistItems } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -28,7 +28,7 @@ function AddChecklistItem({ open, setOpen, selectedChecklist }: Props) {
   };
 
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<StateProps>(initialState);
 
   const { mutate, isLoading } = useMutation(addChecklistItems, {

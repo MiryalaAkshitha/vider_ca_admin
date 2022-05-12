@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { getForm, updatePage } from "api/services/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import FormAppbar from "layout/primarylayout/app-bar/FormAppbar";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -30,7 +30,6 @@ const FormBuilder = () => {
   const dispatch = useDispatch();
   const { data, activePage } = useSelector(selectForms);
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { isLoading }: ResType = useQuery(
     ["form-details", params.formId],

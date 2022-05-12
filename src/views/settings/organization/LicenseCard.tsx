@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { deleteOrganizationLicense } from "api/services/organization";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -18,7 +18,7 @@ import { StyledAttachment } from "./styles";
 
 function LicenseCard({ data }) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);

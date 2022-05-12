@@ -29,7 +29,6 @@ const BillingEntities = loadable(
 const ViewBillingEntityUser = loadable(
   () => import("pages/settings/viewBillingEntityUser")
 );
-
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const ViewUser = loadable(() => import("pages/settings/ViewUser"));
@@ -63,7 +62,6 @@ const KybFormAuditLog = loadable(
 const OrganizationProfile = loadable(
   () => import("pages/settings/organization-profile")
 );
-const ViewRole = loadable(() => import("pages/settings/view-role"));
 const Storage = loadable(() => import("pages/storage"));
 const MyStorage = loadable(() => import("views/storage/MyStorage"));
 const AllClientsStorage = loadable(
@@ -72,8 +70,11 @@ const AllClientsStorage = loadable(
 const RecurringProfile = loadable(() => {
   return import("views/clients/clients/RecurringProfile");
 });
-const RolesAndPermissions = loadable(() => {
+const Roles = loadable(() => {
   return import("pages/settings/roles-permissions");
+});
+const EditPermissions = loadable(() => {
+  return import("pages/settings/roles-permissions/edit-permissions");
 });
 const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
@@ -167,8 +168,8 @@ function RoutesContainer() {
           </Route>
           <Route path="labels" element={<Labels />} />
           <Route path="roles-permissions">
-            <Route index element={<RolesAndPermissions />} />
-            <Route path=":role" element={<ViewRole />} />
+            <Route index element={<Roles />} />
+            <Route path=":roleId" element={<EditPermissions />} />
           </Route>
           <Route
             path="organization-profile"

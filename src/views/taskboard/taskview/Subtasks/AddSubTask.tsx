@@ -5,7 +5,7 @@ import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ interface StateProps {
 function AddSubTask({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<StateProps>({
     name: "",
     description: "",

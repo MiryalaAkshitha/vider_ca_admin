@@ -3,7 +3,7 @@ import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { deleteForm } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ interface Props {
 function KybFormCard({ data }: Props) {
   const menu = useMenu();
   const navigate = useNavigate();
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const queryClient = useQueryClient();
 

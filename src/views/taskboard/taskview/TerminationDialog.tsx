@@ -1,14 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { terminateTask } from "api/services/tasks";
 import DialogWrapper from "components/DialogWrapper";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { DialogProps } from "types";
 import { useState } from "react";
 
 function TerminationDialog({ open, setOpen }: DialogProps) {
-  const snack = useSnack();
   const params = useParams();
   const navigate = useNavigate();
   const [reason, setReason] = useState("");

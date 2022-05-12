@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { updateFormValidation } from "api/services/forms";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -12,7 +12,6 @@ interface Props extends DialogProps {
 }
 
 function EditFormValidation({ open, setOpen, data }: Props) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const [state, setState] = useState({
     name: "",

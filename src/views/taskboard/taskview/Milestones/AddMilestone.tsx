@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { addMilestone } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -22,7 +22,7 @@ function AddMilestone({ open, setOpen }: DialogProps) {
   };
   const params = useParams();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<IAddMilestoneState>(initialState);
 
   const { mutate, isLoading } = useMutation(addMilestone, {

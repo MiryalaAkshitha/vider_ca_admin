@@ -10,7 +10,7 @@ import { updateExpenditure } from "api/services/expenditure";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -21,7 +21,7 @@ interface Props extends DialogProps {
 
 function EditExpenditure({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState({
     type: "",
     particularName: "",

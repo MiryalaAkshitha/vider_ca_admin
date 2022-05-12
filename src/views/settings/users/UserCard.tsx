@@ -3,7 +3,7 @@ import { Avatar, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { removeFromTeam } from "api/services/users";
 import { icons } from "assets";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ type Props = {
 function UserCard({ data, type, teamId }: Props) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -65,7 +65,7 @@ function UserCard({ data, type, teamId }: Props) {
           {data?.email}
         </Typography>
         <Typography sx={{ mt: 4 }} variant="body2" color="#149ECD">
-          {data?.roles[0]?.name}
+          {data?.role?.name}
         </Typography>
         <IconButton
           sx={{ position: "absolute", top: 20, right: 20 }}

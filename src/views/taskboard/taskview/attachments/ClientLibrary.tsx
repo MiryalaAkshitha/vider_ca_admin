@@ -5,7 +5,7 @@ import { addAttachmentsFromStorage } from "api/services/tasks";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -21,7 +21,7 @@ type Props = {
 function ClientLibrary({ setOpen }: Props) {
   const queryClient = useQueryClient();
   const params: any = useParams();
-  const snack = useSnack();
+
   const [selectedFiles, setSelectedFiles] = useState<number[]>([]);
   const taskData: any = useTaskData();
 

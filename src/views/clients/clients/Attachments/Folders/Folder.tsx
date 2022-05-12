@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { moveFile } from "api/services/storage";
 import { icons } from "assets";
 import useQueryParams from "hooks/useQueryParams";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledFolder } from "views/clients/clients/styles";
@@ -19,7 +19,7 @@ type Position = {
 
 function Folder({ data }: Props) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [dragging, setDragging] = useState(false);
   const [dropping, setDropping] = useState(false);
   const [contextMenu, setContextMenu] = useState<Position | null>(null);

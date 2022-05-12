@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { deleteLogHour } from "api/services/tasks";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledLogHoursTopbar } from "views/clients/clients/styles";
 
@@ -10,7 +10,6 @@ type Props = {
 };
 
 function LogHoursTopbar({ selectedItems, setSelectedItems }: Props) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation(deleteLogHour, {

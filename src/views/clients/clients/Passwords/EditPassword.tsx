@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { updateClientPassword } from "api/services/client-info";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
@@ -21,7 +21,7 @@ interface Props extends DialogProps {
 
 function EditPassword({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<StateProps>({
     website: "",
     websiteUrl: "",

@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { issueOrReceiveDsc } from "api/services/client";
 import DialogWrapper from "components/DialogWrapper";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -13,7 +13,7 @@ interface Props extends DialogProps {
 
 function IssueOrReceive({ open, setOpen, type, dscRegister }: Props) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [personName, setPersonName] = useState("");
 
   const { mutate } = useMutation(issueOrReceiveDsc, {

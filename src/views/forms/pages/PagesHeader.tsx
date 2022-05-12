@@ -3,7 +3,7 @@ import { Box, Button, IconButton, Tab, Tabs } from "@mui/material";
 import { deletePage, duplicatePage } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { MouseEvent } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 function PagesHeader() {
   const menu = useMenu();
-  const snack = useSnack();
+
   const queryClient = useQueryClient();
   const params = useParams();
   const confirm = useConfirm();

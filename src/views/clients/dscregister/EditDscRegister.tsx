@@ -4,7 +4,7 @@ import { getClients, updateDscRegister } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType, SubmitType } from "types";
@@ -26,7 +26,7 @@ interface Props extends DialogProps {
 
 function EditDscRegister({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<StateProps>({
     client: null,
     holderName: "",

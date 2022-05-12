@@ -5,7 +5,7 @@ import FileOpenOutlinedIcon from "@mui/icons-material/FileOpenOutlined";
 import { ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { removeFile } from "api/services/storage";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,7 +26,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const snack = useSnack();
+
   const location = useLocation();
   const [open, setOpen] = useState<boolean>(false);
 

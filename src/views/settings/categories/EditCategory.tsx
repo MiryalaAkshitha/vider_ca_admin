@@ -5,7 +5,7 @@ import { updateCategory } from "api/services/categories";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -24,7 +24,7 @@ interface EditCategoryProps extends DialogProps {
 
 function EditCategory({ open, setOpen, data }: EditCategoryProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState<StateProps>({
     name: "",
     image: "",

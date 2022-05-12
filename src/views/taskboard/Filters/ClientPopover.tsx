@@ -1,7 +1,7 @@
 import { Box, MenuItem, Popover, TextField, Typography } from "@mui/material";
 import { addPin } from "api/services/tasks";
 import useQueryParams from "hooks/useQueryParams";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -14,7 +14,7 @@ interface IProps {
 function ClientPopover({ anchorEl, setAnchorEl, data }: IProps) {
   const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [search, setSearch] = useState("");
 
   const { mutate } = useMutation(addPin, {

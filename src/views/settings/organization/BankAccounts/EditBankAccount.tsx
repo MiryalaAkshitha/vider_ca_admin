@@ -4,7 +4,7 @@ import { updateBankAccount } from "api/services/organization";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormInput from "components/FormFields/FormInput";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
@@ -14,7 +14,6 @@ import {
 } from "validations/createBankDetails";
 
 const EditBankAccount = ({ open, setOpen, data }) => {
-  const snack = useSnack();
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(updateBankAccount, {

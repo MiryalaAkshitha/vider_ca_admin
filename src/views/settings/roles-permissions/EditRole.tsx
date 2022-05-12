@@ -3,13 +3,14 @@ import { Box } from "@mui/system";
 import { updateRole } from "api/services/roles";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 
 interface EditRoleProps extends DialogProps {
   data: {
     name: string;
+    description: string;
     active: boolean;
     id: number;
   };
@@ -17,7 +18,6 @@ interface EditRoleProps extends DialogProps {
 
 function EditRole({ open, setOpen, data }: EditRoleProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate, isLoading } = useMutation(updateRole, {
     onSuccess: () => {
@@ -35,9 +35,11 @@ function EditRole({ open, setOpen, data }: EditRoleProps) {
     const name = e.target.elements.name.value;
     const status = e.target.elements.status.value;
     const active = status === "active" ? true : false;
+    const description = e.target.elements.description.value;
+
     mutate({
       id: data.id,
-      data: { name, active },
+      data: { name, active, description },
     });
   };
 
@@ -67,6 +69,18 @@ function EditRole({ open, setOpen, data }: EditRoleProps) {
           <MenuItem value="active">Active</MenuItem>
           <MenuItem value="inactive">Inactive</MenuItem>
         </TextField>
+        <TextField
+          variant="outlined"
+          fullWidth
+          size="small"
+          multiline
+          defaultValue={data?.description}
+          sx={{ mt: 2 }}
+          rows={3}
+          required
+          label="Description"
+          name="description"
+        />
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             loading={isLoading}

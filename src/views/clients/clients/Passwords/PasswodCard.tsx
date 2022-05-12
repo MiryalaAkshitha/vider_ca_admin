@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { deleteClientPassword } from "api/services/client-info";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -23,7 +23,7 @@ function PasswordCard({ data }: Props) {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [show, setShow] = useState(false);
-  const snack = useSnack();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editOpen, setEditOpen] = useState(false);
 

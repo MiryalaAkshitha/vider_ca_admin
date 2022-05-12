@@ -1,7 +1,7 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { sendOtp } from "api/services/users";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import React from "react";
 import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,6 @@ function CreateAccount() {
   const navigate = useNavigate();
   const { fullName, email, password, mobileNumber } = useSelector(selectSignup);
   const dispatch = useDispatch();
-  const snack = useSnack();
 
   const { mutate, isLoading } = useMutation(sendOtp, {
     onSuccess: (res) => {

@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import { deleteOrganizationLicense } from "api/services/organization";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
 function LicenseCard() {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const confirm = useConfirm();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 

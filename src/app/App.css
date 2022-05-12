@@ -105,3 +105,6 @@ input::placeholder {
 .mentions_input__suggestions__item--focused {
   background-color: rgba(0, 0, 0, 0.1);
 }
+.Toastify__toast{
+  font-family: muli_medium !important;
+}

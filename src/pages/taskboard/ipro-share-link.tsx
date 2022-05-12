@@ -6,11 +6,10 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import LinkRoundedIcon from "@mui/icons-material/LinkRounded";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 
 function IProShareLink() {
   const params = useParams();
-  const snack = useSnack();
 
   const { data, isLoading }: ResType = useQuery(
     ["form-details", params.formId],

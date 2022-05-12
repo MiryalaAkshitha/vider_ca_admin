@@ -8,13 +8,12 @@ import {
   getPanDetails,
   getSandboxToken,
 } from "api/services/users";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
 const OrganizationInformation = ({ data, apiData, setState }) => {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const [gstLoading, setGstLoading] = useState(false);
   const [panLoading, setPanLoading] = useState(false);
@@ -24,7 +23,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
   useEffect(() => {
     setPanChanged(apiData.panNumber !== data.panNumber);
     setGstChanged(apiData.gstNumber !== data.gstNumber);
-  }, [data]);
+  }, [data, apiData]);
 
   const handleChange = (e: any) => {
     setState({

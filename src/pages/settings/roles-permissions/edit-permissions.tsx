@@ -1,23 +1,22 @@
-import { Button, Typography } from "@mui/material";
+import { Breadcrumbs, Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getPermissions, getRole, updateRole } from "api/services/roles";
-import BreadCrumbs from "components/BreadCrumbs";
+import { LinkRouter } from "components/BreadCrumbs";
 import Loader from "components/Loader";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import _ from "lodash";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
 import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
-import PermissonsAccordion from "views/settings/rolesandpermissions/PermissionAccordion";
+import PermissonsAccordion from "views/settings/roles-permissions/PermissionAccordion";
 
 type PermissionsDataResponse = UseQueryResult<DataResponse, Error>;
 
-function ViewRole() {
+function ViewProfile() {
   const params: any = useParams();
   const [permissions, setPermissons] = useState<number[]>([]);
-  const snack = useSnack();
 
   const {
     data: permissionsData,
@@ -25,7 +24,7 @@ function ViewRole() {
   }: PermissionsDataResponse = useQuery("permissions", getPermissions);
 
   const { data, isLoading }: UseQueryResult<{ data: any }, Error> = useQuery(
-    ["role", params.role],
+    ["role", params.roleId],
     getRole,
     {
       onSuccess: (res: any) => {
@@ -68,7 +67,16 @@ function ViewRole() {
 
   return (
     <div>
-      <BreadCrumbs page="viewRole" />
+      <Breadcrumbs>
+        <LinkRouter
+          underline="hover"
+          color="inherit"
+          to="/settings/roles-permissions"
+        >
+          Roles
+        </LinkRouter>
+        <Typography>{data?.data?.name}</Typography>
+      </Breadcrumbs>
       <Box
         display="flex"
         gap={10}
@@ -131,4 +139,4 @@ function ViewRole() {
   );
 }
 
-export default ViewRole;
+export default ViewProfile;

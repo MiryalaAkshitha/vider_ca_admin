@@ -12,7 +12,7 @@ import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,6 @@ import {
 
 function EditEvent({ data, open, setOpen }) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { control, watch, handleSubmit, reset } = useForm({
     defaultValues: addCalendarEventDefaultValues,

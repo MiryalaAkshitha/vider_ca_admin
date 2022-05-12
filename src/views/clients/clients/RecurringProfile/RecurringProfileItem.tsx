@@ -3,7 +3,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { terminateRecurringProfile } from "api/services/recurring";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { MouseEvent, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -22,7 +22,7 @@ interface Props {
 
 const RecurringProfileItem = ({ active, last, data, onClick }: Props) => {
   const menu = useMenu();
-  const snack = useSnack();
+
   const queryClient = useQueryClient();
   const confirm = useConfirm();
   const [open, setOpen] = useState(false);

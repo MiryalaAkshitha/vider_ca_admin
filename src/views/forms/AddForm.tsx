@@ -5,7 +5,7 @@ import DrawerWrapper from "components/DrawerWrapper";
 import FormFreeSoloAutoComplete from "components/FormFields/FormFreeSoloAutoComplete";
 import FormInput from "components/FormFields/FormInput";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -15,7 +15,6 @@ import {
 } from "validations/createForm";
 
 function AddForm({ open, setOpen }: DialogProps) {
-  const snack = useSnack();
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(createForm, {

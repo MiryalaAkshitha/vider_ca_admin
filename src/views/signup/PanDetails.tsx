@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { getPanDetails, getSandboxToken, signup } from "api/services/users";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { selectSignup } from "redux/reducers/signUpSlice";
 import { SubmitType } from "types";
 
 const PanDetails = () => {
-  const snack = useSnack();
   const [state, setState] = useState<any>({});
   const [isVerified, setIsVerified] = useState(false);
   const [isloading, setLoading] = useState<boolean>(false);

@@ -2,7 +2,7 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { signin } from "api/services/users";
 import { newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
@@ -14,7 +14,7 @@ type DataType = { username: string; password: string };
 
 const Login = () => {
   const navigate = useNavigate();
-  const snack = useSnack();
+
   const [open, setOpen] = useState<boolean>(false);
   const [state, setState] = useState<DataType>({
     username: "",

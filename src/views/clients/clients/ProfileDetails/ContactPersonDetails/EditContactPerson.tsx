@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { updateContactPerson } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
@@ -36,7 +36,7 @@ interface EditContactPersonProps extends DialogProps {
 
 function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState(initialState);
   const params = useParams();
   const formRef = useRef<HTMLFormElement>(null);

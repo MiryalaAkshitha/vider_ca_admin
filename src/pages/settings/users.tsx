@@ -30,6 +30,13 @@ function Users() {
         return user.fullName.toLowerCase().includes(search.toLowerCase());
       });
     }
+
+    if (role) {
+      result = result?.filter((user: any) => {
+        return user.role?.name === role;
+      });
+    }
+
     return result;
   };
 

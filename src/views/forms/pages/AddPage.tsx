@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { addPage } from "api/services/forms";
 import DialogWrapper from "components/DialogWrapper";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { SubmitType } from "types";
 function AddPage() {
   const queryClient = useQueryClient();
   const params = useParams();
-  const snack = useSnack();
+
   const [name, setName] = useState("");
   const { addPageOpen } = useSelector(selectForms);
   const dispatch = useDispatch();

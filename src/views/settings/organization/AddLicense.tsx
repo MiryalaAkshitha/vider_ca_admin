@@ -4,7 +4,7 @@ import { createOrganizationLicense } from "api/services/organization";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -12,7 +12,7 @@ import { LICENSE_TYPES } from "utils/constants";
 
 function AddLicense({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState({
     name: "",
     type: "",

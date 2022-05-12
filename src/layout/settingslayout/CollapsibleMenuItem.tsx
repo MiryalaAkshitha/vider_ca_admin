@@ -1,4 +1,5 @@
-import { Typography } from "@mui/material";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { ListItemIcon, Typography } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
@@ -14,7 +15,7 @@ const CollapsibleMenuItem = ({ item }: any) => {
   useEffect(() => {
     const hasPath = item?.children
       .map((item: any) => item?.path)
-      .includes(location.pathname);
+      .some((path: string) => location.pathname.includes(path));
     setOpen(hasPath);
   }, [item, location]);
 
@@ -29,6 +30,13 @@ const CollapsibleMenuItem = ({ item }: any) => {
             </Typography>
           }
         />
+        <ListItemIcon>
+          {open ? (
+            <KeyboardArrowUp sx={{ color: "white" }} />
+          ) : (
+            <KeyboardArrowDown sx={{ color: "white" }} />
+          )}
+        </ListItemIcon>
       </StyledListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
@@ -42,7 +50,7 @@ const CollapsibleMenuItem = ({ item }: any) => {
                 selected={false}
                 sx={{
                   paddingLeft: "30px",
-                  opacity: item.path === location.pathname ? 1 : 0.4,
+                  opacity: location.pathname?.includes(item.path) ? 1 : 0.4,
                 }}
               >
                 <ListItemText

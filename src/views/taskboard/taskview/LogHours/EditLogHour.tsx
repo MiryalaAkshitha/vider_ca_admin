@@ -6,7 +6,7 @@ import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ interface IProps extends DialogProps {
 
 function UpdateLogHour({ open, setOpen, logHourData }: IProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const taskData: any = useTaskData();
 
   const { mutate, isLoading: createLoading } = useMutation(updateLogHour, {

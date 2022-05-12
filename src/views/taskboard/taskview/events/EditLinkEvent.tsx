@@ -10,7 +10,7 @@ import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,6 @@ interface Props extends DialogProps {
 function EditEvent({ open, setOpen, event }: Props) {
   const taskData: any = useTaskData();
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate, isLoading: createLoading } = useMutation(updateEvent, {
     onSuccess: () => {

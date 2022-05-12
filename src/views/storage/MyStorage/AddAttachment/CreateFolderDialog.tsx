@@ -1,7 +1,7 @@
 import { Button, Dialog, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { createFolder } from "api/services/storage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router-dom";
@@ -10,7 +10,7 @@ import { DialogProps } from "types";
 const CreateFolderDialog = ({ open, setOpen }: DialogProps) => {
   const [name, setName] = useState<string>("Untitled folder");
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchParams] = useSearchParams();
 

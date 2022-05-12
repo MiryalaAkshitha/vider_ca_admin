@@ -8,6 +8,8 @@ import { getClients } from "api/services/client";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
+import ValidateAccess from "components/ValidateAccess";
+import { usePermissions } from "context/PermissionsProvider";
 import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import { useRef, useState } from "react";
@@ -15,6 +17,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle } from "utils";
+import { Permissions } from "utils/permissons";
 import AddClient from "views/clients/clients/AddClient";
 import CustomizeColumns from "views/clients/clients/CustomizeColumns";
 import ClientFilter from "views/clients/clients/Filter";
@@ -78,6 +81,7 @@ function Clients() {
   const [selected, setSelected] = useState<any[]>([]);
   const selectionRef = useRef<any>({});
   const { queryParams, setQueryParams } = useQueryParams();
+  const { permissions } = usePermissions();
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -103,52 +107,50 @@ function Clients() {
   };
 
   return (
-    <Box>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item xs={5}>
-          <Box display="flex" gap={2} alignItems="center">
-            <SearchContainer
-              value={filters.search}
-              debounced
-              minWidth="400px"
-              onChange={(v) => {
-                setFilters({
-                  ...filters,
-                  search: v,
-                });
-              }}
-              placeHolder="Search"
-            />
+    <>
+      <Box display="flex" gap={2}>
+        <Box display="flex" flex={1} gap={2} alignItems="center">
+          <SearchContainer
+            value={filters.search}
+            debounced
+            minWidth="400px"
+            onChange={(v) => {
+              setFilters({
+                ...filters,
+                search: v,
+              });
+            }}
+            placeHolder="Search"
+          />
+          <Button
+            startIcon={<FilterAltOutlinedIcon />}
+            onClick={() => setOpenFilter(true)}
+            color="primary"
+            sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
+          >
+            Filters
+          </Button>
+          <Button
+            startIcon={<SettingsIcon />}
+            onClick={() => setOpenCustomColumns(true)}
+            color="primary"
+            sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
+          >
+            Columns
+          </Button>
+        </Box>
+        <Box display="flex" gap={2}>
+          {selected.length > 0 && (
             <Button
-              startIcon={<FilterAltOutlinedIcon />}
-              onClick={() => setOpenFilter(true)}
-              color="primary"
-              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+              variant="outlined"
+              color="secondary"
+              endIcon={<KeyboardArrowDownOutlinedIcon />}
             >
-              Filters
+              Actions
             </Button>
-            <Button
-              startIcon={<SettingsIcon />}
-              onClick={() => setOpenCustomColumns(true)}
-              color="primary"
-              sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
-            >
-              Columns
-            </Button>
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box display="flex" gap={2}>
-            {selected.length > 0 && (
-              <Button
-                onClick={(e) => setAnchorEl(e.currentTarget)}
-                variant="outlined"
-                color="secondary"
-                endIcon={<KeyboardArrowDownOutlinedIcon />}
-              >
-                Actions
-              </Button>
-            )}
+          )}
+          <ValidateAccess name={Permissions.CREATE_CLIENT_PROFILE}>
             <Button
               onClick={() => setOpenImportDialog(true)}
               variant="outlined"
@@ -157,13 +159,17 @@ function Clients() {
             >
               Import Clients
             </Button>
-          </Box>
-        </Grid>
-      </Grid>
+          </ValidateAccess>
+        </Box>
+      </Box>
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
-        onRowClick={(v) => handleRowClick(v)}
+        onRowClick={(v) => {
+          if (permissions.includes(Permissions.VIEW_CLIENT_PROFILE)) {
+            handleRowClick(v);
+          }
+        }}
         data={data?.data[0] || []}
         columns={columns}
         pagination={{
@@ -181,14 +187,16 @@ function Clients() {
           },
         }}
       />
-      <FloatingButton
-        onClick={() => {
-          setQueryParams({
-            ...queryParams,
-            createClient: "true",
-          });
-        }}
-      />
+      <ValidateAccess name={Permissions.CREATE_CLIENT_PROFILE}>
+        <FloatingButton
+          onClick={() => {
+            setQueryParams({
+              ...queryParams,
+              createClient: "true",
+            });
+          }}
+        />
+      </ValidateAccess>
       <AddClient />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter
@@ -210,7 +218,7 @@ function Clients() {
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
       />
-    </Box>
+    </>
   );
 }
 

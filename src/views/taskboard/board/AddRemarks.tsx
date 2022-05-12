@@ -10,7 +10,7 @@ import {
 import { Box } from "@mui/system";
 import { updateTask } from "api/services/tasks";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { DialogProps } from "types";
@@ -22,7 +22,7 @@ interface AddRemarksProps extends DialogProps {
 
 function AddRemarks(props: AddRemarksProps) {
   const { open, setOpen, remarksPromise, onHoldTaskId } = props;
-  const snack = useSnack();
+
   const [remarks, setRemarks] = useState<string>("");
   const [resolve, reject] = remarksPromise;
 

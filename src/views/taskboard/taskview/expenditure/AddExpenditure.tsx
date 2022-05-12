@@ -10,7 +10,7 @@ import { addExpenditure } from "api/services/expenditure";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import UploadImage from "components/UploadImage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ import { DialogProps, SubmitType } from "types";
 function AddExpenditure({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [state, setState] = useState({
     type: "",
     particularName: "",

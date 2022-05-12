@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { addField } from "api/services/forms";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { Draggable } from "react-beautiful-dnd";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { prepareField } from "../utils/prepareField";
 function Field({ item, index }: any) {
   const params = useParams();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const { data, activePage } = useSelector(selectForms);
 
   const { mutate: handleAddField } = useMutation(addField, {

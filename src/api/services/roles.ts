@@ -2,6 +2,7 @@ import { http } from "api/http";
 
 interface Data {
   name: string;
+  description: string;
 }
 
 interface IUpdateData {
@@ -9,6 +10,7 @@ interface IUpdateData {
   data: {
     name?: string;
     active?: boolean;
+    description?: string;
     permissions?: number[];
   };
 }
@@ -27,6 +29,10 @@ const getRole = ({ queryKey }: any) => {
 
 const getPermissions = () => {
   return http.get("/permissions/tree");
+};
+
+const getMyPermissions = () => {
+  return http.get("/permissions/mine");
 };
 
 const createRole = (data: Data) => {
@@ -54,4 +60,5 @@ export {
   getPermissions,
   getAllRoles,
   createPermissions,
+  getMyPermissions,
 };

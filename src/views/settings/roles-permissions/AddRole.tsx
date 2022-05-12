@@ -3,13 +3,12 @@ import { Box } from "@mui/system";
 import { createRole } from "api/services/roles";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 
 function AddRole({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const snack = useSnack();
 
   const { mutate, isLoading } = useMutation(createRole, {
     onSuccess: () => {
@@ -25,8 +24,10 @@ function AddRole({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const name = e.target.elements.name.value;
+    const description = e.target.elements.description.value;
     mutate({
       name,
+      description,
     });
   };
 
@@ -40,6 +41,17 @@ function AddRole({ open, setOpen }: DialogProps) {
           required
           label="Name"
           name="name"
+        />
+        <TextField
+          variant="outlined"
+          fullWidth
+          size="small"
+          multiline
+          sx={{ mt: 2 }}
+          rows={3}
+          required
+          label="Description"
+          name="description"
         />
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton

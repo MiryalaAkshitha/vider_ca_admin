@@ -14,7 +14,7 @@ import {
 import { useConfirm } from "context/ConfirmDialog";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -132,7 +132,7 @@ const columns = [
 const Actions = ({ data }) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [open, setOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

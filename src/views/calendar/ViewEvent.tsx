@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { deleteEvent } from "api/services/events";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -21,7 +21,7 @@ import EditEvent from "./EditEvent";
 const EventDialog = ({ open, setOpen, data }) => {
   const [editOpen, setEditOpen] = useState(false);
   const confirm = useConfirm();
-  const snack = useSnack();
+
   const queryClient = useQueryClient();
 
   const EditEventClicked = () => {

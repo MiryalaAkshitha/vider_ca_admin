@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { updateProfile } from "api/services/users";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useQueryClient, useMutation } from "react-query";
 import SectionWrapper from "./SectionWrapper";
@@ -9,7 +9,7 @@ import AddSpecification from "./AddSpecification";
 
 const Specializations = ({ data }) => {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const [editable, setEditable] = useState(false);
   const [state, setState] = useState({
     specializations: [],

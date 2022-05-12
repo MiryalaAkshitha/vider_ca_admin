@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Fab, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { uploadFile } from "api/services/storage";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,6 @@ import CreateFolderDialog from "./CreateFolderDialog";
 import UploadStatusDrawer from "./UploadStatusDrawer";
 
 function AddAttachment() {
-  const snack = useSnack();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();

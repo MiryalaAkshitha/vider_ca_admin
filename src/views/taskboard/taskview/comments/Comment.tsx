@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Mention, MentionsInput } from "react-mentions";
 import { SendOutlined } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { addComment } from "api/services/tasks";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -18,7 +18,7 @@ type Props = {
 
 function TaskComment({ data, users }: Props) {
   const params: any = useParams();
-  const snack = useSnack();
+
   const [showReply, setShowReply] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [reply, setReply] = useState("");

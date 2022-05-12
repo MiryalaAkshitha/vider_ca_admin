@@ -2,7 +2,7 @@ import { Autocomplete, Box, Button, Grid } from "@mui/material";
 import { updateTask } from "api/services/tasks";
 import Loader from "components/Loader";
 import { useTaskData } from "context/TaskData";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { getFinancialYears, getTitle } from "utils";
@@ -14,7 +14,7 @@ import useTaskViewData from "./useTaskDetailsData";
 
 function Details() {
   const queryClient = useQueryClient();
-  const snack = useSnack();
+
   const { users, loading, categories, labels } = useTaskViewData();
   const taskData: any = useTaskData();
   const [state, setState] = useState<any>({});

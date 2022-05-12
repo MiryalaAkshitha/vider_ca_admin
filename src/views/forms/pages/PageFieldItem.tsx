@@ -3,7 +3,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { IconButton } from "@mui/material";
 import { deleteField, updatePage } from "api/services/forms";
 import { useConfirm } from "context/ConfirmDialog";
-import useSnack from "hooks/useSnack";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ const PageFieldItem = ({ item, index }: any) => {
   const params = useParams();
   const queryClient = useQueryClient();
   const confirm = useConfirm();
-  const snack = useSnack();
+
   const [active, setActive] = useState<boolean>(false);
   const { data, activePage, focused } = useSelector(selectForms);
   const [open, setOpen] = useState(false);
