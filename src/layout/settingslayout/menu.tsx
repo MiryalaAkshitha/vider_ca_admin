@@ -6,11 +6,21 @@ export interface IMenuItem {
 
 export const menuItems: Array<IMenuItem> = [
   {
-    title: "Organization profile",
-    path: "/settings/organization-profile",
+    title: "Organization Details",
+    path: "",
+    children: [
+      {
+        title: "Organization profile",
+        path: "/settings/organization-profile",
+      },
+      {
+        title: "Billing Entities",
+        path: "/settings/billing-entities",
+      },
+    ],
   },
   {
-    title: "Manage Users",
+    title: "Manage users",
     path: "",
     children: [
       {
@@ -35,8 +45,4 @@ export const menuItems: Array<IMenuItem> = [
     title: "Labels",
     path: "/settings/labels",
   },
-  // {
-  //   title: "Billing Entities",
-  //   path: "/settings/billing-entities",
-  // },
 ];

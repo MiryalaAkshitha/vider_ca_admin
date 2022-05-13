@@ -2,10 +2,10 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { signin } from "api/services/users";
 import { newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
-import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import ForgotPassword from "views/login/ForgotPassword";
 import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
@@ -14,7 +14,6 @@ type DataType = { username: string; password: string };
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [open, setOpen] = useState<boolean>(false);
   const [state, setState] = useState<DataType>({
     username: "",
@@ -31,7 +30,7 @@ const Login = () => {
       window.location.href = "/";
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      toast.error(err.response.data.message);
     },
   });
 
