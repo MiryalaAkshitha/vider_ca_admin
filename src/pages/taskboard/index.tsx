@@ -3,16 +3,20 @@ import { Box } from "@mui/system";
 import { getTasks } from "api/services/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
+import ValidateAccess from "components/ValidateAccess";
+import { usePermissions } from "context/PermissionsProvider";
 import useQueryParams from "hooks/useQueryParams";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { ResType, ViewType } from "types";
+import { Permissions } from "utils/permissons";
 import Board from "views/taskboard/board";
 import Filters from "views/taskboard/Filters";
 import TaskTable from "views/taskboard/table";
 
 function TaskBoard() {
+  const { permissions } = usePermissions();
   const { queryParams, setQueryParams } = useQueryParams();
   const view = (queryParams.view as ViewType) || "grid";
   const { search, appliedFilters } = useSelector(selectTaskBoard);
@@ -63,15 +67,19 @@ function TaskBoard() {
           </Typography>
         </Box>
       )}
-      <FloatingButton
-        onClick={() => {
-          setQueryParams({
-            ...queryParams,
-            createTask: "true",
-          });
-        }}
-        position="right"
-      />
+      <ValidateAccess
+        name={[Permissions.CREATE_TASK, Permissions.CREATE_RECUR_TASK]}
+      >
+        <FloatingButton
+          onClick={() => {
+            setQueryParams({
+              ...queryParams,
+              createTask: "true",
+            });
+          }}
+          position="right"
+        />
+      </ValidateAccess>
     </Box>
   );
 }

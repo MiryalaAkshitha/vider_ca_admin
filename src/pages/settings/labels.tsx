@@ -47,7 +47,7 @@ function Tags() {
 
   return (
     <>
-      <Box textAlign="right" mt={2}>
+      <Box mb={2} textAlign="right" mt={2}>
         <Button
           onClick={() => setOpen(true)}
           variant="outlined"
@@ -57,41 +57,39 @@ function Tags() {
           Add Label
         </Button>
       </Box>
-      <Box maxWidth={800}>
-        <Table
-          columns={[
-            {
-              title: "Label",
-              key: "name",
-              render: (item) => (
-                <Typography variant="body1" color="primary">
-                  {item?.name}
-                </Typography>
-              ),
-            },
-            {
-              title: "View",
-              key: "color",
-              render: (item) => (
-                <StyledLabel color={item?.color}>
-                  <Typography variant="body2">{item?.name}</Typography>
-                </StyledLabel>
-              ),
-            },
-            {
-              title: "Actions",
-              key: "actions",
-              render: (item) => (
-                <IconButton onClick={() => handleRemove(item?.id)} size="small">
-                  <Delete color="secondary" fontSize="small" />
-                </IconButton>
-              ),
-            },
-          ]}
-          loading={isLoading}
-          data={data?.data || []}
-        />
-      </Box>
+      <Table
+        columns={[
+          {
+            title: "Label",
+            key: "name",
+            render: (item) => (
+              <Typography variant="body1" color="primary">
+                {item?.name}
+              </Typography>
+            ),
+          },
+          {
+            title: "View",
+            key: "color",
+            render: (item) => (
+              <StyledLabel color={item?.color}>
+                <Typography variant="body2">{item?.name}</Typography>
+              </StyledLabel>
+            ),
+          },
+          {
+            title: "Actions",
+            key: "actions",
+            render: (item) => (
+              <IconButton onClick={() => handleRemove(item?.id)} size="small">
+                <Delete color="secondary" fontSize="small" />
+              </IconButton>
+            ),
+          },
+        ]}
+        loading={isLoading}
+        data={data?.data || []}
+      />
       <AddLabel open={open} setOpen={setOpen} />
     </>
   );

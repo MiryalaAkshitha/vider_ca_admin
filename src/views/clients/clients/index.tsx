@@ -2,7 +2,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/client";
 import FloatingButton from "components/FloatingButton";
@@ -141,14 +141,16 @@ function Clients() {
         </Box>
         <Box display="flex" gap={2}>
           {selected.length > 0 && (
-            <Button
-              onClick={(e) => setAnchorEl(e.currentTarget)}
-              variant="outlined"
-              color="secondary"
-              endIcon={<KeyboardArrowDownOutlinedIcon />}
-            >
-              Actions
-            </Button>
+            <ValidateAccess name={Permissions.DELETE_CLIENT_PROFILE}>
+              <Button
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                variant="outlined"
+                color="secondary"
+                endIcon={<KeyboardArrowDownOutlinedIcon />}
+              >
+                Actions
+              </Button>
+            </ValidateAccess>
           )}
           <ValidateAccess name={Permissions.CREATE_CLIENT_PROFILE}>
             <Button

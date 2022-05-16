@@ -1,6 +1,9 @@
 import loadable from "@loadable/component";
 import GlobalDrawers from "./GlobalDrawers";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
+import PageWithPermission from "components/PageWithPermission";
 
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
@@ -168,12 +171,23 @@ function RoutesContainer() {
           </Route>
           <Route path="labels" element={<Labels />} />
           <Route path="roles-permissions">
-            <Route index element={<Roles />} />
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.MANAGE_ORG_ROLES}>
+                  <Roles />
+                </PageWithPermission>
+              }
+            />
             <Route path=":roleId" element={<EditPermissions />} />
           </Route>
           <Route
             path="organization-profile"
-            element={<OrganizationProfile />}
+            element={
+              <PageWithPermission name={Permissions.MANAGE_ORG_PROFILE}>
+                <OrganizationProfile />
+              </PageWithPermission>
+            }
           />
         </Route>
         <Route path="/signup" element={<SignUp />} />
