@@ -5,6 +5,7 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardInvoice from "views/invoicing/dashboard/DashboardInvoice";
+import InvoicingSideBar from "views/invoicing/InvoicingSideBar";
 
 function Invoicing() {
   useTitle("Invoice");
@@ -15,7 +16,7 @@ function Invoicing() {
     setAnchorEl(null);
   };
 
-  const handleNewReceipt = () => {};
+  const handleNewReceipt = () => { };
 
   const handleNewEstimate = () => {
     navigate("/invoicing/create-estimate");
@@ -27,7 +28,8 @@ function Invoicing() {
 
   return (
     <Box>
-      <DashboardInvoice />
+      {/* <DashboardInvoice /> */}
+      <InvoicingSideBar />
       <Fab
         onClick={(e) => {
           e.stopPropagation();

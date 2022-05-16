@@ -39,6 +39,10 @@ const Login = () => {
     mutate(state);
   };
 
+  const clicked = () => {
+    navigate("/dashboard")
+  }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={6} lg={6}>
@@ -96,6 +100,7 @@ const Login = () => {
                 title="Submit"
                 color="secondary"
               />
+              <Button onClick={clicked}>direct</Button>
             </form>
             <div>
               <Button sx={{ mt: 3 }} onClick={() => setOpen(true)}>
