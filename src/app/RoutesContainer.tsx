@@ -7,13 +7,18 @@ import PageWithPermission from "components/PageWithPermission";
 
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
-const Invoicing = loadable(() => import("pages/invoicing"));
+const SideNavBar = loadable(() => import("pages/invoicing/SideNavBar"));
+const InvoicingDashboard = loadable(() => import("pages/invoicing/InvoicingDashboard"));
+const Invoices = loadable(() => import("pages/invoicing/invoices"));
+const Estimates = loadable(() => import("pages/invoicing/Estimates"));
+const ClientsDashboard = loadable(() => import("pages/invoicing/ClientsDashboard"));
 const CreateInvoice = loadable(
-  () => import("views/invoicing/createInvoice/index")
+  () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
-const Preview = loadable(() => import("views/invoicing/createInvoice/Preview"));
+const Preview = loadable(() => import("views/invoicing/billing/invoices/createInvoice/Preview"));
+const SentEmail = loadable(() => import("views/invoicing/billing/invoices/createInvoice/SendEmail"));
 const CreateEstimate = loadable(
-  () => import("views/invoicing/createEstimate/index")
+  () => import("views/invoicing/billing/Estimates/createEstimate/index")
 );
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
@@ -111,8 +116,22 @@ function RoutesContainer() {
           </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
-          <Route path="invoicing">
-            <Route index element={<Invoicing />} />
+
+          <Route path="invoicing" element={<SideNavBar />} >
+            <Route index element={<InvoicingDashboard />} />
+            <Route path="dashboard" element={<InvoicingDashboard />} />
+            <Route path="invoices" element={<Invoices />} />
+            <Route path="clients" element={<ClientsDashboard />} />
+            <Route path="estimates" element={<Estimates />} />
+
+          </Route>
+          <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
+          <Route path="invoicing/send-email" element={<SentEmail />} />
+          <Route path="invoicing/preview" element={<Preview />} />
+          <Route path="invoicing/create-estimate" element={<CreateEstimate />} />
+
+
+          <Route path="billing">
             <Route path="create-invoice" element={<CreateInvoice />} />
             <Route path="preview" element={<Preview />} />
             <Route path="create-estimate" element={<CreateEstimate />} />

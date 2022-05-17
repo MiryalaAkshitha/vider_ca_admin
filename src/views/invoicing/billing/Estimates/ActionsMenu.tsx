@@ -1,10 +1,17 @@
-import { Menu, MenuItem, Typography } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const ActionsMenu = ({ options, actionsAnchorEl, setActionsAnchorEl }) => {
+const ActionsMenu = ({ actionsAnchorEl, setActionsAnchorEl }) => {
+  const navigate = useNavigate()
   const handleClose = () => {
     setActionsAnchorEl(null);
   };
   const open = Boolean(actionsAnchorEl);
+
+  const handleEditInvoice = () => {
+    navigate("/invoicing/create-invoice")
+  }
+
   return (
     <Menu
       id="basic-menu"
@@ -30,13 +37,8 @@ const ActionsMenu = ({ options, actionsAnchorEl, setActionsAnchorEl }) => {
         horizontal: "right",
       }}
     >
-      {options.map((data, index) => {
-        return (
-          <MenuItem key={index} sx={{ py: 2, m: 0 }}>
-            <Typography variant="body2">{data}</Typography>
-          </MenuItem>
-        );
-      })}
+      <MenuItem sx={{ py: 2, m: 0 }}>Generate Invoice</MenuItem>
+      <MenuItem onClick={handleEditInvoice} sx={{ py: 2, m: 0 }}>Generate Receipt</MenuItem>
     </Menu>
   );
 };

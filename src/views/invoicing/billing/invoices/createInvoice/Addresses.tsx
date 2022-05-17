@@ -70,11 +70,6 @@ function Addresses() {
             title="Mobile Number"
             value={billingAddress?.mobileNumber}
           />
-          <AddressDetail
-            title="GST Treatment"
-            value={billingAddress?.gstTreatment}
-          />
-          <AddressDetail title="GSTIN" value={billingAddress?.gstIn} />
         </Box>
       </Grid>
       <Grid container spacing={2} alignItems="baseline" columnSpacing={4}>
@@ -122,7 +117,7 @@ function Addresses() {
               id="invoiceCustomer"
               label="PlaceofSupply"
               defaultValue="customer1"
-              onChange={(e) => {}}
+              onChange={(e) => { }}
             >
               <MenuItem>Telangana</MenuItem>
               <MenuItem>Andhra Pradesh</MenuItem>

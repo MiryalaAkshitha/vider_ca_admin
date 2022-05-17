@@ -32,7 +32,7 @@ const CreateEstimate = () => {
 
   const { data, isLoading }: ResType = useQuery(["clients", {}], getClients);
 
-  useTitle("New Invoice");
+  useTitle("New Estimate");
 
   if (isLoading) return <Loader />;
 

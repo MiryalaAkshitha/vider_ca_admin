@@ -23,7 +23,7 @@ function BottomBar() {
 
   let iCalcs = new InvoiceCalculations(state);
 
-  const onSubmit = () => {
+  const handleSaveASDraft = () => {
     let apiData: any = { ...state };
     apiData.tdsAmount = iCalcs.tdsAmount();
     apiData.totalTaxableAmount = iCalcs.totalTaxableAmount();
@@ -44,6 +44,11 @@ function BottomBar() {
       data: apiData,
     });
   };
+
+  const handleSaveAndSend = () => {
+    navigate(`/invoicing/send-email`);
+
+  }
 
   const PreviewPage = () => {
     navigate(`/invoicing/preview`);
@@ -68,7 +73,7 @@ function BottomBar() {
       >
         <Box>
           <Button
-            onClick={onSubmit}
+            onClick={handleSaveASDraft}
             size="large"
             variant="contained"
             color="inherit"
@@ -76,7 +81,7 @@ function BottomBar() {
             Save as Draft
           </Button>
           <Button
-            onClick={onSubmit}
+            onClick={handleSaveAndSend}
             size="large"
             color="secondary"
             variant="contained"
