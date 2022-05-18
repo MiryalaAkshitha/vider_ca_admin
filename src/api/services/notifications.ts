@@ -4,4 +4,8 @@ const saveToken = (data: any) => {
   return http.post("/notifications/token", data);
 };
 
-export { saveToken };
+const getNotifications = () => {
+  return http.get("/notifications");
+};
+
+export { saveToken, getNotifications };

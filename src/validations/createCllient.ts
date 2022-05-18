@@ -9,7 +9,7 @@ let createClientDefaultValues = {
   designation: "",
   email: "",
   mobileNumber: "",
-  gstRegistered: "",
+  gstRegistered: "yes",
   gstNumber: "",
   panNumber: "",
   firstName: "",

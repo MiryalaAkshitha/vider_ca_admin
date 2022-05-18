@@ -17,6 +17,8 @@ function CompanyDetails({ control, watch, setData }) {
   const gstValue = watch("gstNumber");
 
   const handleGstClick = async () => {
+    if (!gstValue) return;
+
     try {
       setLoading(true);
       let token: any = await getSandboxToken();
@@ -43,6 +45,8 @@ function CompanyDetails({ control, watch, setData }) {
   };
 
   const handlePanClick = async () => {
+    if (!panValue) return;
+
     try {
       setLoading(true);
       let token: any = await getSandboxToken();

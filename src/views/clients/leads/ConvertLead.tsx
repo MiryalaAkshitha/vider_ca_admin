@@ -168,16 +168,6 @@ function ConverLead({ open, setOpen, data }: Props) {
             sx={{ mt: 3 }}
             variant="outlined"
             fullWidth
-            name="tradeName"
-            required
-            onChange={handleChange}
-            size="small"
-            label="Trade Name"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
             required
             onChange={handleChange}
             value={state.clientManager || ""}

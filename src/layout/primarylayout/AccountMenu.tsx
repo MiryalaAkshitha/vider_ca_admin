@@ -1,7 +1,5 @@
 import { Logout } from "@mui/icons-material";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
-import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 type ElementType = HTMLElement | null;
@@ -33,31 +31,16 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
         elevation: 0,
         sx: {
           minWidth: 200,
-          minHeight: 150,
-          py: 1,
         },
       }}
       transformOrigin={{ horizontal: "right", vertical: "top" }}
-      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
-      <MenuItem sx={{ py: 1, m: 0 }}>
-        <ListItemIcon>
-          <PermIdentityOutlinedIcon color='primary' fontSize='small' />
-        </ListItemIcon>
-        <Typography variant='body2'>My Profile</Typography>
-      </MenuItem>
-      <Divider sx={{ mx: 1, my: 0 }} />
-      <MenuItem sx={{ py: 1, m: 0 }}>
-        <ListItemIcon>
-          <HelpOutlineOutlinedIcon color='primary' fontSize='small' />
-        </ListItemIcon>
-        <Typography variant='body2'>Help/Support</Typography>
-      </MenuItem>
-      <Divider sx={{ mx: 1, my: 0 }} />
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
       <MenuItem sx={{ py: 1, m: 0 }} onClick={handleLogout}>
         <ListItemIcon>
-          <Logout color='primary' fontSize='small' />
+          <Logout color="primary" fontSize="small" />
         </ListItemIcon>
-        <Typography variant='body2'>Logout</Typography>
+        <Typography variant="body2">Logout</Typography>
       </MenuItem>
     </Menu>
   );

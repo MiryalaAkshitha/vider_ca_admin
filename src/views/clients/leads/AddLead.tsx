@@ -126,6 +126,10 @@ function AddLead({ open, setOpen }: DialogProps) {
           onChange={handleChange}
           name="mobileNumber"
           size="small"
+          inputProps={{
+            pattern: "[0-9]{10}",
+            title: "Enter 10 digit mobile number",
+          }}
           label="Mobile Number"
         />
         <TextField
