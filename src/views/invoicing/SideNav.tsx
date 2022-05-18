@@ -35,6 +35,11 @@ const Dashboard = () => {
 		navigate("/invoicing/clients")
 	}
 
+
+	const handleReceiptsClick = () => {
+		navigate("/invoicing/receipts")
+	};
+
 	const handleDashboardClick = () => {
 		navigate("/invoicing/dashboard")
 	};
@@ -84,7 +89,7 @@ const Dashboard = () => {
 							</ListItemIcon>
 							<ListItemText primary="Invoices" />
 						</ListItemButton>
-						<ListItemButton sx={{ pl: 4 }}>
+						<ListItemButton sx={{ pl: 4 }} onClick={handleReceiptsClick}>
 							<ListItemIcon>
 								<DraftsIcon />
 							</ListItemIcon>

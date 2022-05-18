@@ -109,21 +109,6 @@ function Addresses() {
             />
             <AddressDetail title="GSTIN" value={billingAddress?.gstIn} />
           </Box>
-
-          <FormControl fullWidth size="small">
-            <InputLabel id="invoiceCustomer">Place of Supply</InputLabel>
-            <Select
-              labelId="invoiceCustomer"
-              id="invoiceCustomer"
-              label="PlaceofSupply"
-              defaultValue="customer1"
-              onChange={(e) => { }}
-            >
-              <MenuItem>Telangana</MenuItem>
-              <MenuItem>Andhra Pradesh</MenuItem>
-              <MenuItem>Tamil Nadu</MenuItem>
-            </Select>
-          </FormControl>
         </Grid>
         <Grid item xs={6}>
           <InvoiceHeadings title={"Shipping Address"} />
@@ -164,6 +149,22 @@ function Addresses() {
             />
             <AddressDetail title="GSTIN" value={shippingAddress?.gstIn} />
           </Box>
+        </Grid>
+        <Grid xs={4} ml={6}>
+          <FormControl fullWidth size="small">
+            <InputLabel id="invoiceCustomer">Place of Supply</InputLabel>
+            <Select
+              labelId="invoiceCustomer"
+              id="invoiceCustomer"
+              label="PlaceofSupply"
+              defaultValue="customer1"
+              onChange={(e) => { }}
+            >
+              <MenuItem>Telangana</MenuItem>
+              <MenuItem>Andhra Pradesh</MenuItem>
+              <MenuItem>Tamil Nadu</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
       <EditAddress type={type} open={open} setOpen={setOpen} />

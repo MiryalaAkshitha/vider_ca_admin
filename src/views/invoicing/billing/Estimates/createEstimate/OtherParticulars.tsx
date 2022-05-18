@@ -57,11 +57,9 @@ function OtherParticulars() {
           >
             <TableRow>
               <TableCell>
-                <Typography>Particular Name</Typography>
+                <Typography>Services as a Pure Agent</Typography>
               </TableCell>
-              <TableCell>
-                <Typography>Service Type</Typography>
-              </TableCell>
+
               <TableCell>
                 <Typography>Amount</Typography>
               </TableCell>
@@ -80,28 +78,14 @@ function OtherParticulars() {
                     <TextField
                       variant="standard"
                       type="text"
-                      placeholder="Enter service name"
+                      placeholder="Services as a Pure Agent"
                       value={data.name}
                       onChange={(e) => {
                         updateOtherParticular(index, "name", e.target.value);
                       }}
                     />
                   </TableCell>
-                  <TableCell>
-                    <TextField
-                      variant="standard"
-                      fullWidth
-                      type="text"
-                      value={data.type}
-                      select
-                      onChange={(e) => {
-                        updateOtherParticular(index, "type", e.target.value);
-                      }}
-                    >
-                      <MenuItem value="ADDITIONAL">Additional</MenuItem>
-                      <MenuItem value="PURE_AGENT">Pure Agent</MenuItem>
-                    </TextField>
-                  </TableCell>
+
                   <TableCell
                     sx={{
                       display: "flex",
@@ -137,7 +121,7 @@ function OtherParticulars() {
                 "& .MuiTableCell-root": { border: "1px solid #e0e0e0" },
               }}
             >
-              <TableCell colSpan={2} sx={{ border: "none !important" }}>
+              <TableCell colSpan={1} sx={{ border: "none !important" }}>
                 <Typography
                   onClick={addOtherParticular}
                   sx={{ color: "#F2353C", cursor: "pointer" }}

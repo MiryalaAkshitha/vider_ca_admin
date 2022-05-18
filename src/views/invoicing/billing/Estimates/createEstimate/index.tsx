@@ -51,7 +51,35 @@ const CreateEstimate = () => {
         </Box>
         <Box maxWidth={500}>
           <FormControl size="small" fullWidth>
-            <InputLabel id="invoiceCustomer">Customer</InputLabel>
+            <InputLabel id="invoiceCustomer">Select Billing Entity</InputLabel>
+            <Select
+              labelId="invoiceCustomer"
+              id="invoiceCustomer"
+              value={client}
+              label="Select Billing Entity"
+              defaultValue="customer1"
+              onChange={(e) => {
+                let client = data.data[0]?.find(
+                  (client: any) => client.id === e.target.value
+                );
+                dispatch(
+                  handleClientChange({
+                    client,
+                  })
+                );
+              }}
+            >
+              {data?.data[0]?.map((client: any, index: number) => (
+                <MenuItem value={client?.id} key={index}>
+                  {client?.displayName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+        <Box maxWidth={500} mt={4}>
+          <FormControl size="small" fullWidth>
+            <InputLabel id="invoiceCustomer">Select Client</InputLabel>
             <Select
               labelId="invoiceCustomer"
               id="invoiceCustomer"
@@ -97,13 +125,16 @@ const CreateEstimate = () => {
         </Box>
         <Box sx={{ margin: "50px 0 100px 0" }}>
           <Typography sx={{ textAlign: "center" }}>
-            For any enquiry, reach out via email viderbusiness@gmail.com or call
+            For any enquiry, reach out via email: viderbusiness@gmail.com or call
             on +91 81211 81212
           </Typography>
         </Box>
+
       </Box>
       <BottomBar />
+
     </>
   );
 };
 export default CreateEstimate;
+

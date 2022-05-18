@@ -1,6 +1,7 @@
 import {
   FormControl,
   Grid,
+  Box,
   InputLabel,
   MenuItem,
   Select,
@@ -28,6 +29,15 @@ function InvoiceDetails() {
       <Grid item xs={12}>
         <InvoiceHeadings title="Invoice Details" />
         <Grid container sx={{ padding: "30px 0" }}>
+          <Box mb={4} sx={{ width: "40%" }}>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              size="small"
+              label="Invoice number"
+              variant="outlined"
+            />
+          </Box>
           <Grid container columnSpacing={3}>
             <Grid item xs={4}>
               <TextField
@@ -56,10 +66,18 @@ function InvoiceDetails() {
                   }}
                   label="Terms"
                 >
-                  <MenuItem value="term0">Net 30</MenuItem>
-                  <MenuItem value={"term1"}>Vider Soft</MenuItem>
-                  <MenuItem value={"term2"}>Vider Softawre</MenuItem>
-                  <MenuItem value={"term3"}>Vider Software Solutions</MenuItem>
+                  <MenuItem value="dueOnReceipt">Due on Receipt</MenuItem>
+                  <MenuItem value="net15">Net 15</MenuItem>
+                  <MenuItem value="net30">Net 30</MenuItem>
+                  <MenuItem value="net45">Net 45</MenuItem>
+                  <MenuItem value="net60">Net 60</MenuItem>
+                  <MenuItem value={"dueEndMonth"}>
+                    Due end of the month
+                  </MenuItem>
+                  <MenuItem value={"dueEndNextMonth"}>
+                    Due end of the next month
+                  </MenuItem>
+                  <MenuItem value={"CustomDate"}>Custom Due Date</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

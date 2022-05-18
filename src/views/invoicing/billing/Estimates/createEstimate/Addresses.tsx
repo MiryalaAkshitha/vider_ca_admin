@@ -1,5 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
 import { logo } from "assets";
 import { useState } from "react";
@@ -103,12 +103,23 @@ function Addresses() {
               title="Mobile Number"
               value={shippingAddress?.mobileNumber}
             />
-            <AddressDetail
-              title="GST Treatment"
-              value={shippingAddress?.gstTreatment}
-            />
-            <AddressDetail title="GSTIN" value={shippingAddress?.gstIn} />
           </Box>
+        </Grid>
+        <Grid xs={4} ml={6}>
+          <FormControl fullWidth size="small">
+            <InputLabel id="invoiceCustomer">Place of Supply</InputLabel>
+            <Select
+              labelId="invoiceCustomer"
+              id="invoiceCustomer"
+              label="PlaceofSupply"
+              defaultValue="customer1"
+              onChange={(e) => { }}
+            >
+              <MenuItem>Telangana</MenuItem>
+              <MenuItem>Andhra Pradesh</MenuItem>
+              <MenuItem>Tamil Nadu</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
       <EditAddress type={type} open={open} setOpen={setOpen} />

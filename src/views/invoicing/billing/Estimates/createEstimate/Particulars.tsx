@@ -223,7 +223,11 @@ function Particulars() {
                 </TableCell>
               </TableRow>
             ))}
-            <TableRow>
+            <TableRow sx={{
+              "& .MuiTableCell-root": {
+                border: "1px solid #e0e0e0",
+              },
+            }}>
               <TableCell
                 colSpan={5}
                 sx={{

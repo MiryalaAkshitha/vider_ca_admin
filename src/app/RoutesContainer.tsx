@@ -10,6 +10,7 @@ const Calendar = loadable(() => import("pages/calendar"));
 const SideNavBar = loadable(() => import("pages/invoicing/SideNavBar"));
 const InvoicingDashboard = loadable(() => import("pages/invoicing/InvoicingDashboard"));
 const Invoices = loadable(() => import("pages/invoicing/invoices"));
+const Receipts = loadable(() => import("pages/invoicing/Receipts"));
 const Estimates = loadable(() => import("pages/invoicing/Estimates"));
 const ClientsDashboard = loadable(() => import("pages/invoicing/ClientsDashboard"));
 const CreateInvoice = loadable(
@@ -19,6 +20,9 @@ const Preview = loadable(() => import("views/invoicing/billing/invoices/createIn
 const SentEmail = loadable(() => import("views/invoicing/billing/invoices/createInvoice/SendEmail"));
 const CreateEstimate = loadable(
   () => import("views/invoicing/billing/Estimates/createEstimate/index")
+);
+const CreateReceipt = loadable(
+  () => import("views/invoicing/billing/Receipts/createReceipt/index")
 );
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
@@ -123,13 +127,13 @@ function RoutesContainer() {
             <Route path="invoices" element={<Invoices />} />
             <Route path="clients" element={<ClientsDashboard />} />
             <Route path="estimates" element={<Estimates />} />
-
+            <Route path="receipts" element={<Receipts />} />
           </Route>
           <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
           <Route path="invoicing/send-email" element={<SentEmail />} />
           <Route path="invoicing/preview" element={<Preview />} />
           <Route path="invoicing/create-estimate" element={<CreateEstimate />} />
-
+          <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
 
           <Route path="billing">
             <Route path="create-invoice" element={<CreateInvoice />} />
