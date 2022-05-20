@@ -4,11 +4,13 @@ import { createInvoice } from "api/services/invoicing";
 import { snack } from "components/toast";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { selectInvoice } from "redux/reducers/createInvoiceSlice";
 import { InvoiceCalculations } from "./calculations";
 
 function BottomBar() {
   const state = useSelector(selectInvoice);
+  const navigate = useNavigate()
 
   const { mutate } = useMutation(createInvoice, {
     onSuccess: () => {
@@ -18,6 +20,10 @@ function BottomBar() {
       snack.error(err.response.data.message);
     },
   });
+
+  const handlePreviewClick = () => {
+    navigate("/invoicing/estimate-preview")
+  }
 
   let iCalcs = new InvoiceCalculations(state);
 
@@ -71,7 +77,7 @@ function BottomBar() {
           </Button>
         </Box>
         <Box>
-          <Button size="large" color="secondary">
+          <Button size="large" color="secondary" onClick={handlePreviewClick}>
             Preview
           </Button>
         </Box>

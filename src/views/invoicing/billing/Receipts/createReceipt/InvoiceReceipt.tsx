@@ -1,32 +1,156 @@
-import { TextField, FormControlLabel, Box, Typography } from "@mui/material";
-import Checkbox from '@mui/material/Checkbox';
-import { useState } from "react";
-
+import { Box, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
+import Table from "components/Table";
+import useTitle from "hooks/useTitle";
+import PaymentSummaryCard from "./PaymentSummaryCard";
 
 
 const InvoiceReceipt = () => {
-    const [checked, setChecked] = useState(false);
+    useTitle("Receipts Table");
 
-    const val = 300;
-    let unusedCreidts = 500;
-    let amountReceived = 200;
 
-    if (checked) {
-        amountReceived = amountReceived + unusedCreidts;
-        unusedCreidts = 0;
-    }
 
-    const handleChange = (event: any) => {
-        setChecked(event.target.checked);
-    };
+    const pureAgent = (
+        <>
+            <TextField size="small" placeholder="Enter amount" /><br />
+            <FormControlLabel control={<Checkbox />} label="Pay in Full" />
+        </>
+
+    );
+
+    const servicePayment = (
+        <>
+            <TextField size="small" placeholder="Enter amount" /><br />
+            <FormControlLabel control={<Checkbox />} label="Pay in Full" />
+        </>
+
+    );
+
+
+
+    const columns = [
+        {
+            title: "Invoice Number",
+            key: "invoiceNumber"
+        },
+        {
+            title: "Invoice Date",
+            key: "invoiceDate"
+        },
+        {
+            title: "Due Date",
+            key: "dueDate"
+        },
+        {
+            title: "Invoice Amount",
+            key: "invoiceAmount"
+        },
+        {
+            title: "Pure Agent Amount",
+            key: "pureAgentAmount"
+        },
+        {
+            title: "Pure Agent Due Amount",
+            key: "pureAgentDueAmount"
+        },
+        {
+            title: "Pure Agent Payment",
+            key: "pureAgentPayment"
+        },
+        {
+            title: "Service Amount",
+            key: "serviceAmount"
+        },
+        {
+            title: "Service Due Amount",
+            key: "serviceDueAmount"
+        },
+        {
+
+            title: "Service Payment",
+            key: "servicePayment"
+        },
+    ]
+
+
+    const data = [
+        {
+            invoiceNumber: "INV365647",
+            invoiceDate: "13/09/2021",
+            dueDate: "21/09/2021",
+            invoiceAmount: "3,500 /-",
+            pureAgentAmount: "3,000 /-",
+            pureAgentDueAmount: "3000 /-",
+            pureAgentPayment: pureAgent,
+            serviceAmount: "1,000 /-",
+            serviceDueAmount: "100 /-",
+            servicePayment: servicePayment,
+
+        },
+        {
+            invoiceNumber: "INV365647",
+            invoiceDate: "13/09/2021",
+            dueDate: "21/09/2021",
+            invoiceAmount: "3,500 /-",
+            pureAgentAmount: "3,000 /-",
+            pureAgentDueAmount: "3000 /-",
+            pureAgentPayment: pureAgent,
+            serviceAmount: "1,000 /-",
+            serviceDueAmount: "100 /-",
+            servicePayment: servicePayment,
+
+        },
+        {
+            invoiceNumber: "INV365647",
+            invoiceDate: "13/09/2021",
+            dueDate: "21/09/2021",
+            invoiceAmount: "3,500 /-",
+            pureAgentAmount: "3,000 /-",
+            pureAgentDueAmount: "3000 /-",
+            pureAgentPayment: pureAgent,
+            serviceAmount: "1,000 /-",
+            serviceDueAmount: "100 /-",
+            servicePayment: servicePayment,
+
+        },
+        {
+            invoiceNumber: "INV365647",
+            invoiceDate: "13/09/2021",
+            dueDate: "21/09/2021",
+            invoiceAmount: "3,500 /-",
+            pureAgentAmount: "3,000 /-",
+            pureAgentDueAmount: "3000 /-",
+            pureAgentPayment: pureAgent,
+            serviceAmount: "1,000 /-",
+            serviceDueAmount: "100 /-",
+            servicePayment: servicePayment,
+
+        },
+        {
+            invoiceNumber: "INV365647",
+            invoiceDate: "13/09/2021",
+            dueDate: "21/09/2021",
+            invoiceAmount: "3,500 /-",
+            pureAgentAmount: "3,000 /-",
+            pureAgentDueAmount: "3000 /-",
+            pureAgentPayment: pureAgent,
+            serviceAmount: "1,000 /-",
+            serviceDueAmount: "100 /-",
+            servicePayment: servicePayment,
+
+        },
+    ]
 
     return (
+        <Box mt={3}>
+            <Box mb={1}>
+                <Typography variant="caption">Available Invoices</Typography>
+            </Box>
+            <Table data={data || []} columns={columns} loading={false} />
+            <Box mt={3} display="flex" justifyContent="flex-end">
+                <PaymentSummaryCard amtReceived={5000} amtUsedForPayment={6000} unusedCredits={500} />
+            </Box>
 
-        <Box>
 
-            <TextField sx={{ width: "500px", mt: "20px" }} id="outlined-basic" label="Amount received" variant="outlined" value={amountReceived} />
-            <Typography mt={2} variant="body2" component="div">Unused Credits : <b>{unusedCreidts}</b></Typography>
-            <FormControlLabel control={<Checkbox onChange={handleChange} />} label=" Use Available Unused credits" />
         </Box>
     );
 }

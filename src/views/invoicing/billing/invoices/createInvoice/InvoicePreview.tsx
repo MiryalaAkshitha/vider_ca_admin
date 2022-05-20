@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import { logo } from "assets";
 import InvoiceHeadings from "./InvoiceHeadings";
 
-const Preview = () => {
+const InvoicePreview = () => {
   return (
     <>
       <Paper
@@ -20,7 +20,7 @@ const Preview = () => {
           width: "1099px",
           height: "1922px",
           margin: "auto",
-          padding: "100px",
+          padding: "50px",
         }}
       >
         <Grid container spacing={4}>
@@ -123,6 +123,28 @@ const Preview = () => {
               <Typography variant="body1">
                 9947368386, Viderbusiness@gmail.com
               </Typography>
+              <Grid container>
+                <Grid item xs={4}>
+                  <Typography variant="body1">GST Treatment</Typography>
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography>:</Typography>
+                </Grid>
+                <Grid item xs={7}>
+                  <Typography variant="body1" >Registered Business - Regular</Typography>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={4}>
+                  <Typography variant="body1">GSTIN</Typography>
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography>:</Typography>
+                </Grid>
+                <Grid item xs={7}>
+                  <Typography variant="body1" >365473538457</Typography>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
           <Grid item xs={6}>
@@ -139,6 +161,28 @@ const Preview = () => {
               <Typography variant="body1">
                 9947368386, Viderbusiness@gmail.com
               </Typography>
+              <Grid container>
+                <Grid item xs={4}>
+                  <Typography variant="body1">GST Treatment</Typography>
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography>:</Typography>
+                </Grid>
+                <Grid item xs={7}>
+                  <Typography variant="body1" >Registered Business - Regular</Typography>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={4}>
+                  <Typography variant="body1">GSTIN</Typography>
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography>:</Typography>
+                </Grid>
+                <Grid item xs={7}>
+                  <Typography variant="body1" >365473538457</Typography>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -150,47 +194,55 @@ const Preview = () => {
                     "& th": { color: "white" },
                   }}
                 >
-                  <TableRow>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                  <TableRow sx={{
+                    "& .MuiTableCell-root": {
+                      border: "1px solid gray",
+                    },
+                  }}>
+                    <TableCell >
                       Particulars (Task / Service name)
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       HSN / SAC
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       Units
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       Rate
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       Discount
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       Taxable Value
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       IGST
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell >
                       Amount
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                  <TableRow sx={{
+                    "& .MuiTableCell-root": {
+                      border: "1px solid gray",
+                    },
+                  }}>
+                    <TableCell>
                       GST Registration
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell>
                       34355
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>44</TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>1</TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>233</TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>2</TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>2</TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>2</TableCell>
+                    <TableCell>44</TableCell>
+                    <TableCell>1</TableCell>
+                    <TableCell>233</TableCell>
+                    <TableCell>2</TableCell>
+                    <TableCell>2</TableCell>
+                    <TableCell>2</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -205,27 +257,41 @@ const Preview = () => {
                     "& th": { color: "white" },
                   }}
                 >
-                  <TableRow>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                  <TableRow sx={{
+                    "& .MuiTableCell-root": {
+                      border: "1px solid gray",
+                    },
+                  }}>
+                    <TableCell>
                       Services as a Pure Agent
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell>
                       Amount
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                  <TableRow sx={{
+                    "& .MuiTableCell-root": {
+                      border: "1px solid gray",
+                    },
+                  }}>
+                    <TableCell>
                       GST Registration
                     </TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                    <TableCell>
                       250 /-
                     </TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell sx={{ border: "none !important" }}></TableCell>
-                    <TableCell sx={{ border: "1px solid gray" }}>
+                  <TableRow sx={{
+                    "& .MuiTableCell-root": {
+                      border: "1px solid gray",
+                    },
+                  }}>
+                    <TableCell sx={{
+                      border: "none !important",
+                    }} ></TableCell>
+                    <TableCell >
                       <Typography sx={{ fontSize: "11px" }}>
                         Total Amount :
                       </Typography>
@@ -494,4 +560,4 @@ const Preview = () => {
   );
 };
 
-export default Preview;
+export default InvoicePreview;

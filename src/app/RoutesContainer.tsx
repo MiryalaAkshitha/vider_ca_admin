@@ -20,15 +20,21 @@ const ClientsDashboard = loadable(
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
+<<<<<<< HEAD
 const Preview = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/Preview")
 );
 const SentEmail = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/SendEmail")
 );
+=======
+const InvoicePreview = loadable(() => import("views/invoicing/billing/invoices/createInvoice/InvoicePreview"));
+const SentEmail = loadable(() => import("views/invoicing/billing/invoices/createInvoice/SendEmail"));
+>>>>>>> a2a82be (estimates ui and receipts ui)
 const CreateEstimate = loadable(
   () => import("views/invoicing/billing/Estimates/createEstimate/index")
 );
+const EstimatePreview = loadable(() => import("views/invoicing/billing/Estimates/createEstimate/EstimatePreview"));
 const CreateReceipt = loadable(
   () => import("views/invoicing/billing/Receipts/createReceipt/index")
 );
@@ -139,18 +145,11 @@ function RoutesContainer() {
           </Route>
           <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
           <Route path="invoicing/send-email" element={<SentEmail />} />
-          <Route path="invoicing/preview" element={<Preview />} />
-          <Route
-            path="invoicing/create-estimate"
-            element={<CreateEstimate />}
-          />
+          <Route path="invoicing/invoice-preview" element={<InvoicePreview />} />
+          <Route path="invoicing/create-estimate" element={<CreateEstimate />} />
+          <Route path="invoicing/estimate-preview" element={<EstimatePreview />} />
           <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
 
-          <Route path="billing">
-            <Route path="create-invoice" element={<CreateInvoice />} />
-            <Route path="preview" element={<Preview />} />
-            <Route path="create-estimate" element={<CreateEstimate />} />
-          </Route>
           <Route path="storage" element={<Storage />}>
             <Route path="my-storage" element={<MyStorage />} />
             <Route path="all-clients-storage" element={<AllClientsStorage />} />

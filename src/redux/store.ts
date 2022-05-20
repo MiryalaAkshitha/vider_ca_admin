@@ -7,6 +7,7 @@ import taskBoardReducer from "redux/reducers/taskboardSlice";
 import createInvoiceReducer from "./reducers/createInvoiceSlice";
 import signUpSliceReducer from "./reducers/signUpSlice";
 import addServiceReducer from "./reducers/addServiceSlice";
+import createReceiptReducer from "./reducers/createReceiptSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     taskBoard: taskBoardReducer,
     signup: signUpSliceReducer,
     createInvoice: createInvoiceReducer,
+    createReceipt: createReceiptReducer,
     addService: addServiceReducer,
   },
 });

@@ -51,7 +51,7 @@ function BottomBar() {
   }
 
   const PreviewPage = () => {
-    navigate(`/invoicing/preview`);
+    navigate(`/invoicing/invoice-preview`);
   };
 
   return (

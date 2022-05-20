@@ -1,8 +1,15 @@
-import { Paper, TextField, Autocomplete, Grid, Box, Button } from "@mui/material";
+import { Paper, TextField, Autocomplete, Grid, Box, Button, Typography } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import { useState } from "react";
 
 
 const SendEmail = () => {
+    const [file, SetFile] = useState()
+
+    const handleFileChange = (e: any) => {
+        SetFile(e.target.files[0].name)
+    }
 
     const data = [
         { email: 'client@gmail.com' },
@@ -11,12 +18,11 @@ const SendEmail = () => {
         { email: 'vider@vider.com' },
         { email: 'shahid@gmail.com' },
         { email: 'name@gmail.com' },
-
     ];
 
     return (
         <Box p={4} bgcolor="#F7F7F7" sx={{ height: "90vh" }}>
-            <Paper sx={{ position: "relative", width: "900px", margin: "auto", padding: "30px", minHeight: "70vh" }}>
+            <Paper sx={{ width: "900px", margin: "auto", padding: "30px", minHeight: "70vh" }}>
                 <Grid container>
                     <Grid item xs={12}>
                         <Grid container mt={2}>
@@ -119,8 +125,13 @@ const SendEmail = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Box mt={3}>
-                        <input type="file" id="myfile" name="myfile" />
+                    <Box mt={4} display="flex" alignItems="center">
+
+                        <label>
+                            <input type="file" onChange={handleFileChange} hidden />
+                            <AttachFileIcon />
+                        </label>
+                        {file && <Typography sx={{ border: "1px solid #D1D1D1", bgcolor: "#F8F8F8", padding: "15px 25px" }}>{file}</Typography>}
                     </Box>
 
                 </Grid>
