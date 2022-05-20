@@ -8,16 +8,24 @@ import PageWithPermission from "components/PageWithPermission";
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const SideNavBar = loadable(() => import("pages/invoicing/SideNavBar"));
-const InvoicingDashboard = loadable(() => import("pages/invoicing/InvoicingDashboard"));
+const InvoicingDashboard = loadable(
+  () => import("pages/invoicing/InvoicingDashboard")
+);
 const Invoices = loadable(() => import("pages/invoicing/invoices"));
 const Receipts = loadable(() => import("pages/invoicing/Receipts"));
 const Estimates = loadable(() => import("pages/invoicing/Estimates"));
-const ClientsDashboard = loadable(() => import("pages/invoicing/ClientsDashboard"));
+const ClientsDashboard = loadable(
+  () => import("pages/invoicing/ClientsDashboard")
+);
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
-const Preview = loadable(() => import("views/invoicing/billing/invoices/createInvoice/Preview"));
-const SentEmail = loadable(() => import("views/invoicing/billing/invoices/createInvoice/SendEmail"));
+const Preview = loadable(
+  () => import("views/invoicing/billing/invoices/createInvoice/Preview")
+);
+const SentEmail = loadable(
+  () => import("views/invoicing/billing/invoices/createInvoice/SendEmail")
+);
 const CreateEstimate = loadable(
   () => import("views/invoicing/billing/Estimates/createEstimate/index")
 );
@@ -121,7 +129,7 @@ function RoutesContainer() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
 
-          <Route path="invoicing" element={<SideNavBar />} >
+          <Route path="invoicing" element={<SideNavBar />}>
             <Route index element={<InvoicingDashboard />} />
             <Route path="dashboard" element={<InvoicingDashboard />} />
             <Route path="invoices" element={<Invoices />} />
@@ -132,7 +140,10 @@ function RoutesContainer() {
           <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
           <Route path="invoicing/send-email" element={<SentEmail />} />
           <Route path="invoicing/preview" element={<Preview />} />
-          <Route path="invoicing/create-estimate" element={<CreateEstimate />} />
+          <Route
+            path="invoicing/create-estimate"
+            element={<CreateEstimate />}
+          />
           <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
 
           <Route path="billing">
