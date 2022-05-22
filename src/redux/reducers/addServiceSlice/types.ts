@@ -53,15 +53,16 @@ export type DescriptionItem = {
 };
 
 export interface IAddService {
-  serviceType: string;
-  documents: string[];
-  deliverables: string[];
-  recurring: boolean;
-  frequency: string;
-  frequencyPeriods: Array<Period>;
-  mileStones: Array<MileStone>;
-  description: Array<DescriptionItem>;
-  repeated: boolean;
+  name: string;
+  description: string;
+  category: string;
+  subCategory: string;
+  hourlyPrice: string;
+  totalPrice: string;
+  checklists: Array<any>;
+  milestones: Array<any>;
+  stageOfWork: Array<any>;
+  subTasks: Array<any>;
 }
 
 export type UpdateDate = {

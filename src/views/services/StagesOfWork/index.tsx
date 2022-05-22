@@ -5,51 +5,51 @@ import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { addServiceState } from "redux/reducers/addServiceSlice";
-import AddMilestone from "./AddMilestone";
-import Milestone from "./Milestone";
+import AddStageOfWork from "./AddStageOfWork";
+import Stage from "./Stage";
 
-function Milestones() {
+function StageOfWork() {
   const [open, setOpen] = useState<boolean>(false);
-  const { milestones } = useSelector(addServiceState);
+  const { stageOfWork } = useSelector(addServiceState);
 
   return (
     <>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
-          Milestones
+          Stage of Work
         </Typography>
-        {milestones.length ? (
+        {stageOfWork.length ? (
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
             startIcon={<Add />}
           >
-            Add milestone
+            Add stage of work
           </Button>
         ) : null}
       </Box>
       <Box mt={2}>
-        {milestones.length ? (
+        {stageOfWork.length ? (
           <Grid container spacing={2}>
-            {milestones.map((item: any, index: number) => (
-              <Grid item xs={4}>
-                <Milestone data={item} key={index} index={index} />
+            {stageOfWork.map((item: any, index: number) => (
+              <Grid item xs={6}>
+                <Stage data={item} key={index} index={index} />
               </Grid>
             ))}
           </Grid>
         ) : (
           <NoItems
             img={noChecklists}
-            title="Add Milestone to your service"
-            desc="Create a milestone in your service."
-            btnTitle="Add Milestone"
+            title="Add stage of work to your service"
+            desc="Create a stage of work in your service."
+            btnTitle="Add stage of work"
             btnAction={() => setOpen(true)}
           />
         )}
       </Box>
-      <AddMilestone open={open} setOpen={setOpen} />
+      <AddStageOfWork open={open} setOpen={setOpen} />
     </>
   );
 }
 
-export default Milestones;
+export default StageOfWork;

@@ -2,8 +2,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Button } from "@mui/material";
-import { Box } from "@mui/system";
+import { Button, Box } from "@mui/material";
 import { getClients } from "api/services/client";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
@@ -12,6 +11,7 @@ import ValidateAccess from "components/ValidateAccess";
 import { usePermissions } from "context/PermissionsProvider";
 import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
+import _ from "lodash";
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -26,50 +26,18 @@ import Actions from "./Actions";
 
 function Clients() {
   useTitle("Clients");
-  const defaultColumns: Array<ColumnType> = [
-    { key: "displayName", title: "Display Name" },
-    { key: "tradeName", title: "Trade Name", hide: true },
-    { key: "clientId", title: "Client Id", hide: true },
-    {
-      key: "category",
-      title: "Category",
-      render: (rowData) => getTitle(rowData?.category),
-    },
-    {
-      key: "subCategory",
-      title: "Sub Category",
-      render: (rowData) => getTitle(rowData?.subCategory),
-    },
-    { key: "mobileNumber", title: "Mobile Number" },
-    { key: "email", title: "Email" },
-    { key: "panNumber", title: "Pan Number", hide: true },
-    { key: "authorizedPerson", title: "Authorized Person", hide: true },
-    {
-      key: "active",
-      title: "Status",
-      render: (rowData) => {
-        return (
-          <div>
-            {rowData?.active ? (
-              <span style={{ color: "green" }}>Active</span>
-            ) : (
-              <span style={{ color: "red" }}>Inactive</span>
-            )}
-          </div>
-        );
-      },
-    },
-  ];
-
   const navigate = useNavigate();
+  const selectionRef = useRef<any>({});
+  const { queryParams, setQueryParams } = useQueryParams();
+  const { permissions } = usePermissions();
   const [limit, setLimit] = useState<number>(50);
   const [offset, setOffset] = useState<number>(0);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-  const [columns, setColumns] = useState<Array<ColumnType>>([
-    ...defaultColumns,
-  ]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selected, setSelected] = useState<any[]>([]);
+  const [columns, setColumns] = useState(_.cloneDeep(defaultColumns));
   const [filters, setFilters] = useState({
     category: [],
     subCategory: [],
@@ -77,11 +45,6 @@ function Clients() {
     labels: [],
     search: "",
   });
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selected, setSelected] = useState<any[]>([]);
-  const selectionRef = useRef<any>({});
-  const { queryParams, setQueryParams } = useQueryParams();
-  const { permissions } = usePermissions();
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -101,9 +64,7 @@ function Clients() {
   );
 
   const handleRowClick = (v: any) => {
-    navigate(
-      `/clients/${v?.id}/profile?displayName=${v?.displayName}&clientId=${v?.clientId}`
-    );
+    navigate(`/clients/${v?.id}/profile`);
   };
 
   return (
@@ -208,7 +169,7 @@ function Clients() {
         setOpen={setOpenFilter}
       />
       <CustomizeColumns
-        defaultColumns={defaultColumns}
+        defaultColumns={_.cloneDeep(defaultColumns)}
         columns={columns}
         setColumns={setColumns}
         open={openCustomColumns}
@@ -223,5 +184,40 @@ function Clients() {
     </>
   );
 }
+
+const defaultColumns: Array<ColumnType> = [
+  { key: "displayName", title: "Display Name" },
+  { key: "tradeName", title: "Trade Name", hide: true },
+  { key: "clientId", title: "Client Id", hide: true },
+  {
+    key: "category",
+    title: "Category",
+    render: (rowData) => getTitle(rowData?.category),
+  },
+  {
+    key: "subCategory",
+    title: "Sub Category",
+    render: (rowData) => getTitle(rowData?.subCategory),
+  },
+  { key: "mobileNumber", title: "Mobile Number" },
+  { key: "email", title: "Email" },
+  { key: "panNumber", title: "Pan Number", hide: true },
+  { key: "authorizedPerson", title: "Authorized Person", hide: true },
+  {
+    key: "active",
+    title: "Status",
+    render: (rowData) => {
+      return (
+        <div>
+          {rowData?.active ? (
+            <span style={{ color: "green" }}>Active</span>
+          ) : (
+            <span style={{ color: "red" }}>Inactive</span>
+          )}
+        </div>
+      );
+    },
+  },
+];
 
 export default Clients;

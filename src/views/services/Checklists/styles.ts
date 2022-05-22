@@ -22,12 +22,12 @@ export const StyledChecklist = styled("div")(() => ({
   },
 }));
 
-export const StyledChecklistItem = styled("div")<{ bgColor: string }>(
-  ({ bgColor }) => ({
+export const StyledChecklistItem = styled("div")<{ bgcolor: string }>(
+  ({ bgcolor }) => ({
     padding: "5px 10px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: bgColor,
+    backgroundColor: bgcolor,
   })
 );

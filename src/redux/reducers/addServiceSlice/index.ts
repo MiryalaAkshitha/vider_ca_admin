@@ -1,185 +1,103 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
-import {
-  HPERIODS,
-  INITIAL_MILESTONES,
-  MONTHS,
-  QPERIODS,
-  YPERIODS,
-} from "utils/constants";
-import { v4 as uuidv4 } from "uuid";
-import {
-  AddAccordionContent,
-  DeleteChecklistItem,
-  IAddService,
-  UpdateChecklistItem,
-  UpdateDate,
-  UpdateFrequencyPayload,
-  UpdateMileStoneName,
-} from "./types";
+import { IAddService } from "./types";
 
 const initialState: IAddService = {
-  serviceType: "",
-  documents: [""],
-  deliverables: [""],
-  recurring: false,
-  frequency: "",
-  frequencyPeriods: [],
-  mileStones: [...INITIAL_MILESTONES],
-  description: [],
-  repeated: false,
+  name: "",
+  description: "",
+  category: "",
+  subCategory: "",
+  hourlyPrice: "",
+  totalPrice: "",
+  checklists: [],
+  milestones: [],
+  stageOfWork: [],
+  subTasks: [],
 };
 
 export const addServiceSlice = createSlice({
   name: "addService",
   initialState,
   reducers: {
-    addDocument(state) {
-      state.documents.push("");
+    setData: (state: IAddService, action) => {
+      const { payload } = action;
+      state.name = payload.name;
+      state.description = payload.description || "";
+      state.category = payload.category;
+      state.subCategory = payload.subCategory || "";
+      state.hourlyPrice = payload.hourlyPrice || "";
+      state.totalPrice = payload.totalPrice || "";
+      state.checklists = payload.checklists;
+      state.milestones = payload.milestones;
+      state.stageOfWork = payload.stageOfWork;
+      state.subTasks = payload.subTasks;
     },
-    updateServiceType(state, action) {
-      if (action.payload === "Recurring service") {
-        state.recurring = true;
-      } else {
-        state.recurring = false;
-      }
+    resetData: (state: IAddService) => {
+      state.name = "";
+      state.description = "";
+      state.category = "";
+      state.subCategory = "";
+      state.hourlyPrice = "";
+      state.totalPrice = "";
+      state.checklists = [];
+      state.milestones = [];
+      state.stageOfWork = [];
+      state.subTasks = [];
     },
-    updateFrequency(state, action) {
-      state.frequency = action.payload;
-      state.repeated = false;
-      if (action.payload === "Monthly") {
-        state.frequencyPeriods = MONTHS.map((item) => ({
-          period: item,
-          startDate: "",
-          endDate: "",
-        }));
-      }
-      if (action.payload === "Quarterly") {
-        state.frequencyPeriods = QPERIODS.map((item) => ({
-          period: item,
-          startDate: "",
-          endDate: "",
-        }));
-      }
-      if (action.payload === "Half-Yearly") {
-        state.frequencyPeriods = HPERIODS.map((item) => ({
-          period: item,
-          startDate: "",
-          endDate: "",
-        }));
-      }
-      if (action.payload === "Yearly") {
-        state.frequencyPeriods = YPERIODS.map((item) => ({
-          period: item,
-          startDate: "",
-          endDate: "",
-        }));
-      }
+    handleChange: (state: IAddService, action) => {
+      const { name, value } = action.payload;
+      state[name] = value;
     },
-    repeateStartAndEndDates(state) {
-      if (state.repeated) {
-        return;
-      }
-
-      let startDatesUpdated: boolean = false;
-      let endDatesUpdated: boolean = false;
-
-      let updateDatesForRemaining = ({ index, type, date }: UpdateDate) => {
-        for (let i = index; i <= state.frequencyPeriods.length - 1; i++) {
-          state.frequencyPeriods[i][type] =
-            date.split(",")[0] + ", " + state.frequencyPeriods[i].period;
-        }
-      };
-
-      for (let i = state.frequencyPeriods.length - 1; i >= 0; i--) {
-        let existingStartDate = state.frequencyPeriods[i].startDate;
-        let existingEndDate = state.frequencyPeriods[i].endDate;
-
-        if (existingStartDate && !startDatesUpdated) {
-          updateDatesForRemaining({
-            index: i,
-            type: "startDate",
-            date: existingStartDate,
-          });
-          startDatesUpdated = true;
-        }
-
-        if (existingEndDate && !endDatesUpdated) {
-          updateDatesForRemaining({
-            index: i,
-            type: "endDate",
-            date: existingEndDate,
-          });
-          endDatesUpdated = true;
-        }
-      }
-      state.repeated = true;
+    addChecklist(state: IAddService, action) {
+      state.checklists.push(action.payload);
     },
-
-    updateFrequencyDate(state, action: PayloadAction<UpdateFrequencyPayload>) {
-      const { index, name, value } = action.payload;
-      state.frequencyPeriods[index][name] = value;
+    updateChecklistName(state: IAddService, action) {
+      state.checklists[action.payload.index].name = action.payload.name;
     },
-    updateMilestoneName(state, action: PayloadAction<UpdateMileStoneName>) {
-      state.mileStones[action.payload.index].name = action.payload.value;
+    deleteChecklist(state: IAddService, action) {
+      state.checklists.splice(action.payload, 1);
     },
-    addMilestone(state) {
-      state.mileStones.push({
-        name: "",
-        checklist: [],
-        id: uuidv4(),
-      });
+    addChecklistItem(state: IAddService, action) {
+      state.checklists[action.payload.index].checklistItems.push(
+        ...action.payload.items
+      );
     },
-    deleteMilestone(state, action: PayloadAction<number>) {
-      state.mileStones.splice(action.payload, 1);
+    deleteChecklistItem(state: IAddService, action) {
+      state.checklists[action.payload.checklistIndex].checklistItems.splice(
+        action.payload.itemIndex,
+        1
+      );
     },
-    addMilestoneChecklistItem(state, action: PayloadAction<number>) {
-      state.mileStones[action.payload].checklist.push("");
+    updateChecklistItem(state: IAddService, action) {
+      const { itemIndex, checklistIndex, data } = action.payload;
+      state.checklists[checklistIndex].checklistItems[itemIndex] = data;
     },
-    updateChecklistItemName(state, action: PayloadAction<UpdateChecklistItem>) {
-      const { index, cIndex, value } = action.payload;
-      state.mileStones[index].checklist[cIndex] = value;
+    addMilestone(state: IAddService, action) {
+      state.milestones.push(action.payload);
     },
-    deleteMilestoneChecklistItem(
-      state,
-      action: PayloadAction<DeleteChecklistItem>
-    ) {
-      let { mIndex, cIndex } = action.payload;
-      state.mileStones[mIndex].checklist.splice(cIndex, 1);
+    updateMilestone(state: IAddService, action) {
+      state.milestones[action.payload.index] = action.payload.data;
     },
-    reArrangeMilestones(state, action) {
-      state.mileStones = action.payload;
+    deleteMilestone(state: IAddService, action) {
+      state.milestones.splice(action.payload, 1);
     },
-    addContentBlock(state, action: PayloadAction<string>) {
-      state.description.push({
-        title: action.payload,
-        id: uuidv4(),
-        items: [],
-      });
+    addStageOfWork(state: IAddService, action) {
+      state.stageOfWork.push(action.payload);
     },
-    addTextContent(state, action: PayloadAction<{ index: number }>) {
-      let contentBlockIndex = action.payload.index;
-      state.description[contentBlockIndex].items.push({
-        type: "text",
-        id: uuidv4(),
-        description: "",
-        items: [],
-      });
+    updateStageOfWork(state: IAddService, action) {
+      state.stageOfWork[action.payload.index] = action.payload.data;
     },
-    addAccordionContent(state, action: PayloadAction<AddAccordionContent>) {
-      let contentBlockIndex = action.payload.index;
-      state.description[contentBlockIndex].items.push({
-        type: "accordion",
-        id: uuidv4(),
-        description: "",
-        items: [
-          {
-            ...action.payload.data,
-            id: uuidv4(),
-            items: [],
-          },
-        ],
-      });
+    deleteStageOfWork(state: IAddService, action) {
+      state.stageOfWork.splice(action.payload, 1);
+    },
+    addSubTask(state: IAddService, action) {
+      state.subTasks.push(action.payload);
+    },
+    updateSubTask(state: IAddService, action) {
+      state.subTasks[action.payload.index] = action.payload.data;
+    },
+    deleteSubTask(state: IAddService, action) {
+      state.subTasks.splice(action.payload, 1);
     },
   },
 });
@@ -187,21 +105,24 @@ export const addServiceSlice = createSlice({
 export const addServiceState = (state: RootState) => state.addService;
 
 export const {
-  addDocument,
-  updateServiceType,
-  updateFrequency,
-  updateFrequencyDate,
-  updateMilestoneName,
+  addChecklist,
+  addChecklistItem,
+  updateChecklistName,
+  deleteChecklist,
+  deleteChecklistItem,
+  updateChecklistItem,
   addMilestone,
+  updateMilestone,
   deleteMilestone,
-  addMilestoneChecklistItem,
-  deleteMilestoneChecklistItem,
-  updateChecklistItemName,
-  repeateStartAndEndDates,
-  reArrangeMilestones,
-  addContentBlock,
-  addTextContent,
-  addAccordionContent,
+  addStageOfWork,
+  updateStageOfWork,
+  deleteStageOfWork,
+  addSubTask,
+  updateSubTask,
+  deleteSubTask,
+  handleChange,
+  setData,
+  resetData,
 } = addServiceSlice.actions;
 
 export default addServiceSlice.reducer;

@@ -1,44 +1,137 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Button, Divider, Paper } from "@mui/material";
 import { getCategories } from "api/services/categories";
+import {
+  createService,
+  getService,
+  updateService,
+} from "api/services/services";
 import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
+import { snack } from "components/toast";
+import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
-import { useQuery, UseQueryResult } from "react-query";
-import KnowYourServices from "views/services/know";
-import MileStones from "views/services/milestones";
-import Overview from "views/services/overview";
-import ServiceType from "views/services/servicetype";
-
-interface Category {
-  name: string;
-  image: string;
-  subCategories: [];
-}
-
-interface CategoryResponse {
-  data: Category[];
-}
+import { useEffect } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  addServiceState,
+  resetData,
+  setData,
+} from "redux/reducers/addServiceSlice";
+import { ResType } from "types";
+import BasicDetails from "views/services/BasicDetails";
+import Checklists from "views/services/Checklists";
+import MileStones from "views/services/Milestones";
+import StageOfWork from "views/services/StagesOfWork";
+import Subtasks from "views/services/SubTasks";
+import { GreyButton } from "views/taskboard/styles";
 
 function AddService() {
-  const { data, isLoading }: UseQueryResult<CategoryResponse, Error> = useQuery(
-    "categories",
-    getCategories
+  useTitle("Services");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const state = useSelector(addServiceState);
+  const { queryParams } = useQueryParams();
+  let serviceId = queryParams.serviceId;
+
+  const { data, isLoading }: ResType = useQuery(
+    ["service-details", serviceId],
+    getService,
+    {
+      onSuccess: (res: any) => {
+        dispatch(setData(res?.data));
+      },
+      enabled: !!serviceId,
+    }
   );
 
-  useTitle("Services");
+  useEffect(() => {
+    if (!serviceId) {
+      dispatch(resetData());
+    }
+  }, [serviceId, data]);
+
+  const { mutate } = useMutation(createService, {
+    onSuccess: () => {
+      snack.success("Service added successfully");
+      dispatch(resetData());
+      navigate("/services");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const { mutate: update } = useMutation(updateService, {
+    onSuccess: () => {
+      snack.success("Service updated successfully");
+      dispatch(resetData());
+      navigate("/services");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleSubmit = () => {
+    if (serviceId) {
+      update({
+        id: serviceId,
+        data: state,
+      });
+    } else {
+      mutate(state);
+    }
+  };
 
   if (isLoading) return <Loader />;
 
   return (
-    <Box p={3}>
+    <Box p={3} pb={15}>
       <BreadCrumbs page="addService" />
-      <Overview data={data} />
+      <BasicDetails />
       <Divider sx={{ my: 5 }} />
-      <ServiceType />
+      <Checklists />
       <Divider sx={{ my: 5 }} />
       <MileStones />
       <Divider sx={{ my: 5 }} />
-      <KnowYourServices />
+      <StageOfWork />
+      <Divider sx={{ my: 5 }} />
+      <Subtasks />
+      <Paper
+        elevation={3}
+        sx={{
+          ml: -3,
+          position: "fixed",
+          right: 0,
+          bottom: 0,
+          width: "100%",
+          zIndex: "100",
+          transition: "0.8s",
+        }}
+      >
+        <Box p={2} display="flex" justifyContent="flex-end" gap={2}>
+          <GreyButton
+            onClick={() => {
+              navigate("/services");
+            }}
+            size="large"
+            color="secondary"
+            variant="contained"
+          >
+            Cancel
+          </GreyButton>
+          <Button
+            onClick={handleSubmit}
+            size="large"
+            color="secondary"
+            variant="contained"
+          >
+            Submit
+          </Button>
+        </Box>
+      </Paper>
     </Box>
   );
 }

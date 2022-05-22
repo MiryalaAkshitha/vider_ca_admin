@@ -1,76 +1,63 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { getCategories } from "api/services/categories";
+import { getServices } from "api/services/services";
+import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
+import SearchContainer from "components/SearchContainer";
+import useFilteredData from "hooks/useFilteredData";
 import useTitle from "hooks/useTitle";
-import { useQuery, UseQueryResult } from "react-query";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { ResType } from "types";
 import ServiceCard from "views/services/ServiceCard";
 
-interface Category {
-  name: string;
-  image: string;
-  subCategories: [];
-}
-
-interface CategoryResponse {
-  data: Category[];
-}
-
 function Services() {
-  const { data, isLoading }: UseQueryResult<CategoryResponse, Error> = useQuery(
-    "categories",
-    getCategories
-  );
-
   useTitle("Services");
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const { data, isLoading }: ResType = useQuery("services", getServices);
+  const filteredData = useFilteredData(data?.data, ["name"], search);
 
   if (isLoading) return <Loader />;
 
   return (
     <Box p={3}>
       <Box textAlign="right" mt={2}>
-        <Link to="/services/add" style={{ textDecoration: "none" }}>
-          <Button variant="outlined" startIcon={<Add />} color="secondary">
-            Add Service
-          </Button>
-        </Link>
+        {data?.data?.length > 0 && (
+          <Link to="/services/add" style={{ textDecoration: "none" }}>
+            <Button variant="outlined" startIcon={<Add />} color="secondary">
+              Add Service
+            </Button>
+          </Link>
+        )}
       </Box>
-      <Grid container spacing={2} sx={{ mt: 1, maxWidth: 1200 }}>
-        <Grid item xs={4}>
-          <TextField fullWidth size="small" select label="Select Category">
-            {data?.data.map((option: any, index: any) => (
-              <MenuItem key={index} value={option.name}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={4}>
-          <TextField fullWidth size="small" select label="Select Sub Category">
-            {data?.data.map((option: any, index: any) => (
-              <MenuItem key={index} value={option.name}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-      </Grid>
+      <Box mt={2}>
+        {data?.data?.length > 0 && (
+          <SearchContainer
+            placeHolder="Search for a service"
+            onChange={setSearch}
+          />
+        )}
+      </Box>
       <Grid container spacing={2} sx={{ mt: 2 }}>
-        <Grid item xs={4}>
-          <ServiceCard />
-        </Grid>
-        <Grid item xs={4}>
-          <ServiceCard />
-        </Grid>
-        <Grid item xs={4}>
-          <ServiceCard />
-        </Grid>
-        <Grid item xs={4}>
-          <ServiceCard />
-        </Grid>
+        {filteredData?.map((service: any, index: number) => (
+          <Grid item xs={4}>
+            <ServiceCard data={service} key={index} />
+          </Grid>
+        ))}
       </Grid>
+      {data?.data?.length === 0 && (
+        <EmptyPage
+          title="No services found"
+          desc="You can add a service by clicking the button above."
+          btnTitle="Add Service"
+          btnAction={() => {
+            navigate("/services/add");
+          }}
+        />
+      )}
     </Box>
   );
 }

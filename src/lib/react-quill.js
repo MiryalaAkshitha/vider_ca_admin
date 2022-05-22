@@ -26,6 +26,7 @@ class ReactQuill extends React.Component {
     theme: "snow",
     modules: {},
     readOnly: false,
+    preserveWhitespace: false,
   };
 
   state = {
@@ -294,7 +295,8 @@ class ReactQuill extends React.Component {
         className={`quill ${this.props.className ?? ""}`}
         onKeyPress={this.props.onKeyPress}
         onKeyDown={this.props.onKeyDown}
-        onKeyUp={this.props.onKeyUp}>
+        onKeyUp={this.props.onKeyUp}
+      >
         {this.renderEditingArea()}
       </div>
     );
