@@ -1,154 +1,138 @@
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import {
-    Button, IconButton,
-    InputAdornment, TextField,
-    Typography
-} from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
+import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
+import { useMenu } from "context/MenuPopover";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ActionsMenu from "./ActionsMenu";
 
 const EstimatesTable = () => {
-    useTitle("Invoice Table");
+  useTitle("Invoice Table");
+  const [, setSearch] = useState("");
+  const navigate = useNavigate();
 
-    const [serachKeyword, setSearchKeyword] = useState("");
-    const navigate = useNavigate();
+  const handleAddNewInvoice = () => {
+    navigate("/invoicing/create-estimate");
+  };
 
-    const [actionsAnchorEl, setActionsAnchorEl] = useState<null | HTMLElement>(null);
+  return (
+    <Box p={3}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          margin: "20px 0",
+          justifyContent: "space-between",
+        }}
+      >
+        <SearchContainer
+          minWidth="400px"
+          placeHolder="Search for estimate"
+          onChange={setSearch}
+        />
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={handleAddNewInvoice}
+        >
+          + Add new estimate
+        </Button>
+      </Box>
+      <Table data={data || []} columns={columns} loading={false} />
+    </Box>
+  );
+};
 
-    const handleAddNewInvoice = () => {
-        navigate("/invoicing/create-estimate")
-    }
+const TableActions = () => {
+  const menu = useMenu();
 
-    const actionsIcon = (
-        <IconButton onClick={(e) => setActionsAnchorEl(e.currentTarget)}>
-            <MoreVertOutlinedIcon color="primary" />
-        </IconButton>
-    );
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    menu({
+      target: e.currentTarget,
+      position: "bottom-right",
+      options: [
+        {
+          label: "Edit",
+          action: () => {},
+        },
+        {
+          label: "View",
+          action: () => {},
+        },
+      ],
+    });
+  };
 
+  return (
+    <IconButton onClick={handleClick}>
+      <MoreVertOutlinedIcon color="primary" />
+    </IconButton>
+  );
+};
 
+const columns = [
+  {
+    key: "estimateNumber",
+    title: "Estimate number",
+  },
+  {
+    key: "client",
+    title: "Client name",
+  },
+  {
+    key: "estimateDate",
+    title: "Estimate Date",
+  },
+  {
+    key: "estimateAmount",
+    title: "Estimate Amount",
+  },
+  {
+    key: "actions",
+    title: "Actions",
+    render: () => <TableActions />,
+  },
+];
 
-    const columns = [
-        {
-            key: "estimateNumber",
-            title: "Estimate number",
-        },
-        {
-            key: "client",
-            title: "Client name",
-        },
-        {
-            key: "estimateDate",
-            title: "Estimate Date",
-        },
-        {
-            key: "estimateAmount",
-            title: "Estimate Amount",
-        },
-        {
-            key: "actions",
-            title: "Actions",
-        },
-    ];
+const data = [
+  {
+    estimateNumber: "INV365647",
+    client: "Doris Riley",
+    estimateDate: "11/09/2021",
+    estimateAmount: "1852 /-",
+  },
+  {
+    estimateNumber: "INV365647",
+    client: "Doris Riley",
+    estimateDate: "11/09/2021",
+    estimateAmount: "1852 /-",
+  },
+  {
+    estimateNumber: "INV365647",
+    client: "Doris Riley",
+    estimateDate: "11/09/2021",
+    estimateAmount: "1852 /-",
+  },
+  {
+    estimateNumber: "INV365647",
+    client: "Doris Riley",
+    estimateDate: "11/09/2021",
+    estimateAmount: "1852 /-",
+  },
+  {
+    estimateNumber: "INV365647",
+    client: "Doris Riley",
+    estimateDate: "11/09/2021",
+    estimateAmount: "1852 /-",
+  },
+  {
+    estimateNumber: "INV365647",
+    client: "Doris Riley",
+    estimateDate: "11/09/2021",
+    estimateAmount: "1852 /-",
+  },
+];
 
-    const data = [
-        {
-            estimateNumber: "INV365647",
-            client: "Doris Riley",
-            estimateDate: "11/09/2021",
-            estimateAmount: "1852 /-",
-            actions: actionsIcon,
-        },
-        {
-            estimateNumber: "INV365647",
-            client: "Doris Riley",
-            estimateDate: "11/09/2021",
-            estimateAmount: "1852 /-",
-            actions: actionsIcon,
-        },
-        {
-            estimateNumber: "INV365647",
-            client: "Doris Riley",
-            estimateDate: "11/09/2021",
-            estimateAmount: "1852 /-",
-            actions: actionsIcon,
-        },
-        {
-            estimateNumber: "INV365647",
-            client: "Doris Riley",
-            estimateDate: "11/09/2021",
-            estimateAmount: "1852 /-",
-            actions: actionsIcon,
-        },
-        {
-            estimateNumber: "INV365647",
-            client: "Doris Riley",
-            estimateDate: "11/09/2021",
-            estimateAmount: "1852 /-",
-            actions: actionsIcon,
-        },
-        {
-            estimateNumber: "INV365647",
-            client: "Doris Riley",
-            estimateDate: "11/09/2021",
-            estimateAmount: "1852 /-",
-            actions: actionsIcon,
-        },
-    ];
-
-    return (
-        <Box p={3}>
-            <Box sx={{
-                alignItems: "center",
-                margin: "20px 0",
-                display: "flex",
-                justifyContent: "space-between"
-            }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        margin: "20px 0",
-                    }}
-                >
-
-                    <TextField
-                        sx={{ width: "500px" }}
-                        label={<Typography sx={{ fontSize: "14px" }}>Search by Name / Client Type</Typography>}
-                        variant="outlined"
-                        value={serachKeyword}
-                        onChange={(e) => {
-                            setSearchKeyword(e.target.value);
-                        }}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <SearchOutlinedIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Box>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    sx={{ height: "55px" }}
-                    onClick={handleAddNewInvoice}
-                >
-                    + Add new estimate
-                </Button>
-            </Box>
-            <Table data={data || []} columns={columns} loading={false} />
-            <ActionsMenu
-                actionsAnchorEl={actionsAnchorEl}
-                setActionsAnchorEl={setActionsAnchorEl}
-            />
-        </Box>
-    );
-}
 export default EstimatesTable;

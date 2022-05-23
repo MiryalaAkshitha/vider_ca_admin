@@ -1,31 +1,38 @@
 import loadable from "@loadable/component";
 import GlobalDrawers from "./GlobalDrawers";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ValidateAccess from "components/ValidateAccess";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { Permissions } from "utils/permissons";
 import PageWithPermission from "components/PageWithPermission";
 
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
-const SideNavBar = loadable(() => import("pages/invoicing/SideNavBar"));
-const InvoicingDashboard = loadable(
-  () => import("pages/invoicing/InvoicingDashboard")
-);
+const Invoicing = loadable(() => import("pages/invoicing"));
+const InvoicingDashboard = loadable(() => import("pages/invoicing/Dashboard"));
 const Invoices = loadable(() => import("pages/invoicing/invoices"));
 const Receipts = loadable(() => import("pages/invoicing/Receipts"));
 const Estimates = loadable(() => import("pages/invoicing/Estimates"));
-const ClientsDashboard = loadable(
-  () => import("pages/invoicing/ClientsDashboard")
-);
+const InvocingClients = loadable(() => import("pages/invoicing/Clients"));
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
-const InvoicePreview = loadable(() => import("views/invoicing/billing/invoices/createInvoice/InvoicePreview"));
-const SentEmail = loadable(() => import("views/invoicing/billing/invoices/createInvoice/SendEmail"));
+const InvoicePreview = loadable(
+  () => import("views/invoicing/billing/invoices/createInvoice/InvoicePreview")
+);
+const SentEmail = loadable(
+  () => import("views/invoicing/billing/invoices/createInvoice/SendEmail")
+);
 const CreateEstimate = loadable(
   () => import("views/invoicing/billing/Estimates/createEstimate/index")
 );
-const EstimatePreview = loadable(() => import("views/invoicing/billing/Estimates/createEstimate/EstimatePreview"));
+const EstimatePreview = loadable(
+  () =>
+    import("views/invoicing/billing/Estimates/createEstimate/EstimatePreview")
+);
 const CreateReceipt = loadable(
   () => import("views/invoicing/billing/Receipts/createReceipt/index")
 );
@@ -126,19 +133,28 @@ function RoutesContainer() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
 
-          <Route path="invoicing" element={<SideNavBar />}>
-            <Route index element={<InvoicingDashboard />} />
+          <Route path="invoicing" element={<Invoicing />}>
+            <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<InvoicingDashboard />} />
             <Route path="invoices" element={<Invoices />} />
-            <Route path="clients" element={<ClientsDashboard />} />
+            <Route path="clients" element={<InvocingClients />} />
             <Route path="estimates" element={<Estimates />} />
             <Route path="receipts" element={<Receipts />} />
           </Route>
           <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
           <Route path="invoicing/send-email" element={<SentEmail />} />
-          <Route path="invoicing/invoice-preview" element={<InvoicePreview />} />
-          <Route path="invoicing/create-estimate" element={<CreateEstimate />} />
-          <Route path="invoicing/estimate-preview" element={<EstimatePreview />} />
+          <Route
+            path="invoicing/invoice-preview"
+            element={<InvoicePreview />}
+          />
+          <Route
+            path="invoicing/create-estimate"
+            element={<CreateEstimate />}
+          />
+          <Route
+            path="invoicing/estimate-preview"
+            element={<EstimatePreview />}
+          />
           <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
 
           <Route path="storage" element={<Storage />}>
