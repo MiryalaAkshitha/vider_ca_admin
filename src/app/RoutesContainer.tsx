@@ -20,17 +20,8 @@ const ClientsDashboard = loadable(
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
-<<<<<<< HEAD
-const Preview = loadable(
-  () => import("views/invoicing/billing/invoices/createInvoice/Preview")
-);
-const SentEmail = loadable(
-  () => import("views/invoicing/billing/invoices/createInvoice/SendEmail")
-);
-=======
 const InvoicePreview = loadable(() => import("views/invoicing/billing/invoices/createInvoice/InvoicePreview"));
 const SentEmail = loadable(() => import("views/invoicing/billing/invoices/createInvoice/SendEmail"));
->>>>>>> a2a82be (estimates ui and receipts ui)
 const CreateEstimate = loadable(
   () => import("views/invoicing/billing/Estimates/createEstimate/index")
 );
