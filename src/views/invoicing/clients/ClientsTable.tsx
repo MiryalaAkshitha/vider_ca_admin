@@ -1,13 +1,11 @@
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import { Button, IconButton } from "@mui/material";
+import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
-import { useMenu } from "context/MenuPopover";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 
 const ClientsTable = () => {
     useTitle("Invoice Table");
