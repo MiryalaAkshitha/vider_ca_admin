@@ -4,6 +4,7 @@ import Appbar from "./Appbar";
 import MainContent from "./MainContent";
 import SideNav from "./SideNav";
 import { Outlet } from "react-router-dom";
+import BottomAppbar from "./BottomAppbar";
 
 function Layout() {
   return (
@@ -14,6 +15,7 @@ function Layout() {
       <MainContent>
         <Outlet />
       </MainContent>
+      <BottomAppbar />
     </Box>
   );
 }
