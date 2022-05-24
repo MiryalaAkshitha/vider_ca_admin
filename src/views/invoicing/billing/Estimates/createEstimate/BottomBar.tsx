@@ -25,6 +25,10 @@ function BottomBar() {
     navigate("/invoicing/estimate-preview")
   }
 
+  const handleCancelClick = () => {
+    navigate("/invoicing/estimates")
+  }
+
   let iCalcs = new InvoiceCalculations(state);
 
   const onSubmit = () => {
@@ -74,6 +78,15 @@ function BottomBar() {
             variant="contained"
           >
             Save and send
+          </Button>
+          <Button
+            onClick={handleCancelClick}
+            size="large"
+            color="inherit"
+            variant="contained"
+            sx={{ ml: "20px" }}
+          >
+            Cancel
           </Button>
         </Box>
         <Box>

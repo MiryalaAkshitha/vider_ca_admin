@@ -44,7 +44,7 @@ const Receipt = () => {
             <Box display="flex" justifyContent="center" p={3}>
                 <Typography variant="h4">RECEIPT</Typography>
             </Box>
-            <Box p={7} sx={{ margin: "50px 0 100px 0" }}>
+            <Box p={7} sx={{ margin: "0 0 100px 0" }}>
                 <TextField sx={{ width: "500px" }} id="outlined-basic" label="Receipt number" variant="outlined" />
                 <br />
                 <TextField

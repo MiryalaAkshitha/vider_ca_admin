@@ -16,7 +16,8 @@ const InvoicingDashboard = loadable(() => import("pages/invoicing/Dashboard"));
 const Invoices = loadable(() => import("pages/invoicing/invoices"));
 const Receipts = loadable(() => import("pages/invoicing/Receipts"));
 const Estimates = loadable(() => import("pages/invoicing/Estimates"));
-const InvocingClients = loadable(() => import("pages/invoicing/Clients"));
+const ClientsTable = loadable(() => import("views/invoicing/clients/ClientsTable"));
+const ClientDashboard = loadable(() => import("pages/invoicing/Clients"));
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
@@ -36,6 +37,11 @@ const EstimatePreview = loadable(
 const CreateReceipt = loadable(
   () => import("views/invoicing/billing/Receipts/createReceipt/index")
 );
+const Overview = loadable(() => import("views/invoicing/clients/clientDashboard/Overview"));
+const UnbilledTasks = loadable(() => import("views/invoicing/clients/clientDashboard/UnbilledTasks"));
+const BilledTask = loadable(() => import("views/invoicing/clients/clientDashboard/BilledTask"));
+const PaymentReceived = loadable(() => import("views/invoicing/clients/clientDashboard/PaymentReceived"));
+
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
@@ -137,7 +143,19 @@ function RoutesContainer() {
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<InvoicingDashboard />} />
             <Route path="invoices" element={<Invoices />} />
-            <Route path="clients" element={<InvocingClients />} />
+            <Route path="clients" >
+              <Route index element={<ClientsTable />} />
+              <Route path="id" element={<ClientDashboard />}>
+                <Route path="overview" element={<Overview />} />
+                <Route path="unbilled-tasks" element={<UnbilledTasks />} />
+                <Route path="billed-tasks" element={<BilledTask />} />
+                <Route path="payments-received" element={<PaymentReceived />} />
+
+
+              </Route>
+
+            </Route>
+
             <Route path="estimates" element={<Estimates />} />
             <Route path="receipts" element={<Receipts />} />
           </Route>

@@ -1,149 +1,28 @@
+import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import {
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
+  Button, FormControl, IconButton, InputLabel, MenuItem, Select
 } from "@mui/material";
 import { Box } from "@mui/system";
+import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
+import { useMenu } from "context/MenuPopover";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ActionsMenu from "./ActionsMenu";
-import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const InvoiceTable = () => {
   useTitle("Invoice Table");
 
-  const [serachKeyword, setSearchKeyword] = useState("");
+  const [, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const [actionsAnchorEl, setActionsAnchorEl] = useState<null | HTMLElement>(
-    null
-  );
   const [filterBy, setFilterBy] = useState("");
 
   const handleAddNewInvoice = () => {
     navigate("/invoicing/create-invoice");
   };
 
-  const actionsIcon = (
-    <IconButton onClick={(e) => setActionsAnchorEl(e.currentTarget)}>
-      <MoreVertOutlinedIcon color="primary" />
-    </IconButton>
-  );
-
-  const columns = [
-    {
-      key: "invoiceDate",
-      title: "Invoice Date",
-    },
-    {
-      key: "invoiceNumber",
-      title: "Invoice number",
-    },
-    {
-      key: "client",
-      title: "Client name",
-    },
-    {
-      key: "invoiceAmount",
-      title: "Invoice Amount",
-    },
-    {
-      key: "dueDate",
-      title: "Due Date",
-    },
-    {
-      key: "balanceDue",
-      title: "Balance Due",
-    },
-    {
-      key: "status",
-      title: "Invoice Status",
-    },
-    {
-      key: "actions",
-      title: "Actions",
-    },
-  ];
-
-  const data = [
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Paid",
-      actions: actionsIcon,
-    },
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Overdue",
-      actions: actionsIcon,
-    },
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Canceled",
-      actions: actionsIcon,
-    },
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Paid",
-      actions: actionsIcon,
-    },
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Paid",
-      actions: actionsIcon,
-    },
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Paid",
-      actions: actionsIcon,
-    },
-    {
-      invoiceNumber: "INV365647",
-      client: "Doris Riley",
-      invoiceDate: "11/09/2021",
-      dueDate: "11/09/2021",
-      invoiceAmount: "1852 /-",
-      balanceDue: "850 /-",
-      status: "Paid",
-      actions: actionsIcon,
-    },
-  ];
 
   return (
     <Box p={3}>
@@ -163,25 +42,10 @@ const InvoiceTable = () => {
             margin: "20px 0",
           }}
         >
-          <TextField
-            sx={{ width: "500px" }}
-            label={
-              <Typography sx={{ fontSize: "14px" }}>
-                Search by Name / Client Type
-              </Typography>
-            }
-            variant="outlined"
-            value={serachKeyword}
-            onChange={(e) => {
-              setSearchKeyword(e.target.value);
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchOutlinedIcon />
-                </InputAdornment>
-              ),
-            }}
+          <SearchContainer
+            minWidth="400px"
+            placeHolder="Search for estimate"
+            onChange={setSearch}
           />
           <Button
             variant="outlined"
@@ -189,12 +53,11 @@ const InvoiceTable = () => {
               minWidth: "auto",
               marginLeft: "10px",
               marginRight: "10px",
-              height: "55px",
             }}
           >
             <ImportExportOutlinedIcon />
           </Button>
-          <FormControl sx={{ minWidth: "140px" }}>
+          <FormControl size="small" sx={{ minWidth: "140px" }}>
             <InputLabel id=" ">Filter By</InputLabel>
             <Select
               labelId="filter"
@@ -215,18 +78,163 @@ const InvoiceTable = () => {
         <Button
           variant="outlined"
           color="secondary"
-          sx={{ height: "55px" }}
           onClick={handleAddNewInvoice}
         >
           + Add new invoice
         </Button>
       </Box>
       <Table data={data || []} columns={columns} loading={false} />
-      <ActionsMenu
-        actionsAnchorEl={actionsAnchorEl}
-        setActionsAnchorEl={setActionsAnchorEl}
-      />
     </Box>
   );
 };
+
+
+const TableActions = () => {
+  const menu = useMenu();
+  const navigate = useNavigate()
+
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    menu({
+      target: e.currentTarget,
+      position: "bottom-right",
+      options: [
+        {
+          label: "Download Invoice PDF",
+          action: () => {
+          },
+        },
+        {
+          label: "View Invoice",
+          action: () => {
+          },
+        },
+        {
+          label: "Edit Invoice",
+          action: () => {
+            navigate("/invoicing/create-invoice")
+          },
+        },
+        {
+          label: "Create Payment Receipt",
+          action: () => { },
+        },
+        {
+          label: "Cancel Invoice",
+          action: () => { },
+        },
+      ],
+    });
+  };
+
+  return (
+    <IconButton onClick={handleClick}>
+      <MoreVertOutlinedIcon color="primary" />
+    </IconButton>
+  );
+};
+
+const columns = [
+  {
+    key: "invoiceDate",
+    title: "Invoice Date",
+  },
+  {
+    key: "invoiceNumber",
+    title: "Invoice number",
+  },
+  {
+    key: "client",
+    title: "Client name",
+  },
+  {
+    key: "invoiceAmount",
+    title: "Invoice Amount",
+  },
+  {
+    key: "dueDate",
+    title: "Due Date",
+  },
+  {
+    key: "balanceDue",
+    title: "Balance Due",
+  },
+  {
+    key: "status",
+    title: "Invoice Status",
+  },
+  {
+    key: "actions",
+    title: "Actions",
+    render: () => <TableActions />,
+  },
+];
+
+const data = [
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Paid",
+  },
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Overdue",
+  },
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Canceled",
+  },
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Paid",
+  },
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Paid",
+  },
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Paid",
+  },
+  {
+    invoiceNumber: "INV365647",
+    client: "Doris Riley",
+    invoiceDate: "11/09/2021",
+    dueDate: "11/09/2021",
+    invoiceAmount: "1852 /-",
+    balanceDue: "850 /-",
+    status: "Paid",
+  },
+];
+
+
 export default InvoiceTable;

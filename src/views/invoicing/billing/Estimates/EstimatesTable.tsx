@@ -54,12 +54,13 @@ const TableActions = () => {
       position: "bottom-right",
       options: [
         {
-          label: "Edit",
-          action: () => {},
+          label: "Generate Invoice",
+          action: () => {
+          },
         },
         {
-          label: "View",
-          action: () => {},
+          label: "Generate Receipt",
+          action: () => { },
         },
       ],
     });
