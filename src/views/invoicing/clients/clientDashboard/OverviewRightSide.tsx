@@ -65,7 +65,7 @@ const OverviewRightSide = () => {
             </Box>
             <Divider />
             <Box display="flex" alignItems="center">
-              <PieChartCard />
+              <PieChartCard data={pieData} colors={colors} width={230} height={190} cx={100} cy={100} />
               <Box>
                 <Box display="flex" alignItems="center">
                   <Box m={2} sx={{ width: "15px", height: "15px", bgcolor: "#FFD950" }}></Box>
@@ -75,7 +75,6 @@ const OverviewRightSide = () => {
                   <Box m={2} sx={{ width: "15px", height: "15px", bgcolor: "#4791FF" }}></Box>
                   <Typography variant="body2">Amount Due</Typography>
                 </Box>
-
               </Box>
             </Box>
           </Paper>
@@ -86,7 +85,7 @@ const OverviewRightSide = () => {
           <Typography p={1} variant="caption" component="div">Revenue Statistics</Typography>
           <Divider />
           <Box>
-            <BarChatCard />
+            <BarChatCard data={barData} barInfo={barInfo} width="100%" height={2.5} />
           </Box>
         </Paper>
       </Box>
@@ -98,3 +97,68 @@ const OverviewRightSide = () => {
 }
 
 export default OverviewRightSide
+
+const pieData = [
+  { name: "Group A", value: 50 },
+  { name: "Group B", value: 300 },
+
+];
+
+const colors = ["#FFD950", "#4791FF"];
+
+
+const barInfo = [
+  {
+    name: "pv",
+    color: "#8884d8"
+  },
+  {
+    name: "uv",
+    color: "#82ca9d"
+  },
+]
+
+const barData = [
+  {
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100
+  }
+]

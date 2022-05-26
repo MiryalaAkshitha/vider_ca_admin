@@ -27,18 +27,6 @@ const CardComponent = ({ title, value }) => {
   );
 }
 
-
-
-
-const data = [
-  { name: "Group A", value: 50 },
-  { name: "Group B", value: 300 },
-
-];
-
-const COLORS = ["#FFD950", "#4791FF"];
-
-const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
   cx,
   cy,
@@ -48,6 +36,7 @@ const renderCustomizedLabel = ({
   percent,
   index
 }: any) => {
+  const RADIAN = Math.PI / 180;
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -64,13 +53,13 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-const PieChartCard = () => {
+const PieChartCard = ({ data, colors, width, height, cx, cy }) => {
   return (
-    <PieChart width={230} height={190}>
+    <PieChart width={width} height={height}>
       <Pie
         data={data}
-        cx={100}
-        cy={100}
+        cx={cx}
+        cy={cy}
         labelLine={false}
         label={renderCustomizedLabel}
         outerRadius={80}
@@ -78,7 +67,7 @@ const PieChartCard = () => {
         dataKey="value"
       >
         {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
         ))}
       </Pie>
     </PieChart>
@@ -87,55 +76,12 @@ const PieChartCard = () => {
 
 
 
-const BarChatCard = () => {
+const BarChatCard = ({ data, barInfo, width, height }) => {
 
-  const data = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100
-    }
-  ]
+
 
   return (
-    <ResponsiveContainer width="100%" aspect={2.5}>
+    <ResponsiveContainer width={width} aspect={height}>
       <BarChart
         data={data}
         margin={{
@@ -150,8 +96,11 @@ const BarChatCard = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="pv" fill="#8884d8" />
-        <Bar dataKey="uv" fill="#82ca9d" />
+        {barInfo.map((item: any) => {
+
+          return (<Bar dataKey={item.name} fill={item.color} />);
+
+        })}
       </BarChart>
     </ResponsiveContainer>
   );

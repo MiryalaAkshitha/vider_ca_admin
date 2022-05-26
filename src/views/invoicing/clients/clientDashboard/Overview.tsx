@@ -45,7 +45,6 @@ const Overview = () => {
               <Grid mt={1} mb={1} item xs={7}>
                 <Typography variant="subtitle2">Venkat@jss.in</Typography>
               </Grid>
-
               <Grid xs={12}><Divider /></Grid>
               <Grid item xs={12}>
                 <Box mt={1} mb={1}><Typography variant="caption">Statutory details</Typography></Box>
@@ -60,7 +59,6 @@ const Overview = () => {
               <Grid mt={1} item xs={7}>
                 <Typography variant="subtitle2">APKSD46536</Typography>
               </Grid>
-
               <Grid mt={1} item xs={4}>
                 <Typography variant="caption">PAN number</Typography>
               </Grid>
@@ -82,7 +80,6 @@ const Overview = () => {
             </Grid>
             <Divider />
             <Box mt={1} mb={1}> <Typography variant="caption"> Contact person details</Typography></Box>
-
             <Divider />
             <Box mt={2} p={2} sx={{ width: "100%", border: "2px solid #182F531A", display: "flex", justifyContent: "space-between" }}>
               <Box>

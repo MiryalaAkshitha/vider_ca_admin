@@ -26,6 +26,9 @@ const SideNav = () => {
   const handleBillingEntitiesClick = () => {
     setBillingEntityOpen(!BillingEntityopen);
   };
+  const handleRecurringInvoicesClick = () => {
+    navigate("/invoicing/recurring-invoices");
+  };
 
   const handleEstimatesClick = () => {
     navigate("/invoicing/estimates");
@@ -103,7 +106,7 @@ const SideNav = () => {
               </ListItemIcon>
               <ListItemText primary="Receipts" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton sx={{ pl: 4 }} onClick={handleRecurringInvoicesClick}>
               <ListItemIcon>
                 <StarBorder />
               </ListItemIcon>
