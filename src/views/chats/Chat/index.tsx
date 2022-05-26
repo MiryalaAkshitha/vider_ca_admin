@@ -17,7 +17,7 @@ interface Props {
 }
 
 function Chat({ onClose }: Props) {
-  const { name, roomId, members } = useSelector(selectChats);
+  const { name, roomId, members, type } = useSelector(selectChats);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -49,21 +49,23 @@ function Chat({ onClose }: Props) {
           <Typography flex={1} variant="body1">
             {name}
           </Typography>
-          <Box display="flex" alignItems="center" gap="4px">
-            <Members
-              size="small"
-              data={members?.map((item) => ({
-                title: item?.fullName,
-                src: item?.imageUrl,
-              }))}
-            />
-            <Typography
-              variant="caption"
-              sx={{ display: "block", fontSize: 10 }}
-            >
-              ({members?.length} participants)
-            </Typography>
-          </Box>
+          {type === "GROUP" && (
+            <Box display="flex" alignItems="center" gap="4px">
+              <Members
+                size="small"
+                data={members?.map((item) => ({
+                  title: item?.fullName,
+                  src: item?.imageUrl,
+                }))}
+              />
+              <Typography
+                variant="caption"
+                sx={{ display: "block", fontSize: 10 }}
+              >
+                ({members?.length} participants)
+              </Typography>
+            </Box>
+          )}
         </Box>
         <Box display="flex">
           <IconButton size="small" onClick={handleClose}>
