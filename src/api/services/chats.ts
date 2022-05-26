@@ -17,7 +17,9 @@ const updateChatRoom = ({ id, data }) => {
 };
 
 const getChatRooms = ({ queryKey }) => {
-  return http.get("/chats/rooms", { params: { type: queryKey[1] } });
+  return http.get("/chats/rooms", {
+    params: { type: queryKey[1], taskId: queryKey[2] },
+  });
 };
 
 const readMessages = ({ queryKey }) => {

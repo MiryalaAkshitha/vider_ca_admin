@@ -11,7 +11,6 @@ interface Props extends DialogProps {
 }
 
 function AddGroupChat({ open, setOpen, taskData }: Props) {
-  let userId = localStorage.getItem("userId") || "";
   const queryClient = useQueryClient();
   const [state, setState] = useState<any>({
     name: "",
@@ -68,9 +67,7 @@ function AddGroupChat({ open, setOpen, taskData }: Props) {
         onChange={(_, value) => {
           setState({ ...state, members: value });
         }}
-        options={
-          taskData?.members?.filter((item: any) => item?.id !== +userId) || []
-        }
+        options={taskData?.members || []}
         getOptionLabel={(option: any) => option.fullName}
         renderInput={(params) => (
           <TextField {...params} label="Members" variant="outlined" />

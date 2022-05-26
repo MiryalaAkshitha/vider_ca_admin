@@ -52,7 +52,7 @@ function RecentChats() {
       setChatData({
         name: data?.name,
         image: data?.image,
-        type: "GROUP",
+        type: "INDIVIDUAL",
         members: data?.members,
         roomId: data?.roomId,
         messages: data?.messages,

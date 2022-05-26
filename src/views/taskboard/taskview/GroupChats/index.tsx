@@ -16,7 +16,7 @@ function GroupChats({ open, setOpen, taskData }: Props) {
   const [openAddGroupChat, setOpenAddGroupChat] = useState(false);
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-group-chats", "GROUP"],
+    ["task-group-chats", "GROUP", taskData?.id],
     getChatRooms,
     {
       refetchInterval: 3000,
