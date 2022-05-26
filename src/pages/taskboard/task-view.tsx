@@ -13,7 +13,7 @@ import Expenditure from "views/taskboard/taskview/expenditure";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
-import TaskHeader from "./TaskHeader";
+import TaskHeader from "../../views/taskboard/taskview/TaskHeader";
 
 function TaskDetails() {
   useTitle("Task Details");

@@ -68,7 +68,7 @@ function AddMember({ open, setOpen }: DialogProps) {
               label="role"
               options={data?.data?.map((item: any) => ({
                 label: item.name,
-                value: item.name,
+                value: item.id,
               }))}
             />
           </Box>

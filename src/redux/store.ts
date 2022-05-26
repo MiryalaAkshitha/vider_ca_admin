@@ -8,6 +8,7 @@ import createInvoiceReducer from "./reducers/createInvoiceSlice";
 import signUpSliceReducer from "./reducers/signUpSlice";
 import addServiceReducer from "./reducers/addServiceSlice";
 import createReceiptReducer from "./reducers/createReceiptSlice";
+import chatsReducer from "./reducers/chatsSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     createInvoice: createInvoiceReducer,
     createReceipt: createReceiptReducer,
     addService: addServiceReducer,
+    chats: chatsReducer,
   },
 });
 

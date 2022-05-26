@@ -7,14 +7,14 @@ import taskboard from "./icons/taskboard.svg";
 import calendar from "./icons/calendar.svg";
 import checklist_PosterImage from "./icons/checklist_PosterImage.png";
 import handshake_PosterImage from "./icons/handshake_PosterImage.png";
-import socialmedia_PosterImage from"./icons/socialmedia_PosterImage.png";
-import calendar_PosterImage from"./icons/calendar_PosterImage.png";
-import taskCompleted from"./icons/taskCompleted.svg";
-import totalClients from"./icons/totalClients.svg";
-import taskInprogress from"./icons/taskInprogress.svg";
-import taskTodo from"./icons/taskTodo.svg";
-import taskUnderReview from"./icons/taskUnderReview.svg";
-import totalTasks from"./icons/totalTasks.svg";
+import socialmedia_PosterImage from "./icons/socialmedia_PosterImage.png";
+import calendar_PosterImage from "./icons/calendar_PosterImage.png";
+import taskCompleted from "./icons/taskCompleted.svg";
+import totalClients from "./icons/totalClients.svg";
+import taskInprogress from "./icons/taskInprogress.svg";
+import taskTodo from "./icons/taskTodo.svg";
+import taskUnderReview from "./icons/taskUnderReview.svg";
+import totalTasks from "./icons/totalTasks.svg";
 import invoicing from "./icons/invoicing.svg";
 import clients from "./icons/clients.svg";
 import storage from "./icons/storage.svg";
@@ -43,7 +43,7 @@ import audio from "./icons/filetypes/audio.png";
 import recurring from "./icons/recurring.svg";
 import singleLine from "./icons/singleLine.svg";
 import email from "./icons/email.svg";
-import address from  "./icons/address.svg";
+import address from "./icons/address.svg";
 import multiLine from "./icons/multiLine.svg";
 import name from "./icons/name.svg";
 import checkBox from "./icons/checkBox.svg";
@@ -69,6 +69,7 @@ import newlogo from "./images/newlogo.png";
 import emptyLicenses from "./images/emptyLicenses.png";
 import createFormLanding from "./images/createFormLanding.png";
 import clientFormCard from "./images/clientFormCard.png";
+import file from "./icons/file.png";
 
 export {
   quote,
@@ -87,7 +88,7 @@ export {
   newlogo,
   emptyLicenses,
   createFormLanding,
-  clientFormCard
+  clientFormCard,
 };
 
 export const icons = {
@@ -144,5 +145,6 @@ export const icons = {
   numbers,
   fieldDate,
   checkBox,
-  address
+  address,
+  file,
 };

@@ -4,7 +4,6 @@ import { getTasks } from "api/services/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
-import { usePermissions } from "context/PermissionsProvider";
 import useQueryParams from "hooks/useQueryParams";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
@@ -16,7 +15,6 @@ import Filters from "views/taskboard/Filters";
 import TaskTable from "views/taskboard/table";
 
 function TaskBoard() {
-  const { permissions } = usePermissions();
   const { queryParams, setQueryParams } = useQueryParams();
   const view = (queryParams.view as ViewType) || "grid";
   const { search, appliedFilters } = useSelector(selectTaskBoard);

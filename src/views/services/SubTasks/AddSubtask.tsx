@@ -1,9 +1,9 @@
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import DrawerWrapper from "components/DrawerWrapper";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addMilestone, addSubTask } from "redux/reducers/addServiceSlice";
+import { addSubTask } from "redux/reducers/addServiceSlice";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 
 function AddSubtask({ open, setOpen }: DialogProps) {

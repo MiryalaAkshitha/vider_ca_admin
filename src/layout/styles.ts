@@ -121,3 +121,15 @@ export const StyledNotificationsTabs = styled(Tab)(({ theme }) => ({
     backgroundColor: "none",
   },
 }));
+
+export const StyledBottomAppbar = styled("div")(() => ({
+  position: "fixed",
+  bottom: 0,
+  width: "100%",
+  background: "white",
+  boxShadow: "0px -1px 3px rgba(0, 0, 0, 0.1)",
+  display: "flex",
+  padding: "10px 0px",
+  paddingLeft: 100,
+  gap: 20,
+}));

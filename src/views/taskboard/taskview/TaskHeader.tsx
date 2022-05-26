@@ -1,11 +1,11 @@
-import { DeleteOutlined } from "@mui/icons-material";
+import { ChatOutlined, DeleteOutlined } from "@mui/icons-material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import { Box, Button } from "@mui/material";
 import { deleteTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
+import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import { useTaskData } from "context/TaskData";
-import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +15,14 @@ import {
   StyledProfileNavItem,
 } from "views/clients/clients/styles";
 import TerminationDialog from "views/taskboard/taskview/TerminationDialog";
+import GroupChats from "./GroupChats";
 
 function TaskHeader({ onChange }: any) {
   const confirm = useConfirm();
   const navigate = useNavigate();
   const taskData: any = useTaskData();
   const [open, setOpen] = useState(false);
+  const [openGroupChats, setOpenGroupChats] = useState(false);
 
   const { mutate: taskDelete } = useMutation(deleteTask, {
     onSuccess: (res) => {
@@ -55,6 +57,12 @@ function TaskHeader({ onChange }: any) {
         <BreadCrumbs page="taskView" />
         <Box display="flex" gap={1}>
           <Button
+            onClick={() => setOpenGroupChats(true)}
+            startIcon={<ChatOutlined color="secondary" />}
+          >
+            Group Chat
+          </Button>
+          <Button
             onClick={() => setOpen(true)}
             startIcon={<CancelPresentationIcon color="secondary" />}
           >
@@ -80,6 +88,11 @@ function TaskHeader({ onChange }: any) {
         ))}
       </StyledProfileNav>
       <TerminationDialog open={open} setOpen={setOpen} />
+      <GroupChats
+        open={openGroupChats}
+        setOpen={setOpenGroupChats}
+        taskData={taskData}
+      />
     </Box>
   );
 }

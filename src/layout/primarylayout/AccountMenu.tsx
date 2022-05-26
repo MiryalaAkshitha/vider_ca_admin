@@ -18,6 +18,7 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     window.location.href = "/";
   };
 

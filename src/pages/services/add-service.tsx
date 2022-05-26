@@ -21,7 +21,7 @@ import {
 import { ResType } from "types";
 import BasicDetails from "views/services/BasicDetails";
 import Checklists from "views/services/Checklists";
-import MileStones from "views/services/milestones";
+import MileStones from "views/services/Milestones";
 import StageOfWork from "views/services/StagesOfWork";
 import Subtasks from "views/services/SubTasks";
 import { GreyButton } from "views/taskboard/styles";
@@ -49,7 +49,7 @@ function AddService() {
     if (!serviceId) {
       dispatch(resetData());
     }
-  }, [serviceId, data]);
+  }, [serviceId, data, dispatch]);
 
   const { mutate } = useMutation(createService, {
     onSuccess: () => {

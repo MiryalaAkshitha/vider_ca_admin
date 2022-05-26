@@ -30,9 +30,9 @@ function CreateNonRecurringTask() {
   const { mutate, isLoading } = useMutation(createTask, {
     onSuccess: () => {
       snack.success("Task Created");
+      queryClient.invalidateQueries("tasks");
       delete queryParams.createTask;
       setQueryParams({ ...queryParams });
-      queryClient.invalidateQueries("tasks");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
