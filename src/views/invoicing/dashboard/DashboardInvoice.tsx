@@ -5,6 +5,7 @@ import Table from "components/Table";
 import { useState } from "react";
 import { BarChatCard, PieChartCard } from "../clients/clientDashboard/OverviewCard";
 import AgeingDues from "./AgeingDues";
+import FavIcon from "./FavIcon";
 
 function DashboardInvoice() {
 
@@ -102,7 +103,7 @@ function DashboardInvoice() {
               </FormControl>
             </Box>
             <Divider />
-            <PieChartCard data={pieData} colors={colors} width={450} height={250} cx={230} cy={120} />
+            <PieChartCard data={pieData} colors={pieColors} width={450} height={250} cx={230} cy={120} />
             <Divider />
             <Box p={2} display="flex" justifyContent="space-evenly">
               <Box display="flex" alignItems="center">
@@ -118,6 +119,8 @@ function DashboardInvoice() {
         </Grid>
       </Grid>
       <AgeingDues />
+      <FavIcon />
+
     </Box >
   );
 }
@@ -139,7 +142,7 @@ const pieData = [
 
 ];
 
-const colors = ["#FFD950", "#4791FF"];
+const pieColors = ["#FFD950", "#4791FF"];
 
 
 const barInfo = [
@@ -154,12 +157,12 @@ const barInfo = [
 ]
 const barData = [
   {
-    name: "Page A",
+    name: "Feb-23",
     amountReceived: 4000,
     amountGenerated: 2400,
   },
   {
-    name: "Page B",
+    name: "Jan-2",
     amountReceived: 3000,
     amountGenerated: 1398,
   },
