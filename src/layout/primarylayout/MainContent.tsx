@@ -10,6 +10,7 @@ function MainContent(props: any) {
       sx={{
         flexGrow: 1,
         ml: { sm: `calc(${theme.spacing(9)} + 1px)` },
+        pb: 10,
       }}
     >
       <Toolbar />

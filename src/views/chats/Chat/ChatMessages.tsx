@@ -32,25 +32,47 @@ const ChatMessages = () => {
 
   useEffect(() => {
     if (!elementRef.current) return;
-    const config = { childList: true, subtree: true };
 
-    let elementScrollHeight = elementRef.current.scrollHeight;
-    elementRef.current.scrollTo({
-      top: elementScrollHeight,
-      behavior: "smooth",
-    });
+    const config = {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      CharacterData: true,
+    };
+
+    function elementScroll() {
+      let elementScrollHeight = elementRef.current!.scrollHeight;
+      elementRef.current!.scrollTo({
+        top: elementScrollHeight,
+      });
+    }
+
+    let images = elementRef.current!.querySelectorAll("img");
+
+    if (!images.length) {
+      elementScroll();
+    } else {
+      for (let i = 0; i < Array.from(images).length; i++) {
+        images[i].addEventListener("load", () => {
+          if (i !== images.length - 1) return;
+          elementScroll();
+        });
+      }
+    }
 
     const callback = (mutationList: MutationRecord[]) => {
       for (const mutation of mutationList) {
-        if (
-          mutation.type === "childList" ||
-          mutation.type === "characterData"
-        ) {
-          elementScrollHeight = elementRef!.current!.scrollHeight;
-          elementRef!.current!.scrollTo({
-            top: elementScrollHeight,
+        elementScroll();
+
+        mutation.addedNodes.forEach((node) => {
+          let images = (node as HTMLElement).querySelectorAll("img");
+          images.forEach((image) => {
+            image.onload = () => {
+              console.log("loaded");
+              elementScroll();
+            };
           });
-        }
+        });
       }
     };
 

@@ -132,4 +132,5 @@ export const StyledBottomAppbar = styled("div")(() => ({
   padding: "10px 0px",
   paddingLeft: 100,
   gap: 20,
+  zIndex: 10,
 }));
