@@ -26,9 +26,8 @@ function Activity() {
 
   if (isLoading) return <Loader />;
 
-  console.log(data)
   return (
-    <Box width={1000} mt={4}>
+    <Box width={500} mt={4}>
       <Typography variant="h6" gutterBottom color="primary">
         Activity Log
       </Typography>

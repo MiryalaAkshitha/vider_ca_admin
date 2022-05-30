@@ -4,7 +4,7 @@ import { BarChatCard, CardComponent, PieChartCard } from "./OverviewCard";
 
 const OverviewRightSide = () => {
   return (
-    <Box pl={2}>
+    <Box pl={2} sx={{ width: "100%" }}>
       <Grid container spacing={2}>
         <Grid item xs={5}>
           <Grid container spacing={2}>
@@ -64,8 +64,8 @@ const OverviewRightSide = () => {
               </Box>
             </Box>
             <Divider />
-            <Box display="flex" alignItems="center">
-              <PieChartCard data={pieData} colors={colors} width={230} height={190} cx={100} cy={100} />
+            <Box display="flex" alignItems="center" justifyContent="center">
+              <PieChartCard data={pieData} colors={colors} width={170} height={190} cx={80} cy={100} />
               <Box>
                 <Box display="flex" alignItems="center">
                   <Box m={2} sx={{ width: "15px", height: "15px", bgcolor: "#FFD950" }}></Box>

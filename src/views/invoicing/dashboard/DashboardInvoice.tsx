@@ -64,8 +64,8 @@ function DashboardInvoice() {
                 </Select>
               </FormControl>
               <SearchContainer
-                minWidth="200px"
-                placeHolder="Search for estimate"
+                minWidth="260px"
+                placeHolder="Search"
                 onChange={setSearch}
               />
             </Box>
@@ -103,7 +103,9 @@ function DashboardInvoice() {
               </FormControl>
             </Box>
             <Divider />
-            <PieChartCard data={pieData} colors={pieColors} width={450} height={250} cx={230} cy={120} />
+            <Box display="flex" justifyContent="center" >
+              <PieChartCard data={pieData} colors={pieColors} width={250} height={250} cx={100} cy={120} />
+            </Box>
             <Divider />
             <Box p={2} display="flex" justifyContent="space-evenly">
               <Box display="flex" alignItems="center">
@@ -120,20 +122,12 @@ function DashboardInvoice() {
       </Grid>
       <AgeingDues />
       <FavIcon />
-
     </Box >
   );
 }
 
 export default DashboardInvoice;
 
-
-const dueBy = [
-  "0-15 Days",
-  "15-30 Days",
-  "30-45 Days",
-  "Above Days"
-]
 
 
 const pieData = [

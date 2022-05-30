@@ -55,31 +55,30 @@ const renderCustomizedLabel = ({
 };
 const PieChartCard = ({ data, colors, width, height, cx, cy }) => {
   return (
-    <PieChart width={width} height={height}>
-      <Pie
-        data={data}
-        cx={cx}
-        cy={cy}
-        labelLine={false}
-        label={renderCustomizedLabel}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-        ))}
-      </Pie>
-    </PieChart>
+    <Box>
+      <PieChart width={width} height={height}>
+        <Pie
+          data={data}
+          cx={cx}
+          cy={cy}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={80}
+          fill="#8884d8"
+          dataKey="value"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </Box>
   );
 }
 
 
 
 const BarChatCard = ({ data, barInfo, width, height }) => {
-
-
-
   return (
     <ResponsiveContainer width={width} aspect={height}>
       <BarChart

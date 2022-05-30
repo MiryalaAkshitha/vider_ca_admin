@@ -5,7 +5,7 @@ import OverviewRightSide from "./OverviewRightSide";
 const Overview = () => {
   return (
     <Box p={2} display="flex">
-      <Box sx={{ width: "20%", position: "fixed", top: "14%", left: "18.5%" }}>
+      <Box sx={{ width: "32%" }}>
         <Paper>
           <Box p={2}>
             <Box mb={1}><Typography variant="caption">Personal details</Typography></Box>
@@ -15,8 +15,8 @@ const Overview = () => {
                 <img src={profileImage} alt="" width={90} height={100} style={{ borderRadius: "15px" }} />
               </Grid>
               <Grid mt={3} item xs={8}>
-                <Typography variant="subtitle2" >Venkat yellapragada</Typography>
-                <Typography variant="caption"> Individual</Typography>
+                <Typography p={2} variant="subtitle2" >Venkat yellapragada</Typography>
+                <Typography p={2} variant="caption"> Individual</Typography>
               </Grid>
               <Grid mt={1} item xs={4}>
                 <Typography variant="caption">Client ID</Typography>
@@ -104,7 +104,7 @@ const Overview = () => {
           </Box>
         </Paper>
       </Box>
-      <Box sx={{ marginLeft: "26%" }}>
+      <Box sx={{ width: "100%" }}>
         <OverviewRightSide />
       </Box>
     </Box>
