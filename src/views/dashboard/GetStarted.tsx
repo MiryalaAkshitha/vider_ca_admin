@@ -3,7 +3,7 @@ import { Grid, Typography, Button } from "@mui/material";
 import { icons } from "assets";
 import GetStartedCard from "./GetStartedCard";
 
-const GetStarted = () => {
+const GetStarted = ({ data }: any) => {
   return (
     <>
       <Box p={3}>
@@ -37,7 +37,7 @@ const GetStarted = () => {
 
         <Box mt={4}>
           <GetStartedCard
-            active={true}
+            active={data?.useExist}
             img={icons.socialmedia_PosterImage}
             title="Add a new User"
             desc="Add a user or Team member to work with"
@@ -45,7 +45,7 @@ const GetStarted = () => {
             btnAction={() => {}}
           />
           <GetStartedCard
-            active={true}
+            active={data?.clientExist}
             img={icons.handshake_PosterImage}
             title="Add a new client"
             desc="Add a new client with their basic details"
@@ -53,7 +53,7 @@ const GetStarted = () => {
             btnAction={() => {}}
           />
           <GetStartedCard
-            active={false}
+            active={data?.taskExist}
             img={icons.checklist_PosterImage}
             title="Add a new Task"
             desc="Add a new Task and assign them to added users"
@@ -61,7 +61,7 @@ const GetStarted = () => {
             btnAction={() => {}}
           />
           <GetStartedCard
-            active={false}
+            active={data?.eventExist}
             img={icons.calendar_PosterImage}
             title="Add a new Event"
             desc="Add a New event in calendar and set reminder for the events."

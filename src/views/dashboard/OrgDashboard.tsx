@@ -7,7 +7,7 @@ import PieChartCard from "./PieChartCard";
 import TasksTableCard from "./TasksTableCard";
 import ColorTitleCard from "./ColorTitleCrad";
 
-function Dashboard() {
+function Dashboard({ data }: any) {
   return (
     <Box p={2}>
       <Grid container spacing={2}>

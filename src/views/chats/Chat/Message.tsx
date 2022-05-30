@@ -79,7 +79,11 @@ function Message({ data }) {
         )}
         {data?.file && isImage && (
           <a href={data?.file} target="_blank" rel="noopener noreferrer">
-            <img src={data?.file} alt="file" style={{ maxWidth: "100%" }} />
+            <img
+              src={data?.file}
+              alt="file"
+              style={{ maxWidth: "100%", maxHeight: 500 }}
+            />
           </a>
         )}
         {data?.file && !isImage && (

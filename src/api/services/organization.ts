@@ -4,6 +4,14 @@ const getOrganization = () => {
   return http.get(`/users/organization`);
 };
 
+const getGetStarted = () => {
+  return http.get(`/stats/organization/dashboard/get-started`);
+};
+
+const getOrganizationDashboard = () => {
+  return http.get(`/stats/organization/dashboard`);
+};
+
 const getOrganizationLicenses = () => {
   return http.get(`/users/organization/licenses`);
 };
@@ -55,4 +63,6 @@ export {
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
+  getOrganizationDashboard,
+  getGetStarted,
 };

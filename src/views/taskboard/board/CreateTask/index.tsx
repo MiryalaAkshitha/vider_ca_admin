@@ -9,6 +9,7 @@ import CreateRecurringTask from "./CreateRecurringTask";
 const CreateTask = () => {
   const { queryParams, setQueryParams } = useQueryParams();
   const [type, setType] = useState("non_recurring");
+  const [selectionType, setSelectionType] = useState("standard");
 
   return (
     <DrawerWrapper
@@ -19,6 +20,25 @@ const CreateTask = () => {
       }}
       title="Create Task"
     >
+      <RadioGroup
+        onChange={(e) => setSelectionType(e.target.value)}
+        row
+        aria-labelledby="selectionType"
+        name="type"
+        sx={{ mb: 2 }}
+        value={selectionType}
+      >
+        <FormControlLabel
+          value="custom"
+          control={<Radio />}
+          label={<Typography>Custom Service</Typography>}
+        />
+        <FormControlLabel
+          value="standard"
+          control={<Radio />}
+          label={<Typography>Standard Service</Typography>}
+        />
+      </RadioGroup>
       <RadioGroup
         onChange={(e) => setType(e.target.value)}
         row
