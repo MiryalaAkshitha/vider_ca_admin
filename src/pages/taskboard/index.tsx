@@ -5,19 +5,22 @@ import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
 import useQueryParams from "hooks/useQueryParams";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { ResType, ViewType } from "types";
 import { Permissions } from "utils/permissons";
 import Board from "views/taskboard/board";
+import CreateTask from "views/taskboard/board/CreateTask";
 import Filters from "views/taskboard/Filters";
 import TaskTable from "views/taskboard/table";
 
 function TaskBoard() {
-  const { queryParams, setQueryParams } = useQueryParams();
+  const { queryParams } = useQueryParams();
   const view = (queryParams.view as ViewType) || "grid";
   const { search, appliedFilters } = useSelector(selectTaskBoard);
+  const [open, setOpen] = useState(false);
 
   const getFiltersData = () => {
     let result = {};
@@ -70,14 +73,12 @@ function TaskBoard() {
       >
         <FloatingButton
           onClick={() => {
-            setQueryParams({
-              ...queryParams,
-              createTask: "true",
-            });
+            setOpen(true);
           }}
           position="right"
         />
       </ValidateAccess>
+      <CreateTask open={open} setOpen={setOpen} />
     </Box>
   );
 }

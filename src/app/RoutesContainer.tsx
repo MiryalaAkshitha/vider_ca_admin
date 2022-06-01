@@ -1,5 +1,4 @@
 import loadable from "@loadable/component";
-import GlobalDrawers from "./GlobalDrawers";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -16,9 +15,13 @@ const InvoicingDashboard = loadable(() => import("pages/invoicing/Dashboard"));
 const Invoices = loadable(() => import("pages/invoicing/invoices"));
 const Receipts = loadable(() => import("pages/invoicing/Receipts"));
 const Estimates = loadable(() => import("pages/invoicing/Estimates"));
-const ClientsTable = loadable(() => import("views/invoicing/clients/ClientsTable"));
+const ClientsTable = loadable(
+  () => import("views/invoicing/clients/ClientsTable")
+);
 const ClientDashboard = loadable(() => import("pages/invoicing/Clients"));
-const RecurringInvoices = loadable(() => import("views/invoicing/billing/RecurringInvoices"));
+const RecurringInvoices = loadable(
+  () => import("views/invoicing/billing/RecurringInvoices")
+);
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
@@ -38,10 +41,18 @@ const EstimatePreview = loadable(
 const CreateReceipt = loadable(
   () => import("views/invoicing/billing/Receipts/createReceipt/index")
 );
-const Overview = loadable(() => import("views/invoicing/clients/clientDashboard/Overview"));
-const UnbilledTasks = loadable(() => import("views/invoicing/clients/clientDashboard/UnbilledTasks"));
-const BilledTask = loadable(() => import("views/invoicing/clients/clientDashboard/BilledTask"));
-const PaymentReceived = loadable(() => import("views/invoicing/clients/clientDashboard/PaymentReceived"));
+const Overview = loadable(
+  () => import("views/invoicing/clients/clientDashboard/Overview")
+);
+const UnbilledTasks = loadable(
+  () => import("views/invoicing/clients/clientDashboard/UnbilledTasks")
+);
+const BilledTask = loadable(
+  () => import("views/invoicing/clients/clientDashboard/BilledTask")
+);
+const PaymentReceived = loadable(
+  () => import("views/invoicing/clients/clientDashboard/PaymentReceived")
+);
 
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
@@ -131,7 +142,7 @@ function RoutesContainer() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="services">
             <Route index element={<Services />} />
@@ -144,7 +155,7 @@ function RoutesContainer() {
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<InvoicingDashboard />} />
             <Route path="invoices" element={<Invoices />} />
-            <Route path="clients" >
+            <Route path="clients">
               <Route index element={<ClientsTable />} />
               <Route path="id" element={<ClientDashboard />}>
                 <Route path="overview" element={<Overview />} />
@@ -152,7 +163,8 @@ function RoutesContainer() {
                 <Route path="billed-tasks" element={<BilledTask />} />
                 <Route path="payments-received" element={<PaymentReceived />} />
               </Route>
-            </Route>RecurringInvoices
+            </Route>
+            RecurringInvoices
             <Route path="estimates" element={<Estimates />} />
             <Route path="receipts" element={<Receipts />} />
             <Route path="recurring-invoices" element={<RecurringInvoices />} />
@@ -274,7 +286,6 @@ function RoutesContainer() {
           element={<Esign />}
         />
       </Routes>
-      <GlobalDrawers />
     </Router>
   );
 }

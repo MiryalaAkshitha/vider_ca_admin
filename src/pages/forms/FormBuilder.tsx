@@ -65,12 +65,7 @@ const FormBuilder = () => {
         source.index,
         destination.index
       );
-      dispatch(
-        moveFields({
-          from: source.index,
-          to: destination.index,
-        })
-      );
+
       updatePageFields({
         formId: params.formId,
         pageId: data.pages[activePage]?._id,
@@ -82,8 +77,6 @@ const FormBuilder = () => {
       let fields = [...data?.pages[activePage]?.fields];
       let newField = prepareField(availableFields[source.index]);
       fields.splice(destination.index, 0, newField);
-
-      dispatch(setFields(fields));
 
       updatePageFields({
         formId: params.formId,

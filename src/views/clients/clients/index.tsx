@@ -2,14 +2,13 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Button, Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { getClients } from "api/services/client";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
 import ValidateAccess from "components/ValidateAccess";
 import { usePermissions } from "context/PermissionsProvider";
-import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import _ from "lodash";
 import { useRef, useState } from "react";
@@ -28,7 +27,7 @@ function Clients() {
   useTitle("Clients");
   const navigate = useNavigate();
   const selectionRef = useRef<any>({});
-  const { queryParams, setQueryParams } = useQueryParams();
+  const [open, setOpen] = useState(false);
   const { permissions } = usePermissions();
   const [limit, setLimit] = useState<number>(50);
   const [offset, setOffset] = useState<number>(0);
@@ -153,14 +152,11 @@ function Clients() {
       <ValidateAccess name={Permissions.CREATE_CLIENT_PROFILE}>
         <FloatingButton
           onClick={() => {
-            setQueryParams({
-              ...queryParams,
-              createClient: "true",
-            });
+            setOpen(true);
           }}
         />
       </ValidateAccess>
-      <AddClient />
+      <AddClient open={open} setOpen={setOpen} />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter
         filters={filters}

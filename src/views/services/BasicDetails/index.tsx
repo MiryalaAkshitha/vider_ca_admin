@@ -24,6 +24,10 @@ function Overview() {
 
   const { data, isLoading }: ResType = useQuery("categories", getCategories);
 
+  const subCategories = data?.data?.find(
+    (item: any) => item.id === state.categoryId
+  )?.subCategories;
+
   const onChange = (e: any) => {
     dispatch(
       handleChange({
@@ -31,11 +35,31 @@ function Overview() {
         value: e.target.value,
       })
     );
-  };
 
-  const subCategories = data?.data?.find(
-    (item: any) => item.name === state.category
-  )?.subCategories;
+    if (e.target.name === "categoryId") {
+      let category = data?.data?.find(
+        (category: any) => category.id === e.target.value
+      );
+      dispatch(
+        handleChange({
+          name: "category",
+          value: category?.name,
+        })
+      );
+    }
+
+    if (e.target.name === "subCategoryId") {
+      let category = subCategories?.find(
+        (category: any) => category.id === e.target.value
+      );
+      dispatch(
+        handleChange({
+          name: "subCategory",
+          value: category?.name,
+        })
+      );
+    }
+  };
 
   if (isLoading) return <Loader />;
 
@@ -50,15 +74,15 @@ function Overview() {
             Select Category
           </Typography>
           <TextField
-            name="category"
-            value={state.category}
+            name="categoryId"
+            value={state.categoryId}
             onChange={onChange}
             fullWidth
             size="small"
             select
           >
             {data?.data.map((option: any, index: any) => (
-              <MenuItem key={index} value={option.name}>
+              <MenuItem key={index} value={option.id}>
                 {option.name}
               </MenuItem>
             ))}
@@ -70,15 +94,15 @@ function Overview() {
               Select Sub Category
             </Typography>
             <TextField
-              value={state.subCategory}
-              name="subCategory"
+              value={state.subCategoryId}
+              name="subCategoryId"
               onChange={onChange}
               fullWidth
               size="small"
               select
             >
               {subCategories?.map((option: any, index: any) => (
-                <MenuItem key={index} value={option.name}>
+                <MenuItem key={index} value={option.id}>
                   {option.name}
                 </MenuItem>
               ))}

@@ -19,7 +19,6 @@ const PageFieldItem = ({ item, index }: any) => {
   const params = useParams();
   const queryClient = useQueryClient();
   const confirm = useConfirm();
-
   const [active, setActive] = useState<boolean>(false);
   const { data, activePage, focused } = useSelector(selectForms);
   const [open, setOpen] = useState(false);

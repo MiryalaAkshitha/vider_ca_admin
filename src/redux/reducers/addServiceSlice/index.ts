@@ -7,6 +7,8 @@ const initialState: IAddService = {
   description: "",
   category: "",
   subCategory: "",
+  categoryId: null,
+  subCategoryId: null,
   hourlyPrice: "",
   totalPrice: "",
   checklists: [],
@@ -23,8 +25,10 @@ export const addServiceSlice = createSlice({
       const { payload } = action;
       state.name = payload.name;
       state.description = payload.description || "";
-      state.category = payload.category;
+      state.category = payload.category || "";
       state.subCategory = payload.subCategory || "";
+      state.categoryId = payload.categoryId;
+      state.subCategoryId = payload.subCategoryId || "";
       state.hourlyPrice = payload.hourlyPrice || "";
       state.totalPrice = payload.totalPrice || "";
       state.checklists = payload.checklists;

@@ -57,6 +57,8 @@ export interface IAddService {
   description: string;
   category: string;
   subCategory: string;
+  categoryId: string | null;
+  subCategoryId: string | null;
   hourlyPrice: string;
   totalPrice: string;
   checklists: Array<any>;

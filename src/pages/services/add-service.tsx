@@ -75,6 +75,7 @@ function AddService() {
 
   const handleSubmit = () => {
     if (serviceId) {
+      console.log(state);
       update({
         id: serviceId,
         data: state,

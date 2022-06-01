@@ -45,7 +45,7 @@ function FormRadio(props: Props) {
                   <FormControlLabel
                     key={index}
                     value={item.value}
-                    control={<Radio />}
+                    control={<Radio color="secondary" size="small" />}
                     label={item.label}
                   />
                 ))}

@@ -7,7 +7,6 @@ import { getEvents } from "api/services/events";
 import { getTasks } from "api/services/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
-import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
 import { useState } from "react";
@@ -17,11 +16,11 @@ import AddEvent from "views/calendar/AddEvent";
 import ViewEvent from "views/calendar/ViewEvent";
 
 function Calendar() {
+  useTitle("Calendar");
   const [open, setOpen] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false);
   const [data, setData] = useState({});
 
-  useTitle("Calendar");
-  const { queryParams, setQueryParams } = useQueryParams();
   const { data: events, isLoading }: ResType = useQuery(["events"], getEvents);
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
     ["tasks"],
@@ -51,7 +50,7 @@ function Calendar() {
   const clickedevent = (value: any) => {
     if (value.event.backgroundColor !== "#88B151") return;
     let event = events?.data?.find((item: any) => item.id === +value.event.id);
-    setOpen(true);
+    setViewOpen(true);
     setData(event);
   };
 
@@ -74,15 +73,12 @@ function Calendar() {
         eventTextColor="black"
       />
       <FloatingButton
-        onClick={() =>
-          setQueryParams({
-            ...queryParams,
-            createEvent: "true",
-          })
-        }
+        onClick={() => {
+          setOpen(true);
+        }}
       />
-      <AddEvent />
-      <ViewEvent open={open} setOpen={setOpen} data={data} />
+      <AddEvent open={open} setOpen={setOpen} />
+      <ViewEvent open={viewOpen} setOpen={setViewOpen} data={data} />
     </Box>
   );
 }

@@ -7,12 +7,11 @@ import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useQueryParams from "hooks/useQueryParams";
 import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { ResType } from "types";
+import { DialogProps, ResType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
 import {
   createClientDefaultValues,
@@ -20,11 +19,12 @@ import {
 } from "validations/createCllient";
 import Details from "./Details";
 
-function AddClient() {
-  const { queryParams, setQueryParams } = useQueryParams();
-  const navigate = useNavigate();
+interface Props extends DialogProps {
+  successCb?: () => void;
+}
 
-  const open = queryParams.createClient === "true";
+function AddClient({ open, setOpen, successCb }: Props) {
+  const navigate = useNavigate();
 
   const { data: users, isLoading: userLoading }: ResType = useQuery(
     "users",
@@ -37,9 +37,15 @@ function AddClient() {
   const { mutate, isLoading } = useMutation(createClient, {
     onSuccess: (res) => {
       snack.success("Client Created");
-      navigate(
-        `/clients/${res.data.id}/profile/?displayName=${res.data?.displayName}&clientId=${res.data?.clientId}`
-      );
+      setOpen(false);
+      if (successCb) {
+        successCb();
+        return;
+      }
+      navigate({
+        pathname: `/clients/${res.data.id}/profile/`,
+        search: `?displayName=${res.data?.displayName}&clientId=${res.data?.clientId}`,
+      });
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -79,16 +85,7 @@ function AddClient() {
   };
 
   return (
-    <DrawerWrapper
-      open={open}
-      setOpen={() => {
-        delete queryParams.createClient;
-        setQueryParams({
-          ...queryParams,
-        });
-      }}
-      title="Add Client"
-    >
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add Client">
       {userLoading ? (
         <Loader />
       ) : (

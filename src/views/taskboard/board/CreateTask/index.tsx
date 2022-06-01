@@ -1,72 +1,133 @@
-import { FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box } from "@mui/material";
+import { createTask } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import Loader from "components/Loader";
+import LoadingButton from "components/LoadingButton";
+import { snack } from "components/toast";
 import useQueryParams from "hooks/useQueryParams";
-import { useState } from "react";
-import CreateNonRecurringTask from "./CreateNonRecurringTask";
-import CreateRecurringTask from "./CreateRecurringTask";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import { DialogProps } from "types";
+import {
+  createTaskDefaultValues,
+  createTaskSchema,
+} from "validations/createTask";
+import CommonFields from "./CommonFields";
+import CustomCommonFields from "./CustomCommonFields";
+import NonRecurringFields from "./NonRecurringFields";
+import RecurringFields from "./RecurringFields";
+import SelectTypes from "./SelectTypes";
+import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
-const CreateTask = () => {
+interface Props extends DialogProps {
+  successCb?: () => void;
+}
+
+function CreateTask({ open, setOpen, successCb }: Props) {
   const { queryParams, setQueryParams } = useQueryParams();
-  const [type, setType] = useState("non_recurring");
-  const [selectionType, setSelectionType] = useState("standard");
+  const queryClient = useQueryClient();
+
+  const { users, labels, categories, clients, loading } =
+    useCreateTaskInitialData({});
+
+  const subcategoriesExist = (category: any) => {
+    return categories?.data?.find((item: any) => item.id === parseInt(category))
+      ?.subCategories?.length;
+  };
+
+  const {
+    watch,
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: createTaskDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(createTaskSchema({ subcategoriesExist })),
+  });
+
+  const { mutate, isLoading } = useMutation(createTask, {
+    onSuccess: () => {
+      snack.success("Task Created");
+      queryClient.invalidateQueries("tasks");
+      setOpen(false);
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const onFormSubmit = (data: any) => {
+    data.client = data.client?.map((client: any) => parseInt(client.value));
+    data.members = data.members?.map((member: any) => parseInt(member.value));
+    data.labels = data.labels?.map((label: any) => parseInt(label.value));
+    data.category = parseInt(data.category);
+    data.subCategory = parseInt(data.subCategory);
+    data.taskLeader = parseInt(data.taskLeader);
+    data.feeAmount = parseFloat(data?.feeAmount);
+    data.service = data?.service?._id;
+    data.dueDay = parseInt(data.dueDay?.value);
+    data.recurringEndDate = data?.neverExpires ? null : data.recurringEndDate;
+    mutate(data);
+  };
+
+  console.log(errors);
 
   return (
-    <DrawerWrapper
-      open={queryParams.createTask === "true"}
-      setOpen={() => {
-        delete queryParams.createTask;
-        setQueryParams({ ...queryParams });
-      }}
-      title="Create Task"
-    >
-      <RadioGroup
-        onChange={(e) => setSelectionType(e.target.value)}
-        row
-        aria-labelledby="selectionType"
-        name="type"
-        sx={{ mb: 2 }}
-        value={selectionType}
-      >
-        <FormControlLabel
-          value="custom"
-          control={<Radio />}
-          label={<Typography>Custom Service</Typography>}
-        />
-        <FormControlLabel
-          value="standard"
-          control={<Radio />}
-          label={<Typography>Standard Service</Typography>}
-        />
-      </RadioGroup>
-      <RadioGroup
-        onChange={(e) => setType(e.target.value)}
-        row
-        aria-labelledby="typeOfTask"
-        name="type"
-        sx={{ mb: 2 }}
-        value={type}
-      >
-        <FormControlLabel
-          value="non_recurring"
-          control={<Radio />}
-          label={<Typography>Non-recurring</Typography>}
-        />
-        <FormControlLabel
-          value="recurring"
-          control={<Radio />}
-          label={<Typography>Recurring</Typography>}
-        />
-      </RadioGroup>
-      <Box>
-        {type === "non_recurring" ? (
-          <CreateNonRecurringTask />
-        ) : type === "recurring" ? (
-          <CreateRecurringTask />
-        ) : null}
-      </Box>
+    <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
+      {loading ? (
+        <Loader />
+      ) : (
+        <form onSubmit={handleSubmit(onFormSubmit)}>
+          <SelectTypes control={control} watch={watch} setValue={setValue} />
+          <Box mt={2}>
+            <FormAutoComplete
+              control={control}
+              label="Client"
+              multiple
+              name="client"
+              options={clients?.data[0]?.map((item: any) => ({
+                label: item.displayName,
+                value: item.id,
+              }))}
+            />
+          </Box>
+          {watch("serviceType") === "custom" && (
+            <CustomCommonFields
+              control={control}
+              watch={watch}
+              categories={categories}
+            />
+          )}
+          {watch("taskType") === "recurring" && (
+            <RecurringFields control={control} watch={watch} />
+          )}
+          {watch("taskType") === "non_recurring" && (
+            <NonRecurringFields control={control} />
+          )}
+          <CommonFields
+            control={control}
+            watch={watch}
+            labels={labels}
+            users={users}
+          />
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+            <LoadingButton
+              loading={isLoading}
+              fullWidth
+              type="submit"
+              loadingColor="white"
+              title="Create Task"
+              color="secondary"
+            />
+          </Box>
+        </form>
+      )}
     </DrawerWrapper>
   );
-};
+}
 
 export default CreateTask;

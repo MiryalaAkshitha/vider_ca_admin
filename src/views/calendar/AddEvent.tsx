@@ -12,11 +12,10 @@ import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import useQueryParams from "hooks/useQueryParams";
 import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ResType } from "types";
+import { DialogProps, ResType } from "types";
 import { getTitle } from "utils";
 import { Reminders } from "utils/constants";
 import {
@@ -24,15 +23,18 @@ import {
   AddCalendarEventSchema,
 } from "validations/addCalendarEvent";
 
-function AddEvent() {
-  const { queryParams, setQueryParams } = useQueryParams();
+interface Props extends DialogProps {
+  successCb?: () => void;
+}
+
+function AddEvent({ open, setOpen, successCb }: Props) {
   const queryClient = useQueryClient();
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
     ["clients", {}],
     getClients,
     {
-      enabled: queryParams.createEvent === "true",
+      enabled: open,
     }
   );
 
@@ -40,15 +42,14 @@ function AddEvent() {
     ["tasks", {}],
     getTasks,
     {
-      enabled: queryParams.createEvent === "true",
+      enabled: open,
     }
   );
 
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
       snack.success("Event Created");
-      delete queryParams.createEvent;
-      setQueryParams({ ...queryParams });
+      setOpen(false);
       queryClient.invalidateQueries("events");
     },
     onError: (err: any) => {
@@ -87,14 +88,7 @@ function AddEvent() {
       ?.members || [];
 
   return (
-    <DrawerWrapper
-      open={queryParams.createEvent === "true"}
-      setOpen={() => {
-        delete queryParams.createEvent;
-        setQueryParams({ ...queryParams });
-      }}
-      title="Create an Event"
-    >
+    <DrawerWrapper open={open} setOpen={setOpen} title="Create an Event">
       {clientsLoading || tasksLoading ? (
         <Loader />
       ) : (
