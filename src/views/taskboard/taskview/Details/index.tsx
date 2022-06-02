@@ -11,6 +11,7 @@ import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
+import BottomBar from "components/BottomBar";
 
 function Details() {
   const queryClient = useQueryClient();
@@ -27,7 +28,7 @@ function Details() {
 
   const { mutate } = useMutation(updateTask, {
     onSuccess: (res) => {
-      queryClient.invalidateQueries("tasks");
+      queryClient.invalidateQueries("task");
       snack.success("Task Details Updated");
     },
     onError: (err: any) => {
@@ -36,12 +37,14 @@ function Details() {
   });
 
   const handleUpdate = () => {
-    let apiData = { ...state };
-
-    apiData.financialYear = mutate({
+    mutate({
       id: taskData?.id,
       data: state,
     });
+  };
+
+  const handleCancel = () => {
+    setState(taskData);
   };
 
   const handleChange = (e: any) => {
@@ -274,8 +277,8 @@ function Details() {
               />
             </DetailSection>
           </Grid>
-          <Grid item xs={12}>
-            <DetailSection label="Remarks" labelWidth="15%">
+          <Grid item xs={6}>
+            <DetailSection label="Remarks">
               <CustomTextField
                 value={state?.remarks || ""}
                 onChange={handleChange}
@@ -284,25 +287,13 @@ function Details() {
             </DetailSection>
           </Grid>
         </Grid>
-        <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }} mt={4}>
-          <Button
-            onClick={() => setState(taskData)}
-            size="large"
-            variant="outlined"
-            color="secondary"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleUpdate}
-            size="large"
-            variant="contained"
-            color="secondary"
-          >
-            Update
-          </Button>
-        </Box>
       </Box>
+      <BottomBar
+        data={taskData}
+        state={state}
+        onUpdate={handleUpdate}
+        onCancel={handleCancel}
+      />
     </>
   );
 }

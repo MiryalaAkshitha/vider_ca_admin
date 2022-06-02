@@ -43,7 +43,7 @@ function Info({ state }: Props) {
           Task ID
         </Typography>
         <Typography variant="subtitle2" color="primary">
-          {state?.taskId}
+          {state?.taskNumber}
         </Typography>
       </Box>
     </Box>

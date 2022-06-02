@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Box, Typography } from "@mui/material";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
@@ -13,65 +14,53 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-const TasksTableCard = () => {
+const TasksTableCard = ({ data }) => {
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700, p: 2 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <TableCell variant="footer">User</TableCell>
-              <TableCell align="right" variant="footer">
-                GST
+    <TableContainer
+      component={Paper}
+      sx={{ minHeight: 300, position: "relative" }}
+    >
+      <Table sx={{ p: 2 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            {data?.keys?.map((key: string, index: number) => (
+              <TableCell variant="footer" key={index}>
+                {key}
               </TableCell>
-              <TableCell align="right" variant="footer">
-                Income Tax
-              </TableCell>
-              <TableCell align="right" variant="footer">
-                MCA
-              </TableCell>
-              <TableCell align="right" variant="footer">
-                Registrations
-              </TableCell>
-              <TableCell align="right" variant="footer">
-                Others
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </StyledTableRow>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data?.values?.length > 0 ? (
+            data?.values?.map((value: any, index: number) => (
+              <StyledTableRow key={index}>
+                <TableCell component="th" scope="row">
+                  {value?.name}
+                </TableCell>
+                {Object.keys(value?.tasks)?.map((key: any, index: number) => (
+                  <TableCell component="th" scope="row" key={index}>
+                    {value?.tasks[key]}
+                  </TableCell>
+                ))}
+              </StyledTableRow>
+            ))
+          ) : (
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Typography variant="subtitle2" color="grey">
+                No Data.
+              </Typography>
+            </Box>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 export default TasksTableCard;

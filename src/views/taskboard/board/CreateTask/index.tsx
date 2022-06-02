@@ -37,13 +37,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
       ?.subCategories?.length;
   };
 
-  const {
-    watch,
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const { watch, control, handleSubmit, setValue } = useForm({
     defaultValues: createTaskDefaultValues,
     mode: "onChange",
     resolver: yupResolver(createTaskSchema({ subcategoriesExist })),
@@ -54,6 +48,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
       snack.success("Task Created");
       queryClient.invalidateQueries("tasks");
       setOpen(false);
+      successCb && successCb();
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

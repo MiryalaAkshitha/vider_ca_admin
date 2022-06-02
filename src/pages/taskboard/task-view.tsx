@@ -7,19 +7,20 @@ import Checklists from "views/taskboard/taskview/Checklists";
 import Comments from "views/taskboard/taskview/comments";
 import Description from "views/taskboard/taskview/Description";
 import Details from "views/taskboard/taskview/Details";
-import IPro from "views/taskboard/taskview/iPro";
 import Events from "views/taskboard/taskview/events";
 import Expenditure from "views/taskboard/taskview/expenditure";
+import IPro from "views/taskboard/taskview/iPro";
 import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
+import StageOfWork from "views/taskboard/taskview/StageOfWork";
 import SubTasks from "views/taskboard/taskview/Subtasks";
 import TaskHeader from "../../views/taskboard/taskview/TaskHeader";
-import StageOfWork from "views/taskboard/taskview/StageOfWork";
 
 function TaskDetails() {
   useTitle("Task Details");
 
   useEffect(() => {
+    window.location.hash = "#details";
     const handleScroll = () => {
       let elements = document.querySelectorAll(`[data-target]`);
       let inViewElements = Array.from(elements).filter((item) => {
@@ -30,6 +31,7 @@ function TaskDetails() {
           "data-target"
         ) || "";
     };
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {

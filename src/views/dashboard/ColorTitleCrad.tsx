@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { getTitle } from "utils";
 
 const ColorTitleCard = ({ color, title }) => {
   return (
@@ -8,13 +9,12 @@ const ColorTitleCard = ({ color, title }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          gap: 1,
+          mt: 1,
         }}
       >
         <Box bgcolor={color} width={15} height={3}></Box>
-        <Typography p={1} variant="body2">
-          {title}
-        </Typography>
+        <Typography variant="body2">{getTitle(title)}</Typography>
       </Box>
     </>
   );

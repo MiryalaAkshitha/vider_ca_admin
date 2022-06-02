@@ -8,6 +8,10 @@ const getGetStarted = () => {
   return http.get(`/stats/organization/dashboard/get-started`);
 };
 
+const updateGetStarted = (data: any) => {
+  return http.patch(`/stats/organization/dashboard/get-started`, data);
+};
+
 const getOrganizationDashboard = () => {
   return http.get(`/stats/organization/dashboard`);
 };
@@ -65,4 +69,5 @@ export {
   deleteBankAccount,
   getOrganizationDashboard,
   getGetStarted,
+  updateGetStarted,
 };

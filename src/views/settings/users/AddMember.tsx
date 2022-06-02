@@ -16,7 +16,11 @@ import {
   inviteUserSchema,
 } from "validations/inviteUser";
 
-function AddMember({ open, setOpen }: DialogProps) {
+interface Props extends DialogProps {
+  successCb?: () => void;
+}
+
+function AddMember({ open, setOpen, successCb }: Props) {
   const { data, isLoading: dataLoading }: ResType = useQuery(
     "roles",
     getRoles,
@@ -27,6 +31,7 @@ function AddMember({ open, setOpen }: DialogProps) {
     onSuccess: () => {
       snack.success("An invitation has been sent to the user");
       setOpen(false);
+      successCb && successCb();
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

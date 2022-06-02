@@ -2,8 +2,41 @@ import { Box } from "@mui/system";
 import { Grid, Typography, Button } from "@mui/material";
 import { icons } from "assets";
 import GetStartedCard from "./GetStartedCard";
+import { useMutation, useQueryClient } from "react-query";
+import { updateGetStarted } from "api/services/organization";
+import { snack } from "components/toast";
+import AddClient from "views/clients/clients/AddClient";
+import { useState } from "react";
+import AddMember from "views/settings/users/AddMember";
+import CreateTask from "views/taskboard/board/CreateTask";
 
 const GetStarted = ({ data }: any) => {
+  const queryClient = useQueryClient();
+  const [openAddClient, setOpenAddClient] = useState(false);
+  const [openAddMember, setOpenAddMember] = useState(false);
+  const [openCreateTask, setOpenCreateTask] = useState(false);
+
+  const { mutate } = useMutation(updateGetStarted, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("get-started");
+    },
+    onError: (err: any) => {
+      snack.error("something went wrong");
+    },
+  });
+
+  const handleClick = () => {
+    mutate({
+      status: "REJECTED",
+    });
+  };
+
+  const handleUpdate = (key: string) => {
+    mutate({
+      [key]: true,
+    });
+  };
+
   return (
     <>
       <Box p={3}>
@@ -28,48 +61,54 @@ const GetStarted = ({ data }: any) => {
                 alignItems: "center",
               }}
             >
-              <Button variant="contained" color="error">
+              <Button onClick={handleClick} variant="contained" color="error">
                 Skip these steps
               </Button>
             </Box>
           </Grid>
         </Grid>
-
         <Box mt={4}>
           <GetStartedCard
-            active={data?.useExist}
+            active={data?.createUser}
             img={icons.socialmedia_PosterImage}
             title="Add a new User"
             desc="Add a user or Team member to work with"
-            btnTitle="Add new client"
-            btnAction={() => {}}
+            btnTitle="Add user"
+            btnAction={() => setOpenAddMember(true)}
           />
           <GetStartedCard
-            active={data?.clientExist}
+            active={data?.createClient}
             img={icons.handshake_PosterImage}
             title="Add a new client"
             desc="Add a new client with their basic details"
-            btnTitle="Add new client"
-            btnAction={() => {}}
+            btnTitle="Add client"
+            btnAction={() => setOpenAddClient(true)}
           />
           <GetStartedCard
-            active={data?.taskExist}
+            active={data?.createTask}
             img={icons.checklist_PosterImage}
             title="Add a new Task"
             desc="Add a new Task and assign them to added users"
-            btnTitle="Add new Task"
-            btnAction={() => {}}
-          />
-          <GetStartedCard
-            active={data?.eventExist}
-            img={icons.calendar_PosterImage}
-            title="Add a new Event"
-            desc="Add a New event in calendar and set reminder for the events."
-            btnTitle="Add new Event"
-            btnAction={() => {}}
+            btnTitle="Add task"
+            btnAction={() => setOpenCreateTask(true)}
           />
         </Box>
       </Box>
+      <AddClient
+        successCb={() => handleUpdate("createClient")}
+        open={openAddClient}
+        setOpen={setOpenAddClient}
+      />
+      <AddMember
+        open={openAddMember}
+        setOpen={setOpenAddMember}
+        successCb={() => handleUpdate("createUser")}
+      />
+      <CreateTask
+        open={openCreateTask}
+        setOpen={setOpenCreateTask}
+        successCb={() => handleUpdate("createTask")}
+      />
     </>
   );
 };

@@ -10,7 +10,7 @@ import Dashboard from "views/dashboard/OrgDashboard";
 
 function Home() {
   const { data: getStarted, isLoading: getStartedLoading }: ResType = useQuery(
-    "org-get-started",
+    "get-started",
     getGetStarted
   );
 
