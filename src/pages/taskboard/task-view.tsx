@@ -14,6 +14,7 @@ import LogHours from "views/taskboard/taskview/LogHours";
 import Milestones from "views/taskboard/taskview/Milestones";
 import SubTasks from "views/taskboard/taskview/Subtasks";
 import TaskHeader from "../../views/taskboard/taskview/TaskHeader";
+import StageOfWork from "views/taskboard/taskview/StageOfWork";
 
 function TaskDetails() {
   useTitle("Task Details");
@@ -64,6 +65,9 @@ function TaskDetails() {
       </TaskSection>
       <TaskSection id="milestones">
         <Milestones />
+      </TaskSection>
+      <TaskSection id="stageofwork">
+        <StageOfWork />
       </TaskSection>
       <TaskSection id="comments">
         <Comments />

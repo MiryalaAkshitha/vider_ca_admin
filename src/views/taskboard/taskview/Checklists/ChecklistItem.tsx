@@ -55,7 +55,7 @@ const CheckListItem = ({ data, index }: Props) => {
   });
 
   const handleClick = (e: any) => {
-    const status = e.target.checked ? "done" : "pending";
+    const status = e.target.checked ? "DONE" : "PENDING";
     mutate({
       data: {
         ...data,
@@ -78,7 +78,7 @@ const CheckListItem = ({ data, index }: Props) => {
   return (
     <>
       <StyledChecklistItem
-        bgColor={(index + 1) % 2 === 1 ? "#FAFAFA" : "white"}
+        bgcolor={(index + 1) % 2 === 1 ? "#FAFAFA" : "white"}
       >
         <Grid container sx={{ flex: 1 }}>
           <Grid item xs={5}>
@@ -86,7 +86,7 @@ const CheckListItem = ({ data, index }: Props) => {
               control={
                 <Checkbox
                   onClick={handleClick}
-                  defaultChecked={data?.status === "done"}
+                  defaultChecked={data?.status === "DONE"}
                   size="small"
                   color="secondary"
                 />

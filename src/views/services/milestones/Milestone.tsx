@@ -7,7 +7,13 @@ import { useDispatch } from "react-redux";
 import { deleteMilestone } from "redux/reducers/addServiceSlice";
 import EditMilestone from "./EditMilestone";
 
-function Milestone({ data, index }: any) {
+interface Props {
+  data: any;
+  index: number;
+  disabled?: boolean;
+}
+
+function Milestone({ data, index, disabled = false }: Props) {
   const dispatch = useDispatch();
   const menu = useMenu();
   const [open, setOpen] = useState(false);
@@ -65,7 +71,7 @@ function Milestone({ data, index }: any) {
         {data.referenceNumber && (
           <Box mt={2}>
             <TextField
-              disabled
+              disabled={disabled}
               sx={{ background: "white", width: "80%" }}
               variant="outlined"
               size="small"

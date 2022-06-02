@@ -12,24 +12,24 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { updateStageOfWork } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
+import { snack } from "components/toast";
 import _ from "lodash";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateStageOfWork } from "redux/reducers/addServiceSlice";
+import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 
 interface Props extends DialogProps {
   data: any;
-  index: number;
 }
 
-function EditStageOfWork({ open, setOpen, data, index }: Props) {
-  const dispatch = useDispatch();
+function EditStageOfWork({ open, setOpen, data }: Props) {
+  const queryClient = useQueryClient();
 
   const [state, setState] = useState({
     name: "",
-    type: "Stage of work",
+    type: "",
     description: "",
     referenceNumber: false,
     extraAttributes: [
@@ -42,8 +42,16 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
   });
 
   useEffect(() => {
-    setState(_.cloneDeep(data));
+    setState(data);
   }, [data]);
+
+  const { mutate } = useMutation(updateStageOfWork, {
+    onSuccess: () => {
+      snack.success("Stage of work updated");
+      queryClient.invalidateQueries("stage-of-work");
+      setOpen(false);
+    },
+  });
 
   const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -65,13 +73,10 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    dispatch(
-      updateStageOfWork({
-        index,
-        data: state,
-      })
-    );
-    setOpen(false);
+    mutate({
+      id: data.id,
+      data: state,
+    });
   };
 
   return (
@@ -88,12 +93,12 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
             value={state.type}
           >
             <FormControlLabel
-              value="Stage of work"
+              value="STAGE_OF_WORK"
               control={<Radio />}
               label="Stage of work"
             />
             <FormControlLabel
-              value="Deliverables"
+              value="DELIVERABLES"
               control={<Radio />}
               label="Deliverables"
             />
@@ -123,7 +128,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
           label="Description"
           required
         />
-        {state.type === "Stage of work" && (
+        {state.type === "STAGE_OF_WORK" && (
           <FormControlLabel
             sx={{ mt: 1 }}
             label="Does this have a reference number"
@@ -139,7 +144,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
             }
           />
         )}
-        {state.type === "Deliverables" && (
+        {state.type === "DELIVERABLES" && (
           <Box mt={2}>
             <Typography variant="body2" gutterBottom>
               Add attachments or reference numbers

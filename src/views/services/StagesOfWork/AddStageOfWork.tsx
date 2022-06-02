@@ -29,6 +29,7 @@ let initialState = {
     {
       type: "Reference Number",
       title: "Reference Number",
+      value: "",
     },
   ],
 };
@@ -49,6 +50,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
         {
           type: "Reference Number",
           title: "",
+          value: "",
         },
       ],
     });

@@ -7,7 +7,7 @@ import FormSelect from "components/FormFields/FormSelect";
 import { getFinancialYears, getTitle } from "utils";
 import { PriorityEnum } from "utils/constants";
 
-function CommonFields({ control, watch, users, labels }) {
+function CommonFields({ control, watch, users, labels, setValue }) {
   return (
     <>
       <Box mt={2}>
@@ -72,6 +72,13 @@ function CommonFields({ control, watch, users, labels }) {
           row
           control={control}
           name="feeType"
+          onChange={(v) => {
+            let feeAmount =
+              v === "HOURLY"
+                ? watch("service")?.hourlyPrice
+                : watch("service")?.totalPrice;
+            setValue("feeAmount", feeAmount || "");
+          }}
           label="Fee Type"
           options={[
             {

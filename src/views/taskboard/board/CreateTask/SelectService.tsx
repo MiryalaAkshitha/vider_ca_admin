@@ -10,9 +10,10 @@ import { DialogProps, ResType } from "types";
 
 interface Props extends DialogProps {
   setValue: any;
+  watch: any;
 }
 
-function SelectService({ open, setOpen, setValue }: Props) {
+function SelectService({ open, setOpen, setValue, watch }: Props) {
   const [search, setSearch] = useState("");
 
   const { data, isLoading }: ResType = useQuery("services", getServices, {
@@ -26,7 +27,12 @@ function SelectService({ open, setOpen, setValue }: Props) {
   );
 
   const handleClick = (service: any) => {
+    let feeAmount =
+      watch("feeType") === "HOURLY"
+        ? service?.hourlyPrice
+        : service?.totalPrice;
     setValue("service", service);
+    setValue("feeAmount", feeAmount || "");
     setOpen(false);
   };
 

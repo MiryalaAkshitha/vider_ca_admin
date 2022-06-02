@@ -1,17 +1,17 @@
-import { TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { updateMilestone } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
-import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { DialogProps, SubmitType } from "types";
-import SelectChecklistItems from "./SelectChecklistItems";
+import { useDispatch } from "react-redux";
+import { DialogProps, InputChangeType, SubmitType } from "types";
 
-export interface IAddMilestoneState {
+interface StateProps {
   name: string;
-  checklistItems: number[];
+  description: string;
+  referenceNumber: boolean;
 }
 
 interface Props extends DialogProps {
@@ -19,42 +19,38 @@ interface Props extends DialogProps {
 }
 
 function EditMilestone({ open, setOpen, data }: Props) {
-  const initialState = {
-    checklistItems: [],
-    name: "",
-  };
   const queryClient = useQueryClient();
 
-  const [state, setState] = useState<IAddMilestoneState>(initialState);
+  const [state, setState] = useState<StateProps>({
+    name: "",
+    description: "",
+    referenceNumber: false,
+  });
 
   useEffect(() => {
     setState({
-      name: data?.name,
-      checklistItems: data?.checklistItems.map((item: any) => item.id),
+      name: data.name,
+      description: data.description,
+      referenceNumber: data.referenceNumber,
     });
   }, [data]);
 
-  const { mutate, isLoading } = useMutation(updateMilestone, {
+  const handleChange = (e: InputChangeType) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const { mutate } = useMutation(updateMilestone, {
     onSuccess: () => {
-      snack.success("Milestone Updated");
-      setState(initialState);
-      setOpen(false);
+      snack.success("Milestone updated");
       queryClient.invalidateQueries("milestones");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
+      setOpen(false);
     },
   });
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    if (!state.checklistItems.length) {
-      snack.error("Please select at least one checklist item");
-      return;
-    }
-
     mutate({
-      id: data?.id,
+      id: data.id,
       data: state,
     });
   };
@@ -65,25 +61,44 @@ function EditMilestone({ open, setOpen, data }: Props) {
         <TextField
           variant="outlined"
           fullWidth
-          onChange={(e) => {
-            setState({ ...state, name: e.target.value });
-          }}
+          onChange={handleChange}
           size="small"
-          value={state?.name}
+          value={state.name}
           name="name"
           label="Milestone name"
           required
         />
-        <SelectChecklistItems state={state} setState={setState} />
-        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-          <LoadingButton
-            loading={isLoading}
-            fullWidth
-            loadingColor="white"
-            title="Update Milestone"
-            color="secondary"
-            type="submit"
-          />
+        <TextField
+          variant="outlined"
+          fullWidth
+          onChange={handleChange}
+          size="small"
+          sx={{ mt: 2 }}
+          rows={4}
+          multiline
+          value={state.description}
+          name="description"
+          label="Description"
+          required
+        />
+        <FormControlLabel
+          sx={{ mt: 1 }}
+          label="Does this have a reference number"
+          control={
+            <Checkbox
+              checked={state.referenceNumber}
+              onChange={(e) => {
+                setState({ ...state, referenceNumber: e.target.checked });
+              }}
+              name="referenceNumber"
+              color="primary"
+            />
+          }
+        />
+        <Box textAlign="right" mt={3}>
+          <Button fullWidth variant="contained" color="secondary" type="submit">
+            Submit
+          </Button>
         </Box>
       </form>
     </DrawerWrapper>

@@ -228,6 +228,22 @@ const deleteTask = ({ id }: any) => {
   return http.post(`/tasks/${id}/delete`);
 };
 
+const getStageOfWork = ({ queryKey }: QueryType) => {
+  return http.get(`/tasks/stage-of-work`, { params: { taskId: queryKey[1] } });
+};
+
+const addStageOfWork = ({ taskId, data }: any) => {
+  return http.post(`/tasks/${taskId}/stage-of-work`, data);
+};
+
+const updateStageOfWork = ({ id, data }: any) => {
+  return http.put(`/tasks/stage-of-work/${id}`, data);
+};
+
+const deleteStageOfWork = (id: number) => {
+  return http.delete(`/tasks/stage-of-work/${id}`);
+};
+
 export {
   getTasks,
   getTasksAsOptions,
@@ -272,4 +288,8 @@ export {
   terminateTask,
   deleteTask,
   getUserTasks,
+  getStageOfWork,
+  updateStageOfWork,
+  deleteStageOfWork,
+  addStageOfWork,
 };

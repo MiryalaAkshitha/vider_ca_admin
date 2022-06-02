@@ -74,8 +74,6 @@ function CreateTask({ open, setOpen, successCb }: Props) {
     mutate(data);
   };
 
-  console.log(errors);
-
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
       {loading ? (
@@ -113,6 +111,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
             watch={watch}
             labels={labels}
             users={users}
+            setValue={setValue}
           />
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton

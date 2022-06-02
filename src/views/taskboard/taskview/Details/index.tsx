@@ -196,7 +196,7 @@ function Details() {
                 onChange={(_, value) =>
                   setState({ ...state, taskLeader: value })
                 }
-                value={state?.taskLeader || {}}
+                value={state?.taskLeader || null}
                 options={users?.data || []}
                 isOptionEqualToValue={(option, value) => {
                   return option?.id === value?.id;
@@ -233,6 +233,25 @@ function Details() {
                 value={state?.financialYear || ""}
                 options={getFinancialYears()}
                 renderInput={(params) => <StyledTextField {...params} />}
+              />
+            </DetailSection>
+          </Grid>
+          <Grid item xs={6}>
+            <DetailSection label="Fee Type">
+              <CustomSelect
+                value={state?.feeType || ""}
+                onChange={handleChange}
+                options={[
+                  {
+                    label: "Hourly",
+                    value: "HOURLY",
+                  },
+                  {
+                    label: "Total",
+                    value: "TOTAL",
+                  },
+                ]}
+                name="feeType"
               />
             </DetailSection>
           </Grid>

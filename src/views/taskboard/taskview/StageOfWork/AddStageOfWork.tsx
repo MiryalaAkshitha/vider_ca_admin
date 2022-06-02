@@ -1,10 +1,11 @@
-import { Add } from "@mui/icons-material";
+import { Add, Delete } from "@mui/icons-material";
 import {
   Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   MenuItem,
   Radio,
   RadioGroup,
@@ -12,42 +13,45 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { addStageOfWork } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
+import { snack } from "components/toast";
 import _ from "lodash";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { updateStageOfWork } from "redux/reducers/addServiceSlice";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { useParams } from "react-router-dom";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 
-interface Props extends DialogProps {
-  data: any;
-  index: number;
-}
+let initialState = {
+  name: "",
+  type: "STAGE_OF_WORK",
+  description: "",
+  referenceNumber: false,
+  extraAttributes: [
+    {
+      type: "Reference Number",
+      title: "Reference Number",
+    },
+  ],
+};
 
-function EditStageOfWork({ open, setOpen, data, index }: Props) {
-  const dispatch = useDispatch();
-
-  const [state, setState] = useState({
-    name: "",
-    type: "Stage of work",
-    description: "",
-    referenceNumber: false,
-    extraAttributes: [
-      {
-        type: "Reference Number",
-        title: "",
-        value: "",
-      },
-    ],
-  });
-
-  useEffect(() => {
-    setState(_.cloneDeep(data));
-  }, [data]);
+function AddStageOfWork({ open, setOpen }: DialogProps) {
+  const queryClient = useQueryClient();
+  const [state, setState] = useState(_.cloneDeep(initialState));
+  const params = useParams();
 
   const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
+
+  const { mutate } = useMutation(addStageOfWork, {
+    onSuccess: () => {
+      snack.success("Stage of work added");
+      queryClient.invalidateQueries("stage-of-work");
+      setState(_.cloneDeep(initialState));
+      setOpen(false);
+    },
+  });
 
   const handleAdd = () => {
     setState({
@@ -57,25 +61,28 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
         {
           type: "Reference Number",
           title: "",
-          value: "",
         },
       ],
     });
   };
 
+  const handleRemove = (index: number) => {
+    let newExtraAttributes = [...state.extraAttributes];
+    newExtraAttributes.splice(index, 1);
+    setState({ ...state, extraAttributes: newExtraAttributes });
+  };
+
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    dispatch(
-      updateStageOfWork({
-        index,
-        data: state,
-      })
-    );
     setOpen(false);
+    mutate({
+      taskId: params.taskId,
+      data: state,
+    });
   };
 
   return (
-    <DrawerWrapper open={open} title="Edit stage of work" setOpen={setOpen}>
+    <DrawerWrapper open={open} title="Add stage of work" setOpen={setOpen}>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
@@ -88,12 +95,12 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
             value={state.type}
           >
             <FormControlLabel
-              value="Stage of work"
+              value="STAGE_OF_WORK"
               control={<Radio />}
               label="Stage of work"
             />
             <FormControlLabel
-              value="Deliverables"
+              value="DELIVERABLES"
               control={<Radio />}
               label="Deliverables"
             />
@@ -107,7 +114,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
           sx={{ mt: 2 }}
           value={state.name}
           name="name"
-          label="Milestone name"
+          label="Name"
           required
         />
         <TextField
@@ -123,7 +130,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
           label="Description"
           required
         />
-        {state.type === "Stage of work" && (
+        {state.type === "STAGE_OF_WORK" && (
           <FormControlLabel
             sx={{ mt: 1 }}
             label="Does this have a reference number"
@@ -139,7 +146,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
             }
           />
         )}
-        {state.type === "Deliverables" && (
+        {state.type === "DELIVERABLES" && (
           <Box mt={2}>
             <Typography variant="body2" gutterBottom>
               Add attachments or reference numbers
@@ -148,7 +155,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
               {state.extraAttributes.map((item, index) => (
                 <Box display="flex" gap={1} mb={1} key={index}>
                   <TextField
-                    sx={{ width: "30%" }}
+                    sx={{ width: "20%" }}
                     select
                     onChange={(e: InputChangeType) => {
                       const newState = [...state.extraAttributes];
@@ -180,6 +187,9 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
                     size="small"
                     value={item.title}
                   />
+                  <IconButton onClick={() => handleRemove(index)}>
+                    <Delete />
+                  </IconButton>
                 </Box>
               ))}
               <Box mt={1} textAlign="right">
@@ -204,4 +214,4 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
   );
 }
 
-export default EditStageOfWork;
+export default AddStageOfWork;

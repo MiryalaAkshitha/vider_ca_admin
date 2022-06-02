@@ -15,6 +15,7 @@ interface Props {
   control: any;
   options: Array<{ label: string; value: string }>;
   row?: boolean;
+  onChange?: (value: any) => void;
 }
 
 function FormRadio(props: Props) {
@@ -25,6 +26,7 @@ function FormRadio(props: Props) {
     label = "",
     options,
     row = false,
+    onChange,
   } = props;
 
   return (
@@ -39,13 +41,22 @@ function FormRadio(props: Props) {
               <RadioGroup
                 row={row}
                 aria-labelledby="demo-controlled-radio-buttons-group"
-                {...field}
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                  onChange && onChange(e.target.value);
+                }}
+                value={field.value}
               >
                 {options.map((item, index) => (
                   <FormControlLabel
                     key={index}
-                    value={item.value}
-                    control={<Radio color="secondary" size="small" />}
+                    control={
+                      <Radio
+                        color="secondary"
+                        size="small"
+                        value={item.value}
+                      />
+                    }
                     label={item.label}
                   />
                 ))}

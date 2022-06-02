@@ -1,42 +1,75 @@
 import { MoreVert } from "@mui/icons-material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { deleteMilestone } from "api/services/tasks";
-import { useConfirm } from "context/ConfirmDialog";
+import { Box, IconButton, TextField, Typography } from "@mui/material";
+import { deleteMilestone, updateMilestone } from "api/services/tasks";
 import { snack } from "components/toast";
-import { useState } from "react";
+import { useMenu } from "context/MenuPopover";
+import { FocusEvent, MouseEvent, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditMilestone from "./EditMilestone";
 
-type Props = {
+interface Props {
   data: any;
   index: number;
-};
+  disabled?: boolean;
+}
 
-function MileStone({ data, index }: Props) {
+function Milestone({ data, index, disabled = false }: Props) {
   const queryClient = useQueryClient();
-  const confirm = useConfirm();
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [open, setOpen] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<any | null>(null);
+  const menu = useMenu();
+  const [open, setOpen] = useState(false);
 
   const { mutate } = useMutation(deleteMilestone, {
     onSuccess: () => {
       snack.success("Milestone deleted");
       queryClient.invalidateQueries("milestones");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
+      setOpen(false);
     },
   });
 
-  const handleDelete = () => {
-    confirm({
-      msg: "Are you sure you want to delete this milestone?",
-      action: () => {
-        mutate(data?.id);
+  const { mutate: update } = useMutation(updateMilestone, {
+    onSuccess: () => {
+      snack.success("Milestone updated");
+      queryClient.invalidateQueries("milestones");
+      setOpen(false);
+    },
+  });
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    menu({
+      target: e.currentTarget,
+      options: [
+        {
+          label: "Edit",
+          action: () => setOpen(true),
+        },
+        {
+          label: "Delete",
+          action: () => {
+            mutate(data?.id);
+          },
+        },
+      ],
+    });
+  };
+
+  const handleComplete = () => {
+    update({
+      id: data?.id,
+      data: {
+        ...data,
+        status: data?.status === "DONE" ? "PENDING" : "DONE",
+      },
+    });
+  };
+
+  const handleUpdate = (e: FocusEvent<HTMLInputElement>) => {
+    if (data?.referenceNumberValue === e.target.value) return;
+    update({
+      id: data?.id,
+      data: {
+        ...data,
+        referenceNumberValue: e.target.value,
       },
     });
   };
@@ -45,67 +78,56 @@ function MileStone({ data, index }: Props) {
     <>
       <Box
         sx={{
-          minWidth: 300,
-          background: "#FBF9F2",
+          minHeight: "100px",
+          background: "#F6F5FF",
           padding: "10px 10px 10px 10px",
           borderRadius: 3,
           border: "1px solid #EFE5C2",
         }}
       >
-        <Box display="flex" alignItems="center">
+        <Box display="flex" gap={1}>
+          <CheckCircleOutlineIcon
+            fontSize="medium"
+            onClick={handleComplete}
+            sx={{
+              color: data?.status === "DONE" ? "#07bc0c" : "rgba(0,0,0,0.2)",
+              mt: "5px",
+              cursor: "pointer",
+            }}
+          />
           <Box flex={1}>
-            <Typography variant="h6">
-              {index + 1}. {data.name}
+            <Typography variant="subtitle2">
+              {index + 1}. {data?.name}
             </Typography>
           </Box>
           <div>
-            <IconButton
-              onClick={(e) => setAnchorEl(e.currentTarget)}
-              size="small"
-            >
+            <IconButton size="small" onClick={handleClick}>
               <MoreVert />
             </IconButton>
           </div>
         </Box>
-        <Box mt={1} display="flex" alignItems="center">
-          <Box flex={1}>
-            <Typography variant="body2" color="rgba(0,0,0,0.6)">
-              {data?.checklistItems?.length} Checklist Items
-            </Typography>
-          </Box>
-          <Box mr="5px">
-            {data?.status === "done" ? (
-              <CheckCircleIcon fontSize="medium" sx={{ color: "#89B152" }} />
-            ) : (
-              <CheckCircleOutlineIcon
-                fontSize="medium"
-                sx={{ color: "rgba(0,0,0,0.2)" }}
-              />
-            )}
-          </Box>
+        <Box mt={1}>
+          <Typography variant="body2" color="rgba(0,0,0,0.6)">
+            {data?.description}
+          </Typography>
         </Box>
+        {data.referenceNumber && (
+          <Box mt={2}>
+            <TextField
+              disabled={disabled}
+              sx={{ background: "white", width: "80%" }}
+              variant="outlined"
+              size="small"
+              defaultValue={data?.referenceNumberValue || ""}
+              onBlur={handleUpdate}
+              placeholder="Reference number"
+            />
+          </Box>
+        )}
       </Box>
-      <Menu
-        anchorEl={anchorEl}
-        onClick={() => setAnchorEl(null)}
-        onClose={() => setAnchorEl(null)}
-        open={Boolean(anchorEl)}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <MenuItem
-          onClick={() => {
-            setOpen(true);
-            setSelectedItem(data);
-          }}
-        >
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
-      </Menu>
-      <EditMilestone open={open} setOpen={setOpen} data={selectedItem} />
+      <EditMilestone open={open} setOpen={setOpen} data={data} />
     </>
   );
 }
 
-export default MileStone;
+export default Milestone;

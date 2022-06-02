@@ -33,7 +33,7 @@ function Milestones() {
           <Grid container spacing={2}>
             {milestones.map((item: any, index: number) => (
               <Grid item xs={4}>
-                <Milestone data={item} key={index} index={index} />
+                <Milestone disabled data={item} key={index} index={index} />
               </Grid>
             ))}
           </Grid>

@@ -85,7 +85,12 @@ function SelectTypes({ control, setValue, watch }) {
           ]}
         />
       </Box>
-      <SelectService open={open} setOpen={setOpen} setValue={setValue} />
+      <SelectService
+        open={open}
+        setOpen={setOpen}
+        setValue={setValue}
+        watch={watch}
+      />
     </>
   );
 }
