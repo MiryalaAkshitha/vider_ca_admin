@@ -142,8 +142,8 @@ export const invoicingClientsMenu: Array<{ title: string; path: string }> = [
     path: "/billed-tasks",
   },
   {
-    title: "Billing",
-    path: "/billing",
+    title: "invoices",
+    path: "/invoices",
   },
   {
     title: "Payments received",
@@ -198,76 +198,76 @@ export const CLIENT_CATEGORIES: Array<{
   value: string;
   subCategories?: Array<{ label: string; value: string }>;
 }> = [
-  { label: "INDIVIDUAL", value: "individual" },
-  { label: "HUF", value: "huf" },
-  {
-    label: "PARTNERSHIP FIRM",
-    value: "partnership_firm",
-  },
-  {
-    label: "LLP",
-    value: "llp",
-    subCategories: [
-      { label: "INDIAN", value: "indian" },
-      { label: "FOREIGN", value: "foreign" },
-    ],
-  },
-  {
-    label: "COMPANY",
-    value: "company",
-    subCategories: [
-      { label: "PRIVATE", value: "private" },
-      { label: "PUBLIC", value: "public" },
-      { label: "GOVERNMENT", value: "government" },
-      { label: "OPC", value: "opc" },
-      { label: "SEC-8", value: "sec_8" },
-      { label: "FOREIGN", value: "foreign" },
-    ],
-  },
-  {
-    label: "TRUST",
-    value: "trust",
-    subCategories: [
-      { label: "TRUST", value: "trust" },
-      {
-        label: "PRIVATE DISCRETIONARY TRUST",
-        value: "private_discretionary_trust",
-      },
-    ],
-  },
-  {
-    label: "SOCIETY",
-    value: "society",
-    subCategories: [
-      { label: "SOCIETY", value: "society" },
-      { label: "CO-OPERATIVE SOCIETY", value: "cooperative_society" },
-    ],
-  },
-  {
-    label: "AOP",
-    value: "aop",
-  },
-  {
-    label: "BOI",
-    value: "boi",
-  },
-  {
-    label: "CORPORATIONS",
-    value: "corporations",
-  },
-  {
-    label: "GOVERNMENT",
-    value: "govermanment",
-    subCategories: [
-      { label: "STATE", value: "state" },
-      { label: "CENTRAL", value: "central" },
-    ],
-  },
-  {
-    label: "ARTIFICIAL JUDICIAL PERSON",
-    value: "artificial_judicial_person",
-  },
-];
+    { label: "INDIVIDUAL", value: "individual" },
+    { label: "HUF", value: "huf" },
+    {
+      label: "PARTNERSHIP FIRM",
+      value: "partnership_firm",
+    },
+    {
+      label: "LLP",
+      value: "llp",
+      subCategories: [
+        { label: "INDIAN", value: "indian" },
+        { label: "FOREIGN", value: "foreign" },
+      ],
+    },
+    {
+      label: "COMPANY",
+      value: "company",
+      subCategories: [
+        { label: "PRIVATE", value: "private" },
+        { label: "PUBLIC", value: "public" },
+        { label: "GOVERNMENT", value: "government" },
+        { label: "OPC", value: "opc" },
+        { label: "SEC-8", value: "sec_8" },
+        { label: "FOREIGN", value: "foreign" },
+      ],
+    },
+    {
+      label: "TRUST",
+      value: "trust",
+      subCategories: [
+        { label: "TRUST", value: "trust" },
+        {
+          label: "PRIVATE DISCRETIONARY TRUST",
+          value: "private_discretionary_trust",
+        },
+      ],
+    },
+    {
+      label: "SOCIETY",
+      value: "society",
+      subCategories: [
+        { label: "SOCIETY", value: "society" },
+        { label: "CO-OPERATIVE SOCIETY", value: "cooperative_society" },
+      ],
+    },
+    {
+      label: "AOP",
+      value: "aop",
+    },
+    {
+      label: "BOI",
+      value: "boi",
+    },
+    {
+      label: "CORPORATIONS",
+      value: "corporations",
+    },
+    {
+      label: "GOVERNMENT",
+      value: "govermanment",
+      subCategories: [
+        { label: "STATE", value: "state" },
+        { label: "CENTRAL", value: "central" },
+      ],
+    },
+    {
+      label: "ARTIFICIAL JUDICIAL PERSON",
+      value: "artificial_judicial_person",
+    },
+  ];
 
 export enum FormType {
   INTERNAL = "INTERNAL",

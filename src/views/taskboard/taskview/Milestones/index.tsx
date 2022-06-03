@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import AddMilestone from "./AddMilestone";
-import Milestone from "./Milestone";
+import Milestone from "./milestone";
 
 function Milestones() {
   const params: any = useParams();

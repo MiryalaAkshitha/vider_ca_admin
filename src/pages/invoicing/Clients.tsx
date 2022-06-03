@@ -15,7 +15,6 @@ const Clients = () => {
   return (
     <Box>
       <Box sx={{ position: "sticky", top: 50, left: 520, bgcolor: "white", zIndex: 2 }}>
-
         <StyledProfileNav>
           {invoicingClientsMenu.map((item, index) => (
             <RouterLink

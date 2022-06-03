@@ -50,8 +50,20 @@ const UnbilledTasks = loadable(
 const BilledTask = loadable(
   () => import("views/invoicing/clients/clientDashboard/BilledTask")
 );
+const ClientInvoicing = loadable(
+  () => import("views/invoicing/clients/clientDashboard/ClientInvoicing")
+);
 const PaymentReceived = loadable(
   () => import("views/invoicing/clients/clientDashboard/PaymentReceived")
+);
+const Comments = loadable(
+  () => import("views/invoicing/clients/clientDashboard/Comments")
+);
+const Mails = loadable(
+  () => import("views/invoicing/clients/clientDashboard/Mails")
+);
+const Statements = loadable(
+  () => import("views/invoicing/clients/clientDashboard/Statements")
 );
 
 const Reports = loadable(() => import("pages/reports"));
@@ -162,6 +174,10 @@ function RoutesContainer() {
                 <Route path="unbilled-tasks" element={<UnbilledTasks />} />
                 <Route path="billed-tasks" element={<BilledTask />} />
                 <Route path="payments-received" element={<PaymentReceived />} />
+                <Route path="invoices" element={<ClientInvoicing />} />
+                <Route path="comments" element={<Comments />} />
+                <Route path="mails" element={<Mails />} />
+                <Route path="statements" element={<Statements />} />
               </Route>
             </Route>
             RecurringInvoices
