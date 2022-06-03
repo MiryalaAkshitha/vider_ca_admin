@@ -9,7 +9,11 @@ interface Props {
 }
 
 function PageWithPermission({ name, children }: Props) {
-  let { permissions } = usePermissions();
+  let { permissions, role } = usePermissions();
+
+  if (role?.defaultRole) {
+    return <>{children}</>;
+  }
 
   if (permissions.includes(name)) {
     return <>{children}</>;

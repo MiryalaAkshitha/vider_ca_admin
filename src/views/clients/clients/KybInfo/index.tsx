@@ -3,10 +3,12 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { getForms } from "api/services/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
+import ValidateAccess from "components/ValidateAccess";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import { Permissions } from "utils/permissons";
 import SelectFormTemplate from "views/taskboard/taskview/iPro/SelectFormTemplate";
 import KybFormCard from "./KybFormCard";
 
@@ -56,13 +58,15 @@ function KybInfo() {
           />
         )}
       </Box>
-      <SelectFormTemplate
-        open={open}
-        setOpen={setOpen}
-        queryKey="client-forms"
-        type="CLIENT"
-        typeId={params.clientId}
-      />
+      <ValidateAccess name={Permissions.CREATE_CLIENT_KYB}>
+        <SelectFormTemplate
+          open={open}
+          setOpen={setOpen}
+          queryKey="client-forms"
+          type="CLIENT"
+          typeId={params.clientId}
+        />
+      </ValidateAccess>
     </Box>
   );
 }

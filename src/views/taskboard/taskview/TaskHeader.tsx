@@ -4,12 +4,14 @@ import { Box, Button } from "@mui/material";
 import { deleteTask } from "api/services/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
 import { snack } from "components/toast";
+import ValidateAccess from "components/ValidateAccess";
 import { useConfirm } from "context/ConfirmDialog";
 import { useTaskData } from "context/TaskData";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { taskViewMenu } from "utils/constants";
+import { Permissions } from "utils/permissons";
 import {
   StyledProfileNav,
   StyledProfileNavItem,
@@ -62,18 +64,22 @@ function TaskHeader({ onChange }: any) {
           >
             Group Chat
           </Button>
-          <Button
-            onClick={() => setOpen(true)}
-            startIcon={<CancelPresentationIcon color="secondary" />}
-          >
-            Terminate task
-          </Button>
-          <Button
-            onClick={handleDelete}
-            startIcon={<DeleteOutlined color="secondary" />}
-          >
-            Delete task
-          </Button>
+          <ValidateAccess name={Permissions.TERMINATE_TASK}>
+            <Button
+              onClick={() => setOpen(true)}
+              startIcon={<CancelPresentationIcon color="secondary" />}
+            >
+              Terminate task
+            </Button>
+          </ValidateAccess>
+          <ValidateAccess name={Permissions.DELETE_TASK}>
+            <Button
+              onClick={handleDelete}
+              startIcon={<DeleteOutlined color="secondary" />}
+            >
+              Delete task
+            </Button>
+          </ValidateAccess>
         </Box>
       </Box>
       <StyledProfileNav>

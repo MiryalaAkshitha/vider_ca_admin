@@ -3,10 +3,12 @@ import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
 import Loader from "components/Loader";
+import ValidateAccess from "components/ValidateAccess";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
+import { Permissions } from "utils/permissons";
 import AddCategory from "views/settings/categories/AddCategory";
 import CategoryCard from "views/settings/categories/CategoryCard";
 
@@ -21,14 +23,16 @@ function Cateogries() {
   return (
     <>
       <Box textAlign="right" mt={2}>
-        <Button
-          onClick={() => setOpen(true)}
-          variant="outlined"
-          startIcon={<Add />}
-          color="secondary"
-        >
-          Add Category
-        </Button>
+        <ValidateAccess name={Permissions.CREATE_CATEGORIES}>
+          <Button
+            onClick={() => setOpen(true)}
+            variant="outlined"
+            startIcon={<Add />}
+            color="secondary"
+          >
+            Add Category
+          </Button>
+        </ValidateAccess>
       </Box>
       <Grid container spacing={2} sx={{ maxWidth: 1000 }}>
         {data?.data?.map((item: any, index: any) => (

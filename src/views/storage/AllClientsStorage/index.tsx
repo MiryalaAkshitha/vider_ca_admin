@@ -5,13 +5,15 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import { StorageResponse } from "types";
 import BreadCrumbs from "views/clients/clients/Attachments/BreadCrumbs";
-import Files from "views/clients/clients/Attachments/Files";
-import Folders from "views/clients/clients/Attachments/Folders";
 import ClientsList from "./ClientsList";
 import Loader from "components/Loader";
-import AddAttachment from "views/clients/clients/Attachments/AddAttachment";
 import Search from "views/clients/clients/Attachments/Search";
 import ClientDetails from "./ClientDetails";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
+import AddAttachment from "./AddAttachment";
+import Files from "./Files";
+import Folders from "./Folders";
 
 function AllClientsStorage() {
   const { queryParams } = useQueryParams();
@@ -83,7 +85,9 @@ function AllClientsStorage() {
             {getFilesOrFolders("file")?.length ? (
               <Files data={getFilesOrFolders("file")} />
             ) : null}
-            <AddAttachment />
+            <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
+              <AddAttachment />
+            </ValidateAccess>
           </Box>
         )}
       </Box>

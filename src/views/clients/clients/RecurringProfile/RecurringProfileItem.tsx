@@ -12,6 +12,8 @@ import { RecurringFrequency } from "utils/constants";
 import { StyledRecurProfileItem } from "../styles";
 import EditRecurringProfile from "./EditRecurringProfile";
 import ViewRecurringProfile from "./ViewRecurringProfile";
+import { usePermissions } from "context/PermissionsProvider";
+import { Permissions } from "utils/permissons";
 
 interface Props {
   active?: boolean;
@@ -22,7 +24,7 @@ interface Props {
 
 const RecurringProfileItem = ({ active, last, data, onClick }: Props) => {
   const menu = useMenu();
-
+  const { permissions } = usePermissions();
   const queryClient = useQueryClient();
   const confirm = useConfirm();
   const [open, setOpen] = useState(false);
@@ -52,16 +54,21 @@ const RecurringProfileItem = ({ active, last, data, onClick }: Props) => {
 
   const handleMenu = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    let options = [
-      {
+    let options: any[] = [];
+
+    if (permissions.includes(Permissions.EDIT_CLIENT_RECURRING_PROFILE)) {
+      options.push({
         label: "Edit",
         action: () => setOpen(true),
-      },
-      {
+      });
+    }
+
+    if (permissions.includes(Permissions.TERMINATE_CLIENT_RECURRING_PROFILE)) {
+      options.push({
         label: "Terminate",
         action: handleTerminate,
-      },
-    ];
+      });
+    }
 
     if (
       data?.status === "completed" ||

@@ -7,7 +7,11 @@ interface Props {
 }
 
 function ValidateAccess({ name, children }: Props) {
-  let { permissions } = usePermissions();
+  let { permissions, role } = usePermissions();
+
+  if (role?.defaultRole) {
+    return <>{children}</>;
+  }
 
   if (Array.isArray(name)) {
     let isPermitted = name.some((item) => permissions.includes(item));

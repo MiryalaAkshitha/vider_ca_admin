@@ -3,10 +3,12 @@ import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClientPasswords } from "api/services/client-info";
 import Loader from "components/Loader";
+import ValidateAccess from "components/ValidateAccess";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import { Permissions } from "utils/permissons";
 import AddPassword from "./AddPassword";
 import PasswordCard from "./PasswodCard";
 
@@ -29,15 +31,17 @@ function Passwords() {
           <PasswordCard key={item.id} data={item} />
         ))}
       </Box>
-      <Fab
-        onClick={(e) => setOpen(true)}
-        size="medium"
-        color="secondary"
-        sx={{ position: "fixed", bottom: 40, right: 40, borderRadius: "8px" }}
-        aria-label="add"
-      >
-        <Add />
-      </Fab>
+      <ValidateAccess name={Permissions.CREATE_CLIENT_PASSWORDS}>
+        <Fab
+          onClick={(e) => setOpen(true)}
+          size="medium"
+          color="secondary"
+          sx={{ position: "fixed", bottom: 40, right: 40, borderRadius: "8px" }}
+          aria-label="add"
+        >
+          <Add />
+        </Fab>
+      </ValidateAccess>
       <AddPassword open={open} setOpen={setOpen} />
     </>
   );

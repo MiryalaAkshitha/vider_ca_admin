@@ -7,6 +7,8 @@ import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import { bulkDelete, bulkUpdate } from "api/services/client";
 import { useMutation, useQueryClient } from "react-query";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
 
 interface Props {
   anchorEl: HTMLElement | null;
@@ -82,13 +84,17 @@ function Actions({ anchorEl, setAnchorEl, selected, clearSelection }: Props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={(e) => setNestedAnchorEl(e.currentTarget)}>
-          <Box alignItems="center" display="flex" gap={1}>
-            Change status
-            <ChevronRightOutlinedIcon fontSize="small" />
-          </Box>
-        </MenuItem>
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        <ValidateAccess name={Permissions.EDIT_CLIENTS}>
+          <MenuItem onClick={(e) => setNestedAnchorEl(e.currentTarget)}>
+            <Box alignItems="center" display="flex" gap={1}>
+              Change status
+              <ChevronRightOutlinedIcon fontSize="small" />
+            </Box>
+          </MenuItem>
+        </ValidateAccess>
+        <ValidateAccess name={Permissions.DELETE_CLIENTS}>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        </ValidateAccess>
       </Menu>
       <NestedActions
         onClick={handleStatus}

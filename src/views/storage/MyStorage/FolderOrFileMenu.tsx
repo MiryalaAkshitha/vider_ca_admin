@@ -88,7 +88,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
           </ListItemIcon>
           <Typography variant="body2">Open</Typography>
         </MenuItem>
-        <ValidateAccess name={Permissions.EDIT_CLIENT_STORAGE}>
+        <ValidateAccess name={Permissions.EDIT_STORAGE}>
           <MenuItem sx={{ mt: 1 }} onClick={() => setOpen(true)}>
             <ListItemIcon>
               <DriveFileRenameOutlineRoundedIcon
@@ -99,7 +99,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
             <Typography variant="body2">Rename</Typography>
           </MenuItem>
         </ValidateAccess>
-        <ValidateAccess name={Permissions.DELETE_CLIENT_STORAGE}>
+        <ValidateAccess name={Permissions.DELETE_STORAGE}>
           <MenuItem sx={{ mt: 1 }} onClick={handleDelete}>
             <ListItemIcon>
               <DeleteOutlineRoundedIcon color="primary" fontSize="small" />

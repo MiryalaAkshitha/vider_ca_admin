@@ -14,6 +14,8 @@ import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditPassword from "./EditPassword";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
 
 type Props = {
   data: any;
@@ -139,8 +141,12 @@ function PasswordCard({ data }: Props) {
         onClick={() => setAnchorEl(null)}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuItem onClick={() => setEditOpen(true)}>Edit</MenuItem>
-        <MenuItem onClick={handleDelete}>Remove</MenuItem>
+        <ValidateAccess name={Permissions.EDIT_CLIENT_PASSWORDS}>
+          <MenuItem onClick={() => setEditOpen(true)}>Edit</MenuItem>
+        </ValidateAccess>
+        <ValidateAccess name={Permissions.DELETE_CLIENT_PASSWORDS}>
+          <MenuItem onClick={handleDelete}>Remove</MenuItem>
+        </ValidateAccess>
       </Menu>
       <EditPassword open={editOpen} setOpen={setEditOpen} data={data} />
     </>

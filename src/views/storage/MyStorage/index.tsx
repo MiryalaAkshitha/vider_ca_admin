@@ -1,15 +1,17 @@
 import { Box } from "@mui/system";
 import { getStorage } from "api/services/storage";
 import Loader from "components/Loader";
+import ValidateAccess from "components/ValidateAccess";
 import moment from "moment";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { StorageResponse } from "types";
+import { Permissions } from "utils/permissons";
 import BreadCrumbs from "views/clients/clients/Attachments/BreadCrumbs";
-import Files from "views/clients/clients/Attachments/Files";
-import Folders from "views/clients/clients/Attachments/Folders";
 import Search from "views/clients/clients/Attachments/Search";
 import AddAttachment from "./AddAttachment";
+import Files from "./Files";
+import Folders from "./Folders";
 
 function Attachments() {
   const [searchParams] = useSearchParams();
@@ -74,7 +76,9 @@ function Attachments() {
         {getFilesOrFolders("file")?.length ? (
           <Files data={getFilesOrFolders("file")} />
         ) : null}
-        <AddAttachment />
+        <ValidateAccess name={Permissions.CREATE_STORAGE}>
+          <AddAttachment />
+        </ValidateAccess>
       </Box>
     </>
   );

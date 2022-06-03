@@ -5,12 +5,12 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 
 type Type = {
-  role: string;
+  role: any;
   permissions: string[];
 };
 
 export const PermissionsContext = React.createContext<Type>({
-  role: "",
+  role: null,
   permissions: [],
 });
 
@@ -28,7 +28,7 @@ function PermissionsProvider({ children }) {
   return (
     <PermissionsContext.Provider
       value={{
-        role: data?.data?.name || "",
+        role: data?.data || "",
         permissions:
           data?.data?.permissions?.map((item: any) => item?.slug) || [],
       }}

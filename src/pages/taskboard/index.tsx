@@ -68,9 +68,7 @@ function TaskBoard() {
           </Typography>
         </Box>
       )}
-      <ValidateAccess
-        name={[Permissions.CREATE_TASK, Permissions.CREATE_RECUR_TASK]}
-      >
+      <ValidateAccess name={Permissions.CREATE_TASK}>
         <FloatingButton
           onClick={() => {
             setOpen(true);

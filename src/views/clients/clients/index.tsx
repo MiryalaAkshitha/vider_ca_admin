@@ -101,7 +101,9 @@ function Clients() {
         </Box>
         <Box display="flex" gap={2}>
           {selected.length > 0 && (
-            <ValidateAccess name={Permissions.DELETE_CLIENT_PROFILE}>
+            <ValidateAccess
+              name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}
+            >
               <Button
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 variant="outlined"
@@ -112,7 +114,7 @@ function Clients() {
               </Button>
             </ValidateAccess>
           )}
-          <ValidateAccess name={Permissions.CREATE_CLIENT_PROFILE}>
+          <ValidateAccess name={Permissions.CREATE_CLIENTS}>
             <Button
               onClick={() => setOpenImportDialog(true)}
               variant="outlined"
@@ -128,9 +130,7 @@ function Clients() {
         sx={{ mt: 3 }}
         loading={isLoading}
         onRowClick={(v) => {
-          if (permissions.includes(Permissions.VIEW_CLIENT_PROFILE)) {
-            handleRowClick(v);
-          }
+          handleRowClick(v);
         }}
         data={data?.data[0] || []}
         columns={columns}
@@ -149,7 +149,7 @@ function Clients() {
           },
         }}
       />
-      <ValidateAccess name={Permissions.CREATE_CLIENT_PROFILE}>
+      <ValidateAccess name={Permissions.CREATE_CLIENTS}>
         <FloatingButton
           onClick={() => {
             setOpen(true);

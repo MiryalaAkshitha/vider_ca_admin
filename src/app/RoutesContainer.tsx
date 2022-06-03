@@ -162,7 +162,6 @@ function RoutesContainer() {
           </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
-
           <Route path="invoicing" element={<Invoicing />}>
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<InvoicingDashboard />} />
@@ -180,7 +179,6 @@ function RoutesContainer() {
                 <Route path="statements" element={<Statements />} />
               </Route>
             </Route>
-            RecurringInvoices
             <Route path="estimates" element={<Estimates />} />
             <Route path="receipts" element={<Receipts />} />
             <Route path="recurring-invoices" element={<RecurringInvoices />} />
@@ -202,8 +200,22 @@ function RoutesContainer() {
           <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
 
           <Route path="storage" element={<Storage />}>
-            <Route path="my-storage" element={<MyStorage />} />
-            <Route path="all-clients-storage" element={<AllClientsStorage />} />
+            <Route
+              path="my-storage"
+              element={
+                <PageWithPermission name={Permissions.VIEW_STORAGE}>
+                  <MyStorage />
+                </PageWithPermission>
+              }
+            />
+            <Route
+              path="all-clients-storage"
+              element={
+                <PageWithPermission name={Permissions.VIEW_CLIENT_STORAGE}>
+                  <AllClientsStorage />
+                </PageWithPermission>
+              }
+            />
           </Route>
           <Route path="broadcast" element={<BroadCast />} />
           <Route path="forms" element={<Forms />}>
@@ -212,17 +224,63 @@ function RoutesContainer() {
             <Route path="task-forms" element={<TaskForms />} />
           </Route>
           <Route path="task-board">
-            <Route index element={<TaskBoard />} />
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.VIEW_TASK}>
+                  <TaskBoard />
+                </PageWithPermission>
+              }
+            />
             <Route path=":taskId" element={<TasksView />} />
           </Route>
           <Route path="clients">
             <Route index element={<Clients />} />
             <Route path=":clientId" element={<ClientView />}>
-              <Route path="kyb-info" element={<KybInfo />} />
-              <Route path="passwords" element={<Passwords />} />
-              <Route path="attachments" element={<Attachments />} />
-              <Route path="recurring-profile" element={<RecurringProfile />} />
-              <Route path="profile" element={<ProfileDetails />} />
+              <Route
+                path="kyb-info"
+                element={
+                  <PageWithPermission name={Permissions.VIEW_CLIENT_KYB}>
+                    <KybInfo />
+                  </PageWithPermission>
+                }
+              />
+              <Route
+                path="passwords"
+                element={
+                  <PageWithPermission name={Permissions.VIEW_CLIENT_PASSWORDS}>
+                    <Passwords />
+                  </PageWithPermission>
+                }
+              />
+              <Route
+                path="attachments"
+                element={
+                  <PageWithPermission
+                    name={Permissions.VIEW_CLIENT_ATTACHMENTS}
+                  >
+                    <Attachments />
+                  </PageWithPermission>
+                }
+              />
+              <Route
+                path="recurring-profile"
+                element={
+                  <PageWithPermission
+                    name={Permissions.VIEW_CLIENT_RECURRING_PROFILE}
+                  >
+                    <RecurringProfile />
+                  </PageWithPermission>
+                }
+              />
+              <Route
+                path="profile"
+                element={
+                  <PageWithPermission name={Permissions.VIEW_CLIENT_PROFILE}>
+                    <ProfileDetails />
+                  </PageWithPermission>
+                }
+              />
               <Route path="archives" element={<Archives />} />
             </Route>
           </Route>
@@ -233,7 +291,14 @@ function RoutesContainer() {
           </Route>
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>
-          <Route path="categories" element={<Categories />} />
+          <Route
+            path="categories"
+            element={
+              <PageWithPermission name={Permissions.VIEW_CATEGORIES}>
+                <Categories />
+              </PageWithPermission>
+            }
+          />
           <Route path="billing-entities">
             <Route index element={<BillingEntities />} />
             <Route path=":billingId" element={<ViewBillingEntityUser />} />

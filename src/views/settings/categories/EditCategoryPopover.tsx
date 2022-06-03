@@ -7,6 +7,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { Category } from "./CategoryCard";
 import EditCategory from "./EditCategory";
 import { useConfirm } from "context/ConfirmDialog";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
 
 interface EditCategoryPopoverProps extends AccountMenuProps {
   data: Category;
@@ -59,8 +61,12 @@ function EditCategoryPopover(props: EditCategoryPopoverProps) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
-        <MenuItem onClick={handleDelete}>Remove</MenuItem>
+        <ValidateAccess name={Permissions.EDIT_CATEGORIES}>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        </ValidateAccess>
+        <ValidateAccess name={Permissions.DELETE_CATEGORIES}>
+          <MenuItem onClick={handleDelete}>Remove</MenuItem>
+        </ValidateAccess>
       </Menu>
       <EditCategory open={editOpen} setOpen={setEditOpen} data={data} />
     </>

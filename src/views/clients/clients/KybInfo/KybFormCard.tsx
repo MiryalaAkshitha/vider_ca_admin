@@ -8,12 +8,15 @@ import moment from "moment";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { StyledCard } from "views/forms/styles";
+import { usePermissions } from "context/PermissionsProvider";
+import { Permissions } from "utils/permissons";
 
 interface Props {
   data: any;
 }
 
 function KybFormCard({ data }: Props) {
+  const { permissions } = usePermissions();
   const menu = useMenu();
   const navigate = useNavigate();
 
@@ -32,39 +35,50 @@ function KybFormCard({ data }: Props) {
 
   const handleMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    let options: any[] = [
+      {
+        label: "Audit log",
+        action: () => {
+          navigate(`${data?._id}/audit-log?formName=${data?.name}`);
+        },
+      },
+    ];
+
+    if (permissions.includes(Permissions.VIEW_CLIENT_KYB)) {
+      options.push({
+        label: "Form details",
+        action: () => {
+          navigate(`${data?._id}?formName=${data?.name}`);
+        },
+      });
+    }
+
+    if (permissions.includes(Permissions.DELETE_CLIENT_KYB)) {
+      options.push({
+        label: "Delete",
+        action: () => {
+          confirm({
+            msg: "Are you sure you want to delete this form?",
+            action: () => {
+              mutate({ id: data._id });
+            },
+          });
+        },
+      });
+    }
+
+    if (permissions.includes(Permissions.EDIT_CLIENT_KYB)) {
+      options.push({
+        label: "Edit",
+        action: () => {
+          navigate(`${data?._id}/edit?formName=${data?.name}`);
+        },
+      });
+    }
+
     menu({
       target: e.currentTarget,
-      options: [
-        {
-          label: "Form details",
-          action: () => {
-            navigate(`${data?._id}?formName=${data?.name}`);
-          },
-        },
-        {
-          label: "Audit log",
-          action: () => {
-            navigate(`${data?._id}/audit-log?formName=${data?.name}`);
-          },
-        },
-        {
-          label: "Edit",
-          action: () => {
-            navigate(`${data?._id}/edit?formName=${data?.name}`);
-          },
-        },
-        {
-          label: "Delete",
-          action: () => {
-            confirm({
-              msg: "Are you sure you want to delete this form?",
-              action: () => {
-                mutate({ id: data._id });
-              },
-            });
-          },
-        },
-      ],
+      options,
     });
   };
 

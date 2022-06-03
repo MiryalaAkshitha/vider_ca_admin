@@ -12,6 +12,8 @@ import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
 import BottomBar from "components/BottomBar";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
 
 function Details() {
   const queryClient = useQueryClient();
@@ -288,12 +290,14 @@ function Details() {
           </Grid>
         </Grid>
       </Box>
-      <BottomBar
-        data={taskData}
-        state={state}
-        onUpdate={handleUpdate}
-        onCancel={handleCancel}
-      />
+      <ValidateAccess name={Permissions.EDIT_TASK}>
+        <BottomBar
+          data={taskData}
+          state={state}
+          onUpdate={handleUpdate}
+          onCancel={handleCancel}
+        />
+      </ValidateAccess>
     </>
   );
 }

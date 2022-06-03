@@ -14,6 +14,9 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 import AddEvent from "views/calendar/AddEvent";
 import ViewEvent from "views/calendar/ViewEvent";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "utils/permissons";
+import { usePermissions } from "context/PermissionsProvider";
 
 function Calendar() {
   useTitle("Calendar");
@@ -49,6 +52,7 @@ function Calendar() {
 
   const clickedevent = (value: any) => {
     if (value.event.backgroundColor !== "#88B151") return;
+
     let event = events?.data?.find((item: any) => item.id === +value.event.id);
     setViewOpen(true);
     setData(event);
@@ -72,11 +76,13 @@ function Calendar() {
         displayEventEnd={true}
         eventTextColor="black"
       />
-      <FloatingButton
-        onClick={() => {
-          setOpen(true);
-        }}
-      />
+      <ValidateAccess name={Permissions.CREATE_CALENDAR}>
+        <FloatingButton
+          onClick={() => {
+            setOpen(true);
+          }}
+        />
+      </ValidateAccess>
       <AddEvent open={open} setOpen={setOpen} />
       <ViewEvent open={viewOpen} setOpen={setViewOpen} data={data} />
     </Box>
