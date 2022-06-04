@@ -5,7 +5,7 @@ import { useMenu } from "context/MenuPopover";
 import { MouseEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteMilestone } from "redux/reducers/addServiceSlice";
-import EditMilestone from "./EditMilestone";
+import EditMilestone from "views/services/Milestones/EditMilestone";
 
 interface Props {
   data: any;

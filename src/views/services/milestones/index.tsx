@@ -5,8 +5,8 @@ import NoItems from "components/NoItems";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { addServiceState } from "redux/reducers/addServiceSlice";
-import AddMilestone from "views/services/milestones/AddMilestone";
-import Milestone from "views/services/milestones/Milestone";
+import AddMilestone from "views/services/Milestones/AddMilestone";
+import Milestone from "views/services/Milestones/Milestone";
 
 function Milestones() {
   const [open, setOpen] = useState<boolean>(false);
