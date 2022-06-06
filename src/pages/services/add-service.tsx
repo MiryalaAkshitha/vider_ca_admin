@@ -21,10 +21,10 @@ import {
 import { ResType } from "types";
 import BasicDetails from "views/services/BasicDetails";
 import Checklists from "views/services/Checklists";
-import MileStones from "views/services/Milestones";
 import StageOfWork from "views/services/StagesOfWork";
 import Subtasks from "views/services/SubTasks";
 import { GreyButton } from "views/taskboard/styles";
+import Milestones from "views/services/Milestones";
 
 function AddService() {
   useTitle("Services");
@@ -94,7 +94,7 @@ function AddService() {
       <Divider sx={{ my: 5 }} />
       <Checklists />
       <Divider sx={{ my: 5 }} />
-      <MileStones />
+      <Milestones />
       <Divider sx={{ my: 5 }} />
       <StageOfWork />
       <Divider sx={{ my: 5 }} />
