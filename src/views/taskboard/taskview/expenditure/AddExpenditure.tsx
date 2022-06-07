@@ -13,11 +13,11 @@ import UploadImage from "components/UploadImage";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
+import { Params, useParams } from "react-router-dom";
 import { DialogProps, SubmitType } from "types";
 
 function AddExpenditure({ open, setOpen }: DialogProps) {
-  const params = useParams();
+  const params: any = useParams();
   const queryClient = useQueryClient();
 
   const [state, setState] = useState({
@@ -42,8 +42,9 @@ function AddExpenditure({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     mutate({
-      taskId: params.taskId,
       ...state,
+      taskId: +params.taskId,
+      amount: +state.amount,
     });
   };
 

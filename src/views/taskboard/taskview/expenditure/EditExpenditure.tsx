@@ -67,11 +67,11 @@ function EditExpenditure({ open, setOpen, data }: Props) {
           name="type"
         >
           <FormControlLabel
-            control={<Radio required value="pure_agent" />}
+            control={<Radio required value="PURE_AGENT" />}
             label="Pure agent"
           />
           <FormControlLabel
-            control={<Radio required value="additional_charges" />}
+            control={<Radio required value="ADDITIONAL" />}
             label="Additional Charges"
           />
         </RadioGroup>
