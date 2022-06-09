@@ -13,6 +13,10 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectTitle } from "redux/reducers/globalSlice";
+import AddEvent from "views/calendar/AddEvent";
+import AddClient from "views/clients/clients/AddClient";
+import AddMember from "views/settings/users/AddMember";
+import CreateTask from "views/taskboard/board/CreateTask";
 import AccountMenu from "./AccountMenu";
 import GlobalAdd from "./GlobalAdd";
 import Notifications from "./Notifications";
@@ -25,6 +29,7 @@ function Appbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [globalAddAnchorEl, setGlobalAddAnchorEl] = useState<RefType>(null);
   const [notifAnchorEl, setNotifAnchorEl] = useState<RefType>(null);
+  const [globalActionType, setGlobalActionType] = useState<string>("");
 
   return (
     <>
@@ -57,7 +62,7 @@ function Appbar() {
             >
               <NotificationsOutlined color="primary" />
             </IconButton>
-            <Link to="/settings/categories">
+            <Link to="/settings">
               <IconButton>
                 <SettingsOutlinedIcon color="primary" />
               </IconButton>
@@ -68,13 +73,38 @@ function Appbar() {
           </Box>
         </Toolbar>
         <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-        <GlobalAdd
-          anchorEl={globalAddAnchorEl}
-          setAnchorEl={setGlobalAddAnchorEl}
-        />
         <Notifications
           anchorEl={notifAnchorEl}
           setAnchorEl={setNotifAnchorEl}
+        />
+        <GlobalAdd
+          anchorEl={globalAddAnchorEl}
+          setAnchorEl={setGlobalAddAnchorEl}
+          setGlobalActionType={setGlobalActionType}
+        />
+        <AddClient
+          open={globalActionType === "Client"}
+          setOpen={() => {
+            setGlobalActionType("");
+          }}
+        />
+        <AddMember
+          open={globalActionType === "Member"}
+          setOpen={() => {
+            setGlobalActionType("");
+          }}
+        />
+        <CreateTask
+          open={globalActionType === "Task"}
+          setOpen={() => {
+            setGlobalActionType("");
+          }}
+        />
+        <AddEvent
+          open={globalActionType === "Event"}
+          setOpen={() => {
+            setGlobalActionType("");
+          }}
         />
       </AppBar>
     </>

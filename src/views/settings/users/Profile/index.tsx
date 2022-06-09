@@ -8,8 +8,13 @@ import Specializations from "./Specializations";
 import StatutoryInformation from "./StatutoryInformation";
 import { ResType } from "types";
 import { useParams } from "react-router-dom";
+import ChangePassword from "./ChangePassword";
 
-function Profile() {
+interface Props {
+  type?: "userProfile" | "user";
+}
+
+function Profile({ type }: Props) {
   const params = useParams();
   const { data, isLoading }: ResType = useQuery(
     ["user-profile", params.userId],
@@ -21,6 +26,7 @@ function Profile() {
   return (
     <Box sx={{ maxWidth: 1300, mx: "auto", mt: 3 }}>
       <BasicDetails data={data?.data} />
+      {type === "userProfile" && <ChangePassword />}
       <Specializations data={data?.data} />
       <StatutoryInformation data={data?.data} />
       <BankDetails data={data?.data} />

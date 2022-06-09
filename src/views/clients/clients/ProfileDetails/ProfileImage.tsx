@@ -14,7 +14,18 @@ function ProfileImage({ src, onChange }: any) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const uploadImage = (e: any) => {
-    if (!e.target.files[0]) return;
+    let file: File = e.target.files[0];
+    if (!file) return;
+
+    let notValid =
+      file.type !== "image/jpeg" &&
+      file.type !== "image/jpeg" &&
+      file.type !== "image/png";
+
+    if (notValid) {
+      return snack.error("Only jpeg and png images are allowed");
+    }
+
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     http

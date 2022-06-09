@@ -47,7 +47,11 @@ const PanDetails = () => {
       });
       setIsVerified(true);
     } catch (e: any) {
-      snack.error(e.response?.data?.message);
+      if (e.response?.data?.code === 422) {
+        snack.error("Invalid PAN");
+      } else {
+        snack.error(e.response?.data?.message);
+      }
     } finally {
       setLoading(false);
     }

@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import SideNav from "views/invoicing/SideNav";
 
 function SideNavBar() {
-  useTitle("Invoice");
+  useTitle("Invoicing");
 
   return (
     <Box display="flex" alignItems="flex-start">

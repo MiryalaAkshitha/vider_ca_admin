@@ -42,7 +42,7 @@ function CreateAccount() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    mutate({ mobileNumber });
+    mutate({ mobileNumber, email });
   };
 
   return (
@@ -59,6 +59,10 @@ function CreateAccount() {
               size="small"
               name="fullName"
               label="Full Name"
+              type="text"
+              inputProps={{
+                minLength: 3,
+              }}
               onChange={handleChange}
               value={fullName}
             />
@@ -69,6 +73,10 @@ function CreateAccount() {
               fullWidth
               size="small"
               name="mobileNumber"
+              inputProps={{
+                pattern: "[0-9]{10}",
+                title: "Mobile number must be 10 digits",
+              }}
               label="Mobile Number"
               onChange={handleChange}
               value={mobileNumber}
@@ -81,6 +89,7 @@ function CreateAccount() {
               size="small"
               name="email"
               label="Email"
+              type="email"
               onChange={handleChange}
               value={email}
             />
@@ -91,6 +100,13 @@ function CreateAccount() {
               value={password}
               label="Password"
               onChange={handleChange}
+              inputProps={{
+                minLength: 8,
+                pattern:
+                  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,}).*$",
+                title:
+                  "Password must be at least 8 characters long and contain at least one special character, one uppercase letter, one lowercase letter and one number",
+              }}
             />
           </Grid>
         </Grid>

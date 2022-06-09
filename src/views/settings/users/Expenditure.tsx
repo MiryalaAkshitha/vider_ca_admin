@@ -51,7 +51,7 @@ function Expenditure() {
 const columns = [
   {
     title: "Task ID",
-    key: "task.taskId",
+    key: "task.taskNumber",
   },
   {
     title: "Task Name",

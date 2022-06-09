@@ -1,8 +1,11 @@
 import { Grid } from "@mui/material";
+import useTitle from "hooks/useTitle";
 import { Outlet } from "react-router-dom";
 import FormNav from "../../views/forms/FormNav";
 
 const Forms = () => {
+  useTitle("Forms");
+
   return (
     <Grid
       container

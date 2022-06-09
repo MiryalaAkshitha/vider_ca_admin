@@ -9,6 +9,7 @@ interface Props {
   options: Array<{ label: string; value: string }>;
   style?: any;
   onChange?: (value: any) => void;
+  required?: boolean;
 }
 
 function FormSelect(props: Props) {
@@ -20,6 +21,7 @@ function FormSelect(props: Props) {
     label = "",
     style,
     onChange,
+    required = false,
   } = props;
 
   return (
@@ -32,7 +34,7 @@ function FormSelect(props: Props) {
             <TextField
               error={Boolean(error)}
               variant="outlined"
-              label={label}
+              label={`${label} ${required ? "*" : ""}`}
               select
               fullWidth
               size={size}

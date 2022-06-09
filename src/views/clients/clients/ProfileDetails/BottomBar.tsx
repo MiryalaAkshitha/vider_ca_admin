@@ -5,12 +5,12 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
+import { emailPattern, phonePattern } from "utils/patterns";
 import { GreyButton } from "views/taskboard/styles";
 
 function BottomBar({ data, state, setState }) {
   const queryClient = useQueryClient();
   const params = useParams();
-
   const [isStateChanged, setIsStateChanged] = useState(false);
 
   useEffect(() => {
@@ -29,12 +29,28 @@ function BottomBar({ data, state, setState }) {
       queryClient.invalidateQueries("client");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(err.response.data.message[0]);
     },
   });
 
   const onSubmit = () => {
     const { imageUrl, ...data } = state;
+
+    if (data?.email && !emailPattern.test(data.email)) {
+      return snack.error("Invalid Email");
+    }
+
+    if (data?.mobileNumber && !phonePattern.test(data?.mobileNumber)) {
+      return snack.error("Invalid Mobile Number");
+    }
+
+    if (
+      data?.alternateMobileNumber &&
+      !phonePattern.test(data?.alternateMobileNumber)
+    ) {
+      return snack.error("Invalid alternate mobile Number");
+    }
+
     mutate({ data, id: params.clientId });
   };
 

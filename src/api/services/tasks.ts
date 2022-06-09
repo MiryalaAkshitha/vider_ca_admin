@@ -57,9 +57,8 @@ const getTasks = ({ queryKey }) => {
 };
 
 const getUserTasks = ({ queryKey }) => {
-  return http.get("/tasks", {
+  return http.get("/tasks/user", {
     params: {
-      queryType: "USER",
       ...queryKey[1],
     },
   });

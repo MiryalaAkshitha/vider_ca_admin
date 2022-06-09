@@ -70,6 +70,7 @@ import emptyLicenses from "./images/emptyLicenses.png";
 import createFormLanding from "./images/createFormLanding.png";
 import clientFormCard from "./images/clientFormCard.png";
 import file from "./icons/file.png";
+import atom_logo from "./images/atom_logo.png";
 
 export {
   quote,
@@ -89,6 +90,7 @@ export {
   emptyLicenses,
   createFormLanding,
   clientFormCard,
+  atom_logo,
 };
 
 export const icons = {

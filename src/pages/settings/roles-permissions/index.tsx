@@ -18,8 +18,6 @@ function RolesAndPermissions() {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
-  const [editOpen, setEditOpen] = useState<boolean>(false);
-  const [selectedData, setSelectedData] = useState<any>({});
 
   const { data, isLoading }: ResType = useQuery("roles", getRoles);
 
@@ -121,15 +119,6 @@ function RolesAndPermissions() {
                       }}
                       size="small"
                     >
-                      <Visibility fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        setSelectedData(item);
-                        setEditOpen(true);
-                      }}
-                      size="small"
-                    >
                       <Edit fontSize="small" />
                     </IconButton>
                     <IconButton
@@ -148,7 +137,6 @@ function RolesAndPermissions() {
         />
       </Box>
       <AddRole open={open} setOpen={setOpen} />
-      <EditRole open={editOpen} setOpen={setEditOpen} data={selectedData} />
     </>
   );
 }

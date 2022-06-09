@@ -16,7 +16,6 @@ interface EditCategoryPopoverProps extends AccountMenuProps {
 
 function EditCategoryPopover(props: EditCategoryPopoverProps) {
   const { anchorEl, setAnchorEl, data } = props;
-
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);
@@ -60,13 +59,18 @@ function EditCategoryPopover(props: EditCategoryPopoverProps) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        PaperProps={{
+          sx: {
+            minWidth: 100,
+          },
+        }}
       >
         <ValidateAccess name={Permissions.EDIT_CATEGORIES}>
           <MenuItem onClick={handleEdit}>Edit</MenuItem>
         </ValidateAccess>
-        <ValidateAccess name={Permissions.DELETE_CATEGORIES}>
+        {/* <ValidateAccess name={Permissions.DELETE_CATEGORIES}>
           <MenuItem onClick={handleDelete}>Remove</MenuItem>
-        </ValidateAccess>
+        </ValidateAccess> */}
       </Menu>
       <EditCategory open={editOpen} setOpen={setEditOpen} data={data} />
     </>

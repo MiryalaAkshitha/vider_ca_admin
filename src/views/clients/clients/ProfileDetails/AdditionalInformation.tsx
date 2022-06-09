@@ -31,21 +31,6 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
       </Typography>
       <Box>
         <Grid container spacing={3}>
-          {data?.category === "individual" && (
-            <Grid item xs={4}>
-              <TextField
-                label="Date of birth"
-                name="dob"
-                onChange={handleChange}
-                value={data?.dob || ""}
-                fullWidth
-                type="date"
-                variant="outlined"
-                size="small"
-                InputLabelProps={{ shrink: true }}
-              />
-            </Grid>
-          )}
           <Grid item xs={4}>
             <Autocomplete
               multiple

@@ -14,12 +14,12 @@ function BreadCrumbs({ data }: any) {
           sx={{
             cursor: "pointer",
           }}
-          onClick={() =>
+          onClick={() => {
+            delete queryParams.folderId;
             setQueryParams({
               ...queryParams,
-              folderId: "",
-            })
-          }
+            });
+          }}
         >
           Home
         </Typography>

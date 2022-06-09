@@ -68,6 +68,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
             tradeName: result?.data?.tradeNam,
             placeOfSupply: result?.data?.pradr?.addr?.stcd,
             constitutionOfBusiness: result?.data?.ctb,
+            buildingName: result?.data?.pradr?.addr?.bnm,
+            street: result?.data?.pradr?.addr?.st,
+            city: result?.data?.pradr?.addr?.dst,
+            state: result?.data?.pradr?.addr?.stcd,
+            pincode: result?.data?.pradr?.addr?.pncd,
             gstVerified: true,
           },
         });

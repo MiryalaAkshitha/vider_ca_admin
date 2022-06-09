@@ -2,6 +2,7 @@ import { Button, Menu, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getNotifications } from "api/services/notifications";
 import Loader from "components/Loader";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import DateFilter from "./DateFilter";
@@ -9,9 +10,13 @@ import NotificationItem from "./NotificationItem";
 
 function Notifications({ anchorEl, setAnchorEl }) {
   const open = Boolean(anchorEl);
+  const [filters, setFilters] = useState({
+    fromDate: null,
+    toDate: null,
+  });
 
   const { data, isLoading }: ResType = useQuery(
-    "notifications",
+    ["notifications", filters],
     getNotifications,
     {
       enabled: Boolean(anchorEl),
@@ -61,7 +66,7 @@ function Notifications({ anchorEl, setAnchorEl }) {
         </Button>
       </Box>
       <Box>
-        <DateFilter />
+        <DateFilter filters={filters} setFilters={setFilters} />
         {isLoading ? (
           <Loader minHeight="200px" />
         ) : (

@@ -7,10 +7,18 @@ interface Props {
   size?: "small" | "medium";
   control: any;
   multiline?: boolean;
+  required?: boolean;
 }
 
 function FormInput(props: Props) {
-  const { name, size = "small", control, label = "", multiline } = props;
+  const {
+    name,
+    size = "small",
+    control,
+    label = "",
+    multiline,
+    required = false,
+  } = props;
 
   return (
     <>
@@ -22,7 +30,7 @@ function FormInput(props: Props) {
             <TextField
               error={Boolean(error)}
               variant="outlined"
-              label={label}
+              label={`${label} ${required ? "*" : ""}`}
               fullWidth
               multiline={multiline}
               rows={multiline ? 3 : 1}

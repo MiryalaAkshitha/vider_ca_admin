@@ -10,6 +10,7 @@ interface PasswordFieldProps {
   value: string;
   required?: boolean;
   name?: string;
+  inputProps?: any;
 }
 
 function PasswordField({
@@ -19,6 +20,7 @@ function PasswordField({
   sx,
   value,
   name = "password",
+  inputProps = {},
 }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -47,6 +49,7 @@ function PasswordField({
       required={required}
       size="small"
       label={label}
+      inputProps={inputProps}
     />
   );
 }

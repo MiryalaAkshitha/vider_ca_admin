@@ -4,8 +4,12 @@ const saveToken = (data: any) => {
   return http.post("/notifications/token", data);
 };
 
-const getNotifications = () => {
-  return http.get("/notifications");
+const getNotifications = ({ queryKey }) => {
+  return http.get("/notifications", {
+    params: {
+      ...queryKey[1],
+    },
+  });
 };
 
 export { saveToken, getNotifications };

@@ -1,47 +1,51 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { signin } from "api/services/users";
+import { Box, Grid, Typography } from "@mui/material";
+import { resetPassword } from "api/services/users";
 import { newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
+import PasswordField from "views/login/PasswordField";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-import ForgotPassword from "views/login/ForgotPassword";
-import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
+import { snack } from "components/toast";
+import useQueryParams from "hooks/useQueryParams";
 
-type DataType = { username: string; password: string };
+type StateType = { password: string; confirmPassword: string };
 
-const Login = () => {
+const ResetPassword = () => {
+  const { queryParams } = useQueryParams();
   const navigate = useNavigate();
-  const [open, setOpen] = useState<boolean>(false);
-  const [state, setState] = useState<DataType>({
-    username: "",
+  const [state, setState] = useState<StateType>({
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: any) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const { mutate, isLoading } = useMutation(signin, {
-    onSuccess: (res: any) => {
-      localStorage.setItem("token", res.data.access_token);
-      localStorage.setItem("userId", JSON.stringify(res.data.userId));
-      window.location.href = "/";
+  const { mutate, isLoading } = useMutation(resetPassword, {
+    onSuccess: () => {
+      snack.success("Password reset successfully");
+      navigate("/login");
     },
     onError: (err: any) => {
-      if (err.response.data.statusCode === 401) {
-        toast.error("Invalid Credentials");
-      } else {
-        toast.error(err.response.data.message);
-      }
+      snack.error(err.response.data.message);
     },
   });
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    mutate(state);
+
+    if (state.password !== state.confirmPassword) {
+      return snack.error("Passwords do not match");
+    }
+
+    mutate({
+      token: queryParams.token,
+      password: state.password,
+    });
   };
 
   return (
@@ -74,50 +78,43 @@ const Login = () => {
           minHeight="100vh"
         >
           <Box maxWidth="400px" width="100%">
-            <Typography variant="subtitle1">Sign in to your Account</Typography>
+            <Typography variant="subtitle1">Reset your password</Typography>
             <form onSubmit={handleSubmit}>
-              <TextField
-                required
-                fullWidth
-                size="small"
-                name="username"
-                label="Email"
-                sx={{ mt: 3 }}
-                type="email"
-                onChange={handleChange}
-              />
               <PasswordField
                 value={state.password}
                 label="Password"
+                name="password"
+                sx={{ mt: 3 }}
+                inputProps={{
+                  minLength: 8,
+                  pattern:
+                    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,}).*$",
+                  title:
+                    "Password must be at least 8 characters long and contain at least one special character, one uppercase letter, one lowercase letter and one number",
+                }}
+                onChange={handleChange}
+              />
+              <PasswordField
+                value={state.confirmPassword}
+                name="confirmPassword"
+                label="Confirm Password"
                 sx={{ mt: 3 }}
                 onChange={handleChange}
               />
               <LoadingButton
                 loading={isLoading}
-                sx={{ mt: 4 }}
-                size="large"
+                sx={{ mt: 3 }}
                 fullWidth
                 type="submit"
                 title="Submit"
                 color="secondary"
               />
             </form>
-            <div>
-              <Button sx={{ mt: 3 }} onClick={() => setOpen(true)}>
-                Forgot Password?
-              </Button>
-            </div>
-            <div>
-              <Button sx={{ mt: 1 }} onClick={() => navigate("/signup")}>
-                Don't have an account - Create New Account
-              </Button>
-            </div>
           </Box>
         </Box>
       </Grid>
-      <ForgotPassword open={open} setOpen={setOpen} />
     </Grid>
   );
 };
 
-export default Login;
+export default ResetPassword;

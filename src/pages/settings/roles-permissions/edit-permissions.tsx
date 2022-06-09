@@ -1,4 +1,5 @@
-import { Breadcrumbs, Button, Typography } from "@mui/material";
+import { Edit } from "@mui/icons-material";
+import { Breadcrumbs, Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getPermissions, getRole, updateRole } from "api/services/roles";
 import { LinkRouter } from "components/BreadCrumbs";
@@ -10,6 +11,7 @@ import { useState } from "react";
 import { useMutation, useQuery, UseQueryResult } from "react-query";
 import { useParams } from "react-router-dom";
 import { DataResponse } from "types";
+import EditRole from "views/settings/roles-permissions/EditRole";
 import PermissonsAccordion from "views/settings/roles-permissions/PermissionAccordion";
 
 type PermissionsDataResponse = UseQueryResult<DataResponse, Error>;
@@ -17,6 +19,8 @@ type PermissionsDataResponse = UseQueryResult<DataResponse, Error>;
 function ViewProfile() {
   const params: any = useParams();
   const [permissions, setPermissons] = useState<number[]>([]);
+  const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [selectedData, setSelectedData] = useState<any>({});
 
   const {
     data: permissionsData,
@@ -84,6 +88,7 @@ function ViewProfile() {
         bgcolor="#FBF9F2"
         borderRadius={4}
         p={3}
+        position="relative"
       >
         <Box>
           <Typography variant="body1" gutterBottom color="primary">
@@ -115,9 +120,22 @@ function ViewProfile() {
             color="secondary"
             variant="outlined"
           >
-            Save
+            Save Changes
           </Button>
         </Box>
+        <IconButton
+          onClick={() => {
+            setSelectedData(data?.data);
+            setEditOpen(true);
+          }}
+          sx={{
+            position: "absolute",
+            right: -14,
+            top: -14,
+          }}
+        >
+          <Edit fontSize="small" />
+        </IconButton>
       </Box>
       <Box mt={3} maxWidth={800}>
         <Typography sx={{ mb: 2 }} variant="subtitle1">
@@ -135,6 +153,7 @@ function ViewProfile() {
           )
         )}
       </Box>
+      <EditRole open={editOpen} setOpen={setEditOpen} data={selectedData} />
     </div>
   );
 }

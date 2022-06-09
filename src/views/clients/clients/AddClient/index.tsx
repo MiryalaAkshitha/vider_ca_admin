@@ -92,6 +92,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
         <form onSubmit={handleSubmit(onFormSubmit)}>
           <FormSelect
             control={control}
+            required
             name="category"
             label="Category"
             options={CLIENT_CATEGORIES.map((item) => ({
@@ -128,6 +129,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
               control={control}
               name="displayName"
               label="Display Name"
+              required
             />
           </Box>
           <Box mt={2}>
@@ -135,10 +137,11 @@ function AddClient({ open, setOpen, successCb }: Props) {
               control={control}
               name="mobileNumber"
               label="Mobile number"
+              required
             />
           </Box>
           <Box mt={2}>
-            <FormInput control={control} name="email" label="Email" />
+            <FormInput control={control} name="email" label="Email" required />
           </Box>
           <Box mt={2}>
             <FormInput

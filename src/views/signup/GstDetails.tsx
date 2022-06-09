@@ -46,7 +46,11 @@ const GstDetails = () => {
       });
       setIsVerified(true);
     } catch (e: any) {
-      snack.error(e.response?.data?.message);
+      if (e.response?.data?.code === 422) {
+        snack.error("Invalid GSTIN");
+      } else {
+        snack.error(e.response?.data?.message);
+      }
     } finally {
       setLoading(false);
     }

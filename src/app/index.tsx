@@ -1,6 +1,5 @@
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import AuthWrapper from "components/AuthWrapper";
 import ConfirmDialogProvider from "context/ConfirmDialog";
 import MenuPopoverProvider from "context/MenuPopover";
 import PermissionsProvider from "context/PermissionsProvider";
@@ -36,11 +35,9 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <ConfirmDialogProvider>
             <MenuPopoverProvider>
-              <AuthWrapper>
-                <PermissionsProvider>
-                  <RoutesContainer />
-                </PermissionsProvider>
-              </AuthWrapper>
+              <PermissionsProvider>
+                <RoutesContainer />
+              </PermissionsProvider>
             </MenuPopoverProvider>
           </ConfirmDialogProvider>
         </QueryClientProvider>

@@ -6,6 +6,8 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/system";
 import { logo } from "assets";
+import AccountMenu from "layout/primarylayout/AccountMenu";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -16,6 +18,8 @@ const AppBar = styled(MuiAppBar)(({ theme }) => ({
 }));
 
 function Appbar() {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const navigate = useNavigate();
 
   return (
@@ -32,11 +36,12 @@ function Appbar() {
               Settings
             </Button>
           </Box>
-          <Box display="flex" gap={2}>
-            <IconButton>
-              <AccountCircleOutlinedIcon />
+          <Box>
+            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+              <AccountCircleOutlinedIcon color="primary" />
             </IconButton>
           </Box>
+          <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </Toolbar>
       </AppBar>
     </>

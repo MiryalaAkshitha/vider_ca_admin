@@ -52,6 +52,14 @@ const signin = (data: any) => {
   return http.post("/users/signin", data);
 };
 
+const forgotPassword = (data: any) => {
+  return http.post("/users/forgot-password", data);
+};
+
+const resetPassword = (data: any) => {
+  return http.post("/users/reset-password", data);
+};
+
 const inviteUser = (data: any) => {
   return http.post("/users/invite-user", data);
 };
@@ -96,6 +104,10 @@ const updateProfile = (data: any) => {
   return http.patch(`/users/profile`, data);
 };
 
+const changePassword = (data: any) => {
+  return http.patch(`/users/change-password`, data);
+};
+
 export {
   getSandboxToken,
   getGstDetails,
@@ -115,4 +127,7 @@ export {
   removeFromTeam,
   getProfile,
   updateProfile,
+  forgotPassword,
+  resetPassword,
+  changePassword,
 };

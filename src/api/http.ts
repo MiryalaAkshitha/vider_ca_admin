@@ -16,15 +16,14 @@ http.interceptors.response.use(
     if (err.message === "Network Error") {
       alert("Please Check your internet connection");
     }
-    if (err.response.data.statusCode === 401) {
-      if (
-        err.response.config.url !== "/users/signin" &&
-        err.response.config.url !== "/users/signup"
-      ) {
-        localStorage.removeItem("token");
-        alert("Session Expired, Please Login Again");
-        window.location.href = "/login";
-      }
+    if (
+      err.response.data.statusCode === 401 &&
+      err.response.config.method === "get"
+    ) {
+      alert("Session Expired, Please Login Again");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      window.location.href = "/login";
     }
     return Promise.reject(err);
   }

@@ -1,6 +1,8 @@
-import { Logout } from "@mui/icons-material";
+import { ContactPageOutlined, Logout } from "@mui/icons-material";
 import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import ContactPageIcon from "@mui/icons-material/ContactPage";
+import { useNavigate } from "react-router-dom";
 
 type ElementType = HTMLElement | null;
 
@@ -11,6 +13,7 @@ export interface AccountMenuProps {
 
 function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -37,6 +40,17 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
+      <MenuItem
+        sx={{ py: 1, m: 0 }}
+        onClick={() => {
+          navigate("/settings/profile");
+        }}
+      >
+        <ListItemIcon>
+          <ContactPageOutlined color="primary" fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="body2">Profile</Typography>
+      </MenuItem>
       <MenuItem sx={{ py: 1, m: 0 }} onClick={handleLogout}>
         <ListItemIcon>
           <Logout color="primary" fontSize="small" />

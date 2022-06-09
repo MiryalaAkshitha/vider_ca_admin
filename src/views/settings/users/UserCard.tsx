@@ -51,7 +51,7 @@ function UserCard({ data, type, teamId }: Props) {
     <>
       <StyledUserCard
         onClick={() => {
-          navigate(`/settings/users/${data.id}/profile`);
+          navigate(`/settings/users/${data.id}`);
         }}
       >
         <Avatar

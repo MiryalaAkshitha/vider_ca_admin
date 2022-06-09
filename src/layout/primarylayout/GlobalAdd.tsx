@@ -1,13 +1,13 @@
 import { Add } from "@mui/icons-material";
 import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import useQueryParams from "hooks/useQueryParams";
 
 type ElementType = HTMLElement | null;
 
 interface AccountMenuProps {
   anchorEl: ElementType;
   setAnchorEl: (v: ElementType) => void;
+  setGlobalActionType: (v: string) => void;
 }
 
 const globalAddMenu = [
@@ -23,14 +23,22 @@ const globalAddMenu = [
     title: "Event",
     action: "createEvent",
   },
+  {
+    title: "Member",
+    action: "createEvent",
+  },
 ];
 
-function GlobalAdd({ anchorEl, setAnchorEl }: AccountMenuProps) {
+function GlobalAdd(props: AccountMenuProps) {
+  const { anchorEl, setAnchorEl, setGlobalActionType } = props;
   const open = Boolean(anchorEl);
-  const { queryParams, setQueryParams } = useQueryParams();
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClick = (title: string) => {
+    setGlobalActionType(title);
   };
 
   return (
@@ -55,10 +63,7 @@ function GlobalAdd({ anchorEl, setAnchorEl }: AccountMenuProps) {
           <MenuItem
             sx={{ py: 1, m: 0 }}
             onClick={() => {
-              setQueryParams({
-                ...queryParams,
-                [item.action]: "true",
-              });
+              handleClick(item.title);
             }}
           >
             <ListItemIcon>

@@ -49,10 +49,10 @@ const BasicInformation = ({ data, setState }) => {
           </Grid>
           <Grid item xs={4}>
             <TextField
-              disabled
               label="Display Name"
               name="displayName"
               value={data?.displayName || ""}
+              onChange={handleChange}
               fullWidth
               variant="outlined"
               size="small"
@@ -168,6 +168,21 @@ const BasicInformation = ({ data, setState }) => {
               onChange={handleChange}
             />
           </Grid>
+          {data?.category === "individual" && (
+            <Grid item xs={4}>
+              <TextField
+                label="Date of birth"
+                name="dob"
+                onChange={handleChange}
+                value={data?.dob || ""}
+                fullWidth
+                type="date"
+                variant="outlined"
+                size="small"
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+          )}
         </Grid>
       </Box>
     </Box>

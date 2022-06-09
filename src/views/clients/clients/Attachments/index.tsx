@@ -1,5 +1,6 @@
 import { Box } from "@mui/system";
 import { getStorage } from "api/services/storage";
+import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
 import moment from "moment";
@@ -67,21 +68,35 @@ function Attachments() {
 
   return (
     <>
-      <Search type="client" />
       <Box px={4} py={2}>
-        {data?.data.breadCrumbs.length ? (
-          <BreadCrumbs data={data?.data?.breadCrumbs} />
-        ) : null}
-        {getFilesOrFolders("folder")?.length ? (
-          <Folders data={getFilesOrFolders("folder")} />
-        ) : null}
-        {getFilesOrFolders("file")?.length ? (
-          <Files data={getFilesOrFolders("file")} />
-        ) : null}
-        <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
-          <AddAttachment />
-        </ValidateAccess>
+        <Box display="flex" justifyContent="space-between">
+          <Box>
+            {data?.data.breadCrumbs.length ? (
+              <BreadCrumbs data={data?.data?.breadCrumbs} />
+            ) : null}
+          </Box>
+          <Search type="client" />
+        </Box>
+        {data?.data?.result?.length ? (
+          <>
+            {getFilesOrFolders("folder")?.length ? (
+              <Folders data={getFilesOrFolders("folder")} />
+            ) : null}
+            {getFilesOrFolders("file")?.length ? (
+              <Files data={getFilesOrFolders("file")} />
+            ) : null}
+          </>
+        ) : (
+          <EmptyPage
+            minHeight="60vh"
+            title="No files or folders found"
+            desc="Add folder or file to your storage"
+          />
+        )}
       </Box>
+      <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
+        <AddAttachment />
+      </ValidateAccess>
     </>
   );
 }

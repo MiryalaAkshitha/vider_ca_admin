@@ -1,9 +1,9 @@
-import { ListItemButton, Typography } from "@mui/material";
+import { Box, ListItemButton, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { logo } from "assets";
+import { atom_logo, logo } from "assets";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Drawer, DrawerHeader } from "../styles";
@@ -30,8 +30,10 @@ function SideNav() {
       onMouseOver={handleDrawerOpen}
     >
       <DrawerHeader>
-        <img src={logo} alt="" />
-        <Typography
+        <Box mx="-5px">
+          <img style={{ width: 120 }} src={atom_logo} alt="" />
+        </Box>
+        {/* <Typography
           variant="subtitle1"
           sx={{ opacity: open ? 1 : 0, transition: "0.4s" }}
           pt={1}
@@ -39,7 +41,7 @@ function SideNav() {
           color="white"
         >
           Vider
-        </Typography>
+        </Typography> */}
       </DrawerHeader>
       <Divider />
       <List>

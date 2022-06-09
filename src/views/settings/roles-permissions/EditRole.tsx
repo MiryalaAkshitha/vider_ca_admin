@@ -21,9 +21,8 @@ function EditRole({ open, setOpen, data }: EditRoleProps) {
 
   const { mutate, isLoading } = useMutation(updateRole, {
     onSuccess: () => {
-      snack.success("Role Updated");
       setOpen(false);
-      queryClient.invalidateQueries("roles");
+      queryClient.invalidateQueries("role");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

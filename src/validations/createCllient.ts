@@ -27,7 +27,7 @@ let CreateClientSchema = ({ subCategoriesExist }) =>
   object().shape({
     displayName: string().required("Display Name is required"),
     tradeName: string().notRequired(),
-    clientManager: string().required("Select a client manager"),
+    clientManager: string().notRequired(),
     category: string().required("Category is required"),
     subCategory: mixed().when("category", {
       is: (category: any) => subCategoriesExist(category),

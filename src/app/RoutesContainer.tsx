@@ -70,6 +70,7 @@ const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
 const Login = loadable(() => import("pages/login"));
+const ResetPassword = loadable(() => import("pages/reset-password"));
 const Join = loadable(() => import("pages/join"));
 const SignUp = loadable(() => import("pages/signup"));
 const Dashboard = loadable(() => import("pages/dashboard"));
@@ -83,14 +84,10 @@ const BillingEntities = loadable(
 const ViewBillingEntityUser = loadable(
   () => import("pages/settings/viewBillingEntityUser")
 );
+const MyProfile = loadable(() => import("pages/settings/UserProfile"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const ViewUser = loadable(() => import("pages/settings/ViewUser"));
-const UserProfile = loadable(() => import("views/settings/users/Profile"));
-const UserTasks = loadable(() => import("views/settings/users/Tasks"));
-const UserExpenditure = loadable(
-  () => import("views/settings/users/Expenditure")
-);
 const Teams = loadable(() => import("pages/settings/teams"));
 const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
 const Clients = loadable(() => import("pages/clients"));
@@ -303,13 +300,11 @@ function RoutesContainer() {
             <Route index element={<BillingEntities />} />
             <Route path=":billingId" element={<ViewBillingEntityUser />} />
           </Route>
+          <Route index element={<Navigate to="profile" />} />
+          <Route path="profile" element={<MyProfile />} />
           <Route path="users">
             <Route index element={<Users />} />
-            <Route path=":userId" element={<ViewUser />}>
-              <Route path="profile" element={<UserProfile />} />
-              <Route path="tasks" element={<UserTasks />} />
-              <Route path="expenditure" element={<UserExpenditure />} />
-            </Route>
+            <Route path=":userId" element={<ViewUser />} />
           </Route>
           <Route path="storage-management" element={<StorageManagement />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
@@ -339,9 +334,6 @@ function RoutesContainer() {
             }
           />
         </Route>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/join" element={<Join />} />
         <Route path="/forms/builder/:formId" element={<FormBuilder />} />
         <Route path="/forms/access/:formId" element={<AccessForm />} />
         <Route path="/tasks/:taskId/iPro/:formId" element={<ViewIproForm />}>
@@ -366,6 +358,10 @@ function RoutesContainer() {
           path="/forms/:formId/fields/:fieldId/esign"
           element={<Esign />}
         />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/join" element={<Join />} />
       </Routes>
     </Router>
   );

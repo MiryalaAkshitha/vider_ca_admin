@@ -23,8 +23,8 @@ let CreatebankDetailsSchema = object().shape({
     ),
   ifscCode: string()
     .required("IFSC code is required")
-    .min(3, "IFSC code should be atleast 3 characters")
-    .max(20, "IFSC code should be most at 11 characters"),
+    .min(11, "IFSC code should be 11 characters long.")
+    .max(11, "IFSC code should be 11 characters long."),
   upiId: string().required("UPI ID is required"),
   upiAttachment: string().required("UPI attachment is required"),
 });
