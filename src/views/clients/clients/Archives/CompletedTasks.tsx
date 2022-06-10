@@ -54,7 +54,7 @@ function CompletedTasks({ filters }: Props) {
           data={getData()}
           columns={[
             {
-              key: "taskId",
+              key: "taskNumber",
               title: "Task ID",
             },
             {
@@ -66,10 +66,7 @@ function CompletedTasks({ filters }: Props) {
               title: "Completed Date",
               render: (row) => {
                 return row?.completedDate
-                  ? moment
-                      .utc(row?.completedDate)
-                      .local()
-                      .format("MM/DD/YYYY, h:mm a")
+                  ? moment(row?.completedDate).format("MM/DD/YYYY, h:mm a")
                   : "";
               },
             },

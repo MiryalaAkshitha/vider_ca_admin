@@ -53,7 +53,7 @@ function TerminatedTasks({ filters }: Props) {
           data={getData()}
           columns={[
             {
-              key: "taskId",
+              key: "taskNumber",
               title: "Task ID",
             },
             {
@@ -65,10 +65,7 @@ function TerminatedTasks({ filters }: Props) {
               title: "Terminated Date",
               render: (row) => {
                 return row?.terminatedDate
-                  ? moment
-                      .utc(row?.terminatedDate)
-                      .local()
-                      .format("MM/DD/YYYY, h:mm a")
+                  ? moment(row?.terminatedDate).format("MM/DD/YYYY, h:mm a")
                   : "";
               },
             },

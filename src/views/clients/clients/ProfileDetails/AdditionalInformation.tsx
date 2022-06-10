@@ -48,7 +48,7 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
                   variant="outlined"
                   size="small"
                   fullWidth
-                  label="Tags"
+                  label="Labels"
                 />
               )}
             />

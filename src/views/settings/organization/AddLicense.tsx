@@ -40,10 +40,6 @@ function AddLicense({ open, setOpen }: DialogProps) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    if (!state.attachment) {
-      snack.error("Please upload an attachment");
-      return;
-    }
     mutate({
       data: state,
     });

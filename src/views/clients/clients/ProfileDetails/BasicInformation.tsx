@@ -1,6 +1,7 @@
 import { Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getUsers } from "api/services/users";
+import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { CLIENT_CATEGORIES } from "utils/constants";
@@ -179,6 +180,9 @@ const BasicInformation = ({ data, setState }) => {
                 type="date"
                 variant="outlined"
                 size="small"
+                inputProps={{
+                  max: moment().format("YYYY-MM-DD"),
+                }}
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>

@@ -50,7 +50,7 @@ function RolesAndPermissions() {
         mt={2}
       >
         <Typography variant="subtitle2" color="primary">
-          Roles
+          Roles & Permissions
         </Typography>
         <Button
           onClick={() => setOpen(true)}

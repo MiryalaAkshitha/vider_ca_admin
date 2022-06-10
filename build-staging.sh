@@ -1,5 +1,5 @@
 rm -rf build
 yarn build:staging
 cp ./apache.conf ./build/.htaccess
-ssh vider 'rm -rf /home/ubuntu/vider_ca_admin_staging/build'
-scp -r ./build vider:/home/ubuntu/vider_ca_admin_staging/build
+ssh viderTest 'rm -rf /home/ubuntu/vider_ca_admin_staging/build'
+scp -r ./build viderTest:/home/ubuntu/vider_ca_admin_staging/build

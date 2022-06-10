@@ -86,25 +86,31 @@ function LicenseCard({ data }) {
             <Typography variant="body2" gutterBottom>
               Attachment
             </Typography>
-            <StyledAttachment
-              sx={{
-                p: 1,
-              }}
-            >
-              <a
-                href={data.attachmentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            {data?.attachment ? (
+              <StyledAttachment
+                sx={{
+                  p: 1,
+                }}
               >
-                <Typography
-                  gutterBottom
-                  variant="body2"
-                  color="rgba(0,0,0,0.8)"
+                <a
+                  href={data.attachmentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {data.attachment}
-                </Typography>
-              </a>
-            </StyledAttachment>
+                  <Typography
+                    gutterBottom
+                    variant="body2"
+                    color="rgba(0,0,0,0.8)"
+                  >
+                    {data.attachment}
+                  </Typography>
+                </a>
+              </StyledAttachment>
+            ) : (
+              <Typography sx={{ fontSize: 15 }} variant="subtitle2">
+                NA
+              </Typography>
+            )}
           </Grid>
         </Grid>
         <IconButton

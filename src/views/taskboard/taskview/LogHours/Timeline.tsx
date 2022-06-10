@@ -31,10 +31,9 @@ function Timeline({ data }: any) {
                 </div>
                 <Typography variant="caption">
                   {data?.data?.timeline[status] &&
-                    moment
-                      .utc(data?.data?.timeline[status])
-                      .local()
-                      .format("MM/DD/YYYY, h:mm a")}
+                    moment(data?.data?.timeline[status]).format(
+                      "MM/DD/YYYY, h:mm a"
+                    )}
                 </Typography>{" "}
                 <br />
                 {status === TaskStatus.ON_HOLD && data?.data?.timeline[status] && (

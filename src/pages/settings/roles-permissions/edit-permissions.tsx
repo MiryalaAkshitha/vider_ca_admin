@@ -77,7 +77,7 @@ function ViewProfile() {
           color="inherit"
           to="/settings/roles-permissions"
         >
-          Roles
+          Roles & Permissions
         </LinkRouter>
         <Typography>{data?.data?.name}</Typography>
       </Breadcrumbs>

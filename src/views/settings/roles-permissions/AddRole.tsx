@@ -49,7 +49,6 @@ function AddRole({ open, setOpen }: DialogProps) {
           multiline
           sx={{ mt: 2 }}
           rows={3}
-          required
           label="Description"
           name="description"
         />

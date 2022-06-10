@@ -76,7 +76,6 @@ function EditRole({ open, setOpen, data }: EditRoleProps) {
           defaultValue={data?.description}
           sx={{ mt: 2 }}
           rows={3}
-          required
           label="Description"
           name="description"
         />

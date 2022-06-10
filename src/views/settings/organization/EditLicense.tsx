@@ -53,10 +53,6 @@ function EditLicense({ open, setOpen, data }: IProps) {
 
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
-    if (!state.attachment) {
-      snack.error("Please upload an attachment");
-      return;
-    }
     mutate({
       id: data.id,
       data: state,

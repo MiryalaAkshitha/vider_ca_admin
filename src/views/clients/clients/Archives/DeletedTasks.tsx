@@ -54,7 +54,7 @@ function DeletedTasks({ filters }: Props) {
           data={getData()}
           columns={[
             {
-              key: "taskId",
+              key: "taskNumber",
               title: "Task ID",
             },
             {
@@ -66,10 +66,7 @@ function DeletedTasks({ filters }: Props) {
               title: "Deleted Date",
               render: (row) => {
                 return row?.deletedDate
-                  ? moment
-                      .utc(row?.deletedDate)
-                      .local()
-                      .format("MM/DD/YYYY, h:mm a")
+                  ? moment(row?.deletedDate).format("MM/DD/YYYY, h:mm a")
                   : "";
               },
             },
