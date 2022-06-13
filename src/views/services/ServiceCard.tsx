@@ -48,7 +48,7 @@ function ServiceCard({ data }) {
   return (
     <CustomCard sx={{ position: "relative" }}>
       <Box display="flex" gap={1} alignItems="center">
-        <Typography sx={{ flex: 1 }} color="primary" variant="subtitle2" mb={1}>
+        <Typography sx={{ flex: 1 }} color="primary" variant="subtitle2">
           {data?.name}
         </Typography>
         <IconButton size="small" onClick={handleClick}>
@@ -56,7 +56,17 @@ function ServiceCard({ data }) {
         </IconButton>
       </Box>
       <Typography color="gray" variant="body2">
-        <div dangerouslySetInnerHTML={{ __html: data?.description }}></div>
+        <div
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            lineClamp: 2,
+            WebkitBoxOrient: "vertical",
+          }}
+          dangerouslySetInnerHTML={{ __html: data?.description }}
+        ></div>
       </Typography>
       <Divider sx={{ my: 1 }} />
       <Box textAlign="right">

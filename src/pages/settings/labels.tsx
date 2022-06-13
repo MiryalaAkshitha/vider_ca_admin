@@ -13,7 +13,7 @@ import { ResType } from "types";
 import AddLabel from "views/settings/labels/AddLabel";
 import { StyledLabel } from "views/settings/labels/styles";
 
-function Tags() {
+function Labels() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -64,7 +64,16 @@ function Tags() {
             key: "name",
             render: (item) => (
               <Typography variant="body1" color="primary">
-                {item?.name}
+                {item?.name}{" "}
+                {item?.defaultOne && (
+                  <Typography
+                    color="rgba(0,0,0,0.8)"
+                    mt="4px"
+                    variant="caption"
+                  >
+                    (default)
+                  </Typography>
+                )}
               </Typography>
             ),
           },
@@ -80,11 +89,13 @@ function Tags() {
           {
             title: "Actions",
             key: "actions",
-            render: (item) => (
-              <IconButton onClick={() => handleRemove(item?.id)} size="small">
-                <Delete color="secondary" fontSize="small" />
-              </IconButton>
-            ),
+            render: (item) => {
+              return !item?.defaultOne ? (
+                <IconButton onClick={() => handleRemove(item?.id)}>
+                  <Delete fontSize="small" />
+                </IconButton>
+              ) : null;
+            },
           },
         ]}
         loading={isLoading}
@@ -95,4 +106,4 @@ function Tags() {
   );
 }
 
-export default Tags;
+export default Labels;

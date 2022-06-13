@@ -9,23 +9,15 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
-import { Category } from "./CategoryCard";
-
-interface StateProps {
-  name: string;
-  image: string | undefined | null;
-  color: string | undefined;
-  subCategories: Array<{ name: string }>;
-}
 
 interface EditCategoryProps extends DialogProps {
-  data: Category;
+  data: any;
 }
 
 function EditCategory({ open, setOpen, data }: EditCategoryProps) {
   const queryClient = useQueryClient();
 
-  const [state, setState] = useState<StateProps>({
+  const [state, setState] = useState<any>({
     name: "",
     image: "",
     color: "",

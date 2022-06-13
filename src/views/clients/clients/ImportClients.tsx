@@ -9,16 +9,20 @@ import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { FILETYPES } from "utils/constants";
 
-function ImportClients({ open, setOpen }: DialogProps) {
-  const queryClient = useQueryClient();
+interface Props extends DialogProps {
+  successCb?: () => void;
+}
 
-  const [files, setFiles] = useState<File[]>([]);
+function ImportClients({ open, setOpen, successCb }: Props) {
+  const queryClient = useQueryClient();
+  const [file, setFile] = useState<File | null>(null);
 
   const { mutate, isLoading } = useMutation(importClients, {
     onSuccess: () => {
       snack.success("Clients Import Successfully");
       setOpen(false);
-      setFiles([]);
+      setFile(null);
+      successCb && successCb();
       queryClient.invalidateQueries("clients");
     },
     onError: (err: any) => {
@@ -27,20 +31,20 @@ function ImportClients({ open, setOpen }: DialogProps) {
   });
 
   const handleFiles = (files: File[]) => {
-    setFiles(files);
+    setFile(files[0]);
   };
 
   const handleSubmit = () => {
-    if (!files.length) {
+    if (!file) {
       snack.error("Select a file");
       return;
     }
 
     const ValidFile = (): boolean => {
       return (
-        files[0].type === FILETYPES.SHEET1 ||
-        files[0].type === FILETYPES.SHEET2 ||
-        files[0].type === FILETYPES.SHEET3
+        file.type === FILETYPES.SHEET1 ||
+        file.type === FILETYPES.SHEET2 ||
+        file.type === FILETYPES.SHEET3
       );
     };
 
@@ -50,7 +54,7 @@ function ImportClients({ open, setOpen }: DialogProps) {
     }
 
     let formData = new FormData();
-    formData.append("file", files[0]);
+    formData.append("file", file);
     mutate(formData);
   };
 

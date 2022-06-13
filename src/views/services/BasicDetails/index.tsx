@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addServiceState, handleChange } from "redux/reducers/addServiceSlice";
 import { ResType } from "types";
 
-function Overview() {
+function BasicDetails() {
   const dispatch = useDispatch();
   const [hourlyPrice, setHourlyPrice] = useState(true);
   const [totalPrice, setTotalPrice] = useState(true);
@@ -189,7 +189,7 @@ function Overview() {
                 })
               );
             }}
-            id="overview"
+            id="BasicDetails"
           />
         </Box>
       </Box>
@@ -197,4 +197,4 @@ function Overview() {
   );
 }
 
-export default Overview;
+export default BasicDetails;

@@ -4,14 +4,13 @@ import { deleteCategory } from "api/services/categories";
 import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { Category } from "./CategoryCard";
 import EditCategory from "./EditCategory";
 import { useConfirm } from "context/ConfirmDialog";
 import ValidateAccess from "components/ValidateAccess";
 import { Permissions } from "utils/permissons";
 
 interface EditCategoryPopoverProps extends AccountMenuProps {
-  data: Category;
+  data: any;
 }
 
 function EditCategoryPopover(props: EditCategoryPopoverProps) {

@@ -1,14 +1,15 @@
+import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { Grid, Typography, Button } from "@mui/material";
-import { icons } from "assets";
-import GetStartedCard from "./GetStartedCard";
-import { useMutation, useQueryClient } from "react-query";
 import { updateGetStarted } from "api/services/organization";
+import { icons } from "assets";
 import { snack } from "components/toast";
-import AddClient from "views/clients/clients/AddClient";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import ImportClients from "views/clients/clients/ImportClients";
 import AddMember from "views/settings/users/AddMember";
 import CreateTask from "views/taskboard/board/CreateTask";
+import GetStartedCard from "./GetStartedCard";
+import SelectServices from "./SelectServices";
 
 const GetStarted = ({ data }: any) => {
   const queryClient = useQueryClient();
@@ -48,8 +49,8 @@ const GetStarted = ({ data }: any) => {
               </Typography>
               <Typography mt={1} variant="body1">
                 The following are the steps to follow to add new users, clients,
-                Tasks and events which will help you do the bait functionalities
-                in the vider practice management platform
+                and services which will help you do the bait functionalities in
+                the vider practice management platform
               </Typography>
             </Box>
           </Grid>
@@ -77,25 +78,25 @@ const GetStarted = ({ data }: any) => {
             btnAction={() => setOpenAddMember(true)}
           />
           <GetStartedCard
-            active={data?.createClient}
+            active={data?.importClients}
             img={icons.handshake_PosterImage}
-            title="Add a new client"
-            desc="Add a new client with their basic details"
-            btnTitle="Add client"
+            title="Import clients"
+            desc="Import clients with their basic details"
+            btnTitle="Imports clients"
             btnAction={() => setOpenAddClient(true)}
           />
           <GetStartedCard
-            active={data?.createTask}
+            active={data?.selectServices}
             img={icons.checklist_PosterImage}
-            title="Add a new Task"
-            desc="Add a new Task and assign them to added users"
-            btnTitle="Add task"
+            title="Add Sevices"
+            desc="Select services to be added to the platform"
+            btnTitle="Select services"
             btnAction={() => setOpenCreateTask(true)}
           />
         </Box>
       </Box>
-      <AddClient
-        successCb={() => handleUpdate("createClient")}
+      <ImportClients
+        successCb={() => handleUpdate("importClients")}
         open={openAddClient}
         setOpen={setOpenAddClient}
       />
@@ -104,10 +105,10 @@ const GetStarted = ({ data }: any) => {
         setOpen={setOpenAddMember}
         successCb={() => handleUpdate("createUser")}
       />
-      <CreateTask
+      <SelectServices
         open={openCreateTask}
         setOpen={setOpenCreateTask}
-        successCb={() => handleUpdate("createTask")}
+        successCb={() => handleUpdate("selectServices")}
       />
     </>
   );

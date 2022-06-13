@@ -5,16 +5,8 @@ import { Box } from "@mui/system";
 import { MouseEvent, useState } from "react";
 import EditCategoryPopover from "./EditCategoryPopover";
 
-export interface Category {
-  id: number;
-  name: string;
-  image?: string;
-  color?: string;
-  subCategories: [];
-}
-
 type Props = {
-  data: Category;
+  data: any;
 };
 
 function CategoryCard({ data }: Props) {
@@ -33,10 +25,17 @@ function CategoryCard({ data }: Props) {
           borderRadius: 2,
         }}
       >
-        <Box display="flex" p={2} justifyContent="space-between">
-          <Typography variant="subtitle2" color="primary">
-            {data?.name}
-          </Typography>
+        <Box display="flex" p={2} gap={1} justifyContent="space-between">
+          <Box display="flex" gap="4px">
+            <Typography variant="subtitle2" color="primary">
+              {data?.name}{" "}
+              {data?.defaultOne && (
+                <Typography color="rgba(0,0,0,0.8)" mt="4px" variant="caption">
+                  (default)
+                </Typography>
+              )}
+            </Typography>
+          </Box>
           <Box display="flex" gap={1}>
             {data?.subCategories?.length ? (
               <IconButton onClick={() => setOpen(!open)}>
@@ -69,11 +68,13 @@ function CategoryCard({ data }: Props) {
           </>
         ) : null}
       </Box>
-      <EditCategoryPopover
-        data={data}
-        anchorEl={anchorEl}
-        setAnchorEl={setAnchorEl}
-      />
+      {!data?.defaultOne && (
+        <EditCategoryPopover
+          data={data}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        />
+      )}
     </>
   );
 }

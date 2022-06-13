@@ -4,6 +4,14 @@ const getServices = () => {
   return http.get("/services");
 };
 
+const getDefaultServices = () => {
+  return http.get("/services/default");
+};
+
+const importServices = (data: any) => {
+  return http.post("/services/import", data);
+};
+
 const getService = ({ queryKey }) => {
   return http.get(`/services/${queryKey[1]}`);
 };
@@ -20,4 +28,12 @@ const deleteService = ({ id }: any) => {
   return http.delete(`/services/${id}`);
 };
 
-export { getServices, createService, getService, updateService, deleteService };
+export {
+  getServices,
+  getDefaultServices,
+  importServices,
+  createService,
+  getService,
+  updateService,
+  deleteService,
+};

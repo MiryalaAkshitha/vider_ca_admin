@@ -81,15 +81,6 @@ function RolesAndPermissions() {
               ),
             },
             {
-              title: "Created By",
-              key: "createdBy",
-              render: (item) => (
-                <Typography variant="body1" color="primary">
-                  {item?.createdBy?.name || "N/A"}
-                </Typography>
-              ),
-            },
-            {
               title: "Created On",
               key: "createdAt",
               render: (item) => (

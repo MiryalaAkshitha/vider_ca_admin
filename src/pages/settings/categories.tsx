@@ -34,9 +34,9 @@ function Cateogries() {
           </Button>
         </ValidateAccess>
       </Box>
-      <Grid container spacing={2} sx={{ maxWidth: 1000 }}>
+      <Grid container spacing={2}>
         {data?.data?.map((item: any, index: any) => (
-          <Grid item xs={6} key={index}>
+          <Grid item xs={4} key={index}>
             <CategoryCard data={item} />
           </Grid>
         ))}
