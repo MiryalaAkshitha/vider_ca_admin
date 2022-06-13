@@ -1,6 +1,6 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { getPanDetails, getSandboxToken, signup } from "api/services/users";
-import Loader from "components/Loader";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { useState } from "react";
@@ -12,14 +12,40 @@ import { SubmitType } from "types";
 const PanDetails = () => {
   const [state, setState] = useState<any>({});
   const [isVerified, setIsVerified] = useState(false);
-  const [isloading, setLoading] = useState<boolean>(false);
   const [panNumber, setPanNumber] = useState("");
+  const [panLoading, setPanLoading] = useState(false);
   const { email, password, mobileNumber } = useSelector(selectSignup);
 
-  const handleClick = async () => {
-    if (!panNumber) return;
+  const { mutate, isLoading } = useMutation(signup, {
+    onSuccess: (res: any) => {
+      localStorage.setItem("token", res.data.access_token);
+      window.location.href = "/";
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
 
-    setLoading(true);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = async (e: SubmitType) => {
+    e.preventDefault();
+    mutate({
+      ...state,
+      email,
+      password,
+      mobileNumber,
+      panNumber,
+      category: state.category?.toUpperCase(),
+    });
+  };
+
+  const verifyPan = async () => {
+    if (!panNumber) return snack.error("Enter Pan Number");;
+
+    setPanLoading(true);
 
     try {
       let token: any = await getSandboxToken();
@@ -53,58 +79,50 @@ const PanDetails = () => {
         snack.error(e.response?.data?.message);
       }
     } finally {
-      setLoading(false);
+      setPanLoading(false);
     }
+
   };
 
-  const { mutate, isLoading } = useMutation(signup, {
-    onSuccess: (res: any) => {
-      localStorage.setItem("token", res.data.access_token);
-      window.location.href = "/";
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
+  const PanAdornment = () => {
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.value });
+    return (
+      <>
+        {panLoading && <CircularProgress size="1rem" />}
+        {isVerified && !panLoading && (
+          <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
+        )}
+        {!isVerified && !panLoading && (
+          <Button color="error" size="small" onClick={verifyPan}>
+            Verify
+          </Button>
+        )}
+      </>
+    );
   };
 
-  const handleSubmit = async (e: SubmitType) => {
-    e.preventDefault();
-    mutate({
-      ...state,
-      email,
-      password,
-      mobileNumber,
-      panNumber,
-      category: state.category?.toUpperCase(),
-    });
-  };
-
+  const handlePanChange = (e: any) => {
+    setPanNumber(e.target.value)
+    setIsVerified(false)
+  }
   return (
     <>
       <Box>
         <TextField
           required
-          onChange={(e) => setPanNumber(e.target.value)}
+          onChange={handlePanChange}
           value={panNumber}
           sx={{ mt: 2 }}
           label="Pan Number"
           name="panNumber"
           size="small"
           fullWidth
+          InputProps={{
+            endAdornment: <PanAdornment />,
+          }}
+          InputLabelProps={{ shrink: true }}
         />
-        {!isVerified && (
-          <Box textAlign="right" mt={1}>
-            <Button onClick={handleClick} sx={{ color: "#F2353C" }}>
-              Verify and get details
-            </Button>
-          </Box>
-        )}
       </Box>
-      {isloading && <Loader />}
       {isVerified && (
         <form onSubmit={handleSubmit}>
           <TextField

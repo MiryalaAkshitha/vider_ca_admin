@@ -1,6 +1,6 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { getGstDetails, getSandboxToken, signup } from "api/services/users";
-import Loader from "components/Loader";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { ChangeEvent, useState } from "react";
@@ -13,13 +13,60 @@ const GstDetails = () => {
   const [state, setState]: any = useState({});
   const [gstNumber, setGstNumber] = useState("");
   const [isVerified, setIsVerified] = useState(false);
-  const [isloading, setLoading] = useState<boolean>(false);
+  const [gstLoading, setGstLoading] = useState(false);
   const { fullName, email, password, mobileNumber } = useSelector(selectSignup);
 
-  const handleClick = async () => {
-    if (!gstNumber) return;
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.value });
+  };
 
-    setLoading(true);
+  const { mutate, isLoading } = useMutation(signup, {
+    onSuccess: (res: any) => {
+      localStorage.setItem("token", res.data.access_token);
+      window.location.href = "/";
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleSubmit = async (e: SubmitType) => {
+    e.preventDefault();
+    mutate({
+      ...state,
+      fullName,
+      email,
+      password,
+      mobileNumber,
+      gstNumber,
+      category: "COMPANY",
+    });
+  };
+
+  const GstAdornment = () => {
+    const showGstActive = isVerified
+    const showGstVerify = !isVerified
+
+    return (
+      <>
+        {gstLoading && <CircularProgress size="1rem" />}
+        {showGstActive && !gstLoading && (
+          <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
+        )}
+        {showGstVerify && !gstLoading && (
+          <Button color="error" size="small" onClick={verifyGst}>
+            Verify
+          </Button>
+        )}
+      </>
+    );
+  };
+
+  const verifyGst = async () => {
+
+    if (!gstNumber) return snack.error("Enter GST Number");
+
+    setGstLoading(true);
 
     try {
       let token: any = await getSandboxToken();
@@ -52,65 +99,33 @@ const GstDetails = () => {
         snack.error(e.response?.data?.message);
       }
     } finally {
-      setLoading(false);
+      setGstLoading(false);
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.value });
-  };
-
-  const { mutate, isLoading } = useMutation(signup, {
-    onSuccess: (res: any) => {
-      localStorage.setItem("token", res.data.access_token);
-      window.location.href = "/";
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const handleSubmit = async (e: SubmitType) => {
-    e.preventDefault();
-    mutate({
-      ...state,
-      fullName,
-      email,
-      password,
-      mobileNumber,
-      gstNumber,
-      category: "COMPANY",
-    });
-  };
+  const handleGstChange = (e: any) => {
+    setGstNumber(e.target.value)
+    setIsVerified(false)
+  }
 
   return (
     <>
       <Box>
         <TextField
           required
-          onChange={(e) => setGstNumber(e.target.value)}
+          onChange={handleGstChange}
           value={gstNumber}
           sx={{ mt: 2 }}
           label="GST Number"
           name="gstNumber"
           size="small"
           fullWidth
+          InputProps={{
+            endAdornment: <GstAdornment />,
+          }}
+          InputLabelProps={{ shrink: true }}
         />
-        {!isVerified && (
-          <Typography
-            sx={{
-              marginTop: "15px",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Button onClick={handleClick} sx={{ color: "#F2353C" }}>
-              Get Tax payer details
-            </Button>
-          </Typography>
-        )}
       </Box>
-      {isloading && <Loader />}
       {isVerified && (
         <form onSubmit={handleSubmit}>
           <TextField
