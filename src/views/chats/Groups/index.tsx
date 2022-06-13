@@ -68,9 +68,6 @@ function Groups() {
           <Typography variant="body1">Groups</Typography>
           <Box>
             <IconButton size="small" onClick={handleClose}>
-              <RemoveRoundedIcon />
-            </IconButton>
-            <IconButton size="small" onClick={handleClose}>
               <CloseRoundedIcon />
             </IconButton>
           </Box>

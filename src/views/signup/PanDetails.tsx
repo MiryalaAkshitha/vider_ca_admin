@@ -43,7 +43,7 @@ const PanDetails = () => {
   };
 
   const verifyPan = async () => {
-    if (!panNumber) return snack.error("Enter Pan Number");;
+    if (!panNumber) return snack.error("Enter Pan Number");
 
     setPanLoading(true);
 
@@ -81,11 +81,9 @@ const PanDetails = () => {
     } finally {
       setPanLoading(false);
     }
-
   };
 
   const PanAdornment = () => {
-
     return (
       <>
         {panLoading && <CircularProgress size="1rem" />}
@@ -102,9 +100,9 @@ const PanDetails = () => {
   };
 
   const handlePanChange = (e: any) => {
-    setPanNumber(e.target.value)
-    setIsVerified(false)
-  }
+    setPanNumber(e.target.value);
+    setIsVerified(false);
+  };
   return (
     <>
       <Box>
@@ -131,6 +129,7 @@ const PanDetails = () => {
             sx={{ mt: 2 }}
             value={state.category}
             name="Category"
+            disabled
             required
             fullWidth
           />
@@ -143,6 +142,7 @@ const PanDetails = () => {
                 value={state.firstName}
                 label="First Name"
                 size="small"
+                disabled
                 name="firstName"
                 fullWidth
               />
@@ -152,6 +152,7 @@ const PanDetails = () => {
                 value={state.middleName}
                 label="Middle Name"
                 size="small"
+                disabled
                 name="middleName"
                 fullWidth
               />
@@ -162,6 +163,7 @@ const PanDetails = () => {
                 value={state.lastName}
                 label="Last Name"
                 size="small"
+                disabled
                 name="lastName"
                 fullWidth
               />
@@ -176,6 +178,7 @@ const PanDetails = () => {
                 value={state.fullName}
                 label="Organisation name"
                 size="small"
+                disabled
                 name="legalName"
                 fullWidth
               />
@@ -186,6 +189,7 @@ const PanDetails = () => {
                 sx={{ mt: 2 }}
                 label="Trade Name"
                 name="tradeName"
+                disabled
                 size="small"
                 fullWidth
               />
@@ -196,6 +200,7 @@ const PanDetails = () => {
                 size="small"
                 name="constitutionOfBusiness"
                 onChange={handleChange}
+                disabled
                 fullWidth
               />
             </>

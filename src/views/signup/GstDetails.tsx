@@ -44,8 +44,8 @@ const GstDetails = () => {
   };
 
   const GstAdornment = () => {
-    const showGstActive = isVerified
-    const showGstVerify = !isVerified
+    const showGstActive = isVerified;
+    const showGstVerify = !isVerified;
 
     return (
       <>
@@ -63,7 +63,6 @@ const GstDetails = () => {
   };
 
   const verifyGst = async () => {
-
     if (!gstNumber) return snack.error("Enter GST Number");
 
     setGstLoading(true);
@@ -104,9 +103,9 @@ const GstDetails = () => {
   };
 
   const handleGstChange = (e: any) => {
-    setGstNumber(e.target.value)
-    setIsVerified(false)
-  }
+    setGstNumber(e.target.value);
+    setIsVerified(false);
+  };
 
   return (
     <>
@@ -135,6 +134,7 @@ const GstDetails = () => {
             value={state.legalName}
             label="Legal name"
             size="small"
+            disabled
             name="legalName"
             fullWidth
           />
@@ -146,6 +146,7 @@ const GstDetails = () => {
             label="Trade Name"
             name="tradeName"
             size="small"
+            disabled
             fullWidth
           />
           <TextField
@@ -156,6 +157,7 @@ const GstDetails = () => {
             label="State Jurisdiction / Place of supply"
             name="placeOfSupply"
             size="small"
+            disabled
             fullWidth
           />
           <TextField
@@ -166,6 +168,7 @@ const GstDetails = () => {
             label="Date of Registration"
             name="registrationDate"
             size="small"
+            disabled
             fullWidth
           />
           <TextField
@@ -175,6 +178,7 @@ const GstDetails = () => {
             size="small"
             name="constitutionOfBusiness"
             onChange={handleChange}
+            disabled
             fullWidth
           />
           <TextField
@@ -184,6 +188,7 @@ const GstDetails = () => {
             sx={{ mt: 2 }}
             label="GSTN status"
             name="gstStatus"
+            disabled
             size="small"
             fullWidth
           />

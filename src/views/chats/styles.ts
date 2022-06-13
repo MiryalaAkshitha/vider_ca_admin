@@ -6,6 +6,7 @@ export const StyledChatsWrapper = styled("div")(() => ({
   bottom: 45,
   display: "flex",
   gap: 10,
+  alignItems: "flex-end",
 }));
 
 export const StyledRecentChatsContainer = styled("div")(() => ({
@@ -13,13 +14,13 @@ export const StyledRecentChatsContainer = styled("div")(() => ({
   borderRadius: 10,
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
   width: 400,
-  minHeight: 400,
-  maxHeight: 400,
+  height: 400,
   display: "flex",
   flexDirection: "column",
   border: "1px solid #e0e0e0",
   position: "relative",
   overflow: "hidden",
+  transition: "all 0.3s ease-in-out",
 }));
 
 export const StyledChatHeader = styled("div")(() => ({

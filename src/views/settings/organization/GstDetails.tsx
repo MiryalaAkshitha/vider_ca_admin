@@ -1,5 +1,11 @@
 import { CloseOutlined } from "@mui/icons-material";
-import { Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import UploadImage from "components/UploadImage";
 import SectionWrapper from "./SectionWrapper";
 import { StyledAttachment } from "./styles";
@@ -14,19 +20,17 @@ import {
 import { useMutation, useQueryClient } from "react-query";
 import { updateOrganization } from "api/services/organization";
 
-function GstDetails({ state, setState }) {
+function GstDetails({ state, setState, apiData }: any) {
   const queryClient = useQueryClient();
-
-
   const [gstLoading, setGstLoading] = useState(false);
   const [panLoading, setPanLoading] = useState(false);
-  const [, setPanChanged] = useState(false);
-  const [, setGstChanged] = useState(false);
+  const [panChanged, setPanChanged] = useState(false);
+  const [gstChanged, setGstChanged] = useState(false);
 
   useEffect(() => {
-    setPanChanged(state.panNumber !== state.panNumber);
-    setGstChanged(state.gstNumber);
-  }, [state]);
+    setPanChanged(state.panNumber !== apiData.panNumber);
+    setGstChanged(state.gstNumber !== apiData.gstNumber);
+  }, [state, apiData]);
 
   const handleChange = (e: any) => {
     setState((draft: any) => {
@@ -126,8 +130,10 @@ function GstDetails({ state, setState }) {
   };
 
   const GstAdornment = () => {
-    const showGstActive = false
-    const showGstVerify = true
+    const showGstActive = state?.gstVerified && !gstChanged;
+    const showGstVerify = !state?.gstVerified || gstChanged;
+
+    console.log(state?.gstVerified, gstChanged);
 
     return (
       <>
@@ -145,8 +151,8 @@ function GstDetails({ state, setState }) {
   };
 
   const PanAdornment = () => {
-    const showPanActive = false
-    const showPanVerify = true
+    const showPanActive = state?.panVerified && !panChanged;
+    const showPanVerify = !state?.panVerified || panChanged;
 
     return (
       <>
@@ -162,8 +168,6 @@ function GstDetails({ state, setState }) {
       </>
     );
   };
-
-
 
   return (
     <SectionWrapper title="GST Information">

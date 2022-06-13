@@ -1,16 +1,17 @@
+import { MaximizeOutlined } from "@mui/icons-material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import { Box, IconButton, Typography } from "@mui/material";
 import { readMessages } from "api/services/chats";
 import { socket } from "app";
 import Members from "components/Members";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, selectChats } from "redux/reducers/chatsSlice";
 import { StyledChatHeader, StyledRecentChatsContainer } from "../styles";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
+import ZoomOutMapRoundedIcon from "@mui/icons-material/ZoomOutMapRounded";
 
 interface Props {
   onClose?: () => void;
@@ -19,6 +20,7 @@ interface Props {
 function Chat({ onClose }: Props) {
   const { name, roomId, members, type } = useSelector(selectChats);
   const dispatch = useDispatch();
+  const [maximize, setMaximize] = useState(false);
 
   const handleClose = () => {
     onClose && onClose();
@@ -39,7 +41,14 @@ function Chat({ onClose }: Props) {
   }, [roomId, dispatch]);
 
   return (
-    <StyledRecentChatsContainer>
+    <StyledRecentChatsContainer
+      sx={{
+        ...(maximize && {
+          width: 500,
+          height: 500,
+        }),
+      }}
+    >
       <StyledChatHeader
         sx={{
           boxShadow: "0px -1px 8px rgba(0, 0, 0, 0.1)",
@@ -67,7 +76,15 @@ function Chat({ onClose }: Props) {
             </Box>
           )}
         </Box>
-        <Box display="flex">
+        <Box display="flex" gap={1}>
+          <IconButton
+            size="small"
+            onClick={() => {
+              setMaximize(!maximize);
+            }}
+          >
+            <ZoomOutMapRoundedIcon fontSize="small" />
+          </IconButton>
           <IconButton size="small" onClick={handleClose}>
             <CloseRoundedIcon />
           </IconButton>

@@ -36,7 +36,7 @@ function OrganizationProfile() {
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />
       <ContactDetails state={state} setState={setState} />
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />
-      <GstDetails state={state} setState={setState} />
+      <GstDetails apiData={data?.data} state={state} setState={setState} />
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />
       <PrimaryContactDetails state={state} setState={setState} />
       <Divider sx={{ my: 4, borderWidth: 2, borderColor: "#F5F5F5" }} />

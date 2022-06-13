@@ -67,9 +67,6 @@ function RecentChats() {
           <Typography variant="body1">Chats</Typography>
           <Box>
             <IconButton size="small" onClick={handleClose}>
-              <RemoveRoundedIcon />
-            </IconButton>
-            <IconButton size="small" onClick={handleClose}>
               <CloseRoundedIcon />
             </IconButton>
           </Box>

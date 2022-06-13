@@ -16,10 +16,9 @@ function BackgroundWrapper({ children }: any) {
               Vider Practice Management software
             </Typography>
             <Typography mt={1} variant="body2" color="rgba(255,255,255,0.7)">
-              Praesent eu dolor eu orci vehicula euismod. Vivamus sed
-              sollicitudin libero, vel malesuada velit. Nullam et maximus lorem.
-              Suspendisse maximus dolor quis consequat volutpat donec vehicula
-              elit eu erat pulvinar.
+              Vider is a technology-driven smart discovery and aggregator
+              platform, that offers services addressing the growing needs of
+              Professionals & Clients in enhancing businesses in India.
             </Typography>
           </LogoContainer>
         </BackgroundImage>
