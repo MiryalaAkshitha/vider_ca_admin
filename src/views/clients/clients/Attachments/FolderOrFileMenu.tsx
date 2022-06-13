@@ -1,14 +1,12 @@
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import FileOpenOutlinedIcon from "@mui/icons-material/FileOpenOutlined";
 import { ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import { removeFile } from "api/services/storage";
 import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useLocation, useNavigate } from "react-router-dom";
 import RenameFileOrFolderDialog from "./RenameFileOrFolder";
 import ValidateAccess from "components/ValidateAccess";
 import { Permissions } from "utils/permissons";
@@ -27,9 +25,7 @@ interface Props {
 function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
-  const location = useLocation();
   const [open, setOpen] = useState<boolean>(false);
 
   const { mutate } = useMutation(removeFile, {
@@ -49,14 +45,6 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
         mutate(data.id);
       },
     });
-  };
-
-  const openItem = (e: any) => {
-    if (data?.type === "folder") {
-      navigate(`${location.pathname}?folderId=${data?.uid}`);
-    } else {
-      window.open(data?.fileUrl);
-    }
   };
 
   const downloadItem = (e: any) => {
@@ -82,12 +70,6 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
         onClose={() => setContextMenu(null)}
         onClick={() => setContextMenu(null)}
       >
-        <MenuItem onClick={openItem}>
-          <ListItemIcon>
-            <FileOpenOutlinedIcon color="primary" fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="body2">Open</Typography>
-        </MenuItem>
         <ValidateAccess name={Permissions.EDIT_CLIENT_STORAGE}>
           <MenuItem sx={{ mt: 1 }} onClick={() => setOpen(true)}>
             <ListItemIcon>

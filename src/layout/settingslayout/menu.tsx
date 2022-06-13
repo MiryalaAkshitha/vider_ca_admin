@@ -18,6 +18,10 @@ export const menuItems: Array<IMenuItem> = [
     path: "",
     children: [
       {
+        title: "Invited Users",
+        path: "/settings/invited-users",
+      },
+      {
         title: "Users",
         path: "/settings/users",
       },

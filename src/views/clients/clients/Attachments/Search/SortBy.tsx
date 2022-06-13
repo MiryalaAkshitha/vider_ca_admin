@@ -9,7 +9,7 @@ const SortBy = () => {
   return (
     <TextField
       sx={{ minWidth: 100 }}
-      value={queryParams.soryBy || ""}
+      value={queryParams.sortBy || ""}
       InputLabelProps={{ shrink: true }}
       onChange={(e) => {
         setQueryParams({
