@@ -47,6 +47,9 @@ function ServiceCard({ data }) {
 
   return (
     <CustomCard sx={{ position: "relative" }}>
+      <Typography variant="caption" color="rgba(0,0,0,0.6)">
+        {data?.category} {data?.subCategory && `-- ${data?.subCategory}`}
+      </Typography>
       <Box display="flex" gap={1} alignItems="center">
         <Typography sx={{ flex: 1 }} color="primary" variant="subtitle2">
           {data?.name}

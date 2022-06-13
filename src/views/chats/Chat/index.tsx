@@ -69,9 +69,6 @@ function Chat({ onClose }: Props) {
         </Box>
         <Box display="flex">
           <IconButton size="small" onClick={handleClose}>
-            <RemoveRoundedIcon />
-          </IconButton>
-          <IconButton size="small" onClick={handleClose}>
             <CloseRoundedIcon />
           </IconButton>
         </Box>

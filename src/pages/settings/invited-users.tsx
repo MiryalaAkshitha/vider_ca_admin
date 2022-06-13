@@ -1,41 +1,34 @@
-import { Box, Typography } from '@mui/material'
-import Table from 'components/Table'
+import { Box, Typography } from "@mui/material";
+import { getInvitedusers } from "api/services/users";
+import Loader from "components/Loader";
+import Table from "components/Table";
+import { useQuery } from "react-query";
+import { ResType } from "types";
 
-const inviteUsers = () => {
+const InvitedUsers = () => {
+  const { data, isLoading }: ResType = useQuery("users", getInvitedusers);
+
+  if (isLoading) return <Loader />;
+
   return (
     <Box>
-      <Table data={overDueData || []} columns={overDueColumns} loading={false} />
+      <Typography gutterBottom variant="subtitle2">
+        Invited Users
+      </Typography>
+      <Table data={data?.data || []} columns={columns} loading={false} />
     </Box>
-  )
-}
+  );
+};
 
-export default inviteUsers
+export default InvitedUsers;
 
-const overDueData = [
+const columns = [
   {
-    name: "shahid",
-    mobileNumber: "87687809789",
-    email: "shahid@janaspanddana.in",
-
+    key: "id",
+    title: "Id",
   },
   {
-    name: "shahid",
-    mobileNumber: "87687809789",
-    email: "shahid@janaspanddana.in",
-
-  },
-  {
-    name: "shahid",
-    mobileNumber: "87687809789",
-    email: "shahid@janaspanddana.in",
-
-  },
-
-];
-
-const overDueColumns = [
-  {
-    key: "name",
+    key: "fullName",
     title: "Name",
   },
   {
@@ -46,5 +39,4 @@ const overDueColumns = [
     key: "email",
     title: "Email",
   },
-
 ];

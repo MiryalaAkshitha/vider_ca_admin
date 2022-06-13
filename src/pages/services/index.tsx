@@ -32,30 +32,32 @@ function Services() {
   )?.subCategories;
 
   const onChange = (e: any) => {
-    setCategoryId(e.target.value)
-    setSubCategoryId("")
-  }
+    setCategoryId(e.target.value);
+    setSubCategoryId("");
+  };
 
   const onSubChange = (e: any) => {
-    setSubCategoryId(e.target.value)
-  }
+    setSubCategoryId(e.target.value);
+  };
 
   function getData() {
-    let result = [...data?.data]
+    let result = [...data?.data];
 
     if (search) {
-      result = result?.filter(item => item.name?.toLowerCase().includes(search.toLowerCase()))
+      result = result?.filter((item) =>
+        item.name?.toLowerCase().includes(search.toLowerCase())
+      );
     }
 
     if (categoryId) {
-      result = result?.filter(item => item.categoryId == categoryId)
+      result = result?.filter((item) => item.categoryId == categoryId);
     }
 
     if (subCategoryId) {
-      result = result?.filter(item => item.subCategoryId == subCategoryId)
+      result = result?.filter((item) => item.subCategoryId == subCategoryId);
     }
 
-    return result
+    return result;
   }
 
   if (isLoading) return <Loader />;
@@ -73,7 +75,11 @@ function Services() {
       </Box>
       <Box mt={2}>
         {data?.data?.length > 0 && (
-          <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Box display="flex">
               <Box>
                 <TextField

@@ -72,6 +72,10 @@ const getUsers = (data: any) => {
   return http.get("/users", data);
 };
 
+const getInvitedusers = (data: any) => {
+  return http.get("/users/invited", data);
+};
+
 const getTeams = () => {
   return http.get("/teams");
 };
@@ -130,4 +134,5 @@ export {
   forgotPassword,
   resetPassword,
   changePassword,
+  getInvitedusers,
 };

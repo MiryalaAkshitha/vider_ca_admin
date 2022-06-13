@@ -27,20 +27,21 @@ function AddMember({ open, setOpen, successCb }: Props) {
     { enabled: open }
   );
 
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: inviteUserDefaultValues,
+    resolver: yupResolver(inviteUserSchema()),
+  });
+
   const { mutate, isLoading } = useMutation(inviteUser, {
     onSuccess: () => {
       snack.success("An invitation has been sent to the user");
+      reset(inviteUserDefaultValues);
       setOpen(false);
       successCb && successCb();
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
-  });
-
-  const { control, handleSubmit } = useForm({
-    defaultValues: inviteUserDefaultValues,
-    resolver: yupResolver(inviteUserSchema()),
   });
 
   const onSubmit = (data) => {
