@@ -87,6 +87,7 @@ const ViewBillingEntityUser = loadable(
 const MyProfile = loadable(() => import("pages/settings/UserProfile"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
+const InviteUsers = loadable(() => import("pages/settings/invited-users"));
 const ViewUser = loadable(() => import("pages/settings/ViewUser"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
@@ -306,6 +307,7 @@ function RoutesContainer() {
             <Route index element={<Users />} />
             <Route path=":userId" element={<ViewUser />} />
           </Route>
+          <Route path="invited-users" element={<InviteUsers />} />
           <Route path="storage-management" element={<StorageManagement />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />

@@ -82,13 +82,15 @@ function ViewProfile() {
         <Typography>{data?.data?.name}</Typography>
       </Breadcrumbs>
       <Box
+        mt={3}
         display="flex"
         gap={10}
-        mt={3}
         bgcolor="#FBF9F2"
         borderRadius={4}
         p={3}
-        position="relative"
+        position="sticky"
+        top={80}
+        sx={{ zIndex: "1" }}
       >
         <Box>
           <Typography variant="body1" gutterBottom color="primary">
