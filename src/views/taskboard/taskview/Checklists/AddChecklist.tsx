@@ -120,7 +120,6 @@ function AddChecklist({ open, setOpen }: DialogProps) {
                 value={item.description}
                 name="description"
                 label="Checklist item description"
-                required
               />
             </Box>
             <div>

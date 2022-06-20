@@ -32,6 +32,7 @@ function Groups() {
   const [openAddGroup, setOpenAddGroup] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const [selected, setSelected] = useState<any>(null);
+  const [search, setSearch] = useState("");
 
   const { data, isLoading }: ResType = useQuery(
     ["group-chats", "GROUP"],
@@ -40,6 +41,15 @@ function Groups() {
       refetchInterval: 3000,
     }
   );
+
+  const filtered = () => {
+    if (search) {
+      return data?.data?.filter((item: any) => {
+        return item?.name?.toLowerCase().includes(search.toLowerCase());
+      });
+    }
+    return data?.data;
+  };
 
   const handleClose = () => {
     dispatch(setChatType(""));
@@ -73,14 +83,20 @@ function Groups() {
           </Box>
         </StyledChatHeader>
         <Box>
-          <StyledChatSearch type="text" placeholder="Search for a group" />
+          <StyledChatSearch
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            type="text"
+            placeholder="Search for a group"
+          />
         </Box>
         <Box sx={{ flex: 1, overflowY: "auto" }}>
           {isLoading ? (
             <Loader />
           ) : (
             <List>
-              {data?.data?.map((item: any, index: number) => {
+              {filtered()?.map((item: any, index: number) => {
                 return (
                   <React.Fragment key={index}>
                     <ChatItem

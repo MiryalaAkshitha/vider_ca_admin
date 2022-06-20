@@ -1,4 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { getCategories } from "api/services/categories";
 import { getServices } from "api/services/services";
 import DialogWrapper from "components/DialogWrapper";
 import Loader from "components/Loader";
@@ -7,6 +15,11 @@ import useFilteredData from "hooks/useFilteredData";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { DialogProps, ResType } from "types";
+import {
+  StyledServiceDesc,
+  StyledServiceItem,
+  StyledServicesContainer,
+} from "./styles";
 
 interface Props extends DialogProps {
   setValue: any;
@@ -15,16 +28,47 @@ interface Props extends DialogProps {
 
 function SelectService({ open, setOpen, setValue, watch }: Props) {
   const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState({
+    category: "",
+    subCategory: "",
+  });
 
   const { data, isLoading }: ResType = useQuery("services", getServices, {
     enabled: open,
   });
 
-  const filteredData = useFilteredData(
-    data?.data,
-    ["name", "category", "subCategory"],
-    search
+  const { data: categories, isLoading: categoriesLoading }: ResType = useQuery(
+    "categories",
+    getCategories,
+    {
+      enabled: open,
+    }
   );
+
+  function getData() {
+    const { category, subCategory } = filters;
+    let result = data?.data ? [...data?.data] : [];
+
+    if (search) {
+      result = result?.filter((item) =>
+        item.name?.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    if (category) {
+      result = result?.filter((item) => item.categoryId == category);
+    }
+
+    if (subCategory) {
+      result = result?.filter((item) => item.subCategoryId == subCategory);
+    }
+
+    return result;
+  }
+
+  const subCategories = categories?.data?.find(
+    (item: any) => item.id == filters.category
+  )?.subCategories;
 
   const handleClick = (service: any) => {
     let feeAmount =
@@ -37,45 +81,101 @@ function SelectService({ open, setOpen, setValue, watch }: Props) {
   };
 
   return (
-    <DialogWrapper open={open} setOpen={setOpen} title="Select Service">
-      <SearchContainer
-        placeHolder="Search by category or name"
-        minWidth="100%"
-        onChange={setSearch}
-      />
-      {isLoading ? (
+    <DialogWrapper
+      width="lg"
+      open={open}
+      setOpen={setOpen}
+      title="Select Service"
+    >
+      <Box display="flex" justifyContent="space-between">
+        <Box display="flex" gap={1}>
+          <TextField
+            label="Select Category"
+            value={filters.category}
+            sx={{
+              width: 200,
+            }}
+            onChange={(e: any) => {
+              console.log(
+                categories?.data?.find((item: any) => item.id == e.target.value)
+              );
+              setFilters({
+                ...filters,
+                category: e.target.value,
+                subCategory: "",
+              });
+            }}
+            size="small"
+            select
+          >
+            {categories?.data.map((option: any, index: any) => (
+              <MenuItem key={index} value={option.id}>
+                {option.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          {subCategories?.length > 0 && (
+            <TextField
+              sx={{
+                width: 200,
+              }}
+              value={filters.subCategory}
+              label="Select Subcategory"
+              onChange={(e: any) => {
+                setFilters({
+                  ...filters,
+                  subCategory: e.target.value,
+                });
+              }}
+              size="small"
+              select
+            >
+              {subCategories?.map((option: any, index: any) => (
+                <MenuItem key={index} value={option.id}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        </Box>
+        <Box display="flex" gap={1}>
+          <SearchContainer
+            placeHolder="Search"
+            minWidth="300px"
+            onChange={setSearch}
+          />
+        </Box>
+      </Box>
+      <Divider sx={{ mt: 2 }} />
+      {isLoading || categoriesLoading ? (
         <Loader />
       ) : (
-        <Box
-          sx={{
-            height: 300,
-            overflow: "auto",
-            mx: -2,
-            px: 2,
-            mt: 2,
-          }}
-        >
-          {filteredData?.map((item: any, index: number) => (
-            <Box
-              key={index}
-              onClick={() => handleClick(item)}
-              sx={{
-                border: "1px solid rgba(0,0,0,0.3)",
-                borderRadius: 1,
-                mb: "10px",
-                px: 1,
-                py: "4px",
-                cursor: "pointer",
-              }}
-            >
-              <Typography variant="caption" color="rgba(0,0,0,0.6)">
-                {item?.category}{" "}
-                {item?.subCategory && `-- ${item?.subCategory}`}
-              </Typography>
-              <Typography variant="subtitle2">{item?.name}</Typography>
-            </Box>
-          ))}
-        </Box>
+        <>
+          <StyledServicesContainer>
+            <Grid container spacing={2}>
+              {getData()?.map((item: any, index: number) => (
+                <Grid item xs={4} key={index}>
+                  <StyledServiceItem onClick={() => handleClick(item)}>
+                    <Box>
+                      <Typography variant="caption" color="rgba(0,0,0,0.6)">
+                        {item?.category}{" "}
+                        {item?.subCategory && `-- ${item?.subCategory}`}
+                      </Typography>
+                      <Typography variant="subtitle2">{item?.name}</Typography>
+                      <Typography color="rgba(0,0,0,0.6)" variant="body2">
+                        <StyledServiceDesc
+                          dangerouslySetInnerHTML={{
+                            __html: item?.description,
+                          }}
+                        ></StyledServiceDesc>
+                      </Typography>
+                    </Box>
+                  </StyledServiceItem>
+                </Grid>
+              ))}
+            </Grid>
+          </StyledServicesContainer>
+        </>
       )}
     </DialogWrapper>
   );

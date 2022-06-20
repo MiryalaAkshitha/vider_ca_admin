@@ -3,6 +3,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import ConfirmDialogProvider from "context/ConfirmDialog";
 import MenuPopoverProvider from "context/MenuPopover";
 import PermissionsProvider from "context/PermissionsProvider";
+import UserProfileProvider from "context/UserProfile";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
@@ -36,7 +37,9 @@ function App() {
           <ConfirmDialogProvider>
             <MenuPopoverProvider>
               <PermissionsProvider>
-                <RoutesContainer />
+                <UserProfileProvider>
+                  <RoutesContainer />
+                </UserProfileProvider>
               </PermissionsProvider>
             </MenuPopoverProvider>
           </ConfirmDialogProvider>

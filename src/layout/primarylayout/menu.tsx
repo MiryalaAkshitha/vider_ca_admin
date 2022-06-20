@@ -28,27 +28,26 @@ export const menuItems: Array<IMenuItem> = [
     path: "/clients",
     icon: icons.clients,
   },
-  {
-    title: "Reports",
-    path: "/reports",
-    icon: icons.reports,
-  },
-  {
-    title: "Invoicing",
-    path: "/invoicing",
-    icon: icons.invoicing,
-  },
-
+  // {
+  //   title: "Reports",
+  //   path: "/reports",
+  //   icon: icons.reports,
+  // },
+  // {
+  //   title: "Invoicing",
+  //   path: "/invoicing",
+  //   icon: icons.invoicing,
+  // },
   {
     title: "Storage",
     path: "/storage/my-storage",
     icon: icons.storage,
   },
-  {
-    title: "Broadcast",
-    path: "/broadcast",
-    icon: icons.broadcast,
-  },
+  // {
+  //   title: "Broadcast",
+  //   path: "/broadcast",
+  //   icon: icons.broadcast,
+  // },
   {
     title: "Services",
     path: "/services",

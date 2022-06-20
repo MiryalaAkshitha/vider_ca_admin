@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CompletedTasks from "./CompletedTasks";
 import TerminatedTasks from "./TerminatedTasks";
-import { Box, TextField } from "@mui/material";
+import { Autocomplete, Box, MenuItem, TextField } from "@mui/material";
 import SearchContainer from "components/SearchContainer";
 import { StyledClientFilterItem } from "views/taskboard/Filters/style";
 import DeletedTasks from "./DeletedTasks";
+import { getFinancialYears } from "utils";
 
 function Archives() {
   const [active, setActive] = useState("completed");
@@ -53,31 +54,25 @@ function Archives() {
           </StyledClientFilterItem>
         </Box>
         <Box display="flex" gap="15px" alignItems="center">
-          <TextField
-            sx={{ minWidth: 100 }}
-            size="small"
-            select
-            value={filters[active].financialYear}
-            onChange={(e) => {
+          <Autocomplete
+            disablePortal
+            onChange={(_, v) => {
               setFilters({
                 ...filters,
                 [active]: {
                   ...filters[active],
-                  financialYear: e.target.value,
+                  financialYear: v,
                 },
               });
             }}
-            InputLabelProps={{ shrink: true }}
-            label="Financial year"
-            SelectProps={{ native: true }}
-          >
-            <option value="">None</option>
-            {Array.from(Array(50).keys()).map((_, index) => (
-              <option value={`${2000 + index}-${2000 + index + 1}`} key={index}>
-                {2000 + index}-{2000 + index + 1}
-              </option>
-            ))}
-          </TextField>
+            options={getFinancialYears()}
+            value={filters[active].financialYear || ""}
+            sx={{ width: 200 }}
+            size="small"
+            renderInput={(params) => (
+              <TextField {...params} label="Financial Year" />
+            )}
+          />
           <SearchContainer
             value={filters[active].search}
             minWidth="350px"

@@ -16,6 +16,7 @@ interface Props {
   options: Array<{ label: string; value: string }>;
   row?: boolean;
   onChange?: (value: any) => void;
+  required?: boolean;
 }
 
 function FormRadio(props: Props) {
@@ -27,6 +28,7 @@ function FormRadio(props: Props) {
     options,
     row = false,
     onChange,
+    required = false,
   } = props;
 
   return (
@@ -37,7 +39,9 @@ function FormRadio(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <FormControl size={size} fullWidth>
-              <FormLabel id={name}>{label}</FormLabel>
+              <FormLabel id={name}>
+                {label} {required ? "*" : ""}
+              </FormLabel>
               <RadioGroup
                 row={row}
                 aria-labelledby="demo-controlled-radio-buttons-group"

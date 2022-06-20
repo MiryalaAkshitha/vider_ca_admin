@@ -12,7 +12,6 @@ import { DialogProps } from "types";
 
 interface StateProps {
   name: string;
-  image: string;
   color: string;
   subCategories: Array<{ name: string }>;
 }
@@ -22,7 +21,6 @@ function AddCategory({ open, setOpen }: DialogProps) {
 
   const [state, setState] = useState<StateProps>({
     name: "",
-    image: "",
     color: "",
     subCategories: [],
   });
@@ -74,11 +72,6 @@ function AddCategory({ open, setOpen }: DialogProps) {
         onChange={(e) => handleChange("name", e.target.value)}
         size="small"
         label="Name"
-      />
-      <UploadImage
-        sx={{ mt: 2 }}
-        name="image"
-        onChange={(v) => handleChange("image", v)}
       />
       <Box display="flex" gap={1} mt={3}>
         <TextField

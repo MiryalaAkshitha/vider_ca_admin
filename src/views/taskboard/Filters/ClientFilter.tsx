@@ -41,7 +41,7 @@ function ClientFilter() {
       <ClientPopover
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
-        data={clients?.data[0]}
+        data={clients?.data?.result}
       />
     </>
   );

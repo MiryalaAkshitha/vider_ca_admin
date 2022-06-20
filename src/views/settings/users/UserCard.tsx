@@ -67,7 +67,7 @@ function UserCard({ data, type, teamId }: Props) {
         <Typography sx={{ mt: 4 }} variant="body2" color="#149ECD">
           {data?.role?.name}
         </Typography>
-        <IconButton
+        {/* <IconButton
           sx={{ position: "absolute", top: 20, right: 20 }}
           onClick={(e) => {
             e.stopPropagation();
@@ -75,9 +75,9 @@ function UserCard({ data, type, teamId }: Props) {
           }}
         >
           <MoreVertRounded />
-        </IconButton>
+        </IconButton> */}
       </StyledUserCard>
-      <Menu
+      {/* <Menu
         id="long-menu"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -97,7 +97,7 @@ function UserCard({ data, type, teamId }: Props) {
         {type === "team" && (
           <MenuItem onClick={handleRemoveFromTeam}>Remove from team</MenuItem>
         )}
-      </Menu>
+      </Menu> */}
     </>
   );
 }

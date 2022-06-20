@@ -59,7 +59,7 @@ const CreateInvoice = () => {
               label="SelectBillingEntity"
               defaultValue="customer1"
               onChange={(e) => {
-                let client = data.data[0]?.find(
+                let client = data.data?.result?.find(
                   (client: any) => client.id === e.target.value
                 );
                 dispatch(
@@ -69,7 +69,7 @@ const CreateInvoice = () => {
                 );
               }}
             >
-              {data?.data[0]?.map((client: any, index: number) => (
+              {data?.data?.result?.map((client: any, index: number) => (
                 <MenuItem value={client?.id} key={index}>
                   {client?.displayName}
                 </MenuItem>
@@ -87,7 +87,7 @@ const CreateInvoice = () => {
               label="Customer"
               defaultValue="customer1"
               onChange={(e) => {
-                let client = data.data[0]?.find(
+                let client = data.data?.result?.find(
                   (client: any) => client.id === e.target.value
                 );
                 dispatch(
@@ -97,7 +97,7 @@ const CreateInvoice = () => {
                 );
               }}
             >
-              {data?.data[0]?.map((client: any, index: number) => (
+              {data?.data?.result?.map((client: any, index: number) => (
                 <MenuItem value={client?.id} key={index}>
                   {client?.displayName}
                 </MenuItem>

@@ -13,6 +13,7 @@ function CustomCommonFields({ control, watch, categories }) {
         <FormSelect
           control={control}
           name="category"
+          required
           label="Category"
           options={categories?.data.map((item: any) => ({
             label: item.name,
@@ -25,6 +26,7 @@ function CustomCommonFields({ control, watch, categories }) {
           <FormSelect
             control={control}
             name="subCategory"
+            required
             label="Sub Category"
             options={subCategories.map((item: any) => ({
               label: item.name,
@@ -34,7 +36,7 @@ function CustomCommonFields({ control, watch, categories }) {
         </Box>
       )}
       <Box mt={2}>
-        <FormInput name="name" control={control} label="Name" />
+        <FormInput required name="name" control={control} label="Name" />
       </Box>
     </>
   );

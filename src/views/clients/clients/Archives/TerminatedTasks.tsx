@@ -70,6 +70,10 @@ function TerminatedTasks({ filters }: Props) {
               },
             },
             {
+              key: "terminationReason",
+              title: "Termination Reason",
+            },
+            {
               key: "Memberss",
               title: "Members",
               render: (v) => (

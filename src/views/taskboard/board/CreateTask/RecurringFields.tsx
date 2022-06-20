@@ -19,6 +19,7 @@ const RecurringFields = ({ control, watch }) => {
           control={control}
           name="frequency"
           label="Frequency"
+          required
           options={Object.values(RecurringFrequency).map((item) => ({
             label: getTitle(item),
             value: item,

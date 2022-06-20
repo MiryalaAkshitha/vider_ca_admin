@@ -98,7 +98,7 @@ function EditDscRegister({ open, setOpen, data }: Props) {
             disabled
             label="Client"
           >
-            {clients?.data[0]?.map((item, index) => (
+            {clients?.data?.result?.map((item, index) => (
               <MenuItem key={index} value={item?.id}>
                 {item.displayName}
               </MenuItem>

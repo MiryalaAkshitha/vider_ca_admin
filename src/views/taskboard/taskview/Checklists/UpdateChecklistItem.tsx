@@ -83,7 +83,6 @@ function UpdateChecklistItem({ open, setOpen, selectedItem }: Props) {
               onChange={handleChange}
               value={state.description}
               label="Checklist item description"
-              required
             />
           </Box>
         </Box>

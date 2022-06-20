@@ -15,14 +15,14 @@ function ClientsList() {
       if (!queryParams.clientId) {
         setQueryParams({
           ...queryParams,
-          clientId: data?.data[0][0].id,
+          clientId: data?.data?.result[0].id,
         });
       }
     },
   });
 
   let getData = () => {
-    let result = data?.data[0];
+    let result = data?.data?.result;
     if (search) {
       result = result?.filter((item: any) =>
         item?.displayName.toLowerCase().includes(search.toLowerCase())

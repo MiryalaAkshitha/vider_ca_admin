@@ -24,11 +24,8 @@ function StageOfWork() {
 
   return (
     <>
-      <Box display="flex" justifyContent="space-between">
-        <Typography variant="subtitle1" color="primary">
-          Stage of Work
-        </Typography>
-        {data?.data?.length ? (
+      {data?.data?.length > 0 && (
+        <Box display="flex" justifyContent="flex-end">
           <Button
             onClick={() => setOpen(true)}
             color="secondary"
@@ -36,23 +33,38 @@ function StageOfWork() {
           >
             Add stage of work
           </Button>
-        ) : null}
-      </Box>
+        </Box>
+      )}
       <Box mt={2}>
-        {data?.data?.length ? (
-          <Box
-            maxWidth={800}
-            sx={{
-              "& > div": {
-                mb: 3,
-              },
-            }}
-          >
-            {data?.data?.map((item: any, index: number) => (
-              <Stage data={item} key={index} index={index} />
-            ))}
-          </Box>
-        ) : (
+        {data?.data?.length > 0 && (
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" color="primary">
+                Stage of Work
+              </Typography>
+              {data?.data
+                ?.filter((item: any) => item?.type === "STAGE_OF_WORK")
+                ?.map((item: any, index: number) => (
+                  <Box mt={2} key={index}>
+                    <Stage data={item} index={index} />
+                  </Box>
+                ))}
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="subtitle1" color="primary">
+                Deliverables
+              </Typography>
+              {data?.data
+                ?.filter((item: any) => item?.type === "DELIVERABLES")
+                ?.map((item: any, index: number) => (
+                  <Box mt={2} key={index}>
+                    <Stage data={item} index={index} />
+                  </Box>
+                ))}
+            </Grid>
+          </Grid>
+        )}
+        {data?.data?.length === 0 && (
           <NoItems
             img={noChecklists}
             title="Add stage of work to your task"

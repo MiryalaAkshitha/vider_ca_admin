@@ -2,6 +2,7 @@ import moment from "moment";
 import { array, boolean, date, mixed, number, object, ref, string } from "yup";
 
 let addCalendarEventDefaultValues: any = {
+  type: "EVENT",
   client: null,
   task: null,
   title: "",
@@ -19,28 +20,27 @@ let AddCalendarEventSchema = () => {
   return object()
     .nullable()
     .shape({
+      type: string().required(),
       client: object()
         .nullable()
-        .shape({
-          label: string().required(),
-          value: number().required(),
-        })
-        .required("Client is required"),
+        .when("type", {
+          is: "TASK",
+          then: (schema) => schema.required("Client is required"),
+          otherwise: (schema) => schema.notRequired(),
+        }),
       task: object()
         .nullable()
-        .shape({
-          label: string().required(),
-          value: number().required(),
-        })
-        .required("Task is required"),
-      members: array()
-        .of(
-          object().shape({
-            label: string().required(),
-            value: string().required(),
-          })
-        )
-        .min(1, "Select atleast one member"),
+        .when("type", {
+          is: "TASK",
+          then: (schema) => schema.required("Task is required"),
+          otherwise: (schema) => schema.notRequired(),
+        }),
+
+      members: array().when("type", {
+        is: "TASK",
+        then: (schema) => schema.min(1, "Select atleast one member"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
       title: string()
         .required("Event name is required")
         .min(3, "Event name should be atleast 3 characters"),

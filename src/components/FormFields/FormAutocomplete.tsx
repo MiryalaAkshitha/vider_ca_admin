@@ -9,6 +9,7 @@ interface Props {
   options: Array<{ label: string; value: any }>;
   multiple?: boolean;
   trigger?: () => void;
+  required?: boolean;
 }
 
 function FormAutoComplete(props: Props) {
@@ -20,6 +21,7 @@ function FormAutoComplete(props: Props) {
     options,
     multiple = false,
     trigger,
+    required = false,
   } = props;
 
   return (
@@ -52,7 +54,7 @@ function FormAutoComplete(props: Props) {
                     {...params}
                     onBlur={field.onBlur}
                     error={Boolean(error)}
-                    label={label}
+                    label={`${label} ${required ? "*" : ""}`}
                   />
                   {error && (
                     <Typography

@@ -22,6 +22,7 @@ function RecentChats() {
   const dispatch = useDispatch();
   const [openChat, setOpenChat] = useState(false);
   const [selected, setSelected] = useState<any>(null);
+  const [search, setSearch] = useState("");
 
   const { data, isLoading }: ResType = useQuery(
     ["chats", "INDIVIDUAL"],
@@ -39,6 +40,15 @@ function RecentChats() {
       image: user?.imageUrl,
     };
   });
+
+  const filtered = () => {
+    if (search) {
+      return mapped?.filter((item: any) => {
+        return item?.name?.toLowerCase().includes(search.toLowerCase());
+      });
+    }
+    return mapped;
+  };
 
   const handleClose = () => {
     dispatch(setChatType(""));
@@ -72,14 +82,20 @@ function RecentChats() {
           </Box>
         </StyledChatHeader>
         <Box>
-          <StyledChatSearch type="text" placeholder="Search for a chat" />
+          <StyledChatSearch
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            type="text"
+            placeholder="Search for a chat"
+          />
         </Box>
         <Box sx={{ flex: 1, overflowY: "auto" }}>
           {isLoading ? (
             <Loader />
           ) : (
             <List>
-              {mapped?.map((item: any, index: number) => {
+              {filtered()?.map((item: any, index: number) => {
                 return (
                   <React.Fragment key={index}>
                     <ChatItem

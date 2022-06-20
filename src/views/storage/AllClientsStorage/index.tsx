@@ -1,22 +1,38 @@
-import { Box } from "@mui/material";
+import { Box } from "@mui/system";
 import { getStorage } from "api/services/storage";
-import useQueryParams from "hooks/useQueryParams";
-import moment from "moment";
-import { useQuery } from "react-query";
-import { StorageResponse } from "types";
-import BreadCrumbs from "views/clients/clients/Attachments/BreadCrumbs";
-import ClientsList from "./ClientsList";
 import Loader from "components/Loader";
-import Search from "views/clients/clients/Attachments/Search";
-import ClientDetails from "./ClientDetails";
 import ValidateAccess from "components/ValidateAccess";
+import { usePermissions } from "context/PermissionsProvider";
+import useQueryParams from "hooks/useQueryParams";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
+import { StorageResponse } from "types";
 import { Permissions } from "utils/permissons";
-import AddAttachment from "./AddAttachment";
-import Files from "./Files";
-import Folders from "./Folders";
+import AddAttachment from "views/storage/AddAttachment";
+import BreadCrumbs from "views/storage/BreadCrumbs";
+import Files from "views/storage/Files";
+import Folders from "views/storage/Folders";
+import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
+import Search from "views/storage/Search";
+import ClientDetails from "./ClientDetails";
+import ClientsList from "./ClientsList";
 
-function AllClientsStorage() {
+function ClientStorage() {
   const { queryParams } = useQueryParams();
+  const { permissions } = usePermissions();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      setPermissions({
+        write: permissions.includes(Permissions.CREATE_CLIENT_STORAGE),
+        edit: permissions.includes(Permissions.EDIT_CLIENT_STORAGE),
+        delete: permissions.includes(Permissions.DELETE_CLIENT_STORAGE),
+      })
+    );
+  }, []);
 
   const query = {
     folderId: queryParams.folderId,
@@ -27,44 +43,26 @@ function AllClientsStorage() {
   const { data, isLoading }: StorageResponse = useQuery(
     ["storage", query],
     getStorage,
-    { enabled: Boolean(queryParams.clientId) }
+    {
+      onSuccess: (res: any) => {
+        dispatch(setCurrentStorage(res?.data?.result));
+      },
+    }
   );
 
-  const getFilesOrFolders = (type: "folder" | "file") => {
-    let soryBy = queryParams.sortBy;
-    let result = data?.data?.result?.filter((item) => item.type === type);
+  let folders = getFilesOrFolders({
+    type: "folder",
+    data: data?.data?.result,
+    sortBy: queryParams.soryBy || "",
+  });
 
-    if (soryBy === "a_z") {
-      result = result?.sort((a, b) => a.name.localeCompare(b.name));
-    }
+  let files = getFilesOrFolders({
+    type: "file",
+    data: data?.data?.result,
+    sortBy: queryParams.soryBy || "",
+  });
 
-    if (soryBy === "z_a") {
-      result = result?.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    if (soryBy === "date_newest") {
-      result = result?.sort((a, b) => {
-        return moment.utc(b?.createdAt).local().diff(moment(a.createdAt));
-      });
-    }
-
-    if (soryBy === "date_oldest") {
-      result = result?.sort((a, b) => {
-        return moment.utc(a?.createdAt).local().diff(moment(b.createdAt));
-      });
-    }
-
-    if (type === "file") {
-      if (soryBy === "size_low_to_high") {
-        result = [...(result || [])]?.sort((a, b) => a.fileSize - b.fileSize);
-      }
-      if (soryBy === "size_high_to_low") {
-        result = [...(result || [])]?.sort((a, b) => b.fileSize - a.fileSize);
-      }
-    }
-
-    return result;
-  };
+  if (isLoading) return <Loader />;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -79,14 +77,10 @@ function AllClientsStorage() {
             {data?.data.breadCrumbs.length ? (
               <BreadCrumbs data={data?.data?.breadCrumbs} />
             ) : null}
-            {getFilesOrFolders("folder")?.length ? (
-              <Folders data={getFilesOrFolders("folder")} />
-            ) : null}
-            {getFilesOrFolders("file")?.length ? (
-              <Files data={getFilesOrFolders("file")} />
-            ) : null}
+            {folders?.length ? <Folders xl={3} lg={4} data={folders} /> : null}
+            {files?.length ? <Files xl={4} lg={4} data={files} /> : null}
             <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
-              <AddAttachment />
+              <AddAttachment type="client" />
             </ValidateAccess>
           </Box>
         )}
@@ -95,4 +89,4 @@ function AllClientsStorage() {
   );
 }
 
-export default AllClientsStorage;
+export default ClientStorage;

@@ -14,6 +14,7 @@ function SelectTypes({ control, setValue, watch }) {
           row
           control={control}
           label="Service Type"
+          required={true}
           name="serviceType"
           options={[
             {
@@ -72,6 +73,7 @@ function SelectTypes({ control, setValue, watch }) {
           row
           control={control}
           label="Task Type"
+          required={true}
           name="taskType"
           options={[
             {

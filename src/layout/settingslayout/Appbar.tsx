@@ -1,11 +1,11 @@
 import { ArrowBack } from "@mui/icons-material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Button, IconButton } from "@mui/material";
+import { Avatar, Button, IconButton } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/system";
 import { logo } from "assets";
+import { useUserData } from "context/UserProfile";
 import AccountMenu from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ const AppBar = styled(MuiAppBar)(({ theme }) => ({
 
 function Appbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { data } = useUserData();
 
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ function Appbar() {
           </Box>
           <Box>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-              <AccountCircleOutlinedIcon color="primary" />
+              <Avatar src={data?.imageUrl} />
             </IconButton>
           </Box>
           <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />

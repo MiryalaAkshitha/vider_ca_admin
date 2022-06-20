@@ -24,9 +24,12 @@ let CreatebankDetailsSchema = object().shape({
   ifscCode: string()
     .required("IFSC code is required")
     .min(11, "IFSC code should be 11 characters long.")
-    .max(11, "IFSC code should be 11 characters long."),
-  upiId: string().required("UPI ID is required"),
-  upiAttachment: string().required("UPI attachment is required"),
+    .max(11, "IFSC code should be 11 characters long.")
+    .matches(/^[A-Z]{4}[0-9]{7}$/, "IFSC code should be valid"),
+  upiId: string()
+    .notRequired()
+    .matches(/^([a-zA-Z0-9]{2,})@([a-zA-Z0-9]{2,})$/, "UPI ID should be valid"),
+  upiAttachment: string().notRequired(),
 });
 
 export { createBankdetailsDefaultValues, CreatebankDetailsSchema };

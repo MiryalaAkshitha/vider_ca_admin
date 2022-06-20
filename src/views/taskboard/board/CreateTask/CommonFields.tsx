@@ -15,6 +15,7 @@ function CommonFields({ control, watch, users, labels, setValue }) {
           control={control}
           name="financialYear"
           label="Finanacial Year"
+          required
           options={getFinancialYears().map((item) => ({
             label: item,
             value: item,

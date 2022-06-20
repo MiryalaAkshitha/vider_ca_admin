@@ -130,7 +130,7 @@ function EditTeam({ open, setOpen, selectedTeam }: IProps) {
                   labelPlacement="start"
                   label={
                     <Box display="flex" gap={1} flex={1} alignItems="center">
-                      <Avatar src="https://i.pravatar.cc/100" />
+                      <Avatar src={user?.imageUrl} />
                       <Typography sx={{ flex: 1 }}>{user?.fullName}</Typography>
                     </Box>
                   }

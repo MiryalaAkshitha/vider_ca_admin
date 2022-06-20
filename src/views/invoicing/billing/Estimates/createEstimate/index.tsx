@@ -59,7 +59,7 @@ const CreateEstimate = () => {
               label="Select Billing Entity"
               defaultValue="customer1"
               onChange={(e) => {
-                let client = data.data[0]?.find(
+                let client = data.data?.result?.find(
                   (client: any) => client.id === e.target.value
                 );
                 dispatch(
@@ -69,7 +69,7 @@ const CreateEstimate = () => {
                 );
               }}
             >
-              {data?.data[0]?.map((client: any, index: number) => (
+              {data?.data?.result?.map((client: any, index: number) => (
                 <MenuItem value={client?.id} key={index}>
                   {client?.displayName}
                 </MenuItem>
@@ -87,7 +87,7 @@ const CreateEstimate = () => {
               label="Customer"
               defaultValue="customer1"
               onChange={(e) => {
-                let client = data.data[0]?.find(
+                let client = data.data?.result?.find(
                   (client: any) => client.id === e.target.value
                 );
                 dispatch(
@@ -97,7 +97,7 @@ const CreateEstimate = () => {
                 );
               }}
             >
-              {data?.data[0]?.map((client: any, index: number) => (
+              {data?.data?.result?.map((client: any, index: number) => (
                 <MenuItem value={client?.id} key={index}>
                   {client?.displayName}
                 </MenuItem>
@@ -125,16 +125,13 @@ const CreateEstimate = () => {
         </Box>
         <Box sx={{ margin: "50px 0 100px 0" }}>
           <Typography sx={{ textAlign: "center" }}>
-            For any enquiry, reach out via email: viderbusiness@gmail.com or call
-            on +91 81211 81212
+            For any enquiry, reach out via email: viderbusiness@gmail.com or
+            call on +91 81211 81212
           </Typography>
         </Box>
-
       </Box>
       <BottomBar />
-
     </>
   );
 };
 export default CreateEstimate;
-

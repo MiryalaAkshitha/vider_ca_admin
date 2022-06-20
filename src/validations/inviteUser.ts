@@ -1,10 +1,10 @@
 import { object, string } from "yup";
 
 let inviteUserDefaultValues = {
-  fullName: "",
-  email: "",
-  role: "",
-  mobileNumber: "",
+  fullName: "vinay  ",
+  email: "vinaykanna367@gmail.com",
+  role: "85",
+  mobileNumber: "9505335109",
 };
 
 let inviteUserSchema = () => {

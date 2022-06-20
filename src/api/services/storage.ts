@@ -3,7 +3,7 @@ import { http } from "api/http";
 interface CreateFolder {
   name: string;
   clientId?: string;
-  folderId: string | null;
+  parent: string | null;
   type: "organization" | "client";
 }
 
@@ -21,8 +21,8 @@ const uploadFile = (data: any) => {
   return http.post("/storage/upload-file", data);
 };
 
-const moveFile = ({ fileId, folderId }: any) => {
-  return http.put(`/storage/move-file/${fileId}`, { folderId });
+const moveFile = (data: any) => {
+  return http.put(`/storage/move-file`, data);
 };
 
 const getStorage = ({ queryKey }: any) => {

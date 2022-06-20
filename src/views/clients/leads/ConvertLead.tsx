@@ -170,24 +170,6 @@ function ConverLead({ open, setOpen, data }: Props) {
             fullWidth
             required
             onChange={handleChange}
-            value={state.clientManager || ""}
-            name="clientManager"
-            size="small"
-            label="Client Manager"
-            select
-          >
-            {users?.data?.map((item: any, index: number) => (
-              <MenuItem key={index} value={item?.id}>
-                {item?.fullName}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
             name="mobileNumber"
             size="small"
             label="Mobile Number"
@@ -205,6 +187,23 @@ function ConverLead({ open, setOpen, data }: Props) {
             value={state.email}
             label="Email ID"
           />
+          <TextField
+            sx={{ mt: 3 }}
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            value={state.clientManager || ""}
+            name="clientManager"
+            size="small"
+            label="Client Manager"
+            select
+          >
+            {users?.data?.map((item: any, index: number) => (
+              <MenuItem key={index} value={item?.id}>
+                {item?.fullName}
+              </MenuItem>
+            ))}
+          </TextField>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}

@@ -26,7 +26,6 @@ interface Props extends DialogProps {
 }
 
 function CreateTask({ open, setOpen, successCb }: Props) {
-  const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
 
   const { users, labels, categories, clients, loading } =
@@ -81,8 +80,9 @@ function CreateTask({ open, setOpen, successCb }: Props) {
               control={control}
               label="Client"
               multiple
+              required
               name="client"
-              options={clients?.data[0]?.map((item: any) => ({
+              options={clients?.data?.result?.map((item: any) => ({
                 label: item.displayName,
                 value: item.id,
               }))}

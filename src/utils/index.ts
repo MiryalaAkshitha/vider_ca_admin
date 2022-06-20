@@ -73,9 +73,13 @@ export const fileSizeInKb = (size: number) => {
 };
 
 export const getFinancialYears = () => {
-  return Array.from(Array(50).keys()).map((_, index) => {
-    return `${2000 + index}-${2000 + index + 1}`;
-  });
+  let fiscalYears: any = [];
+  for (let i = 0; i < 50; i++) {
+    const year = new Date().getFullYear() - i;
+    const fiscalYear = `${year}-${year + 1}`;
+    fiscalYears.push(fiscalYear);
+  }
+  return fiscalYears;
 };
 
 export const getFieldSize = (fieldSize: "SMALL" | "MEDIUM" | "LARGE") => {

@@ -29,15 +29,13 @@ interface ISelected {
 const CheckListItem = ({ data, index }: Props) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<ISelected | null>(null);
 
   const { mutate } = useMutation(updateChecklistItem, {
     onSuccess: () => {
-      snack.success("Checklist item udpated");
-      queryClient.invalidateQueries("milestones");
+      snack.success("Checklist item updated");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

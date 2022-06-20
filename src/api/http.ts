@@ -14,13 +14,12 @@ http.interceptors.response.use(
   },
   function (err) {
     if (err.message === "Network Error") {
-      alert("Please Check your internet connection");
+      alert("Network Error");
     }
     if (
       err.response.data.statusCode === 401 &&
       err.response.config.method === "get"
     ) {
-      alert("Session Expired, Please Login Again");
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       window.location.href = "/login";

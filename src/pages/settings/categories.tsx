@@ -22,8 +22,8 @@ function Cateogries() {
 
   return (
     <>
-      <Box textAlign="right" mt={2}>
-        <ValidateAccess name={Permissions.CREATE_CATEGORIES}>
+      <ValidateAccess name={Permissions.CREATE_CATEGORIES}>
+        <Box textAlign="right" mt={2} mb={2}>
           <Button
             onClick={() => setOpen(true)}
             variant="outlined"
@@ -32,8 +32,8 @@ function Cateogries() {
           >
             Add Category
           </Button>
-        </ValidateAccess>
-      </Box>
+        </Box>
+      </ValidateAccess>
       <Grid container spacing={2}>
         {data?.data?.map((item: any, index: any) => (
           <Grid item xs={4} key={index}>

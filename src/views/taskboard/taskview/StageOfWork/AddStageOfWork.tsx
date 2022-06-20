@@ -128,7 +128,6 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
           value={state.description}
           name="description"
           label="Description"
-          required
         />
         {state.type === "STAGE_OF_WORK" && (
           <FormControlLabel

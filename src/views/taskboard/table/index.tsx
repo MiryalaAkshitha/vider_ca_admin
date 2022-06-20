@@ -1,6 +1,9 @@
+import { Typography } from "@mui/material";
 import Members from "components/Members";
+import PriorityText from "components/PriorityText";
 import Table, { ColumnType } from "components/Table";
 import { useNavigate } from "react-router-dom";
+import { getTitle } from "utils";
 
 type Props = {
   data: any;
@@ -22,18 +25,31 @@ function TaskTable({ data }: Props) {
 }
 
 const columns: Array<ColumnType> = [
-  { key: "taskId", title: "taskId" },
+  { key: "taskNumber", title: "taskId" },
   { key: "name", title: "Task Name" },
   { key: "dueDate", title: "Due Date" },
   { key: "client.displayName", title: "Client Name" },
-  { key: "priority", title: "Priority" },
-  { key: "status", title: "Email" },
+  {
+    key: "priority",
+    title: "Priority",
+    render: (v) => <PriorityText text={v?.priority} />,
+  },
+  {
+    key: "status",
+    title: "Status",
+    render: (v) => {
+      return <Typography variant="body2">{getTitle(v?.status)}</Typography>;
+    },
+  },
   {
     key: "Memberss",
     title: "Members",
     render: (v) => (
       <Members
-        data={v?.members?.map((item: any) => ({ title: item?.fullName }))}
+        data={v?.members?.map((item: any) => ({
+          title: item?.fullName,
+          src: item?.imageUrl,
+        }))}
       />
     ),
   },

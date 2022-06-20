@@ -23,6 +23,7 @@ function Members() {
   const userId = localStorage.getItem("userId") || "";
   const [openChat, setOpenChat] = useState(false);
   const [selected, setSelected] = useState<any>(null);
+  const [search, setSearch] = useState("");
 
   const { data, isLoading }: ResType = useQuery("users", getUsers);
 
@@ -55,6 +56,15 @@ function Members() {
     });
   };
 
+  const filtered = () => {
+    if (search) {
+      return data?.data?.filter((item: any) => {
+        return item?.fullName?.toLowerCase().includes(search.toLowerCase());
+      });
+    }
+    return data?.data;
+  };
+
   return (
     <StyledChatsWrapper>
       <StyledRecentChatsContainer>
@@ -68,6 +78,9 @@ function Members() {
         </StyledChatHeader>
         <Box>
           <StyledChatSearch
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
             type="text"
             placeholder="Search for a member or a group"
           />
@@ -77,7 +90,7 @@ function Members() {
             <Loader />
           ) : (
             <List>
-              {data?.data?.map((item: any, index: number) => {
+              {filtered()?.map((item: any, index: number) => {
                 if (item.id === parseInt(userId)) return null;
                 return (
                   <>

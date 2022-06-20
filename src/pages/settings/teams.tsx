@@ -44,7 +44,7 @@ function Users() {
       </Box>
       <Grid container spacing={3} sx={{ maxWidth: 1400, mt: 2 }}>
         {getData()?.map((team: any, index: number) => (
-          <Grid item xs={3} key={index}>
+          <Grid item xs={4} key={index}>
             <TeamCard data={team} />
           </Grid>
         ))}

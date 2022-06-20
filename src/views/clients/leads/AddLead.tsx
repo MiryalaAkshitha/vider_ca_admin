@@ -148,7 +148,6 @@ function AddLead({ open, setOpen }: DialogProps) {
           variant="outlined"
           fullWidth
           name="description"
-          required
           rows={4}
           multiline
           onChange={handleChange}

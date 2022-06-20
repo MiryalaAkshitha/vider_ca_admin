@@ -60,7 +60,8 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
         .min(3, "Name should be atleast 3 characters"),
       otherwise: string().notRequired(),
     }),
-    startDate: date()
+    startDate: date().nullable().typeError("Invalid date").notRequired(),
+    dueDate: date()
       .nullable()
       .typeError("Invalid date")
       .min(
@@ -68,17 +69,12 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
         "Start date should be greater than today"
       )
       .notRequired(),
-    dueDate: date()
-      .nullable()
-      .typeError("Invalid date")
-      .min(ref("startDate"), "Due date should be later than start date.")
-      .notRequired(),
     expectedCompletionDate: date()
       .nullable()
       .typeError("Invalid Error")
       .min(
-        ref("startDate"),
-        "Expected completed date should be later than start date."
+        moment().format("YYYY-MM-DD"),
+        "Start date should be greater than today"
       )
       .notRequired(),
     financialYear: string().required("Financial Year is required"),
@@ -87,9 +83,7 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
     taskLeader: string().notRequired(),
     priority: string().nullable().notRequired(),
     feeType: string().required("Fee Type is required"),
-    feeAmount: string()
-      .required("Fee Amount is required")
-      .matches(/^[0-9]*$/, `Fee amount must be a number`),
+    feeAmount: string().notRequired().nullable(),
     description: string().nullable().notRequired(),
     frequency: mixed().when("taskType", {
       is: (taskType: any) => taskType === "recurring",

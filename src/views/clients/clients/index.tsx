@@ -132,10 +132,10 @@ function Clients() {
         onRowClick={(v) => {
           handleRowClick(v);
         }}
-        data={data?.data[0] || []}
+        data={data?.data?.result || []}
         columns={columns}
         pagination={{
-          totalCount: data?.data[1],
+          totalCount: data?.data?.count,
           pageCount: limit,
           onPageCountChange: (v) => setLimit(v),
           onChange: (v) => {

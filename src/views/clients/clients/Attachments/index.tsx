@@ -3,66 +3,64 @@ import { getStorage } from "api/services/storage";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
-import moment from "moment";
+import { usePermissions } from "context/PermissionsProvider";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
+import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
 import { StorageResponse } from "types";
 import { Permissions } from "utils/permissons";
-import AddAttachment from "./AddAttachment";
-import BreadCrumbs from "./BreadCrumbs";
-import Files from "./Files";
-import Folders from "./Folders";
-import Search from "./Search";
+import BreadCrumbs from "views/storage/BreadCrumbs";
+import Files from "views/storage/Files";
+import Folders from "views/storage/Folders";
+import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
+import Search from "views/storage/Search";
+import AddAttachment from "views/storage/AddAttachment";
 
 function Attachments() {
+  const { permissions } = usePermissions();
   const params = useParams();
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      setPermissions({
+        write: permissions.includes(Permissions.CREATE_CLIENT_ATTACHMENTS),
+        edit: permissions.includes(Permissions.EDIT_CLIENT_ATTACHMENTS),
+        delete: permissions.includes(Permissions.DELETE_CLIENT_ATTACHMENTS),
+      })
+    );
+  }, []);
 
   const query = {
     clientId: params.clientId || "",
     folderId: searchParams.get("folderId"),
     type: "client",
   };
+
   const { data, isLoading }: StorageResponse = useQuery(
     ["storage", query],
-    getStorage
+    getStorage,
+    {
+      onSuccess: (res: any) => {
+        dispatch(setCurrentStorage(res?.data?.result));
+      },
+    }
   );
 
-  const getFilesOrFolders = (type: "folder" | "file") => {
-    let soryBy = searchParams.get("sortBy");
-    let result = data?.data?.result?.filter((item) => item.type === type);
+  let folders = getFilesOrFolders({
+    type: "folder",
+    data: data?.data?.result,
+    sortBy: searchParams.get("sortBy") || "",
+  });
 
-    if (soryBy === "a_z") {
-      result = result?.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    if (soryBy === "z_a") {
-      result = result?.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    if (soryBy === "date_newest") {
-      result = result?.sort((a, b) => {
-        return moment.utc(b?.createdAt).local().diff(moment(a.createdAt));
-      });
-    }
-
-    if (soryBy === "date_oldest") {
-      result = result?.sort((a, b) => {
-        return moment.utc(a?.createdAt).local().diff(moment(b.createdAt));
-      });
-    }
-
-    if (type === "file") {
-      if (soryBy === "size_low_to_high") {
-        result = [...(result || [])]?.sort((a, b) => a.fileSize - b.fileSize);
-      }
-      if (soryBy === "size_high_to_low") {
-        result = [...(result || [])]?.sort((a, b) => b.fileSize - a.fileSize);
-      }
-    }
-
-    return result;
-  };
+  let files = getFilesOrFolders({
+    type: "file",
+    data: data?.data?.result,
+    sortBy: searchParams.get("sortBy") || "",
+  });
 
   if (isLoading) return <Loader />;
 
@@ -79,23 +77,19 @@ function Attachments() {
         </Box>
         {data?.data?.result?.length ? (
           <>
-            {getFilesOrFolders("folder")?.length ? (
-              <Folders data={getFilesOrFolders("folder")} />
-            ) : null}
-            {getFilesOrFolders("file")?.length ? (
-              <Files data={getFilesOrFolders("file")} />
-            ) : null}
+            {folders?.length ? <Folders data={folders} /> : null}
+            {files?.length ? <Files data={files} /> : null}
           </>
         ) : (
           <EmptyPage
             minHeight="60vh"
             title="No files or folders found"
-            desc="Add folder or file to your storage"
+            desc="Add folder or file to the storage"
           />
         )}
       </Box>
       <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
-        <AddAttachment />
+        <AddAttachment type="client" />
       </ValidateAccess>
     </>
   );

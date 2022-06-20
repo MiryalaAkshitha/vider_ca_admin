@@ -81,7 +81,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
             name="client"
             label="Client"
           >
-            {clients?.data[0]?.map((item, index) => (
+            {clients?.data?.result?.map((item, index) => (
               <MenuItem key={index} value={item?.id}>
                 {item.displayName}
               </MenuItem>

@@ -84,12 +84,7 @@ function GroupChat({ chat, taskData, setGroupChats }) {
         </Box>
         <Divider sx={{ mx: -2 }} />
       </Box>
-      <EditGroupChat
-        open={open}
-        setOpen={setOpen}
-        taskData={taskData}
-        groupChatData={chat}
-      />
+      <EditGroupChat open={open} setOpen={setOpen} groupChatData={chat} />
     </>
   );
 }

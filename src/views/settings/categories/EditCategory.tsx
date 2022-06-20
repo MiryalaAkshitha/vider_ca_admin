@@ -19,7 +19,6 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
 
   const [state, setState] = useState<any>({
     name: "",
-    image: "",
     color: "",
     subCategories: [],
   });
@@ -28,7 +27,6 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
   useEffect(() => {
     setState({
       name: data.name,
-      image: data.image,
       color: data.color,
       subCategories: data.subCategories,
     });
@@ -86,11 +84,6 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
         size="small"
         label="Name"
       />
-      <UploadImage
-        sx={{ mt: 2 }}
-        name="image"
-        onChange={(v) => handleChange("image", v)}
-      />
       <Box display="flex" gap={1} mt={3}>
         <TextField
           variant="outlined"
@@ -123,7 +116,7 @@ function EditCategory({ open, setOpen, data }: EditCategoryProps) {
               {index + 1}. {item.name}
             </Typography>
             <IconButton size="small" onClick={() => deleteSubCategory(index)}>
-              <Delete color="info" />
+              <Delete />
             </IconButton>
           </Box>
         ))}

@@ -84,11 +84,11 @@ const BillingEntities = loadable(
 const ViewBillingEntityUser = loadable(
   () => import("pages/settings/viewBillingEntityUser")
 );
-const MyProfile = loadable(() => import("pages/settings/UserProfile"));
+const MyProfile = loadable(() => import("pages/settings/profile"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/users"));
 const InviteUsers = loadable(() => import("pages/settings/invited-users"));
-const ViewUser = loadable(() => import("pages/settings/ViewUser"));
+const ViewUser = loadable(() => import("pages/settings/view-user"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
 const Clients = loadable(() => import("pages/clients"));
@@ -101,7 +101,7 @@ const ClientView = loadable(() => import("pages/clients/client-view"));
 const TasksView = loadable(() => import("pages/taskboard/task-view"));
 const Attachments = loadable(() => import("views/clients/clients/Attachments"));
 const KybInfo = loadable(() => import("views/clients/clients/KybInfo"));
-const Passwords = loadable(() => import("views/clients/clients/Passwords"));
+const Credentials = loadable(() => import("views/clients/clients/Credentials"));
 const Archives = loadable(() => import("views/clients/clients/Archives"));
 const ProfileDetails = loadable(
   () => import("views/clients/clients/ProfileDetails")
@@ -244,10 +244,10 @@ function RoutesContainer() {
                 }
               />
               <Route
-                path="passwords"
+                path="credentials"
                 element={
                   <PageWithPermission name={Permissions.VIEW_CLIENT_PASSWORDS}>
-                    <Passwords />
+                    <Credentials />
                   </PageWithPermission>
                 }
               />

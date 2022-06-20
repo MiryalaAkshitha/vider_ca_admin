@@ -16,8 +16,6 @@ interface StateProps {
   customRole: string;
   email: string;
   mobile: string;
-  dscAvailable: boolean;
-  dscExpiryDate: string | null;
 }
 
 const initialState: StateProps = {
@@ -26,8 +24,6 @@ const initialState: StateProps = {
   customRole: "",
   email: "",
   mobile: "",
-  dscAvailable: false,
-  dscExpiryDate: "",
 };
 
 function AddContactPerson({ open, setOpen }: DialogProps) {
@@ -56,13 +52,6 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
       snack.error(err.response.data.message);
     },
   });
-
-  const handleDscAvailable = (e: any) => {
-    setState({
-      ...state,
-      dscAvailable: e.target.checked,
-    });
-  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -131,28 +120,13 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
           required
           onChange={handleChange}
           name="mobile"
+          inputProps={{
+            pattern: "[0-9]{10}",
+            title: "Mobile number must be 10 digits",
+          }}
           size="small"
           label="Mobile"
         />
-        <FormControlLabel
-          sx={{ mt: 2 }}
-          control={<Checkbox onChange={handleDscAvailable} />}
-          label="DSC Available"
-        />
-        {state.dscAvailable && (
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            type="date"
-            name="dscExpiryDate"
-            size="small"
-            InputLabelProps={{ shrink: true }}
-            label="DSC Expiry Date"
-          />
-        )}
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             loading={isLoading}

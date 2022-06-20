@@ -5,12 +5,14 @@ export interface IGlobal {
   title: string;
   loading: boolean;
   taskItemsLoaded: boolean;
+  unreadMessages: number;
 }
 
 const initialState: IGlobal = {
   title: "",
   loading: false,
   taskItemsLoaded: false,
+  unreadMessages: 0,
 };
 
 export const globalClice = createSlice({
@@ -25,6 +27,9 @@ export const globalClice = createSlice({
     },
     setTaskItemsLoaded(state, action: PayloadAction<boolean>) {
       state.taskItemsLoaded = action.payload;
+    },
+    setUnreadMessages(state, action: PayloadAction<number>) {
+      state.unreadMessages = action.payload;
     },
   },
 });

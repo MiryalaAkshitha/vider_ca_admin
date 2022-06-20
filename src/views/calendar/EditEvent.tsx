@@ -9,6 +9,7 @@ import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
+import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -28,13 +29,22 @@ import {
 function EditEvent({ data, open, setOpen }) {
   const queryClient = useQueryClient();
 
-  const { control, watch, handleSubmit, reset } = useForm({
+  const {
+    control,
+    watch,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: addCalendarEventDefaultValues,
     mode: "onChange",
     resolver: yupResolver(AddCalendarEventSchema()),
   });
 
+  console.log(errors);
+
   useEffect(() => {
+    console.log(data);
     reset({
       ...data,
       client: data?.client
@@ -121,43 +131,43 @@ function EditEvent({ data, open, setOpen }) {
         <Loader />
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormAutoComplete
-            control={control}
-            label="Client"
-            name="client"
-            options={
-              clients?.data[0]?.map((item: any) => ({
-                label: item.displayName,
-                value: item.id,
-              })) || []
-            }
-          />
-          {watch("client") && (
-            <Box mt={2}>
+          {watch("type") === "TASK" && (
+            <>
               <FormAutoComplete
                 control={control}
-                label="Task"
-                name="task"
-                options={clientTasks}
+                label="Client"
+                name="client"
+                options={clients?.data?.result?.map((item: any) => ({
+                  label: item.displayName,
+                  value: item.id,
+                }))}
               />
-            </Box>
+              {watch("client") && (
+                <Box mt={2}>
+                  <FormAutoComplete
+                    control={control}
+                    label="Task"
+                    name="task"
+                    options={clientTasks}
+                  />
+                </Box>
+              )}
+              <Box mt={2}>
+                {watch("task") && (
+                  <FormAutoComplete
+                    control={control}
+                    label="Members"
+                    multiple
+                    name="members"
+                    options={taskMembers?.map((item: any) => ({
+                      label: item.fullName,
+                      value: item.id,
+                    }))}
+                  />
+                )}
+              </Box>
+            </>
           )}
-          <Box mt={2}>
-            {watch("task") && (
-              <FormAutoComplete
-                control={control}
-                label="Members"
-                multiple
-                name="members"
-                options={
-                  taskMembers?.map((item: any) => ({
-                    label: item.fullName,
-                    value: item.id,
-                  })) || []
-                }
-              />
-            )}
-          </Box>
           <Box mt={2}>
             <FormInput name="title" control={control} label="Title" />
           </Box>

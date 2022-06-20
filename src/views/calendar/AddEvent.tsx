@@ -9,6 +9,7 @@ import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
+import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -46,21 +47,22 @@ function AddEvent({ open, setOpen, successCb }: Props) {
     }
   );
 
+  const { control, watch, handleSubmit, reset } = useForm({
+    defaultValues: addCalendarEventDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(AddCalendarEventSchema()),
+  });
+
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
       snack.success("Event Created");
       setOpen(false);
+      reset(addCalendarEventDefaultValues);
       queryClient.invalidateQueries("events");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
-  });
-
-  const { control, watch, handleSubmit } = useForm({
-    defaultValues: addCalendarEventDefaultValues,
-    mode: "onChange",
-    resolver: yupResolver(AddCalendarEventSchema()),
   });
 
   const onSubmit = (data: any) => {
@@ -93,39 +95,55 @@ function AddEvent({ open, setOpen, successCb }: Props) {
         <Loader />
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormAutoComplete
+          <FormRadio
             control={control}
-            label="Client"
-            name="client"
-            options={clients?.data[0]?.map((item: any) => ({
-              label: item.displayName,
-              value: item.id,
-            }))}
+            name="type"
+            row
+            label="Event Type"
+            options={[
+              { label: "Event", value: "EVENT" },
+              { label: "Task", value: "TASK" },
+            ]}
           />
-          {watch("client") && (
-            <Box mt={2}>
-              <FormAutoComplete
-                control={control}
-                label="Task"
-                name="task"
-                options={clientTasks}
-              />
-            </Box>
+          {watch("type") === "TASK" && (
+            <>
+              <Box mt={2}>
+                <FormAutoComplete
+                  control={control}
+                  label="Client"
+                  name="client"
+                  options={clients?.data?.result?.map((item: any) => ({
+                    label: item.displayName,
+                    value: item.id,
+                  }))}
+                />
+              </Box>
+              {watch("client") && (
+                <Box mt={2}>
+                  <FormAutoComplete
+                    control={control}
+                    label="Task"
+                    name="task"
+                    options={clientTasks}
+                  />
+                </Box>
+              )}
+              <Box mt={2}>
+                {watch("task") && (
+                  <FormAutoComplete
+                    control={control}
+                    label="Members"
+                    multiple
+                    name="members"
+                    options={taskMembers?.map((item: any) => ({
+                      label: item.fullName,
+                      value: item.id,
+                    }))}
+                  />
+                )}
+              </Box>
+            </>
           )}
-          <Box mt={2}>
-            {watch("task") && (
-              <FormAutoComplete
-                control={control}
-                label="Members"
-                multiple
-                name="members"
-                options={taskMembers?.map((item: any) => ({
-                  label: item.fullName,
-                  value: item.id,
-                }))}
-              />
-            )}
-          </Box>
           <Box mt={2}>
             <FormInput name="title" control={control} label="Title" />
           </Box>

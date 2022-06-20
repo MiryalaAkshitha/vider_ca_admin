@@ -101,7 +101,6 @@ function AddChecklistItem({ open, setOpen, selectedChecklist }: Props) {
                 value={item.description}
                 name="description"
                 label="Checklist item description"
-                required
               />
             </Box>
             <div>

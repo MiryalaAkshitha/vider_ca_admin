@@ -2,6 +2,7 @@ import { ref } from "yup";
 import { string, date, object, array, mixed, boolean } from "yup";
 
 let linkEventDefaultValues = {
+  type: "TASK",
   title: "",
   location: "",
   date: null,
@@ -15,14 +16,8 @@ let linkEventDefaultValues = {
 
 let LinkEventSchema = ({ taskCreatedDate }) => {
   return object().shape({
-    members: array()
-      .of(
-        object().shape({
-          label: string().required(),
-          value: string().required(),
-        })
-      )
-      .min(1, "Select atleast one member"),
+    type: string().required(),
+    members: array().min(1, "Select atleast one member"),
     title: string()
       .required("Event name is required")
       .min(3, "Event name should be atleast 3 characters"),

@@ -15,10 +15,14 @@ import DialogWrapper from "components/DialogWrapper";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import { snack } from "components/toast";
-import useFilteredData from "hooks/useFilteredData";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { DialogProps, ResType } from "types";
+import {
+  StyledServiceDesc,
+  StyledServiceItem,
+  StyledServicesContainer,
+} from "views/taskboard/board/CreateTask/styles";
 
 interface Props extends DialogProps {
   successCb: () => void;
@@ -61,14 +65,29 @@ function SelectServices({ open, setOpen, successCb }: Props) {
     },
   });
 
-  const filteredData = useFilteredData(
-    data?.data,
-    ["name", "category", "subCategory"],
-    search
-  );
+  function getData() {
+    const { category, subCategory } = filters;
+    let result = data?.data ? [...data?.data] : [];
+
+    if (search) {
+      result = result?.filter((item) =>
+        item.name?.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    if (category) {
+      result = result?.filter((item) => item.categoryId == category);
+    }
+
+    if (subCategory) {
+      result = result?.filter((item) => item.subCategoryId == subCategory);
+    }
+
+    return result;
+  }
 
   const subCategories = categories?.data?.find(
-    (item: any) => item.id === filters.category
+    (item: any) => item.id === +filters.category
   )?.subCategories;
 
   const handleChange = (id: string) => {
@@ -158,7 +177,7 @@ function SelectServices({ open, setOpen, successCb }: Props) {
             }
           />
           <SearchContainer
-            placeHolder="Search by category or name"
+            placeHolder="Search"
             minWidth="300px"
             onChange={setSearch}
           />
@@ -169,32 +188,11 @@ function SelectServices({ open, setOpen, successCb }: Props) {
         <Loader />
       ) : (
         <>
-          <Box
-            sx={{
-              height: 400,
-              overflow: "auto",
-              mx: -2,
-              px: 2,
-              mt: 2,
-            }}
-          >
+          <StyledServicesContainer>
             <Grid container spacing={2}>
-              {filteredData?.map((item: any, index: number) => (
+              {getData()?.map((item: any, index: number) => (
                 <Grid item xs={4} key={index}>
-                  <Box
-                    sx={{
-                      height: "100%",
-                      border: "1px solid rgba(0,0,0,0.3)",
-                      borderRadius: 1,
-                      mb: "10px",
-                      px: 1,
-                      py: "4px",
-                      cursor: "pointer",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      gap: 1,
-                    }}
-                  >
+                  <StyledServiceItem>
                     <Box>
                       <Typography variant="caption" color="rgba(0,0,0,0.6)">
                         {item?.category}{" "}
@@ -202,19 +200,11 @@ function SelectServices({ open, setOpen, successCb }: Props) {
                       </Typography>
                       <Typography variant="subtitle2">{item?.name}</Typography>
                       <Typography color="rgba(0,0,0,0.6)" variant="body2">
-                        <div
-                          style={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            lineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                          }}
+                        <StyledServiceDesc
                           dangerouslySetInnerHTML={{
                             __html: item?.description,
                           }}
-                        ></div>
+                        ></StyledServiceDesc>
                       </Typography>
                     </Box>
                     <Box>
@@ -223,11 +213,11 @@ function SelectServices({ open, setOpen, successCb }: Props) {
                         checked={selectedServices.includes(item?._id)}
                       />
                     </Box>
-                  </Box>
+                  </StyledServiceItem>
                 </Grid>
               ))}
             </Grid>
-          </Box>
+          </StyledServicesContainer>
           <Box
             sx={{
               textAlign: "center",

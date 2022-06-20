@@ -62,6 +62,7 @@ const BankAccountDetailsCard = ({ data }) => {
         borderRadius: "8px",
         p: 2,
         position: "relative",
+        height: "100%",
       }}
     >
       <Grid
@@ -105,20 +106,22 @@ const BankAccountDetailsCard = ({ data }) => {
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body2">UPI Attachment</Typography>
-          <Box display="flex" gap={1} alignItems="center">
-            <Typography sx={{ fontSize: 15 }} variant="subtitle2">
-              UPI QR
-            </Typography>
-            <a
-              href={data?.upiAttachmentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconButton>
-                <OpenInNewRoundedIcon color="secondary" fontSize="small" />
-              </IconButton>
-            </a>
-          </Box>
+          {data?.upiAttachment && (
+            <Box display="flex" gap={1} alignItems="center">
+              <Typography sx={{ fontSize: 15 }} variant="subtitle2">
+                UPI QR
+              </Typography>
+              <a
+                href={data?.upiAttachmentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconButton>
+                  <OpenInNewRoundedIcon color="secondary" fontSize="small" />
+                </IconButton>
+              </a>
+            </Box>
+          )}
         </Grid>
       </Grid>
       <Box sx={{ position: "absolute", top: 20, right: 20 }}>
