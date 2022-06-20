@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledFolder } from "views/clients/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
+import SameFileOrFolderWarning from "./SameFileOrFolderWarning";
 
 type Props = {
   data: any;
@@ -19,10 +20,12 @@ type Position = {
 
 function Folder({ data }: Props) {
   const queryClient = useQueryClient();
+  const { queryParams, setQueryParams } = useQueryParams();
   const [dragging, setDragging] = useState(false);
   const [dropping, setDropping] = useState(false);
   const [contextMenu, setContextMenu] = useState<Position | null>(null);
-  const { queryParams, setQueryParams } = useQueryParams();
+  const [openWarning, setOpenWarning] = useState(false);
+  const [originId, setOriginId] = useState<any>(null);
 
   const { mutate } = useMutation(moveFile, {
     onSuccess: () => {
@@ -30,7 +33,11 @@ function Folder({ data }: Props) {
       queryClient.invalidateQueries("storage");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      if (err.response.data.status === 409) {
+        setOpenWarning(true);
+      } else {
+        snack.error(err.response.data.message);
+      }
     },
   });
 
@@ -68,10 +75,16 @@ function Folder({ data }: Props) {
 
   const handleDrop = (e: any) => {
     preventDefault(e);
+
     if (dragging) return;
+
     setDropping(false);
+
     let originId = parseInt(e.dataTransfer.getData("fileId"));
     let destinationId = data.id;
+
+    setOriginId(originId);
+
     mutate({
       originId,
       destinationId,
@@ -117,6 +130,12 @@ function Folder({ data }: Props) {
         contextMenu={contextMenu}
         setContextMenu={setContextMenu}
         data={data}
+      />
+      <SameFileOrFolderWarning
+        open={openWarning}
+        setOpen={setOpenWarning}
+        originId={originId}
+        destinationId={data?.id}
       />
     </>
   );

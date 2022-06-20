@@ -19,9 +19,9 @@ function ImportClients({ open, setOpen, successCb }: Props) {
 
   const { mutate, isLoading } = useMutation(importClients, {
     onSuccess: () => {
-      snack.success("Clients Import Successfully");
       setOpen(false);
       setFile(null);
+      snack.success("Clients Import Successfully");
       successCb && successCb();
       queryClient.invalidateQueries("clients");
     },

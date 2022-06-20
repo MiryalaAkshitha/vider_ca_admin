@@ -46,6 +46,14 @@ const removeFile = (id: number) => {
   return http.delete(`/storage/remove-file/${id}`);
 };
 
+const replaceFileOrFolder = (data: any) => {
+  return http.post(`/storage/replace`, data);
+};
+
+const keepBothFilesOrFolders = (data: any) => {
+  return http.post(`/storage/keep-both`, data);
+};
+
 export {
   createFolder,
   getStorage,
@@ -55,4 +63,6 @@ export {
   renameFile,
   removeFile,
   searchStorage,
+  replaceFileOrFolder,
+  keepBothFilesOrFolders,
 };

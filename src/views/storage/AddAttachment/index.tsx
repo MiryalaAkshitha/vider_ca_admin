@@ -44,6 +44,15 @@ function AddAttachment({ type }: IProps) {
 
   const handleUploadFiles = async (e: any) => {
     if (!e.target.files.length) return;
+
+    let invalidSize = [...e.target.files].some((file: any) => {
+      return file.size > 10000000;
+    });
+
+    if (invalidSize) {
+      return snack.error("File size must be less than 10MB");
+    }
+
     dispatch(setInitialUploads(e.target.files));
 
     for (const file of e.target.files) {
