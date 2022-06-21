@@ -16,4 +16,8 @@ const getEvents = ({ queryKey }) => {
   return http.get("/events", { params: { ...queryKey[1] } });
 };
 
-export { getEvents, createEvent, updateEvent, deleteEvent };
+const getDefaultEvents = () => {
+  return http.get("/events/default");
+};
+
+export { getEvents, getDefaultEvents, createEvent, updateEvent, deleteEvent };

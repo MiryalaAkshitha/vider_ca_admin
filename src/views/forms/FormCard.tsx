@@ -91,7 +91,7 @@ const FormCard = ({ data }: any) => {
             <Box>
               <Typography variant="subtitle2">{data?.name}</Typography>
               <Typography variant="body2" color="rgba(0,0,0,0.6)">
-                {data?.description}
+                {data?.description} {data?.defaultOne?.toString()}
               </Typography>
               <Box pt={2} display="flex" gap={1}>
                 {data?.tags?.map((tag: string) => (
