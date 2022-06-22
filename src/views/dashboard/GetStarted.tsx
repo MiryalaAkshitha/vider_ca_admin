@@ -7,9 +7,8 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import ImportClients from "views/clients/clients/ImportClients";
 import AddMember from "views/settings/users/AddMember";
-import CreateTask from "views/taskboard/board/CreateTask";
 import GetStartedCard from "./GetStartedCard";
-import SelectServices from "./SelectServices";
+import ImportServices from "./ImportServices";
 
 const GetStarted = ({ data }: any) => {
   const queryClient = useQueryClient();
@@ -105,7 +104,7 @@ const GetStarted = ({ data }: any) => {
         setOpen={setOpenAddMember}
         successCb={() => handleUpdate("createUser")}
       />
-      <SelectServices
+      <ImportServices
         open={openCreateTask}
         setOpen={setOpenCreateTask}
         successCb={() => handleUpdate("selectServices")}

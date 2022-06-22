@@ -24,6 +24,14 @@ const getForms = ({ queryKey }: any) => {
   return http.get("/forms", { params: { ...queryKey[1] } });
 };
 
+const getDefaultForms = () => {
+  return http.get("/forms/default");
+};
+
+const importForms = (data: any) => {
+  return http.post("/forms/import", data);
+};
+
 const getForm = ({ queryKey }: any) => {
   return http.get(`/forms/${queryKey[1]}`);
 };
@@ -58,6 +66,14 @@ const updateField = ({ formId, pageId, fieldId, data }: any) => {
 
 const getFormValidations = () => {
   return http.get("/form-validations");
+};
+
+const getDefaultFormValidations = () => {
+  return http.get("/form-validations/default");
+};
+
+const importFormValidations = (data: any) => {
+  return http.post("/form-validations/import", data);
 };
 
 const createFormValidation = ({ data }) => {
@@ -100,4 +116,8 @@ export {
   getFormActivity,
   signField,
   duplicatePage,
+  getDefaultForms,
+  importForms,
+  getDefaultFormValidations,
+  importFormValidations,
 };

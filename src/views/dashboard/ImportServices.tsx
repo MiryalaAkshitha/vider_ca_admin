@@ -16,7 +16,7 @@ import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import { snack } from "components/toast";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
 import {
   StyledServiceDesc,
@@ -25,10 +25,11 @@ import {
 } from "views/taskboard/board/CreateTask/styles";
 
 interface Props extends DialogProps {
-  successCb: () => void;
+  successCb?: () => void;
 }
 
-function SelectServices({ open, setOpen, successCb }: Props) {
+function ImportServices({ open, setOpen, successCb }: Props) {
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -55,6 +56,7 @@ function SelectServices({ open, setOpen, successCb }: Props) {
 
   const { mutate } = useMutation(importServices, {
     onSuccess: () => {
+      queryClient.invalidateQueries("services");
       setOpen(false);
       setSelectAll(false);
       setSelectedServices([]);
@@ -119,7 +121,7 @@ function SelectServices({ open, setOpen, successCb }: Props) {
       width="lg"
       open={open}
       setOpen={setOpen}
-      title="Select Services"
+      title="Import Services"
     >
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" gap={1}>
@@ -241,4 +243,4 @@ function SelectServices({ open, setOpen, successCb }: Props) {
   );
 }
 
-export default SelectServices;
+export default ImportServices;

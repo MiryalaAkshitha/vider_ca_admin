@@ -106,7 +106,7 @@ const FormBuilder = () => {
       ) : (
         <EmptyPage
           title="There are no pages available"
-          btnTitle="+ Add Page"
+          btn2Title="+ Add Page"
           btnAction={() => dispatch(setAddPageOpen(true))}
           desc="Click on add page to add a new page"
         />

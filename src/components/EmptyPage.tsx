@@ -5,6 +5,8 @@ import { empty } from "assets";
 interface EmptyPageProps {
   btnTitle?: string;
   btnAction?: () => void;
+  btn2Title?: string;
+  btn2Action?: () => void;
   minHeight?: string;
   title?: string;
   desc?: string;
@@ -19,6 +21,8 @@ function EmptyPage(props: EmptyPageProps) {
     title = "List is empty",
     desc = "",
     noImage = false,
+    btn2Title,
+    btn2Action,
   } = props;
   return (
     <Box
@@ -37,11 +41,18 @@ function EmptyPage(props: EmptyPageProps) {
         <Typography mb={2} variant="body2">
           {desc}
         </Typography>
-        {btnTitle && (
-          <Button variant="contained" color="secondary" onClick={btnAction}>
-            {btnTitle}
-          </Button>
-        )}
+        <Box display="flex" justifyContent="center" gap={1}>
+          {btnTitle && (
+            <Button variant="contained" color="secondary" onClick={btnAction}>
+              {btnTitle}
+            </Button>
+          )}
+          {btn2Title && (
+            <Button variant="contained" color="secondary" onClick={btn2Action}>
+              {btn2Title}
+            </Button>
+          )}
+        </Box>
       </Box>
     </Box>
   );

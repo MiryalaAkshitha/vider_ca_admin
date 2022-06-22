@@ -40,7 +40,7 @@ function Passwords() {
           title="There is no password added"
           desc="Click on Add password to add a new password"
           {...(permissions.includes(Permissions.CREATE_CLIENT_PASSWORDS) && {
-            btnTitle: "Add Password",
+            btn2Title: "Add Password",
             btnAction: () => setOpen(true),
           })}
         />

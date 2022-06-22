@@ -16,7 +16,7 @@ const Estimates = () => {
       ) : (
         <EmptyPage
           title="There are no Estimate available"
-          btnTitle="Add new estimate"
+          btn2Title="Add new estimate"
           btnAction={handleAddNewEstimate}
           desc="Click on Add new estimate to add an estimate"
         />

@@ -1,29 +1,26 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
 import { getServices } from "api/services/services";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
-import useFilteredData from "hooks/useFilteredData";
 import useTitle from "hooks/useTitle";
-import { result } from "lodash";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addServiceState } from "redux/reducers/addServiceSlice";
 import { ResType } from "types";
+import ImportServices from "views/dashboard/ImportServices";
 import ServiceCard from "views/services/ServiceCard";
 
 function Services() {
   useTitle("Services");
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [openImport, setOpenImport] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const [subCategoryId, setSubCategoryId] = useState("");
-
   const { data, isLoading }: ResType = useQuery("services", getServices);
   const { data: categories }: ResType = useQuery("categories", getCategories);
 
@@ -44,17 +41,17 @@ function Services() {
     let result = [...data?.data];
 
     if (search) {
-      result = result?.filter((item) =>
-        item.name?.toLowerCase().includes(search.toLowerCase())
-      );
+      result = result?.filter((item) => {
+        return item.name?.toLowerCase().includes(search.toLowerCase());
+      });
     }
 
     if (categoryId) {
-      result = result?.filter((item) => item.categoryId == categoryId);
+      result = result?.filter((item) => item.categoryId === categoryId);
     }
 
     if (subCategoryId) {
-      result = result?.filter((item) => item.subCategoryId == subCategoryId);
+      result = result?.filter((item) => item.subCategoryId === subCategoryId);
     }
 
     return result;
@@ -63,91 +60,108 @@ function Services() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box p={3}>
-      <Box textAlign="right" mt={2}>
-        {data?.data?.length > 0 && (
-          <Link to="/services/add" style={{ textDecoration: "none" }}>
-            <Button variant="outlined" startIcon={<Add />} color="secondary">
-              Add Service
-            </Button>
-          </Link>
-        )}
-      </Box>
-      <Box mt={2}>
-        {data?.data?.length > 0 && (
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box display="flex">
-              <Box>
-                <TextField
-                  name="categoryId"
-                  value={categoryId}
-                  onChange={onChange}
-                  size="small"
-                  label="Category"
-                  select
-                  sx={{ width: "250px" }}
+    <>
+      <Box px={3} py={1}>
+        <Box display="flex" justifyContent="flex-end" gap={1} mt={2}>
+          {data?.data?.length > 0 && (
+            <>
+              <Link to="/services/add" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="outlined"
+                  startIcon={<Add />}
+                  color="secondary"
                 >
-                  {categories?.data.map((option: any, index: any) => (
-                    <MenuItem key={index} value={option.id}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  Add Service
+                </Button>
+              </Link>
+              <Button
+                onClick={() => setOpenImport(true)}
+                variant="outlined"
+                startIcon={<Add />}
+                color="secondary"
+              >
+                Import from Vider
+              </Button>
+            </>
+          )}
+        </Box>
+        <Box mt={4}>
+          {data?.data?.length > 0 && (
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box display="flex">
+                <Box>
+                  <TextField
+                    name="categoryId"
+                    value={categoryId}
+                    onChange={onChange}
+                    size="small"
+                    label="Category"
+                    select
+                    sx={{ width: "250px" }}
+                  >
+                    {categories?.data.map((option: any, index: any) => (
+                      <MenuItem key={index} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+                <Box>
+                  {subCategories?.length > 0 && (
+                    <Box ml={2}>
+                      <TextField
+                        value={subCategoryId}
+                        name="subCategoryId"
+                        onChange={onSubChange}
+                        sx={{ width: "250px" }}
+                        size="small"
+                        label="Sub Category"
+                        select
+                      >
+                        {subCategories?.map((option: any, index: any) => (
+                          <MenuItem key={index} value={option.id}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  )}
+                </Box>
               </Box>
               <Box>
-                {subCategories?.length > 0 && (
-                  <Box ml={2}>
-                    <TextField
-                      value={subCategoryId}
-                      name="subCategoryId"
-                      onChange={onSubChange}
-                      sx={{ width: "250px" }}
-                      size="small"
-                      label="Sub Category"
-                      select
-                    >
-                      {subCategories?.map((option: any, index: any) => (
-                        <MenuItem key={index} value={option.id}>
-                          {option.name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Box>
-                )}
+                <SearchContainer
+                  minWidth="400px"
+                  placeHolder="Search for a service"
+                  onChange={setSearch}
+                />
               </Box>
             </Box>
-            <Box>
-              <SearchContainer
-                minWidth="400px"
-                placeHolder="Search for a service"
-                onChange={setSearch}
-              />
-            </Box>
-          </Box>
+          )}
+        </Box>
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          {getData()?.map((service: any, index: number) => (
+            <Grid item xs={4}>
+              <ServiceCard data={service} key={index} />
+            </Grid>
+          ))}
+        </Grid>
+        {data?.data?.length === 0 && (
+          <EmptyPage
+            title="No services found"
+            desc="You can add a service by clicking the button above."
+            btnTitle="Import from Vider"
+            btnAction={() => setOpenImport(true)}
+            btn2Title="Add Service"
+            btn2Action={() => navigate("/services/add")}
+          />
         )}
       </Box>
-      <Grid container spacing={2} sx={{ mt: 2 }}>
-        {getData()?.map((service: any, index: number) => (
-          <Grid item xs={4}>
-            <ServiceCard data={service} key={index} />
-          </Grid>
-        ))}
-      </Grid>
-      {data?.data?.length === 0 && (
-        <EmptyPage
-          title="No services found"
-          desc="You can add a service by clicking the button above."
-          btnTitle="Add Service"
-          btnAction={() => {
-            navigate("/services/add");
-          }}
-        />
-      )}
-    </Box>
+      <ImportServices open={openImport} setOpen={setOpenImport} />
+    </>
   );
 }
 

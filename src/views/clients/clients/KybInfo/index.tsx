@@ -53,7 +53,7 @@ function KybInfo() {
             minHeight="70vh"
             title="There is no KYB Info form added"
             desc="Click on Add KYB form to add a new form template"
-            btnTitle="Add KYB Form"
+            btn2Title="Add KYB Form"
             btnAction={() => setOpen(true)}
           />
         )}
