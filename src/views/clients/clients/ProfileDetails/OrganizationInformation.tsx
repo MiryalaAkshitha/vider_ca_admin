@@ -48,6 +48,13 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       return;
     }
 
+    if (data?.panNumber) {
+      let gstSlice = data?.gstNumber?.slice(2, 12);
+      if (gstSlice !== data?.panNumber) {
+        return snack.error("GST Number should correspond to Pan Number");
+      }
+    }
+
     try {
       setGstLoading(true);
       let token: any = await getSandboxToken();
@@ -90,6 +97,13 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
     if (!data.panNumber) {
       snack.error("Please enter PAN Number");
       return;
+    }
+
+    if (data?.gstNumber) {
+      let gstSlice = data?.gstNumber?.slice(2, 12);
+      if (gstSlice !== data?.panNumber) {
+        return snack.error("PAN Number should correspond to GST Number");
+      }
     }
 
     try {
