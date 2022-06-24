@@ -29,7 +29,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   const queryClient = useQueryClient();
 
   const { users, labels, categories, clients, loading } =
-    useCreateTaskInitialData({});
+    useCreateTaskInitialData({ enabled: open });
 
   const subcategoriesExist = (category: any) => {
     return categories?.data?.find((item: any) => item.id === parseInt(category))

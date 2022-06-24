@@ -1,7 +1,4 @@
-import {
-  getGetStarted,
-  getOrganizationDashboard,
-} from "api/services/organization";
+import { getGetStarted } from "api/services/organization";
 import Loader from "components/Loader";
 import { usePermissions } from "context/PermissionsProvider";
 import useTitle from "hooks/useTitle";
@@ -18,31 +15,17 @@ function Home() {
     "get-started",
     getGetStarted,
     {
-      // enabled: role?.defaultRole,
+      enabled: role?.defaultRole,
     }
   );
 
-  // let status = getStarted?.data?.status;
-
-  // const { data, isLoading }: ResType = useQuery(
-  //   "org-dashboard",
-  //   getOrganizationDashboard,
-  //   {
-  //     enabled: !role?.defaultRole || (Boolean(status) && status !== "PENDING"),
-  //   }
-  // );
-
-  // if (getStartedLoading || isLoading) return <Loader />;
-
-  // return role?.defaultRole && getStarted?.data?.status === "PENDING" ? (
-  //   <GetStarted data={getStarted?.data} />
-  // ) : (
-  //   <Dashboard data={data?.data} />
-  // );
-
   if (getStartedLoading) return <Loader />;
 
-  return <GetStarted data={getStarted?.data} />;
+  return role?.defaultRole && getStarted?.data?.status === "PENDING" ? (
+    <GetStarted data={getStarted?.data} />
+  ) : (
+    <Dashboard />
+  );
 }
 
 export default Home;

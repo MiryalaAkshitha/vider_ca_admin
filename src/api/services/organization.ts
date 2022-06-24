@@ -12,8 +12,12 @@ const updateGetStarted = (data: any) => {
   return http.patch(`/stats/organization/dashboard/get-started`, data);
 };
 
-const getOrganizationDashboard = () => {
-  return http.get(`/stats/organization/dashboard`);
+const getOrganizationDashboard = ({ queryKey }) => {
+  return http.get(`/stats/organization/dashboard`, {
+    params: {
+      type: queryKey[1],
+    },
+  });
 };
 
 const getOrganizationLicenses = () => {
