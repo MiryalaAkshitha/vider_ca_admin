@@ -17,7 +17,7 @@ const Receipts = () => {
         <EmptyPage
           title="There are no Receipts available"
           btn2Title="Add new Receipts"
-          btnAction={AddNewReceipts}
+          btn2Action={AddNewReceipts}
           desc="Click on Add new Receipts to add an Receipts"
         />
       )}

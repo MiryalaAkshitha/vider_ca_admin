@@ -54,7 +54,7 @@ function KybInfo() {
             title="There is no KYB Info form added"
             desc="Click on Add KYB form to add a new form template"
             btn2Title="Add KYB Form"
-            btnAction={() => setOpen(true)}
+            btn2Action={() => setOpen(true)}
           />
         )}
       </Box>

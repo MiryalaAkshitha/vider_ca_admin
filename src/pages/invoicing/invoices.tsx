@@ -17,7 +17,7 @@ const Invoices = () => {
         <EmptyPage
           title="There are no Invoices available"
           btn2Title="Add new Invoice"
-          btnAction={AddNewInvoice}
+          btn2Action={AddNewInvoice}
           desc="Click on Add new Invoice to add an Invoice"
         />
       )}

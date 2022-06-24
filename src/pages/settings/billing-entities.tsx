@@ -26,7 +26,7 @@ const BillingEntities = () => {
           <EmptyPage
             title="There are no Billing Entities"
             btn2Title="Add New Billing Entity"
-            btnAction={() => setOpen(true)}
+            btn2Action={() => setOpen(true)}
             desc="Click on Add New Billing Entity to add a Billing Entity"
           />
           <AddBillingEntities open={open} setOpen={setOpen} />{" "}
