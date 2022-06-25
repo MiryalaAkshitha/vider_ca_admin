@@ -7,12 +7,12 @@ import { getOrganizationDashboard } from "api/services/organization";
 import { ResType } from "types";
 import { useQuery } from "react-query";
 import Loader from "components/Loader";
-import ColorTitleCard from "../ColorTitleCrad";
-import PieChartCard from "../PieChartCard";
+import ColorTitleCard from "./ColorTitleCrad";
+import PieChartCard from "./PieChartCard";
 
-function TaskCategories() {
+function ClientCategories() {
   const { data, isLoading }: ResType = useQuery(
-    ["org-dashboard-task-numericals", "TASK_NUMERALS"],
+    ["org-dashboard-client-categories", "CLIENT_CATEGORIES"],
     getOrganizationDashboard
   );
 
@@ -36,7 +36,7 @@ function TaskCategories() {
         />
       </Box>
       <Box flex={1}>
-        <Typography variant="subtitle2">Task Numericals</Typography>
+        <Typography variant="subtitle2">Client Categories</Typography>
         <Grid container>
           {data?.data?.map((item: any, index: number) => (
             <Grid item xs={6}>
@@ -49,4 +49,4 @@ function TaskCategories() {
   );
 }
 
-export default TaskCategories;
+export default ClientCategories;

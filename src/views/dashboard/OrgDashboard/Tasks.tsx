@@ -1,11 +1,10 @@
-import { Box } from "@mui/system";
-import { Grid, Typography, Paper } from "@mui/material";
-import { icons } from "assets";
+import { Grid, Typography } from "@mui/material";
 import { getOrganizationDashboard } from "api/services/organization";
+import { icons } from "assets";
+import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import TasksCard from "../TasksCard";
-import Loader from "components/Loader";
+import TasksCard from "./TasksCard";
 
 function Tasks() {
   const { data, isLoading }: ResType = useQuery(
@@ -21,11 +20,18 @@ function Tasks() {
         Tasks
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
+          <TasksCard
+            img={icons.totalClients}
+            title="Total Number of Clients on board"
+            value={data?.data?.totalClients || 0}
+          />
+        </Grid>
+        <Grid item xs={6}>
           <TasksCard
             img={icons.totalTasks}
             title="Total Number of Tasks Created"
-            value={data?.data?.total || 0}
+            value={data?.data?.totalTasks || 0}
           />
         </Grid>
         <Grid item xs={4}>

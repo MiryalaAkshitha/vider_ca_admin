@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { ResType } from "types";
-import ImportServices from "views/dashboard/ImportServices";
+import ImportServices from "views/dashboard/GetStarted/ImportServices";
 import ServiceCard from "views/services/ServiceCard";
 
 function Services() {
