@@ -1,13 +1,20 @@
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { getPanDetails, getSandboxToken, signup } from "api/services/users";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { selectSignup } from "redux/reducers/signUpSlice";
-import { SubmitType } from "types";
+import { ResType, SubmitType } from "types";
+import { getStates } from "api/services/common";
 
 const PanDetails = () => {
   const [state, setState] = useState<any>({});
@@ -15,6 +22,8 @@ const PanDetails = () => {
   const [panNumber, setPanNumber] = useState("");
   const [panLoading, setPanLoading] = useState(false);
   const { email, password, mobileNumber } = useSelector(selectSignup);
+
+  const { data: states }: ResType = useQuery("states", getStates);
 
   const { mutate, isLoading } = useMutation(signup, {
     onSuccess: (res: any) => {
@@ -243,7 +252,23 @@ const PanDetails = () => {
             value={state.state}
             size="small"
             fullWidth
-          />
+            select
+            SelectProps={{
+              MenuProps: {
+                PaperProps: {
+                  sx: {
+                    maxHeight: "200px",
+                  },
+                },
+              },
+            }}
+          >
+            {states?.data?.map((option: any) => (
+              <MenuItem key={option.name} value={option.name}>
+                {option.name}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             onChange={handleChange}
             sx={{ mt: 2 }}

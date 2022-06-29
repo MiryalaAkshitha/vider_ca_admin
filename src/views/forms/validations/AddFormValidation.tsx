@@ -7,19 +7,22 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
 
+let initialState = {
+  name: "",
+  format: "",
+  message: "",
+};
+
 function AddFormValidation({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-  const [state, setState] = useState({
-    name: "",
-    format: "",
-    message: "",
-  });
+  const [state, setState] = useState({ ...initialState });
 
   const { mutate } = useMutation(createFormValidation, {
     onSuccess: () => {
-      setOpen(false);
       queryClient.invalidateQueries("form-validations");
       snack.success("Form validation created");
+      setState({ ...initialState });
+      setOpen(false);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

@@ -34,6 +34,7 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
           <Grid item xs={4}>
             <Autocomplete
               multiple
+              limitTags={3}
               id="tags-standard"
               onChange={(_, value) => {
                 setState({ ...data, labels: value });

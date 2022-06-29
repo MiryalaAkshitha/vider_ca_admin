@@ -2,7 +2,9 @@ import ChatIcon from "@mui/icons-material/Chat";
 import PeopleIcon from "@mui/icons-material/People";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import { Button } from "@mui/material";
+import { socket } from "app";
 import { StyledBottomAppbar } from "layout/styles";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectChats, setChatType } from "redux/reducers/chatsSlice";
 import Chat from "views/chats/Chat";
@@ -26,6 +28,16 @@ function BottomAppbar() {
       background: isActive ? "rgba(0,0,0,0.08)" : "",
     };
   };
+
+  useEffect(() => {
+    let userId = localStorage.getItem("userId") || "";
+    socket.on(userId + "-unread", (message) => {
+      console.log(message);
+    });
+    return () => {
+      socket.off(userId + "-unread");
+    };
+  }, []);
 
   return (
     <StyledBottomAppbar>

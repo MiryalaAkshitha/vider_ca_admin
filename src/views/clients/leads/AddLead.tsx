@@ -4,6 +4,7 @@ import { createLead } from "api/services/client";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import _ from "lodash";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
@@ -19,18 +20,20 @@ interface StateProps {
   description: string;
 }
 
+let initialState = {
+  category: "",
+  subCategory: null,
+  name: "",
+  clientManager: "",
+  mobileNumber: "",
+  email: "",
+  description: "",
+};
+
 function AddLead({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
 
-  const [state, setState] = useState<StateProps>({
-    category: "",
-    subCategory: null,
-    name: "",
-    clientManager: "",
-    mobileNumber: "",
-    email: "",
-    description: "",
-  });
+  const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
   let formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: any) => {
@@ -52,6 +55,7 @@ function AddLead({ open, setOpen }: DialogProps) {
     onSuccess: (res) => {
       snack.success("Lead Created");
       queryClient.invalidateQueries("leads");
+      setState(_.cloneDeep(initialState));
       setOpen(false);
     },
     onError: (err: any) => {

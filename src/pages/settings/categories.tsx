@@ -1,9 +1,11 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
 import Loader from "components/Loader";
+import SearchContainer from "components/SearchContainer";
 import ValidateAccess from "components/ValidateAccess";
+import useFilteredData from "hooks/useFilteredData";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -13,29 +15,73 @@ import AddCategory from "views/settings/categories/AddCategory";
 import CategoryCard from "views/settings/categories/CategoryCard";
 
 function Cateogries() {
+  useTitle("Categories");
   const [open, setOpen] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
+  const [sortBy, setSortBy] = useState("");
+
   const { data, isLoading }: ResType = useQuery("categories", getCategories);
 
-  useTitle("Categories");
+  const getData = () => {
+    let result = [...data?.data];
+
+    if (search) {
+      result = result?.filter((item) => {
+        return item.name.toLowerCase().includes(search.toLowerCase());
+      });
+    }
+
+    if (sortBy === "a_z") {
+      result = result?.sort((a: any, b: any) => a.name.localeCompare(b.name));
+    }
+
+    if (sortBy === "z_a") {
+      result = result?.sort((a: any, b: any) => b.name.localeCompare(a.name));
+    }
+
+    return result;
+  };
 
   if (isLoading) return <Loader />;
 
   return (
     <>
-      <ValidateAccess name={Permissions.CREATE_CATEGORIES}>
-        <Box textAlign="right" mt={2} mb={2}>
-          <Button
-            onClick={() => setOpen(true)}
+      <Box display="flex" justifyContent="space-between" mt={2} mb={2}>
+        <Box display="flex" gap={1}>
+          <SearchContainer
+            minWidth="300px"
+            onChange={setSearch}
+            placeHolder="Search categories"
+          />
+          <TextField
+            sx={{ minWidth: 120 }}
+            select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            size="small"
             variant="outlined"
-            startIcon={<Add />}
-            color="secondary"
+            label="Sort By"
           >
-            Add Category
-          </Button>
+            <MenuItem value="">None</MenuItem>
+            <MenuItem value="a_z">A - Z</MenuItem>
+            <MenuItem value="z_a">Z - A</MenuItem>
+          </TextField>
         </Box>
-      </ValidateAccess>
+        <ValidateAccess name={Permissions.CREATE_CATEGORIES}>
+          <Box>
+            <Button
+              onClick={() => setOpen(true)}
+              variant="outlined"
+              startIcon={<Add />}
+              color="secondary"
+            >
+              Add Category
+            </Button>
+          </Box>
+        </ValidateAccess>
+      </Box>
       <Grid container spacing={2}>
-        {data?.data?.map((item: any, index: any) => (
+        {getData()?.map((item: any, index: any) => (
           <Grid item xs={4} key={index}>
             <CategoryCard data={item} />
           </Grid>

@@ -33,7 +33,7 @@ function KybFormFields({ data, pageId, onContinue }: any) {
   });
 
   const onSubmit = (result: any) => {
-    let newData = [...data];
+    let newData = _.cloneDeep(data);
     for (let key in result) {
       const value = result[key];
       const field = newData?.find((field: any) => field._id === key);

@@ -6,6 +6,7 @@ export interface IGlobal {
   loading: boolean;
   taskItemsLoaded: boolean;
   unreadMessages: number;
+  timerRunning: boolean;
 }
 
 const initialState: IGlobal = {
@@ -13,6 +14,7 @@ const initialState: IGlobal = {
   loading: false,
   taskItemsLoaded: false,
   unreadMessages: 0,
+  timerRunning: false,
 };
 
 export const globalClice = createSlice({
@@ -31,13 +33,16 @@ export const globalClice = createSlice({
     setUnreadMessages(state, action: PayloadAction<number>) {
       state.unreadMessages = action.payload;
     },
+    setTimerRunning(state, action: PayloadAction<boolean>) {
+      state.timerRunning = action.payload;
+    },
   },
 });
 
 export const selectGlobal = (state: RootState) => state.global;
 export const selectTitle = (state: RootState) => state.global.title;
 
-export const { updateTitle, setLoading, setTaskItemsLoaded } =
+export const { updateTitle, setLoading, setTaskItemsLoaded, setTimerRunning } =
   globalClice.actions;
 
 export default globalClice.reducer;

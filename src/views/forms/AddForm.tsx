@@ -17,20 +17,21 @@ import {
 function AddForm({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
 
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: createFormDefaultValues,
+    mode: "onChange",
+    resolver: yupResolver(CreateFormSchema()),
+  });
+
   const { mutate } = useMutation(createForm, {
     onSuccess: () => {
       setOpen(false);
+      reset(createFormDefaultValues);
       queryClient.invalidateQueries("forms");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
-  });
-
-  const { control, handleSubmit } = useForm({
-    defaultValues: createFormDefaultValues,
-    mode: "onChange",
-    resolver: yupResolver(CreateFormSchema()),
   });
 
   const onFormSubmit = (data: any) => {

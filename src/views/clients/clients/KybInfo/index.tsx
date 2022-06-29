@@ -17,7 +17,7 @@ function KybInfo() {
   const [open, setOpen] = useState(false);
 
   const { data, isLoading }: ResType = useQuery(
-    ["client-forms", { type: "CLIENT", clientId: params.clientId }],
+    ["client-forms", { type: "KYB", clientId: params.clientId }],
     getForms
   );
 
@@ -63,7 +63,7 @@ function KybInfo() {
           open={open}
           setOpen={setOpen}
           queryKey="client-forms"
-          type="CLIENT"
+          type="KYB"
           typeId={params.clientId}
         />
       </ValidateAccess>

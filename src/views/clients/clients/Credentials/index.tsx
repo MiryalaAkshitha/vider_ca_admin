@@ -14,7 +14,7 @@ import { Permissions } from "utils/permissons";
 import AddCredentials from "./AddCredentials";
 import CredentialsCard from "./CredentialsCard";
 
-function Passwords() {
+function Credentials() {
   const { permissions } = usePermissions();
   const params = useParams();
   const clientId = params.clientId || "";
@@ -68,4 +68,4 @@ function Passwords() {
   );
 }
 
-export default Passwords;
+export default Credentials;

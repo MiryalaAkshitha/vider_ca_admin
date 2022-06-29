@@ -28,7 +28,7 @@ interface Props extends DialogProps {
   successCb?: () => void;
 }
 
-function AddEvent({ open, setOpen, successCb }: Props) {
+function AddEvent({ open, setOpen }: Props) {
   const queryClient = useQueryClient();
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(

@@ -1,167 +1,114 @@
-import { DownloadOutlined } from "@mui/icons-material";
+import { Close, DownloadOutlined } from "@mui/icons-material";
 import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
-import { updateProfile } from "api/services/users";
 import UploadImage from "components/UploadImage";
-import { snack } from "components/toast";
-import { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
 import SectionWrapper from "./SectionWrapper";
-import { aadharPattern, panCardPattern } from "utils/patterns";
 
-const StatutoryInformation = ({ data }) => {
-  const queryClient = useQueryClient();
-
-  const [editable, setEditable] = useState(false);
-  const [state, setState] = useState({
-    aadharNumber: "",
-    aadharCard: "",
-    panNumber: "",
-    panCard: "",
-    drivingLicenseNumber: "",
-    drivingLicense: "",
-  });
-
-  useEffect(() => {
-    setState({
-      aadharNumber: data?.profile?.aadharNumber,
-      aadharCard: data?.profile?.aadharCard,
-      panNumber: data?.profile?.panNumber,
-      panCard: data?.profile?.panCard,
-      drivingLicenseNumber: data?.profile?.drivingLicenseNumber,
-      drivingLicense: data?.profile?.drivingLicense,
-    });
-  }, [data]);
-
-  const { mutate } = useMutation(updateProfile, {
-    onSuccess: () => {
-      snack.success("Profile updated successfully");
-      queryClient.invalidateQueries("user-profile");
-      setEditable(false);
-    },
-    onError: () => {
-      snack.error("Error updating profile");
-    },
-  });
-
-  const handleSubmit = () => {
-    if (state.aadharNumber && !aadharPattern.test(state.aadharNumber)) {
-      return snack.error("Invalid aadhar number");
-    }
-
-    if (state.panNumber && !state.panNumber.match(panCardPattern)) {
-      return snack.error("Invalid pan number");
-    }
-
-    mutate({
-      ...state,
-      id: data?.id,
-      type: "user",
-    });
-  };
-
-  return (
-    <SectionWrapper
-      editable={editable}
-      onSave={handleSubmit}
-      setEditable={setEditable}
-      title="Statutory Information"
-    >
-      {!editable ? (
-        <Grid container spacing={2} sx={{ p: 2 }}>
-          <Grid item xs={6}>
-            <IdentityCard
-              title="Aadhar Card"
-              value={data?.profile?.aadharNumber}
-              file={data?.profile?.aadharCardUrl}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <IdentityCard
-              title="Pan Card"
-              value={data?.profile?.panNumber}
-              file={data?.profile?.panCardUrl}
-            />
-          </Grid>
-        </Grid>
-      ) : (
-        <EditSection state={state} setState={setState} />
-      )}
-    </SectionWrapper>
-  );
-};
-
-const EditSection = ({ state, setState }) => {
+const StatutoryInformation = ({ state, setState }) => {
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
   return (
-    <Grid container alignItems="center" spacing={2} sx={{ p: 2 }}>
-      <Grid item xs={6}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          size="medium"
-          onChange={handleChange}
-          name="aadharNumber"
-          label="Aadhar Number"
-          value={state?.aadharNumber}
-        />
+    <SectionWrapper title="Statutory Information">
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item xs={6}>
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="medium"
+            onChange={handleChange}
+            name="aadharNumber"
+            label="Aadhar Number"
+            value={state?.aadharNumber || ""}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          {state?.aadharCard ? (
+            <IdentityCard
+              title="Aadhar Card"
+              value={state?.aadharCard}
+              file={state?.aadharCardUrl}
+              onClose={() => setState({ ...state, aadharCard: null })}
+            />
+          ) : (
+            <UploadImage
+              widthoutIcon
+              sx={{ minHeight: "60px" }}
+              name="aadharCard"
+              label="Upload Attachment"
+              onChange={(v) =>
+                setState({
+                  ...state,
+                  aadharCard: v,
+                })
+              }
+            />
+          )}
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="medium"
+            onChange={handleChange}
+            name="panNumber"
+            label="Pan Number"
+            value={state?.panNumber}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          {state?.panCard ? (
+            <IdentityCard
+              title="Pan Card"
+              value={state?.panCard}
+              file={state?.panCardUrl}
+              onClose={() => setState({ ...state, panCard: null })}
+            />
+          ) : (
+            <UploadImage
+              widthoutIcon
+              sx={{ minHeight: "60px" }}
+              name="panCard"
+              label="Upload Attachment"
+              onChange={(v) => setState({ ...state, panCard: v })}
+            />
+          )}
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="medium"
+            onChange={handleChange}
+            name="drivingLicenseNumber"
+            label="Driving license number"
+            value={state?.drivingLicenseNumber}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          {state?.drivingLicense ? (
+            <IdentityCard
+              title="Driving License"
+              value={state?.drivingLicense}
+              file={state?.drivingLicenseUrl}
+              onClose={() => setState({ ...state, drivingLicense: null })}
+            />
+          ) : (
+            <UploadImage
+              widthoutIcon
+              sx={{ minHeight: "60px" }}
+              name="drivingLicense"
+              label="Upload Attachment"
+              onChange={(v) => setState({ ...state, drivingLicense: v })}
+            />
+          )}
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        <UploadImage
-          widthoutIcon
-          sx={{ minHeight: "60px" }}
-          name="aadharCard"
-          label="Upload Attachment"
-          onChange={(v) => setState({ ...state, aadharCard: v })}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          size="medium"
-          onChange={handleChange}
-          name="panNumber"
-          label="Pan Number"
-          value={state?.panNumber}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <UploadImage
-          widthoutIcon
-          sx={{ minHeight: "60px" }}
-          name="panCard"
-          label="Upload Attachment"
-          onChange={(v) => setState({ ...state, panCard: v })}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          variant="outlined"
-          fullWidth
-          size="medium"
-          onChange={handleChange}
-          name="drivingLicenseNumber"
-          label="Driving license number"
-          value={state?.drivingLicenseNumber}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <UploadImage
-          widthoutIcon
-          sx={{ minHeight: "60px" }}
-          name="drivingLicense"
-          label="Upload Attachment"
-          onChange={(v) => setState({ ...state, drivingLicense: v })}
-        />
-      </Grid>
-    </Grid>
+    </SectionWrapper>
   );
 };
 
-const IdentityCard = ({ title, value, file }) => {
+const IdentityCard = ({ title, value, file, onClose }) => {
   return (
     <Box
       sx={{
@@ -182,12 +129,15 @@ const IdentityCard = ({ title, value, file }) => {
         <Typography variant="body1">{value ? value : "NA"}</Typography>
       </Box>
       {file && (
-        <Box>
+        <Box display="flex" gap={1}>
           <a href={file} target="_blank" rel="noopener noreferrer">
             <IconButton>
               <DownloadOutlined color="secondary" />
             </IconButton>
           </a>
+          <IconButton onClick={onClose}>
+            <Close color="secondary" />
+          </IconButton>
         </Box>
       )}
     </Box>

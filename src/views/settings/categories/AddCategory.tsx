@@ -4,8 +4,8 @@ import { Box } from "@mui/system";
 import { createCategory } from "api/services/categories";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import UploadImage from "components/UploadImage";
 import { snack } from "components/toast";
+import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
@@ -16,14 +16,15 @@ interface StateProps {
   subCategories: Array<{ name: string }>;
 }
 
+let initialState = {
+  name: "",
+  color: "",
+  subCategories: [],
+};
+
 function AddCategory({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-
-  const [state, setState] = useState<StateProps>({
-    name: "",
-    color: "",
-    subCategories: [],
-  });
+  const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
   const [subCategory, setSubCategory] = useState<string>("");
 
   const handleChange = (key: string, v: string) => {
@@ -33,8 +34,9 @@ function AddCategory({ open, setOpen }: DialogProps) {
   const { mutate, isLoading } = useMutation(createCategory, {
     onSuccess: () => {
       snack.success("Category Created");
-      setOpen(false);
       queryClient.invalidateQueries("categories");
+      setState(_.cloneDeep(initialState));
+      setOpen(false);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

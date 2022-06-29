@@ -39,8 +39,7 @@ let CreateClientSchema = ({ subCategoriesExist }) =>
       .required("Email is required"),
     mobileNumber: string()
       .required("Mobile number is required")
-      .min(10, "Mobile number should be atleast 10 digits")
-      .max(10, "Mobile number should not exceed 10 digits"),
+      .matches(/^[0-9]{10}$/, "Mobile number is invalid"),
     authorizedPerson: string().notRequired(),
     designation: string().notRequired(),
     gstRegistered: string().notRequired(),

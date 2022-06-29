@@ -1,12 +1,12 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { changePassword } from "api/services/users";
+import DialogWrapper from "components/DialogWrapper";
 import { snack } from "components/toast";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { InputChangeType, SubmitType } from "types";
+import { useMutation } from "react-query";
+import { DialogProps, InputChangeType, SubmitType } from "types";
 
-const ChangePassword = () => {
-  const [open, setOpen] = useState(false);
+const ChangePassword = ({ open, setOpen }: DialogProps) => {
   const [state, setState] = useState({
     oldPassword: "",
     newPassword: "",
@@ -35,79 +35,43 @@ const ChangePassword = () => {
   };
 
   return (
-    <Box
-      mb={3}
-      sx={{
-        border: "1px solid rgba(0,0,0,0.2)",
-        borderRadius: 2,
-        overflow: "hidden",
-      }}
-    >
-      <Box
-        display="flex"
-        alignItems="center"
-        mb={1}
-        justifyContent="space-between"
-        sx={{
-          background: "rgb(24, 47, 83, 0.05)",
-          px: 2,
-          py: 1,
-        }}
-      >
-        <Typography variant="subtitle2" color="primary">
-          Change Password
-        </Typography>
-      </Box>
-      <Box p={2}>
-        {!open ? (
+    <DialogWrapper title="Change Password" open={open} setOpen={setOpen}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          name="oldPassword"
+          value={state.oldPassword}
+          onChange={handleChange}
+          fullWidth
+          variant="outlined"
+          size="small"
+          required
+          placeholder="Old Password"
+        />
+        <TextField
+          name="newPassword"
+          value={state.newPassword}
+          onChange={handleChange}
+          fullWidth
+          variant="outlined"
+          size="small"
+          required
+          placeholder="New Password"
+          sx={{ mt: 2 }}
+        />
+        <Box mt={2} display="flex" gap={1} justifyContent="flex-end">
           <Button
-            onClick={() => setOpen(true)}
+            onClick={() => setOpen(false)}
             variant="outlined"
             color="secondary"
           >
-            Change Password
+            Cancel
           </Button>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <Box maxWidth={400}>
-              <TextField
-                name="oldPassword"
-                value={state.oldPassword}
-                onChange={handleChange}
-                fullWidth
-                variant="outlined"
-                size="small"
-                required
-                placeholder="Old Password"
-              />
-              <TextField
-                name="newPassword"
-                value={state.newPassword}
-                onChange={handleChange}
-                fullWidth
-                variant="outlined"
-                size="small"
-                required
-                placeholder="New Password"
-                sx={{ mt: 2 }}
-              />
-              <Box mt={2} display="flex" gap={1} justifyContent="flex-end">
-                <Button
-                  onClick={() => setOpen(false)}
-                  variant="outlined"
-                  color="secondary"
-                >
-                  Cancel
-                </Button>
-                <Button variant="outlined" color="secondary" type="submit">
-                  Submit
-                </Button>
-              </Box>
-            </Box>
-          </form>
-        )}
-      </Box>
-    </Box>
+          <Button variant="outlined" color="secondary" type="submit">
+            Submit
+          </Button>
+        </Box>
+      </form>
+    </DialogWrapper>
   );
 };
 

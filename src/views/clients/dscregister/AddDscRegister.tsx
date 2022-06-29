@@ -5,9 +5,11 @@ import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import _ from "lodash";
 import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType, SubmitType } from "types";
+import { panCardPattern } from "utils/patterns";
 
 interface StateProps {
   client: null;
@@ -20,19 +22,20 @@ interface StateProps {
   holderDesignation: string;
 }
 
+let initialState = {
+  client: null,
+  holderName: "",
+  expiryDate: "",
+  password: "",
+  tokenNumber: "",
+  panNumber: "",
+  mobileNumber: "",
+  holderDesignation: "",
+};
+
 function AddDscRegister({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-
-  const [state, setState] = useState<StateProps>({
-    client: null,
-    holderName: "",
-    expiryDate: "",
-    password: "",
-    tokenNumber: "",
-    panNumber: "",
-    mobileNumber: "",
-    holderDesignation: "",
-  });
+  const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
   let formRef = useRef<HTMLFormElement>(null);
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
@@ -53,6 +56,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
       snack.success("Dsc Register Created");
       queryClient.invalidateQueries("dsc-register");
       setOpen(false);
+      setState(_.cloneDeep(initialState));
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -140,6 +144,10 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
             onChange={handleChange}
             size="small"
             label="Pan Number"
+            inputProps={{
+              pattern: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+              title: "Pan Number is invalid",
+            }}
           />
           <TextField
             sx={{ mt: 3 }}
@@ -149,6 +157,10 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
             onChange={handleChange}
             name="mobileNumber"
             size="small"
+            inputProps={{
+              pattern: "[0-9]{10}",
+              title: "Enter 10 digit mobile number",
+            }}
             label="Mobile Number"
           />
           <TextField

@@ -34,7 +34,7 @@ function AddService() {
   const { queryParams } = useQueryParams();
   let serviceId = queryParams.serviceId;
 
-  const { data, isLoading }: ResType = useQuery(
+  const { isLoading }: ResType = useQuery(
     ["service-details", serviceId],
     getService,
     {
@@ -49,7 +49,7 @@ function AddService() {
     if (!serviceId) {
       dispatch(resetData());
     }
-  }, [serviceId, data, dispatch]);
+  }, [serviceId, dispatch]);
 
   const { mutate } = useMutation(createService, {
     onSuccess: () => {
@@ -58,7 +58,7 @@ function AddService() {
       navigate("/services");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(err.response.data.message[0]);
     },
   });
 
@@ -75,7 +75,6 @@ function AddService() {
 
   const handleSubmit = () => {
     if (serviceId) {
-      console.log(state);
       update({
         id: serviceId,
         data: state,
@@ -89,7 +88,29 @@ function AddService() {
 
   return (
     <Box p={3} pb={15}>
-      <BreadCrumbs page="addService" />
+      <Box display="flex" justifyContent="space-between">
+        <BreadCrumbs page="addService" />
+        <Box display="flex" gap={1}>
+          <Button
+            onClick={() => {
+              navigate("/services");
+            }}
+            sx={{ minWidth: 130 }}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            sx={{ minWidth: 130 }}
+            disableElevation
+            variant="contained"
+            color="secondary"
+          >
+            Save
+          </Button>
+        </Box>
+      </Box>
       <BasicDetails />
       <Divider sx={{ my: 5 }} />
       <Checklists />
@@ -99,7 +120,7 @@ function AddService() {
       <StageOfWork />
       <Divider sx={{ my: 5 }} />
       <Subtasks />
-      <Paper
+      {/* <Paper
         elevation={3}
         sx={{
           ml: -3,
@@ -131,7 +152,7 @@ function AddService() {
             Submit
           </Button>
         </Box>
-      </Paper>
+      </Paper> */}
     </Box>
   );
 }

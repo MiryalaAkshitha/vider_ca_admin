@@ -1,8 +1,9 @@
 import { ContactPageOutlined, Logout } from "@mui/icons-material";
 import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import ContactPageIcon from "@mui/icons-material/ContactPage";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { selectGlobal } from "redux/reducers/globalSlice";
 
 type ElementType = HTMLElement | null;
 
@@ -12,6 +13,7 @@ export interface AccountMenuProps {
 }
 
 function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
+  const { timerRunning } = useSelector(selectGlobal);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -20,9 +22,21 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    window.location.href = "/";
+    const logout = async () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      window.location.href = "/";
+    };
+
+    if (timerRunning) {
+      let confirm = window.confirm(
+        "Timer is running. Are you sure you want to logout?"
+      );
+      if (!confirm) return;
+      logout();
+    } else {
+      logout();
+    }
   };
 
   return (

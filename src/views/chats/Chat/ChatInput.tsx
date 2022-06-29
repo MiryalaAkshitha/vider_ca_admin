@@ -12,9 +12,11 @@ import { StyledChatInput } from "../styles";
 function ChatInput() {
   const userId = localStorage.getItem("userId") || "";
   const [message, setMessage] = useState("");
-  const { roomId } = useSelector(selectChats);
+  const { roomId, members, type } = useSelector(selectChats);
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+
+  let user = members?.find((member: any) => member.id === +userId);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files?.[0];
@@ -38,6 +40,10 @@ function ChatInput() {
     setLoading(false);
   };
 
+  const onMessageChange = (e: any) => {
+    setMessage(e.target.value);
+  };
+
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     if (!message) return;
@@ -52,7 +58,7 @@ function ChatInput() {
         <form onSubmit={handleSubmit}>
           <input
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={onMessageChange}
             autoFocus
             type="text"
             placeholder="Type a message..."

@@ -5,10 +5,15 @@ const NonRecurringFields = ({ control }) => {
   return (
     <>
       <Box mt={2}>
-        <FormDate name="startDate" control={control} label="Start Date" />
+        <FormDate
+          name="startDate"
+          required
+          control={control}
+          label="Start Date"
+        />
       </Box>
       <Box mt={2}>
-        <FormDate name="dueDate" control={control} label="Due Date" />
+        <FormDate name="dueDate" required control={control} label="Due Date" />
       </Box>
       <Box mt={2}>
         <FormDate

@@ -60,15 +60,26 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
         .min(3, "Name should be atleast 3 characters"),
       otherwise: string().notRequired(),
     }),
-    startDate: date().nullable().typeError("Invalid date").notRequired(),
-    dueDate: date()
-      .nullable()
-      .typeError("Invalid date")
-      .min(
-        moment().format("YYYY-MM-DD"),
-        "Start date should be greater than today"
-      )
-      .notRequired(),
+    startDate: mixed().when("taskType", {
+      is: (taskType: any) => taskType === "non_recurring",
+      then: date()
+        .nullable()
+        .typeError("Invalid date")
+        .required("Start date is required"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    dueDate: mixed().when("taskType", {
+      is: (taskType: any) => taskType === "non_recurring",
+      then: date()
+        .nullable()
+        .typeError("Invalid date")
+        .min(
+          moment().format("YYYY-MM-DD"),
+          "Due date should be greater than today"
+        )
+        .required("Due date is required"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
     expectedCompletionDate: date()
       .nullable()
       .typeError("Invalid Error")

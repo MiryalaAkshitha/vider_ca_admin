@@ -6,10 +6,11 @@ interface Props {
   name: string;
   size?: "small" | "medium";
   control: any;
+  required?: boolean;
 }
 
 function FormDate(props: Props) {
-  const { name, size = "small", control, label = "" } = props;
+  const { name, size = "small", control, label = "", required = false } = props;
 
   return (
     <>
@@ -19,7 +20,7 @@ function FormDate(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <DesktopDatePicker
-              label={label}
+              label={`${label} ${required ? "*" : ""}`}
               mask="____/__/__"
               inputFormat="yyyy/MM/dd"
               value={field.value}

@@ -14,6 +14,7 @@ import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType, SubmitType } from "types";
@@ -25,14 +26,15 @@ type State = {
   members: any[];
 };
 
+let initialState = {
+  name: "",
+  tags: [],
+  members: [],
+};
+
 function AddTeam({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-
-  const [state, setState] = useState<State>({
-    name: "",
-    tags: [],
-    members: [],
-  });
+  const [state, setState] = useState<State>(_.cloneDeep(initialState));
 
   const { data: labels, isLoading: labelsLoading }: ResType = useQuery(
     "labels",
@@ -47,9 +49,10 @@ function AddTeam({ open, setOpen }: DialogProps) {
 
   const { mutate, isLoading } = useMutation(createTeam, {
     onSuccess: () => {
+      setState(_.cloneDeep(initialState));
+      queryClient.invalidateQueries("teams");
       snack.success("Team Created");
       setOpen(false);
-      queryClient.invalidateQueries("teams");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

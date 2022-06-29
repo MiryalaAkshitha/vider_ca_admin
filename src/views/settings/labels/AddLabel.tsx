@@ -4,32 +4,39 @@ import { createLabel } from "api/services/labels";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 
+let initialState = {
+  name: "",
+  color: "",
+};
+
 function AddLabel({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
+  const [state, setState] = useState({ ...initialState });
 
   const { mutate, isLoading } = useMutation(createLabel, {
     onSuccess: () => {
       snack.success("Label Created");
-      setOpen(false);
       queryClient.invalidateQueries("labels");
+      setState({ ...initialState });
+      setOpen(false);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
     },
   });
 
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const name = e.target.elements.name.value;
-    const color = e.target.elements.color.value;
-
-    mutate({
-      name,
-      color,
-    });
+    mutate(state);
   };
 
   return (
@@ -42,14 +49,16 @@ function AddLabel({ open, setOpen }: DialogProps) {
           required
           label="Name"
           name="name"
+          onChange={handleChange}
         />
         <TextField
-          sx={{ mt: 4, minWidth: 100 }}
+          sx={{ mt: 4, minWidth: 150 }}
           InputProps={{ sx: { padding: "0px" } }}
           variant="outlined"
           size="small"
           label="Choose Color"
           name="color"
+          onChange={handleChange}
           type="color"
           required
         />

@@ -19,7 +19,6 @@ function KybFormCard({ data }: Props) {
   const { permissions } = usePermissions();
   const menu = useMenu();
   const navigate = useNavigate();
-
   const confirm = useConfirm();
   const queryClient = useQueryClient();
 

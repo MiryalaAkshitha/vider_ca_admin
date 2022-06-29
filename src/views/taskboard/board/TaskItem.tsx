@@ -10,7 +10,9 @@ import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setTimerRunning } from "redux/reducers/globalSlice";
 import Timer from "./timer";
 
 type Props = {
@@ -18,9 +20,9 @@ type Props = {
 };
 
 function TaskItem({ data }: Props) {
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
   const [showTimer, setShowTimer] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timerId, setTimerId] = useState<number | null>(null);
@@ -32,6 +34,7 @@ function TaskItem({ data }: Props) {
 
     if (existingTimer) {
       setShowTimer(true);
+      dispatch(setTimerRunning(true));
       setTimerId(existingTimer?.id);
       setStartTime(existingTimer?.startTime);
     }
@@ -42,6 +45,7 @@ function TaskItem({ data }: Props) {
       snack.success("Timer Started");
       queryClient.invalidateQueries("tasks");
       setShowTimer(true);
+      dispatch(setTimerRunning(true));
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -53,6 +57,7 @@ function TaskItem({ data }: Props) {
       snack.success("Timer Ended");
       queryClient.invalidateQueries("tasks");
       setShowTimer(false);
+      dispatch(setTimerRunning(false));
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
