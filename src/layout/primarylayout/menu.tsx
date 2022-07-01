@@ -28,6 +28,11 @@ export const menuItems: Array<IMenuItem> = [
     path: "/clients",
     icon: icons.clients,
   },
+  {
+    title: "Leads",
+    path: "/leads",
+    icon: icons.clients,
+  },
   // {
   //   title: "Reports",
   //   path: "/reports",

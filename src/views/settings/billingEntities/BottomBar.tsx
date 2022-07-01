@@ -4,7 +4,7 @@ import { updateBillingEntity } from "api/services/billingEntity";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { GreyButton } from "views/taskboard/styles";
+import { GreyButton } from "views/tasks/styles";
 
 function BottomBar({ data, state, setState }) {
   const queryClient = useQueryClient();

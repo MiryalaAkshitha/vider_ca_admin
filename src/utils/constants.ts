@@ -107,6 +107,10 @@ export const clientMenu: Array<{ title: string; path: string }> = [
     path: "/profile",
   },
   {
+    title: "DSC Register",
+    path: "/dsc-register",
+  },
+  {
     title: "Credentials",
     path: "/credentials",
   },

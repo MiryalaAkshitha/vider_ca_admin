@@ -65,7 +65,6 @@ const Mails = loadable(
 const Statements = loadable(
   () => import("views/invoicing/clients/clientDashboard/Statements")
 );
-
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
@@ -76,7 +75,7 @@ const SignUp = loadable(() => import("pages/signup"));
 const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout/primarylayout"));
 const SettingsLayout = loadable(() => import("layout/settingslayout"));
-const TaskBoard = loadable(() => import("pages/taskboard"));
+const TaskBoard = loadable(() => import("pages/tasks"));
 const Categories = loadable(() => import("pages/settings/categories"));
 const BillingEntities = loadable(
   () => import("pages/settings/billing-entities")
@@ -92,24 +91,26 @@ const ViewUser = loadable(() => import("pages/settings/view-user"));
 const Teams = loadable(() => import("pages/settings/teams"));
 const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
 const Clients = loadable(() => import("pages/clients"));
-const Leads = loadable(() => import("views/clients/leads"));
-const DscRegister = loadable(() => import("views/clients/dscregister"));
+const Leads = loadable(() => import("pages/leads"));
+const DscRegister = loadable(() => import("pages/client-view/dsc-register"));
 const DscRegisterView = loadable(
-  () => import("views/clients/dscregister/view")
+  () => import("pages/client-view/view-dsc-register")
 );
-const ClientView = loadable(() => import("pages/clients/client-view"));
-const TasksView = loadable(() => import("pages/taskboard/task-view"));
-const Attachments = loadable(() => import("views/clients/clients/Attachments"));
-const KybInfo = loadable(() => import("views/clients/clients/KybInfo"));
-const Credentials = loadable(() => import("views/clients/clients/Credentials"));
-const Archives = loadable(() => import("views/clients/clients/Archives"));
-const ProfileDetails = loadable(
-  () => import("views/clients/clients/ProfileDetails")
+const ClientView = loadable(() => import("pages/client-view"));
+const TasksView = loadable(() => import("pages/task-view"));
+const Attachments = loadable(() => import("pages/client-view/attachments"));
+const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
+const Credentials = loadable(() => import("pages/client-view/credentials"));
+const Archives = loadable(() => import("pages/client-view/archives"));
+const ProfileDetails = loadable(() => import("pages/client-view/profile"));
+const KybFormDetails = loadable(
+  () => import("pages/client-view/kyb-form-details")
 );
-const KybFormDetails = loadable(() => import("pages/clients/kyb-form-details"));
-const EditKybDetails = loadable(() => import("pages/clients/kyb-form-edit"));
+const EditKybDetails = loadable(
+  () => import("pages/client-view/kyb-form-edit")
+);
 const KybFormAuditLog = loadable(
-  () => import("pages/clients/kyb-form-audit-log")
+  () => import("pages/client-view/kyb-form-audit-log")
 );
 const OrganizationProfile = loadable(
   () => import("pages/settings/organization-profile")
@@ -120,7 +121,7 @@ const AllClientsStorage = loadable(
   () => import("views/storage/AllClientsStorage")
 );
 const RecurringProfile = loadable(() => {
-  return import("views/clients/clients/RecurringProfile");
+  return import("pages/client-view/recurring-profile");
 });
 const Roles = loadable(() => {
   return import("pages/settings/roles-permissions");
@@ -138,12 +139,12 @@ const FormTemplates = loadable(() => import("pages/forms/FormTemplates"));
 const FormValidations = loadable(() => import("pages/forms/FormValidations"));
 const FormBuilder = loadable(() => import("pages/forms/FormBuilder"));
 const AccessForm = loadable(() => import("pages/forms/AccessForm"));
-const ViewIproForm = loadable(() => import("pages/taskboard/view-ipro"));
+const ViewIproForm = loadable(() => import("pages/task-view/view-ipro"));
 const ViewIproFormEntry = loadable(
-  () => import("pages/taskboard/view-ipro-entry")
+  () => import("pages/task-view/view-ipro-entry")
 );
-const IProAuditLog = loadable(() => import("pages/taskboard/ipro-audit-log"));
-const IProShareLink = loadable(() => import("pages/taskboard/ipro-share-link"));
+const IProAuditLog = loadable(() => import("pages/task-view/ipro-audit-log"));
+const IProShareLink = loadable(() => import("pages/task-view/ipro-share-link"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/services/add-service"));
 
@@ -232,6 +233,7 @@ function RoutesContainer() {
             />
             <Route path=":taskId" element={<TasksView />} />
           </Route>
+          <Route path="leads" element={<Leads />} />
           <Route path="clients">
             <Route index element={<Clients />} />
             <Route path=":clientId" element={<ClientView />}>
@@ -280,12 +282,11 @@ function RoutesContainer() {
                 }
               />
               <Route path="archives" element={<Archives />} />
+              <Route path="dsc-register">
+                <Route index element={<DscRegister />} />
+                <Route path=":dscId" element={<DscRegisterView />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="leads" element={<Leads />} />
-          <Route path="dsc-register">
-            <Route index element={<DscRegister />} />
-            <Route path=":dscId" element={<DscRegisterView />} />
           </Route>
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>

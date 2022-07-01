@@ -18,7 +18,7 @@ import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType, SubmitType } from "types";
-import { StyledChecklistContainer } from "views/taskboard/taskview/Milestones/styled";
+import { StyledChecklistContainer } from "views/taskview/Milestones/styled";
 
 type State = {
   name: string;

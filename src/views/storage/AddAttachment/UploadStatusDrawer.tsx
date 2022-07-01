@@ -13,7 +13,7 @@ import { resetUploads, selectStorage } from "redux/reducers/storageSlice";
 import {
   StyledFileTitle,
   StyledUploadStatusDrawer,
-} from "views/clients/clients/styles";
+} from "views/clients/styles";
 
 function UploadStatusDrawer() {
   const dispatch = useDispatch();

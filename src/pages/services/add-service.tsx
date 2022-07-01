@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Paper } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import {
   createService,
   getService,
@@ -23,7 +23,6 @@ import BasicDetails from "views/services/BasicDetails";
 import Checklists from "views/services/Checklists";
 import StageOfWork from "views/services/StagesOfWork";
 import Subtasks from "views/services/SubTasks";
-import { GreyButton } from "views/taskboard/styles";
 import Milestones from "views/services/Milestones";
 
 function AddService() {

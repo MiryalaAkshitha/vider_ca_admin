@@ -1,7 +1,7 @@
 import { DesktopDatePicker } from "@mui/lab";
 import { Button, Grid, TextField } from "@mui/material";
 import { useState } from "react";
-import ProfileImage from "views/clients/clients/ProfileDetails/ProfileImage";
+import ProfileImage from "views/client-view/ProfileDetails/ProfileImage";
 import ChangePassword from "./ChangePassword";
 import SectionWrapper from "./SectionWrapper";
 

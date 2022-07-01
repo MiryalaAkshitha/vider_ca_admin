@@ -17,7 +17,7 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType, SubmitType } from "types";
-import { StyledChecklistContainer } from "views/taskboard/taskview/Milestones/styled";
+import { StyledChecklistContainer } from "views/taskview/Milestones/styled";
 
 type State = {
   name: string;

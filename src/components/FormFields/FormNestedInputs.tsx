@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Controller } from "react-hook-form";
-import { reorder } from "views/taskboard/board/utils";
+import { reorder } from "views/tasks/board/utils";
 
 const FormNestedInputs = ({ control, name, label }: any) => {
   const handleChange = (field: any, index: number, key: string, value: any) => {

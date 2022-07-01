@@ -1,7 +1,7 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { GreyButton } from "views/taskboard/styles";
+import { GreyButton } from "views/tasks/styles";
 
 interface Props {
   data: any;

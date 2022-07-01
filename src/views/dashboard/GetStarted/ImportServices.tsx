@@ -22,7 +22,7 @@ import {
   StyledServiceDesc,
   StyledServiceItem,
   StyledServicesContainer,
-} from "views/taskboard/board/CreateTask/styles";
+} from "views/tasks/board/CreateTask/styles";
 
 interface Props extends DialogProps {
   successCb?: () => void;
@@ -78,11 +78,11 @@ function ImportServices({ open, setOpen, successCb }: Props) {
     }
 
     if (category) {
-      result = result?.filter((item) => item.categoryId == category);
+      result = result?.filter((item) => item.categoryId === +category);
     }
 
     if (subCategory) {
-      result = result?.filter((item) => item.subCategoryId == subCategory);
+      result = result?.filter((item) => item.subCategoryId === +subCategory);
     }
 
     return result;

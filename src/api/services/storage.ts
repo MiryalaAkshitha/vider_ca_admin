@@ -30,6 +30,11 @@ const getStorage = ({ queryKey }: any) => {
   return http.get("/storage", { params });
 };
 
+const getTotalStorage = ({ queryKey }: any) => {
+  const clientId = queryKey[1];
+  return http.get("/storage/total-storage", { params: { clientId } });
+};
+
 const searchStorage = (params: any) => {
   return http.get("/storage", { params });
 };
@@ -65,4 +70,5 @@ export {
   searchStorage,
   replaceFileOrFolder,
   keepBothFilesOrFolders,
+  getTotalStorage,
 };

@@ -2,7 +2,7 @@ import { MoreVert } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { StyledFile, StyledFileTitle } from "views/clients/clients/styles";
+import { StyledFile, StyledFileTitle } from "views/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 import { renderFile } from "./renderFile";
 

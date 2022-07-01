@@ -1,6 +1,5 @@
 import { Box } from "@mui/system";
 import { Grid, Typography, Paper } from "@mui/material";
-import { icons } from "assets";
 import { getTitle } from "utils";
 import { COLORS } from "utils/constants";
 import { getOrganizationDashboard } from "api/services/organization";
@@ -39,7 +38,7 @@ function TaskCategories() {
         <Typography variant="subtitle2">Task Numericals</Typography>
         <Grid container>
           {data?.data?.map((item: any, index: number) => (
-            <Grid item xs={6}>
+            <Grid item xs={6} key={index}>
               <ColorTitleCard color={COLORS[index]} title={item?.category} />
             </Grid>
           ))}

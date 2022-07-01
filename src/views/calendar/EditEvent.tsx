@@ -9,7 +9,6 @@ import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormCheckbox from "components/FormFields/FormCheckbox";
 import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
-import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -29,22 +28,13 @@ import {
 function EditEvent({ data, open, setOpen }) {
   const queryClient = useQueryClient();
 
-  const {
-    control,
-    watch,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const { control, watch, handleSubmit, reset } = useForm({
     defaultValues: addCalendarEventDefaultValues,
     mode: "onChange",
     resolver: yupResolver(AddCalendarEventSchema()),
   });
 
-  console.log(errors);
-
   useEffect(() => {
-    console.log(data);
     reset({
       ...data,
       client: data?.client
@@ -88,8 +78,8 @@ function EditEvent({ data, open, setOpen }) {
   let { mutate, isLoading: createLoading } = useMutation(updateEvent, {
     onSuccess: () => {
       snack.success("Event updated");
-      setOpen(false);
       queryClient.invalidateQueries("events");
+      setOpen(false);
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

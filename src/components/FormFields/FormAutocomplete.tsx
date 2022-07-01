@@ -32,6 +32,7 @@ function FormAutoComplete(props: Props) {
         render={({ field, fieldState: { error } }) => (
           <>
             <Autocomplete
+              id={name}
               size={size}
               multiple={multiple}
               disablePortal

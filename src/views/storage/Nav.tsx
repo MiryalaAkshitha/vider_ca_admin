@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { StyledClientFilterItem } from "views/taskboard/Filters/style";
+import { StyledClientFilterItem } from "views/tasks/Filters/style";
 
 function Nav() {
   const location = useLocation();

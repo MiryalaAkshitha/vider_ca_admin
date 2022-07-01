@@ -9,21 +9,19 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-  moveFields,
   selectForms,
   setAddPageOpen,
   setData,
-  setFields,
 } from "redux/reducers/formsSlice";
 import { ResType } from "types";
 import Fields from "views/forms/fields";
+import FormInfo from "views/forms/FormInfo";
 import AddPage from "views/forms/pages/AddPage";
 import EditPage from "views/forms/pages/EditPage";
-import Pages from "../../views/forms/pages";
-import { reorder } from "views/taskboard/board/utils";
 import availableFields from "views/forms/utils/availableFields";
 import { prepareField } from "views/forms/utils/prepareField";
-import FormInfo from "views/forms/FormInfo";
+import { reorder } from "views/tasks/board/utils";
+import Pages from "../../views/forms/pages";
 
 const FormBuilder = () => {
   const params = useParams();

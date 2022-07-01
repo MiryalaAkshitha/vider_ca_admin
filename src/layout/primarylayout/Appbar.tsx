@@ -2,7 +2,6 @@ import {
   AddCircleOutlineRounded,
   NotificationsOutlined,
 } from "@mui/icons-material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { AppBar, Avatar, IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -15,9 +14,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectTitle } from "redux/reducers/globalSlice";
 import AddEvent from "views/calendar/AddEvent";
-import AddClient from "views/clients/clients/AddClient";
+import AddClient from "views/clients/AddClient";
 import AddMember from "views/settings/users/AddMember";
-import CreateTask from "views/taskboard/board/CreateTask";
+import CreateTask from "views/tasks/board/CreateTask";
 import AccountMenu from "./AccountMenu";
 import GlobalAdd from "./GlobalAdd";
 import Notifications from "./Notifications";

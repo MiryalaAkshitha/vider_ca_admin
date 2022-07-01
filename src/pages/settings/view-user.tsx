@@ -3,10 +3,7 @@ import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userProfileMenu } from "utils/constants";
-import {
-  StyledProfileNav,
-  StyledProfileNavItem,
-} from "views/clients/clients/styles";
+import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import Expenditure from "views/settings/users/Expenditure";
 import Tasks from "views/settings/users/Tasks";
 import UserDetails from "views/settings/users/UserDetails";

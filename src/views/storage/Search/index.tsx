@@ -7,7 +7,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useParams } from "react-router-dom";
-import { StyledSearchList } from "views/clients/clients/styles";
+import { StyledSearchList } from "views/clients/styles";
 import SearchFileItem from "./SearchFileItem";
 import SearchFolderItem from "./SearchFolderItem";
 import SortBy from "./SortBy";

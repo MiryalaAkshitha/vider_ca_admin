@@ -7,7 +7,6 @@ import {
   Typography,
 } from "@mui/material";
 import { getDefaultForms, importForms } from "api/services/forms";
-import { importServices } from "api/services/services";
 import DialogWrapper from "components/DialogWrapper";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
@@ -19,7 +18,7 @@ import { DialogProps, ResType } from "types";
 import {
   StyledServiceItem,
   StyledServicesContainer,
-} from "views/taskboard/board/CreateTask/styles";
+} from "views/tasks/board/CreateTask/styles";
 
 interface Props extends DialogProps {
   successCb?: () => void;

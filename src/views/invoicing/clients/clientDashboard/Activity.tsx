@@ -13,8 +13,7 @@ import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import moment from "moment";
 import { getTitle } from "utils";
-import { StyledTimelineIcon } from "views/clients/clients/styles";
-
+import { StyledTimelineIcon } from "views/clients/styles";
 
 function Activity() {
   const params = useParams();

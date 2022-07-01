@@ -5,7 +5,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { StyledFolder } from "views/clients/clients/styles";
+import { StyledFolder } from "views/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 import SameFileOrFolderWarning from "./SameFileOrFolderWarning";
 

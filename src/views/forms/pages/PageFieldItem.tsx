@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectForms, setFocused } from "redux/reducers/formsSlice";
-import { StyledDraggebleFormField } from "views/taskboard/styles";
+import { StyledDraggebleFormField } from "views/tasks/styles";
 import FieldProperties from "../fields/FieldProperties";
 import RenderField from "../utils/RenderField";
 

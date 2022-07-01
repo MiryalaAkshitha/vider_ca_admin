@@ -20,7 +20,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { formattedDatetime, getTitle } from "utils";
-import RejectExpenditureDialog from "views/taskboard/taskview/expenditure/RejectExpenditureDialog";
+import RejectExpenditureDialog from "views/taskview/expenditure/RejectExpenditureDialog";
 
 function Expenditure() {
   const params = useParams();

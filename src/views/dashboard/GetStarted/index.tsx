@@ -5,7 +5,7 @@ import { icons } from "assets";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import ImportClients from "views/clients/clients/ImportClients";
+import ImportClients from "views/clients/ImportClients";
 import AddMember from "views/settings/users/AddMember";
 import GetStartedCard from "./GetStartedCard";
 import ImportServices from "./ImportServices";
