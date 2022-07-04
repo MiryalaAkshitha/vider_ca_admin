@@ -180,26 +180,29 @@ function Clients() {
 }
 
 const defaultColumns: Array<ColumnType> = [
-  { key: "displayName", title: "Display Name" },
+  { key: "displayName", title: "Display Name", default: true },
   { key: "tradeName", title: "Trade Name", hide: true },
   { key: "clientId", title: "Client Id", hide: true },
   {
     key: "category",
     title: "Category",
     render: (rowData) => getTitle(rowData?.category),
+    default: true,
   },
   {
     key: "subCategory",
     title: "Sub Category",
     render: (rowData) => getTitle(rowData?.subCategory),
+    default: true,
   },
-  { key: "mobileNumber", title: "Mobile Number" },
-  { key: "email", title: "Email" },
+  { key: "mobileNumber", title: "Mobile Number", default: true },
+  { key: "email", title: "Email", default: true },
   { key: "panNumber", title: "Pan Number", hide: true },
   { key: "authorizedPerson", title: "Authorized Person", hide: true },
   {
     key: "active",
     title: "Status",
+    default: true,
     render: (rowData) => {
       return (
         <div>

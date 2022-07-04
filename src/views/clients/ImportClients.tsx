@@ -67,7 +67,7 @@ function ImportClients({ open, setOpen, successCb }: Props) {
         </Typography>
         <a
           style={{ textDecoration: "none" }}
-          href="https://jss-vider.s3.ap-south-1.amazonaws.com/sampleclients.xlsx"
+          href="https://jss-vider.s3.ap-south-1.amazonaws.com/sample-import.xlsx"
         >
           <Typography variant="caption" color="secondary">
             Download Sample File

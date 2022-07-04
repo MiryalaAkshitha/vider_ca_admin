@@ -34,15 +34,25 @@ export const StyledFile = styled("div")<{ dragging: number }>(
     border: `1px solid ${dragging ? "red" : "#DDDDDD"}`,
     borderRadius: "4px",
     overflow: "hidden",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   })
 );
 
 export const StyledFileTitle = styled(Typography)(() => ({
-  flex: 1,
   overflow: "hidden",
-  width: "100%",
-  whiteSpace: "nowrap",
   textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+}));
+
+export const StyledSingleLineContainer = styled("div")(() => ({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  WebkitLineClamp: 1,
+  lineClamp: 1,
+  WebkitBoxOrient: "vertical",
 }));
 
 export const StyledFolder = styled("div")<{

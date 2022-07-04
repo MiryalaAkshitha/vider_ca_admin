@@ -52,6 +52,9 @@ function Files(props: Props) {
         {view === "list" && (
           <Table
             loading={false}
+            onRowClick={(row: any) => {
+              window.open(row?.fileUrl);
+            }}
             columns={[
               {
                 title: "File Name",
@@ -81,6 +84,7 @@ function Files(props: Props) {
                   return (
                     <IconButton
                       onClick={(e) => {
+                        e.stopPropagation();
                         setSelectedFile(item);
                         setContextMenu(
                           contextMenu === null

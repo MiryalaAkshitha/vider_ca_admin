@@ -1,8 +1,8 @@
 import { MoreVert } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { StyledFile, StyledFileTitle } from "views/clients/styles";
+import { StyledFile, StyledSingleLineContainer } from "views/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 import { renderFile } from "./renderFile";
 
@@ -56,22 +56,27 @@ function File(props: Props) {
       >
         <Box
           width="100%"
-          height="200px"
           display="flex"
+          flex={1}
+          minHeight="200px"
           justifyContent="center"
           alignItems="center"
         >
           {renderFile(data)}
         </Box>
-        <Box
-          bgcolor="#FBF9F2"
-          p={1}
-          display="flex"
-          justifyContent="space-between"
-          gap={1}
-          alignItems="center"
-        >
-          <StyledFileTitle variant="body2">{data?.name}</StyledFileTitle>
+        <Box bgcolor="#FBF9F2" p={1} display="flex" gap={1} alignItems="center">
+          <Box sx={{ width: "100%", flex: 1 }}>
+            <StyledSingleLineContainer>
+              <Typography variant="body2">{data?.name}</Typography>
+            </StyledSingleLineContainer>
+            {data?.user && (
+              <StyledSingleLineContainer>
+                <Typography variant="caption" color="rgba(0,0,0,0.4)">
+                  Uploaded by {data?.user?.fullName}
+                </Typography>
+              </StyledSingleLineContainer>
+            )}
+          </Box>
           <IconButton size="small" onClick={handleContextMenu}>
             <MoreVert />
           </IconButton>

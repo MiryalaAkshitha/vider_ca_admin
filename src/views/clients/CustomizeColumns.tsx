@@ -41,6 +41,7 @@ function CustomizeColumns(props: ClientFilterProps) {
         {state.map((column: ColumnType, index: number) => (
           <Grid item xs={6} key={index}>
             <FormControlLabel
+              disabled={column.default}
               control={
                 <Checkbox
                   onChange={() => handleChange(index)}

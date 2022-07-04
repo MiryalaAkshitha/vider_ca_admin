@@ -80,6 +80,7 @@ function TerminatedTasks({ filters }: Props) {
                 <Members
                   data={v?.members?.map((item: any) => ({
                     title: item?.fullName,
+                    src: item?.imageUrl,
                   }))}
                 />
               ),

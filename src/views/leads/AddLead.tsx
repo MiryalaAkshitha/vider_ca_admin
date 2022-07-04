@@ -32,9 +32,8 @@ let initialState = {
 
 function AddLead({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-
   const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
-  let formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {

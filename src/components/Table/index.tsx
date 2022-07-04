@@ -15,6 +15,7 @@ export type ColumnType = {
   title: string;
   render?: (item: any) => React.ReactElement | string | null;
   hide?: boolean;
+  default?: boolean;
 };
 
 type PaginationType = {
