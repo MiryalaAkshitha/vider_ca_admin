@@ -15,6 +15,7 @@ const Esign = () => {
   const { mutate, error } = useMutation(signField, {
     onSuccess: (res) => {
       let result = res.data;
+      console.log(result);
       let form = document.createElement("form");
       form.action = process.env.REACT_APP_EMSIGNER_URL || "";
       form.method = "POST";

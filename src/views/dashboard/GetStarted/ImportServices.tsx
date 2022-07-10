@@ -78,11 +78,11 @@ function ImportServices({ open, setOpen, successCb }: Props) {
     }
 
     if (category) {
-      result = result?.filter((item) => item.categoryId === +category);
+      result = result?.filter((item) => item.category?.id === +category);
     }
 
     if (subCategory) {
-      result = result?.filter((item) => item.subCategoryId === +subCategory);
+      result = result?.filter((item) => item.subCategory?.id === +subCategory);
     }
 
     return result;
@@ -197,8 +197,8 @@ function ImportServices({ open, setOpen, successCb }: Props) {
                   <StyledServiceItem>
                     <Box>
                       <Typography variant="caption" color="rgba(0,0,0,0.6)">
-                        {item?.category}{" "}
-                        {item?.subCategory && `-- ${item?.subCategory}`}
+                        {item?.category?.name}{" "}
+                        {item?.subCategory && `-- ${item?.subCategory?.name}`}
                       </Typography>
                       <Typography variant="subtitle2">{item?.name}</Typography>
                       <Typography color="rgba(0,0,0,0.6)" variant="body2">
@@ -211,8 +211,8 @@ function ImportServices({ open, setOpen, successCb }: Props) {
                     </Box>
                     <Box>
                       <Checkbox
-                        onChange={() => handleChange(item?._id)}
-                        checked={selectedServices.includes(item?._id)}
+                        onChange={() => handleChange(item?.id)}
+                        checked={selectedServices.includes(item?.id)}
                       />
                     </Box>
                   </StyledServiceItem>

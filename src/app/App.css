@@ -108,3 +108,8 @@ input::placeholder {
 .Toastify__toast{
   font-family: muli_medium !important;
 }
+
+
+.container{
+  max-width: 1200px;
+}

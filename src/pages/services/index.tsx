@@ -47,11 +47,13 @@ function Services() {
     }
 
     if (categoryId) {
-      result = result?.filter((item) => item.categoryId === categoryId);
+      result = result?.filter((item) => item.category?.id === +categoryId);
     }
 
     if (subCategoryId) {
-      result = result?.filter((item) => item.subCategoryId === subCategoryId);
+      result = result?.filter(
+        (item) => item.subCategory?.id === +subCategoryId
+      );
     }
 
     return result;

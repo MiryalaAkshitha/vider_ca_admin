@@ -22,12 +22,12 @@ import { DialogProps, InputChangeType, SubmitType } from "types";
 
 let initialState = {
   name: "",
-  type: "Stage of work",
+  type: "STAGE_OF_WORK",
   description: "",
   referenceNumber: false,
   extraAttributes: [
     {
-      type: "Reference Number",
+      type: "REFERENCE_NUMBER",
       title: "Reference Number",
       value: "",
     },
@@ -48,7 +48,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
       extraAttributes: [
         ...state.extraAttributes,
         {
-          type: "Reference Number",
+          type: "REFERENCE_NUMBER",
           title: "",
           value: "",
         },
@@ -83,12 +83,12 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
             value={state.type}
           >
             <FormControlLabel
-              value="Stage of work"
+              value="STAGE_OF_WORK"
               control={<Radio />}
               label="Stage of work"
             />
             <FormControlLabel
-              value="Deliverables"
+              value="DELIVERABLES"
               control={<Radio />}
               label="Deliverables"
             />
@@ -118,7 +118,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
           label="Description"
           required
         />
-        {state.type === "Stage of work" && (
+        {state.type === "STAGE_OF_WORK" && (
           <FormControlLabel
             sx={{ mt: 1 }}
             label="Does this have a reference number"
@@ -134,7 +134,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
             }
           />
         )}
-        {state.type === "Deliverables" && (
+        {state.type === "DELIVERABLES" && (
           <Box mt={2}>
             <Typography variant="body2" gutterBottom>
               Add attachments or reference numbers
@@ -154,10 +154,10 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
                     size="small"
                     value={item.type}
                   >
-                    <MenuItem value="Reference Number">
+                    <MenuItem value="REFERENCE_NUMBER">
                       Reference Number
                     </MenuItem>
-                    <MenuItem value="Attachment">Attachment</MenuItem>
+                    <MenuItem value="ATTACHMENT">Attachment</MenuItem>
                   </TextField>
                   <TextField
                     onChange={(e: InputChangeType) => {

@@ -36,7 +36,7 @@ function ServiceCard({ data }) {
             confirm({
               msg: "Are you sure you want to delete this service?",
               action: () => {
-                mutate({ id: data?._id });
+                mutate({ id: data?.id });
               },
             });
           },
@@ -46,9 +46,17 @@ function ServiceCard({ data }) {
   };
 
   return (
-    <CustomCard sx={{ position: "relative" }}>
+    <CustomCard
+      sx={{
+        position: "relative",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="caption" color="rgba(0,0,0,0.6)">
-        {data?.category} {data?.subCategory && `-- ${data?.subCategory}`}
+        {data?.category?.name}{" "}
+        {data?.subCategory && `-- ${data?.subCategory?.name}`}
       </Typography>
       <Box display="flex" gap={1} alignItems="center">
         <Typography sx={{ flex: 1 }} color="primary" variant="subtitle2">
@@ -75,7 +83,7 @@ function ServiceCard({ data }) {
       <Box textAlign="right">
         <Button
           onClick={() => {
-            navigate(`/services/add/?serviceId=${data?._id}`);
+            navigate(`/services/add/?serviceId=${data?.id}`);
           }}
           endIcon={<ArrowRightAltOutlined />}
         >

@@ -5,10 +5,8 @@ import { IAddService } from "./types";
 const initialState: IAddService = {
   name: "",
   description: "",
-  category: "",
-  subCategory: "",
-  categoryId: null,
-  subCategoryId: null,
+  category: null,
+  subCategory: null,
   hourlyPrice: "",
   totalPrice: "",
   checklists: [],
@@ -25,24 +23,20 @@ export const addServiceSlice = createSlice({
       const { payload } = action;
       state.name = payload.name;
       state.description = payload.description || "";
-      state.category = payload.category || "";
-      state.subCategory = payload.subCategory || "";
-      state.categoryId = payload.categoryId;
-      state.subCategoryId = payload.subCategoryId || "";
+      state.category = payload.category?.id || null;
+      state.subCategory = payload.subCategory?.id || null;
       state.hourlyPrice = payload.hourlyPrice || "";
       state.totalPrice = payload.totalPrice || "";
       state.checklists = payload.checklists;
       state.milestones = payload.milestones;
-      state.stageOfWork = payload.stageOfWork;
+      state.stageOfWork = payload.stageOfWorks;
       state.subTasks = payload.subTasks;
     },
     resetData: (state: IAddService) => {
       state.name = "";
       state.description = "";
-      state.category = "";
-      state.subCategory = "";
-      state.categoryId = null;
-      state.subCategoryId = null;
+      state.category = null;
+      state.subCategory = null;
       state.hourlyPrice = "";
       state.totalPrice = "";
       state.checklists = [];

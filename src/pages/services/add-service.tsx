@@ -119,39 +119,6 @@ function AddService() {
       <StageOfWork />
       <Divider sx={{ my: 5 }} />
       <Subtasks />
-      {/* <Paper
-        elevation={3}
-        sx={{
-          ml: -3,
-          position: "fixed",
-          right: 0,
-          bottom: 0,
-          width: "100%",
-          zIndex: "100",
-          transition: "0.8s",
-        }}
-      >
-        <Box p={2} display="flex" justifyContent="flex-end" gap={2}>
-          <GreyButton
-            onClick={() => {
-              navigate("/services");
-            }}
-            size="large"
-            color="secondary"
-            variant="contained"
-          >
-            Cancel
-          </GreyButton>
-          <Button
-            onClick={handleSubmit}
-            size="large"
-            color="secondary"
-            variant="contained"
-          >
-            Submit
-          </Button>
-        </Box>
-      </Paper> */}
     </Box>
   );
 }

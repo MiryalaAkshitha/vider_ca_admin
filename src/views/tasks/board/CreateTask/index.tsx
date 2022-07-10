@@ -62,7 +62,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
     data.subCategory = parseInt(data.subCategory);
     data.taskLeader = parseInt(data.taskLeader);
     data.feeAmount = parseFloat(data?.feeAmount);
-    data.service = data?.service?._id;
+    data.service = data?.service?.id;
     data.dueDay = parseInt(data.dueDay?.value);
     data.recurringEndDate = data?.neverExpires ? null : data.recurringEndDate;
     mutate(data);

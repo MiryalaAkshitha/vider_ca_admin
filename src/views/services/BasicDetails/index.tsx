@@ -25,7 +25,7 @@ function BasicDetails() {
   const { data, isLoading }: ResType = useQuery("categories", getCategories);
 
   const subCategories = data?.data?.find(
-    (item: any) => item.id === state.categoryId
+    (item: any) => item.id === state.category
   )?.subCategories;
 
   const onChange = (e: any) => {
@@ -35,30 +35,6 @@ function BasicDetails() {
         value: e.target.value,
       })
     );
-
-    if (e.target.name === "categoryId") {
-      let category = data?.data?.find(
-        (category: any) => category.id === e.target.value
-      );
-      dispatch(
-        handleChange({
-          name: "category",
-          value: category?.name,
-        })
-      );
-    }
-
-    if (e.target.name === "subCategoryId") {
-      let category = subCategories?.find(
-        (category: any) => category.id === e.target.value
-      );
-      dispatch(
-        handleChange({
-          name: "subCategory",
-          value: category?.name,
-        })
-      );
-    }
   };
 
   if (isLoading) return <Loader />;
@@ -74,8 +50,8 @@ function BasicDetails() {
             Select Category
           </Typography>
           <TextField
-            name="categoryId"
-            value={state.categoryId}
+            name="category"
+            value={state.category}
             onChange={onChange}
             fullWidth
             size="small"
@@ -94,8 +70,8 @@ function BasicDetails() {
               Select Sub Category
             </Typography>
             <TextField
-              value={state.subCategoryId}
-              name="subCategoryId"
+              value={state.subCategory}
+              name="subCategory"
               onChange={onChange}
               fullWidth
               size="small"

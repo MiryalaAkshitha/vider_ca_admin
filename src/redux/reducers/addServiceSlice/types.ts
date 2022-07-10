@@ -55,10 +55,8 @@ export type DescriptionItem = {
 export interface IAddService {
   name: string;
   description: string;
-  category: string;
-  subCategory: string;
-  categoryId: string | null;
-  subCategoryId: string | null;
+  category: number | null;
+  subCategory: number | null;
   hourlyPrice: string;
   totalPrice: string;
   checklists: Array<any>;
