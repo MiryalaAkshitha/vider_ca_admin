@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { io } from "socket.io-client";
-import "./App.css";
+import "styles/app.css";
 import useNotifications from "./NotificationWrapper";
 import RoutesContainer from "./RoutesContainer";
 

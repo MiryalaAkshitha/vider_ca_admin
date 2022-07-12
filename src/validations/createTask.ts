@@ -1,5 +1,5 @@
 import moment from "moment";
-import { RecurringFrequency } from "utils/constants";
+import { RecurringFrequency } from "data/constants";
 import { array, boolean, date, mixed, object, ref, string } from "yup";
 
 let createTaskDefaultValues = {

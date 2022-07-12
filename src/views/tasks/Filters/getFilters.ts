@@ -1,4 +1,4 @@
-import { DateFilters, PriorityEnum, TaskStatus } from "utils/constants";
+import { DateFilters, PriorityEnum, TaskStatus } from "data/constants";
 
 type Filter = {
   title: string;

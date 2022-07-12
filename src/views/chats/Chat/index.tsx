@@ -1,5 +1,5 @@
-import { MaximizeOutlined } from "@mui/icons-material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import ZoomOutMapRoundedIcon from "@mui/icons-material/ZoomOutMapRounded";
 import { Box, IconButton, Typography } from "@mui/material";
 import { readMessages } from "api/services/chats";
 import { socket } from "app";
@@ -11,7 +11,6 @@ import { addMessage, selectChats } from "redux/reducers/chatsSlice";
 import { StyledChatHeader, StyledRecentChatsContainer } from "../styles";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
-import ZoomOutMapRoundedIcon from "@mui/icons-material/ZoomOutMapRounded";
 
 interface Props {
   onClose?: () => void;

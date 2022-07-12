@@ -1,5 +1,5 @@
 import { Grid, Box, MenuItem, TextField } from "@mui/material";
-import { ORGANIZATION_CATEGORIES, ORGANIZATION_TYPES } from "utils/constants";
+import { ORGANIZATION_CATEGORIES, ORGANIZATION_TYPES } from "data/constants";
 import SectionWrapper from "../organization/SectionWrapper";
 
 const BasicDetails = ({ state, setState }) => {

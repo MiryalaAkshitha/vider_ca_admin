@@ -5,7 +5,7 @@ import DrawerWrapper from "components/DrawerWrapper";
 import { useEffect, useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { DataResponse, DialogProps } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { CLIENT_CATEGORIES } from "data/constants";
 
 interface ClientFilterProps extends DialogProps {
   filters: any;

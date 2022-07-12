@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { DialogProps, ResType } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { CLIENT_CATEGORIES } from "data/constants";
 import {
   createClientDefaultValues,
   CreateClientSchema,

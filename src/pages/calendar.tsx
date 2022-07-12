@@ -13,7 +13,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import AddEvent from "views/calendar/AddEvent";
 import EventIndication from "views/calendar/EventIndication";
 import ViewEvent from "views/calendar/ViewEvent";

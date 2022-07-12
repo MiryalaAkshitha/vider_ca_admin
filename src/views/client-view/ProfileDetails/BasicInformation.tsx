@@ -4,10 +4,12 @@ import { getUsers } from "api/services/users";
 import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { CLIENT_CATEGORIES } from "data/constants";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 
 const BasicInformation = ({ data, setState }) => {
+  const { data: users }: ResType = useQuery("users", getUsers);
+
   const handleChange = (e: any) => {
     setState({
       ...data,
@@ -26,8 +28,6 @@ const BasicInformation = ({ data, setState }) => {
   let subCategories = CLIENT_CATEGORIES.find(
     (item) => item.value === data?.category
   )?.subCategories;
-
-  const { data: users }: ResType = useQuery("users", getUsers);
 
   return (
     <Box mt={2}>

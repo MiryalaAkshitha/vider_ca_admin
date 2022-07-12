@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { userProfileMenu } from "utils/constants";
+import { userProfileMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import Expenditure from "views/settings/users/Expenditure";
 import Tasks from "views/settings/users/Tasks";

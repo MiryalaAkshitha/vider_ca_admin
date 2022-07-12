@@ -21,7 +21,6 @@ interface Props extends DialogProps {
 
 function EditPassword({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-
   const [state, setState] = useState<StateProps>({
     website: "",
     websiteUrl: "",

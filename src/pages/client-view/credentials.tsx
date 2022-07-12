@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import CredentialsCard from "views/client-view/Credentials/CredentialsCard";
 import AddCredentials from "views/client-view/Credentials/AddCredentials";
 

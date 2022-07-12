@@ -8,7 +8,7 @@ import { snack } from "components/toast";
 import { bulkDelete, bulkUpdate } from "api/services/client";
 import { useMutation, useQueryClient } from "react-query";
 import ValidateAccess from "components/ValidateAccess";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 
 interface Props {
   anchorEl: HTMLElement | null;
@@ -17,13 +17,13 @@ interface Props {
   clearSelection: () => void;
 }
 
-function Actions({ anchorEl, setAnchorEl, selected, clearSelection }: Props) {
+type Type = HTMLElement | null;
+
+function Actions(props: Props) {
+  const { anchorEl, setAnchorEl, selected, clearSelection } = props;
   const queryClient = useQueryClient();
   const confirm = useConfirm();
-
-  const [nestedAnchorEl, setNestedAnchorEl] = useState<HTMLElement | null>(
-    null
-  );
+  const [nestedAnchorEl, setNestedAnchorEl] = useState<Type>(null);
 
   const { mutate } = useMutation(bulkDelete, {
     onSuccess: () => {

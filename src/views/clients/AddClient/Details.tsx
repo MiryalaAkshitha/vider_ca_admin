@@ -12,7 +12,6 @@ import { useState } from "react";
 
 function CompanyDetails({ control, watch, setData }) {
   const [isloading, setLoading] = useState(false);
-
   const panValue = watch("panNumber");
   const gstValue = watch("gstNumber");
 

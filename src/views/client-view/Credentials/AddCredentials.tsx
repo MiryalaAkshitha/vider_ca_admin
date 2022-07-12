@@ -18,7 +18,6 @@ interface StateProps {
 
 function AddPassword({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-
   const params = useParams();
   const [state, setState] = useState<StateProps>({
     website: "",

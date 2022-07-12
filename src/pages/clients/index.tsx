@@ -15,7 +15,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle } from "utils";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import Actions from "views/clients/Actions";
 import AddClient from "views/clients/AddClient";
 import CustomizeColumns from "views/clients/CustomizeColumns";

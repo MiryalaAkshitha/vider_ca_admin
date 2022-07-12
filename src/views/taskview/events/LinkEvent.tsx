@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { getTitle } from "utils";
-import { Reminders } from "utils/constants";
+import { Reminders } from "data/constants";
 import { linkEventDefaultValues, LinkEventSchema } from "validations/addEvent";
 
 function LinkEvent({ open, setOpen }: DialogProps) {

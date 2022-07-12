@@ -8,7 +8,7 @@ import _ from "lodash";
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { CLIENT_CATEGORIES } from "data/constants";
 
 interface StateProps {
   category: string;

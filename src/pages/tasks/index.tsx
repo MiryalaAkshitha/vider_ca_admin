@@ -10,7 +10,7 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { ResType, ViewType } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import Board from "views/tasks/board";
 import CreateTask from "views/tasks/board/CreateTask";
 import Filters from "views/tasks/Filters";

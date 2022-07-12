@@ -1,7 +1,8 @@
 import { DesktopDatePicker } from "@mui/lab";
 import { TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { getFieldSize } from "utils";
+import { getFieldSize } from "utils/getFieldSize";
+
 interface Props {
   label?: string;
   name: string;

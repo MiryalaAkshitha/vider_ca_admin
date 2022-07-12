@@ -11,10 +11,10 @@ interface Props extends DialogProps {
   dscRegister: number;
 }
 
-function IssueOrReceive({ open, setOpen, type, dscRegister }: Props) {
+function IssueOrReceive(props: Props) {
+  const { open, setOpen, type, dscRegister } = props;
   const queryClient = useQueryClient();
-
-  const [personName, setPersonName] = useState("");
+  const [personName, setPersonName] = useState<string>("");
 
   const { mutate } = useMutation(issueOrReceiveDsc, {
     onSuccess: (res) => {

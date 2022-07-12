@@ -11,7 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { DialogProps, ResType, SubmitType } from "types";
 import { getTitle } from "utils";
-import { PriorityEnum } from "utils/constants";
+import { PriorityEnum } from "data/constants";
 
 interface StateProps {
   name: string;

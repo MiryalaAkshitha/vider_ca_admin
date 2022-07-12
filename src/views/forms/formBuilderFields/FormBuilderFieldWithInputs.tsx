@@ -1,7 +1,7 @@
 import { Box, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
-import countries from "utils/countries";
+import countries from "data/countries";
 import { FormBuilderInputTypes } from "../utils/renderFieldsComponent";
 
 interface Props {

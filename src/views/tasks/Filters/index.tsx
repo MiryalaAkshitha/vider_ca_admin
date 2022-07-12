@@ -10,7 +10,7 @@ import { ViewType } from "types";
 import AllFiltersDialog from "./AllFiltersDialog";
 import AppliedFilters from "./ApplidedFilters";
 import ClientFilter from "./ClientFilter";
-import { StyledTasksFilterContainer } from "./style";
+import { StyledTasksFilterContainer } from "./styles";
 
 function Filters() {
   const dispatch = useDispatch();

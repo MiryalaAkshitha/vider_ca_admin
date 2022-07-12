@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { Grid, Typography, Paper } from "@mui/material";
 import { getTitle } from "utils";
-import { COLORS } from "utils/constants";
+import { COLORS } from "data/constants";
 import { getOrganizationDashboard } from "api/services/organization";
 import { ResType } from "types";
 import { useQuery } from "react-query";

@@ -8,7 +8,7 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
-import { LICENSE_TYPES } from "utils/constants";
+import { LICENSE_TYPES } from "data/constants";
 
 interface IProps extends DialogProps {
   data: any;

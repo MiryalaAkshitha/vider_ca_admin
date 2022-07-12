@@ -18,7 +18,6 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 function PagesHeader() {
   const menu = useMenu();
-
   const queryClient = useQueryClient();
   const params = useParams();
   const confirm = useConfirm();

@@ -26,7 +26,7 @@ interface Props extends DialogProps {
 
 function EditDscRegister({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<StateProps>({
     client: null,
     holderName: "",
@@ -37,7 +37,6 @@ function EditDscRegister({ open, setOpen, data }: Props) {
     mobileNumber: "",
     holderDesignation: "",
   });
-  let formRef = useRef<HTMLFormElement>(null);
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
     ["clients", {}],

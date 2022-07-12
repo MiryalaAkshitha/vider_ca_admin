@@ -1,5 +1,4 @@
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import { Box, Divider, IconButton, List, Typography } from "@mui/material";
 import { getChatRooms } from "api/services/chats";
 import Loader from "components/Loader";

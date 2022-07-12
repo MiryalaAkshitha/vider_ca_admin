@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
-import { Reminders } from "utils/constants";
+import { Reminders } from "data/constants";
 import {
   addCalendarEventDefaultValues,
   AddCalendarEventSchema,

@@ -4,7 +4,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { handleRemove, selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { getTitle } from "utils";
-import { StyledAppliedFilterItem } from "./style";
+import { StyledAppliedFilterItem } from "./styles";
 
 function AppliedFilters() {
   const { appliedFilters } = useSelector(selectTaskBoard);

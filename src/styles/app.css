@@ -1,4 +1,4 @@
-/* GLOBAL */
+/*** GLOBAL ***/
 html,
 body {
   padding: 0;
@@ -23,7 +23,7 @@ body {
   src: url(../assets/fonts/Muli-Bold.ttf);
 }
 
-/* CUSTOM  SCROLLBAR */
+/*** CUSTOM  SCROLLBAR ***/
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -71,7 +71,7 @@ input::placeholder {
   text-transform: capitalize !important;
 }
 
-/* MENTIONS */
+/*** MENTIONS ***/
 .mentions_input {
   font-family: muli_regular !important;
 }
@@ -107,9 +107,4 @@ input::placeholder {
 }
 .Toastify__toast{
   font-family: muli_medium !important;
-}
-
-
-.container{
-  max-width: 1200px;
 }

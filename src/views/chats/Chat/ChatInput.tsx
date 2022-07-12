@@ -12,11 +12,9 @@ import { StyledChatInput } from "../styles";
 function ChatInput() {
   const userId = localStorage.getItem("userId") || "";
   const [message, setMessage] = useState("");
-  const { roomId, members, type } = useSelector(selectChats);
+  const { roomId } = useSelector(selectChats);
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
-
-  let user = members?.find((member: any) => member.id === +userId);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files?.[0];
@@ -28,7 +26,6 @@ function ChatInput() {
     const formData = new FormData();
     formData.append("file", file);
     const res: any = await http.post("/common/upload", formData);
-    console.log(file.type);
     socket.emit("message", {
       message,
       file: res.data.Location,

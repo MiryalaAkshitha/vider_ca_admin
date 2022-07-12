@@ -10,7 +10,7 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import AddCategory from "views/settings/categories/AddCategory";
 import CategoryCard from "views/settings/categories/CategoryCard";
 

@@ -6,7 +6,7 @@ import { icons } from "assets";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { covertToKb, fileSizeInKb, getFileSize } from "utils";
-import { FILETYPES } from "utils/constants";
+import { FILETYPES } from "data/constants";
 
 const UploadContainer = styled("div")(() => ({
   display: "flex",

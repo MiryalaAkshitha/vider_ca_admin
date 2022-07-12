@@ -1,6 +1,6 @@
 import { http } from "api/http";
 import { QueryType } from "api/types";
-import { TaskStatus } from "utils/constants";
+import { TaskStatus } from "data/constants";
 
 type UpdateStatus = {
   id: number;

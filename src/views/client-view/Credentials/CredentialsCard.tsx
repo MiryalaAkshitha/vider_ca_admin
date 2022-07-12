@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditCredentials from "./EditCredentials";
 import ValidateAccess from "components/ValidateAccess";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 
 type Props = {
   data: any;
@@ -25,7 +25,6 @@ function PasswordCard({ data }: Props) {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [show, setShow] = useState(false);
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editOpen, setEditOpen] = useState(false);
 

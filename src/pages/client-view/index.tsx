@@ -4,7 +4,7 @@ import RouterLink from "components/RouterLink";
 import ClientDataProvider, { ClientDataContext } from "context/ClientData";
 import useTitle from "hooks/useTitle";
 import { Outlet, useLocation, useParams } from "react-router-dom";
-import { clientMenu } from "utils/constants";
+import { clientMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 
 function ClientProfile() {

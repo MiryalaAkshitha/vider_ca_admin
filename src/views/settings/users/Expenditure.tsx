@@ -19,7 +19,8 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import { formattedDatetime, getTitle } from "utils";
+import { getTitle } from "utils";
+import { formattedDatetime } from "utils/formattedDateTime";
 import RejectExpenditureDialog from "views/taskview/expenditure/RejectExpenditureDialog";
 
 function Expenditure() {

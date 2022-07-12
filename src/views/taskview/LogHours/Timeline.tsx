@@ -3,7 +3,7 @@ import { useTaskData } from "context/TaskData";
 import moment from "moment";
 import { useState } from "react";
 import { getTitle } from "utils";
-import { TaskStatus } from "utils/constants";
+import { TaskStatus } from "data/constants";
 import { StyledTimline } from "views/tasks/styles";
 import ViewRemark from "./ViewRemark";
 

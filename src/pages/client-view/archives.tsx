@@ -1,11 +1,11 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import SearchContainer from "components/SearchContainer";
 import { useState } from "react";
-import { getFinancialYears } from "utils";
+import { getFinancialYears } from "utils/getFinancialYears";
 import CompletedTasks from "views/client-view/Archives/CompletedTasks";
 import DeletedTasks from "views/client-view/Archives/DeletedTasks";
 import TerminatedTasks from "views/client-view/Archives/TerminatedTasks";
-import { StyledClientFilterItem } from "views/tasks/Filters/style";
+import { StyledClientFilterItem } from "views/tasks/Filters/styles";
 
 function Archives() {
   const [active, setActive] = useState("completed");

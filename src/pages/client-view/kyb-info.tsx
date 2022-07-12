@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import KybFormCard from "views/client-view/KybInfo/KybFormCard";
 import SelectFormTemplate from "views/taskview/iPro/SelectFormTemplate";
 

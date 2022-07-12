@@ -12,7 +12,6 @@ import { SubmitType } from "types";
 function AddPage() {
   const queryClient = useQueryClient();
   const params = useParams();
-
   const [name, setName] = useState("");
   const { addPageOpen } = useSelector(selectForms);
   const dispatch = useDispatch();

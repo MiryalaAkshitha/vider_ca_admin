@@ -8,11 +8,11 @@ import moment from "moment";
 import { MouseEvent, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
-import { RecurringFrequency } from "utils/constants";
+import { RecurringFrequency } from "data/constants";
 import EditRecurringProfile from "./EditRecurringProfile";
 import ViewRecurringProfile from "./ViewRecurringProfile";
 import { usePermissions } from "context/PermissionsProvider";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import { StyledRecurProfileItem } from "views/clients/styles";
 
 interface Props {

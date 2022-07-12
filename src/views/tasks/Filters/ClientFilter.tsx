@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import ClientPopover from "./ClientPopover";
-import { StyledClientFilterItem, StyledMoreHorButton } from "./style";
+import { StyledClientFilterItem, StyledMoreHorButton } from "./styles";
 
 function ClientFilter() {
   const { queryParams, setQueryParams } = useQueryParams();

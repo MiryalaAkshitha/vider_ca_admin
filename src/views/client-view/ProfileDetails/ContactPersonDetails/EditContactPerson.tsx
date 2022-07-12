@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { DialogProps, InputChangeType } from "types";
-import { CONTACT_PERSON_ROLES } from "utils/constants";
+import { CONTACT_PERSON_ROLES } from "data/constants";
 
 interface StateProps {
   name: string;

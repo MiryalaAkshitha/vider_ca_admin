@@ -1,5 +1,5 @@
 import { icons } from "assets";
-import { FILETYPES } from "utils/constants";
+import { FILETYPES } from "data/constants";
 
 export const renderFile = (data: any) => {
   switch (data?.fileType) {

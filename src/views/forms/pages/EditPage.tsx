@@ -16,7 +16,6 @@ import { SubmitType } from "types";
 function EditPage() {
   const queryClient = useQueryClient();
   const params = useParams();
-
   const [name, setName] = useState("");
   const { data, activePage, editPageOpen } = useSelector(selectForms);
   const dispatch = useDispatch();

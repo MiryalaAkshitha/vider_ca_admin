@@ -1,6 +1,6 @@
 import RouterLink from "components/RouterLink";
 import { Outlet, useLocation } from "react-router-dom";
-import { invoicingClientsMenu } from "utils/constants";
+import { invoicingClientsMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import { Box } from "@mui/material";
 

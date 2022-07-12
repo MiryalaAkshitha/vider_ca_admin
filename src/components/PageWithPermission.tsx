@@ -1,7 +1,7 @@
 import BlockIcon from "@mui/icons-material/Block";
 import { Box, Typography } from "@mui/material";
 import { usePermissions } from "context/PermissionsProvider";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 
 interface Props {
   name: Permissions;

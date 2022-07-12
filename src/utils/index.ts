@@ -42,14 +42,6 @@ export const getMinutesOptions = () => {
   });
 };
 
-export const formattedDate = (date: string) => {
-  return moment(date).format("YYYY-MM-DD");
-};
-
-export const formattedDatetime = (date: string) => {
-  return moment(date).format("YYYY-MM-DD HH:mm A");
-};
-
 export const getTotalLogHoursDuration = (logs: any[]) => {
   let total = logs.reduce((acc, cur) => {
     return acc + +cur.duration;
@@ -70,27 +62,4 @@ export const covertToKb = (size: number, type: "KB" | "MB" | "GB") => {
 
 export const fileSizeInKb = (size: number) => {
   return size / 1024;
-};
-
-export const getFinancialYears = () => {
-  let fiscalYears: any = [];
-  for (let i = 0; i < 50; i++) {
-    const year = new Date().getFullYear() - i;
-    const fiscalYear = `${year}-${year + 1}`;
-    fiscalYears.push(fiscalYear);
-  }
-  return fiscalYears;
-};
-
-export const getFieldSize = (fieldSize: "SMALL" | "MEDIUM" | "LARGE") => {
-  switch (fieldSize) {
-    case "SMALL":
-      return "50%";
-    case "MEDIUM":
-      return "75%";
-    case "LARGE":
-      return "100%";
-    default:
-      return "100%";
-  }
 };

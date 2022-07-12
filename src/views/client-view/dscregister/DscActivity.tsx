@@ -4,9 +4,11 @@ import moment from "moment";
 import { useState } from "react";
 import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
 
+type Type = "issue" | "receive";
+
 function DscActivity({ data }) {
   const [issueOrReceiveOpen, setIssueOrReceiveOpen] = useState(false);
-  const [type, setType] = useState<"issue" | "receive">("issue");
+  const [type, setType] = useState<Type>("issue");
 
   const issuedData = data?.data?.dscActivity?.filter(
     (item: any) => item.type === "issue"

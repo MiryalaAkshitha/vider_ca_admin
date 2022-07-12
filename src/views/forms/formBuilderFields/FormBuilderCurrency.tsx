@@ -1,7 +1,7 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { getFieldSize } from "utils";
-import { currencies } from "utils/currencies";
+import { getFieldSize } from "utils/getFieldSize";
+import { currencies } from "data/currencies";
 
 interface Props {
   label?: string;

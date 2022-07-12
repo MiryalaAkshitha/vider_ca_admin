@@ -1,5 +1,5 @@
 import moment from "moment";
-import { array, boolean, date, mixed, number, object, ref, string } from "yup";
+import { array, boolean, date, mixed, object, ref, string } from "yup";
 
 let addCalendarEventDefaultValues: any = {
   type: "EVENT",

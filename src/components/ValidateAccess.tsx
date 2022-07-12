@@ -1,5 +1,5 @@
 import { usePermissions } from "context/PermissionsProvider";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 
 interface Props {
   name: Permissions | Array<string>;

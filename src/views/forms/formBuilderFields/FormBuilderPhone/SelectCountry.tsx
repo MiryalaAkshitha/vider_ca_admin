@@ -1,7 +1,7 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Box, Menu, MenuItem, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import countries from "utils/countries";
+import countries from "data/countries";
 
 const SelectCountryCode = ({ value, onChange, setWidth, allowedCountries }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);

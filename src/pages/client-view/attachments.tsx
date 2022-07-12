@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
 import { StorageResponse } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import BreadCrumbs from "views/storage/BreadCrumbs";
 import Files from "views/storage/Files";
 import Folders from "views/storage/Folders";

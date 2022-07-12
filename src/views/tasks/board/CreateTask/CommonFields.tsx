@@ -4,8 +4,9 @@ import FormInput from "components/FormFields/FormInput";
 import FormNumber from "components/FormFields/FormNumber.";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
-import { getFinancialYears, getTitle } from "utils";
-import { PriorityEnum } from "utils/constants";
+import { getTitle } from "utils";
+import { getFinancialYears } from "utils/getFinancialYears";
+import { PriorityEnum } from "data/constants";
 
 function CommonFields({ control, watch, users, labels, setValue }) {
   return (

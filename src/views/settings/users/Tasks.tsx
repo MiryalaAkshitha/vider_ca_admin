@@ -6,7 +6,8 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { ResType } from "types";
-import { formattedDatetime, getTitle, getTotalLogHoursDuration } from "utils";
+import { getTitle, getTotalLogHoursDuration } from "utils";
+import { formattedDatetime } from "utils/formattedDateTime";
 
 function Tasks() {
   const params = useParams();

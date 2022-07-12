@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { getFileSize } from "utils";
-import { FILETYPES } from "utils/constants";
+import { FILETYPES } from "data/constants";
 import { FormBuilderFieldTypes } from "views/forms/utils/renderFieldsComponent";
 import { renderFieldValue } from "views/forms/utils/renderFieldValue";
 

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
 import { StorageResponse } from "types";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import AddAttachment from "views/storage/AddAttachment";
 import BreadCrumbs from "views/storage/BreadCrumbs";
 import Files from "views/storage/Files";
@@ -31,7 +31,7 @@ function MyStorage() {
         delete: permissions.includes(Permissions.DELETE_STORAGE),
       })
     );
-  }, []);
+  }, [dispatch, permissions]);
 
   const query = {
     folderId: searchParams.get("folderId"),

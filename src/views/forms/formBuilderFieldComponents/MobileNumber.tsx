@@ -5,7 +5,7 @@ import FormInput from "components/FormFields/FormInput";
 import FormLimitRange from "components/FormFields/FormLimitRange";
 import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
-import countries from "utils/countries";
+import countries from "data/countries";
 
 const MobileNumber = (props: any) => {
   const { control, watch } = props;

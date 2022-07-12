@@ -11,7 +11,6 @@ import EditFormValidation from "./EditFormValidation";
 
 const FormValidationCard = ({ data }: any) => {
   const queryClient = useQueryClient();
-
   const confirm = useConfirm();
   const menu = useMenu();
   const [open, setOpen] = useState(false);

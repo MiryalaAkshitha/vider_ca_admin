@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import FormSelect from "components/FormFields/FormSelect";
 import { getTitle } from "utils";
-import { RecurringFrequency } from "utils/constants";
+import { RecurringFrequency } from "data/constants";
 import CustomDates from "./CustomDates";
 import FrequencyDates from "./FrequencyDates";
 

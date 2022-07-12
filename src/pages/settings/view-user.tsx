@@ -2,7 +2,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userProfileMenu } from "utils/constants";
+import { userProfileMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import Expenditure from "views/settings/users/Expenditure";
 import Tasks from "views/settings/users/Tasks";

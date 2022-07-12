@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import { useClientData } from "context/ClientData";
 import { useEffect, useState } from "react";
 import ValidateAccess from "components/ValidateAccess";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import ProfileImage from "views/client-view/ProfileDetails/ProfileImage";
 import BasicInformation from "views/client-view/ProfileDetails/BasicInformation";
 import OrganizationInformation from "views/client-view/ProfileDetails/OrganizationInformation";

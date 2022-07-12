@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 import PageWithPermission from "components/PageWithPermission";
 
 const BroadCast = loadable(() => import("pages/broadcast"));
@@ -147,6 +147,10 @@ const IProAuditLog = loadable(() => import("pages/task-view/ipro-audit-log"));
 const IProShareLink = loadable(() => import("pages/task-view/ipro-share-link"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/services/add-service"));
+const Approvals = loadable(() => import("pages/settings/approval-hierarchies"));
+const AddApproval = loadable(
+  () => import("pages/settings/approval-hierarchies/add-approval-hierarchy")
+);
 
 function RoutesContainer() {
   return (
@@ -290,6 +294,10 @@ function RoutesContainer() {
           </Route>
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>
+          <Route path="approvals">
+            <Route index element={<Approvals />} />
+            <Route path="add-approval" element={<AddApproval />} />
+          </Route>
           <Route
             path="categories"
             element={

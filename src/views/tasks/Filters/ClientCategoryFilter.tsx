@@ -4,7 +4,7 @@ import {
   handleCategories,
   selectTaskBoard,
 } from "redux/reducers/taskboardSlice";
-import { CLIENT_CATEGORIES } from "utils/constants";
+import { CLIENT_CATEGORIES } from "data/constants";
 
 function ClientCategoryFilter() {
   const dispatch = useDispatch();

@@ -7,7 +7,7 @@ import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
-import { FILETYPES } from "utils/constants";
+import { FILETYPES } from "data/constants";
 
 interface Props extends DialogProps {
   successCb?: () => void;

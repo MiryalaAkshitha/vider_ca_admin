@@ -3,7 +3,12 @@ import { AppBar, Breadcrumbs, Button, Typography } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import { useNavigate, useParams } from "react-router-dom";
 
-function KybAppbar({ name, page }: any) {
+interface Props {
+  name: string;
+  page: string;
+}
+
+function KybAppbar({ name, page }: Props) {
   const params = useParams();
   const navigate = useNavigate();
 

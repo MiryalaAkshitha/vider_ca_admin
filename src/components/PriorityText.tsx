@@ -3,7 +3,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Typography, TypographyProps } from "@mui/material";
 import { Box } from "@mui/system";
 import { getTitle } from "utils";
-import { PriorityEnum } from "utils/constants";
+import { PriorityEnum } from "data/constants";
 
 interface Props extends TypographyProps {
   text: PriorityEnum;

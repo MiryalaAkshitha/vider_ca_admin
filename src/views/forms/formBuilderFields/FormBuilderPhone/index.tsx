@@ -1,7 +1,7 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
-import { getFieldSize } from "utils";
+import { getFieldSize } from "utils/getFieldSize";
 import SelectCountryCode from "./SelectCountry";
 
 interface Props {

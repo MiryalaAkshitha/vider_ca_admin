@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { StyledCard } from "views/forms/styles";
 import { usePermissions } from "context/PermissionsProvider";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 
 interface Props {
   data: any;

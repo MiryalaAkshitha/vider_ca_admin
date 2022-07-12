@@ -43,4 +43,8 @@ export const menuItems: Array<IMenuItem> = [
     title: "Labels",
     path: "/settings/labels",
   },
+  {
+    title: "Approvals",
+    path: "/settings/approvals",
+  },
 ];

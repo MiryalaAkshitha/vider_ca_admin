@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
-import countries from "utils/countries";
+import countries from "data/countries";
 
 interface Props {
   label?: string;

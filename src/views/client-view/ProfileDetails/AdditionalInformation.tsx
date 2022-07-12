@@ -13,14 +13,14 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 
 const AdditionalInformation = ({ data, setState, apiData }) => {
+  const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
+
   const handleChange = (e: any) => {
     setState({
       ...data,
       [e.target.name]: e.target.value,
     });
   };
-
-  const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
 
   if (isLoading) return <Loader />;
 

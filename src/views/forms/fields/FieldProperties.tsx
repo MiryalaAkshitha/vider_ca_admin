@@ -18,7 +18,6 @@ import {
 
 const FieldProperties = ({ open, setOpen, item }: any) => {
   const queryClient = useQueryClient();
-
   const params = useParams();
   const { data, activePage, validations } = useSelector(selectForms);
 

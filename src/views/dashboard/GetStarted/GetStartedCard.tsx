@@ -11,14 +11,8 @@ interface Props {
   btnAction: () => void;
 }
 
-const GetStartedCard = ({
-  active,
-  img,
-  title,
-  desc,
-  btnAction,
-  btnTitle,
-}: Props) => {
+const GetStartedCard = (props: Props) => {
+  const { active, img, title, desc, btnAction, btnTitle } = props;
   return (
     <>
       <Box

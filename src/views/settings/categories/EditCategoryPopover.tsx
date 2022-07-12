@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "react-query";
 import EditCategory from "./EditCategory";
 import { useConfirm } from "context/ConfirmDialog";
 import ValidateAccess from "components/ValidateAccess";
-import { Permissions } from "utils/permissons";
+import { Permissions } from "data/permissons";
 
 interface EditCategoryPopoverProps extends AccountMenuProps {
   data: any;
