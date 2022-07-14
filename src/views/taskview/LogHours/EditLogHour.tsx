@@ -23,9 +23,8 @@ interface IProps extends DialogProps {
 }
 
 function UpdateLogHour({ open, setOpen, logHourData }: IProps) {
-  const queryClient = useQueryClient();
-
   const taskData: any = useTaskData();
+  const queryClient = useQueryClient();
 
   const { mutate, isLoading: createLoading } = useMutation(updateLogHour, {
     onSuccess: () => {

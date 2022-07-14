@@ -65,8 +65,8 @@ export const menu: Array<{ title: string; path: string }> = [
     path: "audit-log",
   },
   {
-    title: "Share Link",
-    path: "share-link",
+    title: "Approvals",
+    path: "approvals",
   },
 ];
 

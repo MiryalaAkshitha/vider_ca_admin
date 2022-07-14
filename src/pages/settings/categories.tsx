@@ -45,10 +45,11 @@ function Cateogries() {
   if (isLoading) return <Loader />;
 
   return (
-    <>
-      <Box display="flex" justifyContent="space-between" mt={2} mb={2}>
-        <Box display="flex" gap={1}>
+    <Box p={3}>
+      <Box display="flex" justifyContent="space-between" mb={2}>
+        <Box display="flex" gap={2}>
           <SearchContainer
+            value={search}
             minWidth="300px"
             onChange={setSearch}
             placeHolder="Search categories"
@@ -80,7 +81,7 @@ function Cateogries() {
           </Box>
         </ValidateAccess>
       </Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={1}>
         {getData()?.map((item: any, index: any) => (
           <Grid item xs={4} key={index}>
             <CategoryCard data={item} />
@@ -88,7 +89,7 @@ function Cateogries() {
         ))}
       </Grid>
       <AddCategory open={open} setOpen={setOpen} />
-    </>
+    </Box>
   );
 }
 

@@ -3,7 +3,6 @@ import { getForm, updatePage } from "api/services/forms";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
-import FormAppbar from "layout/primarylayout/app-bar/FormAppbar";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +14,7 @@ import {
 } from "redux/reducers/formsSlice";
 import { ResType } from "types";
 import Fields from "views/forms/fields";
+import FormAppbar from "views/forms/FormAppbar";
 import FormInfo from "views/forms/FormInfo";
 import AddPage from "views/forms/pages/AddPage";
 import EditPage from "views/forms/pages/EditPage";
@@ -92,7 +92,7 @@ const FormBuilder = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       {data?.type === "TEMPLATE" && <FormAppbar />}
       {data?.pages?.length > 0 ? (
-        <Grid container spacing={2} sx={{ pb: 4, px: 2 }}>
+        <Grid container spacing={2} sx={{ pb: 4, px: 2, py: 12 }}>
           <Grid item xs={7}>
             <Pages />
           </Grid>

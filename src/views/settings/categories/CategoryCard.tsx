@@ -42,9 +42,11 @@ function CategoryCard({ data }: Props) {
                 <KeyboardArrowDownRoundedIcon />
               </IconButton>
             ) : null}
-            <IconButton onClick={handleClick}>
-              <MoreVertRounded />
-            </IconButton>
+            {!data?.defaultOne && (
+              <IconButton onClick={handleClick}>
+                <MoreVertRounded />
+              </IconButton>
+            )}
           </Box>
         </Box>
         {data?.subCategories?.length && open ? (

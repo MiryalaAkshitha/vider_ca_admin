@@ -11,8 +11,8 @@ interface IProps extends DialogProps {
 }
 
 function RejectExpenditureDialog({ open, setOpen, data }: IProps) {
-  const [reason, setReason] = useState<string>("");
   const queryClient = useQueryClient();
+  const [reason, setReason] = useState<string>("");
 
   const { mutate } = useMutation(rejectExpenditure, {
     onSuccess: () => {

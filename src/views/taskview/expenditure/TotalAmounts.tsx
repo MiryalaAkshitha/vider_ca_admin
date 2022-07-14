@@ -14,7 +14,7 @@ function TotalAmounts({ data, taskFee }) {
     }, 0);
 
   const totalAmount =
-    +taskFee || 0 + pureAgentExpenditure + additionalExpenditure;
+    (+taskFee || 0) + pureAgentExpenditure + additionalExpenditure;
 
   return (
     <Grid

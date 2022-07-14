@@ -8,10 +8,9 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
-
 const PaymentReceived = () => {
   useTitle("Invoice Table");
-  const [, setSearch] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleClientClick = () => {
     // navigate("/invoicing/clients/id/overview");
@@ -19,12 +18,15 @@ const PaymentReceived = () => {
 
   return (
     <Box p={3}>
-      <Box sx={{
-        display: "flex",
-        alignItems: "center",
-        margin: "20px 0",
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          margin: "20px 0",
+        }}
+      >
         <SearchContainer
+          value={search}
           minWidth="400px"
           placeHolder="Search"
           onChange={setSearch}
@@ -41,14 +43,18 @@ const PaymentReceived = () => {
         </Button>
       </Box>
 
-      <Table onRowClick={handleClientClick} data={data || []} columns={columns} loading={false} />
+      <Table
+        onRowClick={handleClientClick}
+        data={data || []}
+        columns={columns}
+        loading={false}
+      />
     </Box>
   );
 };
 
 const TableActions = () => {
   const menu = useMenu();
-
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     menu({
@@ -57,13 +63,11 @@ const TableActions = () => {
       options: [
         {
           label: "Send Reminder",
-          action: () => {
-          },
+          action: () => {},
         },
         {
           label: "Generate Receipt",
-          action: () => {
-          },
+          action: () => {},
         },
       ],
     });
@@ -106,39 +110,31 @@ const data = [
     taskStatus: "To-Do",
     amount: "200/-",
     amountStatus: "Unbilled",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
     taskStatus: "Inprogress",
     amount: "200/-",
     amountStatus: "Billed",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
     taskStatus: "Completed",
     amount: "200/-",
     amountStatus: "Unbilled",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
     taskStatus: "To-Do",
     amount: "200/-",
     amountStatus: "Unbilled",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
     taskStatus: "To-Do",
     amount: "200/-",
     amountStatus: "Unbilled",
-
   },
-
 ];
-
-
 
 export default PaymentReceived;

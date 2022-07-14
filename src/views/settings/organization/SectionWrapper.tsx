@@ -7,8 +7,9 @@ interface IProps {
 
 const SectionWrapper = (props: IProps) => {
   const { title, children } = props;
+
   return (
-    <Box mb={4} px={3} maxWidth={1400}>
+    <Box mb={4}>
       <Typography variant="subtitle2" color="primary">
         {title}
       </Typography>

@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { getClients } from "api/services/client";
+import { getClients } from "api/services/clients/clients";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useQuery } from "react-query";

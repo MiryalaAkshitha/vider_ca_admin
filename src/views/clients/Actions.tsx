@@ -5,7 +5,7 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Box } from "@mui/material";
 import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
-import { bulkDelete, bulkUpdate } from "api/services/client";
+import { bulkDelete, bulkUpdate } from "api/services/clients/clients";
 import { useMutation, useQueryClient } from "react-query";
 import ValidateAccess from "components/ValidateAccess";
 import { Permissions } from "data/permissons";

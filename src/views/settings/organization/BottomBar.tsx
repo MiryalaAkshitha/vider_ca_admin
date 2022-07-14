@@ -6,7 +6,15 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { GreyButton } from "views/tasks/styles";
 
-function BottomBar({ data, state, setState }) {
+interface IProps {
+  data: any;
+  state: any;
+  setState: (state: any) => void;
+  left?: string;
+}
+
+function BottomBar(props: IProps) {
+  const { data, state, setState, left } = props;
   const queryClient = useQueryClient();
 
   const [isStateChanged, setIsStateChanged] = useState(false);
@@ -35,6 +43,7 @@ function BottomBar({ data, state, setState }) {
       sx={{
         position: "fixed",
         bottom: isStateChanged ? 0 : "-100%",
+        left: left || "240px",
         width: "100%",
         zIndex: "100",
         transition: "0.8s",

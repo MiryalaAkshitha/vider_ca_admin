@@ -27,10 +27,6 @@ function AddCategory({ open, setOpen }: DialogProps) {
   const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
   const [subCategory, setSubCategory] = useState<string>("");
 
-  const handleChange = (key: string, v: string) => {
-    setState({ ...state, [key]: v });
-  };
-
   const { mutate, isLoading } = useMutation(createCategory, {
     onSuccess: () => {
       snack.success("Category Created");
@@ -42,6 +38,10 @@ function AddCategory({ open, setOpen }: DialogProps) {
       snack.error(err.response.data.message);
     },
   });
+
+  const handleChange = (key: string, v: string) => {
+    setState({ ...state, [key]: v });
+  };
 
   const addSubCategory = () => {
     if (!subCategory) return snack.error("Enter Subcategory");

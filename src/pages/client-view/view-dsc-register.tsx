@@ -1,6 +1,9 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { getDscRegister, updateDscRegister } from "api/services/client";
+import {
+  getDscRegister,
+  updateDscRegister,
+} from "api/services/clients/clients";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
@@ -39,7 +42,7 @@ function View() {
     }
   );
 
-  const { mutate } = useMutation(updateDscRegister, {
+  const { mutateAsync } = useMutation(updateDscRegister, {
     onSuccess: () => {
       snack.success("Dsc Register Updated");
       queryClient.invalidateQueries("dsc-register-details");
@@ -56,8 +59,8 @@ function View() {
     });
   };
 
-  const handleUpdate = () => {
-    mutate({
+  const handleUpdate = async () => {
+    await mutateAsync({
       id: data?.data?.id,
       data: state,
     });
@@ -168,6 +171,7 @@ function View() {
         </Grid>
       </Grid>
       <BottomBar
+        left="72px"
         data={originalState}
         state={state}
         onUpdate={handleUpdate}

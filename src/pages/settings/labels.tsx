@@ -14,10 +14,9 @@ import AddLabel from "views/settings/labels/AddLabel";
 import { StyledLabel } from "views/settings/labels/styles";
 
 function Labels() {
+  const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
-
-  const confirm = useConfirm();
 
   const { data, isLoading }: ResType = useQuery("labels", getLabels);
 
@@ -46,8 +45,8 @@ function Labels() {
   if (isLoading) return <Loader />;
 
   return (
-    <>
-      <Box mb={2} textAlign="right" mt={2}>
+    <Box p={3}>
+      <Box mb={2} textAlign="right">
         <Button
           onClick={() => setOpen(true)}
           variant="outlined"
@@ -102,7 +101,7 @@ function Labels() {
         data={data?.data || []}
       />
       <AddLabel open={open} setOpen={setOpen} />
-    </>
+    </Box>
   );
 }
 

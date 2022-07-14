@@ -104,6 +104,10 @@ const getProfile = ({ queryKey }) => {
   return http.get("/users/profile", { params: { userId: queryKey[1] } });
 };
 
+const getUser = ({ queryKey }) => {
+  return http.get(`/users/profile/${queryKey[1]}`);
+};
+
 const updateProfile = (data: any) => {
   return http.patch(`/users/profile`, data);
 };
@@ -135,4 +139,5 @@ export {
   resetPassword,
   changePassword,
   getInvitedusers,
+  getUser,
 };

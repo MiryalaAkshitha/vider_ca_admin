@@ -6,16 +6,29 @@ import { GreyButton } from "views/tasks/styles";
 interface Props {
   data: any;
   state: any;
-  onUpdate?: () => void;
-  onCancel?: () => void;
+  onUpdate: () => Promise<any>;
+  onCancel: () => void;
+  left?: string;
+  align?: "left" | "right" | "center";
 }
 
-function BottomBar({ data, state, onUpdate, onCancel }: Props) {
+function BottomBar(props: Props) {
+  const { data, state, onUpdate, onCancel, left, align } = props;
   const [isStateChanged, setIsStateChanged] = useState(false);
 
   useEffect(() => {
     setIsStateChanged(JSON.stringify(data) !== JSON.stringify(state));
   }, [state, data]);
+
+  const handleUpdate = async () => {
+    try {
+      await onUpdate();
+      setIsStateChanged(false);
+    } catch (e) {}
+  };
+
+  const position =
+    align === "left" ? "flex-start" : align === "center" ? "center" : "right";
 
   return (
     <Paper
@@ -23,18 +36,15 @@ function BottomBar({ data, state, onUpdate, onCancel }: Props) {
       sx={{
         position: "fixed",
         bottom: isStateChanged ? 0 : "-100%",
-        width: "100%",
+        width: `calc(100% - ${left || "240px"})`,
         zIndex: "100",
         transition: "0.8s",
-        left: 70,
+        left: left || "240px",
       }}
     >
-      <Box p={2} display="flex" justifyContent="center" gap={2}>
+      <Box p={2} display="flex" justifyContent={position} gap={2}>
         <Button
-          onClick={() => {
-            setIsStateChanged(false);
-            onUpdate && onUpdate();
-          }}
+          onClick={handleUpdate}
           size="large"
           color="secondary"
           variant="contained"

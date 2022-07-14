@@ -19,7 +19,7 @@ const RenameFileOrFolderDialog = (props: Props) => {
 
   useEffect(() => {
     setName(itemName);
-  }, [props]);
+  }, [itemName]);
 
   const { mutate } = useMutation(renameFile, {
     onSuccess: () => {

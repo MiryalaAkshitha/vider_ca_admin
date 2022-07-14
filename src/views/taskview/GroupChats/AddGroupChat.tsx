@@ -24,10 +24,10 @@ function AddGroupChat({ open, setOpen, taskData }: Props) {
   });
 
   useEffect(() => {
-    setState((state: any) => ({
+    setState({
       name: taskData?.name,
       members: taskData?.members,
-    }));
+    });
   }, [taskData]);
 
   const { mutate } = useMutation(createGroup, {

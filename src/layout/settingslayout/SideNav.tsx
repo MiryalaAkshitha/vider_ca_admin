@@ -2,10 +2,10 @@ import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import { logo } from "assets";
+import { settingsMenu } from "data/settingsMenu";
 import { useState } from "react";
 import { DrawerHeader, SettingsDrawer } from "../styles";
 import CollapsibleMenuItem from "./CollapsibleMenuItem";
-import { menuItems } from "./menu";
 import MenuItem from "./SingleMenuItem";
 
 function SideNav() {
@@ -40,7 +40,7 @@ function SideNav() {
       </DrawerHeader>
       <Divider />
       <List>
-        {menuItems.map((item, index) => {
+        {settingsMenu.map((item, index) => {
           return item?.children ? (
             <CollapsibleMenuItem key={index} item={item} />
           ) : (

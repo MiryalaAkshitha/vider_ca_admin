@@ -1,5 +1,5 @@
 import { Avatar, Box, TextField, Typography } from "@mui/material";
-import { getClients } from "api/services/client";
+import { getClients } from "api/services/clients/clients";
 import Loader from "components/Loader";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";

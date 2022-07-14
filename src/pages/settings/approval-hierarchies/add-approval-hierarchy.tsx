@@ -89,7 +89,7 @@ function AddApprovalHierarchy() {
   if (isLoading) return <Loader />;
 
   return (
-    <>
+    <Box p={3}>
       <Box
         sx={{
           display: "flex",
@@ -145,7 +145,7 @@ function AddApprovalHierarchy() {
         </TextField>
         <ApprovalLevels />
       </Box>
-    </>
+    </Box>
   );
 }
 

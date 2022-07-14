@@ -32,6 +32,7 @@ const MyForms = () => {
       {data?.data?.length > 0 && (
         <Box display="flex" gap={1} justifyContent="space-between">
           <SearchContainer
+            value={search}
             placeHolder="Search by name or tags"
             minWidth="400px"
             onChange={setSearch}

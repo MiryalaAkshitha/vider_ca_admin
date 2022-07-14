@@ -2,6 +2,7 @@ import TaskDataProvider, { TaskDataContext } from "context/TaskData";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef } from "react";
 import { StyledTaskSection } from "views/clients/styles";
+import Approvals from "views/taskview/approvals";
 import Attachments from "views/taskview/attachments";
 import Checklists from "views/taskview/Checklists";
 import Comments from "views/taskview/comments";
@@ -93,6 +94,9 @@ function TaskDetails() {
       </TaskSection>
       <TaskSection id="loghours">
         <LogHours />
+      </TaskSection>
+      <TaskSection id="approvals">
+        <Approvals />
       </TaskSection>
       <TaskSection id="events">
         <Events />

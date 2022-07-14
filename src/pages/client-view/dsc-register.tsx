@@ -1,6 +1,9 @@
 import { Delete, Visibility } from "@mui/icons-material";
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import { deleteDscRegister, getDscRegisters } from "api/services/client";
+import {
+  deleteDscRegister,
+  getDscRegisters,
+} from "api/services/clients/clients";
 import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";

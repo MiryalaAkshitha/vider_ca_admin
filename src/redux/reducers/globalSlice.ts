@@ -21,19 +21,19 @@ export const globalClice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    updateTitle(state, action) {
+    updateTitle(state: IGlobal, action) {
       state.title = action.payload;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
+    setGlobalLoading(state: IGlobal, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    setTaskItemsLoaded(state, action: PayloadAction<boolean>) {
+    setTaskItemsLoaded(state: IGlobal, action: PayloadAction<boolean>) {
       state.taskItemsLoaded = action.payload;
     },
-    setUnreadMessages(state, action: PayloadAction<number>) {
+    setUnreadMessages(state: IGlobal, action: PayloadAction<number>) {
       state.unreadMessages = action.payload;
     },
-    setTimerRunning(state, action: PayloadAction<boolean>) {
+    setTimerRunning(state: IGlobal, action: PayloadAction<boolean>) {
       state.timerRunning = action.payload;
     },
   },
@@ -42,7 +42,11 @@ export const globalClice = createSlice({
 export const selectGlobal = (state: RootState) => state.global;
 export const selectTitle = (state: RootState) => state.global.title;
 
-export const { updateTitle, setLoading, setTaskItemsLoaded, setTimerRunning } =
-  globalClice.actions;
+export const {
+  updateTitle,
+  setGlobalLoading,
+  setTaskItemsLoaded,
+  setTimerRunning,
+} = globalClice.actions;
 
 export default globalClice.reducer;

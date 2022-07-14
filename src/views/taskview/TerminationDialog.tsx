@@ -13,7 +13,7 @@ function TerminationDialog({ open, setOpen }: DialogProps) {
   const [reason, setReason] = useState("");
 
   const { mutate: terminate } = useMutation(terminateTask, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       snack.success("Task terminated");
       navigate("/task-board");
     },

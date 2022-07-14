@@ -11,6 +11,8 @@ import { snack } from "components/toast";
 import { addComment } from "api/services/tasks";
 import { useMutation, useQueryClient } from "react-query";
 
+const USER_REGEX = /@\[+[a-z\s]+\]/gi;
+
 type Props = {
   data: any;
   users: any;
@@ -18,7 +20,6 @@ type Props = {
 
 function TaskComment({ data, users }: Props) {
   const params: any = useParams();
-
   const [showReply, setShowReply] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [reply, setReply] = useState("");
@@ -45,12 +46,12 @@ function TaskComment({ data, users }: Props) {
     });
   };
 
-  const reg = /@\[+[a-z\s]+\]/gi;
-  const getText = (text: string) =>
-    text.replace(reg, function (str) {
+  const getText = (text: string) => {
+    return text.replace(USER_REGEX, function (str) {
       return `<span style='color:red'>
       ${str.replace("[", "")?.replace("]", "")} </span>`;
     });
+  };
 
   return (
     <Box mt={4} borderBottom="1px solid rgba(0,0,0,0.08)" pb={3}>

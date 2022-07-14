@@ -17,7 +17,6 @@ interface StateProps {
 function AddMilestone({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
-
   const [state, setState] = useState<StateProps>({
     name: "",
     description: "",

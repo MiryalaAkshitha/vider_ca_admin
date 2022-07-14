@@ -3,10 +3,10 @@ import { ListItemIcon, Typography } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
+import { IMenuItem } from "data/settingsMenu";
 import { StyledListItemButton } from "layout/styles";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { IMenuItem } from "./menu";
 
 const CollapsibleMenuItem = ({ item }: any) => {
   const location = useLocation();

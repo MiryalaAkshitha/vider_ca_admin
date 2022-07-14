@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 
-let initialState = {
+const initialState = {
   name: "",
   color: "",
 };

@@ -1,5 +1,5 @@
 import { Alert, Box } from "@mui/material";
-import { getClient } from "api/services/client";
+import { getClient } from "api/services/clients/clients";
 import Loader from "components/Loader";
 import { createContext, useContext } from "react";
 import { useQuery } from "react-query";

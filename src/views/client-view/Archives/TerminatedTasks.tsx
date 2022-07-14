@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { getTerminatedTasks } from "api/services/client";
+import { getTerminatedTasks } from "api/services/clients/clients";
 import Members from "components/Members";
 import Table from "components/Table";
 import moment from "moment";

@@ -136,6 +136,7 @@ function Services() {
               </Box>
               <Box>
                 <SearchContainer
+                  value={search}
                   minWidth="400px"
                   placeHolder="Search for a service"
                   onChange={setSearch}

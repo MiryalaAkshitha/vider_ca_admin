@@ -1,4 +1,3 @@
-
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 import { Button, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
@@ -9,10 +8,9 @@ import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
-
 const BilledTask = () => {
   useTitle("Invoice Table");
-  const [, setSearch] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleClientClick = () => {
     // navigate("/invoicing/clients/id/overview");
@@ -21,12 +19,15 @@ const BilledTask = () => {
   return (
     <Box p={3}>
       <Box display="flex" justifyContent="space-between" alignItems="baseline">
-        <Box sx={{
-          display: "flex",
-          alignItems: "center",
-          margin: "20px 0",
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            margin: "20px 0",
+          }}
+        >
           <SearchContainer
+            value={search}
             minWidth="400px"
             placeHolder="Search"
             onChange={setSearch}
@@ -43,18 +44,24 @@ const BilledTask = () => {
           </Button>
         </Box>
         <Box>
-          <Button variant="outlined" color="secondary">+Add New Invoice</Button>
+          <Button variant="outlined" color="secondary">
+            +Add New Invoice
+          </Button>
         </Box>
       </Box>
 
-      <Table onRowClick={handleClientClick} data={data || []} columns={columns} loading={false} />
+      <Table
+        onRowClick={handleClientClick}
+        data={data || []}
+        columns={columns}
+        loading={false}
+      />
     </Box>
   );
 };
 
 const TableActions = () => {
   const menu = useMenu();
-
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     menu({
@@ -63,13 +70,11 @@ const TableActions = () => {
       options: [
         {
           label: "Send Reminder",
-          action: () => {
-          },
+          action: () => {},
         },
         {
           label: "Generate Receipt",
-          action: () => {
-          },
+          action: () => {},
         },
       ],
     });
@@ -117,7 +122,6 @@ const data = [
     invoiceDate: "11/09/2021",
     dueDate: "11/09/2021",
     invoiceAmount: "20,281/-",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
@@ -125,7 +129,6 @@ const data = [
     invoiceDate: "11/09/2021",
     dueDate: "11/09/2021",
     invoiceAmount: "20,281/-",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
@@ -133,7 +136,6 @@ const data = [
     invoiceDate: "11/09/2021",
     dueDate: "11/09/2021",
     invoiceAmount: "20,281/-",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
@@ -141,7 +143,6 @@ const data = [
     invoiceDate: "11/09/2021",
     dueDate: "11/09/2021",
     invoiceAmount: "20,281/-",
-
   },
   {
     taskName: "Accounting audits (VD4832)",
@@ -149,10 +150,7 @@ const data = [
     invoiceDate: "11/09/2021",
     dueDate: "11/09/2021",
     invoiceAmount: "20,281/-",
-
   },
 ];
-
-
 
 export default BilledTask;

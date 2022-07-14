@@ -2,7 +2,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/system";
-import { updateClient } from "api/services/client";
+import { updateClient } from "api/services/clients/clients";
 import {
   getGstDetails,
   getPanDetails,

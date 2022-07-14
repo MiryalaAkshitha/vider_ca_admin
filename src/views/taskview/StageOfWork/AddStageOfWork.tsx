@@ -29,16 +29,16 @@ let initialState = {
   referenceNumber: false,
   extraAttributes: [
     {
-      type: "Reference Number",
+      type: "REFERENCE_NUMBER",
       title: "Reference Number",
     },
   ],
 };
 
 function AddStageOfWork({ open, setOpen }: DialogProps) {
+  const params = useParams();
   const queryClient = useQueryClient();
   const [state, setState] = useState(_.cloneDeep(initialState));
-  const params = useParams();
 
   const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -59,7 +59,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
       extraAttributes: [
         ...state.extraAttributes,
         {
-          type: "Reference Number",
+          type: "REFERENCE_NUMBER",
           title: "",
         },
       ],
@@ -165,10 +165,10 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
                     size="small"
                     value={item.type}
                   >
-                    <MenuItem value="Reference Number">
+                    <MenuItem value="REFERENCE_NUMBER">
                       Reference Number
                     </MenuItem>
-                    <MenuItem value="Attachment">Attachment</MenuItem>
+                    <MenuItem value="ATTACHMENT">Attachment</MenuItem>
                   </TextField>
                   <TextField
                     onChange={(e: InputChangeType) => {
@@ -178,7 +178,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
                     }}
                     sx={{ flex: 1 }}
                     placeholder={
-                      item.type === "Reference Number"
+                      item.type === "REFERENCE_NUMBER"
                         ? "Title of the reference number"
                         : "Title of the attachment"
                     }

@@ -10,10 +10,7 @@ import NotificationItem from "./NotificationItem";
 
 function Notifications({ anchorEl, setAnchorEl }) {
   const open = Boolean(anchorEl);
-  const [filters, setFilters] = useState({
-    fromDate: null,
-    toDate: null,
-  });
+  const [filters, setFilters] = useState({ fromDate: null, toDate: null });
 
   const { data, isLoading }: ResType = useQuery(
     ["notifications", filters],
@@ -58,7 +55,7 @@ function Notifications({ anchorEl, setAnchorEl }) {
       >
         <Typography variant="subtitle2">Notifications</Typography>
         <Button
-          sx={{ minWidth: 80 }}
+          sx={{ minWidth: 50 }}
           size="small"
           onClick={(e) => handleClose()}
         >

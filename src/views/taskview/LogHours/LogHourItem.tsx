@@ -24,7 +24,6 @@ type Props = {
 function LogHourItem({ logHour, onSelect, selectedItems }: Props) {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);

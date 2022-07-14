@@ -40,12 +40,7 @@ function GroupChats({ open, setOpen, taskData }: Props) {
           <Loader />
         ) : (
           data?.data?.map((chat: any, index: number) => (
-            <GroupChat
-              setGroupChats={setOpen}
-              key={index}
-              chat={chat}
-              taskData={taskData}
-            />
+            <GroupChat setGroupChats={setOpen} key={index} chat={chat} />
           ))
         )}
       </Box>

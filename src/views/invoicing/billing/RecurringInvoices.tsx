@@ -1,7 +1,12 @@
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import {
-  Button, FormControl, IconButton, InputLabel, MenuItem, Select
+  Button,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchContainer from "components/SearchContainer";
@@ -13,7 +18,7 @@ import { useState } from "react";
 const RecurringInvoices = () => {
   useTitle("Recurring Invoices");
 
-  const [, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [filterBy, setFilterBy] = useState("");
 
   return (
@@ -35,6 +40,7 @@ const RecurringInvoices = () => {
           }}
         >
           <SearchContainer
+            value={search}
             minWidth="400px"
             placeHolder="Search for estimate"
             onChange={setSearch}
@@ -73,10 +79,8 @@ const RecurringInvoices = () => {
   );
 };
 
-
 const TableActions = () => {
   const menu = useMenu();
-
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     menu({
@@ -85,8 +89,7 @@ const TableActions = () => {
       options: [
         {
           label: "Regenerate",
-          action: () => {
-          },
+          action: () => {},
         },
       ],
     });
@@ -100,7 +103,6 @@ const TableActions = () => {
 };
 
 const columns = [
-
   {
     key: "invoiceNumber",
     title: "Invoice number",
@@ -208,6 +210,5 @@ const data = [
     frequency: "Monthly",
   },
 ];
-
 
 export default RecurringInvoices;

@@ -24,7 +24,6 @@ interface StateProps {
 function AddSubTask({ open, setOpen }: DialogProps) {
   const params = useParams();
   const queryClient = useQueryClient();
-
   const [state, setState] = useState<StateProps>({
     name: "",
     description: "",

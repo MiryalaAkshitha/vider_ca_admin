@@ -21,7 +21,6 @@ interface Props extends DialogProps {
 
 function EditExpenditure({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-
   const [state, setState] = useState({
     type: "",
     particularName: "",

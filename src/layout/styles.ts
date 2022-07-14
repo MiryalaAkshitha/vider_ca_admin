@@ -134,3 +134,14 @@ export const StyledBottomAppbar = styled("div")(() => ({
   gap: 20,
   zIndex: 10,
 }));
+
+export const StyledMainContent = styled("main")(({ theme }) => ({
+  flexGrow: 1,
+  paddingBottom: 80,
+  marginLeft: `calc(${theme.spacing(9)} + 1px)`,
+}));
+
+export const StyledSettingsMainContent = styled("main")(({ theme }) => ({
+  flexGrow: 1,
+  marginLeft: drawerWidth,
+}));

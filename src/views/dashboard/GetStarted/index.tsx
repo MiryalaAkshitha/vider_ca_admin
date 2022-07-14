@@ -5,8 +5,9 @@ import { icons } from "assets";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { handleError } from "utils/handleError";
 import ImportClients from "views/clients/ImportClients";
-import AddMember from "views/settings/users/AddMember";
+import AddMember from "views/settings/manage-users/users/AddMember";
 import GetStartedCard from "./GetStartedCard";
 import ImportServices from "./ImportServices";
 
@@ -21,7 +22,7 @@ const GetStarted = ({ data }: any) => {
       queryClient.invalidateQueries("get-started");
     },
     onError: (err: any) => {
-      snack.error("something went wrong");
+      snack.error(handleError(err));
     },
   });
 

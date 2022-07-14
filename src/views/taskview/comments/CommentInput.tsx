@@ -8,7 +8,11 @@ import { Mention, MentionsInput } from "react-mentions";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 
-function CommentInput({ users }) {
+interface Props {
+  users: any[];
+}
+
+function CommentInput({ users }: Props) {
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");
   const params: any = useParams();
@@ -38,7 +42,7 @@ function CommentInput({ users }) {
         className={`mentions_input ${focused ? "focused_mentions_input" : ""}`}
         value={comment}
         placeholder="Write a comment here and type @ to mention someone...."
-        onChange={(e) => {
+        onChange={(e: any) => {
           setComment(e.target.value);
         }}
       >

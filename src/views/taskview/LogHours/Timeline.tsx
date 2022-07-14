@@ -11,6 +11,7 @@ function Timeline({ data }: any) {
   const taskData: any = useTaskData();
   const [open, setOpen] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
+
   return (
     <>
       <Box>

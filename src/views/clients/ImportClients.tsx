@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { importClients } from "api/services/client";
+import { importClients } from "api/services/clients/clients";
 import DrawerWrapper from "components/DrawerWrapper";
 import FileDrop from "components/FileDrop";
 import LoadingButton from "components/LoadingButton";

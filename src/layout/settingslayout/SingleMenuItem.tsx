@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const SingleMenuItem = ({ item }: any) => {
   const location = useLocation();
+
   return (
     <Link to={item.path} style={{ textDecoration: "none", color: "initial" }}>
       <StyledListItemButton

@@ -1,51 +1,76 @@
-import { Search } from "@mui/icons-material";
-import { TextField } from "@mui/material";
+import { Close, Search } from "@mui/icons-material";
+import { IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import _ from "lodash";
+import { useCallback, useEffect, useState } from "react";
 
 interface SearchContainerProps {
   placeHolder?: string;
   onChange: (v: string) => void;
   onFocus?: (e: any) => void;
-  width?: string,
   maxWidth?: string;
   debounced?: boolean;
   minWidth?: string;
   value?: string;
-  defaultValue?: string;
   autoFocus?: boolean;
 }
 
 function SearchContainer(props: SearchContainerProps) {
   const {
-    placeHolder,
+    placeHolder = "Search",
     onChange,
     maxWidth = "600px",
-    width = "50px",
     debounced,
-    minWidth = "600px",
+    minWidth = "400px",
     onFocus,
-    defaultValue = "",
+    value,
     autoFocus = false,
   } = props;
+  const [inputValue, setInputValue] = useState("");
 
-  const handleChange = _.debounce(function (e) {
-    onChange(e.target.value);
-  }, 1000);
+  useEffect(() => {
+    setInputValue(value || "");
+  }, [value]);
+
+  const handleChange = useCallback(
+    _.debounce(function (e) {
+      onChange(e.target.value);
+    }, 1000),
+    []
+  );
 
   return (
     <Box>
       <TextField
-        sx={{ maxWidth, width, minWidth }}
+        sx={{ maxWidth, minWidth }}
         color="primary"
-        defaultValue={defaultValue}
+        value={inputValue}
         autoFocus={autoFocus}
         onChange={(e) => {
-          debounced ? handleChange(e) : onChange(e.target.value);
+          if (debounced) {
+            handleChange(e);
+          } else {
+            onChange(e.target.value);
+          }
+          setInputValue(e.target.value);
         }}
         size="small"
         placeholder={placeHolder}
-        InputProps={{ endAdornment: <Search /> }}
+        InputProps={{
+          endAdornment: inputValue ? (
+            <IconButton
+              sx={{ mr: -1 }}
+              onClick={() => {
+                setInputValue("");
+                onChange("");
+              }}
+            >
+              <Close fontSize="small" />
+            </IconButton>
+          ) : (
+            <Search fontSize="small" />
+          ),
+        }}
         onFocus={onFocus}
       />
     </Box>

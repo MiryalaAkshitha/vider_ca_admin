@@ -1,6 +1,5 @@
 import { AddSharp } from "@mui/icons-material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import {
   Box,
   Button,

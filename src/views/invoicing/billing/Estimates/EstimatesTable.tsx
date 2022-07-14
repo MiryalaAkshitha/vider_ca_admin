@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const EstimatesTable = () => {
   useTitle("Invoice Table");
-  const [, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const handleAddNewInvoice = () => {
@@ -28,6 +28,7 @@ const EstimatesTable = () => {
         }}
       >
         <SearchContainer
+          value={search}
           minWidth="400px"
           placeHolder="Search for estimate"
           onChange={setSearch}
@@ -55,12 +56,11 @@ const TableActions = () => {
       options: [
         {
           label: "Generate Invoice",
-          action: () => {
-          },
+          action: () => {},
         },
         {
           label: "Generate Receipt",
-          action: () => { },
+          action: () => {},
         },
       ],
     });

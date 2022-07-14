@@ -16,7 +16,6 @@ function IProAddedFormCard({ data }: Props) {
   const menu = useMenu();
   const navigate = useNavigate();
   const params = useParams();
-
   const confirm = useConfirm();
   const queryClient = useQueryClient();
 

@@ -1,13 +1,13 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateLead } from "api/services/client";
+import { updateLead } from "api/services/clients/clients";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
-import { useEffect, useRef, useState } from "react";
+import { CLIENT_CATEGORIES } from "data/constants";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
-import { CLIENT_CATEGORIES } from "data/constants";
 
 interface StateProps {
   category: string;
@@ -25,7 +25,6 @@ interface Props extends DialogProps {
 
 function EditLead({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
-
   const [state, setState] = useState<StateProps>({
     category: "",
     subCategory: null,
@@ -35,7 +34,6 @@ function EditLead({ open, setOpen, data }: Props) {
     email: "",
     description: "",
   });
-  let formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (open) {
@@ -80,7 +78,7 @@ function EditLead({ open, setOpen, data }: Props) {
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Edit Lead">
-      <form onSubmit={handleSubmit} ref={formRef}>
+      <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
           fullWidth

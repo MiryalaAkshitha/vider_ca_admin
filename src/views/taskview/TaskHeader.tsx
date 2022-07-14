@@ -82,6 +82,7 @@ function TaskHeader({ onChange }: any) {
       <StyledProfileNav>
         {taskMenu().map((item, index) => (
           <StyledProfileNavItem
+            variant="body2"
             onClick={() => onChange(item)}
             key={index}
             active={window.location.hash?.replace("#", "") === item.id ? 1 : 0}

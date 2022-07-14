@@ -2,17 +2,17 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { userProfileMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
-import Expenditure from "views/settings/users/Expenditure";
-import Tasks from "views/settings/users/Tasks";
-import UserProfile from "views/settings/users/UserProfile";
+import Expenditure from "views/settings/manage-users/users/Expenditure";
+import Tasks from "views/settings/manage-users/users/Tasks";
+import UserProfile from "views/settings/manage-users/users/UserProfile";
 
 function Profile() {
   const [active, setActive] = useState("Profile");
 
   return (
     <>
-      <Box sx={{ position: "sticky", top: 45, bgcolor: "white", zIndex: 2 }}>
-        <StyledProfileNav sx={{ mt: 2, mx: -3 }}>
+      <Box sx={{ position: "sticky", top: 65, bgcolor: "white", zIndex: 2 }}>
+        <StyledProfileNav>
           {userProfileMenu.map((item, index) => (
             <StyledProfileNavItem
               key={index}
@@ -23,6 +23,8 @@ function Profile() {
             </StyledProfileNavItem>
           ))}
         </StyledProfileNav>
+      </Box>
+      <Box px={2} py={3}>
         {active === "Profile" && <UserProfile />}
         {active === "Tasks" && <Tasks />}
         {active === "Expenditure" && <Expenditure />}

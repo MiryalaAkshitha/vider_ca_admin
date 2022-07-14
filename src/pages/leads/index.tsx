@@ -1,6 +1,6 @@
 import { Delete, Edit, InfoOutlined } from "@mui/icons-material";
 import { Box, Button, IconButton } from "@mui/material";
-import { deleteLeads, getLeads } from "api/services/client";
+import { deleteLeads, getLeads } from "api/services/clients/clients";
 import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";

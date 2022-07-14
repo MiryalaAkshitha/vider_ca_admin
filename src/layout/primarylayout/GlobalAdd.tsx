@@ -1,6 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { globalAddMenu } from "data/globalAddMenu";
 
 type ElementType = HTMLElement | null;
 
@@ -9,25 +10,6 @@ interface AccountMenuProps {
   setAnchorEl: (v: ElementType) => void;
   setGlobalActionType: (v: string) => void;
 }
-
-const globalAddMenu = [
-  {
-    title: "Client",
-    action: "createClient",
-  },
-  {
-    title: "Task",
-    action: "createTask",
-  },
-  {
-    title: "Event",
-    action: "createEvent",
-  },
-  {
-    title: "Member",
-    action: "createEvent",
-  },
-];
 
 function GlobalAdd(props: AccountMenuProps) {
   const { anchorEl, setAnchorEl, setGlobalActionType } = props;

@@ -1,6 +1,6 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateClient } from "api/services/client";
+import { updateClient } from "api/services/clients/clients";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";

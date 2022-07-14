@@ -207,18 +207,6 @@ const reorderDDFormFields = (items: number[]) => {
   return http.put(`/due-diligence/fields/reorder`, { items });
 };
 
-const getPins = () => {
-  return http.get(`/tasks/client-pins`);
-};
-
-const addPin = ({ client }: { client: number }) => {
-  return http.post(`/tasks/client-pins`, { client });
-};
-
-const removePin = (id: number) => {
-  return http.delete(`/tasks/client-pins/${id}`);
-};
-
 const terminateTask = ({ id, reason }: any) => {
   return http.post(`/tasks/${id}/terminate`, { reason });
 };
@@ -281,9 +269,6 @@ export {
   reorderDDFormFields,
   deleteDDFormField,
   updateDDFormField,
-  getPins,
-  addPin,
-  removePin,
   terminateTask,
   deleteTask,
   getUserTasks,

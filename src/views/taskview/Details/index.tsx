@@ -18,8 +18,8 @@ import useTaskViewData from "./useTaskDetailsData";
 
 function Details() {
   const queryClient = useQueryClient();
-  const { users, loading, categories, labels } = useTaskViewData();
   const taskData: any = useTaskData();
+  const { users, loading, categories, labels } = useTaskViewData();
   const [state, setState] = useState<any>({});
 
   useEffect(() => {
@@ -28,8 +28,8 @@ function Details() {
     }
   }, [taskData]);
 
-  const { mutate } = useMutation(updateTask, {
-    onSuccess: (res) => {
+  const { mutateAsync } = useMutation(updateTask, {
+    onSuccess: () => {
       queryClient.invalidateQueries("task");
       snack.success("Task Details Updated");
     },
@@ -38,8 +38,8 @@ function Details() {
     },
   });
 
-  const handleUpdate = () => {
-    mutate({
+  const handleUpdate = async () => {
+    await mutateAsync({
       id: taskData?.id,
       data: state,
     });
@@ -61,10 +61,9 @@ function Details() {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  let subCategories = categories?.data.find(
-    (item: any) =>
-      item?.id === state?.category?.id || item?.id === state?.category
-  )?.subCategories;
+  let subCategories = categories?.data.find((item: any) => {
+    return item?.id === state?.category?.id || item?.id === state?.category;
+  })?.subCategories;
 
   if (loading) return <Loader minHeight="60vh" />;
 

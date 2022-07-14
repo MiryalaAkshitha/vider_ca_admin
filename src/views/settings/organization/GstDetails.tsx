@@ -133,8 +133,6 @@ function GstDetails({ state, setState, apiData }: any) {
     const showGstActive = state?.gstVerified && !gstChanged;
     const showGstVerify = !state?.gstVerified || gstChanged;
 
-    console.log(state?.gstVerified, gstChanged);
-
     return (
       <>
         {gstLoading && <CircularProgress size="1rem" />}

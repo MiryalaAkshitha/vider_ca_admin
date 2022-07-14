@@ -32,12 +32,10 @@ function Filters() {
         <ClientFilter />
         <SearchContainer
           minWidth="400px"
-          defaultValue={search}
+          value={search}
           debounced
           placeHolder="Search"
-          onChange={(v) => {
-            dispatch(handleSearch(v));
-          }}
+          onChange={(v) => dispatch(handleSearch(v))}
         />
       </StyledTasksFilterContainer>
       <Box display="flex" gap={3} justifyContent="space-between" mt={2}>

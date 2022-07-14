@@ -28,3 +28,26 @@ export const StyledServiceDesc = styled("div")(() => ({
   lineClamp: 2,
   WebkitBoxOrient: "vertical",
 }));
+
+export const StyledSelectBox = styled("div")({
+  border: "1px dashed rgba(0,0,0,0.3)",
+  borderRadius: 5,
+  padding: 10,
+  height: 100,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  cursor: "pointer",
+  marginTop: 20,
+});
+
+export const StyledSelectedBox = styled("div")({
+  border: "1px solid rgba(0,0,0,0.4)",
+  borderRadius: 5,
+  padding: "5px 10px",
+  marginTop: 10,
+  display: "flex",
+  justifyContent: "space-between",
+  gap: 20,
+  alignItems: "center",
+});

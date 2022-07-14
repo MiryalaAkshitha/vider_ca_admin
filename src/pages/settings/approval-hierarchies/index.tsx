@@ -24,13 +24,9 @@ function Approvals() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box p={2}>
+    <Box p={3}>
       <Box>
-        <SearchContainer
-          minWidth="400px"
-          placeHolder="Search"
-          onChange={setSearch}
-        />
+        <SearchContainer onChange={setSearch} />
       </Box>
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {filteredData?.map((item: any, index: number) => (

@@ -1,11 +1,12 @@
-import moment from "moment";
 import { RecurringFrequency } from "data/constants";
-import { array, boolean, date, mixed, object, ref, string } from "yup";
+import moment from "moment";
+import { array, boolean, date, mixed, object, string } from "yup";
 
 let createTaskDefaultValues = {
   serviceType: "standard",
   taskType: "non_recurring",
   service: null,
+  approvalHierarchy: null,
   client: [],
   category: "",
   subCategory: "",

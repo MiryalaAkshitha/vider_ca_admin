@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { setChatData, setChatType } from "redux/reducers/chatsSlice";
 import EditGroupChat from "./EditGroupChat";
 
-function GroupChat({ chat, taskData, setGroupChats }) {
+function GroupChat({ chat, setGroupChats }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const confirm = useConfirm();

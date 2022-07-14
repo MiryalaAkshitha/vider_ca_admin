@@ -1,14 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { createTask } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
+import { handleError } from "utils/handleError";
 import {
   createTaskDefaultValues,
   createTaskSchema,
@@ -17,7 +20,9 @@ import CommonFields from "./CommonFields";
 import CustomCommonFields from "./CustomCommonFields";
 import NonRecurringFields from "./NonRecurringFields";
 import RecurringFields from "./RecurringFields";
+import SelectApprovalHierarchy from "./SelectApprovalHierarchy";
 import SelectTypes from "./SelectTypes";
+import { StyledSelectBox, StyledSelectedBox } from "./styles";
 import useCreateTaskInitialData from "./useCreateTaskInitialData";
 
 interface Props extends DialogProps {
@@ -26,7 +31,7 @@ interface Props extends DialogProps {
 
 function CreateTask({ open, setOpen, successCb }: Props) {
   const queryClient = useQueryClient();
-
+  const [openSelectAppHier, setOpenSelectAppHier] = useState(false);
   const { users, labels, categories, clients, loading } =
     useCreateTaskInitialData({ enabled: open });
 
@@ -50,7 +55,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
       successCb && successCb();
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -65,6 +70,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
     data.service = data?.service?.id;
     data.dueDay = parseInt(data.dueDay?.value);
     data.recurringEndDate = data?.neverExpires ? null : data.recurringEndDate;
+    data.approvalHierarchy = data?.approvalHierarchy?.id ?? null;
     mutate(data);
   };
 
@@ -108,6 +114,29 @@ function CreateTask({ open, setOpen, successCb }: Props) {
             users={users}
             setValue={setValue}
           />
+          {watch("approvalHierarchy") && (
+            <StyledSelectedBox>
+              <Box display="flex" gap={1} alignItems="center">
+                <Typography variant="caption">Approval Hierarchy -</Typography>
+                <Typography variant="subtitle2">
+                  {watch<any>("approvalHierarchy")?.name}
+                </Typography>
+              </Box>
+              <IconButton
+                onClick={() => setValue("approvalHierarchy", null)}
+                size="small"
+              >
+                <Close fontSize="small" />
+              </IconButton>
+            </StyledSelectedBox>
+          )}
+          {!watch("approvalHierarchy") && (
+            <StyledSelectBox onClick={() => setOpenSelectAppHier(true)}>
+              <Typography variant="body1" color="rgba(0,0,0,0.5)">
+                Select Approval Hierarchy
+              </Typography>
+            </StyledSelectBox>
+          )}
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}
@@ -120,6 +149,11 @@ function CreateTask({ open, setOpen, successCb }: Props) {
           </Box>
         </form>
       )}
+      <SelectApprovalHierarchy
+        onChange={(data: any) => setValue("approvalHierarchy", data)}
+        open={openSelectAppHier}
+        setOpen={setOpenSelectAppHier}
+      />
     </DrawerWrapper>
   );
 }

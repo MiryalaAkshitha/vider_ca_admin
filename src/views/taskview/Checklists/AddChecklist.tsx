@@ -10,11 +10,14 @@ import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 
-type CheckListItems = Array<{ name: string; description: string }>;
+type CheckListItem = {
+  name: string;
+  description: string;
+};
 
 interface StateProps {
   name: string;
-  checklistItems: CheckListItems;
+  checklistItems: Array<CheckListItem>;
 }
 
 function AddChecklist({ open, setOpen }: DialogProps) {

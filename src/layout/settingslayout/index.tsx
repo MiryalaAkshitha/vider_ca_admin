@@ -1,12 +1,13 @@
+import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
+import { StyledSettingsMainContent } from "layout/styles";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Appbar from "./Appbar";
-import MainContent from "./MainContent";
 import SideNav from "./SideNav";
 
-function SettingsLayout(props: any) {
+function SettingsLayout() {
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       window.location.href = "/login";
@@ -18,9 +19,10 @@ function SettingsLayout(props: any) {
       <CssBaseline />
       <Appbar />
       <SideNav />
-      <MainContent>
+      <StyledSettingsMainContent>
+        <Toolbar />
         <Outlet />
-      </MainContent>
+      </StyledSettingsMainContent>
     </Box>
   );
 }

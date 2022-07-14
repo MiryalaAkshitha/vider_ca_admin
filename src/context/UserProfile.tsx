@@ -1,4 +1,3 @@
-import { Alert, Box } from "@mui/material";
 import { getProfile } from "api/services/users";
 import Loader from "components/Loader";
 import { createContext, useContext } from "react";

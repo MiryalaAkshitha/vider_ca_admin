@@ -1,5 +1,5 @@
 import { getCategories } from "api/services/categories";
-import { getClients } from "api/services/client";
+import { getClients } from "api/services/clients/clients";
 import { getLabels } from "api/services/labels";
 import { getUsers } from "api/services/users";
 import { useQuery } from "react-query";

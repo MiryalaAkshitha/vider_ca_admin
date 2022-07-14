@@ -1,5 +1,5 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import { getClient } from "api/services/client";
+import { getClient } from "api/services/clients/clients";
 import { getTotalStorage } from "api/services/storage";
 import Loader from "components/Loader";
 import useQueryParams from "hooks/useQueryParams";

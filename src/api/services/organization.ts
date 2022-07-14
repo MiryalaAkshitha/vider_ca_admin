@@ -1,15 +1,15 @@
 import { http } from "api/http";
 
 const getOrganization = () => {
-  return http.get(`/users/organization`);
+  return http.get(`/organization`);
 };
 
 const getGetStarted = () => {
-  return http.get(`/stats/organization/dashboard/get-started`);
+  return http.get(`/get-started`);
 };
 
 const updateGetStarted = (data: any) => {
-  return http.patch(`/stats/organization/dashboard/get-started`, data);
+  return http.patch(`/get-started`, data);
 };
 
 const getOrganizationDashboard = ({ queryKey }) => {
@@ -21,7 +21,7 @@ const getOrganizationDashboard = ({ queryKey }) => {
 };
 
 const getOrganizationLicenses = () => {
-  return http.get(`/users/organization/licenses`);
+  return http.get(`/organization-lincenses`);
 };
 
 const getBankAccounts = ({ queryKey }) => {
@@ -45,19 +45,19 @@ const deleteBankAccount = ({ id }: any) => {
 };
 
 const createOrganizationLicense = ({ data }: any) => {
-  return http.post(`/users/organization/licenses`, data);
+  return http.post(`/organization-lincenses`, data);
 };
 
 const updateOrganizationLicense = ({ id, data }: any) => {
-  return http.patch(`/users/organization/licenses/${id}`, data);
+  return http.patch(`/organization-lincenses/${id}`, data);
 };
 
 const updateOrganization = ({ data }: any) => {
-  return http.patch(`/users/organization`, data);
+  return http.patch(`/organization`, data);
 };
 
 const deleteOrganizationLicense = ({ id }: any) => {
-  return http.delete(`/users/organization/licenses/${id}`);
+  return http.delete(`/organization-lincenses/${id}`);
 };
 
 export {

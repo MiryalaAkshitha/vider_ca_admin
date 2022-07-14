@@ -85,11 +85,17 @@ const ViewBillingEntityUser = loadable(
 );
 const MyProfile = loadable(() => import("pages/settings/profile"));
 const Labels = loadable(() => import("pages/settings/labels"));
-const Users = loadable(() => import("pages/settings/users"));
-const InviteUsers = loadable(() => import("pages/settings/invited-users"));
-const ViewUser = loadable(() => import("pages/settings/view-user"));
-const Teams = loadable(() => import("pages/settings/teams"));
-const ViewTeam = loadable(() => import("pages/settings/ViewTeam"));
+const Users = loadable(() => import("pages/settings/manage-users/users"));
+const InviteUsers = loadable(
+  () => import("pages/settings/manage-users/invited-users")
+);
+const ViewUser = loadable(
+  () => import("pages/settings/manage-users/users/view-user")
+);
+const Teams = loadable(() => import("pages/settings/manage-users/teams"));
+const ViewTeam = loadable(
+  () => import("pages/settings/manage-users/teams/view-team")
+);
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("pages/leads"));
 const DscRegister = loadable(() => import("pages/client-view/dsc-register"));
@@ -124,10 +130,12 @@ const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
 });
 const Roles = loadable(() => {
-  return import("pages/settings/roles-permissions");
+  return import("pages/settings/manage-users/roles-permissions");
 });
 const EditPermissions = loadable(() => {
-  return import("pages/settings/roles-permissions/edit-permissions");
+  return import(
+    "pages/settings/manage-users/roles-permissions/edit-permissions"
+  );
 });
 const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
@@ -144,7 +152,7 @@ const ViewIproFormEntry = loadable(
   () => import("pages/task-view/view-ipro-entry")
 );
 const IProAuditLog = loadable(() => import("pages/task-view/ipro-audit-log"));
-const IProShareLink = loadable(() => import("pages/task-view/ipro-share-link"));
+const IProApprovals = loadable(() => import("pages/task-view/ipro-approvals"));
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/services/add-service"));
 const Approvals = loadable(() => import("pages/settings/approval-hierarchies"));
@@ -351,7 +359,7 @@ function RoutesContainer() {
           <Route path="view" element={<ViewIproFormEntry />} />
           <Route path="edit" element={<FormBuilder />} />
           <Route path="audit-log" element={<IProAuditLog />} />
-          <Route path="share-link" element={<IProShareLink />} />
+          <Route path="approvals" element={<IProApprovals />} />
         </Route>
         <Route
           path="/clients/:clientId/kyb-info/:formId"

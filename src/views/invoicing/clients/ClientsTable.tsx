@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const ClientsTable = () => {
   useTitle("Invoice Table");
-  const [, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const handleClientClick = () => {
@@ -96,6 +96,7 @@ const ClientsTable = () => {
         }}
       >
         <SearchContainer
+          value={search}
           minWidth="400px"
           placeHolder="Search by Name / Client Type"
           onChange={setSearch}

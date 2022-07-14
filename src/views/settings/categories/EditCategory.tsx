@@ -4,7 +4,6 @@ import { Box } from "@mui/system";
 import { updateCategory } from "api/services/categories";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
-import UploadImage from "components/UploadImage";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -16,13 +15,12 @@ interface EditCategoryProps extends DialogProps {
 
 function EditCategory({ open, setOpen, data }: EditCategoryProps) {
   const queryClient = useQueryClient();
-
+  const [subCategory, setSubCategory] = useState<string>("");
   const [state, setState] = useState<any>({
     name: "",
     color: "",
     subCategories: [],
   });
-  const [subCategory, setSubCategory] = useState<string>("");
 
   useEffect(() => {
     setState({

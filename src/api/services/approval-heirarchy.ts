@@ -1,5 +1,9 @@
 import { http } from "api/http";
 
+const getApprovals = ({ queryKey }) => {
+  return http.get("/approvals", { params: { ...queryKey[1] } });
+};
+
 const createApprovalHeirarchy = (data: any) => {
   return http.post("/approval-hierarchy", data);
 };
@@ -20,10 +24,36 @@ const getApprvalHeirarchyDetails = ({ queryKey }) => {
   return http.get(`/approval-hierarchy/${queryKey[1]}`);
 };
 
+const updateTaskApprovals = ({ taskId, approvalHierarchyId }: any) => {
+  return http.post(`/approvals/task`, {
+    taskId,
+    approvalHierarchyId,
+  });
+};
+
+const updateIrpoApprovals = ({ iproId, approvalHierarchyId }: any) => {
+  return http.post(`/approvals/ipro`, {
+    iproId,
+    approvalHierarchyId,
+  });
+};
+
+const updateApproval = (data: any) => {
+  const { approvalId, status, remarks } = data;
+  return http.patch(`/approvals/${approvalId}`, {
+    status,
+    remarks,
+  });
+};
+
 export {
   getApprvalHeirarchies,
   createApprovalHeirarchy,
   getApprvalHeirarchyDetails,
   updateAppHierarchy,
   deleteAppHierarchy,
+  getApprovals,
+  updateTaskApprovals,
+  updateApproval,
+  updateIrpoApprovals,
 };

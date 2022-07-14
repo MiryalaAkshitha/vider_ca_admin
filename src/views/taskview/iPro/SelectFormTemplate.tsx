@@ -18,10 +18,8 @@ interface Props extends DialogProps {
 
 function SelectFormTemplate(props: Props) {
   const { queryKey, type, typeId, open, setOpen } = props;
-
-  const [search, setSearch] = useState("");
-
   const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
   const [selected, setSelected] = useState("");
 
   const { data, isLoading }: ResType = useQuery(
@@ -66,6 +64,7 @@ function SelectFormTemplate(props: Props) {
         ) : (
           <>
             <SearchContainer
+              value={search}
               maxWidth="200px"
               placeHolder="Search by name or tags"
               onChange={setSearch}

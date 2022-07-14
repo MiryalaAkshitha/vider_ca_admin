@@ -5,36 +5,41 @@ import { addChecklistItems } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
-
-interface StateProps {
-  checklistItems: Array<{ name: string; description: string }>;
-}
 
 interface Props extends DialogProps {
   selectedChecklist: number | null;
 }
 
+interface CheckListItem {
+  name: string;
+  description: string;
+}
+
+interface StateProps {
+  checklistItems: Array<CheckListItem>;
+}
+
+const initialState = {
+  checklistItems: [
+    {
+      name: "",
+      description: "",
+    },
+  ],
+};
+
 function AddChecklistItem({ open, setOpen, selectedChecklist }: Props) {
-  const initialState = {
-    checklistItems: [
-      {
-        name: "",
-        description: "",
-      },
-    ],
-  };
-
   const queryClient = useQueryClient();
-
-  const [state, setState] = useState<StateProps>(initialState);
+  const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
 
   const { mutate, isLoading } = useMutation(addChecklistItems, {
     onSuccess: () => {
       snack.success("Checklist Items Added");
-      setState(initialState);
+      setState(_.cloneDeep(initialState));
       setOpen(false);
       queryClient.invalidateQueries("checklists");
     },

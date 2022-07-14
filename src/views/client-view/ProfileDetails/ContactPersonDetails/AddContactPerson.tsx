@@ -1,6 +1,6 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createContactPerson } from "api/services/client";
+import { createContactPerson } from "api/services/clients/clients";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";

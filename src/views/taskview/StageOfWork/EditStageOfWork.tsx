@@ -32,7 +32,7 @@ function EditStageOfWork({ open, setOpen, data }: Props) {
     referenceNumber: false,
     extraAttributes: [
       {
-        type: "Reference Number",
+        type: "REFERENCE_NUMBER",
         title: "",
         value: "",
       },
@@ -61,7 +61,7 @@ function EditStageOfWork({ open, setOpen, data }: Props) {
       extraAttributes: [
         ...state.extraAttributes,
         {
-          type: "Reference Number",
+          type: "REFERENCE_NUMBER",
           title: "",
           value: "",
         },
@@ -161,10 +161,10 @@ function EditStageOfWork({ open, setOpen, data }: Props) {
                     size="small"
                     value={item.type}
                   >
-                    <MenuItem value="Reference Number">
+                    <MenuItem value="REFERENCE_NUMBER">
                       Reference Number
                     </MenuItem>
-                    <MenuItem value="Attachment">Attachment</MenuItem>
+                    <MenuItem value="ATTACHMENT">Attachment</MenuItem>
                   </TextField>
                   <TextField
                     onChange={(e: InputChangeType) => {
@@ -174,7 +174,7 @@ function EditStageOfWork({ open, setOpen, data }: Props) {
                     }}
                     sx={{ flex: 1 }}
                     placeholder={
-                      item.type === "Reference Number"
+                      item.type === "REFERENCE_NUMBER"
                         ? "Title of the reference number"
                         : "Title of the attachment"
                     }

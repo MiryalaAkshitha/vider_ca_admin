@@ -13,15 +13,16 @@ interface PasswordFieldProps {
   inputProps?: any;
 }
 
-function PasswordField({
-  onChange,
-  required = true,
-  label,
-  sx,
-  value,
-  name = "password",
-  inputProps = {},
-}: PasswordFieldProps) {
+function PasswordField(props: PasswordFieldProps) {
+  const {
+    onChange,
+    required = true,
+    label,
+    sx,
+    value,
+    name = "password",
+    inputProps = {},
+  } = props;
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const togglePassword = () => {

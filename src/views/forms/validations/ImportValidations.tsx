@@ -77,6 +77,7 @@ function ImportValidations({ open, setOpen, successCb }: Props) {
     >
       <Box display="flex" justifyContent="flex-end">
         <SearchContainer
+          value={search}
           placeHolder="Search"
           minWidth="300px"
           onChange={setSearch}

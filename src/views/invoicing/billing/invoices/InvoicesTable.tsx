@@ -1,7 +1,12 @@
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import {
-  Button, FormControl, IconButton, InputLabel, MenuItem, Select
+  Button,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchContainer from "components/SearchContainer";
@@ -14,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const InvoiceTable = () => {
   useTitle("Invoice Table");
 
-  const [, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const [filterBy, setFilterBy] = useState("");
@@ -22,7 +27,6 @@ const InvoiceTable = () => {
   const handleAddNewInvoice = () => {
     navigate("/invoicing/create-invoice");
   };
-
 
   return (
     <Box p={3}>
@@ -43,6 +47,7 @@ const InvoiceTable = () => {
           }}
         >
           <SearchContainer
+            value={search}
             minWidth="400px"
             placeHolder="Search for estimate"
             onChange={setSearch}
@@ -88,11 +93,9 @@ const InvoiceTable = () => {
   );
 };
 
-
 const TableActions = () => {
   const menu = useMenu();
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     menu({
@@ -101,27 +104,25 @@ const TableActions = () => {
       options: [
         {
           label: "Download Invoice PDF",
-          action: () => {
-          },
+          action: () => {},
         },
         {
           label: "View Invoice",
-          action: () => {
-          },
+          action: () => {},
         },
         {
           label: "Edit Invoice",
           action: () => {
-            navigate("/invoicing/create-invoice")
+            navigate("/invoicing/create-invoice");
           },
         },
         {
           label: "Create Payment Receipt",
-          action: () => { },
+          action: () => {},
         },
         {
           label: "Cancel Invoice",
-          action: () => { },
+          action: () => {},
         },
       ],
     });
@@ -235,6 +236,5 @@ const data = [
     status: "Paid",
   },
 ];
-
 
 export default InvoiceTable;

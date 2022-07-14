@@ -19,10 +19,9 @@ import { getTitle } from "utils";
 import EditEvent from "./EditEvent";
 
 const EventDialog = ({ open, setOpen, data }) => {
+  const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState(false);
   const confirm = useConfirm();
-
-  const queryClient = useQueryClient();
 
   const EditEventClicked = () => {
     setEditOpen(true);

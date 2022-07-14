@@ -136,6 +136,7 @@ function SelectService({ open, setOpen, setValue, watch }: Props) {
         </Box>
         <Box display="flex" gap={1}>
           <SearchContainer
+            value={search}
             placeHolder="Search"
             minWidth="300px"
             onChange={setSearch}

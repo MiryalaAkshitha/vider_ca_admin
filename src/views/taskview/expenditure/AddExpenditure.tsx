@@ -19,7 +19,6 @@ import { DialogProps, SubmitType } from "types";
 function AddExpenditure({ open, setOpen }: DialogProps) {
   const params: any = useParams();
   const queryClient = useQueryClient();
-
   const [state, setState] = useState({
     type: "",
     particularName: "",

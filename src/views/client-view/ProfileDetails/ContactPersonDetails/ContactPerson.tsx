@@ -2,7 +2,7 @@ import { MoreVert } from "@mui/icons-material";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteContactPerson } from "api/services/client";
+import { deleteContactPerson } from "api/services/clients/clients";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
 import { snack } from "components/toast";
@@ -19,7 +19,6 @@ function ContactPerson({ data }: Props) {
   const confirm = useConfirm();
   const menu = useMenu();
   const queryClient = useQueryClient();
-
   const [open, setOpen] = useState<boolean>(false);
 
   const { mutate } = useMutation(deleteContactPerson, {

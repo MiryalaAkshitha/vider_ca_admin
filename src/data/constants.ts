@@ -194,6 +194,7 @@ export const taskViewMenu: Array<{ id: string; label: string }> = [
   { id: "subtasks", label: "Sub Tasks" },
   { id: "attachments", label: "Attachments" },
   { id: "loghours", label: "Log Hours" },
+  { id: "approvals", label: "Approvals" },
   { id: "events", label: "Events" },
 ];
 

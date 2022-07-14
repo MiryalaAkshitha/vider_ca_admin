@@ -16,8 +16,8 @@ import PasswordField from "views/login/PasswordField";
 import BackgroundWrapper from "./BackgroundWrapper";
 
 function CreateAccount() {
-  const navigate = useNavigate();
   const { fullName, email, password, mobileNumber } = useSelector(selectSignup);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { mutate, isLoading } = useMutation(sendOtp, {

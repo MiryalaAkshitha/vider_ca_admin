@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid } from "@mui/material";
-import { getClients } from "api/services/client";
+import { getClients } from "api/services/clients/clients";
 import { createEvent } from "api/services/events";
 import { getTasks } from "api/services/tasks";
 import DrawerWrapper from "components/DrawerWrapper";

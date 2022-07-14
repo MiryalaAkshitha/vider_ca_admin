@@ -1,17 +1,28 @@
-import { Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import {
+  Divider,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { useState } from "react";
-import { BarChatCard, PieChartCard } from "../clients/clientDashboard/OverviewCard";
+import {
+  BarChatCard,
+  PieChartCard,
+} from "../clients/clientDashboard/OverviewCard";
 import AgeingDues from "./AgeingDues";
 import FavIcon from "./FavIcon";
 
 function DashboardInvoice() {
-
   const [filterBy, setFilterBy] = useState("");
-  const [, setSearch] = useState("");
-
+  const [search, setSearch] = useState("");
 
   return (
     <Box p={3}>
@@ -41,13 +52,13 @@ function DashboardInvoice() {
           InputLabelProps={{ shrink: true }}
           label="Invoice Date"
           variant="outlined"
-          onChange={(e) => { }}
+          onChange={(e) => {}}
         />
       </Box>
       <Paper>
         <Box mt={2} p={2}>
-          <Box display="flex" justifyContent="space-between" >
-            <Typography variant="inherit" > Revenue Statistics</Typography>
+          <Box display="flex" justifyContent="space-between">
+            <Typography variant="inherit"> Revenue Statistics</Typography>
             <Box display="flex">
               <FormControl size="small" sx={{ minWidth: "140px", mr: "15px" }}>
                 <InputLabel id=" ">Filter By</InputLabel>
@@ -64,29 +75,47 @@ function DashboardInvoice() {
                 </Select>
               </FormControl>
               <SearchContainer
+                value={search}
                 minWidth="260px"
                 placeHolder="Search"
                 onChange={setSearch}
               />
             </Box>
           </Box>
-          <Box >
-            <BarChatCard data={barData} barInfo={barInfo} width="100%" height={4} />
+          <Box>
+            <BarChatCard
+              data={barData}
+              barInfo={barInfo}
+              width="100%"
+              height={4}
+            />
           </Box>
         </Box>
-      </Paper >
+      </Paper>
       <Grid container spacing={2}>
         <Grid item xs={8}>
           <Paper>
             <Box mt={2}>
-              <Typography p={2} sx={{}} variant="inherit" component="div">Top 10 Receivables</Typography>
-              <Table data={receivablesData || []} columns={receivablesColumns} loading={false} />
+              <Typography p={2} sx={{}} variant="inherit" component="div">
+                Top 10 Receivables
+              </Typography>
+              <Table
+                data={receivablesData || []}
+                columns={receivablesColumns}
+                loading={false}
+              />
             </Box>
           </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper>
-            <Box mt={2} p={2} display="flex" justifyContent="space-between" alignItems="center">
+            <Box
+              mt={2}
+              p={2}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
               <Typography variant="inherit">Receivables chart</Typography>
               <FormControl sx={{ width: "150px" }}>
                 <InputLabel id="demo-simple-select-label">Filter by</InputLabel>
@@ -103,17 +132,30 @@ function DashboardInvoice() {
               </FormControl>
             </Box>
             <Divider />
-            <Box display="flex" justifyContent="center" >
-              <PieChartCard data={pieData} colors={pieColors} width={250} height={250} cx={100} cy={120} />
+            <Box display="flex" justifyContent="center">
+              <PieChartCard
+                data={pieData}
+                colors={pieColors}
+                width={250}
+                height={250}
+                cx={100}
+                cy={120}
+              />
             </Box>
             <Divider />
             <Box p={2} display="flex" justifyContent="space-evenly">
               <Box display="flex" alignItems="center">
-                <Box m={2} sx={{ width: "15px", height: "15px", bgcolor: "#FFD950" }}></Box>
+                <Box
+                  m={2}
+                  sx={{ width: "15px", height: "15px", bgcolor: "#FFD950" }}
+                ></Box>
                 <Typography variant="body2">Amount Received</Typography>
               </Box>
               <Box display="flex" alignItems="center">
-                <Box m={2} sx={{ width: "15px", height: "15px", bgcolor: "#4791FB" }}></Box>
+                <Box
+                  m={2}
+                  sx={{ width: "15px", height: "15px", bgcolor: "#4791FB" }}
+                ></Box>
                 <Typography variant="body2">Amount Receivable</Typography>
               </Box>
             </Box>
@@ -122,33 +164,29 @@ function DashboardInvoice() {
       </Grid>
       <AgeingDues />
       <FavIcon />
-    </Box >
+    </Box>
   );
 }
 
 export default DashboardInvoice;
 
-
-
 const pieData = [
   { name: "Group A", value: 50 },
   { name: "Group B", value: 300 },
-
 ];
 
 const pieColors = ["#FFD950", "#4791FF"];
 
-
 const barInfo = [
   {
     name: "amountReceived",
-    color: "#8884d8"
+    color: "#8884d8",
   },
   {
     name: "amountGenerated",
-    color: "#82ca9d"
+    color: "#82ca9d",
   },
-]
+];
 const barData = [
   {
     name: "Feb-23",
@@ -214,10 +252,8 @@ const barData = [
     name: "Page G",
     amountReceived: 3490,
     amountGenerated: 4300,
-  }
-]
-
-
+  },
+];
 
 const receivablesColumns = [
   {
@@ -232,7 +268,6 @@ const receivablesColumns = [
     key: "amountReceivable",
     title: "amountReceivable",
   },
-
 ];
 
 const receivablesData = [
@@ -240,31 +275,26 @@ const receivablesData = [
     clientName: "Roy Capital",
     taskName: "Accounting audits (VD4832)",
     amountReceivable: "20,000 /-",
-
   },
 
   {
     clientName: "Roy Capital",
     taskName: "Accounting audits (VD4832)",
     amountReceivable: "20,000 /-",
-
   },
   {
     clientName: "Roy Capital",
     taskName: "Accounting audits (VD4832)",
     amountReceivable: "20,000 /-",
-
   },
   {
     clientName: "Roy Capital",
     taskName: "Accounting audits (VD4832)",
     amountReceivable: "20,000 /-",
-
   },
   {
     clientName: "Roy Capital",
     taskName: "Accounting audits (VD4832)",
     amountReceivable: "20,000 /-",
-
   },
 ];

@@ -19,10 +19,59 @@ function ExpenditureTable({ data }) {
   );
 }
 
+const columns = [
+  {
+    key: "particularName",
+    title: "Particular",
+  },
+  {
+    key: "type",
+    title: "Expenditure Type",
+    render: (rowData) => getTitle(rowData?.type),
+  },
+  {
+    key: "amount",
+    title: "Amount",
+  },
+  {
+    key: "attachment",
+    title: "Attachment",
+    render: (rowData: any) =>
+      rowData?.attachment ? (
+        <a
+          download={rowData?.attachment}
+          href={rowData?.attachmentUrl}
+          style={{
+            whiteSpace: "nowrap",
+            display: "inline-block",
+            maxWidth: 200,
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+          }}
+        >
+          {rowData?.attachment}
+        </a>
+      ) : (
+        "NA"
+      ),
+  },
+  {
+    key: "",
+    title: "Include in Invoice",
+    render: (rowData: any) => {
+      return rowData?.includeInInvoice ? "Yes" : "No";
+    },
+  },
+  {
+    key: "actions",
+    title: "Actions",
+    render: (rowData: any) => <Actions data={rowData} />,
+  },
+];
+
 const Actions = ({ data }) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
@@ -66,55 +115,5 @@ const Actions = ({ data }) => {
     </>
   );
 };
-
-const columns = [
-  {
-    key: "particularName",
-    title: "Particular",
-  },
-  {
-    key: "type",
-    title: "Expenditure Type",
-    render: (rowData) => getTitle(rowData?.type),
-  },
-  {
-    key: "amount",
-    title: "Amount",
-  },
-  {
-    key: "attachment",
-    title: "Attachment",
-    render: (rowData: any) =>
-      rowData?.attachment ? (
-        <a
-          download={rowData?.attachment}
-          href={rowData?.attachmentUrl}
-          style={{
-            whiteSpace: "nowrap",
-            display: "inline-block",
-            maxWidth: 200,
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-          }}
-        >
-          {rowData?.attachment}
-        </a>
-      ) : (
-        "NA"
-      ),
-  },
-  {
-    key: "",
-    title: "Include in Invoice",
-    render: (rowData) => {
-      return rowData?.includeInInvoice ? "Yes" : "No";
-    },
-  },
-  {
-    key: "actions",
-    title: "Actions",
-    render: (rowData: any) => <Actions data={rowData} />,
-  },
-];
 
 export default ExpenditureTable;

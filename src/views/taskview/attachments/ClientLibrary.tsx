@@ -21,7 +21,6 @@ type Props = {
 function ClientLibrary({ setOpen }: Props) {
   const queryClient = useQueryClient();
   const params: any = useParams();
-
   const [selectedFiles, setSelectedFiles] = useState<number[]>([]);
   const taskData: any = useTaskData();
 

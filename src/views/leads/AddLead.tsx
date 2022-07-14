@@ -1,14 +1,14 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createLead } from "api/services/client";
+import { createLead } from "api/services/clients/clients";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import { CLIENT_CATEGORIES } from "data/constants";
 import _ from "lodash";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, SubmitType } from "types";
-import { CLIENT_CATEGORIES } from "data/constants";
 
 interface StateProps {
   category: string;
@@ -33,7 +33,6 @@ let initialState = {
 function AddLead({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
-  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {
@@ -73,7 +72,7 @@ function AddLead({ open, setOpen }: DialogProps) {
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Add new lead">
-      <form onSubmit={handleSubmit} ref={formRef}>
+      <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
           fullWidth

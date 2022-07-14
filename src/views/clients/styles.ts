@@ -5,7 +5,7 @@ export const StyledProfileNav = styled("div")(({ theme }) => ({
   background: "#F5F5F5",
   display: "flex",
   justifyContent: "center",
-  gap: 30,
+  gap: 25,
 }));
 
 export const StyledProfileNavItem = styled(Typography)<{ active: number }>(

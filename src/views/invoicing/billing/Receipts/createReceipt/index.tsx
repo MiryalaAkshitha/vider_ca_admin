@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import Radio from "@mui/material/Radio";
-import { getClients } from "api/services/client";
+import { getClients } from "api/services/clients/clients";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";

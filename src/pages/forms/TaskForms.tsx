@@ -13,11 +13,12 @@ import FormCard from "views/forms/FormCard";
 
 const TaskForms = () => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
   const { data, isLoading }: ResType = useQuery(
     ["task-forms", { type: "TASKS" }],
     getForms
   );
-  const [search, setSearch] = useState("");
 
   const filteredData = useFilteredData(data?.data, ["name", "tags"], search);
 
@@ -35,8 +36,8 @@ const TaskForms = () => {
   return (
     <Box px={3} py={2}>
       <SearchContainer
+        value={search}
         placeHolder="Search by name or tags"
-        width={"450px"}
         onChange={setSearch}
       />
       <Grid item container spacing={2} mt={2}>

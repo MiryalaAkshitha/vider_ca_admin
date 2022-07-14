@@ -25,7 +25,12 @@ export const approvalsSlice = createSlice({
     setData(state: IState, action: PayloadAction<any>) {
       state.name = action.payload.name;
       state.type = action.payload.type;
-      state.approvalLevels = action.payload.approvalLevels;
+      state.approvalLevels = action.payload.approvalLevels?.map(
+        (item: any) => ({
+          roleId: item.role?.id,
+          userId: item.user?.id,
+        })
+      );
     },
     resetData(state: IState) {
       state.name = "";

@@ -33,10 +33,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
   const [search, setSearch] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [filters, setFilters] = useState({
-    category: "",
-    subCategory: "",
-  });
+  const [filters, setFilters] = useState({ category: "", subCategory: "" });
 
   const { data, isLoading }: ResType = useQuery(
     "default-services",
@@ -179,6 +176,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
             }
           />
           <SearchContainer
+            value={search}
             placeHolder="Search"
             minWidth="300px"
             onChange={setSearch}
