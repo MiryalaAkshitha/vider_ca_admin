@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateClientPassword } from "api/services/client-info";
+import { updateClientPassword } from "api/services/clients/client-info";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";

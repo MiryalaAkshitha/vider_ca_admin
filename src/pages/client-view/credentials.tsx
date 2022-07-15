@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Fab } from "@mui/material";
 import { Box } from "@mui/system";
-import { getClientPasswords } from "api/services/client-info";
+import { getClientPasswords } from "api/services/clients/client-info";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";

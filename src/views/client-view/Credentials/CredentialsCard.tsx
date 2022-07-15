@@ -7,7 +7,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { deleteClientPassword } from "api/services/client-info";
+import { deleteClientPassword } from "api/services/clients/client-info";
 import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import moment from "moment";
