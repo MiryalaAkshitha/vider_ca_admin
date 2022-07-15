@@ -68,21 +68,23 @@ function AddApprovalHierarchy() {
   });
 
   const handleSubmit = () => {
+    let apiData = {
+      name,
+      type,
+      approvalLevels,
+    };
+
+    apiData.approvalLevels = apiData.approvalLevels.map(
+      (item: any, index: number) => ({ ...item, level: index + 1 })
+    );
+
     if (approvalId) {
       update({
         id: approvalId,
-        data: {
-          name,
-          type,
-          approvalLevels,
-        },
+        data: apiData,
       });
     } else {
-      mutate({
-        name,
-        type,
-        approvalLevels,
-      });
+      mutate(apiData);
     }
   };
 

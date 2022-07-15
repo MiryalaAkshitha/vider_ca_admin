@@ -7,12 +7,14 @@ import { icons } from "assets";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
 import { snack } from "components/toast";
+import _ from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTimerRunning } from "redux/reducers/globalSlice";
+import { formattedDatetime } from "utils/formattedDateTime";
 import Timer from "./timer";
 
 type Props = {
@@ -79,6 +81,23 @@ function TaskItem({ data }: Props) {
       id: timerId!,
       endTime: new Date().getTime(),
     });
+  };
+
+  const getApprovalUpdate = (approvals: any[]) => {
+    const sorted = _.sortBy(approvals, "level");
+    const lastApprovedIndex = _.findLastIndex(sorted, { status: "APPROVED" });
+    const allApproved = _.every(sorted, { status: "APPROVED" });
+
+    if (allApproved) return `All approvals have been approved`;
+
+    return `Level ${lastApprovedIndex + 1} has been approved`;
+  };
+
+  const getLastApprovedDate = (approvals: any[]) => {
+    const sorted = _.sortBy(approvals, "level");
+    const lastApprovedIndex = _.findLastIndex(sorted, { status: "APPROVED" });
+
+    return formattedDatetime(sorted[lastApprovedIndex]?.updatedAt);
   };
 
   return (
@@ -169,6 +188,24 @@ function TaskItem({ data }: Props) {
           />
         </Box>
       </Box>
+      {data?.approvals?.length > 0 && (
+        <Box sx={{ p: "6px", borderTop: "1px solid rgba(0,0,0,0.1)" }}>
+          {_.some(data?.approvals, { status: "APPROVED" }) ? (
+            <>
+              <Typography variant="body2">
+                {getApprovalUpdate(data?.approvals)}
+              </Typography>
+              <Typography variant="caption" color="rgba(0,0,0,0.5)">
+                Last Updated on {getLastApprovedDate(data?.approvals)}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="body2" textAlign="center">
+              Approval Levels ({data?.approvals.length})
+            </Typography>
+          )}
+        </Box>
+      )}
     </>
   );
 }

@@ -25,10 +25,11 @@ interface Props {
   item: any;
   index: number;
   queryKey?: string;
+  enabled: boolean;
 }
 
 function ApprovalLevel(props: Props) {
-  const { item, index, queryKey = "task-approvals" } = props;
+  const { item, index, enabled, queryKey = "task-approvals" } = props;
   const queryClient = useQueryClient();
   const [status, setStatus] = useState("");
   const [newStatus, setNewStatus] = useState("");
@@ -115,18 +116,29 @@ function ApprovalLevel(props: Props) {
             <Typography variant="h6">Reviewer Details</Typography>
           </Box>
           <Box p={2}>
-            <Box display="flex" gap={1}>
-              <Box flex={1} display="flex" gap={1} alignItems="center">
-                <Avatar src={item?.user?.imageUrl} />
-                <Box>
-                  <Typography variant="body1">
-                    {item?.user?.fullName}
-                  </Typography>
-                  <Typography variant="caption" color="rgba(0,0,0,0.5)">
+            <Box display="flex" gap={1} alignItems="center">
+              {item?.user ? (
+                <Box flex={1} display="flex" gap={1} alignItems="center">
+                  <Avatar src={item?.user?.imageUrl} />
+                  <Box>
+                    <Typography variant="body1">
+                      {item?.user?.fullName}
+                    </Typography>
+                    <Typography variant="caption" color="rgba(0,0,0,0.5)">
+                      {item?.role?.name}
+                    </Typography>
+                  </Box>
+                </Box>
+              ) : (
+                <Box flex={1} display="flex" alignItems="center" gap={1}>
+                  <Typography variant="subtitle2">
                     {item?.role?.name}
                   </Typography>
+                  <Typography variant="caption" color="rgba(0,0,0,0.6)">
+                    - Any user with this role
+                  </Typography>
                 </Box>
-              </Box>
+              )}
               <Box>
                 <TextField
                   sx={{ width: 150 }}
@@ -134,6 +146,7 @@ function ApprovalLevel(props: Props) {
                   variant="outlined"
                   size="small"
                   select
+                  disabled={!enabled}
                   fullWidth
                   onChange={(e) => setNewStatus(e.target.value)}
                   value={newStatus}

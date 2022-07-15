@@ -44,7 +44,10 @@ export const approvalsSlice = createSlice({
       state.type = action.payload;
     },
     addApprovalLevel(state: IState) {
-      state.approvalLevels.push({ roleId: "", userId: "" });
+      state.approvalLevels.push({
+        roleId: "",
+        userId: "",
+      });
     },
     removeApprovalLevel(state: IState, action: PayloadAction<number>) {
       state.approvalLevels.splice(action.payload, 1);

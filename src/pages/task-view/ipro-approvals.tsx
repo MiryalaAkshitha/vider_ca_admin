@@ -6,6 +6,9 @@ import {
 } from "api/services/approval-heirarchy";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
+import { usePermissions } from "context/PermissionsProvider";
+import { useUserData } from "context/UserProfile";
+import _ from "lodash";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -15,6 +18,8 @@ import SelectApprovalHierarchy from "views/tasks/board/CreateTask/SelectApproval
 import ApprovalLevel from "views/taskview/approvals/ApprovalLevel";
 
 function IProApprovals() {
+  const { role } = usePermissions();
+  const { data: user } = useUserData();
   const queryClient = useQueryClient();
   const params = useParams();
   const [open, setOpen] = useState(false);
@@ -34,6 +39,29 @@ function IProApprovals() {
       snack.error(handleError(err));
     },
   });
+
+  const hasPermission = (item: any) => {
+    if (item?.user) {
+      return item.user?.id === user?.id;
+    }
+
+    if (item?.role) {
+      return item.role?.id === role?.id;
+    }
+
+    return false;
+  };
+
+  const shouldBeEnabled = (index: number) => {
+    const sorted = _.sortBy(data?.data, "level");
+    const lastApprovedIndex = _.findLastIndex(sorted, { status: "APPROVED" });
+
+    if (index === lastApprovedIndex + 1) {
+      return true;
+    }
+
+    return false;
+  };
 
   if (isLoading) return <Loader />;
 
@@ -55,8 +83,9 @@ function IProApprovals() {
         ) : null}
         {data?.data?.length ? (
           <Timeline>
-            {data?.data?.map((item: any, index: number) => (
+            {_.sortBy(data?.data, "level")?.map((item: any, index: number) => (
               <ApprovalLevel
+                enabled={shouldBeEnabled(index) && hasPermission(item)}
                 item={item}
                 index={index}
                 key={index}
