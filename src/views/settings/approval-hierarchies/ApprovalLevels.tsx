@@ -39,7 +39,6 @@ function ApprovalLevels() {
           key={index}
         />
       ))}
-
       <Box
         textAlign="right"
         mt={2}

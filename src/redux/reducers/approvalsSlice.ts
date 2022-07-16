@@ -55,6 +55,10 @@ export const approvalsSlice = createSlice({
     handleApprovalLevel(state: IState, action: PayloadAction<any>) {
       let { index, name, value } = action.payload;
       state.approvalLevels[index][name] = value;
+
+      if (name === "roleId") {
+        state.approvalLevels[index].userId = "";
+      }
     },
   },
 });

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 
 interface IState {
@@ -25,7 +25,7 @@ export const ChatsSlice = createSlice({
   name: "chats",
   initialState,
   reducers: {
-    setChatData(state: IState, action) {
+    setChatData(state: IState, action: PayloadAction<any>) {
       state.name = action.payload.name;
       state.image = action.payload.image;
       state.type = action.payload.type;
@@ -33,10 +33,10 @@ export const ChatsSlice = createSlice({
       state.messages = action.payload.messages;
       state.members = action.payload.members;
     },
-    addMessage(state: IState, action) {
+    addMessage(state: IState, action: PayloadAction<any>) {
       state.messages.push(action.payload);
     },
-    setChatType(state: IState, action) {
+    setChatType(state: IState, action: PayloadAction<any>) {
       state.chatType = action.payload;
     },
   },

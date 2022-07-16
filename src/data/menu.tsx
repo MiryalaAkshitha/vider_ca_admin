@@ -38,11 +38,11 @@ export const menu: Array<IMenuItem> = [
   //   path: "/reports",
   //   icon: icons.reports,
   // },
-  // {
-  //   title: "Invoicing",
-  //   path: "/invoicing",
-  //   icon: icons.invoicing,
-  // },
+  {
+    title: "Invoicing",
+    path: "/invoicing",
+    icon: icons.invoicing,
+  },
   {
     title: "Storage",
     path: "/storage/my-storage",

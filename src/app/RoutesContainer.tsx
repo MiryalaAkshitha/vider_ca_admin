@@ -11,17 +11,17 @@ import PageWithPermission from "components/PageWithPermission";
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Invoicing = loadable(() => import("pages/invoicing"));
-const InvoicingDashboard = loadable(() => import("pages/invoicing/Dashboard"));
-const Invoices = loadable(() => import("pages/invoicing/invoices"));
-const Receipts = loadable(() => import("pages/invoicing/Receipts"));
-const Estimates = loadable(() => import("pages/invoicing/Estimates"));
-const ClientsTable = loadable(
-  () => import("views/invoicing/clients/ClientsTable")
-);
-const ClientDashboard = loadable(() => import("pages/invoicing/Clients"));
-const RecurringInvoices = loadable(
-  () => import("views/invoicing/billing/RecurringInvoices")
-);
+// const InvoicingDashboard = loadable(() => import("pages/invoicing/Dashboard"));
+// const Invoices = loadable(() => import("pages/invoicing/invoices"));
+// const Receipts = loadable(() => import("pages/invoicing/Receipts"));
+// const ClientDashboard = loadable(() => import("pages/invoicing/Clients"));
+// const ClientsTable = loadable(
+//   () => import("views/invoicing/clients/ClientsTable")
+// );
+// const RecurringInvoices = loadable(
+//   () => import("views/invoicing/billing/RecurringInvoices")
+// );
+const Estimates = loadable(() => import("pages/invoicing/estimates"));
 const CreateInvoice = loadable(
   () => import("views/invoicing/billing/invoices/createInvoice/index")
 );
@@ -174,8 +174,8 @@ function RoutesContainer() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
           <Route path="invoicing" element={<Invoicing />}>
-            <Route index element={<Navigate to="dashboard" />} />
-            <Route path="dashboard" element={<InvoicingDashboard />} />
+            <Route index element={<Navigate to="estimates" />} />
+            {/* <Route path="dashboard" element={<InvoicingDashboard />} />
             <Route path="invoices" element={<Invoices />} />
             <Route path="clients">
               <Route index element={<ClientsTable />} />
@@ -189,10 +189,10 @@ function RoutesContainer() {
                 <Route path="mails" element={<Mails />} />
                 <Route path="statements" element={<Statements />} />
               </Route>
-            </Route>
+            </Route> */}
             <Route path="estimates" element={<Estimates />} />
-            <Route path="receipts" element={<Receipts />} />
-            <Route path="recurring-invoices" element={<RecurringInvoices />} />
+            {/* <Route path="receipts" element={<Receipts />} /> */}
+            {/* <Route path="recurring-invoices" element={<RecurringInvoices />} /> */}
           </Route>
           <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
           <Route path="invoicing/send-email" element={<SentEmail />} />

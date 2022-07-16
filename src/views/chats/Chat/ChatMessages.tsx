@@ -68,7 +68,6 @@ const ChatMessages = () => {
           let images = (node as HTMLElement).querySelectorAll("img");
           images.forEach((image) => {
             image.onload = () => {
-              console.log("loaded");
               elementScroll();
             };
           });

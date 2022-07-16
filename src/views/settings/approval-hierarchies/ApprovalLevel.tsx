@@ -91,11 +91,13 @@ const ApprovalLevel = ({ users, roles, data, index }: any) => {
             name="userId"
             onChange={handleChange}
           >
-            {users?.map((user: any) => (
-              <MenuItem value={user?.id} key={user?.id}>
-                {user?.fullName}
-              </MenuItem>
-            ))}
+            {users
+              ?.filter((item: any) => item.role?.id === +data?.roleId)
+              ?.map((user: any) => (
+                <MenuItem value={user?.id} key={user?.id}>
+                  {user?.fullName}
+                </MenuItem>
+              ))}
           </TextField>
         </Box>
       )}

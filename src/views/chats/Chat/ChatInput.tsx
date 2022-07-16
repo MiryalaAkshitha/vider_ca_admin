@@ -3,11 +3,14 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { Box, CircularProgress, IconButton } from "@mui/material";
 import { http } from "api/http";
 import { socket } from "app";
+import _ from "lodash";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectChats } from "redux/reducers/chatsSlice";
 import { SubmitType } from "types";
 import { StyledChatInput } from "../styles";
+
+let timeout: any;
 
 function ChatInput() {
   const userId = localStorage.getItem("userId") || "";
@@ -39,6 +42,19 @@ function ChatInput() {
 
   const onMessageChange = (e: any) => {
     setMessage(e.target.value);
+    socket.emit("typing", {
+      roomId,
+      userId,
+      typing: true,
+    });
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      socket.emit("typing", {
+        roomId,
+        userId,
+        typing: false,
+      });
+    }, 1000);
   };
 
   const handleSubmit = (e: SubmitType) => {

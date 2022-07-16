@@ -20,6 +20,7 @@ function Chat({ onClose }: Props) {
   const { name, roomId, members, type } = useSelector(selectChats);
   const dispatch = useDispatch();
   const [maximize, setMaximize] = useState(false);
+  const [typing, setTyping] = useState(false);
 
   const handleClose = () => {
     onClose && onClose();
@@ -31,7 +32,18 @@ function Chat({ onClose }: Props) {
 
   useEffect(() => {
     if (!roomId) return;
-    socket.on(roomId, (message) => {
+    socket.on(`${roomId}/typing`, (message: any) => {
+      if (message.userId === localStorage.getItem("userId")) return;
+      setTyping(message?.typing || false);
+    });
+    return () => {
+      socket.off(roomId);
+    };
+  }, [roomId]);
+
+  useEffect(() => {
+    if (!roomId) return;
+    socket.on(roomId, (message: any) => {
       dispatch(addMessage(message));
     });
     return () => {
@@ -55,7 +67,7 @@ function Chat({ onClose }: Props) {
       >
         <Box>
           <Typography flex={1} variant="body1">
-            {name}
+            {name} {typing && " - typing..."}
           </Typography>
           {type === "GROUP" && (
             <Box display="flex" alignItems="center" gap="4px">

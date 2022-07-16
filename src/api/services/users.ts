@@ -68,8 +68,8 @@ const joinUser = (data: any) => {
   return http.post("/users/join", data);
 };
 
-const getUsers = (data: any) => {
-  return http.get("/users", data);
+const getUsers = () => {
+  return http.get("/users");
 };
 
 const getInvitedusers = (data: any) => {
