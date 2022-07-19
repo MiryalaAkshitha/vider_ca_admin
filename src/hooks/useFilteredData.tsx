@@ -5,8 +5,8 @@ function useFilteredData(data: any, searchItems: string[], search: string) {
     result = result?.filter((item: any) => {
       return searchItems.some((searchItem: string) => {
         return JSON.stringify(item[searchItem])
-          .toLowerCase()
-          .includes(search.toLowerCase());
+          ?.toLowerCase()
+          ?.includes(search.toLowerCase());
       });
     });
   }

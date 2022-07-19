@@ -1,17 +1,16 @@
-import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { deleteRole, getRoles } from "api/services/roles";
 import Table from "components/Table";
-import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
+import { useConfirm } from "context/ConfirmDialog";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import AddRole from "views/settings/manage-users/roles-permissions/AddRole";
-import EditRole from "views/settings/manage-users/roles-permissions/EditRole";
-import { useNavigate } from "react-router-dom";
 
 function RolesAndPermissions() {
   const navigate = useNavigate();

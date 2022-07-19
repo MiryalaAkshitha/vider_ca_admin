@@ -147,7 +147,7 @@ function TaskComment({ data, users }: Props) {
                 <Box mb={1} display="flex" gap={2} alignItems="center">
                   <Avatar
                     sx={{ width: 30, height: 30 }}
-                    src="https://picsum.photos/200"
+                    src={data?.user?.imageUrl}
                   />
                   <div>
                     <Typography variant="body2" sx={{ lineHeight: "10px" }}>

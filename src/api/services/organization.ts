@@ -20,14 +20,18 @@ const getOrganizationDashboard = ({ queryKey }) => {
   });
 };
 
-const getOrganizationLicenses = () => {
-  return http.get(`/organization-lincenses`);
+const getOrganizationLicenses = ({ queryKey }) => {
+  return http.get(`/organization-lincenses`, {
+    params: {
+      ...queryKey[1],
+    },
+  });
 };
 
 const getBankAccounts = ({ queryKey }) => {
   return http.get(`/bank-accounts`, {
     params: {
-      type: queryKey[1],
+      ...queryKey[1],
     },
   });
 };

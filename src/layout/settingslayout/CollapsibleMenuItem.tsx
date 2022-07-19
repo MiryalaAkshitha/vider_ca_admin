@@ -1,5 +1,5 @@
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import { ListItemIcon, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
@@ -30,13 +30,11 @@ const CollapsibleMenuItem = ({ item }: any) => {
             </Typography>
           }
         />
-        <ListItemIcon>
-          {open ? (
-            <KeyboardArrowUp sx={{ color: "white" }} />
-          ) : (
-            <KeyboardArrowDown sx={{ color: "white" }} />
-          )}
-        </ListItemIcon>
+        {open ? (
+          <KeyboardArrowUp sx={{ color: "white" }} />
+        ) : (
+          <KeyboardArrowDown sx={{ color: "white" }} />
+        )}
       </StyledListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>

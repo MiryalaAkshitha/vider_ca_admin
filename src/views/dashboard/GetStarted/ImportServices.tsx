@@ -100,7 +100,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
   const handleSelectAll = (e: any) => {
     setSelectAll(e.target.checked);
     if (e.target.checked) {
-      let allServices = data?.data.map((item: any) => item._id);
+      let allServices = data?.data.map((item: any) => item.id);
       setSelectedServices(allServices);
     } else {
       setSelectedServices([]);

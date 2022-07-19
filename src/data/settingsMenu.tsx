@@ -10,8 +10,20 @@ export const settingsMenu: Array<IMenuItem> = [
     path: "/settings/profile",
   },
   {
-    title: "Organization Profile",
-    path: "/settings/organization-profile",
+    title: "Organization",
+    path: "",
+    children: [
+      {
+        title: "Organization  Profile",
+        path: "/settings/organization-profile",
+        children: [],
+      },
+      {
+        title: "Billing Entities",
+        path: "/settings/billing-entities",
+        children: [],
+      },
+    ],
   },
   {
     title: "Manage users",

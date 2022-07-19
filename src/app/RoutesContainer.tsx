@@ -10,60 +10,28 @@ import PageWithPermission from "components/PageWithPermission";
 
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
-const Invoicing = loadable(() => import("pages/invoicing"));
-// const InvoicingDashboard = loadable(() => import("pages/invoicing/Dashboard"));
-// const Invoices = loadable(() => import("pages/invoicing/invoices"));
-// const Receipts = loadable(() => import("pages/invoicing/Receipts"));
-// const ClientDashboard = loadable(() => import("pages/invoicing/Clients"));
-// const ClientsTable = loadable(
-//   () => import("views/invoicing/clients/ClientsTable")
-// );
-// const RecurringInvoices = loadable(
-//   () => import("views/invoicing/billing/RecurringInvoices")
-// );
-const Estimates = loadable(() => import("pages/invoicing/estimates"));
-const CreateInvoice = loadable(
-  () => import("views/invoicing/billing/invoices/createInvoice/index")
-);
-const InvoicePreview = loadable(
-  () => import("views/invoicing/billing/invoices/createInvoice/InvoicePreview")
-);
-const SentEmail = loadable(
-  () => import("views/invoicing/billing/invoices/createInvoice/SendEmail")
-);
-const CreateEstimate = loadable(
-  () => import("views/invoicing/billing/Estimates/createEstimate/index")
+const Billing = loadable(() => import("pages/billing"));
+const Estimates = loadable(() => import("pages/billing/estimates"));
+const AddEstimate = loadable(
+  () => import("pages/billing/estimates/add-estimate")
 );
 const EstimatePreview = loadable(
-  () =>
-    import("views/invoicing/billing/Estimates/createEstimate/EstimatePreview")
+  () => import("pages/billing/estimates/estimate-preview")
 );
+const Invoices = loadable(() => import("pages/billing/invoices"));
+const Receipts = loadable(() => import("pages/billing/receipts"));
+const CreateInvoice = loadable(
+  () => import("views/billing/invoices/createInvoice/index")
+);
+const InvoicePreview = loadable(
+  () => import("views/billing/invoices/createInvoice/InvoicePreview")
+);
+const SentEmail = loadable(
+  () => import("views/billing/invoices/createInvoice/SendEmail")
+);
+
 const CreateReceipt = loadable(
-  () => import("views/invoicing/billing/Receipts/createReceipt/index")
-);
-const Overview = loadable(
-  () => import("views/invoicing/clients/clientDashboard/Overview")
-);
-const UnbilledTasks = loadable(
-  () => import("views/invoicing/clients/clientDashboard/UnbilledTasks")
-);
-const BilledTask = loadable(
-  () => import("views/invoicing/clients/clientDashboard/BilledTask")
-);
-const ClientInvoicing = loadable(
-  () => import("views/invoicing/clients/clientDashboard/ClientInvoicing")
-);
-const PaymentReceived = loadable(
-  () => import("views/invoicing/clients/clientDashboard/PaymentReceived")
-);
-const Comments = loadable(
-  () => import("views/invoicing/clients/clientDashboard/Comments")
-);
-const Mails = loadable(
-  () => import("views/invoicing/clients/clientDashboard/Mails")
-);
-const Statements = loadable(
-  () => import("views/invoicing/clients/clientDashboard/Statements")
+  () => import("views/billing/receipts/createReceipt/index")
 );
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
@@ -78,10 +46,10 @@ const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/tasks"));
 const Categories = loadable(() => import("pages/settings/categories"));
 const BillingEntities = loadable(
-  () => import("pages/settings/billing-entities")
+  () => import("pages/settings/organization/billing-entities")
 );
-const ViewBillingEntityUser = loadable(
-  () => import("pages/settings/viewBillingEntityUser")
+const BillingEntityProfile = loadable(
+  () => import("pages/settings/organization/billing-entity-profile")
 );
 const MyProfile = loadable(() => import("pages/settings/profile"));
 const Labels = loadable(() => import("pages/settings/labels"));
@@ -119,7 +87,7 @@ const KybFormAuditLog = loadable(
   () => import("pages/client-view/kyb-form-audit-log")
 );
 const OrganizationProfile = loadable(
-  () => import("pages/settings/organization-profile")
+  () => import("pages/settings/organization/organization-profile")
 );
 const Storage = loadable(() => import("pages/storage"));
 const MyStorage = loadable(() => import("views/storage/MyStorage"));
@@ -173,41 +141,20 @@ function RoutesContainer() {
           </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
-          <Route path="invoicing" element={<Invoicing />}>
+          <Route path="billing" element={<Billing />}>
             <Route index element={<Navigate to="estimates" />} />
-            {/* <Route path="dashboard" element={<InvoicingDashboard />} />
-            <Route path="invoices" element={<Invoices />} />
-            <Route path="clients">
-              <Route index element={<ClientsTable />} />
-              <Route path="id" element={<ClientDashboard />}>
-                <Route path="overview" element={<Overview />} />
-                <Route path="unbilled-tasks" element={<UnbilledTasks />} />
-                <Route path="billed-tasks" element={<BilledTask />} />
-                <Route path="payments-received" element={<PaymentReceived />} />
-                <Route path="invoices" element={<ClientInvoicing />} />
-                <Route path="comments" element={<Comments />} />
-                <Route path="mails" element={<Mails />} />
-                <Route path="statements" element={<Statements />} />
-              </Route>
-            </Route> */}
             <Route path="estimates" element={<Estimates />} />
-            {/* <Route path="receipts" element={<Receipts />} /> */}
-            {/* <Route path="recurring-invoices" element={<RecurringInvoices />} /> */}
+            <Route path="invoices" element={<Invoices />} />
+            <Route path="receipts" element={<Receipts />} />
           </Route>
+          <Route path="billing/estimates/add" element={<AddEstimate />} />
           <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
           <Route path="invoicing/send-email" element={<SentEmail />} />
           <Route
             path="invoicing/invoice-preview"
             element={<InvoicePreview />}
           />
-          <Route
-            path="invoicing/create-estimate"
-            element={<CreateEstimate />}
-          />
-          <Route
-            path="invoicing/estimate-preview"
-            element={<EstimatePreview />}
-          />
+
           <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
 
           <Route path="storage" element={<Storage />}>
@@ -316,7 +263,7 @@ function RoutesContainer() {
           />
           <Route path="billing-entities">
             <Route index element={<BillingEntities />} />
-            <Route path=":billingId" element={<ViewBillingEntityUser />} />
+            <Route path=":billingEntityId" element={<BillingEntityProfile />} />
           </Route>
           <Route index element={<Navigate to="profile" />} />
           <Route path="profile" element={<MyProfile />} />
@@ -361,6 +308,10 @@ function RoutesContainer() {
           <Route path="audit-log" element={<IProAuditLog />} />
           <Route path="approvals" element={<IProApprovals />} />
         </Route>
+        <Route
+          path="/billing/estimates/estimate-preview"
+          element={<EstimatePreview />}
+        />
         <Route
           path="/clients/:clientId/kyb-info/:formId"
           element={<KybFormDetails />}

@@ -12,11 +12,6 @@ function NotificationItem({ data }) {
           pb: 1,
         }}
       >
-        <Avatar
-          sx={{ mt: "5px" }}
-          src={data?.user?.imageUrl || ""}
-          alt="Remy Sharp"
-        />
         <Box flex={1}>
           <Typography variant="body1">{data?.title}</Typography>
           <Typography variant="caption" color="rgba(0,0,0,0.6)">

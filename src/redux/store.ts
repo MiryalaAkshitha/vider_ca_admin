@@ -10,6 +10,7 @@ import addServiceReducer from "./reducers/addServiceSlice";
 import createReceiptReducer from "./reducers/createReceiptSlice";
 import chatsReducer from "./reducers/chatsSlice";
 import approvalsReducer from "./reducers/approvalsSlice";
+import createEstimateReducer from "./reducers/createEstimateSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     taskBoard: taskBoardReducer,
     signup: signUpSliceReducer,
     createInvoice: createInvoiceReducer,
+    createEstimate: createEstimateReducer,
     createReceipt: createReceiptReducer,
     addService: addServiceReducer,
     chats: chatsReducer,

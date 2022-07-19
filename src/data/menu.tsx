@@ -33,14 +33,9 @@ export const menu: Array<IMenuItem> = [
     path: "/leads",
     icon: icons.clients,
   },
-  // {
-  //   title: "Reports",
-  //   path: "/reports",
-  //   icon: icons.reports,
-  // },
   {
-    title: "Invoicing",
-    path: "/invoicing",
+    title: "Billing",
+    path: "/billing",
     icon: icons.invoicing,
   },
   {

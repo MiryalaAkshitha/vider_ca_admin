@@ -22,6 +22,7 @@ const getBillingEntityDetails = ({ queryKey }: any) => {
 const createBankAccounts = (data: any) => {
   return http.post("/bank-accounts", data);
 };
+
 export {
   getBillingEntity,
   createBillingEntity,
