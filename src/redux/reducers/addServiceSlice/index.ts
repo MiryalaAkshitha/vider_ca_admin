@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 import { IAddService } from "./types";
 
@@ -19,7 +19,7 @@ export const addServiceSlice = createSlice({
   name: "addService",
   initialState,
   reducers: {
-    setData: (state: IAddService, action) => {
+    setData: (state: IAddService, action: PayloadAction<any>) => {
       const { payload } = action;
       state.name = payload.name;
       state.description = payload.description || "";

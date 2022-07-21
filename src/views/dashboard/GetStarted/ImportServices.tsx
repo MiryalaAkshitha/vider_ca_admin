@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   Divider,
   FormControlLabel,
   Grid,
@@ -51,7 +52,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
     }
   );
 
-  const { mutate } = useMutation(importServices, {
+  const { mutate, isLoading: importLoading } = useMutation(importServices, {
     onSuccess: () => {
       queryClient.invalidateQueries("services");
       setOpen(false);
@@ -222,6 +223,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
             sx={{
               textAlign: "center",
               background: "white",
+              pt: 2,
             }}
           >
             <Button
@@ -232,7 +234,11 @@ function ImportServices({ open, setOpen, successCb }: Props) {
               onClick={handleSubmit}
               size="large"
             >
-              Submit
+              {importLoading ? (
+                <CircularProgress sx={{ color: "white" }} />
+              ) : (
+                "Import"
+              )}
             </Button>
           </Box>
         </>

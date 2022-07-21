@@ -8,39 +8,41 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { getBankAccounts } from "api/services/organization";
+import Loader from "components/Loader";
 import { useState } from "react";
+import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleBankDetailsChange,
-  selectInvoice,
-} from "redux/reducers/createInvoiceSlice";
-import SectionHeading from "../SectionHeading";
+  selectEstimate,
+} from "redux/reducers/createEstimateSlice";
 
-const banks = [
-  {
-    bankName: "HDFC",
-    bankBranch: "Manikonda",
-    bankAccountNumber: "8834 8570 8382 5432",
-    bankIfscCode: "HDFC0034545",
-  },
-  {
-    bankName: "ICICI",
-    bankBranch: "Manikonda",
-    bankAccountNumber: "8834 8570 8382 5432",
-    bankIfscCode: "HDFC0034545",
-  },
-];
+import { ResType } from "types";
+import SectionHeading from "../SectionHeading";
 
 function BankDetails() {
   const dispatch = useDispatch();
-  const state = useSelector(selectInvoice);
+  const { billingEntity, bankDetails } = useSelector(selectEstimate);
   const [bank, setBank] = useState("");
 
-  const handleChange = (e) => {
+  const { data, isLoading }: ResType = useQuery(
+    ["billing-entity-bank-accounts", { billingEntityId: billingEntity }],
+    getBankAccounts,
+    {
+      enabled: Boolean(billingEntity),
+    }
+  );
+
+  const handleChange = (e: any) => {
     if (e.target.value === "") return;
     setBank(e.target.value);
-    dispatch(handleBankDetailsChange(banks[e.target.value]));
+    let bankAccount = data.data.find((item: any) => item.id === e.target.value);
+    if (!bankAccount) return;
+    dispatch(handleBankDetailsChange(bankAccount));
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <Box sx={{ margin: "30px 0" }}>
@@ -56,41 +58,56 @@ function BankDetails() {
               onChange={handleChange}
               label="Select Bank Account"
             >
-              <MenuItem value="">-Select-</MenuItem>
-              {banks.map((bank, index) => (
-                <MenuItem value={index}>{bank.bankName}</MenuItem>
+              {data?.data?.map((bank: any, index: number) => (
+                <MenuItem key={index} value={bank?.id}>
+                  {bank.bankName}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
           <Box mt={3}>
-            {bank !== "" && (
+            {bankDetails && (
               <>
-                <BankDetail title="Bank Name" value={state.bankName} />
-                <BankDetail title="Bank Branch" value={state.bankBranch} />
+                <BankDetail title="Bank Name" value={bankDetails.bankName} />
+                <BankDetail
+                  title="Bank Branch"
+                  value={bankDetails.branchName}
+                />
                 <BankDetail
                   title="Bank Account Number"
-                  value={state.bankAccountNumber}
+                  value={bankDetails.accountNumber}
                 />
-                <BankDetail title="IFSC Code" value={state.bankIfscCode} />
+                <BankDetail title="IFSC Code" value={bankDetails.ifscCode} />
+                <BankDetail title="UPI ID" value={bankDetails.upiId} />
               </>
             )}
           </Box>
         </Grid>
-        <Grid
-          item
-          xs={6}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <QrCode2Icon sx={{ fontSize: "200px" }} />
-          <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
-            Scan and pay
-          </Typography>
-        </Grid>
+        {bankDetails?.upiAttachment && (
+          <Grid
+            item
+            xs={6}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              style={{
+                width: "200px",
+                height: "200px",
+                objectFit: "cover",
+              }}
+              src={bankDetails?.upiAttachment}
+              alt=""
+            />
+            <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
+              Scan and pay
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );
@@ -121,7 +138,7 @@ const BankDetail = ({ title, value }) => {
           marginLeft: "20px",
         }}
       >
-        {value}
+        {value || "N/A"}
       </Typography>
     </Box>
   );

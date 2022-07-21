@@ -2,185 +2,111 @@ import {
   Checkbox,
   Divider,
   FormControlLabel,
-  FormGroup,
-  Grid,
-  TextField,
+  OutlinedInput,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleChange, selectInvoice } from "redux/reducers/createInvoiceSlice";
-import { InvoiceCalculations } from "../calculations";
+import {
+  handleFieldChange,
+  selectEstimate,
+} from "redux/reducers/createEstimateSlice";
+import {
+  getGrandTotal,
+  getRoundOff,
+  getSubTotal,
+  getTotalGst,
+  getTotalIgst,
+  getTotalCharges,
+} from "../calculations";
 
 function TotalCalculations() {
-  const state = useSelector(selectInvoice);
+  const state = useSelector(selectEstimate);
   const dispatch = useDispatch();
-  const [showTds, setShowTds] = useState(false);
-  const [showOtherCharges, setShowOtherCharges] = useState(false);
-
-  const iCalcs = new InvoiceCalculations(state);
+  const [showAdjustment, setShowAdjustment] = useState(false);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f3f5fa",
-      }}
-    >
-      <Box p={2}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1}>
-              <Typography sx={{ flex: 1 }} variant="body1">
-                Sub Total
-              </Typography>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="subtitle2">
-              {iCalcs.totalAmount()} /-
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mt="3px" alignItems="center">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1}>
-              <Typography variant="body2">
-                Pure Agent/Additional Charges
-              </Typography>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body1">
-              {iCalcs.additionalCharges()}/-
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mt="3px" alignItems="center">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1} alignItems="center">
-              <FormGroup sx={{ flex: 1 }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={(e) => {
-                        setShowTds(e.target.checked);
-                      }}
-                      color="secondary"
-                    />
-                  }
-                  label="Add TDS"
-                />
-              </FormGroup>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box display="flex" flex={1} gap={1}>
-              <TextField
-                fullWidth
-                select
-                onChange={(e) => {
-                  dispatch(
-                    handleChange({
-                      key: "tdsPercent",
-                      value: +e.target.value,
-                    })
-                  );
-                }}
-                disabled={!showTds}
-                variant="standard"
-                SelectProps={{ native: true }}
-              >
-                <option value="0">0%</option>
-                <option value="5">5%</option>
-                <option value="10">10% </option>
-              </TextField>
-              <TextField
-                value={iCalcs.tdsAmount()}
-                fullWidth
-                disabled
-                type="number"
-                variant="standard"
-              />
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1} alignItems="center">
-              <FormGroup sx={{ flex: 1 }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={(e) => {
-                        setShowOtherCharges(e.target.checked);
-                      }}
-                      color="secondary"
-                    />
-                  }
-                  label="Other Charges"
-                />
-              </FormGroup>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box>
-              <TextField
-                disabled={!showOtherCharges}
-                onChange={(e) => {
-                  dispatch(
-                    handleChange({
-                      key: "otherCharges",
-                      value: +e.target.value,
-                    })
-                  );
-                }}
-                fullWidth
-                type="number"
-                variant="standard"
-              />
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mt="3px" alignItems="center">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1}>
-              <Typography variant="body2" sx={{ flex: 1 }}>
-                +/- Round off
-              </Typography>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body1">{state.roundOff}</Typography>
-          </Grid>
-        </Grid>
-      </Box>
-      <Divider />
-      <Box p={2}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Box display="flex" gap={1}>
-              <Typography sx={{ flex: 1 }} variant="body1">
-                Invoice Value
-              </Typography>
-              <span>:</span>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="subtitle2">
-              {iCalcs.grandTotal()} /-
-            </Typography>
-          </Grid>
-        </Grid>
-        <Typography sx={{ mt: 3 }}>
-          Rupees Five Thousand Five Hundred Only
+    <Box sx={{ maxWidth: 500, ml: "auto", p: 2, backgroundColor: "#f3f5fa" }}>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Typography variant="body1" flex={1}>
+          Sub Total
+        </Typography>
+        <Typography variant="subtitle2">
+          {getSubTotal(state.particulars)} /-
         </Typography>
       </Box>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Typography variant="caption" flex={1}>
+          {state.interState ? "CGST + SGST" : "GST"}
+        </Typography>
+        <Typography variant="body2">
+          {state.interState
+            ? getTotalGst(state.particulars)
+            : getTotalIgst(state.particulars)}{" "}
+          /-
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Typography variant="caption" flex={1}>
+          Pure Agent/Additional Charges
+        </Typography>
+        <Typography variant="body2">
+          {getTotalCharges(state.otherParticulars)} /-
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Box flex={1} display="flex" gap={1} alignItems="center">
+          <FormControlLabel
+            control={
+              <Checkbox
+                onChange={(e) => {
+                  setShowAdjustment(e.target.checked);
+                  if (!e.target.checked) {
+                    dispatch(
+                      handleFieldChange({ key: "adjustment", value: 0 })
+                    );
+                  }
+                }}
+                size="small"
+                color="secondary"
+              />
+            }
+            label={<Typography variant="caption">Adjustment</Typography>}
+          />
+          <OutlinedInput
+            disabled={!showAdjustment}
+            size="small"
+            placeholder="Enter Amount"
+            value={state.adjustment}
+            sx={{ width: 150, background: "white", height: 30 }}
+            onChange={(e) => {
+              dispatch(
+                handleFieldChange({ key: "adjustment", value: e.target.value })
+              );
+            }}
+            fullWidth
+            type="number"
+          />
+        </Box>
+        <Typography variant="body2">{state.adjustment} /-</Typography>
+      </Box>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Typography variant="caption" flex={1}>
+          +/- Round Off
+        </Typography>
+        <Typography variant="body2">{getRoundOff(state)} /-</Typography>
+      </Box>
+      <Divider />
+      <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
+        <Typography variant="body1" flex={1}>
+          Estimate Value
+        </Typography>
+        <Typography variant="subtitle2">{getGrandTotal(state)} /-</Typography>
+      </Box>
+      <Typography sx={{ mt: 1, textAlign: "right" }} variant="body2">
+        (Rupees Five Thousand Five Hundred Only)
+      </Typography>
     </Box>
   );
 }

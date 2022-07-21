@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getInvoicingTasks } from "api/services/invoicing";
+import { getInvoicingTasks } from "api/services/billing";
 import DialogWrapper from "components/DialogWrapper";
 import Members from "components/Members";
 import SearchContainer from "components/SearchContainer";
@@ -10,13 +10,13 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectEstimate,
   handleAddTasksToParticular,
-  selectInvoice,
-} from "redux/reducers/createInvoiceSlice";
+} from "redux/reducers/createEstimateSlice";
 import { ResType } from "types";
 
 const SelectTaskDialog = ({ open, setOpen }) => {
-  const { client } = useSelector(selectInvoice);
+  const { client } = useSelector(selectEstimate);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState([]);
@@ -29,7 +29,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       },
     ],
     getInvoicingTasks,
-    { enabled: open }
+    { enabled: open && Boolean(client) }
   );
 
   function onSubmit() {

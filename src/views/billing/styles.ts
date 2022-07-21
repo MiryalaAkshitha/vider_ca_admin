@@ -1,4 +1,4 @@
-import { ListItemButton, Tab } from "@mui/material";
+import { ListItemButton, Tab, Table } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
@@ -40,7 +40,24 @@ export const MenuItem = styled("div")(({ theme }) => ({
 
 export const StyledNewEstimateContainer = styled("div")({
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  maxWidth: 1200,
+  maxWidth: 1400,
   margin: "0 auto",
   padding: "30px 20px",
+});
+
+export const StyledParticularsTable = styled(Table)({
+  tableLayout: "fixed",
+  emptyCells: "hide",
+  "& .MuiTableCell-root": {
+    border: "1px solid #e0e0e0",
+  },
+  "& th": {
+    color: "white",
+  },
+  "& .MuiTableHead-root": {
+    backgroundColor: "#0D47A1",
+  },
+  "& .MuiTableHead-root  .MuiTableCell-root": {
+    border: "none",
+  },
 });

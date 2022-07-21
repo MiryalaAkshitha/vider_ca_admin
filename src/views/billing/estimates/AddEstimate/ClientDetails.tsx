@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleClientChange,
-  handleFieldChange,
+  handlePlaceOfSupplyChange,
   selectEstimate,
 } from "redux/reducers/createEstimateSlice";
 import { ResType } from "types";
@@ -58,12 +58,7 @@ function ClientDetails() {
         <Grid item xs={6}>
           <TextField
             onChange={(e) => {
-              dispatch(
-                handleFieldChange({
-                  key: "placeOfSupply",
-                  value: e.target.value,
-                })
-              );
+              dispatch(handlePlaceOfSupplyChange(e.target.value));
             }}
             size="small"
             select
@@ -72,7 +67,7 @@ function ClientDetails() {
             value={placeOfSupply}
           >
             {states?.data?.map((state: any, index: number) => (
-              <MenuItem value={state?.id} key={index}>
+              <MenuItem value={state?.name} key={index}>
                 {state?.name}
               </MenuItem>
             ))}

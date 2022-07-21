@@ -1,17 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 
-export const particularsHeadings = [
-  "Particulars (Task / Service name)",
-  "HSN / SAC",
-  "Units",
-  "Rate",
-  "Discount",
-  "Taxable amount",
-  "IGST",
-  "Amount",
-];
-
 interface Address {
   businessName: string;
   address: string;

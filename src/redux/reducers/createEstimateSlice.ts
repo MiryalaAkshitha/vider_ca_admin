@@ -1,16 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 
-export const particularsHeadings = [
-  "Particulars (Task / Service name)",
-  "HSN / SAC",
-  "Units",
-  "Rate",
-  "Discount",
-  "Taxable amount",
-  "IGST",
-  "Amount",
-];
+interface ParticularChangeType {
+  index: number;
+  key: string;
+  value: any;
+}
 
 interface Address {
   legalName: string;
@@ -30,10 +25,11 @@ interface Particular {
   rate: number;
   discountType: "PERCENT" | "AMOUNT";
   discount: number;
-  taxableAmount: number;
-  igstPercent: null | number;
-  cgstPercent: null | number;
-  sgstPercent: null | number;
+  amount: number;
+  igst: any;
+  cgst: any;
+  sgst: any;
+  taskId?: number;
 }
 
 interface OtherParticular {
@@ -42,52 +38,55 @@ interface OtherParticular {
   amount: number;
 }
 
+interface BankDetails {
+  accountNumber: string;
+  bankName: string;
+  branchName: string;
+  ifscCode: string;
+  upiId: string;
+  upiAttachment: string;
+}
+
 export interface IState {
   billingEntity: number | null;
   approvalHierarchy: any;
   client: string | null;
   placeOfSupply: string;
-  invoiceDate: string | null;
-  invoiceDueDate: string | null;
+  estimateNumber: string;
+  estimateDate: string | null;
+  estimateDueDate: string | null;
   terms: string | null;
   billingEntityAddress: Address | null;
   shippingAddress: Address | null;
   billingAddress: Address | null;
   particulars: Array<Particular>;
   otherParticulars: Array<OtherParticular>;
-  bankName: string | null;
-  bankAccountNumber: string | null;
-  bankIfscCode: string | null;
-  bankBranch: string | null;
+  bankDetails: BankDetails | null;
   termsAndConditions: Array<string>;
   tasks: Array<number>;
-  tdsPercent: number;
-  otherCharges: number;
-  roundOff: string;
+  adjustment: number;
+  interState: boolean;
 }
 
 const initialState: IState = {
   billingEntity: null,
+  billingEntityAddress: null,
   approvalHierarchy: null,
   client: null,
   placeOfSupply: "",
-  invoiceDate: null,
-  invoiceDueDate: null,
+  estimateNumber: "",
+  estimateDate: null,
+  estimateDueDate: null,
   terms: null,
   shippingAddress: null,
   billingAddress: null,
-  billingEntityAddress: null,
   particulars: [],
   otherParticulars: [],
-  bankName: null,
-  bankAccountNumber: null,
-  bankIfscCode: null,
-  bankBranch: null,
+  bankDetails: null,
   termsAndConditions: [],
   tasks: [],
-  tdsPercent: 0,
-  otherCharges: 0,
-  roundOff: "",
+  adjustment: 0,
+  interState: false,
 };
 
 export const createEstimateSlice = createSlice({
@@ -96,6 +95,10 @@ export const createEstimateSlice = createSlice({
   reducers: {
     handleFieldChange(state: IState, action: PayloadAction<any>) {
       state[action.payload.key] = action.payload.value;
+    },
+    handlePlaceOfSupplyChange(state: IState, action: PayloadAction<any>) {
+      state.placeOfSupply = action.payload;
+      state.interState = action.payload === state.billingEntityAddress?.state;
     },
     handleBillingEntityChange(
       state: IState,
@@ -114,6 +117,7 @@ export const createEstimateSlice = createSlice({
         mobileNumber: billEntity?.mobileNumber,
       };
       state.billingEntityAddress = address;
+      state.interState = state.placeOfSupply === billEntity?.state;
     },
     handleApprovalChange(state: IState, action: PayloadAction<any>) {
       state.approvalHierarchy = action.payload;
@@ -136,11 +140,16 @@ export const createEstimateSlice = createSlice({
       state.shippingAddress = address;
       state.billingAddress = address;
     },
-    handleBankDetailsChange(state: IState, action) {
-      state.bankName = action.payload.bankName;
-      state.bankAccountNumber = action.payload.bankAccountNumber;
-      state.bankIfscCode = action.payload.bankIfscCode;
-      state.bankBranch = action.payload.bankBranch;
+    handleBankDetailsChange(state: IState, action: PayloadAction<any>) {
+      const data = action.payload;
+      state.bankDetails = {
+        accountNumber: data.accountNumber,
+        bankName: data.bankName,
+        branchName: data.branchName,
+        ifscCode: data.ifscCode,
+        upiId: data.upiId,
+        upiAttachment: data.upiAttachmentUrl,
+      };
     },
     handleAddParticular(state: IState) {
       state.particulars.push({
@@ -150,22 +159,21 @@ export const createEstimateSlice = createSlice({
         rate: 0,
         discountType: "PERCENT",
         discount: 0,
-        taxableAmount: 0,
-        igstPercent: 0,
-        cgstPercent: 0,
-        sgstPercent: 0,
+        amount: 0,
+        igst: null,
+        cgst: null,
+        sgst: null,
       });
     },
     handleRemoveParticular(state: IState, action: PayloadAction<number>) {
+      state.tasks = state.tasks.filter(
+        (task) => task !== state.particulars[action.payload].taskId
+      );
       state.particulars.splice(action.payload, 1);
     },
     handleChangeParticular(
       state: IState,
-      action: PayloadAction<{
-        index: number;
-        key: string;
-        value: string | number | null;
-      }>
+      action: PayloadAction<ParticularChangeType>
     ) {
       state.particulars[action.payload.index][action.payload.key] =
         action.payload.value;
@@ -182,11 +190,7 @@ export const createEstimateSlice = createSlice({
     },
     handleChangeOtherParticular(
       state: IState,
-      action: PayloadAction<{
-        index: number;
-        key: string;
-        value: string | number | null;
-      }>
+      action: PayloadAction<ParticularChangeType>
     ) {
       state.otherParticulars[action.payload.index][action.payload.key] =
         action.payload.value;
@@ -212,12 +216,13 @@ export const createEstimateSlice = createSlice({
           rate: +task?.feeAmount || 0,
           discountType: "PERCENT",
           discount: 0,
-          taxableAmount: 0,
-          igstPercent: 0,
-          cgstPercent: 0,
-          sgstPercent: 0,
+          amount: 0,
+          igst: null,
+          cgst: null,
+          sgst: null,
+          taskId: task.id,
         });
-        task?.expenditure?.forEach((expenditure) => {
+        task?.expenditure?.forEach((expenditure: any) => {
           state.otherParticulars.push({
             name: expenditure.particularName,
             type: expenditure.type,
@@ -226,6 +231,25 @@ export const createEstimateSlice = createSlice({
         });
         state.tasks.push(task.id);
       });
+    },
+    resetState(state: IState) {
+      state.billingEntity = null;
+      state.billingEntityAddress = null;
+      state.approvalHierarchy = null;
+      state.client = null;
+      state.placeOfSupply = "";
+      state.estimateNumber = "";
+      state.estimateDate = null;
+      state.estimateDueDate = null;
+      state.terms = null;
+      state.shippingAddress = null;
+      state.billingAddress = null;
+      state.particulars = [];
+      state.otherParticulars = [];
+      state.bankDetails = null;
+      state.termsAndConditions = [];
+      state.tasks = [];
+      state.adjustment = 0;
     },
   },
 });
@@ -248,6 +272,8 @@ export const {
   handleChangeOtherParticular,
   handleClientChange,
   handleAddTasksToParticular,
+  handlePlaceOfSupplyChange,
+  resetState,
 } = createEstimateSlice.actions;
 
 export default createEstimateSlice.reducer;

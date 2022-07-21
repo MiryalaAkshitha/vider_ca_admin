@@ -1,19 +1,22 @@
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { DUE_TERMS } from "data/dueTerms";
 import { useDispatch, useSelector } from "react-redux";
-import { selectEstimate } from "redux/reducers/createEstimateSlice";
-import { handleChange } from "redux/reducers/createInvoiceSlice";
+import {
+  handleFieldChange,
+  selectEstimate,
+} from "redux/reducers/createEstimateSlice";
 import SectionHeading from "../SectionHeading";
 
-function InvoiceDetails() {
-  const { invoiceDate, invoiceDueDate, terms } = useSelector(selectEstimate);
+function EstimateDetails() {
+  const { estimateNumber, estimateDate, estimateDueDate, terms } =
+    useSelector(selectEstimate);
   const dispatch = useDispatch();
 
-  const handleDetailChange = (key: string, value: string | null) => {
+  const handleChange = (e: any) => {
     dispatch(
-      handleChange({
-        key,
-        value,
+      handleFieldChange({
+        key: e.target.name,
+        value: e.target.value,
       })
     );
   };
@@ -29,6 +32,9 @@ function InvoiceDetails() {
               size="small"
               label="Estimate number"
               variant="outlined"
+              name="estimateNumber"
+              value={estimateNumber}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={6}>
@@ -39,7 +45,9 @@ function InvoiceDetails() {
               InputLabelProps={{ shrink: true }}
               label="Estimate Date"
               variant="outlined"
-              value={invoiceDate}
+              value={estimateDate}
+              name="estimateDate"
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={6}>
@@ -49,6 +57,9 @@ function InvoiceDetails() {
               size="small"
               label="Terms"
               variant="outlined"
+              value={terms}
+              name="terms"
+              onChange={handleChange}
             >
               {DUE_TERMS.map((item, index) => (
                 <MenuItem value={item.value} key={index}>
@@ -65,10 +76,9 @@ function InvoiceDetails() {
               label="Due Date"
               size="small"
               variant="outlined"
-              value={invoiceDueDate}
-              onChange={(e) => {
-                handleDetailChange("invoiceDueDate", e.target.value);
-              }}
+              value={estimateDueDate}
+              name="estimateDueDate"
+              onChange={handleChange}
             />
           </Grid>
         </Grid>
@@ -77,4 +87,4 @@ function InvoiceDetails() {
   );
 }
 
-export default InvoiceDetails;
+export default EstimateDetails;

@@ -20,15 +20,6 @@ const EstimatePreview = loadable(
 );
 const Invoices = loadable(() => import("pages/billing/invoices"));
 const Receipts = loadable(() => import("pages/billing/receipts"));
-const CreateInvoice = loadable(
-  () => import("views/billing/invoices/createInvoice/index")
-);
-const InvoicePreview = loadable(
-  () => import("views/billing/invoices/createInvoice/InvoicePreview")
-);
-const SentEmail = loadable(
-  () => import("views/billing/invoices/createInvoice/SendEmail")
-);
 
 const CreateReceipt = loadable(
   () => import("views/billing/receipts/createReceipt/index")
@@ -148,15 +139,7 @@ function RoutesContainer() {
             <Route path="receipts" element={<Receipts />} />
           </Route>
           <Route path="billing/estimates/add" element={<AddEstimate />} />
-          <Route path="invoicing/create-invoice" element={<CreateInvoice />} />
-          <Route path="invoicing/send-email" element={<SentEmail />} />
-          <Route
-            path="invoicing/invoice-preview"
-            element={<InvoicePreview />}
-          />
-
           <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
-
           <Route path="storage" element={<Storage />}>
             <Route
               path="my-storage"

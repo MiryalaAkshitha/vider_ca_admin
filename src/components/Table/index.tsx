@@ -16,9 +16,11 @@ export type ColumnType = {
   render?: (item: any) => React.ReactElement | string | null;
   hide?: boolean;
   default?: boolean;
+  width?: string;
 };
 
 type PaginationType = {
+  offset?: number;
   totalCount: number;
   onPageCountChange?: (v: number) => void;
   pageCount: number;
@@ -145,7 +147,11 @@ function Table(props: TableProps) {
               )}
               {columns.map((item, index) => {
                 if (item.hide) return null;
-                return <th key={index}>{item.title}</th>;
+                return (
+                  <th key={index} style={{ width: item.width || "auto" }}>
+                    {item.title}
+                  </th>
+                );
               })}
             </tr>
           </thead>
@@ -193,6 +199,7 @@ function Table(props: TableProps) {
             count={pagination.totalCount || 10}
             page={page}
             onPageChange={(v, page) => {
+              console.log(page);
               setPage(page);
               pagination.onChange(page);
             }}

@@ -1,44 +1,68 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
-import { createInvoice } from "api/services/invoicing";
+import { createEstimate } from "api/services/billing";
 import { snack } from "components/toast";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectInvoice } from "redux/reducers/createInvoiceSlice";
-import { InvoiceCalculations } from "../calculations";
+import { selectEstimate } from "redux/reducers/createEstimateSlice";
+import { handleError } from "utils/handleError";
+import {
+  getAmount,
+  getGrandTotal,
+  getRoundOff,
+  getSubTotal,
+  getTotalGst,
+  getTotalIgst,
+  getTotalCharges,
+} from "../calculations";
 
 function BottomBar() {
-  const state = useSelector(selectInvoice);
+  const queryClient = useQueryClient();
+  const state = useSelector(selectEstimate);
   const navigate = useNavigate();
 
-  const { mutate } = useMutation(createInvoice, {
+  const { mutate } = useMutation(createEstimate, {
     onSuccess: () => {
       snack.success("Estimate created successfully");
+      queryClient.invalidateQueries("estimates");
+      navigate("/billing/estimates");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
-  let iCalcs = new InvoiceCalculations(state);
-
-  const onSubmit = () => {
+  const onSubmit = (args: any) => {
     let apiData: any = { ...state };
-    apiData.tdsAmount = iCalcs.tdsAmount();
-    apiData.totalTaxableAmount = iCalcs.totalTaxableAmount();
-    apiData.totalGstAmount = iCalcs.totalIgstAmount();
-    apiData.subTotal = iCalcs.totalAmount();
-    apiData.additionalCharges = iCalcs.additionalCharges();
-    apiData.grandTotal = iCalcs.grandTotal();
-    apiData.particulars = state.particulars.map((p: any) => {
+    let totalGstAmount = state.interState
+      ? getTotalGst(state.particulars)
+      : getTotalIgst(state.particulars);
+
+    apiData.approvalHierarchyId = state.approvalHierarchy?.id;
+    apiData.subTotal = getSubTotal(state.particulars);
+    apiData.totalGstAmount = totalGstAmount;
+    apiData.adjustment = +state.adjustment;
+    apiData.totalCharges = getTotalCharges(state.otherParticulars);
+    apiData.roundOff = getRoundOff(state);
+    apiData.grandTotal = getGrandTotal(state);
+    apiData.particulars = state.particulars.map((item: any) => {
       return {
-        ...p,
-        taxableAmount: iCalcs.getTaxableAmount(p),
-        gstAmount: iCalcs.getIgstAmount(p),
-        amount: iCalcs.getAmount(p),
+        ...item,
+        amount: getAmount(item),
+        igst: item?.igst?.value,
+        cgst: item?.cgst?.value,
+        sgst: item?.sgst?.value,
+        ...(state.interState && {
+          igst: null,
+        }),
+        ...(!state.interState && {
+          cgst: null,
+          sgst: null,
+        }),
       };
     });
+    apiData.submitForApproval = args.submitForApproval;
 
     mutate({
       data: apiData,
@@ -61,26 +85,34 @@ function BottomBar() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: 1200,
+          maxWidth: 1400,
+          width: "95%",
           py: 2,
           margin: "auto",
         }}
       >
-        <Box>
+        <Box display="flex" gap={1}>
           <Button
             disableElevation
-            onClick={onSubmit}
+            onClick={() => onSubmit({ submitForApproval: true })}
             color="secondary"
             variant="contained"
           >
-            Save and send
+            Submit for Approval
+          </Button>
+          <Button
+            disableElevation
+            onClick={() => onSubmit({ submitForApproval: false })}
+            color="secondary"
+            variant="contained"
+          >
+            Save as Draft
           </Button>
           <Button
             onClick={() => navigate("/billing/estimates")}
             color="inherit"
             variant="contained"
             disableElevation
-            sx={{ ml: "20px" }}
           >
             Cancel
           </Button>

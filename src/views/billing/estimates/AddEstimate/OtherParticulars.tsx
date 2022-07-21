@@ -1,6 +1,12 @@
 import ClearIcon from "@mui/icons-material/Clear";
-import { Grid, TextField, Typography } from "@mui/material";
-import Table from "@mui/material/Table";
+import {
+  Button,
+  Grid,
+  IconButton,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
@@ -10,25 +16,17 @@ import {
   handleAddOtherParticular,
   handleChangeOtherParticular,
   handleRemoveOtherParticular,
-  selectInvoice,
-} from "redux/reducers/createInvoiceSlice";
-import { InvoiceCalculations } from "../calculations";
+  selectEstimate,
+} from "redux/reducers/createEstimateSlice";
+import { StyledParticularsTable } from "views/billing/styles";
 import TotalCalculations from "./TotalCalculations";
 
 function OtherParticulars() {
   const dispatch = useDispatch();
-  const state = useSelector(selectInvoice);
+  const state = useSelector(selectEstimate);
 
-  let iCalcs = new InvoiceCalculations(state);
-
-  function updateOtherParticular(index, key, value) {
-    dispatch(
-      handleChangeOtherParticular({
-        index,
-        key,
-        value,
-      })
-    );
+  function updateOtherParticular(index: number, key: string, value: any) {
+    dispatch(handleChangeOtherParticular({ index, key, value }));
   }
 
   function addOtherParticular() {
@@ -40,106 +38,82 @@ function OtherParticulars() {
   }
 
   return (
-    <Grid
-      container
-      sx={{
-        margin: "30px 0",
-      }}
-      justifyContent="space-between"
-    >
+    <Grid container mt={3} spacing={2}>
       <Grid item xs={6}>
-        <Table sx={{ tableLayout: "fixed", width: "100%" }}>
-          <TableHead
-            sx={{
-              backgroundColor: "#0D47A1",
-              "& th": { color: "white" },
-            }}
-          >
+        <StyledParticularsTable>
+          <TableHead>
             <TableRow>
               <TableCell>
-                <Typography>Services as a Pure Agent</Typography>
+                <Typography>Particulars</Typography>
               </TableCell>
-
+              <TableCell>
+                <Typography>Type</Typography>
+              </TableCell>
               <TableCell>
                 <Typography>Amount</Typography>
+              </TableCell>
+              <TableCell sx={{ width: "80px" }}>
+                <Typography>Action</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {state.otherParticulars.map((data, index) => {
               return (
-                <TableRow
-                  key={index}
-                  sx={{
-                    "& .MuiTableCell-root": { border: "1px solid #e0e0e0" },
-                  }}
-                >
+                <TableRow key={index}>
                   <TableCell>
                     <TextField
                       variant="standard"
                       type="text"
-                      placeholder="Services as a Pure Agent"
+                      placeholder="Name of the Particular"
                       value={data.name}
                       onChange={(e) => {
                         updateOtherParticular(index, "name", e.target.value);
                       }}
                     />
                   </TableCell>
-
-                  <TableCell
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
+                  <TableCell>
+                    <TextField
+                      fullWidth
+                      variant="standard"
+                      value={data.type}
+                      select
+                      sx={{ mt: -1 }}
+                      label="Select Type"
+                      onChange={(e) => {
+                        updateOtherParticular(index, "type", e.target.value);
+                      }}
+                    >
+                      <MenuItem value="PURE_AGENT">Pure Agent</MenuItem>
+                      <MenuItem value="ADDITIONAL">Additional</MenuItem>
+                    </TextField>
+                  </TableCell>
+                  <TableCell>
                     <TextField
                       placeholder="Enter Amount"
                       variant="standard"
                       type="number"
                       value={data.amount}
                       onChange={(e) => {
-                        updateOtherParticular(index, "amount", +e.target.value);
+                        updateOtherParticular(index, "amount", e.target.value);
                       }}
                     />
-                    <ClearIcon
-                      sx={{
-                        fontSize: "18px",
-                        color: "#F2353C",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        removeOtherParticular(index);
-                      }}
-                    />
+                  </TableCell>
+                  <TableCell>
+                    <IconButton color="secondary">
+                      <ClearIcon onClick={() => removeOtherParticular(index)} />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );
             })}
-            <TableRow
-              sx={{
-                "& .MuiTableCell-root": { border: "1px solid #e0e0e0" },
-              }}
-            >
-              <TableCell colSpan={1} sx={{ border: "none !important" }}>
-                <Typography
-                  onClick={addOtherParticular}
-                  sx={{ color: "#F2353C", cursor: "pointer" }}
-                >
-                  + Add New
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="body2">Total Amount</Typography>
-                <Typography variant="subtitle2">
-                  {iCalcs.additionalCharges()} /-
-                </Typography>
-              </TableCell>
-            </TableRow>
           </TableBody>
-        </Table>
+        </StyledParticularsTable>
+        <Button sx={{ mt: 2 }} color="secondary" onClick={addOtherParticular}>
+          + Add New
+        </Button>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={6}>
         <TotalCalculations />
       </Grid>
     </Grid>

@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getInvoicingTasks } from "api/services/invoicing";
+import { getInvoicingTasks } from "api/services/billing";
 import DialogWrapper from "components/DialogWrapper";
 import Members from "components/Members";
 import SearchContainer from "components/SearchContainer";
@@ -23,8 +23,8 @@ const SelectTaskDialog = ({ open, setOpen }) => {
 
   const { data, isLoading }: ResType = useQuery(
     [
-      "invocing-tasks", +
-      {
+      "invocing-tasks",
+      +{
         client: client,
       },
     ],

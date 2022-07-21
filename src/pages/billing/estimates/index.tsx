@@ -1,74 +1,89 @@
-import { Box, Button, Paper } from "@mui/material";
-import EmptyPage from "components/EmptyPage";
-import FloatingButton from "components/FloatingButton";
+import { Add } from "@mui/icons-material";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import BrowserUpdatedOutlinedIcon from "@mui/icons-material/BrowserUpdatedOutlined";
+import { Box, Button, Typography } from "@mui/material";
+import { getEstimates } from "api/services/billing";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import BrowserUpdatedOutlinedIcon from "@mui/icons-material/BrowserUpdatedOutlined";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import { Add } from "@mui/icons-material";
+import { ResType } from "types";
+import { getTitle } from "utils";
+import Actions from "views/billing/estimates/Actions";
+import { getStatusColor } from "views/billing/estimates/getStatusColor";
 
 const Estimates = () => {
   useTitle("Estimates");
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState<number>(5);
+  const [page, setPage] = useState<number>(0);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  if ([1].length === 0) {
-    return (
-      <EmptyPage
-        title="There are no estimates available"
-        btnTitle="Add new estimate"
-        btnAction={() => navigate("/billing/estimates/add")}
-        desc="Click on Add new estimate button to create a new estimate"
-      />
-    );
-  }
+  const { data, isLoading }: ResType = useQuery(
+    ["estimates", { offset: page * limit, limit }],
+    getEstimates
+  );
 
   return (
-    <Box p={3}>
-      <Box
-        mb={2}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <SearchContainer value={search} onChange={setSearch} />
-        <Box display="flex" gap={1}>
-          <Button
-            endIcon={<BrowserUpdatedOutlinedIcon fontSize="small" />}
-            color="primary"
-            variant="outlined"
-          >
-            Export
-          </Button>
-          <Button
-            endIcon={<ArrowDropDownOutlinedIcon />}
-            color="primary"
-            variant="outlined"
-          >
-            Actions
-          </Button>
-          <Button
-            onClick={() => navigate("/billing/estimates/add")}
-            variant="outlined"
-            color="secondary"
-            startIcon={<Add />}
-          >
-            Add Estimate
-          </Button>
+    <>
+      <Box p={3}>
+        <Box
+          mb={2}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <SearchContainer value={search} onChange={setSearch} />
+          <Box display="flex" gap={1}>
+            <Button
+              endIcon={<BrowserUpdatedOutlinedIcon fontSize="small" />}
+              color="primary"
+              variant="outlined"
+            >
+              Export
+            </Button>
+            <Button
+              endIcon={<ArrowDropDownOutlinedIcon />}
+              color="primary"
+              variant="outlined"
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+            >
+              Actions
+            </Button>
+            <Button
+              onClick={() => navigate("/billing/estimates/add")}
+              variant="outlined"
+              color="secondary"
+              startIcon={<Add />}
+            >
+              Add Estimate
+            </Button>
+          </Box>
         </Box>
+        <Table
+          selection={{
+            onSelect(selected) {},
+          }}
+          pagination={{
+            pageCount: limit,
+            totalCount: data?.data?.totalCount || 0,
+            onPageCountChange(v) {
+              setLimit(v);
+            },
+            onChange(page) {
+              setPage(page);
+            },
+          }}
+          data={data?.data?.result || []}
+          columns={columns}
+          loading={isLoading}
+        />
       </Box>
-      <Table
-        selection={{
-          onSelect(selected) {},
-        }}
-        data={[]}
-        columns={columns}
-        loading={false}
-      />
-    </Box>
+      <Actions anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+    </>
   );
 };
 
@@ -80,22 +95,44 @@ let columns = [
   {
     key: "billingEntity.legalName",
     title: "Billing Entity",
+    width: "20%",
   },
   {
     key: "client.displayName",
-    title: "Estimate Date",
+    title: "Client Name",
   },
   {
-    key: "amount",
+    key: "grandTotal",
     title: "Estimated amount",
   },
   {
-    key: "dueDate",
+    key: "estimateDate",
+    title: "estimateDate",
+  },
+  {
+    key: "estimateDueDate",
     title: "Due Date",
   },
   {
     key: "status",
     title: "Status",
+    render: (row: any) => (
+      <Box
+        sx={{
+          background: getStatusColor(row?.status),
+          px: 2,
+          py: "4px",
+          color: "white",
+          borderRadius: "10px",
+          textAlign: "center",
+          display: "inline-flex",
+        }}
+      >
+        <Typography variant="body2">
+          {getTitle(row?.status?.toLowerCase())}
+        </Typography>
+      </Box>
+    ),
   },
 ];
 
