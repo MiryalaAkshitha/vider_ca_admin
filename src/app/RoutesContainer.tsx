@@ -11,6 +11,7 @@ import PageWithPermission from "components/PageWithPermission";
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
+const TaskDashboard = loadable(() => import("pages/task-dashboard"));
 const Estimates = loadable(() => import("pages/billing/estimates"));
 const AddEstimate = loadable(
   () => import("pages/billing/estimates/add-estimate")
@@ -135,6 +136,7 @@ function RoutesContainer() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="task-dashboard" element={<TaskDashboard />} />
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />

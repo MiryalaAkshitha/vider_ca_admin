@@ -9,6 +9,11 @@ interface IMenuItem {
 
 export const menu: Array<IMenuItem> = [
   {
+    title: "Task Dashboard",
+    path: "/task-dashboard",
+    icon: icons.dashboard,
+  },
+  {
     title: "Dashboard",
     path: "/dashboard",
     icon: icons.dashboard,
