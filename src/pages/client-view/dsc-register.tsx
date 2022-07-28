@@ -58,10 +58,9 @@ function DscRegister() {
         pagination={{
           totalCount: data?.data?.totalCount,
           pageCount: limit,
-          onPageCountChange: (v) => setLimit(v),
-          onChange: (v) => {
-            setOffset(v);
-          },
+          setPageCount: setLimit,
+          page: offset,
+          setPage: setOffset,
         }}
       />
       <FloatingButton onClick={() => setOpen(true)} />

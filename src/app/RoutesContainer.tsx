@@ -11,6 +11,7 @@ import PageWithPermission from "components/PageWithPermission";
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
+const BillingClients = loadable(() => import("pages/billing/clients"));
 const Estimates = loadable(() => import("pages/billing/estimates"));
 const AddEstimate = loadable(
   () => import("pages/billing/estimates/add-estimate")
@@ -19,11 +20,15 @@ const EstimatePreview = loadable(
   () => import("pages/billing/estimates/estimate-preview")
 );
 const Invoices = loadable(() => import("pages/billing/invoices"));
-const Receipts = loadable(() => import("pages/billing/receipts"));
-
-const CreateReceipt = loadable(
-  () => import("views/billing/receipts/createReceipt/index")
+const AddInvoice = loadable(() => import("pages/billing/invoices/add-invoice"));
+const AddInvoiceReceipt = loadable(
+  () => import("pages/billing/invoices/add-receipt")
 );
+const InvoicePreview = loadable(
+  () => import("pages/billing/invoices/invoice-preview")
+);
+const Receipts = loadable(() => import("pages/billing/receipts"));
+const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
 const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
@@ -133,13 +138,18 @@ function RoutesContainer() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />} />
           <Route path="billing" element={<Billing />}>
-            <Route index element={<Navigate to="estimates" />} />
             <Route path="estimates" element={<Estimates />} />
             <Route path="invoices" element={<Invoices />} />
             <Route path="receipts" element={<Receipts />} />
+            <Route path="clients" element={<BillingClients />} />
           </Route>
           <Route path="billing/estimates/add" element={<AddEstimate />} />
-          <Route path="invoicing/create-receipt" element={<CreateReceipt />} />
+          <Route path="billing/invoices/add" element={<AddInvoice />} />
+          <Route path="billing/receipts/add" element={<AddReceipt />} />
+          <Route
+            path="billing/invoices/:invoiceId/receipt"
+            element={<AddInvoiceReceipt />}
+          />
           <Route path="storage" element={<Storage />}>
             <Route
               path="my-storage"
@@ -292,9 +302,14 @@ function RoutesContainer() {
           <Route path="approvals" element={<IProApprovals />} />
         </Route>
         <Route
-          path="/billing/estimates/estimate-preview"
+          path="/billing/estimates/:estimateId/preview"
           element={<EstimatePreview />}
         />
+        <Route
+          path="/billing/invoices/:invoiceId/preview"
+          element={<InvoicePreview />}
+        />
+
         <Route
           path="/clients/:clientId/kyb-info/:formId"
           element={<KybFormDetails />}

@@ -1,96 +1,99 @@
-import { Box, Button } from "@mui/material";
-import EmptyPage from "components/EmptyPage";
-import SearchContainer from "components/SearchContainer";
+import { Box, Typography } from "@mui/material";
+import { getInvoices } from "api/services/billing/invoices";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { ResType } from "types";
+import { getTitle } from "utils";
+import { formattedDate } from "utils/formattedDate";
+import { getStatusColor } from "views/billing/estimates/getStatusColor";
+import InvoicesHeader from "views/billing/invoices/InvoicesHeader";
 
 const Estimates = () => {
   useTitle("Invoices");
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(5);
+  const [selected, setSelected] = useState<any[]>([]);
 
-  const handleAddNewEstimate = () => {
-    navigate("/invoicing/create-estimate");
-  };
+  const { data, isLoading }: ResType = useQuery(
+    ["invoices", { offset: page * pageCount, limit: pageCount, search }],
+    getInvoices
+  );
 
-  if (data.length === 0) {
-    return (
-      <EmptyPage
-        title="There are no Estimate available"
-        btn2Title="Add new estimate"
-        btn2Action={handleAddNewEstimate}
-        desc="Click on Add new estimate to add an estimate"
-      />
-    );
-  }
+  const totalCount = data?.data?.totalCount || 0;
 
   return (
     <Box p={3}>
-      <Box mb={2}>
-        <SearchContainer value={search} onChange={setSearch} />
-      </Box>
-      <Table data={data || []} columns={columns} loading={false} />
+      <InvoicesHeader
+        clearSelection={() => setSelected([])}
+        selected={selected}
+        search={search}
+        setSearch={setSearch}
+      />
+      <Table
+        selection={{ selected, setSelected }}
+        pagination={{ totalCount, pageCount, setPageCount, page, setPage }}
+        data={data?.data?.result || []}
+        columns={columns}
+        loading={isLoading}
+      />
     </Box>
   );
 };
 
 let columns = [
   {
-    key: "estimateNumber",
-    title: "Estimate number",
+    key: "invoiceNumber",
+    title: "Invoice number",
   },
   {
-    key: "client",
-    title: "Client name",
+    key: "billingEntity.legalName",
+    title: "Billing Entity",
+    width: "20%",
   },
   {
-    key: "estimateDate",
+    key: "client.displayName",
+    title: "Client Name",
+  },
+  {
+    key: "grandTotal",
+    title: "Estimated amount",
+  },
+  {
+    key: "invoiceDate",
     title: "Estimate Date",
   },
   {
-    key: "estimateAmount",
-    title: "Estimate Amount",
-  },
-];
-
-let data = [
-  {
-    estimateNumber: "INV365647",
-    client: "Doris Riley",
-    estimateDate: "11/09/2021",
-    estimateAmount: "1852 /-",
+    key: "invoiceDueDate",
+    title: "Due Date",
   },
   {
-    estimateNumber: "INV365647",
-    client: "Doris Riley",
-    estimateDate: "11/09/2021",
-    estimateAmount: "1852 /-",
+    key: "createdAt",
+    title: "Created On",
+    render: (row: any) => formattedDate(row.createdAt),
   },
   {
-    estimateNumber: "INV365647",
-    client: "Doris Riley",
-    estimateDate: "11/09/2021",
-    estimateAmount: "1852 /-",
-  },
-  {
-    estimateNumber: "INV365647",
-    client: "Doris Riley",
-    estimateDate: "11/09/2021",
-    estimateAmount: "1852 /-",
-  },
-  {
-    estimateNumber: "INV365647",
-    client: "Doris Riley",
-    estimateDate: "11/09/2021",
-    estimateAmount: "1852 /-",
-  },
-  {
-    estimateNumber: "INV365647",
-    client: "Doris Riley",
-    estimateDate: "11/09/2021",
-    estimateAmount: "1852 /-",
+    key: "status",
+    title: "Status",
+    render: (row: any) => (
+      <Box
+        sx={{
+          background: getStatusColor(row?.status),
+          px: 2,
+          py: "4px",
+          color: "white",
+          borderRadius: "10px",
+          textAlign: "center",
+          display: "inline-flex",
+        }}
+      >
+        <Typography variant="body2">
+          {getTitle(row?.status?.toLowerCase())}
+        </Typography>
+      </Box>
+    ),
   },
 ];
 

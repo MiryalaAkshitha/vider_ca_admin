@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import converter from "number-to-words";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,9 +17,8 @@ import {
   getGrandTotal,
   getRoundOff,
   getSubTotal,
-  getTotalGst,
-  getTotalIgst,
   getTotalCharges,
+  getTotalGst,
 } from "../calculations";
 
 function TotalCalculations() {
@@ -38,18 +38,15 @@ function TotalCalculations() {
       </Box>
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Typography variant="caption" flex={1}>
-          {state.interState ? "CGST + SGST" : "GST"}
+          GST
         </Typography>
         <Typography variant="body2">
-          {state.interState
-            ? getTotalGst(state.particulars)
-            : getTotalIgst(state.particulars)}{" "}
-          /-
+          {getTotalGst(state.particulars)}/-
         </Typography>
       </Box>
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Typography variant="caption" flex={1}>
-          Pure Agent/Additional Charges
+          Pure Agent Charges
         </Typography>
         <Typography variant="body2">
           {getTotalCharges(state.otherParticulars)} /-
@@ -105,7 +102,7 @@ function TotalCalculations() {
         <Typography variant="subtitle2">{getGrandTotal(state)} /-</Typography>
       </Box>
       <Typography sx={{ mt: 1, textAlign: "right" }} variant="body2">
-        (Rupees Five Thousand Five Hundred Only)
+        ({converter.toWords(getGrandTotal(state))})
       </Typography>
     </Box>
   );

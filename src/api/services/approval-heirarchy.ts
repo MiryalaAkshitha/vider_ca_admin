@@ -38,6 +38,20 @@ const updateIrpoApprovals = ({ iproId, approvalHierarchyId }: any) => {
   });
 };
 
+const updateEstimateApprovals = ({ estimateId, approvalHierarchyId }: any) => {
+  return http.post(`/approvals/estimate`, {
+    estimateId,
+    approvalHierarchyId,
+  });
+};
+
+const updateInvoiceApprovals = ({ invoiceId, approvalHierarchyId }: any) => {
+  return http.post(`/approvals/invoice`, {
+    invoiceId,
+    approvalHierarchyId,
+  });
+};
+
 const updateApproval = (data: any) => {
   const { approvalId, status, remarks } = data;
   return http.patch(`/approvals/${approvalId}`, {
@@ -56,4 +70,6 @@ export {
   updateTaskApprovals,
   updateApproval,
   updateIrpoApprovals,
+  updateEstimateApprovals,
+  updateInvoiceApprovals,
 };

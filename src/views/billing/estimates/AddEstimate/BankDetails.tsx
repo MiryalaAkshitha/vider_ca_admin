@@ -1,4 +1,3 @@
-import QrCode2Icon from "@mui/icons-material/QrCode2";
 import {
   FormControl,
   Grid,
@@ -45,9 +44,9 @@ function BankDetails() {
   if (isLoading) return <Loader />;
 
   return (
-    <Box sx={{ margin: "30px 0" }}>
+    <Box mt={3}>
       <SectionHeading title="Bank Account Details" />
-      <Grid container sx={{ padding: "20px 0" }} columnSpacing={4}>
+      <Grid container spacing={2} alignItems="center" sx={{ p: 2, mt: "0px" }}>
         <Grid item xs={6}>
           <FormControl fullWidth size="small">
             <InputLabel id="bank">Select Bank Account</InputLabel>
@@ -84,16 +83,7 @@ function BankDetails() {
           </Box>
         </Grid>
         {bankDetails?.upiAttachment && (
-          <Grid
-            item
-            xs={6}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <Grid item xs={6} sx={{ textAlign: "center" }}>
             <img
               style={{
                 width: "200px",
@@ -103,9 +93,7 @@ function BankDetails() {
               src={bankDetails?.upiAttachment}
               alt=""
             />
-            <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
-              Scan and pay
-            </Typography>
+            <Typography variant="h5">Scan and pay</Typography>
           </Grid>
         )}
       </Grid>
@@ -113,33 +101,22 @@ function BankDetails() {
   );
 }
 
-const BankDetail = ({ title, value }) => {
+export const BankDetail = ({ title, value }) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "baseline",
-        justifyContent: "space-between",
-        mb: 2,
-      }}
-    >
-      <Typography
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          flex: 1,
-        }}
-      >
-        {title} <span>:</span>
-      </Typography>
-      <Typography
-        sx={{
-          flex: 2,
-          marginLeft: "20px",
-        }}
-      >
-        {value || "N/A"}
-      </Typography>
+    <Box sx={{ marginBottom: "16px" }}>
+      <Grid container>
+        <Grid item xs={4}>
+          <Typography variant="body2">{title}</Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <span>:</span>
+        </Grid>
+        <Grid item xs={7}>
+          <Typography variant="h6" sx={{ flex: 2 }}>
+            {value}
+          </Typography>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

@@ -1,6 +1,6 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import { getInvoicingTasks } from "api/services/billing";
+import { getInvoicingTasks } from "api/services/billing/estimates";
 import DialogWrapper from "components/DialogWrapper";
 import Members from "components/Members";
 import SearchContainer from "components/SearchContainer";
@@ -10,22 +10,26 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectEstimate,
   handleAddTasksToParticular,
+  selectEstimate,
 } from "redux/reducers/createEstimateSlice";
 import { ResType } from "types";
+import { getTitle } from "utils";
 
 const SelectTaskDialog = ({ open, setOpen }) => {
   const { client } = useSelector(selectEstimate);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<any[]>([]);
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState(5);
 
   const { data, isLoading }: ResType = useQuery(
     [
-      "invocing-tasks",
+      "estimate-tasks",
       {
         client: client,
+        search,
       },
     ],
     getInvoicingTasks,
@@ -41,18 +45,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
     setOpen(false);
   }
 
-  const getData = () => {
-    let result = data?.data || [];
-    if (search) {
-      result = result?.filter((item) => {
-        return (
-          item.name.toLowerCase().includes(search.toLowerCase()) ||
-          item?.category?.name.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-    }
-    return result;
-  };
+  const totalCount = data?.data?.totalCount || 0;
 
   return (
     <>
@@ -69,52 +62,54 @@ const SelectTaskDialog = ({ open, setOpen }) => {
         />
         <Table
           sx={{ mt: 3 }}
-          columns={[
-            {
-              title: "Category",
-              key: "category.name",
-            },
-            {
-              title: "Name",
-              key: "name",
-            },
-            {
-              title: "Status",
-              key: "status",
-            },
-            {
-              key: "Memberss",
-              title: "Members",
-              render: (v) => (
-                <Members
-                  data={v?.members?.map((item: any) => ({
-                    title: item?.fullName,
-                  }))}
-                />
-              ),
-            },
-          ]}
-          data={getData()}
+          columns={columns}
+          data={data?.data?.result?.slice(page, pageCount) || []}
           loading={isLoading}
-          selection={{
-            onSelect: (v) => {
-              setSelected(v);
-            },
-          }}
+          selection={{ selected, setSelected }}
+          pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
         />
-        <Box textAlign="center" mt={5}>
+        <Box textAlign="center" mt={2}>
           <Button
             color="secondary"
+            size="large"
+            disabled={!selected?.length}
             variant="contained"
-            sx={{ padding: "12px 120px", margin: "30px auto" }}
+            sx={{ minWidth: 250 }}
             onClick={onSubmit}
           >
-            <Typography>Select Task</Typography>
+            Submit
           </Button>
         </Box>
       </DialogWrapper>
     </>
   );
 };
+
+const columns = [
+  {
+    title: "Category",
+    key: "category.name",
+  },
+  {
+    title: "Name",
+    key: "name",
+  },
+  {
+    title: "Status",
+    key: "status",
+    render: (item: any) => getTitle(item.status),
+  },
+  {
+    key: "Memberss",
+    title: "Members",
+    render: (v: any) => (
+      <Members
+        data={v?.members?.map((item: any) => ({
+          title: item?.fullName,
+        }))}
+      />
+    ),
+  },
+];
 
 export default SelectTaskDialog;

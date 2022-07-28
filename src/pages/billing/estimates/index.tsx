@@ -1,89 +1,46 @@
-import { Add } from "@mui/icons-material";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import BrowserUpdatedOutlinedIcon from "@mui/icons-material/BrowserUpdatedOutlined";
-import { Box, Button, Typography } from "@mui/material";
-import { getEstimates } from "api/services/billing";
-import SearchContainer from "components/SearchContainer";
+import { Box, Typography } from "@mui/material";
+import { getEstimates } from "api/services/billing/estimates";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle } from "utils";
-import Actions from "views/billing/estimates/Actions";
+import { formattedDate } from "utils/formattedDate";
+import EstimatesHeader from "views/billing/estimates/EstimatesHeader";
 import { getStatusColor } from "views/billing/estimates/getStatusColor";
 
 const Estimates = () => {
   useTitle("Estimates");
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState<number>(5);
   const [page, setPage] = useState<number>(0);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [pageCount, setPageCount] = useState<number>(5);
+  const [selected, setSelected] = useState<any[]>([]);
+  const selectionRef = useRef<any>({});
 
   const { data, isLoading }: ResType = useQuery(
-    ["estimates", { offset: page * limit, limit }],
+    ["estimates", { offset: page * pageCount, limit: pageCount, search }],
     getEstimates
   );
 
+  const totalCount = data?.data?.totalCount || 0;
+
   return (
-    <>
-      <Box p={3}>
-        <Box
-          mb={2}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <SearchContainer value={search} onChange={setSearch} />
-          <Box display="flex" gap={1}>
-            <Button
-              endIcon={<BrowserUpdatedOutlinedIcon fontSize="small" />}
-              color="primary"
-              variant="outlined"
-            >
-              Export
-            </Button>
-            <Button
-              endIcon={<ArrowDropDownOutlinedIcon />}
-              color="primary"
-              variant="outlined"
-              onClick={(e) => setAnchorEl(e.currentTarget)}
-            >
-              Actions
-            </Button>
-            <Button
-              onClick={() => navigate("/billing/estimates/add")}
-              variant="outlined"
-              color="secondary"
-              startIcon={<Add />}
-            >
-              Add Estimate
-            </Button>
-          </Box>
-        </Box>
-        <Table
-          selection={{
-            onSelect(selected) {},
-          }}
-          pagination={{
-            pageCount: limit,
-            totalCount: data?.data?.totalCount || 0,
-            onPageCountChange(v) {
-              setLimit(v);
-            },
-            onChange(page) {
-              setPage(page);
-            },
-          }}
-          data={data?.data?.result || []}
-          columns={columns}
-          loading={isLoading}
-        />
-      </Box>
-      <Actions anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-    </>
+    <Box p={3}>
+      <EstimatesHeader
+        clearSelection={selectionRef.current?.clearSelection}
+        selected={selected}
+        search={search}
+        setSearch={setSearch}
+      />
+      <Table
+        selection={{ selected, setSelected }}
+        pagination={{ totalCount, pageCount, setPageCount, page, setPage }}
+        data={data?.data?.result || []}
+        columns={columns}
+        loading={isLoading}
+      />
+    </Box>
   );
 };
 
@@ -107,11 +64,16 @@ let columns = [
   },
   {
     key: "estimateDate",
-    title: "estimateDate",
+    title: "Estimate Date",
   },
   {
     key: "estimateDueDate",
     title: "Due Date",
+  },
+  {
+    key: "createdAt",
+    title: "Created On",
+    render: (row: any) => formattedDate(row.createdAt),
   },
   {
     key: "status",

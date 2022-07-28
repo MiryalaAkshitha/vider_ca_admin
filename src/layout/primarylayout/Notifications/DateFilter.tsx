@@ -65,7 +65,12 @@ const DateFilter = ({ filters, setFilters }) => {
         />
       </Box>
       <Box>
-        <Button size="small" sx={{ minWidth: 50 }} onClick={handleApply}>
+        <Button
+          disabled={!state.fromDate || !state.toDate}
+          size="small"
+          sx={{ minWidth: 50 }}
+          onClick={handleApply}
+        >
           Apply
         </Button>
         <Button size="small" sx={{ minWidth: 50 }} onClick={handleClear}>

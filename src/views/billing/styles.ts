@@ -1,14 +1,14 @@
-import { ListItemButton, Tab, Table } from "@mui/material";
+import { ListItemButton, Menu, Tab, Table } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+export const StyledListItemButton = styled(ListItemButton)({
   "&.MuiListItemButton-root": {
     textAlign: "left",
     minHeight: "48px",
   },
-}));
+});
 
-export const StyledListItem = styled(ListItemButton)(({ theme }) => ({
+export const StyledListItem = styled(ListItemButton)({
   "&.MuiButtonBase-root": {
     minHeight: "auto",
     padding: "10px 0",
@@ -19,8 +19,9 @@ export const StyledListItem = styled(ListItemButton)(({ theme }) => ({
     width: "100%",
     opacity: "1",
   },
-}));
-export const StyledTab = styled(Tab)(({ theme }) => ({
+});
+
+export const StyledTab = styled(Tab)({
   "&.MuiButtonBase-root": {
     minHeight: "auto",
     padding: "10px 0",
@@ -32,11 +33,11 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
     flexDirection: "column",
     opacity: "1",
   },
-}));
+});
 
-export const MenuItem = styled("div")(({ theme }) => ({
+export const MenuItem = styled("div")({
   display: "flex",
-}));
+});
 
 export const StyledNewEstimateContainer = styled("div")({
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -46,8 +47,7 @@ export const StyledNewEstimateContainer = styled("div")({
 });
 
 export const StyledParticularsTable = styled(Table)({
-  tableLayout: "fixed",
-  emptyCells: "hide",
+  width: "100%",
   "& .MuiTableCell-root": {
     border: "1px solid #e0e0e0",
   },
@@ -61,3 +61,19 @@ export const StyledParticularsTable = styled(Table)({
     border: "none",
   },
 });
+
+export const StyledActionsMenu = styled(Menu)(({ theme }) => ({
+  "& .MuiMenuItem-root": {
+    paddingTop: 14,
+    paddingBottom: 14,
+    fontSize: 14,
+  },
+  "& .MuiMenuItem-root:not(:last-child)": {
+    borderBottom: "1px solid #ddd4d4",
+  },
+  "& .MuiSvgIcon-root": {
+    fontSize: 20,
+    marginRight: 10,
+    color: theme.palette.primary.main,
+  },
+}));

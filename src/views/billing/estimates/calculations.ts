@@ -1,5 +1,5 @@
 import { TAX_TYPE } from "data/taxes";
-import { IState } from "redux/reducers/createEstimateSlice";
+import { IState } from "redux/reducers/createEstimateSlice/types";
 
 export function getAmount(particular: any) {
   const { discount, discountType, rate, units } = particular;
@@ -32,14 +32,14 @@ export function getSubTotal(particulars: any[]) {
   );
 }
 
-export function getGstAmount(particular: any, gstValue: string) {
+export function getGstAmount(particular: any, value: string) {
   const taxableAmount = getAmount(particular);
 
-  if (!gstValue) return 0;
+  if (!value) return 0;
 
   let gstPercent = 0;
 
-  switch (gstValue) {
+  switch (value) {
     case TAX_TYPE.NON_GST_SUPPLY:
       gstPercent = 0;
       break;
@@ -71,27 +71,15 @@ export function getGstAmount(particular: any, gstValue: string) {
   return (taxableAmount * gstPercent) / 100;
 }
 
-export function getTotalIgst(particulars: any[]) {
-  return particulars.reduce((acc, particular) => {
-    return acc + getGstAmount(particular, particular?.igst?.value);
-  }, 0);
-}
-
 export function getTotalGst(particulars: any[]) {
   return particulars.reduce((acc, particular) => {
-    return (
-      acc +
-      getGstAmount(particular, particular?.cgst?.value) +
-      getGstAmount(particular, particular?.sgst?.value)
-    );
+    return acc + getGstAmount(particular, particular.gst?.value);
   }, 0);
 }
 
 export function getRoundOff(state: IState) {
   let totalAmount = getSubTotal(state.particulars);
-  let totalGst = state.interState
-    ? getTotalGst(state.particulars)
-    : getTotalIgst(state.particulars);
+  let totalGst = getTotalGst(state.particulars);
   let totalOtherParticularCharges = getTotalCharges(state.otherParticulars);
   let adjustment = +state.adjustment;
   let result =
@@ -104,11 +92,8 @@ export function getRoundOff(state: IState) {
 
 export function getGrandTotal(state: IState) {
   let totalAmount = getSubTotal(state.particulars);
-  let totalGst = state.interState
-    ? getTotalGst(state.particulars)
-    : getTotalIgst(state.particulars);
+  let totalGst = getTotalGst(state.particulars);
   let totalOtherParticularCharges = getTotalCharges(state.otherParticulars);
-
   let adjustment = +state.adjustment;
   let result =
     totalAmount + totalGst + totalOtherParticularCharges + adjustment;

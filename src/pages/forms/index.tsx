@@ -7,12 +7,8 @@ const Forms = () => {
   useTitle("Forms");
 
   return (
-    <Grid
-      container
-      direction={"row"}
-      style={{ height: "100%", flexWrap: "nowrap" }}
-    >
-      <Grid item style={{ borderRight: "1px solid #2222221A", height: "90vh" }}>
+    <Grid container direction="row">
+      <Grid item>
         <FormNav />
       </Grid>
       <Grid item sx={{ flex: 1 }}>

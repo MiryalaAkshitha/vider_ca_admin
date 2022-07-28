@@ -1,6 +1,6 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
-import { createEstimate } from "api/services/billing";
+import { createEstimate } from "api/services/billing/estimates";
 import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
@@ -13,7 +13,6 @@ import {
   getRoundOff,
   getSubTotal,
   getTotalGst,
-  getTotalIgst,
   getTotalCharges,
 } from "../calculations";
 
@@ -35,10 +34,7 @@ function BottomBar() {
 
   const onSubmit = (args: any) => {
     let apiData: any = { ...state };
-    let totalGstAmount = state.interState
-      ? getTotalGst(state.particulars)
-      : getTotalIgst(state.particulars);
-
+    let totalGstAmount = getTotalGst(state.particulars);
     apiData.approvalHierarchyId = state.approvalHierarchy?.id;
     apiData.subTotal = getSubTotal(state.particulars);
     apiData.totalGstAmount = totalGstAmount;
@@ -50,16 +46,7 @@ function BottomBar() {
       return {
         ...item,
         amount: getAmount(item),
-        igst: item?.igst?.value,
-        cgst: item?.cgst?.value,
-        sgst: item?.sgst?.value,
-        ...(state.interState && {
-          igst: null,
-        }),
-        ...(!state.interState && {
-          cgst: null,
-          sgst: null,
-        }),
+        gst: item?.gst?.value,
       };
     });
     apiData.submitForApproval = args.submitForApproval;
@@ -91,6 +78,14 @@ function BottomBar() {
           margin: "auto",
         }}
       >
+        <Button
+          onClick={() => navigate("/billing/estimates")}
+          color="inherit"
+          variant="contained"
+          disableElevation
+        >
+          Cancel
+        </Button>
         <Box display="flex" gap={1}>
           <Button
             disableElevation
@@ -107,23 +102,6 @@ function BottomBar() {
             variant="contained"
           >
             Save as Draft
-          </Button>
-          <Button
-            onClick={() => navigate("/billing/estimates")}
-            color="inherit"
-            variant="contained"
-            disableElevation
-          >
-            Cancel
-          </Button>
-        </Box>
-        <Box>
-          <Button
-            onClick={() => navigate("/billing/estimates/estimate-preview")}
-            size="large"
-            color="secondary"
-          >
-            Preview
           </Button>
         </Box>
       </Box>

@@ -54,9 +54,12 @@ function Particulars() {
           <TableHead>
             <TableRow>
               {PARTICULARS_HEADINGS.map((row, index) => {
-                if (interState && row.name === "IGST") return null;
-                if (!interState && ["CGST", "SGST"].includes(row.name)) {
-                  return null;
+                if (interState && row.name === "IGST") {
+                  return (
+                    <TableCell key={index} style={{ width: row.width }}>
+                      <Typography>CGST + SGST</Typography>
+                    </TableCell>
+                  );
                 }
                 return (
                   <TableCell key={index} style={{ width: row.width }}>
@@ -153,36 +156,14 @@ function Particulars() {
                     disabled
                   />
                 </TableCell>
-                {!interState && (
-                  <TableCell>
-                    <SelectTax
-                      onChange={(v: any) => {
-                        updateParticular(index, "igst", v);
-                      }}
-                      value={row.igst}
-                    />
-                  </TableCell>
-                )}
-                {interState && (
-                  <>
-                    <TableCell>
-                      <SelectTax
-                        onChange={(v: any) => {
-                          updateParticular(index, "sgst", v);
-                        }}
-                        value={row.sgst}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <SelectTax
-                        onChange={(v: any) =>
-                          updateParticular(index, "cgst", v)
-                        }
-                        value={row.cgst}
-                      />
-                    </TableCell>
-                  </>
-                )}
+                <TableCell>
+                  <SelectTax
+                    onChange={(v: any) => {
+                      updateParticular(index, "gst", v);
+                    }}
+                    value={row.gst}
+                  />
+                </TableCell>
                 <TableCell>
                   <IconButton color="secondary">
                     <ClearIcon onClick={() => removeParticular(index)} />

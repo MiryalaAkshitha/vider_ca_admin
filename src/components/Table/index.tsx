@@ -2,13 +2,14 @@ import {
   Checkbox,
   CircularProgress,
   TablePagination,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { Box, SystemStyleObject } from "@mui/system";
 import _ from "lodash";
-import React, { useEffect, useState } from "react";
-import { StyledTable, StyledTableLoader } from "./styles";
+import React from "react";
+import { StyledTable, StyledTableContainer, StyledTableLoader } from "./styles";
+
+const ROWS_PER_PAGE_OPTIONS = [5, 10, 20, 25, 50];
 
 export type ColumnType = {
   key: string;
@@ -20,20 +21,16 @@ export type ColumnType = {
 };
 
 type PaginationType = {
-  offset?: number;
   totalCount: number;
-  onPageCountChange?: (v: number) => void;
-  pageCount: number;
-  onChange: (v: number) => void;
+  page: number;
+  setPage: (page: number) => void;
+  pageCount?: number;
+  setPageCount?: (pageCount: number) => void;
 };
 
 type SelectionType = {
-  selectionRef?: React.MutableRefObject<any>;
-  toolbar?: (
-    selected: any,
-    clearSelection?: () => void
-  ) => React.ReactNode | null;
-  onSelect?: (selected: any) => void;
+  selected: any[];
+  setSelected: (selected: any[]) => void;
 };
 
 interface TableProps {
@@ -57,30 +54,27 @@ function Table(props: TableProps) {
     selection,
   } = props;
 
-  const [page, setPage] = useState(0);
-  const [selected, setSelected] = useState<any>({});
+  const { selected, setSelected } = selection || {
+    selected: [],
+    setSelected: () => {},
+  };
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newData = { ...selected };
     if (e.target.checked) {
-      newData[page] = data;
+      setSelected(data);
     } else {
-      newData[page] = [];
+      setSelected([]);
     }
-    setSelected(newData);
-    selection?.onSelect?.(newData[page]);
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>, item: any) => {
     e.stopPropagation();
-    let newData = { ...selected };
     if (e.target.checked) {
-      newData[page] = [...(selected[page] || []), item];
+      setSelected([...selected, item]);
     } else {
-      newData[page] = selected[page]?.filter((v: any) => v?.id !== item?.id);
+      const filtered = selected?.filter((v: any) => v?.id !== item?.id);
+      setSelected(filtered);
     }
-    setSelected(newData);
-    selection?.onSelect?.(newData[page]);
   };
 
   const handleRowClick = (item: any) => {
@@ -88,51 +82,21 @@ function Table(props: TableProps) {
     onRowClick(item);
   };
 
-  useEffect(() => {
-    const clearSelection = () => {
-      setSelected((prevState) => ({
-        ...prevState,
-        [page]: [],
-      }));
-      selection?.onSelect?.([]);
-    };
-    if (selection?.selectionRef) {
-      selection.selectionRef.current.clearSelection = clearSelection;
-    }
-  }, [selection, page]);
+  const handlePageChange = (v: any, page: number) => {
+    pagination?.setPage(page);
+    setSelected([]);
+  };
 
-  const showToolBar = selected[page] && selected[page].length > 0;
+  const handleRowsPerPageChange = (e: any) => {
+    if (pagination?.setPageCount) {
+      pagination?.setPageCount(+e.target.value);
+      setSelected([]);
+    }
+  };
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        boxShadow: "0px 0px 15px rgb(0 0 0 / 10%)",
-        minHeight: 350,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        borderRadius: "6px",
-        overflow: "hidden",
-        border: "1px solid rgba(0, 0, 0, 0.09)",
-        ...sx,
-      }}
-    >
+    <StyledTableContainer sx={sx}>
       <div>
-        {showToolBar && (
-          <Toolbar
-            sx={{
-              background: "rgba(24, 47, 83, 0.2)",
-              justifyContent: "flex-end",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-            }}
-          >
-            {selection?.toolbar && selection.toolbar(selected[page])}
-          </Toolbar>
-        )}
         <StyledTable>
           <thead>
             <tr>
@@ -141,7 +105,7 @@ function Table(props: TableProps) {
                   <Checkbox
                     color="secondary"
                     onChange={handleSelectAll}
-                    checked={selected[page]?.length === data?.length}
+                    checked={selected?.length === data?.length}
                   />
                 </th>
               )}
@@ -159,22 +123,16 @@ function Table(props: TableProps) {
             {data.map((item, index) => (
               <tr key={index}>
                 {selection && (
-                  <>
-                    <td>
-                      <Checkbox
-                        onChange={(e) => handleSelect(e, item)}
-                        color="secondary"
-                        checked={Boolean(
-                          selected[page]?.find((v: any) => v.id === item.id)
-                        )}
-                      />
-                    </td>
-                  </>
+                  <td>
+                    <Checkbox
+                      onChange={(e) => handleSelect(e, item)}
+                      color="secondary"
+                      checked={Boolean(_.find(selected, { id: item?.id }))}
+                    />
+                  </td>
                 )}
                 {columns.map((col, colIndex) => {
-                  if (col.hide) {
-                    return null;
-                  }
+                  if (col.hide) return null;
                   return (
                     <td key={colIndex} onClick={() => handleRowClick(item)}>
                       {col?.render ? (
@@ -197,19 +155,11 @@ function Table(props: TableProps) {
           <TablePagination
             component="div"
             count={pagination.totalCount || 10}
-            page={page}
-            onPageChange={(v, page) => {
-              console.log(page);
-              setPage(page);
-              pagination.onChange(page);
-            }}
-            rowsPerPageOptions={[5, 10, 20, 25, 50]}
+            page={pagination.page || 0}
+            onPageChange={handlePageChange}
+            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             rowsPerPage={pagination.pageCount || 10}
-            onRowsPerPageChange={(e) => {
-              if (pagination.onPageCountChange) {
-                pagination.onPageCountChange(+e.target.value);
-              }
-            }}
+            onRowsPerPageChange={handleRowsPerPageChange}
           />
         </Box>
       )}
@@ -225,7 +175,7 @@ function Table(props: TableProps) {
           </Typography>
         </StyledTableLoader>
       ) : null}
-    </Box>
+    </StyledTableContainer>
   );
 }
 

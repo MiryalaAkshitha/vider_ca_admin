@@ -5,7 +5,7 @@ const createClient = (data: any) => {
 };
 
 const getClients = ({ queryKey }: any) => {
-  let { limit, offset, query } = queryKey[1];
+  let { limit, offset, query } = queryKey[1] || {};
   return http.get("/client", {
     params: {
       limit,

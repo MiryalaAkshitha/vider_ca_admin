@@ -1,19 +1,19 @@
-import { Delete, Edit, InfoOutlined } from "@mui/icons-material";
+import { Edit, InfoOutlined } from "@mui/icons-material";
 import { Box, Button, IconButton } from "@mui/material";
 import { deleteLeads, getLeads } from "api/services/clients/clients";
-import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
+import { useConfirm } from "context/ConfirmDialog";
 import useTitle from "hooks/useTitle";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 import AddLead from "views/leads/AddLead";
-import EditLead from "views/leads/EditLead";
 import ConverLead from "views/leads/ConvertLead";
+import EditLead from "views/leads/EditLead";
 import ViewLead from "views/leads/ViewLead";
 
 function Leads() {
@@ -21,21 +21,21 @@ function Leads() {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState<number>(5);
-  const [offset, setOffset] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(5);
   const [open, setOpen] = useState(false);
-  const selectionRef = useRef<any>({});
+  const [selected, setSelected] = useState<any[]>([]);
 
   const { isLoading, data }: ResType = useQuery(
-    ["leads", { limit: limit, offset: offset * limit, search }],
+    ["leads", { limit: pageCount, offset: page * pageCount, search }],
     getLeads
   );
 
   const { mutate } = useMutation(deleteLeads, {
     onSuccess: (res) => {
       snack.success("Leads Deleted");
-      selectionRef?.current?.clearSelection();
       queryClient.invalidateQueries("leads");
+      setSelected([]);
       setOpen(false);
     },
     onError: (err: any) => {
@@ -43,18 +43,20 @@ function Leads() {
     },
   });
 
-  const handleDelete = (data: any) => {
+  const handleDelete = () => {
     confirm({
       msg: "Are you sure you want to delete selected leads?",
       action: () => {
-        mutate(data.map((c: any) => c.id));
+        mutate(selected.map((c: any) => c?.id));
       },
     });
   };
 
+  const totalCount = data?.data?.totalCount;
+
   return (
     <Box p={3}>
-      <Box mb={2}>
+      <Box mb={2} display="flex" justifyContent="space-between">
         <SearchContainer
           value={search}
           debounced
@@ -62,30 +64,18 @@ function Leads() {
           onChange={setSearch}
           placeHolder="Search"
         />
+        {selected.length > 0 && (
+          <Button onClick={handleDelete} variant="outlined" color="secondary">
+            Delete
+          </Button>
+        )}
       </Box>
       <Table
         data={data?.data?.data || []}
         columns={columns}
         loading={isLoading}
-        selection={{
-          selectionRef: selectionRef,
-          toolbar: (selected, clearSelection) => (
-            <IconButton
-              color="secondary"
-              onClick={() => handleDelete(selected)}
-            >
-              <Delete />
-            </IconButton>
-          ),
-        }}
-        pagination={{
-          totalCount: data?.data?.totalCount,
-          pageCount: limit,
-          onPageCountChange: (v) => setLimit(v),
-          onChange: (v) => {
-            setOffset(v);
-          },
-        }}
+        selection={{ selected, setSelected }}
+        pagination={{ totalCount, pageCount, setPageCount, page, setPage }}
       />
       <FloatingButton onClick={() => setOpen(true)} />
       <AddLead open={open} setOpen={() => setOpen(false)} />

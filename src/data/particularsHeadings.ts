@@ -28,14 +28,6 @@ export const PARTICULARS_HEADINGS = [
     width: "200px",
   },
   {
-    name: "SGST",
-    width: "200px",
-  },
-  {
-    name: "CGST",
-    width: "200px",
-  },
-  {
     name: "Action",
     width: "80px",
   },

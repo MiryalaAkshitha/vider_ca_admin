@@ -1,14 +1,23 @@
 import { styled } from "@mui/material/styles";
 
+export const StyledTableContainer = styled("div")({
+  position: "relative",
+  boxShadow: "0px 0px 15px rgb(0 0 0 / 10%)",
+  minHeight: 350,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  borderRadius: "6px",
+  overflow: "hidden",
+  border: "1px solid rgba(0, 0, 0, 0.09)",
+});
+
 export const StyledTable = styled("table")(({ theme }) => ({
   width: "100%",
   borderCollapse: "collapse",
   background: "#FFFFFF",
   fontFamily: "muli_regular",
   paddingBottom: "30px",
-  "& thead": {
-    // background: "#182F53",
-  },
   "& tr": {
     cursor: "pointer",
   },

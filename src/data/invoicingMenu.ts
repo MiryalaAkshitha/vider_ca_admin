@@ -1,5 +1,3 @@
-import { icons } from "assets";
-
 export interface IMenuItem {
   title: string;
   path: string;
@@ -8,6 +6,10 @@ export interface IMenuItem {
 }
 
 export const invoicingMenu: Array<IMenuItem> = [
+  {
+    title: "Clients",
+    path: "/billing/clients",
+  },
   {
     title: "Estimates",
     path: "/billing/estimates",

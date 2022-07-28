@@ -16,21 +16,24 @@ import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { DialogProps, SubmitType } from "types";
 
+let initialState = {
+  type: "",
+  particularName: "",
+  amount: "",
+  includeInInvoice: false,
+  attachment: "",
+};
+
 function AddExpenditure({ open, setOpen }: DialogProps) {
   const params: any = useParams();
   const queryClient = useQueryClient();
-  const [state, setState] = useState({
-    type: "",
-    particularName: "",
-    amount: "",
-    includeInInvoice: false,
-    attachment: "",
-  });
+  const [state, setState] = useState({ ...initialState });
 
   const { mutate, isLoading } = useMutation(addExpenditure, {
     onSuccess: () => {
       snack.success("Expenditure Added");
       setOpen(false);
+      setState({ ...initialState });
       queryClient.invalidateQueries("expenditure");
     },
     onError: (err: any) => {

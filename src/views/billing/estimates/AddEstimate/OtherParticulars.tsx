@@ -44,10 +44,7 @@ function OtherParticulars() {
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography>Particulars</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography>Type</Typography>
+                <Typography>Services as a Pure Agent</Typography>
               </TableCell>
               <TableCell>
                 <Typography>Amount</Typography>
@@ -71,22 +68,6 @@ function OtherParticulars() {
                         updateOtherParticular(index, "name", e.target.value);
                       }}
                     />
-                  </TableCell>
-                  <TableCell>
-                    <TextField
-                      fullWidth
-                      variant="standard"
-                      value={data.type}
-                      select
-                      sx={{ mt: -1 }}
-                      label="Select Type"
-                      onChange={(e) => {
-                        updateOtherParticular(index, "type", e.target.value);
-                      }}
-                    >
-                      <MenuItem value="PURE_AGENT">Pure Agent</MenuItem>
-                      <MenuItem value="ADDITIONAL">Additional</MenuItem>
-                    </TextField>
                   </TableCell>
                   <TableCell>
                     <TextField

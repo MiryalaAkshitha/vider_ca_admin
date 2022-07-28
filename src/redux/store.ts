@@ -4,7 +4,6 @@ import formsReducer from "redux/reducers/formsSlice";
 import GlobalReducer from "redux/reducers/globalSlice";
 import storageReducer from "redux/reducers/storageSlice";
 import taskBoardReducer from "redux/reducers/taskboardSlice";
-import createInvoiceReducer from "./reducers/createInvoiceSlice";
 import signUpSliceReducer from "./reducers/signUpSlice";
 import addServiceReducer from "./reducers/addServiceSlice";
 import createReceiptReducer from "./reducers/createReceiptSlice";
@@ -19,7 +18,6 @@ const store = configureStore({
     storage: storageReducer,
     taskBoard: taskBoardReducer,
     signup: signUpSliceReducer,
-    createInvoice: createInvoiceReducer,
     createEstimate: createEstimateReducer,
     createReceipt: createReceiptReducer,
     addService: addServiceReducer,

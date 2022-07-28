@@ -8,14 +8,14 @@ import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
 import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "data/permissons";
 import useTitle from "hooks/useTitle";
 import _ from "lodash";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle } from "utils";
-import { Permissions } from "data/permissons";
 import Actions from "views/clients/Actions";
 import AddClient from "views/clients/AddClient";
 import CustomizeColumns from "views/clients/CustomizeColumns";
@@ -25,10 +25,9 @@ import ImportClients from "views/clients/ImportClients";
 function Clients() {
   useTitle("Clients");
   const navigate = useNavigate();
-  const selectionRef = useRef<any>({});
   const [open, setOpen] = useState(false);
-  const [limit, setLimit] = useState<number>(50);
-  const [offset, setOffset] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(5);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -47,8 +46,8 @@ function Clients() {
     [
       "clients",
       {
-        limit: limit,
-        offset: offset * limit,
+        limit: pageCount,
+        offset: page * pageCount,
         query: {
           ...filters,
           category: filters.category.map((c: any) => c?.value),
@@ -63,6 +62,8 @@ function Clients() {
   const handleRowClick = (v: any) => {
     navigate(`/clients/${v?.id}/profile`);
   };
+
+  const totalCount = data?.data?.count;
 
   return (
     <Box p={3}>
@@ -127,25 +128,11 @@ function Clients() {
       <Table
         sx={{ mt: 3 }}
         loading={isLoading}
-        onRowClick={(v) => {
-          handleRowClick(v);
-        }}
+        onRowClick={handleRowClick}
         data={data?.data?.result || []}
         columns={columns}
-        pagination={{
-          totalCount: data?.data?.count,
-          pageCount: limit,
-          onPageCountChange: (v) => setLimit(v),
-          onChange: (v) => {
-            setOffset(v);
-          },
-        }}
-        selection={{
-          selectionRef: selectionRef,
-          onSelect: (selected) => {
-            setSelected(selected);
-          },
-        }}
+        selection={{ selected, setSelected }}
+        pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
       />
       <ValidateAccess name={Permissions.CREATE_CLIENTS}>
         <FloatingButton
@@ -170,7 +157,7 @@ function Clients() {
         setOpen={setOpenCustomColumns}
       />
       <Actions
-        clearSelection={selectionRef.current?.clearSelection}
+        clearSelection={() => setSelected([])}
         selected={selected}
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
