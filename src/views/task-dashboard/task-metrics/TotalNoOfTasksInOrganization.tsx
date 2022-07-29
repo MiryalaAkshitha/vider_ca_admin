@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import NorthIcon from "@mui/icons-material/North";
 import SouthIcon from "@mui/icons-material/South";
 import { theme } from "styles/theme";
+import { Typography13 } from "../styles";
 
 export default function TotalNoOfTasksInOrganization() {
   const [more, setMore] = useState(true);
   return (
     <Box
       sx={{
-        padding: "35px",
+        padding: "0 35px",
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
@@ -46,11 +47,7 @@ export default function TotalNoOfTasksInOrganization() {
           >
             {more ? "+ " : "- "} 25%
           </Typography>
-          <Typography
-            sx={{ opacity: "50%", fontSize: "13px", lineHeight: "16px" }}
-          >
-            Than Last Week
-          </Typography>
+          <Typography13>Than Last Week</Typography13>
         </Box>
       </Box>
     </Box>
