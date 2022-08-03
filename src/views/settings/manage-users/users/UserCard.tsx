@@ -15,9 +15,7 @@ function UserCard({ data }: Props) {
   return (
     <>
       <StyledUserCard
-        onClick={() => {
-          navigate(`/settings/users/${data.id}`);
-        }}
+        onClick={() => navigate(`/settings/users/${data.id}?tab=Profile`)}
       >
         <Avatar
           sx={{ width: 80, mb: 2, height: 80, mx: "auto" }}

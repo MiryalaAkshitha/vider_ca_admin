@@ -1,6 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { getStageOfWork } from "api/services/tasks";
+import { getStageOfWork } from "api/services/tasks/tasks";
 import { noChecklists } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";

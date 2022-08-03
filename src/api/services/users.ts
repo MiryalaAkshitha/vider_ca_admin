@@ -100,8 +100,8 @@ const deleteTeam = ({ id }) => {
   return http.delete(`/teams/${id}`);
 };
 
-const getProfile = ({ queryKey }) => {
-  return http.get("/users/profile", { params: { userId: queryKey[1] } });
+const getProfile = () => {
+  return http.get("/users/profile");
 };
 
 const getUser = ({ queryKey }) => {

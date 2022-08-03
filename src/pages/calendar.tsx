@@ -4,7 +4,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Box } from "@mui/material";
 import { getDefaultEvents, getEvents } from "api/services/events";
-import { getTasks } from "api/services/tasks";
+import { getTasks } from "api/services/tasks/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
@@ -18,9 +18,11 @@ import AddEvent from "views/calendar/AddEvent";
 import EventIndication from "views/calendar/EventIndication";
 import ViewEvent from "views/calendar/ViewEvent";
 import ViewGlobalEvent from "views/calendar/ViewGlobalEvent";
+import { useNavigate } from "react-router-dom";
 
 function Calendar() {
   useTitle("Calendar");
+  const navigate = useNavigate();
   const [viewOpen, setViewOpen] = useState(false);
   const [data, setData] = useState({});
   const [open, setOpen] = useState(false);
@@ -89,6 +91,10 @@ function Calendar() {
       );
       setOpenGlobal(true);
       setData(event);
+    }
+
+    if (bgColor === "#149ECD") {
+      navigate(`/task-board/${value.event.id}#details`);
     }
   };
 

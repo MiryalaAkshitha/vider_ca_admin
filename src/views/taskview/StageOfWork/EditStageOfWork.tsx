@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateStageOfWork } from "api/services/tasks";
+import { updateStageOfWork } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";

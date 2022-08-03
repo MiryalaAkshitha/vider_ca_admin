@@ -1,13 +1,17 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
 import { userProfileMenu } from "data/constants";
+import useQueryParams from "hooks/useQueryParams";
+import { useNavigate } from "react-router-dom";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import Expenditure from "views/settings/manage-users/users/Expenditure";
 import Tasks from "views/settings/manage-users/users/Tasks";
 import UserProfile from "views/settings/manage-users/users/UserProfile";
 
 function Profile() {
-  const [active, setActive] = useState("Profile");
+  const navigate = useNavigate();
+  const { queryParams } = useQueryParams();
+
+  const active = queryParams.tab;
 
   return (
     <>
@@ -16,7 +20,7 @@ function Profile() {
           {userProfileMenu.map((item, index) => (
             <StyledProfileNavItem
               key={index}
-              onClick={() => setActive(item.title)}
+              onClick={() => navigate(`?tab=${item.title}`)}
               active={active === item.title ? 1 : 0}
             >
               {item.title}

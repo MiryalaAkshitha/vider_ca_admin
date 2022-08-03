@@ -1,6 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { getChecklists } from "api/services/tasks";
+import { getChecklists } from "api/services/tasks/tasks";
 import { noChecklists } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";

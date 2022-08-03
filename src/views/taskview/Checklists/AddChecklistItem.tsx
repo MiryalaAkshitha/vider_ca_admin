@@ -1,7 +1,7 @@
 import { Add, Delete } from "@mui/icons-material";
 import { Button, IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { addChecklistItems } from "api/services/tasks";
+import { addChecklistItems } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";

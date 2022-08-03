@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getTaskComments } from "api/services/tasks";
+import { getTaskComments } from "api/services/tasks/tasks";
 import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";

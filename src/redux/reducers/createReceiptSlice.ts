@@ -11,6 +11,9 @@ export interface IState {
   paymentMode: "CASH" | "CREDIT_CARD" | "CHEQUE" | "BANK_TRANSFER" | "UPI";
   paymentDate: string;
   referenceNumber: string;
+  tds: string;
+  tdsAmount: number;
+  creditsUsed: number;
 }
 
 const initialState: IState = {
@@ -22,6 +25,9 @@ const initialState: IState = {
   paymentMode: "CASH",
   paymentDate: "",
   referenceNumber: "",
+  tds: "",
+  tdsAmount: 0,
+  creditsUsed: 0,
 };
 
 export const createReceiptSlice = createSlice({

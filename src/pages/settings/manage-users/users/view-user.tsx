@@ -1,33 +1,36 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userProfileMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import Expenditure from "views/settings/manage-users/users/Expenditure";
 import Tasks from "views/settings/manage-users/users/Tasks";
 import UserDetails from "views/settings/manage-users/users/UserDetails";
+import LogHours from "views/settings/manage-users/users/LogHours";
+import useQueryParams from "hooks/useQueryParams";
 
 function ViewUser() {
   const navigate = useNavigate();
-  const [active, setActive] = useState("Profile");
+  const { queryParams } = useQueryParams();
+
+  const active = queryParams.tab;
 
   return (
     <>
       <Box p={1}>
-        <Button
+        {/* <Button
           onClick={() => navigate("/settings/users")}
           startIcon={<ArrowBack />}
         >
           User Profile
-        </Button>
+        </Button> */}
       </Box>
       <Box sx={{ position: "sticky", top: 65, bgcolor: "white", zIndex: 2 }}>
         <StyledProfileNav>
           {userProfileMenu.map((item, index) => (
             <StyledProfileNavItem
               key={index}
-              onClick={() => setActive(item.title)}
+              onClick={() => navigate(`?tab=${item.title}`)}
               active={active === item.title ? 1 : 0}
             >
               {item.title}
@@ -39,6 +42,7 @@ function ViewUser() {
         {active === "Profile" && <UserDetails />}
         {active === "Tasks" && <Tasks />}
         {active === "Expenditure" && <Expenditure />}
+        {active === "Log Hours" && <LogHours />}
       </Box>
     </>
   );

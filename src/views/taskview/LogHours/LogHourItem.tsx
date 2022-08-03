@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { deleteLogHour } from "api/services/tasks";
+import { deleteLogHour } from "api/services/tasks/loghours";
 import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import moment from "moment";

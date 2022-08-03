@@ -1,6 +1,6 @@
 import { Dialog, Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
-import { addAttachment } from "api/services/tasks";
+import { addAttachment } from "api/services/tasks/tasks";
 import FileDrop from "components/FileDrop";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";

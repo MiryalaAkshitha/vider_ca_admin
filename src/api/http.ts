@@ -1,4 +1,5 @@
 import axios from "axios";
+import { snack } from "components/toast";
 import { setGlobalLoading } from "redux/reducers/globalSlice";
 import store from "redux/store";
 
@@ -35,6 +36,7 @@ http.interceptors.response.use(
       err.response.data.statusCode === 401 &&
       err.response.config.method === "get"
     ) {
+      snack.error("Session expired. Please login again.");
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       window.location.href = "/login";

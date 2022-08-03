@@ -1,7 +1,7 @@
 import { SendOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
-import { addComment } from "api/services/tasks";
+import { addComment } from "api/services/tasks/tasks";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { Mention, MentionsInput } from "react-mentions";

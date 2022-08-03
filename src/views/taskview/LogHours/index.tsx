@@ -1,6 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { getLogHours } from "api/services/tasks";
+import { getLogHours } from "api/services/tasks/loghours";
 import { noSubTasks } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";

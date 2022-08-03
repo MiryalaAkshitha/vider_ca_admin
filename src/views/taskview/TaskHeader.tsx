@@ -1,7 +1,7 @@
 import { ChatOutlined, DeleteOutlined } from "@mui/icons-material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import { Box, Button } from "@mui/material";
-import { deleteTask } from "api/services/tasks";
+import { deleteTask } from "api/services/tasks/tasks";
 import BreadCrumbs from "components/BreadCrumbs";
 import { snack } from "components/toast";
 import ValidateAccess from "components/ValidateAccess";

@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { deleteLogHour } from "api/services/tasks";
+import { deleteLogHour } from "api/services/tasks/loghours";
 import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledLogHoursTopbar } from "views/clients/styles";

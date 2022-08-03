@@ -34,9 +34,7 @@ function DrawerWrapper(props: IDrawerWrapperProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Box p={2} py={3}>
-        {children}
-      </Box>
+      <Box p={2}>{children}</Box>
     </Drawer>
   );
 }

@@ -1,6 +1,6 @@
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createSubTask } from "api/services/tasks";
+import { createSubTask } from "api/services/tasks/tasks";
 import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";

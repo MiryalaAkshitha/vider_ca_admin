@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import { getTask } from "api/services/tasks";
+import { getTask } from "api/services/tasks/tasks";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 

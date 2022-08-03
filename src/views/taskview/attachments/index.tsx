@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Button, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getTaskAttachments } from "api/services/tasks";
+import { getTaskAttachments } from "api/services/tasks/tasks";
 import { noAttachments } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";

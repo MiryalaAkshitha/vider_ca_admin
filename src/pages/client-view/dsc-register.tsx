@@ -31,6 +31,7 @@ function DscRegister() {
     [
       "dsc-register",
       {
+        type: "CLIENT",
         clientId: params.clientId,
         limit: limit,
         offset: offset * limit,

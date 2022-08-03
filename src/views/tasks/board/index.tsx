@@ -1,17 +1,17 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { reorderTasks, updateStatus } from "api/services/tasks";
+import { reorderTasks, updateStatus } from "api/services/tasks/tasks";
 import { snack } from "components/toast";
+import { TaskStatus } from "data/constants";
 import useTitle from "hooks/useTitle";
 import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
-import { TaskStatus } from "data/constants";
 import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
-import { colors, getContainerHeight, move, reorder } from "./utils";
+import { colors, move, reorder } from "./utils";
 
 type Props = {
   data: any;
@@ -192,7 +192,7 @@ function Board({ data }: Props) {
                         listContainerRef.current = ref;
                         provided.innerRef(ref);
                       }}
-                      height={getContainerHeight(listContainerRef.current)}
+                      height="60vh"
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
                       {state[key].map((item: any, index: number) => (

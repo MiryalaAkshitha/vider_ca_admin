@@ -2,7 +2,7 @@ import { MoreVert } from "@mui/icons-material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { http } from "api/http";
-import { deleteStageOfWork, updateStageOfWork } from "api/services/tasks";
+import { deleteStageOfWork, updateStageOfWork } from "api/services/tasks/tasks";
 import { snack } from "components/toast";
 import { useMenu } from "context/MenuPopover";
 import { FocusEvent, MouseEvent, useState } from "react";

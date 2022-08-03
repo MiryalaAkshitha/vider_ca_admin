@@ -13,7 +13,7 @@ import "styles/app.css";
 import useNotifications from "./NotificationWrapper";
 import RoutesContainer from "./RoutesContainer";
 
-export let socket;
+export let socket: any;
 
 const queryClient = new QueryClient({
   defaultOptions: {

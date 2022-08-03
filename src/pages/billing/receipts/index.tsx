@@ -9,7 +9,7 @@ import { formattedDate } from "utils/formattedDate";
 import ReceiptsHeader from "views/billing/receipts/ReceiptsHeader";
 
 const Receipts = () => {
-  useTitle("receipts");
+  useTitle("Receipts");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);

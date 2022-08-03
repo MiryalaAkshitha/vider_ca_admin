@@ -8,7 +8,7 @@ import { Mention, MentionsInput } from "react-mentions";
 import { SendOutlined } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { snack } from "components/toast";
-import { addComment } from "api/services/tasks";
+import { addComment } from "api/services/tasks/tasks";
 import { useMutation, useQueryClient } from "react-query";
 
 const USER_REGEX = /@\[+[a-z\s]+\]/gi;

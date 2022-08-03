@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Grid } from "@mui/material";
-import { updateTask } from "api/services/tasks";
+import { updateTask } from "api/services/tasks/tasks";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
 import { snack } from "components/toast";

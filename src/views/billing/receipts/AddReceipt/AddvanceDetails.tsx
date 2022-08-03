@@ -16,7 +16,7 @@ function AdvanceDetails() {
     getCreditBalance,
     {
       enabled: Boolean(state.client),
-      onSettled: (res: any) => {
+      onSuccess: (res: any) => {
         dispatch(handleChange({ key: "previousCredits", value: res.data }));
       },
     }

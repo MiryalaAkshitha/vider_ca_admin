@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
-import { addLogHour } from "api/services/tasks";
+import { addLogHour } from "api/services/tasks/loghours";
 import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
@@ -19,9 +19,10 @@ import {
   addLogHourDefaultValues,
   AddLogHourSchema,
 } from "validations/addLogHour";
+import { handleError } from "utils/handleError";
 
 function AddLogHour({ open, setOpen }: DialogProps) {
-  const params = useParams();
+  const params: any = useParams();
   const queryClient = useQueryClient();
 
   const taskData: any = useTaskData();
@@ -37,16 +38,11 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       queryClient.invalidateQueries("loghours");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
-  const {
-    control,
-    trigger,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, trigger, handleSubmit } = useForm({
     defaultValues: addLogHourDefaultValues,
     mode: "onChange",
     resolver: yupResolver(
@@ -61,12 +57,12 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       .duration(`${data.hours?.value}:${data.minutes?.value}`)
       .asMilliseconds();
     mutate({
-      taskId: params.taskId,
-      data: apiData,
+      data: {
+        ...apiData,
+        taskId: +params.taskId,
+      },
     });
   };
-
-  console.log(errors);
 
   return (
     <DrawerWrapper open={open} title="Add Log Hour" setOpen={setOpen}>

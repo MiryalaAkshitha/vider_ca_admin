@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import FormattedDate from "components/FormattedDate";
 import _ from "lodash";
+import moment from "moment";
 import LogHourItem from "./LogHourItem";
 
 type Props = {
@@ -10,7 +11,12 @@ type Props = {
 };
 
 function LogHoursList({ data, onSelect, selectedItems }: Props) {
-  const grouped = _.groupBy(data, "completedDate");
+  const logHours = _.map(data, (logHour: any) => ({
+    ...logHour,
+    completedDate: moment(logHour.completedDate).format("YYYY-MM-DD"),
+  }));
+
+  const grouped = _.groupBy(logHours, "completedDate");
 
   return (
     <div>

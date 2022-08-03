@@ -57,7 +57,7 @@ function AccountMenu({ anchorEl, setAnchorEl }: AccountMenuProps) {
       <MenuItem
         sx={{ py: 1, m: 0 }}
         onClick={() => {
-          navigate("/settings/profile");
+          navigate("/settings/profile?tab=Profile");
         }}
       >
         <ListItemIcon>

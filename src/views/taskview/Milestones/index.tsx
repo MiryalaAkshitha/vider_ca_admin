@@ -1,6 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { getMilestones } from "api/services/tasks";
+import { getMilestones } from "api/services/tasks/tasks";
 import { noMilestones } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";

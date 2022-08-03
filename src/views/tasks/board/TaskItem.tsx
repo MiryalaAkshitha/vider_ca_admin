@@ -2,11 +2,12 @@ import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import StopCircleOutlinedIcon from "@mui/icons-material/StopCircleOutlined";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { endTimer, startTimer } from "api/services/tasks";
+import { endTimer, startTimer } from "api/services/tasks/loghours";
 import { icons } from "assets";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
 import { snack } from "components/toast";
+import { useUserData } from "context/UserProfile";
 import _ from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTimerRunning } from "redux/reducers/globalSlice";
 import { formattedDatetime } from "utils/formattedDateTime";
+import { handleError } from "utils/handleError";
 import Timer from "./timer";
 
 type Props = {
@@ -22,6 +24,7 @@ type Props = {
 };
 
 function TaskItem({ data }: Props) {
+  const { data: user } = useUserData();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -31,7 +34,7 @@ function TaskItem({ data }: Props) {
 
   useEffect(() => {
     const existingTimer = data?.taskLogHours?.find(
-      (item: any) => item.status === "started"
+      (item: any) => item.status === "started" && item?.user?.id === user.id
     );
 
     if (existingTimer) {
@@ -40,7 +43,7 @@ function TaskItem({ data }: Props) {
       setTimerId(existingTimer?.id);
       setStartTime(existingTimer?.startTime);
     }
-  }, [data, startTime, dispatch]);
+  }, [data, startTime, dispatch, user]);
 
   const { mutate } = useMutation(startTimer, {
     onSuccess: () => {
@@ -50,7 +53,7 @@ function TaskItem({ data }: Props) {
       dispatch(setTimerRunning(true));
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -62,7 +65,7 @@ function TaskItem({ data }: Props) {
       dispatch(setTimerRunning(false));
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -110,11 +113,11 @@ function TaskItem({ data }: Props) {
         py={1}
         sx={{ cursor: "pointer" }}
       >
-        <Box display="flex" justifyContent="space-between">
+        <Box display="flex" gap={1} justifyContent="space-between">
           <Typography variant="body2" color="gray">
             {data?.taskNumber}
           </Typography>
-          <Typography variant="body2" color="gray">
+          <Typography variant="caption" color="gray">
             {data?.client?.displayName}
           </Typography>
         </Box>

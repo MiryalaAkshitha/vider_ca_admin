@@ -7,7 +7,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { deleteChecklist, updateChecklist } from "api/services/tasks";
+import { deleteChecklist, updateChecklist } from "api/services/tasks/tasks";
 import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import React, { useState } from "react";

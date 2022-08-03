@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import { terminateTask } from "api/services/tasks";
+import { terminateTask } from "api/services/tasks/tasks";
 import DialogWrapper from "components/DialogWrapper";
 import { snack } from "components/toast";
 import { useMutation } from "react-query";

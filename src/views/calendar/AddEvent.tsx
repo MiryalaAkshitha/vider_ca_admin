@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid } from "@mui/material";
 import { getClients } from "api/services/clients/clients";
 import { createEvent } from "api/services/events";
-import { getTasks } from "api/services/tasks";
+import { getTasks } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormTime from "components/FormFields/FomTime";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";

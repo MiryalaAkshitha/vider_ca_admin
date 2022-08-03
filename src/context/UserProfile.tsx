@@ -8,7 +8,7 @@ export const UserProfileContext = createContext<any>(null);
 
 function UserProfileProvider({ children }) {
   const { data, isLoading, error }: ResType = useQuery(["user"], getProfile, {
-    enabled: localStorage.getItem("token") !== null,
+    enabled: !!localStorage.getItem("token"),
   });
 
   if (isLoading) return <Loader minHeight="60vh" />;

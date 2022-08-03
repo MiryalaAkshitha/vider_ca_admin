@@ -1,4 +1,4 @@
-import { getUserTasks } from "api/services/tasks";
+import { getUserTasks } from "api/services/tasks/tasks";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { useState } from "react";

@@ -9,16 +9,6 @@ type UpdateStatus = {
   destinationItemsOrder: number[];
 };
 
-type StartTimerData = {
-  taskId: number;
-  startTime: number;
-};
-
-type EndTimerData = {
-  id: number;
-  endTime: number;
-};
-
 type AddComment = {
   taskId: string;
   data: {
@@ -108,30 +98,6 @@ const addAttachmentsFromStorage = (args: AddAttachmentFromStorage) => {
 
 const createSubTask = ({ taskId, data }: any) => {
   return http.post(`/tasks/${taskId}/subtasks`, data);
-};
-
-const startTimer = ({ taskId, startTime }: StartTimerData) => {
-  return http.post(`/tasks/${taskId}/loghours/start-timer`, { startTime });
-};
-
-const endTimer = ({ id, endTime }: EndTimerData) => {
-  return http.post(`/tasks/loghours/${id}/end-timer`, { endTime });
-};
-
-const getLogHours = ({ queryKey }: QueryType) => {
-  return http.get(`/tasks/loghours`, { params: { taskId: queryKey[1] } });
-};
-
-const addLogHour = ({ taskId, data }: any) => {
-  return http.post(`/tasks/${taskId}/loghours/add`, data);
-};
-
-const updateLogHour = ({ id, data }: any) => {
-  return http.put(`/tasks/loghours/${id}`, data);
-};
-
-const deleteLogHour = (id: number) => {
-  return http.delete(`/tasks/loghours/${id}`);
 };
 
 const getChecklists = ({ queryKey }: QueryType) => {
@@ -238,8 +204,6 @@ export {
   reorderTasks,
   updateStatus,
   createTask,
-  startTimer,
-  endTimer,
   getTask,
   createRecurringTask,
   getTaskComments,
@@ -248,10 +212,6 @@ export {
   getTaskAttachments,
   createSubTask,
   addAttachmentsFromStorage,
-  getLogHours,
-  addLogHour,
-  updateLogHour,
-  deleteLogHour,
   getChecklists,
   addChecklist,
   addChecklistItems,

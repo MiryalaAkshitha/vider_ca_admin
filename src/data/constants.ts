@@ -180,6 +180,10 @@ export const userProfileMenu: Array<{ title: string; path: string }> = [
     title: "Expenditure",
     path: "/expenditure",
   },
+  {
+    title: "Log Hours",
+    path: "/log-hours",
+  },
 ];
 
 export const taskViewMenu: Array<{ id: string; label: string }> = [

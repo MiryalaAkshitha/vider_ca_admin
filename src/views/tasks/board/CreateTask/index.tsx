@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Close } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
-import { createTask } from "api/services/tasks";
+import { createTask } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import Loader from "components/Loader";

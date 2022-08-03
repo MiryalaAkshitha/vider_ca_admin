@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateTask } from "api/services/tasks";
+import { updateTask } from "api/services/tasks/tasks";
 import { useTaskData } from "context/TaskData";
 import { snack } from "components/toast";
 import ReactQuill from "lib/react-quill";

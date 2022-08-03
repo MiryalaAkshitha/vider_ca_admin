@@ -1,6 +1,6 @@
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getTasks } from "api/services/tasks";
+import { getTasks } from "api/services/tasks/tasks";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
@@ -15,6 +15,7 @@ import Board from "views/tasks/board";
 import CreateTask from "views/tasks/board/CreateTask";
 import Filters from "views/tasks/Filters";
 import TaskTable from "views/tasks/table";
+import { handleError } from "utils/handleError";
 
 function Tasks() {
   const { queryParams } = useQueryParams();
@@ -36,7 +37,7 @@ function Tasks() {
     };
   };
 
-  const { data, isLoading }: ResType = useQuery(
+  const { data, isLoading, error }: ResType = useQuery(
     [
       "tasks",
       {
@@ -47,6 +48,14 @@ function Tasks() {
     ],
     getTasks
   );
+
+  if (error) {
+    return (
+      <Alert sx={{ maxWidth: 500, margin: "auto", mt: 5 }} severity="error">
+        {handleError(error)}
+      </Alert>
+    );
+  }
 
   return (
     <Box p={2}>

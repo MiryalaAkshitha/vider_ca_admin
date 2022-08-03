@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateTask } from "api/services/tasks";
+import { updateTask } from "api/services/tasks/tasks";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { useState } from "react";

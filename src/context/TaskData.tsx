@@ -1,4 +1,4 @@
-import { getTask } from "api/services/tasks";
+import { getTask } from "api/services/tasks/tasks";
 import Loader from "components/Loader";
 import { useContext, useState } from "react";
 import { useQuery } from "react-query";

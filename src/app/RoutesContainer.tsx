@@ -22,7 +22,7 @@ const EstimatePreview = loadable(
 const Invoices = loadable(() => import("pages/billing/invoices"));
 const AddInvoice = loadable(() => import("pages/billing/invoices/add-invoice"));
 const AddInvoiceReceipt = loadable(
-  () => import("pages/billing/invoices/add-receipt")
+  () => import("pages/billing/invoices/create-receipt")
 );
 const InvoicePreview = loadable(
   () => import("pages/billing/invoices/invoice-preview")
@@ -62,8 +62,11 @@ const ViewTeam = loadable(
 );
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("pages/leads"));
-const DscRegister = loadable(() => import("pages/client-view/dsc-register"));
-const DscRegisterView = loadable(
+const DscRegister = loadable(() => import("pages/dsc-register"));
+const ClientDscRegister = loadable(
+  () => import("pages/client-view/dsc-register")
+);
+const ClientDscRegisterView = loadable(
   () => import("pages/client-view/view-dsc-register")
 );
 const ClientView = loadable(() => import("pages/client-view"));
@@ -178,7 +181,12 @@ function RoutesContainer() {
             <Route
               index
               element={
-                <PageWithPermission name={Permissions.VIEW_TASK}>
+                <PageWithPermission
+                  name={[
+                    Permissions.VIEW_ALL_TASKS,
+                    Permissions.VIEW_ASSIGNED_TASKS,
+                  ]}
+                >
                   <TaskBoard />
                 </PageWithPermission>
               }
@@ -235,10 +243,14 @@ function RoutesContainer() {
               />
               <Route path="archives" element={<Archives />} />
               <Route path="dsc-register">
-                <Route index element={<DscRegister />} />
-                <Route path=":dscId" element={<DscRegisterView />} />
+                <Route index element={<ClientDscRegister />} />
+                <Route path=":dscId" element={<ClientDscRegisterView />} />
               </Route>
             </Route>
+          </Route>
+          <Route path="dsc-register">
+            <Route index element={<DscRegister />} />
+            <Route path=":dscId" element={<ClientDscRegisterView />} />
           </Route>
         </Route>
         <Route path="/settings" element={<SettingsLayout />}>

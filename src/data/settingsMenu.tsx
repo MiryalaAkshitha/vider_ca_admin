@@ -7,7 +7,7 @@ export interface IMenuItem {
 export const settingsMenu: Array<IMenuItem> = [
   {
     title: "Profile",
-    path: "/settings/profile",
+    path: "/settings/profile?tab=Profile",
   },
   {
     title: "Organization",

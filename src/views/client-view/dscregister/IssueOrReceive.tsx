@@ -18,7 +18,7 @@ function IssueOrReceive(props: Props) {
 
   const { mutate } = useMutation(issueOrReceiveDsc, {
     onSuccess: (res) => {
-      snack.success("Dsc Register Created");
+      snack.success("Dsc Register Updated");
       setPersonName("");
       queryClient.invalidateQueries("dsc-register");
       queryClient.invalidateQueries("dsc-register-details");
@@ -33,10 +33,7 @@ function IssueOrReceive(props: Props) {
     e.preventDefault();
     mutate({
       id: dscRegister,
-      data: {
-        type,
-        personName,
-      },
+      data: { type, personName },
     });
   };
 

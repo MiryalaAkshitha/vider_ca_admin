@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/system";
-import { updateLogHour } from "api/services/tasks";
+import { updateLogHour } from "api/services/tasks/loghours";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";

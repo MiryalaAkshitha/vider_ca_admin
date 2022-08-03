@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateMilestone } from "api/services/tasks";
+import { updateMilestone } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
