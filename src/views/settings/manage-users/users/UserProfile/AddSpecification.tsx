@@ -18,7 +18,7 @@ function AddSpecification({ open, setOpen, onAdd }) {
   };
 
   return (
-    <DialogWrapper title="Add Specification" open={open} setOpen={setOpen}>
+    <DialogWrapper title="Add Specialization" open={open} setOpen={setOpen}>
       <form onSubmit={handleSubmit}>
         <Autocomplete
           freeSolo
@@ -33,7 +33,7 @@ function AddSpecification({ open, setOpen, onAdd }) {
               {...params}
               size="small"
               fullWidth
-              label="Type Specification"
+              label="Type Specialization"
             />
           )}
         />

@@ -25,7 +25,7 @@ const BasicDetails = ({ state, setState }) => {
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <ProfileImage
-              src={state?.imageUrl || ""}
+              src={state?.imageUrl}
               onChange={(v: string) => {
                 setState({
                   ...state,

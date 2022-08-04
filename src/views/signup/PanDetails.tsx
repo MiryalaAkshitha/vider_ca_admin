@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { selectSignup } from "redux/reducers/signUpSlice";
 import { ResType, SubmitType } from "types";
 import { getStates } from "api/services/common";
+import { handleError } from "utils/handleError";
 
 const PanDetails = () => {
   const [state, setState] = useState<any>({});
@@ -31,7 +32,7 @@ const PanDetails = () => {
       window.location.href = "/";
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -72,6 +73,7 @@ const PanDetails = () => {
         middleName: data?.data?.middle_name,
         lastName: data?.data?.last_name,
         fullName: data?.data?.full_name,
+        legalName: data?.data?.full_name,
         tradeName: data?.data?.tradeName,
         constitutionOfBusiness: data?.data?.constitutionOfBusiness,
         buildingName: data?.data?.buildingName,

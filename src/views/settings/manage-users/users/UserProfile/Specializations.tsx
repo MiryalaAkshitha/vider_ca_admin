@@ -45,7 +45,7 @@ const Specializations = ({ state, setState }) => {
             onClick={() => setOpen(true)}
             color="secondary"
           >
-            Add specification
+            Add Specialization
           </Button>
         </Box>
         <AddSpecification

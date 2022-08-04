@@ -28,7 +28,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
   const params: any = useParams();
 
-  const { control, trigger, handleSubmit, watch } = useForm({
+  const { control, trigger, handleSubmit, watch, reset } = useForm({
     defaultValues: addUserLogHourDefaultValues,
     mode: "onChange",
     resolver: yupResolver(AddUserLogHourSchema),
@@ -39,10 +39,13 @@ function AddLogHour({ open, setOpen }: DialogProps) {
   });
 
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["tasks"],
+    [
+      "tasks",
+      { client: +watch<any>("client")?.value, assignee: [+params.userId] },
+    ],
     getTasks,
     {
-      enabled: open && watch("type") === "TASK",
+      enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
     }
   );
 
@@ -50,6 +53,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     onSuccess: () => {
       snack.success("Log Hour Added");
       setOpen(false);
+      reset(addUserLogHourDefaultValues);
       queryClient.invalidateQueries("user-log-hours");
     },
     onError: (err: any) => {
@@ -91,7 +95,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
             },
           ]}
         />
-        {isLoading || tasksLoading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <>
@@ -100,24 +104,22 @@ function AddLogHour({ open, setOpen }: DialogProps) {
                 <FormInput label="Title" control={control} name="title" />
               </Box>
             )}
+            <Box mt={2}>
+              <FormAutoComplete
+                control={control}
+                label="Client"
+                name="client"
+                options={
+                  data?.data?.result?.map((item: any) => ({
+                    label: item.displayName,
+                    value: item.id,
+                  })) || []
+                }
+              />
+            </Box>
             {watch("type") === "TASK" && (
-              <Box mt={1}>
-                <SelectTask control={control} tasks={tasks?.data} />
-              </Box>
-            )}
-            {watch("type") === "GENERAL" && (
               <Box mt={2}>
-                <FormAutoComplete
-                  control={control}
-                  label="Client"
-                  name="client"
-                  options={
-                    data?.data?.result?.map((item: any) => ({
-                      label: item.displayName,
-                      value: item.id,
-                    })) || []
-                  }
-                />
+                <SelectTask control={control} tasks={tasks?.data} />
               </Box>
             )}
             <Box mt={2}>

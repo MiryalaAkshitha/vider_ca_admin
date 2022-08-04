@@ -4,6 +4,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { useNavigate } from "react-router-dom";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import Expenditure from "views/settings/manage-users/users/Expenditure";
+import LogHoursDetails from "views/settings/manage-users/users/LogHoursDetails";
 import Tasks from "views/settings/manage-users/users/Tasks";
 import UserProfile from "views/settings/manage-users/users/UserProfile";
 
@@ -32,6 +33,7 @@ function Profile() {
         {active === "Profile" && <UserProfile />}
         {active === "Tasks" && <Tasks />}
         {active === "Expenditure" && <Expenditure />}
+        {active === "Log Hours" && <LogHoursDetails />}
       </Box>
     </>
   );

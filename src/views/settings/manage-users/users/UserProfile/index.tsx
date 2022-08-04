@@ -6,6 +6,7 @@ import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
+import { handleError } from "utils/handleError";
 import { aadharPattern, emailPattern, panCardPattern } from "utils/patterns";
 import BankDetails from "./BankDetails";
 import BasicDetails from "./BasicDetails";
@@ -28,7 +29,7 @@ function UserProfile() {
         workEmail: res.data.profile?.workEmail,
         dob: res.data.profile?.dob,
         fatherName: res.data.profile?.fatherName,
-        address: res.data.profile.address,
+        address: res.data.profile?.address,
         specializations: res.data.profile?.specializations || [],
         aadharNumber: res.data.profile?.aadharNumber,
         panNumber: res.data.profile?.panNumber,
@@ -55,8 +56,8 @@ function UserProfile() {
       snack.success("Profile updated successfully");
       queryClient.invalidateQueries("user-profile");
     },
-    onError: () => {
-      snack.error("Error updating profile");
+    onError: (err: any) => {
+      snack.error(handleError(err));
     },
   });
 

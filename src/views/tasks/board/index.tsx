@@ -32,7 +32,6 @@ const initialState = {
 function Board({ data }: Props) {
   const queryClient = useQueryClient();
   const listContainerRef = useRef<HTMLElement | null>(null);
-
   const [state, setState] = useState<IState>(initialState);
   const [openRemarks, setOpenRemarks] = useState<boolean>(false);
   const [remarksPromise, setRemarksPromise] = useState<Function[]>([]);

@@ -24,13 +24,7 @@ let AddUserLogHourSchema = object().shape({
     then: string().required("Title is required"),
     otherwise: string().notRequired(),
   }),
-  client: object()
-    .nullable()
-    .when("type", {
-      is: "GENERAL",
-      then: (schema) => schema.required("Client is required"),
-      otherwise: (schema) => schema.notRequired(),
-    }),
+  client: object().nullable().required("Client is required"),
   task: object()
     .nullable()
     .when("type", {

@@ -270,7 +270,6 @@ function RoutesContainer() {
             <Route index element={<BillingEntities />} />
             <Route path=":billingEntityId" element={<BillingEntityProfile />} />
           </Route>
-          <Route index element={<Navigate to="profile" />} />
           <Route path="profile" element={<MyProfile />} />
           <Route path="users">
             <Route index element={<Users />} />

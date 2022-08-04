@@ -71,7 +71,7 @@ function LogHours() {
   const totalLogHours = generalLogHours + taskLogHours;
 
   const getDuration = (duration: number) => {
-    return moment.utc(duration).format("HH");
+    return Math.round(duration / 1000 / 60 / 60);
   };
 
   if (logHourStatsLoading) return <Loader />;
@@ -152,7 +152,7 @@ function LogHours() {
   );
 }
 
-const columns = [
+export const columns = [
   {
     title: "Date",
     key: "completedDate",
@@ -187,7 +187,7 @@ const columns = [
   },
 ];
 
-const StatCard = ({ title, value, img }) => (
+export const StatCard = ({ title, value, img }) => (
   <Paper sx={{ p: 1, boxShadow: "none", border: "1px solid lightgrey" }}>
     <Box display="flex" gap={2} alignItems="center">
       <div>

@@ -73,7 +73,7 @@ function Appbar() {
                   <NotificationsOutlined color="primary" />
                 </IconButton>
               </div>
-              <Link to="/settings">
+              <Link to="/settings/profile?tab=Profile">
                 <IconButton>
                   <SettingsOutlinedIcon color="primary" />
                 </IconButton>

@@ -3,11 +3,13 @@ import { Box, Divider, IconButton, List, Typography } from "@mui/material";
 import { createRoom } from "api/services/chats";
 import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
+import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { setChatData, setChatType } from "redux/reducers/chatsSlice";
 import { ResType } from "types";
+import { handleError } from "utils/handleError";
 import Chat from "../Chat";
 import {
   StyledChatHeader,
@@ -44,6 +46,9 @@ function Members() {
         })
       );
       setOpenChat(true);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
     },
   });
 

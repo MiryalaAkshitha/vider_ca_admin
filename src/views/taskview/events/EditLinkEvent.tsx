@@ -19,6 +19,7 @@ import { DialogProps } from "types";
 import { getTitle } from "utils";
 import { Reminders } from "data/constants";
 import { linkEventDefaultValues, LinkEventSchema } from "validations/addEvent";
+import { handleError } from "utils/handleError";
 
 interface Props extends DialogProps {
   event: any;
@@ -35,7 +36,7 @@ function EditEvent({ open, setOpen, event }: Props) {
       queryClient.invalidateQueries("events");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
