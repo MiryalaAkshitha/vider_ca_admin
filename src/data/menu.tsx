@@ -58,4 +58,9 @@ export const menu: Array<IMenuItem> = [
     path: "/forms",
     icon: icons.formIcon,
   },
+  {
+    title: "Reports",
+    path: "/reports",
+    icon: icons.reports,
+  },
 ];

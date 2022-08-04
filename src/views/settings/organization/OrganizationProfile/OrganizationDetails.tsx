@@ -44,7 +44,7 @@ function OrganizationDetails({ state, setState }) {
           <TextField
             onChange={handleChange}
             fullWidth
-            label="Constitutation of business"
+            label="Constitution of business"
             name="constitutionOfBusiness"
             value={state.constitutionOfBusiness || ""}
           />
