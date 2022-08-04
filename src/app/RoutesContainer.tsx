@@ -29,7 +29,6 @@ const InvoicePreview = loadable(
 );
 const Receipts = loadable(() => import("pages/billing/receipts"));
 const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
-const Reports = loadable(() => import("pages/reports"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
 const Login = loadable(() => import("pages/login"));
@@ -127,6 +126,12 @@ const AddApproval = loadable(
   () => import("pages/settings/approval-hierarchies/add-approval-hierarchy")
 );
 
+// REPORTS
+const Reports = loadable(() => import("pages/reports"));
+const EmployeeLogHoursReport = loadable(
+  () => import("pages/reports/employee-log-hours-report")
+);
+
 function RoutesContainer() {
   return (
     <Router>
@@ -139,7 +144,13 @@ function RoutesContainer() {
             <Route path="add" element={<AddService />} />
           </Route>
           <Route path="calendar" element={<Calendar />} />
-          <Route path="reports" element={<Reports />} />
+          <Route path="reports">
+            <Route index element={<Reports />} />
+            <Route
+              path="employee-log-hours-report"
+              element={<EmployeeLogHoursReport />}
+            />
+          </Route>
           <Route path="billing" element={<Billing />}>
             <Route path="estimates" element={<Estimates />} />
             <Route path="invoices" element={<Invoices />} />
