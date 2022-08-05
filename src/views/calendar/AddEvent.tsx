@@ -14,7 +14,7 @@ import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
 import { getTitle } from "utils";
@@ -23,6 +23,7 @@ import {
   addCalendarEventDefaultValues,
   AddCalendarEventSchema,
 } from "validations/addCalendarEvent";
+import ReactQuill from "lib/react-quill";
 
 interface Props extends DialogProps {
   successCb?: () => void;
@@ -168,9 +169,6 @@ function AddEvent({ open, setOpen }: Props) {
             </Grid>
           </Box>
           <Box mt={2}>
-            <FormInput multiline name="notes" control={control} label="Notes" />
-          </Box>
-          <Box mt={2}>
             <FormCheckbox
               name="reminderCheck"
               control={control}
@@ -190,6 +188,21 @@ function AddEvent({ open, setOpen }: Props) {
               />
             </Box>
           )}
+          <Box mt={2}>
+            <Controller
+              control={control}
+              name="notes"
+              render={({ field: { value, onChange } }) => (
+                <ReactQuill
+                  value={value || ""}
+                  onChange={(v: any) => {
+                    onChange(v);
+                  }}
+                  id="overview"
+                />
+              )}
+            />
+          </Box>
           <Box mt={3}>
             <LoadingButton
               loading={createLoading}

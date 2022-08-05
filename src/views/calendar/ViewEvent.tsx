@@ -18,7 +18,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
 import EditEvent from "./EditEvent";
 
-const EventDialog = ({ open, setOpen, data }) => {
+const ViewEvent = ({ open, setOpen, data, from = "calendar" }) => {
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState(false);
   const confirm = useConfirm();
@@ -52,96 +52,100 @@ const EventDialog = ({ open, setOpen, data }) => {
 
   return (
     <>
-      <Dialog
-        sx={{ zIndex: "3" }}
-        fullWidth
-        open={open}
-        onClose={() => setOpen(false)}
-      >
+      <Dialog fullWidth open={open} onClose={() => setOpen(false)}>
         <Box p={2} sx={{ cursor: "pointer" }}>
           <Box
             sx={{
-              zIndex: 3,
               display: "flex",
-              boxShadow: "none",
-              p: "0.3rem 1rem",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <Box display="flex" gap={1} alignItems="center">
+            <Box display="flex" gap="4px" alignItems="center">
               <Typography variant="subtitle2">{data.title}</Typography>
-              <IconButton onClick={EditEventClicked}>
-                <EditOutlinedIcon fontSize="small" />
-              </IconButton>
-              <IconButton onClick={handleDelete}>
-                <DeleteOutlineOutlinedIcon fontSize="small" />
-              </IconButton>
+              {from === "calendar" && (
+                <>
+                  <IconButton onClick={EditEventClicked}>
+                    <EditOutlinedIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton onClick={handleDelete}>
+                    <DeleteOutlineOutlinedIcon fontSize="small" />
+                  </IconButton>
+                </>
+              )}
             </Box>
             <Button sx={{ minWidth: 60 }} onClick={() => setOpen(false)}>
               Close
             </Button>
           </Box>
-          <Box p={2}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Typography variant="body1" sx={{ color: "#182F53" }}>
-                  {moment(data.date).format("MMMM DD, YYYY")} (
-                  {moment(data.startTime).format("hh:mm a")} -
-                  {moment(data.endTime).format("hh:mm a")})
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Client</Typography>
+          <Typography mt={1} variant="body2" sx={{ color: "#182F53" }}>
+            {moment(data.date).format("MMMM DD, YYYY")} (
+            {data?.startTime &&
+              data?.endTime &&
+              ` (${moment(data.startTime).format("hh:mm a")} -
+                  ${moment(data.endTime).format("hh:mm a")})`}
+          </Typography>
+          <Grid container spacing={2} mt={1}>
+            <Grid item xs={6}>
+              <Typography variant="caption">Client:</Typography>
+              <Typography variant="body1">
+                {data?.client ? data.client?.displayName : "Na"}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="caption">Task:</Typography>
+              <Typography variant="body1">
+                {data?.task ? data.task?.name : "Na"}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="caption" component="div">
+                Members:
+              </Typography>
+              {data?.members?.length ? (
                 <Typography variant="body1">
-                  {data?.client ? data.client?.displayName : "Na"}
+                  {data?.members
+                    ?.map((member: any) => member.fullName)
+                    .join(", ")}
                 </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Task</Typography>
-                <Typography variant="body1">
-                  {data?.task ? data.task?.name : "Na"}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption" component="div">
-                  Members
-                </Typography>
-                {data?.members?.map((item: any, index: number) => (
-                  <Typography variant="body1" component="span" key={index}>
-                    {item?.fullName ? item.fullName : "Na"},
-                  </Typography>
-                ))}
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="caption">Location</Typography>
-                <Typography variant="body1">
-                  {data?.location ? data.location : "Na"}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="caption">Notes</Typography>
-                <Typography variant="body1">
-                  {data?.notes ? data.notes : "Na"}
-                </Typography>
-              </Grid>
-              {data?.reminder && (
-                <Grid item xs={12}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <AccessAlarmOutlinedIcon fontSize="small" />
-                    <Typography variant="body1" sx={{ padding: "5px" }}>
-                      {getTitle(data.reminder)}
-                    </Typography>
-                  </Box>
-                </Grid>
+              ) : (
+                <Typography variant="body1">Na</Typography>
               )}
             </Grid>
-          </Box>
+            <Grid item xs={6}>
+              <Typography variant="caption">Location:</Typography>
+              <Typography variant="body1">
+                {data?.location ? data.location : "Na"}
+              </Typography>
+            </Grid>
+            {data?.reminder && (
+              <Grid item xs={12}>
+                <Typography variant="caption">Reminder:</Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <AccessAlarmOutlinedIcon fontSize="small" />
+                  <Typography variant="body1" sx={{ padding: "5px" }}>
+                    {getTitle(data.reminder)}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <Typography variant="caption">Notes:</Typography>
+              <Typography>
+                <Box
+                  sx={{ "& h3, & p, & ol, & ul": { margin: 0 } }}
+                  dangerouslySetInnerHTML={{
+                    __html: data?.notes ? data.notes : "NA",
+                  }}
+                ></Box>
+              </Typography>
+            </Grid>
+          </Grid>
         </Box>
       </Dialog>
       <EditEvent data={data} open={editOpen} setOpen={setEditOpen} />
@@ -149,4 +153,4 @@ const EventDialog = ({ open, setOpen, data }) => {
   );
 };
 
-export default EventDialog;
+export default ViewEvent;

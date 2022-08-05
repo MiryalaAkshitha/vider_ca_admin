@@ -13,13 +13,14 @@ import { useTaskData } from "context/TaskData";
 import { snack } from "components/toast";
 import moment from "moment";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { getTitle } from "utils";
 import { Reminders } from "data/constants";
 import { linkEventDefaultValues, LinkEventSchema } from "validations/addEvent";
 import { handleError } from "utils/handleError";
+import ReactQuill from "lib/react-quill";
 
 interface Props extends DialogProps {
   event: any;
@@ -31,7 +32,7 @@ function EditEvent({ open, setOpen, event }: Props) {
 
   const { mutate, isLoading: createLoading } = useMutation(updateEvent, {
     onSuccess: () => {
-      snack.success("Event Created");
+      snack.success("Event Updated");
       setOpen(false);
       queryClient.invalidateQueries("events");
     },
@@ -110,9 +111,6 @@ function EditEvent({ open, setOpen, event }: Props) {
           </Grid>
         </Box>
         <Box mt={2}>
-          <FormInput multiline name="notes" control={control} label="Notes" />
-        </Box>
-        <Box mt={2}>
           <FormCheckbox
             name="reminderCheck"
             control={control}
@@ -132,6 +130,21 @@ function EditEvent({ open, setOpen, event }: Props) {
             />
           </Box>
         )}
+        <Box mt={2}>
+          <Controller
+            control={control}
+            name="notes"
+            render={({ field: { value, onChange } }) => (
+              <ReactQuill
+                value={value || ""}
+                onChange={(v: any) => {
+                  onChange(v);
+                }}
+                id="overview"
+              />
+            )}
+          />
+        </Box>
         <Box mt={3}>
           <LoadingButton
             loading={createLoading}

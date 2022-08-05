@@ -11,12 +11,13 @@ import FormSelect from "components/FormFields/FormSelect";
 import LoadingButton from "components/LoadingButton";
 import { useTaskData } from "context/TaskData";
 import { snack } from "components/toast";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { getTitle } from "utils";
 import { Reminders } from "data/constants";
 import { linkEventDefaultValues, LinkEventSchema } from "validations/addEvent";
+import ReactQuill from "lib/react-quill";
 
 function LinkEvent({ open, setOpen }: DialogProps) {
   const taskData: any = useTaskData();
@@ -83,9 +84,7 @@ function LinkEvent({ open, setOpen }: DialogProps) {
             </Grid>
           </Grid>
         </Box>
-        <Box mt={2}>
-          <FormInput multiline name="notes" control={control} label="Notes" />
-        </Box>
+
         <Box mt={2}>
           <FormCheckbox
             name="reminderCheck"
@@ -106,6 +105,21 @@ function LinkEvent({ open, setOpen }: DialogProps) {
             />
           </Box>
         )}
+        <Box mt={2}>
+          <Controller
+            control={control}
+            name="notes"
+            render={({ field: { value, onChange } }) => (
+              <ReactQuill
+                value={value || ""}
+                onChange={(v: any) => {
+                  onChange(v);
+                }}
+                id="overview"
+              />
+            )}
+          />
+        </Box>
         <Box mt={3}>
           <LoadingButton
             loading={createLoading}

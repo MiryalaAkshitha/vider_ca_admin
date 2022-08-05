@@ -31,30 +31,30 @@ const ViewGlobalEvent = ({ open, setOpen, data }) => {
           <Grid item xs={6}>
             <Typography variant="caption">Location</Typography>
             <Typography variant="body1">
-              {data?.location ? data.location : "Na"}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="caption">Notes</Typography>
-            <Typography variant="body1">
-              {data?.notes ? data.notes : "Na"}
+              {data?.location ? data.location : "NA"}
             </Typography>
           </Grid>
           {data?.reminder && (
             <Grid item xs={12}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
                 <AccessAlarmOutlinedIcon fontSize="small" />
-                <Typography variant="body1" sx={{ padding: "5px" }}>
+                <Typography variant="body1">
                   {getTitle(data.reminder)}
                 </Typography>
               </Box>
             </Grid>
           )}
+          <Grid item xs={12}>
+            <Typography variant="caption">Notes:</Typography>
+            <Typography>
+              <Box
+                sx={{ "& h3, & p": { margin: 0 } }}
+                dangerouslySetInnerHTML={{
+                  __html: data?.notes ? data.notes : "NA",
+                }}
+              ></Box>
+            </Typography>
+          </Grid>
         </Grid>
       </Box>
     </DialogWrapper>

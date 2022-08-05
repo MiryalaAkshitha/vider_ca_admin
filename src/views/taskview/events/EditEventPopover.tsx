@@ -6,6 +6,7 @@ import { AccountMenuProps } from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import EditLinkEvent from "./EditLinkEvent";
+import ViewEvent from "views/calendar/ViewEvent";
 
 interface EditEventProps extends AccountMenuProps {
   event: any;
@@ -13,10 +14,10 @@ interface EditEventProps extends AccountMenuProps {
 
 function EditEventPopover(props: EditEventProps) {
   const { anchorEl, setAnchorEl, event } = props;
-
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [viewOpen, setViewOpen] = useState<boolean>(false);
   const open = Boolean(anchorEl);
 
   const { mutate } = useMutation(deleteEvent, {
@@ -30,11 +31,6 @@ function EditEventPopover(props: EditEventProps) {
       setAnchorEl(null);
     },
   });
-
-  const handleEdit = () => {
-    setEditOpen(true);
-    setAnchorEl(null);
-  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -57,11 +53,19 @@ function EditEventPopover(props: EditEventProps) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        onClick={handleClose}
       >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        <MenuItem onClick={() => setViewOpen(true)}>View</MenuItem>
+        <MenuItem onClick={() => setEditOpen(true)}>Edit</MenuItem>
         <MenuItem onClick={handleDelete}>Remove</MenuItem>
       </Menu>
       <EditLinkEvent open={editOpen} setOpen={setEditOpen} event={event} />
+      <ViewEvent
+        from="task"
+        open={viewOpen}
+        setOpen={setViewOpen}
+        data={event}
+      />
     </>
   );
 }

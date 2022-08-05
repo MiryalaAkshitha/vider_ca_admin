@@ -73,6 +73,9 @@ input::placeholder {
 a.fc-event {
   cursor: pointer !important;
 }
+.fc-popover {
+  z-index: 1 !important;
+}
 
 /*** MENTIONS ***/
 .mentions_input {

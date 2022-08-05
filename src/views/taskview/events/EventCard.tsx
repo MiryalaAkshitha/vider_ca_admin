@@ -34,28 +34,17 @@ function EventCard({ data }: any) {
                   {moment(data?.endTime).format("h:mm a")}
                 </Typography>
               </div>
-              <Members
-                data={
-                  data?.members?.map((item) => ({
-                    src: "",
-                    title: item?.fullName,
-                  })) || []
-                }
-              />
+              <div>
+                <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+                  <MoreVert />
+                </IconButton>
+              </div>
             </Box>
             <Box display="flex" alignItems="center" gap="2px" mb={1}>
               <LocationOnIcon sx={{ fontSize: 14, color: "rgba(0,0,0,0.3)" }} />
               <Typography variant="caption" color="rgba(0,0,0,0.7)">
                 {data?.location}
               </Typography>
-            </Box>
-            <Box display="flex" justifyContent="space-between" gap={1}>
-              <Typography variant="body2" color="rgba(0,0,0,0.7)">
-                {data?.notes}
-              </Typography>
-              <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-                <MoreVert />
-              </IconButton>
             </Box>
           </Box>
         </Box>
