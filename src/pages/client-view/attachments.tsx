@@ -4,19 +4,19 @@ import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
 import { usePermissions } from "context/PermissionsProvider";
+import { Permissions } from "data/permissons";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
 import { StorageResponse } from "types";
-import { Permissions } from "data/permissons";
+import AddAttachment from "views/storage/AddAttachment";
 import BreadCrumbs from "views/storage/BreadCrumbs";
-import Files from "views/storage/Files";
+import FilesAndLinks from "views/storage/FilesAndLinks";
 import Folders from "views/storage/Folders";
 import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
 import Search from "views/storage/Search";
-import AddAttachment from "views/storage/AddAttachment";
 
 function Attachments() {
   const { permissions } = usePermissions();
@@ -56,12 +56,6 @@ function Attachments() {
     sortBy: searchParams.get("sortBy") || "",
   });
 
-  let files = getFilesOrFolders({
-    type: "file",
-    data: data?.data?.result,
-    sortBy: searchParams.get("sortBy") || "",
-  });
-
   if (isLoading) return <Loader />;
 
   return (
@@ -78,7 +72,7 @@ function Attachments() {
         {data?.data?.result?.length ? (
           <>
             {folders?.length ? <Folders data={folders} /> : null}
-            {files?.length ? <Files data={files} /> : null}
+            <FilesAndLinks data={data} />
           </>
         ) : (
           <EmptyPage

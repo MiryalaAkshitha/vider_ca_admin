@@ -71,6 +71,7 @@ import createFormLanding from "./images/createFormLanding.png";
 import clientFormCard from "./images/clientFormCard.png";
 import file from "./icons/file.png";
 import atom_logo from "./images/atom_logo.png";
+import onedrive from "./icons/onedrive.png";
 
 export {
   quote,
@@ -149,4 +150,5 @@ export const icons = {
   checkBox,
   address,
   file,
+  onedrive,
 };

@@ -18,6 +18,7 @@ import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
 import Search from "views/storage/Search";
 import ClientDetails from "./ClientDetails";
 import ClientsList from "./ClientsList";
+import FilesAndLinks from "../FilesAndLinks";
 
 function ClientStorage() {
   const { queryParams } = useQueryParams();
@@ -56,12 +57,6 @@ function ClientStorage() {
     sortBy: queryParams.soryBy || "",
   });
 
-  let files = getFilesOrFolders({
-    type: "file",
-    data: data?.data?.result,
-    sortBy: queryParams.soryBy || "",
-  });
-
   if (isLoading) return <Loader />;
 
   return (
@@ -78,7 +73,7 @@ function ClientStorage() {
               <BreadCrumbs data={data?.data?.breadCrumbs} />
             ) : null}
             {folders?.length ? <Folders xl={3} lg={4} data={folders} /> : null}
-            {files?.length ? <Files xl={4} lg={4} data={files} /> : null}
+            <FilesAndLinks data={data} />
             <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
               <AddAttachment type="client" />
             </ValidateAccess>

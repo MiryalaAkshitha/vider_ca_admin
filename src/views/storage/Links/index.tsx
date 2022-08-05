@@ -1,13 +1,14 @@
 import { MoreVert } from "@mui/icons-material";
-import { Grid, IconButton } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { icons } from "assets";
 import Table from "components/Table";
 import moment from "moment";
 import { useState } from "react";
 import { ViewType } from "types";
-import { getFileSize } from "utils";
 import FolderMenu from "../FolderOrFileMenu";
-import File, { Position } from "./File";
+import Link, { Position } from "./Link";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type Props = {
   data: any;
@@ -16,7 +17,7 @@ type Props = {
   view?: ViewType;
 };
 
-function Files(props: Props) {
+function Links(props: Props) {
   const { data, xl, lg, view = "grid" } = props;
   const [contextMenu, setContextMenu] = useState<Position | null>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
@@ -28,7 +29,7 @@ function Files(props: Props) {
           <Grid container spacing={2}>
             {data?.map((item: any) => (
               <Grid item xl={xl ?? 3} lg={lg ?? 3} key={item?.id}>
-                <File data={item} />
+                <Link data={item} />
               </Grid>
             ))}
           </Grid>
@@ -36,19 +37,26 @@ function Files(props: Props) {
         {view === "list" && (
           <Table
             loading={false}
-            onRowClick={(row: any) => {
-              window.open(row?.fileUrl);
-            }}
             columns={[
               {
                 title: "File Name",
                 key: "name",
-              },
-              {
-                title: "Size",
-                key: "fileSize",
-                render: (item: any) => {
-                  return getFileSize(item?.fileSize) || "";
+                render: (row: any) => {
+                  return (
+                    <Box
+                      display="flex"
+                      gap={1}
+                      alignItems="center"
+                      onClick={() => window.open(row?.file)}
+                      sx={{ cursor: "pointer" }}
+                    >
+                      <div>
+                        <img src={icons.onedrive} alt="OneDrive" width="20px" />
+                      </div>
+                      <Typography variant="body2">{row?.name}</Typography>
+                      <OpenInNewIcon color="secondary" fontSize="small" />
+                    </Box>
+                  );
                 },
               },
               {
@@ -99,4 +107,4 @@ function Files(props: Props) {
   );
 }
 
-export default Files;
+export default Links;

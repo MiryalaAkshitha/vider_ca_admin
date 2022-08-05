@@ -44,9 +44,15 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   const [getDetails, setGetDetails] = useState<boolean>(false);
 
   const handleChange = (e: any) => {
+    let { name, value } = e.target;
+
+    if (name === "panNumber") {
+      value = value.toUpperCase();
+    }
+
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -63,7 +69,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   const { mutate, isLoading } = useMutation(createDscRegister, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       snack.success("Dsc Register Created");
       queryClient.invalidateQueries("dsc-register");
       setOpen(false);
@@ -83,7 +89,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add new DSC Register">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add DSC Register">
       <form onSubmit={handleSubmit} ref={formRef}>
         <FormControlLabel
           control={

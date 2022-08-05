@@ -21,6 +21,10 @@ const uploadFile = (data: any) => {
   return http.post("/storage/upload-file", data);
 };
 
+const createLink = (data: any) => {
+  return http.post("/storage/create-link", data);
+};
+
 const moveFile = (data: any) => {
   return http.put(`/storage/move-file`, data);
 };
@@ -71,4 +75,5 @@ export {
   replaceFileOrFolder,
   keepBothFilesOrFolders,
   getTotalStorage,
+  createLink,
 };

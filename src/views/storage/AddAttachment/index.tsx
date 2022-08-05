@@ -15,6 +15,8 @@ import {
 } from "redux/reducers/storageSlice";
 import CreateFolderDialog from "./CreateFolderDialog";
 import UploadStatusDrawer from "./UploadStatusDrawer";
+import AddLink from "./AddLink";
+import { handleError } from "utils/handleError";
 
 interface IProps {
   type: "client" | "organization";
@@ -28,8 +30,8 @@ function AddAttachment({ type }: IProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { uploads } = useSelector(selectStorage);
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
-
-  let clientId = params.clientId || searchParams.get("clientId") || "";
+  const [openAddLink, setOpenAddLink] = useState<boolean>(false);
+  const clientId = params.clientId || searchParams.get("clientId") || "";
 
   const { mutateAsync } = useMutation(uploadFile, {
     onSuccess: (res: any) => {
@@ -38,7 +40,7 @@ function AddAttachment({ type }: IProps) {
     },
     onError: (err: any) => {
       dispatch(setUploadError(err));
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -113,6 +115,12 @@ function AddAttachment({ type }: IProps) {
             <Typography variant="body2">Upload File(s)</Typography>
           </MenuItem>
         </label>
+        <MenuItem sx={{ py: 1, m: 0 }} onClick={() => setOpenAddLink(true)}>
+          <ListItemIcon>
+            <Add color="primary" fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="body2">New Link</Typography>
+        </MenuItem>
       </Menu>
       <input
         type="file"
@@ -127,6 +135,12 @@ function AddAttachment({ type }: IProps) {
         setOpen={setOpenCreateDialog}
       />
       {uploads.length ? <UploadStatusDrawer /> : null}
+      <AddLink
+        open={openAddLink}
+        setOpen={setOpenAddLink}
+        type={type}
+        clientId={clientId}
+      />
     </div>
   );
 }
