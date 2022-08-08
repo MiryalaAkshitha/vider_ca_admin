@@ -33,7 +33,13 @@ function UploadStatusDrawer() {
       </AppBar>
       <Box p={2} maxHeight={400} sx={{ overflowY: "auto" }}>
         {uploads.map((item, index) => (
-          <Box display="flex" mb={2} gap={1} key={index}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            mb={2}
+            gap={1}
+            key={index}
+          >
             <StyledFileTitle>{item.name}</StyledFileTitle>
             <Box>
               {item.data && <CheckCircleIcon sx={{ color: "green" }} />}

@@ -16,6 +16,7 @@ type Props = {
   data: any;
   editPermission?: boolean;
   deletePermission?: boolean;
+  local?: boolean;
 };
 
 function Link(props: Props) {
@@ -58,18 +59,32 @@ function Link(props: Props) {
       >
         <Box p={1} display="flex" gap={1} alignItems="center">
           <Box sx={{ flex: 1 }}>
-            <Box
-              display="flex"
-              gap={1}
-              alignItems="center"
-              onClick={() => window.open(data?.file)}
-              sx={{ cursor: "pointer" }}
-            >
-              <div>
-                <img src={icons.onedrive} alt="OneDrive" width="20px" />
-              </div>
-              <Typography variant="body2">{data.name}</Typography>
-              <OpenInNewIcon color="secondary" fontSize="small" />
+            <Box>
+              <Box
+                display="flex"
+                gap={1}
+                alignItems="center"
+                sx={{ cursor: "pointer" }}
+              >
+                {!props.local && (
+                  <div>
+                    <img src={icons.onedrive} alt="OneDrive" width="20px" />
+                  </div>
+                )}
+                <Typography variant="body2">{data.name}</Typography>
+                {!props.local && (
+                  <OpenInNewIcon
+                    onClick={() => window.open(data?.file)}
+                    color="secondary"
+                    fontSize="small"
+                  />
+                )}
+              </Box>
+              {props.local && (
+                <Typography variant="caption" color="rgba(0,0,0,0.6)">
+                  {data.file}
+                </Typography>
+              )}
             </Box>
             {data?.user && (
               <StyledSingleLineContainer>

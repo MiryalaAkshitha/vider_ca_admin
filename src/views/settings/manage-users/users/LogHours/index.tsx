@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  addUserLogHour,
   deleteLogHour,
   getUserLogHours,
   getUserLogHourStats,
@@ -32,7 +33,8 @@ import EditLogHour from "./EditLogHour";
 import Filters from "./Filters";
 
 function LogHours() {
-  const params = useParams();
+  const queryClient = useQueryClient();
+  const params: any = useParams();
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [page, setPage] = useState(0);
@@ -45,7 +47,7 @@ function LogHours() {
 
   const { data: logHourStats, isLoading: logHourStatsLoading }: ResType =
     useQuery(
-      ["user-log-hour-stats", { type: "USER", userId: params.userId }],
+      ["user-log-hour-stats", { type: "USER", userId: +params.userId }],
       getUserLogHourStats
     );
 
@@ -53,8 +55,8 @@ function LogHours() {
     [
       "user-log-hours",
       {
-        userId: params.userId,
         type: "USER",
+        userId: +params.userId,
         offset: page * pageCount,
         limit: pageCount,
         search: filters.search,
@@ -65,14 +67,33 @@ function LogHours() {
     getUserLogHours
   );
 
-  const totalCount = data?.data?.totalCount || 0;
-  const generalLogHours = +logHourStats?.data?.generalLogHours;
-  const taskLogHours = +logHourStats?.data?.taskLogHours;
-  const totalLogHours = generalLogHours + taskLogHours;
+  const { mutateAsync } = useMutation(addUserLogHour, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("user-log-hours");
+      snack.success("Log Hour Added");
+      setOpenAdd(false);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
+  const onAdd = async (data: any) => {
+    await mutateAsync({
+      ...data,
+      userId: +params.userId,
+      type: "USER",
+    });
+  };
 
   const getDuration = (duration: number) => {
     return Math.round(duration / 1000 / 60 / 60);
   };
+
+  const totalCount = data?.data?.totalCount || 0;
+  const generalLogHours = +logHourStats?.data?.generalLogHours;
+  const taskLogHours = +logHourStats?.data?.taskLogHours;
+  const totalLogHours = generalLogHours + taskLogHours;
 
   if (logHourStatsLoading) return <Loader />;
 
@@ -147,7 +168,7 @@ function LogHours() {
         open={open}
         setOpen={setOpen}
       />
-      <AddLogHour open={openAdd} setOpen={setOpenAdd} />
+      <AddLogHour onAdd={onAdd} open={openAdd} setOpen={setOpenAdd} />
     </Box>
   );
 }

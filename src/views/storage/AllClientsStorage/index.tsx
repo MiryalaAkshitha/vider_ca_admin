@@ -48,6 +48,7 @@ function ClientStorage() {
       onSuccess: (res: any) => {
         dispatch(setCurrentStorage(res?.data?.result));
       },
+      enabled: Boolean(queryParams.clientId),
     }
   );
 

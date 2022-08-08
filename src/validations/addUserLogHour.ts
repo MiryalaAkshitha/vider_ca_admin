@@ -1,7 +1,7 @@
 import { date, mixed, object, string } from "yup";
 
 let addUserLogHourDefaultValues = {
-  type: "GENERAL",
+  logHourType: "GENERAL",
   title: "",
   description: "",
   client: null,
@@ -18,7 +18,7 @@ let addUserLogHourDefaultValues = {
 };
 
 let AddUserLogHourSchema = object().shape({
-  type: string(),
+  logHourType: string(),
   title: mixed().when("type", {
     is: "GENERAL",
     then: string().required("Title is required"),

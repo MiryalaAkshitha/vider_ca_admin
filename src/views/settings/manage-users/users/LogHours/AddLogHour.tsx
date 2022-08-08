@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/clients/clients";
-import { addUserLogHour } from "api/services/tasks/loghours";
 import { getTasks } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
@@ -11,21 +10,22 @@ import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import { snack } from "components/toast";
 import moment from "moment";
 import { Controller, useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { DialogProps, ResType } from "types";
 import { getHoursOptions, getMinutesOptions } from "utils";
-import { handleError } from "utils/handleError";
 import {
   addUserLogHourDefaultValues,
   AddUserLogHourSchema,
 } from "validations/addUserLogHour";
 
-function AddLogHour({ open, setOpen }: DialogProps) {
-  const queryClient = useQueryClient();
+interface Props extends DialogProps {
+  onAdd: (data: any) => Promise<any>;
+}
+
+function AddLogHour({ open, setOpen, onAdd }: Props) {
   const params: any = useParams();
 
   const { control, trigger, handleSubmit, watch, reset } = useForm({
@@ -35,7 +35,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
   });
 
   const { data, isLoading }: ResType = useQuery(["clients"], getClients, {
-    enabled: open && watch("type") === "GENERAL",
+    enabled: open && watch("logHourType") === "GENERAL",
   });
 
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
@@ -45,23 +45,12 @@ function AddLogHour({ open, setOpen }: DialogProps) {
     ],
     getTasks,
     {
-      enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
+      enabled:
+        open && watch("logHourType") === "TASK" && Boolean(watch("client")),
     }
   );
 
-  const { mutate, isLoading: createLoading } = useMutation(addUserLogHour, {
-    onSuccess: () => {
-      snack.success("Log Hour Added");
-      setOpen(false);
-      reset(addUserLogHourDefaultValues);
-      queryClient.invalidateQueries("user-log-hours");
-    },
-    onError: (err: any) => {
-      snack.error(handleError(err));
-    },
-  });
-
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const { hours, minutes, client, task, ...apiData } = data;
     apiData.client = client?.value;
     apiData.task = task?.id;
@@ -69,12 +58,9 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       .duration(`${data.hours?.value}:${data.minutes?.value}`)
       .asMilliseconds();
 
-    mutate({
-      data: {
-        userId: +params.userId,
-        ...apiData,
-      },
-    });
+    await onAdd({ ...apiData });
+
+    reset(addUserLogHourDefaultValues);
   };
 
   return (
@@ -82,7 +68,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormRadio
           row
-          name="type"
+          name="logHourType"
           control={control}
           options={[
             {
@@ -99,7 +85,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
           <Loader />
         ) : (
           <>
-            {watch("type") === "GENERAL" && (
+            {watch("logHourType") === "GENERAL" && (
               <Box mt={1}>
                 <FormInput label="Title" control={control} name="title" />
               </Box>
@@ -117,7 +103,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
                 }
               />
             </Box>
-            {watch("type") === "TASK" && (
+            {watch("logHourType") === "TASK" && (
               <Box mt={2}>
                 <SelectTask control={control} tasks={tasks?.data} />
               </Box>
@@ -150,7 +136,7 @@ function AddLogHour({ open, setOpen }: DialogProps) {
             </Box>
             <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
               <LoadingButton
-                loading={createLoading}
+                loading={false}
                 fullWidth
                 loadingColor="white"
                 title="Submit"

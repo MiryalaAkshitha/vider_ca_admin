@@ -35,7 +35,7 @@ const addLogHour = ({ data }: any) => {
   return http.post(`/log-hours/add`, data);
 };
 
-const addUserLogHour = ({ data }: any) => {
+const addUserLogHour = (data: any) => {
   return http.post(`/log-hours/user/add`, data);
 };
 

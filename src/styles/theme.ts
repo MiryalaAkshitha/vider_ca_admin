@@ -17,6 +17,13 @@ export const theme: ThemeOptions = createTheme({
     },
   },
   components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: "capitalize",
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

@@ -8,7 +8,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { DialogProps } from "types";
 
 interface IProps extends DialogProps {
-  type: "client" | "organization";
+  type: "client" | "organization" | "task";
 }
 
 const CreateFolderDialog = ({ open, setOpen, type }: IProps) => {

@@ -9,11 +9,12 @@ import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { DialogProps } from "types";
 import { GreyButton } from "views/tasks/styles";
+import AddLocalPath from "./AddLocalPath";
+import AddOneDriveLink from "./AddOneDriveLink";
 import ClientLibrary from "./ClientLibrary";
 
 function UploadAttachmentModal({ open, setOpen }: DialogProps) {
   const queryClient = useQueryClient();
-
   const [files, setFiles] = useState<File[]>([]);
   const [value, setValue] = useState(0);
   const params: any = useParams();
@@ -52,6 +53,8 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
         >
           <Tab label="Upload from PC" {...a11yProps(0)} />
           <Tab label="Client Library" {...a11yProps(1)} />
+          <Tab label="One Drive" {...a11yProps(2)} />
+          <Tab label="Local Storage" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -75,11 +78,17 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
       <TabPanel value={value} index={1}>
         <ClientLibrary setOpen={setOpen} />
       </TabPanel>
+      <TabPanel value={value} index={2}>
+        <AddOneDriveLink setOpen={setOpen} />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <AddLocalPath setOpen={setOpen} />
+      </TabPanel>
     </Dialog>
   );
 }
 
-function a11yProps(index: number) {
+export function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,

@@ -20,11 +20,11 @@ import { handleError } from "utils/handleError";
 import { GreyButton } from "views/tasks/styles";
 
 interface Props extends DialogProps {
-  type: "client" | "organization" | "task";
+  type: "client" | "organization";
   clientId: string | null;
 }
 
-function AddLink({ open, setOpen, type, clientId }: Props) {
+function LocalStorage({ open, setOpen, type, clientId }: Props) {
   const params = useParams();
   const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
@@ -121,4 +121,4 @@ function AddLink({ open, setOpen, type, clientId }: Props) {
   );
 }
 
-export default AddLink;
+export default LocalStorage;

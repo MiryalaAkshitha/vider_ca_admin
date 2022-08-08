@@ -4,7 +4,7 @@ interface CreateFolder {
   name: string;
   clientId?: string;
   parent: string | null;
-  type: "organization" | "client";
+  type: "organization" | "client" | "task";
 }
 
 interface GetStorage {

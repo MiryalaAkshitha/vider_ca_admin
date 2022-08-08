@@ -19,7 +19,7 @@ import AddLink from "./AddLink";
 import { handleError } from "utils/handleError";
 
 interface IProps {
-  type: "client" | "organization";
+  type: "client" | "organization" | "task";
 }
 
 function AddAttachment({ type }: IProps) {
