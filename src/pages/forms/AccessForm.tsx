@@ -7,9 +7,10 @@ import { getForm, updatePage } from "api/services/forms";
 import { logo } from "assets";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
+import _ from "lodash";
 import moment from "moment";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ResType } from "types";
 import {
@@ -21,7 +22,12 @@ import { FormBuilderFieldTypes } from "views/forms/utils/renderFieldsComponent";
 import AccessFormFields from "../../views/forms/AccessFormFields";
 import TaskDetails from "./TaskDetails";
 
-function ViewForm() {
+interface Props {
+  withoutAppbar?: boolean;
+}
+
+function AccessForm({ withoutAppbar = false }: Props) {
+  const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const params = useParams();
   const [data, setData] = useState<any>(null);
@@ -46,6 +52,7 @@ function ViewForm() {
   const { mutate: updatePageFields } = useMutation(updatePage, {
     onSuccess: () => {
       snack.success("Values saved");
+      queryClient.invalidateQueries("form-details");
       if (active === data?.pages?.length - 1) {
         return;
       }
@@ -63,7 +70,7 @@ function ViewForm() {
     };
 
     let activePageData = finalData[data?.pages[active]._id];
-    let activeFields = [...data?.pages[active].fields];
+    let activeFields = [..._.cloneDeep(data?.pages[active].fields)];
 
     for (let key in activePageData) {
       const value = activePageData[key];
@@ -113,25 +120,28 @@ function ViewForm() {
   return (
     <Box
       sx={{
-        background: "rgba(233, 107, 116, 0.04)",
         minHeight: "100vh",
-        pt: 10,
-        pb: 5,
+        ...(!withoutAppbar && {
+          background: "rgba(233, 107, 116, 0.04)",
+        }),
       }}
     >
-      <StyledAccessFormAppbar>
-        <Box display="flex" gap={2} alignItems="center">
-          <img src={logo} alt="" />
-          <Typography variant="subtitle2" color="primary">
-            {data?.name}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="body2">
-            Last updated: {moment(data?.updatedAt).format("YYYY-MM-DD HH:mm A")}
-          </Typography>
-        </Box>
-      </StyledAccessFormAppbar>
+      {!withoutAppbar && (
+        <StyledAccessFormAppbar>
+          <Box display="flex" gap={2} alignItems="center">
+            <img src={logo} alt="" />
+            <Typography variant="subtitle2" color="primary">
+              {data?.name}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography variant="body2">
+              Last updated:{" "}
+              {moment(data?.updatedAt).format("YYYY-MM-DD HH:mm A")}
+            </Typography>
+          </Box>
+        </StyledAccessFormAppbar>
+      )}
       <StyledAccessFormContainer>
         {Boolean(data?.taskId) && <TaskDetails taskId={data?.taskId} />}
         {searchParams.get("preview") === "true" && (
@@ -175,4 +185,4 @@ function ViewForm() {
   );
 }
 
-export default ViewForm;
+export default AccessForm;

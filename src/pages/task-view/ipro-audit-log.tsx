@@ -29,7 +29,7 @@ function IProAuditLog() {
 
   return (
     <Box maxWidth={1000} margin="auto">
-      <Timeline>
+      <Timeline sx={{ margin: "0" }}>
         {data?.data?.map((item: any, index: number) => (
           <TimelineItem key={index}>
             <TimelineOppositeContent

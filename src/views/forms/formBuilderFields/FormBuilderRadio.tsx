@@ -47,7 +47,10 @@ function FormBuilderRadio(props: Props) {
             <RadioGroup
               row={displayColumns !== "1_COLUMN"}
               sx={{ flexWrap: "wrap" }}
-              {...field}
+              value={field.value ? field?.value : ""}
+              onChange={(e) => {
+                field.onChange(e.target.value);
+              }}
             >
               {options.map((item, index) => (
                 <>
@@ -70,7 +73,7 @@ function FormBuilderRadio(props: Props) {
           {error && (
             <Typography
               variant="caption"
-              sx={{ pl: "2px" }}
+              sx={{ pl: "2px", display: "block" }}
               color="rgb(211, 47, 47)"
             >
               {error.message}

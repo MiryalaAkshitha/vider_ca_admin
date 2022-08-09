@@ -4,10 +4,10 @@ import RouterLink from "components/RouterLink";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 
-function ViewIpro() {
+function ViewKyb() {
+  const params: any = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const params = useParams();
 
   return (
     <>
@@ -20,11 +20,11 @@ function ViewIpro() {
           }}
         >
           <Button
-            onClick={() => navigate(`/task-board/${params?.taskId}#iPro`)}
+            onClick={() => navigate(`/clients/${params.clientId}/kyb-info`)}
             color="primary"
             startIcon={<ArrowBack />}
           >
-            Task details
+            Kyb Details
           </Button>
         </Toolbar>
         <StyledProfileNav>
@@ -39,17 +39,13 @@ function ViewIpro() {
           ))}
         </StyledProfileNav>
       </AppBar>
-      <Box mt={3}>
+      <Box py={3}>
         <Outlet />
       </Box>
     </>
   );
 }
 export const menu: Array<{ title: string; path: string }> = [
-  {
-    title: "Edit form",
-    path: "edit",
-  },
   {
     title: "View form entry",
     path: "view",
@@ -59,9 +55,13 @@ export const menu: Array<{ title: string; path: string }> = [
     path: "audit-log",
   },
   {
-    title: "Approvals",
-    path: "approvals",
+    title: "Fill Details",
+    path: "fill-details",
+  },
+  {
+    title: "Edit form",
+    path: "edit",
   },
 ];
 
-export default ViewIpro;
+export default ViewKyb;

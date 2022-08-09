@@ -10,12 +10,7 @@ function FormAppbar() {
   const navigate = useNavigate();
 
   return (
-    <AppBar
-      sx={{
-        height: 60,
-      }}
-      color="default"
-    >
+    <AppBar color="default" position="sticky" sx={{ mb: 2 }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box display="flex" alignItems="center" gap={3}>
           <img src={logo} alt="" />

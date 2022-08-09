@@ -95,10 +95,10 @@ export const StyledAccessFormAppbar = styled("div")(() => ({
   alignItems: "center",
   background: "white",
   borderBottom: "1px solid #E0E0E0",
-  position: "fixed",
+  position: "sticky",
+  top: 0,
   width: "100%",
   padding: "15px 10px",
-  top: 0,
-  left: 0,
   zIndex: 100,
+  marginBottom: 20,
 }));

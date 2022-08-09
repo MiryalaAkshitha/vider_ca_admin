@@ -34,21 +34,31 @@ function KybFormCard({ data }: Props) {
 
   const handleMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    let options: any[] = [
-      {
-        label: "Audit log",
-        action: () => {
-          navigate(`${data?._id}/audit-log?formName=${data?.name}`);
-        },
-      },
-    ];
+    let options: any[] = [];
 
     if (permissions.includes(Permissions.VIEW_CLIENT_KYB)) {
       options.push({
-        label: "Form details",
-        action: () => {
-          navigate(`${data?._id}?formName=${data?.name}`);
-        },
+        label: "View",
+        action: () => navigate(`${data?._id}/view`),
+      });
+    }
+
+    if (permissions.includes(Permissions.VIEW_CLIENT_KYB)) {
+      options.push({
+        label: "Fill Details",
+        action: () => navigate(`${data?._id}/fill-details`),
+      });
+    }
+
+    options.push({
+      label: "Audit log",
+      action: () => navigate(`${data?._id}/audit-log`),
+    });
+
+    if (permissions.includes(Permissions.EDIT_CLIENT_KYB)) {
+      options.push({
+        label: "Edit",
+        action: () => navigate(`${data?._id}/edit`),
       });
     }
 
@@ -58,19 +68,8 @@ function KybFormCard({ data }: Props) {
         action: () => {
           confirm({
             msg: "Are you sure you want to delete this form?",
-            action: () => {
-              mutate({ id: data._id });
-            },
+            action: () => mutate({ id: data._id }),
           });
-        },
-      });
-    }
-
-    if (permissions.includes(Permissions.EDIT_CLIENT_KYB)) {
-      options.push({
-        label: "Edit",
-        action: () => {
-          navigate(`${data?._id}/edit?formName=${data?.name}`);
         },
       });
     }

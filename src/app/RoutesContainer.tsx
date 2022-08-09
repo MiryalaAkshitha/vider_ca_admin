@@ -13,12 +13,7 @@ const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
 const BillingClients = loadable(() => import("pages/billing/clients"));
 const Estimates = loadable(() => import("pages/billing/estimates"));
-const AddEstimate = loadable(
-  () => import("pages/billing/estimates/add-estimate")
-);
-const EstimatePreview = loadable(
-  () => import("pages/billing/estimates/estimate-preview")
-);
+
 const Invoices = loadable(() => import("pages/billing/invoices"));
 const AddInvoice = loadable(() => import("pages/billing/invoices/add-invoice"));
 const AddInvoiceReceipt = loadable(
@@ -75,15 +70,7 @@ const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
 const Credentials = loadable(() => import("pages/client-view/credentials"));
 const Archives = loadable(() => import("pages/client-view/archives"));
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
-const KybFormDetails = loadable(
-  () => import("pages/client-view/kyb-form-details")
-);
-const EditKybDetails = loadable(
-  () => import("pages/client-view/kyb-form-edit")
-);
-const KybFormAuditLog = loadable(
-  () => import("pages/client-view/kyb-form-audit-log")
-);
+
 const OrganizationProfile = loadable(
   () => import("pages/settings/organization/organization-profile")
 );
@@ -95,6 +82,8 @@ const AllClientsStorage = loadable(
 const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
 });
+
+//ROLES AND PERMISSIONS
 const Roles = loadable(() => {
   return import("pages/settings/manage-users/roles-permissions");
 });
@@ -103,24 +92,44 @@ const EditPermissions = loadable(() => {
     "pages/settings/manage-users/roles-permissions/edit-permissions"
   );
 });
+
+// STORAGE MANAGEMENT
 const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
 });
+
+// ESTIMATES
+const AddEstimate = loadable(
+  () => import("pages/billing/estimates/add-estimate")
+);
+const EstimatePreview = loadable(
+  () => import("pages/billing/estimates/estimate-preview")
+);
+
+// FORMS
 const Forms = loadable(() => import("pages/forms"));
 const Esign = loadable(() => import("pages/forms/Esign"));
-const TaskForms = loadable(() => import("pages/forms/TaskForms"));
 const FormTemplates = loadable(() => import("pages/forms/FormTemplates"));
 const FormValidations = loadable(() => import("pages/forms/FormValidations"));
 const FormBuilder = loadable(() => import("pages/forms/FormBuilder"));
 const AccessForm = loadable(() => import("pages/forms/AccessForm"));
+
+// IPRO
 const ViewIproForm = loadable(() => import("pages/task-view/view-ipro"));
 const ViewIproFormEntry = loadable(
   () => import("pages/task-view/view-ipro-entry")
 );
 const IProAuditLog = loadable(() => import("pages/task-view/ipro-audit-log"));
 const IProApprovals = loadable(() => import("pages/task-view/ipro-approvals"));
+
+// KYB DETAILS
+const ViewKyb = loadable(() => import("pages/client-view/view-kyb"));
+
+// SERVICES
 const Services = loadable(() => import("pages/services"));
 const AddService = loadable(() => import("pages/services/add-service"));
+
+// APPROVALS
 const Approvals = loadable(() => import("pages/settings/approval-hierarchies"));
 const AddApproval = loadable(
   () => import("pages/settings/approval-hierarchies/add-approval-hierarchy")
@@ -186,7 +195,6 @@ function RoutesContainer() {
           <Route path="forms" element={<Forms />}>
             <Route index element={<FormTemplates />} />
             <Route path="form-validations" element={<FormValidations />} />
-            <Route path="task-forms" element={<TaskForms />} />
           </Route>
           <Route path="task-board">
             <Route
@@ -323,6 +331,12 @@ function RoutesContainer() {
           <Route path="audit-log" element={<IProAuditLog />} />
           <Route path="approvals" element={<IProApprovals />} />
         </Route>
+        <Route path="/clients/:clientId/kyb-info/:formId" element={<ViewKyb />}>
+          <Route path="view" element={<ViewIproFormEntry />} />
+          <Route path="edit" element={<FormBuilder />} />
+          <Route path="fill-details" element={<AccessForm withoutAppbar />} />
+          <Route path="audit-log" element={<IProAuditLog />} />
+        </Route>
         <Route
           path="/billing/estimates/:estimateId/preview"
           element={<EstimatePreview />}
@@ -330,19 +344,6 @@ function RoutesContainer() {
         <Route
           path="/billing/invoices/:invoiceId/preview"
           element={<InvoicePreview />}
-        />
-
-        <Route
-          path="/clients/:clientId/kyb-info/:formId"
-          element={<KybFormDetails />}
-        />
-        <Route
-          path="/clients/:clientId/kyb-info/:formId/edit"
-          element={<EditKybDetails />}
-        />
-        <Route
-          path="/clients/:clientId/kyb-info/:formId/audit-log"
-          element={<KybFormAuditLog />}
         />
         <Route
           path="/forms/:formId/fields/:fieldId/esign"

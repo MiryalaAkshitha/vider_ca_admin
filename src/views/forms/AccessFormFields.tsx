@@ -27,7 +27,12 @@ function AccessFormFields({ data, active, onContinue }: any) {
     const { errors } = formState;
     if (_.isEmpty(errors)) return;
     let firstError = Object.keys(errors)[0];
-    document.getElementById(firstError)?.scrollIntoView();
+    let element = document.getElementById(firstError);
+    let scrollTo = element!?.offsetTop - 200;
+    window.scrollTo({
+      top: scrollTo,
+      behavior: "smooth",
+    });
   }, [formState]);
 
   return (

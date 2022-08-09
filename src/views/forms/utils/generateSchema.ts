@@ -93,6 +93,7 @@ class GenerateSchema {
   }
 
   singleLineSchema(item: any) {
+    console.log(item);
     let validation = string();
     if (item.required) {
       validation = validation.required(`${item.label} is required`);
@@ -417,7 +418,7 @@ class GenerateSchema {
     let label = item.label;
     let min = item?.range?.min;
     let max = item?.range?.max;
-    let validation = number();
+    let validation = number().typeError("Number must be a number");
 
     if (item.required) {
       validation = validation.required(`${item.label} is required`);

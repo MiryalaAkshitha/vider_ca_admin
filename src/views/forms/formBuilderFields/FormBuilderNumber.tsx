@@ -44,7 +44,7 @@ function FormBuilderNumber(props: Props) {
               type="number"
               value={field.value}
               onChange={(e) => {
-                field.onChange(+e.target.value);
+                field.onChange(e.target.value);
               }}
             />
             {instructions && (
@@ -57,7 +57,7 @@ function FormBuilderNumber(props: Props) {
             {error && (
               <Typography
                 variant="caption"
-                sx={{ pl: "2px" }}
+                sx={{ pl: "2px", display: "block" }}
                 color="rgb(211, 47, 47)"
               >
                 {error.message}
