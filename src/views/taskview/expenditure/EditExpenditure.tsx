@@ -22,7 +22,7 @@ interface Props extends DialogProps {
 function EditExpenditure({ open, setOpen, data }: Props) {
   const queryClient = useQueryClient();
   const [state, setState] = useState({
-    type: "",
+    taskExpenseType: "",
     particularName: "",
     amount: "",
     includeInInvoice: false,
@@ -60,10 +60,10 @@ function EditExpenditure({ open, setOpen, data }: Props) {
         <RadioGroup
           row
           onChange={(e) => {
-            setState({ ...state, type: e.target.value });
+            setState({ ...state, taskExpenseType: e.target.value });
           }}
-          value={state.type}
-          name="type"
+          value={state.taskExpenseType}
+          name="taskExpenseType"
         >
           <FormControlLabel
             control={<Radio required value="PURE_AGENT" />}

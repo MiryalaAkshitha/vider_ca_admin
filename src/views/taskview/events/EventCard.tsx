@@ -2,7 +2,6 @@ import { MoreVert } from "@mui/icons-material";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box, IconButton, Typography } from "@mui/material";
-import Members from "components/Members";
 import moment from "moment";
 import { useState } from "react";
 import EditEventPopover from "./EditEventPopover";

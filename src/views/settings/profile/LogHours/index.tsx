@@ -25,7 +25,6 @@ import { useMenu } from "context/MenuPopover";
 import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
 import AddLogHour from "./AddLogHour";
@@ -34,7 +33,6 @@ import Filters from "./Filters";
 
 function LogHours() {
   const queryClient = useQueryClient();
-  const params: any = useParams();
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [page, setPage] = useState(0);
@@ -46,17 +44,13 @@ function LogHours() {
   });
 
   const { data: logHourStats, isLoading: logHourStatsLoading }: ResType =
-    useQuery(
-      ["user-log-hour-stats", { type: "USER", userId: +params.userId }],
-      getUserLogHourStats
-    );
+    useQuery(["user-log-hour-stats", { type: "SELF" }], getUserLogHourStats);
 
   const { data, isLoading }: ResType = useQuery(
     [
       "user-log-hours",
       {
-        type: "USER",
-        userId: +params.userId,
+        type: "SELF",
         offset: page * pageCount,
         limit: pageCount,
         search: filters.search,
@@ -81,8 +75,7 @@ function LogHours() {
   const onAdd = async (data: any) => {
     await mutateAsync({
       ...data,
-      userId: +params.userId,
-      type: "USER",
+      type: "SELF",
     });
   };
 

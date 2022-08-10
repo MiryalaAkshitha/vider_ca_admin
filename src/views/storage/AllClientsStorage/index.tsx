@@ -3,22 +3,21 @@ import { getStorage } from "api/services/storage";
 import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
 import { usePermissions } from "context/PermissionsProvider";
+import { Permissions } from "data/permissons";
 import useQueryParams from "hooks/useQueryParams";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
 import { StorageResponse } from "types";
-import { Permissions } from "data/permissons";
 import AddAttachment from "views/storage/AddAttachment";
 import BreadCrumbs from "views/storage/BreadCrumbs";
-import Files from "views/storage/Files";
 import Folders from "views/storage/Folders";
 import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
 import Search from "views/storage/Search";
+import FilesAndLinks from "../FilesAndLinks";
 import ClientDetails from "./ClientDetails";
 import ClientsList from "./ClientsList";
-import FilesAndLinks from "../FilesAndLinks";
 
 function ClientStorage() {
   const { queryParams } = useQueryParams();

@@ -1,6 +1,5 @@
 import { ListItemButton, Typography } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
-import { StyledListItemButton } from "layout/styles";
 import { Link, useLocation } from "react-router-dom";
 
 const SingleMenuItem = ({ item }: any) => {

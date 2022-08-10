@@ -2,73 +2,77 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/clients/clients";
+import { addExpenditure } from "api/services/expenditure";
 import { getTasks } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
-import FormDate from "components/FormFields/FormDate";
 import FormInput from "components/FormFields/FormInput";
+import FormNumber from "components/FormFields/FormNumber.";
 import FormRadio from "components/FormFields/FormRadio";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
-import moment from "moment";
+import { snack } from "components/toast";
+import UploadImage from "components/UploadImage";
 import { Controller, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
-import { getHoursOptions, getMinutesOptions } from "utils";
+import { handleError } from "utils/handleError";
 import {
-  addUserLogHourDefaultValues,
-  AddUserLogHourSchema,
-} from "validations/addUserLogHour";
+  addUserExpenditureDefaultValues,
+  AddUserExpenditureSchema,
+} from "validations/addUserExpenditure";
 
-interface Props extends DialogProps {
-  onAdd: (data: any) => Promise<any>;
-}
+function AddExpenditure({ open, setOpen }: DialogProps) {
+  const queryClient = useQueryClient();
 
-function AddLogHour({ open, setOpen, onAdd }: Props) {
-  const params: any = useParams();
-
-  const { control, trigger, handleSubmit, watch, reset } = useForm({
-    defaultValues: addUserLogHourDefaultValues,
+  const { control, handleSubmit, watch, reset } = useForm({
+    defaultValues: addUserExpenditureDefaultValues,
     mode: "onChange",
-    resolver: yupResolver(AddUserLogHourSchema),
+    resolver: yupResolver(AddUserExpenditureSchema),
   });
 
   const { data, isLoading }: ResType = useQuery(["clients"], getClients, {
-    enabled: open && watch("logHourType") === "GENERAL",
+    enabled: open,
   });
 
-  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    [
-      "tasks",
-      { client: +watch<any>("client")?.value, assignee: [+params.userId] },
-    ],
+  const { data: tasks }: ResType = useQuery(
+    ["tasks", { client: +watch<any>("client")?.value }],
     getTasks,
     {
-      enabled:
-        open && watch("logHourType") === "TASK" && Boolean(watch("client")),
+      enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
     }
   );
 
+  const { mutate } = useMutation(addExpenditure, {
+    onSuccess: () => {
+      snack.success("Expenditure Added");
+      setOpen(false);
+      queryClient.invalidateQueries("user_expenditure");
+      reset(addUserExpenditureDefaultValues);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
   const onSubmit = async (data: any) => {
     const { hours, minutes, client, task, ...apiData } = data;
-    apiData.client = client?.value;
+    apiData.client = +client?.value;
     apiData.task = task?.id;
-    apiData.duration = moment
-      .duration(`${data.hours?.value}:${data.minutes?.value}`)
-      .asMilliseconds();
+    apiData.amount = +apiData.amount;
+    apiData.includeInInvoice = true;
 
-    await onAdd({ ...apiData });
-
-    reset(addUserLogHourDefaultValues);
+    mutate({
+      ...apiData,
+    });
   };
 
   return (
-    <DrawerWrapper open={open} title="Add Log Hour" setOpen={setOpen}>
+    <DrawerWrapper open={open} title="Add Expenditure" setOpen={setOpen}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormRadio
           row
-          name="logHourType"
+          name="type"
           control={control}
           options={[
             {
@@ -85,11 +89,6 @@ function AddLogHour({ open, setOpen, onAdd }: Props) {
           <Loader />
         ) : (
           <>
-            {watch("logHourType") === "GENERAL" && (
-              <Box mt={1}>
-                <FormInput label="Title" control={control} name="title" />
-              </Box>
-            )}
             <Box mt={2}>
               <FormAutoComplete
                 control={control}
@@ -103,35 +102,52 @@ function AddLogHour({ open, setOpen, onAdd }: Props) {
                 }
               />
             </Box>
-            {watch("logHourType") === "TASK" && (
+            {watch("type") === "TASK" && (
               <Box mt={2}>
                 <SelectTask control={control} tasks={tasks?.data} />
               </Box>
             )}
             <Box mt={2}>
-              <FormDate control={control} label="Date" name="completedDate" />
-            </Box>
-            <Box sx={{ mt: 3, display: "flex", gap: 1 }}>
-              <FormAutoComplete
+              <FormInput
+                label="Particular name"
                 control={control}
-                label="Hours"
-                name="hours"
-                trigger={() => trigger("minutes")}
-                options={getHoursOptions()}
-              />
-              <FormAutoComplete
-                control={control}
-                label="Minutes"
-                name="minutes"
-                options={getMinutesOptions()}
+                name="particularName"
               />
             </Box>
             <Box mt={2}>
-              <FormInput
-                label="Description"
+              <FormNumber label="Amount" control={control} name="amount" />
+            </Box>
+            {watch("type") === "TASK" && (
+              <Box mt={2}>
+                <FormRadio
+                  label="Task Expense Type"
+                  row
+                  name="taskExpenseType"
+                  control={control}
+                  options={[
+                    {
+                      label: "Pure Agent",
+                      value: "PURE_AGENT",
+                    },
+                    {
+                      label: "Additional",
+                      value: "ADDITIONAL",
+                    },
+                  ]}
+                />
+              </Box>
+            )}
+            <Box mt={2}>
+              <Controller
                 control={control}
-                name="description"
-                multiline
+                name="attachment"
+                render={({ field }) => (
+                  <UploadImage
+                    name="image"
+                    label="Click here to upload an attachment"
+                    onChange={(v) => field.onChange(v)}
+                  />
+                )}
               />
             </Box>
             <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
@@ -204,4 +220,4 @@ const SelectTask = ({ control, tasks }) => {
   );
 };
 
-export default AddLogHour;
+export default AddExpenditure;

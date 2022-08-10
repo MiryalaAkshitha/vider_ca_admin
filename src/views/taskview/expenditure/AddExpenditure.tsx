@@ -15,9 +15,10 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { DialogProps, SubmitType } from "types";
+import { handleError } from "utils/handleError";
 
 let initialState = {
-  type: "",
+  taskExpenseType: "",
   particularName: "",
   amount: "",
   includeInInvoice: false,
@@ -37,7 +38,7 @@ function AddExpenditure({ open, setOpen }: DialogProps) {
       queryClient.invalidateQueries("expenditure");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -45,7 +46,8 @@ function AddExpenditure({ open, setOpen }: DialogProps) {
     e.preventDefault();
     mutate({
       ...state,
-      taskId: +params.taskId,
+      type: "TASK",
+      task: +params.taskId,
       amount: +state.amount,
     });
   };
@@ -56,10 +58,10 @@ function AddExpenditure({ open, setOpen }: DialogProps) {
         <RadioGroup
           row
           onChange={(e) => {
-            setState({ ...state, type: e.target.value });
+            setState({ ...state, taskExpenseType: e.target.value });
           }}
-          value={state.type}
-          name="type"
+          value={state.taskExpenseType}
+          name="taskExpenseType"
         >
           <FormControlLabel
             control={<Radio required value="PURE_AGENT" />}

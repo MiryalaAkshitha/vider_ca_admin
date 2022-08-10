@@ -17,7 +17,6 @@ export const StyledServiceItem = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
   gap: 10,
-  boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
 }));
 
 export const StyledServiceDesc = styled("div")(() => ({

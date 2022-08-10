@@ -2,7 +2,6 @@ import { Timeline } from "@mui/lab";
 import { Box, Button } from "@mui/material";
 import {
   getApprovals,
-  updateEstimateApprovals,
   updateInvoiceApprovals,
 } from "api/services/approval-heirarchy";
 import DialogWrapper from "components/DialogWrapper";

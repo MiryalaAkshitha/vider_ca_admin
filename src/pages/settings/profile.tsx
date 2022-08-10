@@ -3,15 +3,14 @@ import { userProfileMenu } from "data/constants";
 import useQueryParams from "hooks/useQueryParams";
 import { useNavigate } from "react-router-dom";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
-import Expenditure from "views/settings/manage-users/users/Expenditure";
-import LogHoursDetails from "views/settings/manage-users/users/LogHoursDetails";
-import Tasks from "views/settings/manage-users/users/Tasks";
-import UserProfile from "views/settings/manage-users/users/UserProfile";
+import Expenditure from "views/settings/profile/Expenditure";
+import LogHours from "views/settings/profile/LogHours";
+import Tasks from "views/settings/profile/Tasks";
+import UserProfile from "views/settings/profile/UserProfile";
 
 function Profile() {
   const navigate = useNavigate();
   const { queryParams } = useQueryParams();
-
   const active = queryParams.tab;
 
   return (
@@ -33,7 +32,7 @@ function Profile() {
         {active === "Profile" && <UserProfile />}
         {active === "Tasks" && <Tasks />}
         {active === "Expenditure" && <Expenditure />}
-        {active === "Log Hours" && <LogHoursDetails />}
+        {active === "Log Hours" && <LogHours />}
       </Box>
     </>
   );

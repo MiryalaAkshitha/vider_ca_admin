@@ -20,7 +20,6 @@ function AddReceipt() {
   const params = useParams();
   const dispatch = useDispatch();
   useTitle("New Receipt");
-  const { type, client } = useSelector(selectReceipt);
 
   useEffect(() => {
     dispatch(resetState());

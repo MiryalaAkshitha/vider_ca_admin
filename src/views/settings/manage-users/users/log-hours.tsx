@@ -1,8 +1,6 @@
-import { Add } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Box, Button, Grid } from "@mui/material";
 import {
-  addUserLogHour,
   getUserLogHours,
   getUserLogHourStats,
 } from "api/services/tasks/loghours";
@@ -10,19 +8,16 @@ import { icons } from "assets";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
-import { snack } from "components/toast";
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 import { ResType } from "types";
-import { handleError } from "utils/handleError";
-import { columns, StatCard } from "../LogHours";
-import AddLogHour from "../LogHours/AddLogHour";
-import Filters from "../LogHours/Filters";
+import { columns, StatCard } from "views/settings/profile/LogHours";
+import Filters from "views/settings/profile/LogHours/Filters";
 
 function LogHours() {
-  const queryClient = useQueryClient();
+  const params: any = useParams();
   const [open, setOpen] = useState(false);
-  const [openAdd, setOpenAdd] = useState(false);
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(5);
   const [filters, setFilters] = useState({
@@ -32,13 +27,17 @@ function LogHours() {
   });
 
   const { data: logHourStats, isLoading: logHourStatsLoading }: ResType =
-    useQuery(["user-log-hour-stats", { type: "SELF" }], getUserLogHourStats);
+    useQuery(
+      ["user-log-hour-stats", { type: "USER", userId: +params.userId }],
+      getUserLogHourStats
+    );
 
   const { data, isLoading }: ResType = useQuery(
     [
       "user-log-hours",
       {
-        type: "SELF",
+        type: "USER",
+        userId: +params.userId,
         offset: page * pageCount,
         limit: pageCount,
         search: filters.search,
@@ -49,32 +48,14 @@ function LogHours() {
     getUserLogHours
   );
 
-  const { mutateAsync } = useMutation(addUserLogHour, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("user-log-hours");
-      snack.success("Log Hour Added");
-      setOpenAdd(false);
-    },
-    onError: (err: any) => {
-      snack.error(handleError(err));
-    },
-  });
-
-  const onAdd = async (data: any) => {
-    await mutateAsync({
-      ...data,
-      type: "SELF",
-    });
+  const getDuration = (duration: number) => {
+    return Math.round(duration / 1000 / 60 / 60);
   };
 
   const totalCount = data?.data?.totalCount || 0;
   const generalLogHours = +logHourStats?.data?.generalLogHours;
   const taskLogHours = +logHourStats?.data?.taskLogHours;
   const totalLogHours = generalLogHours + taskLogHours;
-
-  const getDuration = (duration: number) => {
-    return Math.round(duration / 1000 / 60 / 60);
-  };
 
   if (logHourStatsLoading) return <Loader />;
 
@@ -103,32 +84,22 @@ function LogHours() {
           />
         </Grid>
       </Grid>
-      <Box display="flex" justifyContent="space-between">
-        <Box display="flex" gap={2}>
-          <SearchContainer
-            debounced
-            onChange={(v) => {
-              setFilters({
-                ...filters,
-                search: v,
-              });
-            }}
-          />
-          <Button
-            onClick={() => setOpen(true)}
-            startIcon={<FilterAltOutlinedIcon />}
-            variant="outlined"
-          >
-            Filter
-          </Button>
-        </Box>
+      <Box display="flex" gap={2}>
+        <SearchContainer
+          debounced
+          onChange={(v) => {
+            setFilters({
+              ...filters,
+              search: v,
+            });
+          }}
+        />
         <Button
-          onClick={() => setOpenAdd(true)}
-          startIcon={<Add />}
-          color="secondary"
+          onClick={() => setOpen(true)}
+          startIcon={<FilterAltOutlinedIcon />}
           variant="outlined"
         >
-          Add Log Hour
+          Filter
         </Button>
       </Box>
       <Box mt={2}>
@@ -149,7 +120,6 @@ function LogHours() {
         open={open}
         setOpen={setOpen}
       />
-      <AddLogHour onAdd={onAdd} open={openAdd} setOpen={setOpenAdd} />
     </Box>
   );
 }

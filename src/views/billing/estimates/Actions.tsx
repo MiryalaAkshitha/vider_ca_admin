@@ -7,7 +7,8 @@ import {
   MoneyOutlined,
   PreviewOutlined,
 } from "@mui/icons-material";
-import { Menu, MenuItem } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { MenuItem } from "@mui/material";
 import {
   cancelEstimate,
   downloadEstimate,
@@ -18,10 +19,9 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { handleError } from "utils/handleError";
-import ViewApprovalStatus from "./ViewApprovalStatus";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { EstimateStatus } from "../types";
 import { StyledActionsMenu } from "../styles";
+import { EstimateStatus } from "../types";
+import ViewApprovalStatus from "./ViewApprovalStatus";
 
 interface Props {
   anchorEl: HTMLElement | null;

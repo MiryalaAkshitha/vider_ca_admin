@@ -1,64 +1,33 @@
-import { Add } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
-import AddSpecification from "./AddSpecification";
+import { Box, Typography } from "@mui/material";
 import SectionWrapper from "./SectionWrapper";
 
-const Specializations = ({ state, setState }) => {
-  const [open, setOpen] = useState(false);
-
+const Specializations = ({ data }) => {
   return (
     <SectionWrapper title="Specializations">
-      <>
-        <Box display="flex" gap={2} flexWrap="wrap">
-          {state?.specializations?.map((tag: any, index: number) => (
-            <Box
-              key={index}
-              onClick={() => {
-                setState({
-                  ...state,
-                  specializations: state.specializations.filter(
-                    (item: any, i: number) => i !== index
-                  ),
-                });
-              }}
-              sx={{
-                background: "#F5F5F5",
-                borderRadius: 2,
-                overflow: "hidden",
-                py: 1,
-                px: 2,
-                minWidth: 80,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: 2,
-                cursor: "pointer",
-              }}
-            >
-              <Typography variant="body2">{tag}</Typography>
-              <Typography variant="body1">&times;</Typography>
-            </Box>
-          ))}
-          <Button
-            startIcon={<Add />}
-            onClick={() => setOpen(true)}
-            color="secondary"
-          >
-            Add Specialization
-          </Button>
-        </Box>
-        <AddSpecification
-          onAdd={(value) =>
-            setState({
-              ...state,
-              specializations: [...state.specializations, value],
-            })
-          }
-          open={open}
-          setOpen={setOpen}
-        />
-      </>
+      <Box p={2} display="flex" gap={2} flexWrap="wrap">
+        <>
+          {data?.specializations?.length ? (
+            data.specializations.map((tag: string, index: number) => (
+              <Box
+                key={index}
+                sx={{
+                  background: "#F5F5F5",
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  py: 1,
+                  px: 2,
+                  minWidth: 80,
+                  textAlign: "center",
+                }}
+              >
+                <Typography variant="body2">{tag}</Typography>
+              </Box>
+            ))
+          ) : (
+            <Typography variant="body2">No Specifications</Typography>
+          )}
+        </>
+      </Box>
     </SectionWrapper>
   );
 };

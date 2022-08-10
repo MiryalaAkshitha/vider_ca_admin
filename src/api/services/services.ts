@@ -1,11 +1,11 @@
 import { http } from "api/http";
 
-const getServices = () => {
-  return http.get("/services");
+const getServices = ({ queryKey }) => {
+  return http.get("/services", { params: { ...queryKey[1] } });
 };
 
-const getDefaultServices = () => {
-  return http.get("/services/default");
+const getDefaultServices = ({ queryKey }) => {
+  return http.get("/services/default", { params: { ...queryKey[1] } });
 };
 
 const importServices = (data: any) => {

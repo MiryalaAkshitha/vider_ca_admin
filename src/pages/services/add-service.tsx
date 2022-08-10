@@ -24,6 +24,7 @@ import Checklists from "views/services/Checklists";
 import StageOfWork from "views/services/StagesOfWork";
 import Subtasks from "views/services/SubTasks";
 import Milestones from "views/services/Milestones";
+import { handleError } from "utils/handleError";
 
 function AddService() {
   useTitle("Services");
@@ -31,7 +32,7 @@ function AddService() {
   const navigate = useNavigate();
   const state = useSelector(addServiceState);
   const { queryParams } = useQueryParams();
-  let serviceId = queryParams.serviceId;
+  const serviceId = queryParams.serviceId;
 
   const { isLoading }: ResType = useQuery(
     ["service-details", serviceId],
@@ -45,9 +46,7 @@ function AddService() {
   );
 
   useEffect(() => {
-    if (!serviceId) {
-      dispatch(resetData());
-    }
+    if (!serviceId) dispatch(resetData());
   }, [serviceId, dispatch]);
 
   const { mutate } = useMutation(createService, {
@@ -57,7 +56,7 @@ function AddService() {
       navigate("/services");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message[0]);
+      snack.error(handleError(err));
     },
   });
 
@@ -68,7 +67,7 @@ function AddService() {
       navigate("/services");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 

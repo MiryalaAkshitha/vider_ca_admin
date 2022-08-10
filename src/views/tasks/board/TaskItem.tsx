@@ -115,7 +115,7 @@ function TaskItem({ data }: Props) {
       >
         <Box display="flex" gap={1} justifyContent="space-between">
           <Typography variant="body2" color="gray">
-            {data?.taskNumber}
+            {data?.taskNumber} {data?.id}
           </Typography>
           <Typography variant="caption" color="gray">
             {data?.client?.displayName}

@@ -3,18 +3,17 @@ import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getTitle, getTotalLogHoursDuration } from "utils";
 import { formattedDate } from "utils/formattedDate";
 
 function Tasks() {
-  const params: any = useParams();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const { data, isLoading }: ResType = useQuery(
-    ["tasks", { type: "USER", userId: +params.userId, search }],
+    ["tasks", { type: "SELF", search }],
     getUserTasks
   );
 

@@ -1,11 +1,12 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, Pagination, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
 import { getServices } from "api/services/services";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
+import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -17,47 +18,39 @@ import ServiceCard from "views/services/ServiceCard";
 function Services() {
   useTitle("Services");
   const navigate = useNavigate();
+  const { queryParams, setQueryParams } = useQueryParams();
   const [search, setSearch] = useState("");
   const [openImport, setOpenImport] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
-  const [subCategoryId, setSubCategoryId] = useState("");
-  const { data, isLoading }: ResType = useQuery("services", getServices);
+  const [category, setCategory] = useState<any>(null);
+  const [subCategory, setSubCategory] = useState<any>(null);
+  const page = +queryParams.page || 1;
+  const limit = 9;
+  const offset = (page - 1) * limit;
+
   const { data: categories }: ResType = useQuery("categories", getCategories);
 
+  const { data, isLoading }: ResType = useQuery(
+    ["services", { search, category, setSubCategory, limit, offset }],
+    getServices
+  );
+
   const subCategories = categories?.data?.find(
-    (item: any) => item.id === categoryId
+    (item: any) => item.id === category
   )?.subCategories;
 
   const onChange = (e: any) => {
-    setCategoryId(e.target.value);
-    setSubCategoryId("");
+    setCategory(e.target.value);
+    setSubCategory("");
+    setQueryParams({ page: "1" });
   };
 
   const onSubChange = (e: any) => {
-    setSubCategoryId(e.target.value);
+    setSubCategory(e.target.value);
+    setQueryParams({ page: "1" });
   };
 
-  function getData() {
-    let result = [...data?.data];
-
-    if (search) {
-      result = result?.filter((item) => {
-        return item.name?.toLowerCase().includes(search.toLowerCase());
-      });
-    }
-
-    if (categoryId) {
-      result = result?.filter((item) => item.category?.id === +categoryId);
-    }
-
-    if (subCategoryId) {
-      result = result?.filter(
-        (item) => item.subCategory?.id === +subCategoryId
-      );
-    }
-
-    return result;
-  }
+  const noInitialData =
+    data?.data?.totalCount === 0 && !search && !category && !subCategory;
 
   if (isLoading) return <Loader />;
 
@@ -65,7 +58,7 @@ function Services() {
     <>
       <Box px={3} py={1}>
         <Box display="flex" justifyContent="flex-end" gap={1} mt={2}>
-          {data?.data?.length > 0 && (
+          {!noInitialData && (
             <>
               <Link to="/services/add" style={{ textDecoration: "none" }}>
                 <Button
@@ -88,7 +81,7 @@ function Services() {
           )}
         </Box>
         <Box mt={4}>
-          {data?.data?.length > 0 && (
+          {!noInitialData && (
             <Box
               display="flex"
               justifyContent="space-between"
@@ -97,8 +90,8 @@ function Services() {
               <Box display="flex">
                 <Box>
                   <TextField
-                    name="categoryId"
-                    value={categoryId}
+                    name="category"
+                    value={category}
                     onChange={onChange}
                     size="small"
                     label="Category"
@@ -116,8 +109,8 @@ function Services() {
                   {subCategories?.length > 0 && (
                     <Box ml={2}>
                       <TextField
-                        value={subCategoryId}
-                        name="subCategoryId"
+                        value={subCategory}
+                        name="subCategory"
                         onChange={onSubChange}
                         sx={{ width: "250px" }}
                         size="small"
@@ -136,23 +129,40 @@ function Services() {
               </Box>
               <Box>
                 <SearchContainer
+                  debounced
                   value={search}
-                  minWidth="400px"
                   placeHolder="Search for a service"
-                  onChange={setSearch}
+                  onChange={(v: string) => {
+                    setSearch(v);
+                    setQueryParams({ page: "1" });
+                  }}
                 />
               </Box>
             </Box>
           )}
         </Box>
         <Grid container spacing={2} sx={{ mt: 2 }}>
-          {getData()?.map((service: any, index: number) => (
+          {data?.data?.result?.map((service: any, index: number) => (
             <Grid item xs={4}>
               <ServiceCard data={service} key={index} />
             </Grid>
           ))}
         </Grid>
-        {data?.data?.length === 0 && (
+        {data?.data?.totalCount > 0 && (
+          <Pagination
+            sx={{
+              mt: 3,
+              "& .MuiPagination-ul": { justifyContent: "flex-end" },
+            }}
+            page={page}
+            onChange={(e, value) => setQueryParams({ page: value.toString() })}
+            color="secondary"
+            count={Math.ceil(data?.data?.totalCount / 9)}
+            variant="outlined"
+            shape="rounded"
+          />
+        )}
+        {noInitialData && (
           <EmptyPage
             title="No services found"
             desc="You can add a service by clicking the button above."

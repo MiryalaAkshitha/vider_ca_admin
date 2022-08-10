@@ -16,7 +16,7 @@ function Expenditure() {
   const [open, setOpen] = useState<boolean>(false);
 
   const { data, isLoading }: ResType = useQuery(
-    ["expenditure", { taskId: params.taskId }],
+    ["expenditure", { taskId: params.taskId, type: "TASK" }],
     getExpenditure
   );
 

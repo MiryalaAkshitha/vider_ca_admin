@@ -5,12 +5,11 @@ import { getCategories } from "api/services/categories";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import ValidateAccess from "components/ValidateAccess";
-import useFilteredData from "hooks/useFilteredData";
+import { Permissions } from "data/permissons";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import { Permissions } from "data/permissons";
 import AddCategory from "views/settings/categories/AddCategory";
 import CategoryCard from "views/settings/categories/CategoryCard";
 

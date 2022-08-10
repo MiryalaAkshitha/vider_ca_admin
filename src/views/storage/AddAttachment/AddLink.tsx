@@ -14,7 +14,6 @@ import { snack } from "components/toast";
 import useQueryParams from "hooks/useQueryParams";
 import { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
 import { DialogProps } from "types";
 import { handleError } from "utils/handleError";
 import { GreyButton } from "views/tasks/styles";
@@ -25,7 +24,6 @@ interface Props extends DialogProps {
 }
 
 function AddLink({ open, setOpen, type, clientId }: Props) {
-  const params = useParams();
   const { queryParams, setQueryParams } = useQueryParams();
   const queryClient = useQueryClient();
   const [state, setState] = useState({ name: "", file: "" });

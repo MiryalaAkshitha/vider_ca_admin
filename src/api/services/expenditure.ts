@@ -1,35 +1,33 @@
 import { http } from "api/http";
 
 const getExpenditure = ({ queryKey }) => {
-  return http.get("/task_expenditure", {
-    params: { ...queryKey[1], type: "TASK" },
-  });
-};
-
-const getUserExpenditure = ({ queryKey }) => {
-  return http.get("/task_expenditure", {
-    params: { ...queryKey[1], type: "USER" },
+  return http.get("/expenditure", {
+    params: { ...queryKey[1] },
   });
 };
 
 const addExpenditure = (data: any) => {
-  return http.post("/task_expenditure", data);
+  return http.post("/expenditure", data);
+};
+
+const addUserExpenditure = (data: any) => {
+  return http.post("/expenditure", data);
 };
 
 const updateExpenditure = ({ id, data }) => {
-  return http.put(`/task_expenditure/${id}`, data);
+  return http.put(`/expenditure/${id}`, data);
 };
 
 const deleteExpenditure = (id: number) => {
-  return http.delete(`/task_expenditure/${id}`);
+  return http.delete(`/expenditure/${id}`);
 };
 
 const approveExpenditure = ({ id }) => {
-  return http.patch(`task_expenditure/${id}/approve`);
+  return http.patch(`expenditure/${id}/approve`);
 };
 
 const rejectExpenditure = ({ id, data }) => {
-  return http.patch(`task_expenditure/${id}/reject`, { reason: data.reason });
+  return http.patch(`expenditure/${id}/reject`, { reason: data.reason });
 };
 
 export {
@@ -37,7 +35,6 @@ export {
   addExpenditure,
   updateExpenditure,
   deleteExpenditure,
-  getUserExpenditure,
   approveExpenditure,
   rejectExpenditure,
 };

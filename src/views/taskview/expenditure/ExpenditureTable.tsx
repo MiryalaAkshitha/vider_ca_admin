@@ -25,9 +25,9 @@ const columns = [
     title: "Particular",
   },
   {
-    key: "type",
-    title: "Expenditure Type",
-    render: (rowData) => getTitle(rowData?.type),
+    key: "taskExpenseType",
+    title: "Task Expenditure Type",
+    render: (rowData: any) => getTitle(rowData?.taskExpenseType),
   },
   {
     key: "amount",

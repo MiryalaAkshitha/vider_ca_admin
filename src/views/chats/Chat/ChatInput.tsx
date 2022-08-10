@@ -3,7 +3,6 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { Box, CircularProgress, IconButton } from "@mui/material";
 import { http } from "api/http";
 import { socket } from "app";
-import _ from "lodash";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectChats } from "redux/reducers/chatsSlice";

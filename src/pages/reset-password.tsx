@@ -2,14 +2,13 @@ import { Box, Grid, Typography } from "@mui/material";
 import { resetPassword } from "api/services/users";
 import { newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
-import PasswordField from "views/login/PasswordField";
-import { useState } from "react";
-import { useMutation } from "react-query";
-import { useNavigate, useParams } from "react-router";
-import { toast } from "react-toastify";
-import { BackgroundImage, LogoContainer } from "views/login/styles";
 import { snack } from "components/toast";
 import useQueryParams from "hooks/useQueryParams";
+import { useState } from "react";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router";
+import PasswordField from "views/login/PasswordField";
+import { BackgroundImage, LogoContainer } from "views/login/styles";
 
 type StateType = { password: string; confirmPassword: string };
 

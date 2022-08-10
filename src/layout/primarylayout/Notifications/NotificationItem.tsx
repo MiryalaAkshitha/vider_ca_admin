@@ -1,4 +1,4 @@
-import { Avatar, Divider, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import moment from "moment";
 
