@@ -1,24 +1,6 @@
-import {
-  Add,
-  Attachment,
-  Delete,
-  InfoOutlined,
-  Visibility,
-} from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import {
-  approveExpenditure,
-  deleteExpenditure,
-  getExpenditure,
-} from "api/services/expenditure";
+import { Add, Delete, Visibility } from "@mui/icons-material";
+import { Box, Button, IconButton } from "@mui/material";
+import { deleteExpenditure, getExpenditure } from "api/services/expenditure";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
@@ -28,7 +10,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
-import RejectExpenditureDialog from "views/taskview/expenditure/RejectExpenditureDialog";
 import AddExpenditure from "./AddExpenditure";
 import ViewExpenditure from "./ViewExpenditure";
 
@@ -85,28 +66,6 @@ const columns = [
     key: "amount",
   },
   {
-    title: "Status",
-    key: "status",
-    render: (row: any) => {
-      return row?.status === "REJECTED" ? (
-        <Box display="flex" gap={1}>
-          {row?.status}{" "}
-          <Tooltip
-            title={
-              <Typography variant="body2">{row?.rejectedReason}</Typography>
-            }
-          >
-            <IconButton size="small">
-              <InfoOutlined fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      ) : (
-        row?.status
-      );
-    },
-  },
-  {
     title: "Actions",
     key: "",
     render: (row: any) => {
@@ -119,28 +78,6 @@ const Actions = ({ data }) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const { mutate } = useMutation(approveExpenditure, {
-    onSuccess: () => {
-      snack.success("Expenditure approved");
-      queryClient.invalidateQueries("user_expenditure");
-    },
-    onError: (err: any) => {
-      snack.error(err.response.data.message);
-    },
-  });
-
-  const handleApprove = () => {
-    confirm({
-      msg: "Are you sure you want to approve this expenditure?",
-      action: () => {
-        mutate({
-          id: data?.id,
-        });
-      },
-    });
-  };
 
   const { mutate: delExpenditure } = useMutation(deleteExpenditure, {
     onSuccess: (res) => {
@@ -173,24 +110,6 @@ const Actions = ({ data }) => {
         </IconButton>
       </Box>
       <ViewExpenditure open={open} setOpen={setOpen} data={data} />
-      {/* <Menu
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-        onClick={() => setAnchorEl(null)}
-      >
-        <MenuItem onClick={handleApprove}>Approve</MenuItem>
-        <MenuItem onClick={() => setOpen(true)}>Reject</MenuItem>
-      </Menu> */}
-      {/* <RejectExpenditureDialog open={open} setOpen={setOpen} data={data} /> */}
     </>
   );
 };

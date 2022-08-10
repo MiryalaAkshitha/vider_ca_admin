@@ -79,6 +79,16 @@ function ViewExpenditure({ open, setOpen, data }: Props) {
             <Typography variant="body1">NA</Typography>
           )}
         </Grid>
+        {data?.status === "REJECTED" && (
+          <Grid item xs={12}>
+            <Typography variant="caption" color="rgba(0,0,0,0.6)">
+              Reason for rejection
+            </Typography>
+            <Typography variant="body1">
+              {data?.rejectedReason || "NA"}
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </DialogWrapper>
   );

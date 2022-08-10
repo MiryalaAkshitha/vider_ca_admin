@@ -25,7 +25,8 @@ function RejectExpenditureDialog({ open, setOpen, data }: IProps) {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     mutate({
       id: data?.id,
       data: {

@@ -104,7 +104,7 @@ function LogHours() {
       </Box>
       <Box mt={2}>
         <Table
-          columns={columns}
+          columns={columns.slice(0, -1)}
           loading={isLoading}
           data={data?.data?.result || []}
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
