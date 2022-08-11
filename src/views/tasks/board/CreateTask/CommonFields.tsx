@@ -48,10 +48,10 @@ function CommonFields({ control, watch, users, labels, setValue }) {
         />
       </Box>
       <Box mt={2}>
-        <FormSelect
+        <FormAutoComplete
           control={control}
-          name="taskLeader"
           label="Task Leader"
+          name="taskLeader"
           options={users?.data.map((item: any) => ({
             label: item.fullName,
             value: item.id,

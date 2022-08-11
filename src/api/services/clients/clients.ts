@@ -63,30 +63,6 @@ const getLeads = ({ queryKey }) => {
   return http.get("/leads", { params: { ...queryKey[1] } });
 };
 
-const getDscRegisters = ({ queryKey }) => {
-  return http.get("/dsc-register", { params: { ...queryKey[1] } });
-};
-
-const createDscRegister = (data: any) => {
-  return http.post("/dsc-register", data);
-};
-
-const updateDscRegister = ({ id, data }: any) => {
-  return http.put(`/dsc-register/${id}`, data);
-};
-
-const deleteDscRegister = (id: number) => {
-  return http.delete(`/dsc-register/${id}`);
-};
-
-const getDscRegister = ({ queryKey }) => {
-  return http.get("/dsc-register/details", { params: { ...queryKey[1] } });
-};
-
-const issueOrReceiveDsc = ({ id, data }: any) => {
-  return http.post(`/dsc-register/${id}/issue-receive`, data);
-};
-
 const getCompletedTasks = ({ queryKey }) => {
   return http.get(`/tasks/completed-tasks`, {
     params: {
@@ -126,12 +102,6 @@ export {
   getLeads,
   updateLead,
   deleteLeads,
-  getDscRegisters,
-  createDscRegister,
-  updateDscRegister,
-  deleteDscRegister,
-  getDscRegister,
-  issueOrReceiveDsc,
   getTerminatedTasks,
   getCompletedTasks,
   getDeletedTasks,

@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 import {
   getDscRegister,
   updateDscRegister,
-} from "api/services/clients/clients";
+} from "api/services/clients/dsc-register";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
 import { snack } from "components/toast";

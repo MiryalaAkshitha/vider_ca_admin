@@ -3,7 +3,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import {
   deleteDscRegister,
   getDscRegisters,
-} from "api/services/clients/clients";
+} from "api/services/clients/dsc-register";
 import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";

@@ -27,7 +27,7 @@ function Clients() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState<number>(0);
-  const [pageCount, setPageCount] = useState<number>(5);
+  const [pageCount, setPageCount] = useState<number>(10);
   const [openImportDialog, setOpenImportDialog] = useState<boolean>(false);
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);

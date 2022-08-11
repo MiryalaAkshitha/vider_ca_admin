@@ -2,6 +2,7 @@ import { date, mixed, object, string } from "yup";
 
 let editLogHourDefaultValues = {
   completedDate: new Date(),
+  description: "",
   hours: {
     label: "00",
     value: "00",
@@ -14,6 +15,7 @@ let editLogHourDefaultValues = {
 
 let EditLogHourSchema = ({ taskCreatedDate }) => {
   return object().shape({
+    description: string().notRequired(),
     completedDate: date()
       .nullable()
       .typeError("Invalid date")

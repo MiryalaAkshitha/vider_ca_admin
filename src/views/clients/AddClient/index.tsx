@@ -18,6 +18,7 @@ import {
   CreateClientSchema,
 } from "validations/createCllient";
 import Details from "./Details";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
 
 interface Props extends DialogProps {
   successCb?: () => void;
@@ -79,6 +80,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
   const onFormSubmit = (data: any) => {
     mutate({
       ...data,
+      clientManager: data?.clientManager?.value,
       gstVerified: data?.gstRegistered === "yes" && data?.gstVerified,
       panVerified: data?.gstRegistered === "no" && data?.panVerified,
     });
@@ -114,7 +116,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
             </Box>
           )}
           <Box mt={2}>
-            <FormSelect
+            <FormAutoComplete
               control={control}
               name="clientManager"
               label="Client Manager"

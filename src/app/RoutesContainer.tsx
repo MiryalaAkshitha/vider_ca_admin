@@ -11,6 +11,11 @@ import PageWithPermission from "components/PageWithPermission";
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
+<<<<<<< HEAD
+const BillingClients = loadable(() => import("pages/billing/clients"));
+=======
+const TaskDashboard = loadable(() => import("pages/task-dashboard"));
+>>>>>>> origin/dashboard_snigdha
 const Estimates = loadable(() => import("pages/billing/estimates"));
 
 const Invoices = loadable(() => import("pages/billing/invoices"));

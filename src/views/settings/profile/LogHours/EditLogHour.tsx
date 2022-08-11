@@ -4,6 +4,7 @@ import { updateLogHour } from "api/services/tasks/loghours";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";
+import FormInput from "components/FormFields/FormInput";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import moment from "moment";
@@ -94,6 +95,14 @@ function EditLogHour({ open, setOpen, logHourData }: IProps) {
             label="Minutes"
             name="minutes"
             options={getMinutesOptions()}
+          />
+        </Box>
+        <Box mt={2}>
+          <FormInput
+            label="Description"
+            control={control}
+            name="description"
+            multiline
           />
         </Box>
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>

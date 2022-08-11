@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { createDscRegister } from "api/services/clients/clients";
+import { createDscRegister } from "api/services/clients/dsc-register";
 import DrawerWrapper from "components/DrawerWrapper";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";

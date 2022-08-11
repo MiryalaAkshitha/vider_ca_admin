@@ -28,18 +28,24 @@ function OrganizationLicenses() {
   return (
     <>
       <Box mb={4}>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="subtitle2" color="primary">
-            Licenses
-          </Typography>
-          <Button
-            color="secondary"
-            onClick={() => setOpen(true)}
-            startIcon={<Add />}
+        {data?.data?.length > 0 && (
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            Add license
-          </Button>
-        </Box>
+            <Typography variant="subtitle2" color="primary">
+              Licenses
+            </Typography>
+            <Button
+              color="secondary"
+              onClick={() => setOpen(true)}
+              startIcon={<Add />}
+            >
+              Add license
+            </Button>
+          </Box>
+        )}
         <Box mt={2}>
           {data?.data?.length > 0 ? (
             <Grid container spacing={2}>

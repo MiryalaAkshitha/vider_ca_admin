@@ -22,7 +22,7 @@ function Leads() {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState<number>(0);
-  const [pageCount, setPageCount] = useState<number>(5);
+  const [pageCount, setPageCount] = useState<number>(10);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<any[]>([]);
 

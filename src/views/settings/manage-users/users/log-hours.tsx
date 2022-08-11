@@ -1,5 +1,6 @@
+import { Visibility } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import {
   getUserLogHours,
   getUserLogHourStats,
@@ -14,6 +15,7 @@ import { useParams } from "react-router-dom";
 import { ResType } from "types";
 import { columns, StatCard } from "views/settings/profile/LogHours";
 import Filters from "views/settings/profile/LogHours/Filters";
+import ViewLogHour from "views/settings/profile/LogHours/ViewLogHour";
 
 function LogHours() {
   const params: any = useParams();
@@ -104,7 +106,14 @@ function LogHours() {
       </Box>
       <Box mt={2}>
         <Table
-          columns={columns.slice(0, -1)}
+          columns={[
+            ...columns.slice(0, -1),
+            {
+              key: "action",
+              title: "Action",
+              render: (row: any) => <Action data={row} />,
+            },
+          ]}
           loading={isLoading}
           data={data?.data?.result || []}
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
@@ -123,5 +132,17 @@ function LogHours() {
     </Box>
   );
 }
+
+const Action = ({ data }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <Box>
+      <IconButton onClick={() => setOpen(true)}>
+        <Visibility />
+      </IconButton>
+      <ViewLogHour open={open} setOpen={setOpen} data={data} />
+    </Box>
+  );
+};
 
 export default LogHours;

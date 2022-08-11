@@ -66,6 +66,14 @@ const columns = [
     key: "amount",
   },
   {
+    title: "Client",
+    key: "client.displayName",
+  },
+  {
+    title: "Task",
+    key: "task.name",
+  },
+  {
     title: "Actions",
     key: "",
     render: (row: any) => {

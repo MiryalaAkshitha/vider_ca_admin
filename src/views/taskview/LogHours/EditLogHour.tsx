@@ -17,6 +17,7 @@ import {
   editLogHourDefaultValues,
   EditLogHourSchema,
 } from "validations/editLogHour";
+import FormInput from "components/FormFields/FormInput";
 
 interface IProps extends DialogProps {
   logHourData: any;
@@ -98,6 +99,14 @@ function UpdateLogHour({ open, setOpen, logHourData }: IProps) {
             label="Minutes"
             name="minutes"
             options={getMinutesOptions()}
+          />
+        </Box>
+        <Box mt={2}>
+          <FormInput
+            label="Description"
+            control={control}
+            name="description"
+            multiline
           />
         </Box>
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>

@@ -1,9 +1,9 @@
-import { Delete, Visibility } from "@mui/icons-material";
+import { Add, Delete, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, IconButton, Typography } from "@mui/material";
 import {
   deleteDscRegister,
   getDscRegisters,
-} from "api/services/clients/clients";
+} from "api/services/clients/dsc-register";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
@@ -17,12 +17,14 @@ import { ResType } from "types";
 import { handleError } from "utils/handleError";
 import EditDscRegister from "views/client-view/dscregister/EditDscRegister";
 import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
+import AddDscRegister from "views/dsc-register/AddDscRegister";
 
 function DscRegister() {
   useTitle("Dsc Register");
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState<number>(5);
+  const [limit, setLimit] = useState<number>(10);
   const [offset, setOffset] = useState<number>(0);
+  const [open, setOpen] = useState(false);
 
   const { isLoading, data, error }: ResType = useQuery(
     [
@@ -48,7 +50,7 @@ function DscRegister() {
 
   return (
     <Box p={3}>
-      <Box mb={2} display="flex" justifyContent="flex-end">
+      <Box mb={2} display="flex" justifyContent="space-between">
         <SearchContainer
           value={search}
           debounced
@@ -56,6 +58,14 @@ function DscRegister() {
           onChange={setSearch}
           placeHolder="Search"
         />
+        <Button
+          onClick={() => setOpen(true)}
+          variant="outlined"
+          color="secondary"
+          startIcon={<Add />}
+        >
+          Add Dsc Register
+        </Button>
       </Box>
       <Table
         data={data?.data?.data || []}
@@ -69,6 +79,7 @@ function DscRegister() {
           setPage: setOffset,
         }}
       />
+      <AddDscRegister open={open} setOpen={setOpen} />
     </Box>
   );
 }

@@ -60,18 +60,24 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   });
 
   const onFormSubmit = (data: any) => {
-    data.client = data.client?.map((client: any) => parseInt(client.value));
-    data.members = data.members?.map((member: any) => parseInt(member.value));
-    data.labels = data.labels?.map((label: any) => parseInt(label.value));
-    data.category = parseInt(data.category);
-    data.subCategory = parseInt(data.subCategory);
-    data.taskLeader = parseInt(data.taskLeader);
-    data.feeAmount = parseFloat(data?.feeAmount);
-    data.service = data?.service?.id;
-    data.dueDay = parseInt(data.dueDay?.value);
-    data.recurringEndDate = data?.neverExpires ? null : data.recurringEndDate;
-    data.approvalHierarchy = data?.approvalHierarchy?.id ?? null;
-    mutate(data);
+    let apiData = { ...data };
+    apiData.client = data.client?.map((client: any) => parseInt(client.value));
+    apiData.members = data.members?.map((member: any) =>
+      parseInt(member.value)
+    );
+    apiData.labels = data.labels?.map((label: any) => parseInt(label.value));
+    apiData.category = parseInt(data.category);
+    apiData.subCategory = parseInt(data.subCategory);
+    apiData.taskLeader = parseInt(data.taskLeader);
+    apiData.feeAmount = parseFloat(data?.feeAmount);
+    apiData.service = data?.service?.id;
+    apiData.dueDay = parseInt(data.dueDay?.value);
+    apiData.recurringEndDate = data?.neverExpires
+      ? null
+      : data.recurringEndDate;
+    apiData.approvalHierarchy = data?.approvalHierarchy?.id ?? null;
+    apiData.taskLeader = parseInt(data?.taskLeader?.value) ?? null;
+    mutate(apiData);
   };
 
   return (

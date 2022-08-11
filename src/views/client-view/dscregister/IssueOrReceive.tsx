@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import { issueOrReceiveDsc } from "api/services/clients/clients";
+import { issueOrReceiveDsc } from "api/services/clients/dsc-register";
 import DialogWrapper from "components/DialogWrapper";
 import { snack } from "components/toast";
 import { useState } from "react";

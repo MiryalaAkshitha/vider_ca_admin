@@ -18,6 +18,7 @@ let editUserLogHourDefaultValues = {
 };
 
 let EditUserLogHourSchema = object().shape({
+  description: string().notRequired(),
   completedDate: date()
     .nullable()
     .typeError("Invalid date")

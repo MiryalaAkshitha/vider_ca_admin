@@ -1,4 +1,4 @@
-import { Add, MoreVert } from "@mui/icons-material";
+import { Add, MoreVert, Visibility } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import {
   Box,
@@ -30,6 +30,7 @@ import { handleError } from "utils/handleError";
 import AddLogHour from "./AddLogHour";
 import EditLogHour from "./EditLogHour";
 import Filters from "./Filters";
+import ViewLogHour from "./ViewLogHour";
 
 function LogHours() {
   const queryClient = useQueryClient();
@@ -217,6 +218,7 @@ export const StatCard = ({ title, value, img }) => (
 
 const Actions = ({ data }) => {
   const [open, setOpen] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false);
   const queryClient = useQueryClient();
   const menu = useMenu();
   const confirm = useConfirm();
@@ -256,10 +258,16 @@ const Actions = ({ data }) => {
 
   return (
     <Box>
-      <IconButton onClick={handleMenu}>
-        <MoreVert />
-      </IconButton>
+      <Box>
+        <IconButton onClick={() => setViewOpen(true)}>
+          <Visibility />
+        </IconButton>
+        <IconButton onClick={handleMenu}>
+          <MoreVert />
+        </IconButton>
+      </Box>
       <EditLogHour open={open} setOpen={setOpen} logHourData={data} />
+      <ViewLogHour open={viewOpen} setOpen={setViewOpen} data={data} />
     </Box>
   );
 };

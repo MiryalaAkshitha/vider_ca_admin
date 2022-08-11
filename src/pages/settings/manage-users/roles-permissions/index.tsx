@@ -101,7 +101,7 @@ function RolesAndPermissions() {
               title: "Actions",
               key: "actions",
               render: (item) => {
-                return item?.name !== "Admin" ? (
+                return !item?.defaultRole ? (
                   <Box display="flex" gap={1}>
                     <IconButton
                       onClick={() => {
