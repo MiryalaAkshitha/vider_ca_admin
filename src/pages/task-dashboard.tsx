@@ -7,6 +7,7 @@ import TaskLogHours from "../views/task-dashboard/task-log-hours/inedx";
 export default function TaskDashboard() {
   return (
     <Box p={2}>
+      <Typography>dash-board</Typography>
       <TaskMetrics />
       <TasksByCategory />
       <TaskLogHours />
