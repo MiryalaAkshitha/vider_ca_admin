@@ -3,7 +3,7 @@ import { Autocomplete, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/clients/clients";
 import { addExpenditure } from "api/services/expenditure";
-import { getTasks } from "api/services/tasks/tasks";
+import { getTasks, getUserTasks } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormInput from "components/FormFields/FormInput";
@@ -36,8 +36,8 @@ function AddExpenditure({ open, setOpen }: DialogProps) {
   });
 
   const { data: tasks }: ResType = useQuery(
-    ["tasks", { client: +watch<any>("client")?.value }],
-    getTasks,
+    ["tasks", { client: +watch<any>("client")?.value, type: "SELF" }],
+    getUserTasks,
     {
       enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
     }

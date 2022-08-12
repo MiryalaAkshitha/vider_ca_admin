@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/clients/clients";
-import { getTasks } from "api/services/tasks/tasks";
+import { getTasks, getUserTasks } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormDate from "components/FormFields/FormDate";
@@ -36,8 +36,8 @@ function AddLogHour({ open, setOpen, onAdd }: Props) {
   });
 
   const { data: tasks }: ResType = useQuery(
-    ["tasks", { client: +watch<any>("client")?.value }],
-    getTasks,
+    ["tasks", { client: +watch<any>("client")?.value, type: "SELF" }],
+    getUserTasks,
     {
       enabled:
         open && watch("logHourType") === "TASK" && Boolean(watch("client")),
