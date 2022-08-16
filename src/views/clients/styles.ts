@@ -29,12 +29,12 @@ export const StyledProfileNavItem = styled(Typography)<{ active: number }>(
   })
 );
 
-export const StyledFile = styled("div")<{ dragging: number }>(
+export const StyledFile = styled("div")<{ dragging?: number }>(
   ({ dragging }) => ({
     border: `1px solid ${dragging ? "red" : "#DDDDDD"}`,
     borderRadius: "4px",
     overflow: "hidden",
-    height: "100%",
+    height: "220px",
     display: "flex",
     flexDirection: "column",
   })
@@ -56,8 +56,8 @@ export const StyledSingleLineContainer = styled("div")(() => ({
 }));
 
 export const StyledFolder = styled("div")<{
-  dragging: number;
-  dropping: number;
+  dragging?: number;
+  dropping?: number;
 }>(({ dragging, dropping }) => ({
   border: `1px solid ${
     dragging ? "red" : dropping ? "#182F53" : "rgba(0,0,0,0.08)"

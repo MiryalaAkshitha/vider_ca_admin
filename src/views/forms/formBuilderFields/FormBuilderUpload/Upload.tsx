@@ -180,9 +180,7 @@ function Upload(props: UploadProps) {
                   <Typography color="GrayText" sx={{ textAlign: "center" }}>
                     Drag and drop or{" "}
                     <a
-                      style={{
-                        pointerEvents: "none",
-                      }}
+                      style={{ pointerEvents: "none" }}
                       href="https://vider.in"
                     >
                       choose files

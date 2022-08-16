@@ -30,6 +30,14 @@ function Nav() {
       <StyledClientFilterItem
         variant="body1"
         color="rgba(0,0,0,0.7)"
+        active={location.pathname === "/storage/onedrive-storage" ? 1 : 0}
+        onClick={() => handleClick("/storage/onedrive-storage")}
+      >
+        One Drive
+      </StyledClientFilterItem>
+      <StyledClientFilterItem
+        variant="body1"
+        color="rgba(0,0,0,0.7)"
         active={location.pathname === "/storage/all-clients-storage" ? 1 : 0}
         onClick={() => handleClick("/storage/all-clients-storage")}
       >

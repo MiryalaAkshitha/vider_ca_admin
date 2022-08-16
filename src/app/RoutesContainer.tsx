@@ -74,11 +74,7 @@ const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 const OrganizationProfile = loadable(
   () => import("pages/settings/organization/organization-profile")
 );
-const Storage = loadable(() => import("pages/storage"));
-const MyStorage = loadable(() => import("views/storage/MyStorage"));
-const AllClientsStorage = loadable(
-  () => import("views/storage/AllClientsStorage")
-);
+
 const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
 });
@@ -97,6 +93,15 @@ const EditPermissions = loadable(() => {
 const StorageManagement = loadable(() => {
   return import("pages/settings/storage-management");
 });
+const OnedriveAuth = loadable(() => {
+  return import("pages/onedrive-auth");
+});
+const Storage = loadable(() => import("pages/storage"));
+const MyStorage = loadable(() => import("views/storage/MyStorage"));
+const AllClientsStorage = loadable(
+  () => import("views/storage/AllClientsStorage")
+);
+const OneDriveStorage = loadable(() => import("views/storage/OneDrive"));
 
 // ESTIMATES
 const AddEstimate = loadable(
@@ -180,6 +185,14 @@ function RoutesContainer() {
               element={
                 <PageWithPermission name={Permissions.VIEW_STORAGE}>
                   <MyStorage />
+                </PageWithPermission>
+              }
+            />
+            <Route
+              path="onedrive-storage"
+              element={
+                <PageWithPermission name={Permissions.VIEW_STORAGE}>
+                  <OneDriveStorage />
                 </PageWithPermission>
               }
             />
@@ -354,6 +367,7 @@ function RoutesContainer() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/onedrive-auth" element={<OnedriveAuth />} />
       </Routes>
     </Router>
   );
