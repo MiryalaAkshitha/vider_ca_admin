@@ -73,14 +73,14 @@ function DscRegister() {
 const Actions = ({ data }) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [issueOrReceiveOpen, setIssueOrReceiveOpen] = useState(false);
   const [type, setType] = useState<"issue" | "receive">("issue");
-  const navigate = useNavigate();
 
   const { mutate } = useMutation(deleteDscRegister, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       snack.success("DSC Regiter Deleted");
       queryClient.invalidateQueries("dsc-register");
       setOpen(false);
@@ -93,9 +93,7 @@ const Actions = ({ data }) => {
   const handleDelete = () => {
     confirm({
       msg: "Are you sure you want to delete this DSC Register?",
-      action: () => {
-        mutate(data?.id);
-      },
+      action: () => mutate(data?.id),
     });
   };
 
@@ -175,21 +173,33 @@ const Actions = ({ data }) => {
 
 const columns = [
   { key: "holderName", title: "DSC Holder Name" },
-  { key: "expiryDate", title: "Expiry Date" },
+  {
+    key: "expiryDate",
+    title: "Expiry Date",
+    render: (row: any) => {
+      return moment(row?.expiryDate).format("DD-MM-YYYY");
+    },
+  },
   {
     key: "",
     title: "No of days left to expiry",
-    render: (row: any) => {
-      const daysLeft = moment(row.expiryDate).diff(moment(), "days");
-      return (daysLeft > 0 ? daysLeft : 0).toString();
-    },
+    render: (row: any) => <NoOfDaysLeftToExpiry row={row} />,
   },
   { key: "password", title: "Password" },
   {
     key: "actions",
     title: "Actions",
-    render: (rowData) => <Actions data={rowData} />,
+    render: (row: any) => <Actions data={row} />,
   },
 ];
+
+export function NoOfDaysLeftToExpiry({ row }: any) {
+  const daysLeft = moment(row?.expiryDate).add(1, "day").diff(moment(), "days");
+  return daysLeft > 0 ? (
+    <span> {daysLeft?.toString()} </span>
+  ) : (
+    <span style={{ color: "red" }}>Expired</span>
+  );
+}
 
 export default DscRegister;

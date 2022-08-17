@@ -65,7 +65,7 @@ function TerminatedTasks({ filters }: Props) {
               title: "Terminated Date",
               render: (row) => {
                 return row?.terminatedDate
-                  ? moment(row?.terminatedDate).format("MM/DD/YYYY, h:mm a")
+                  ? moment(row?.terminatedDate).format("DD-MM-YYYY")
                   : "";
               },
             },

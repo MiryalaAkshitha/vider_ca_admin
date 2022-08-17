@@ -37,7 +37,7 @@ const DateFilter = ({ filters, setFilters }) => {
       <Box display="flex" gap={1} flex={1}>
         <DesktopDatePicker
           label="From"
-          inputFormat="MM/dd/yyyy"
+          inputFormat="dd-MM-yyyy"
           value={state.fromDate}
           onChange={(value) => {
             setState({
@@ -51,7 +51,7 @@ const DateFilter = ({ filters, setFilters }) => {
         />
         <DesktopDatePicker
           label="To"
-          inputFormat="MM/dd/yyyy"
+          inputFormat="dd-MM-yyyy"
           value={state.toDate}
           onChange={(value) => {
             setState({

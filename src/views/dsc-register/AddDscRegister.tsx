@@ -1,3 +1,4 @@
+import { DesktopDatePicker } from "@mui/lab";
 import {
   Autocomplete,
   Checkbox,
@@ -26,7 +27,7 @@ interface StateProps {
   holderName: string;
   email: string;
   mobileNumber: string;
-  expiryDate: string;
+  expiryDate: string | null;
   password: string;
   tokenNumber: string;
   panNumber: string;
@@ -39,7 +40,7 @@ let initialState = {
   holderName: "",
   email: "",
   mobileNumber: "",
-  expiryDate: "",
+  expiryDate: null,
   password: "",
   tokenNumber: "",
   panNumber: "",
@@ -223,20 +224,19 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
             size="small"
             label="DSC Holder Designation"
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="expiryDate"
-            required
-            type="date"
-            onChange={handleChange}
-            value={state.expiryDate}
-            size="small"
+          <DesktopDatePicker
             label="Expiry Date"
-            InputLabelProps={{
-              shrink: true,
+            inputFormat="dd-MM-yyyy"
+            value={state.expiryDate}
+            onChange={(value) => {
+              setState({
+                ...state,
+                expiryDate: value,
+              });
             }}
+            renderInput={(params) => (
+              <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
+            )}
           />
           <TextField
             sx={{ mt: 3 }}

@@ -21,7 +21,7 @@ function FormDate(props: Props) {
           <>
             <DesktopDatePicker
               label={`${label} ${required ? "*" : ""}`}
-              inputFormat="yyyy-MM-dd"
+              inputFormat="dd-MM-yyyy"
               value={field.value}
               onChange={field.onChange}
               renderInput={(params) => (

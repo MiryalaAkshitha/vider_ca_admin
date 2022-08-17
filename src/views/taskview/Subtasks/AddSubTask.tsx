@@ -12,11 +12,12 @@ import { useParams } from "react-router-dom";
 import { DialogProps, ResType, SubmitType } from "types";
 import { getTitle } from "utils";
 import { PriorityEnum } from "data/constants";
+import { DesktopDatePicker } from "@mui/lab";
 
 interface StateProps {
   name: string;
   description: string;
-  dueDate: string;
+  dueDate: string | null;
   priority: string;
   members: any[];
 }
@@ -27,7 +28,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
   const [state, setState] = useState<StateProps>({
     name: "",
     description: "",
-    dueDate: "",
+    dueDate: null,
     priority: "",
     members: [],
   });
@@ -79,18 +80,13 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             required
             value={state.name}
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            size="small"
-            name="dueDate"
-            type="date"
-            label="Due Date"
-            InputLabelProps={{ shrink: true }}
-            required
+          <DesktopDatePicker
+            inputFormat="dd-MM-yyyy"
             value={state.dueDate}
+            onChange={(v: any) => setState({ ...state, dueDate: v })}
+            renderInput={(params) => (
+              <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
+            )}
           />
           <TextField
             variant="outlined"

@@ -80,8 +80,8 @@ const BasicDetails = ({ state, setState }) => {
               onChange={(e) => {
                 setState({ ...state, dob: e });
               }}
-              mask="____/__/__"
-              inputFormat="yyyy/MM/dd"
+              mask="__/__/____"
+              inputFormat="dd-MM-yyyy"
               renderInput={(params) => (
                 <TextField variant="outlined" fullWidth {...params} />
               )}

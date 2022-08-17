@@ -18,6 +18,7 @@ import { handleError } from "utils/handleError";
 import EditDscRegister from "views/client-view/dscregister/EditDscRegister";
 import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
 import AddDscRegister from "views/dsc-register/AddDscRegister";
+import { NoOfDaysLeftToExpiry } from "./client-view/dsc-register";
 
 function DscRegister() {
   useTitle("Dsc Register");
@@ -190,20 +191,23 @@ const Actions = ({ data }) => {
 const columns = [
   { key: "client.displayName", title: "Client" },
   { key: "holderName", title: "DSC Holder Name" },
-  { key: "expiryDate", title: "Expiry Date" },
+  {
+    key: "expiryDate",
+    title: "Expiry Date",
+    render: (row: any) => {
+      return moment(row?.expiryDate).format("DD-MM-YYYY");
+    },
+  },
   {
     key: "",
     title: "No of days left to expiry",
-    render: (row: any) => {
-      const daysLeft = moment(row.expiryDate).diff(moment(), "days");
-      return (daysLeft > 0 ? daysLeft : 0).toString();
-    },
+    render: (row: any) => <NoOfDaysLeftToExpiry row={row} />,
   },
   { key: "password", title: "Password" },
   {
     key: "actions",
     title: "Actions",
-    render: (rowData) => <Actions data={rowData} />,
+    render: (rowData: any) => <Actions data={rowData} />,
   },
 ];
 

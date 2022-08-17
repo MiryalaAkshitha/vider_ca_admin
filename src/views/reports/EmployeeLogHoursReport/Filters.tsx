@@ -43,8 +43,7 @@ function Filters({ state, setState, onSubmit }: Props) {
         <Grid item xs={4}>
           <DesktopDatePicker
             label="From Date"
-            mask="____-__-__"
-            inputFormat="yyyy-MM-dd"
+            inputFormat="dd-MM-yyyy"
             value={state.fromDate}
             onChange={(v) => setState({ ...state, fromDate: v })}
             renderInput={(params) => (
@@ -55,8 +54,7 @@ function Filters({ state, setState, onSubmit }: Props) {
         <Grid item xs={4}>
           <DesktopDatePicker
             label="To Date"
-            mask="____-__-__"
-            inputFormat="yyyy-MM-dd"
+            inputFormat="dd-MM-yyyy"
             value={state.toDate}
             onChange={(v) => setState({ ...state, toDate: v })}
             renderInput={(params) => (

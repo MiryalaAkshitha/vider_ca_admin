@@ -3,7 +3,7 @@ import { API_KEY, messaging } from "api/firebase";
 import { saveToken } from "api/services/notifications";
 import { getToken, onMessage } from "firebase/messaging";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { Slide, toast } from "react-toastify";
 
 function useNotifications() {
   const content = (title: string, body: string) => (
@@ -35,7 +35,8 @@ function useNotifications() {
     onMessage(messaging, (payload: any) => {
       let { title, body } = payload.notification;
       toast.success(content(title, body), {
-        position: "top-right",
+        position: "top-center",
+        transition: Slide,
       });
     });
   }, []);

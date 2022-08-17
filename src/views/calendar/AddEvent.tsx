@@ -32,27 +32,27 @@ interface Props extends DialogProps {
 function AddEvent({ open, setOpen }: Props) {
   const queryClient = useQueryClient();
 
-  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
-    ["clients", {}],
-    getClients,
-    {
-      enabled: open,
-    }
-  );
-
-  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["tasks", {}],
-    getTasks,
-    {
-      enabled: open,
-    }
-  );
-
   const { control, watch, handleSubmit, reset } = useForm({
     defaultValues: addCalendarEventDefaultValues,
     mode: "onChange",
     resolver: yupResolver(AddCalendarEventSchema()),
   });
+
+  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
+    ["clients"],
+    getClients,
+    {
+      enabled: open && watch("type") === "TASK",
+    }
+  );
+
+  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
+    ["tasks", { client: watch<any>("client")?.value }],
+    getTasks,
+    {
+      enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
+    }
+  );
 
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
@@ -76,15 +76,6 @@ function AddEvent({ open, setOpen }: Props) {
       ...apiData,
     });
   };
-
-  let clientTasks = tasks?.data
-    ?.filter(
-      (item: any) => item?.client?.id === parseInt(watch<any>("client")?.value)
-    )
-    ?.map((item: any) => ({
-      label: item.name,
-      value: item.id,
-    }));
 
   let taskMembers =
     tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)
@@ -125,7 +116,10 @@ function AddEvent({ open, setOpen }: Props) {
                     control={control}
                     label="Task"
                     name="task"
-                    options={clientTasks}
+                    options={tasks?.data?.map((item: any) => ({
+                      label: item.name,
+                      value: item.id,
+                    }))}
                   />
                 </Box>
               )}

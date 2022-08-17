@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Grid } from "@mui/material";
+import { Autocomplete, Box, Grid, TextField } from "@mui/material";
 import { updateTask } from "api/services/tasks/tasks";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
@@ -15,6 +15,7 @@ import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
+import { DesktopDatePicker } from "@mui/lab";
 
 function Details() {
   const queryClient = useQueryClient();
@@ -133,21 +134,25 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Start Date">
-              <CustomTextField
-                value={state?.taskStartDate || ""}
-                onChange={handleChange}
-                type="date"
-                name="taskStartDate"
+              <DesktopDatePicker
+                inputFormat="dd-MM-yyyy"
+                value={state.taskStartDate}
+                onChange={(v: any) => setState({ ...state, taskStartDate: v })}
+                renderInput={(params) => (
+                  <StyledTextField fullWidth size="small" {...params} />
+                )}
               />
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Due Date">
-              <CustomTextField
-                value={state?.dueDate || ""}
-                onChange={handleChange}
-                type="date"
-                name="dueDate"
+              <DesktopDatePicker
+                inputFormat="dd-MM-yyyy"
+                value={state.dueDate}
+                onChange={(v: any) => setState({ ...state, dueDate: v })}
+                renderInput={(params) => (
+                  <StyledTextField fullWidth size="small" {...params} />
+                )}
               />
             </DetailSection>
           </Grid>

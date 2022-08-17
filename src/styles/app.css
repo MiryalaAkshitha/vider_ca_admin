@@ -122,3 +122,6 @@ a.fc-event {
 .Toastify__toast-body {
   font-size: 14px !important;
 }
+.fc-header-toolbar {
+  margin-bottom: 0.5rem !important;
+}

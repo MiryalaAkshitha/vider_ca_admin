@@ -29,7 +29,7 @@ import ReactQuill from "lib/react-quill";
 function EditEvent({ data, open, setOpen }) {
   const queryClient = useQueryClient();
 
-  const { control, watch, handleSubmit, reset } = useForm({
+  const { control, watch, handleSubmit, reset, setValue } = useForm({
     defaultValues: addCalendarEventDefaultValues,
     mode: "onChange",
     resolver: yupResolver(AddCalendarEventSchema()),
@@ -43,13 +43,13 @@ function EditEvent({ data, open, setOpen }) {
             label: data?.client?.displayName,
             value: data?.client?.id,
           }
-        : "",
+        : null,
       task: data?.task
         ? {
             label: data?.task?.name,
             value: data?.task?.id,
           }
-        : "",
+        : null,
       members:
         data?.members?.map((member: any) => ({
           label: member.fullName,
@@ -61,18 +61,18 @@ function EditEvent({ data, open, setOpen }) {
   }, [data, reset]);
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
-    ["clients", {}],
+    ["clients"],
     getClients,
     {
-      enabled: open,
+      enabled: open && watch("type") === "TASK",
     }
   );
 
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["tasks", {}],
+    ["tasks", { client: watch<any>("client")?.value }],
     getTasks,
     {
-      enabled: open,
+      enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
     }
   );
 
@@ -103,15 +103,6 @@ function EditEvent({ data, open, setOpen }) {
     });
   };
 
-  let clientTasks = tasks?.data
-    ?.filter(
-      (item: any) => item?.client?.id === parseInt(watch<any>("client")?.value)
-    )
-    ?.map((item: any) => ({
-      label: item.name,
-      value: item.id,
-    }));
-
   let taskMembers =
     tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)
       ?.members || [];
@@ -126,6 +117,7 @@ function EditEvent({ data, open, setOpen }) {
             <>
               <FormAutoComplete
                 control={control}
+                trigger={() => setValue("task", null)}
                 label="Client"
                 name="client"
                 options={clients?.data?.result?.map((item: any) => ({
@@ -139,7 +131,10 @@ function EditEvent({ data, open, setOpen }) {
                     control={control}
                     label="Task"
                     name="task"
-                    options={clientTasks}
+                    options={tasks?.data?.map((item: any) => ({
+                      label: item.name,
+                      value: item.id,
+                    }))}
                   />
                 </Box>
               )}

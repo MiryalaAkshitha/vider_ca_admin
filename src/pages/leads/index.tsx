@@ -1,5 +1,5 @@
 import { Edit, InfoOutlined } from "@mui/icons-material";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { deleteLeads, getLeads } from "api/services/clients/clients";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
@@ -7,6 +7,7 @@ import Table from "components/Table";
 import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import useTitle from "hooks/useTitle";
+import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
@@ -137,20 +138,29 @@ const columns = [
   {
     key: "category",
     title: "Category",
-    render: (rowData) => getTitle(rowData?.category),
+    render: (rowData: any) => getTitle(rowData?.category),
   },
   {
     key: "subCategory",
     title: "Sub Category",
-    render: (rowData) => getTitle(rowData?.subCategory),
+    render: (rowData: any) => getTitle(rowData?.subCategory),
   },
   { key: "name", title: "Name" },
   { key: "mobileNumber", title: "Mobile Number" },
   { key: "email", title: "Email" },
   {
+    title: "Created On",
+    key: "createdAt",
+    render: (item: any) => (
+      <Typography variant="body2" color="primary">
+        {moment(item?.createdAt).format("DD-MM-YYYY")}
+      </Typography>
+    ),
+  },
+  {
     key: "actions",
     title: "Actions",
-    render: (rowData) => <Actions data={rowData} />,
+    render: (rowData: any) => <Actions data={rowData} />,
   },
 ];
 
