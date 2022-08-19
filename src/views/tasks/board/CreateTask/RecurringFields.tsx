@@ -1,35 +1,45 @@
-import { Box } from "@mui/material";
-import FormSelect from "components/FormFields/FormSelect";
+import { Close, Edit } from "@mui/icons-material";
+import { Box, IconButton, Typography } from "@mui/material";
+import { useState } from "react";
 import { getTitle } from "utils";
-import { RecurringFrequency } from "data/constants";
-import CustomDates from "./CustomDates";
-import FrequencyDates from "./FrequencyDates";
+import RecurringFrequencyDetails from "./RecurringFrequencyDetails";
+import { StyledSelectBox, StyledSelectedBox } from "./styles";
 
-const RecurringFields = ({ control, watch }) => {
-  const frequencyIsNotCustom = () => {
-    return (
-      watch("frequency") && watch("frequency") !== RecurringFrequency.CUSTOM
-    );
-  };
+const RecurringFields = ({ control, watch, setValue }) => {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="frequency"
-          label="Frequency"
-          required
-          options={Object.values(RecurringFrequency).map((item) => ({
-            label: getTitle(item),
-            value: item,
-          }))}
-        />
+        <Typography color="rgba(0, 0, 0, 0.54)" variant="caption">
+          Recurring Frequency Details
+        </Typography>
+        {watch("frequency") ? (
+          <StyledSelectedBox sx={{ mt: "4px" }}>
+            <Box display="flex" gap={1} alignItems="center">
+              <Typography variant="subtitle2">
+                {watch("financialYear")} - {getTitle(watch("frequency"))}
+              </Typography>
+            </Box>
+            <IconButton onClick={() => setOpen(true)} size="small">
+              <Edit fontSize="small" />
+            </IconButton>
+          </StyledSelectedBox>
+        ) : (
+          <StyledSelectBox sx={{ mt: "4px" }} onClick={() => setOpen(true)}>
+            <Typography variant="body1" color="rgba(0,0,0,0.5)">
+              + Add Recurring Frequency
+            </Typography>
+          </StyledSelectBox>
+        )}
       </Box>
-      {frequencyIsNotCustom() && <FrequencyDates control={control} />}
-      {watch("frequency") === RecurringFrequency.CUSTOM && (
-        <CustomDates control={control} />
-      )}
+      <RecurringFrequencyDetails
+        open={open}
+        setOpen={setOpen}
+        control={control}
+        watch={watch}
+        setValue={setValue}
+      />
     </>
   );
 };

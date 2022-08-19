@@ -1,4 +1,4 @@
-import { Close } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 import FormRadio from "components/FormFields/FormRadio";
 import { useState } from "react";
@@ -42,9 +42,11 @@ function SelectTypes({ control, setValue, watch }) {
             alignItems: "center",
           }}
         >
-          <Typography variant="subtitle2">{watch("service")?.name}</Typography>
-          <IconButton onClick={() => setValue("service", null)} size="small">
-            <Close fontSize="small" />
+          <Typography variant="subtitle2">
+            {watch("service")?.name} - {watch("service")?.category?.name}
+          </Typography>
+          <IconButton onClick={() => setOpen(true)} size="small">
+            <Edit fontSize="small" />
           </IconButton>
         </Box>
       )}

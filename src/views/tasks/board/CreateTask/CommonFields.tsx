@@ -12,18 +12,6 @@ function CommonFields({ control, watch, users, labels, setValue }) {
   return (
     <>
       <Box mt={2}>
-        <FormSelect
-          control={control}
-          name="financialYear"
-          label="Finanacial Year"
-          required
-          options={getFinancialYears().map((item) => ({
-            label: item,
-            value: item,
-          }))}
-        />
-      </Box>
-      <Box mt={2}>
         <FormAutoComplete
           control={control}
           label="Labels"

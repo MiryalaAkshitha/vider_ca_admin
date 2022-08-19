@@ -51,8 +51,8 @@ function RecurringProfile() {
                   </Typography>
                   <Divider sx={{ mt: 2 }} />
                 </Box>
-                {data?.data[activeIndex]?.recurringTasks ? (
-                  data?.data[activeIndex]?.recurringTasks?.map(
+                {data?.data[activeIndex]?.tasks?.length > 0 ? (
+                  data?.data[activeIndex]?.tasks?.map(
                     (item: any, index: number) => (
                       <RecurringTaskItem data={item} key={index} />
                     )
