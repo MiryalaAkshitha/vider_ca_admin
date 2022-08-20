@@ -3,8 +3,10 @@ import { DesktopDatePicker } from "@mui/lab";
 import {
   Box,
   Button,
+  FormControlLabel,
   IconButton,
   MenuItem,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -13,7 +15,7 @@ import { snack } from "components/toast";
 import { RecurringFrequency } from "data/constants";
 import { halfYears, months, quarters } from "data/periods";
 import moment from "moment";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { getTitle } from "utils";
 import { getFinancialYears } from "utils/getFinancialYears";
 
@@ -124,10 +126,10 @@ function RecurringFrequencyDetails(props: any) {
       return;
     }
 
-    let emptyDates = state.dates.some((v) => !v.startDate || !v.dueDate);
+    let emptyDates = state.dates.some((v) => !v.startDate || !v.dueDate || !v.period);
 
     if (emptyDates) {
-      snack.error("Please select a start and due date for each period");
+      snack.error("Please select a start, due date and period for each row");
       return;
     }
 
@@ -141,12 +143,32 @@ function RecurringFrequencyDetails(props: any) {
   // const maxDate = `${watch("financialYear").split("-")[1]}-03-31`;
   // minDate={moment(minDate).toDate()}
 
+  const handleRepeat = (e: any) => {
+    if (e.target.checked) {
+      let newDates = [...state.dates].slice(1).map((item) => ({
+        ...item,
+        startDate: state.dates[0].startDate,
+        dueDate: state.dates[0].dueDate,
+      }));
+      setState({
+        ...state,
+        dates: [state.dates[0], ...newDates],
+      });
+    } else {
+      let newDates = [...state.dates].slice(1).map((item) => ({
+        ...item,
+        startDate: null,
+        dueDate: null,
+      }));
+      setState({
+        ...state,
+        dates: [state.dates[0], ...newDates],
+      });
+    }
+  };
+
   return (
-    <DialogWrapper
-      title="Recurring Frequency Details"
-      open={open}
-      setOpen={setOpen}
-    >
+    <DialogWrapper title="Recurring Frequency Details" open={open} setOpen={setOpen}>
       <TextField
         label="Financial Year"
         select
@@ -198,15 +220,15 @@ function RecurringFrequencyDetails(props: any) {
         </Box>
       )}
       {state.dates.length > 0 && (
-        <Box
-          mt={2}
-          ref={boxRef}
-          bgcolor="#F7F7F7"
-          px={1}
-          py={1}
-          sx={{ maxHeight: 300, overflow: "auto" }}
-        >
-          <Typography variant="body2">Select Dates</Typography>
+        <Box mt={2} ref={boxRef} bgcolor="#F7F7F7" px={1} py={1} sx={{ maxHeight: 300, overflow: "auto" }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+            <Typography variant="body2">Select Dates</Typography>
+            <FormControlLabel
+              onChange={handleRepeat}
+              label="Repeat as First Row"
+              control={<Switch size="small" />}
+            />
+          </Box>
           {state.dates.map((item: any, index: number) => (
             <Box mb={2}>
               <Typography variant="caption" color="rgba(0,0,0,0.6)">
@@ -218,21 +240,12 @@ function RecurringFrequencyDetails(props: any) {
                   inputFormat="dd-MM-yyyy"
                   value={item.startDate}
                   onChange={(v) => {
+                    console.log(moment(v).format("YYYY-MM-DD"));
                     let dates = [...state.dates];
-                    dates[index].startDate = v;
-
-                    if (
-                      state.frequency === RecurringFrequency.CUSTOM ||
-                      state.frequency === RecurringFrequency.YEARLY
-                    ) {
-                      dates[index].period = moment(v).format("MMM-YYYY");
-                    }
-
+                    dates[index].startDate = moment(v).format("YYYY-MM-DD");
                     setState({ ...state, dates });
                   }}
-                  renderInput={(params) => (
-                    <TextField fullWidth size="small" {...params} />
-                  )}
+                  renderInput={(params) => <TextField fullWidth size="small" {...params} />}
                 />
                 <DesktopDatePicker
                   label="Due Date"
@@ -240,13 +253,24 @@ function RecurringFrequencyDetails(props: any) {
                   value={item.dueDate}
                   onChange={(v) => {
                     let dates = [...state.dates];
-                    dates[index].dueDate = v;
+                    dates[index].dueDate = moment(v).format("YYYY-MM-DD");
                     setState({ ...state, dates });
                   }}
-                  renderInput={(params) => (
-                    <TextField fullWidth size="small" {...params} />
-                  )}
+                  renderInput={(params) => <TextField fullWidth size="small" {...params} />}
                 />
+                {state.frequency === RecurringFrequency.CUSTOM && (
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Period"
+                    onChange={(e) => {
+                      let dates = [...state.dates];
+                      dates[index].period = e.target.value;
+                      setState({ ...state, dates });
+                    }}
+                    value={item.period}
+                  />
+                )}
                 {state.frequency === RecurringFrequency.CUSTOM && (
                   <IconButton
                     size="small"
@@ -269,10 +293,7 @@ function RecurringFrequencyDetails(props: any) {
                 onClick={() => {
                   setState({
                     ...state,
-                    dates: [
-                      ...state.dates,
-                      { startDate: null, dueDate: null, period: "Custom" },
-                    ],
+                    dates: [...state.dates, { startDate: null, dueDate: null, period: "" }],
                   });
                 }}
               >
@@ -283,12 +304,7 @@ function RecurringFrequencyDetails(props: any) {
         </Box>
       )}
       <Box mt={2} textAlign="center">
-        <Button
-          onClick={handleSave}
-          variant="contained"
-          color="secondary"
-          size="large"
-        >
+        <Button onClick={handleSave} variant="contained" color="secondary" size="large">
           Save
         </Button>
       </Box>
