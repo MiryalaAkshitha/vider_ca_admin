@@ -18,10 +18,7 @@ function Users() {
 
   const { data, isLoading }: ResType = useQuery("users", getUsers);
 
-  const { data: roles, isLoading: rolesLoading }: ResType = useQuery(
-    "roles",
-    getRoles
-  );
+  const { data: roles, isLoading: rolesLoading }: ResType = useQuery("roles", getRoles);
 
   const getData = () => {
     let result = data?.data || [];
@@ -45,11 +42,7 @@ function Users() {
   return (
     <Box p={3}>
       <Box display="flex" justifyContent="space-between">
-        <SearchContainer
-          value={search}
-          placeHolder="Search by Name or tags"
-          onChange={(v) => setSearch(v)}
-        />
+        <SearchContainer value={search} placeHolder="Search by Name or tags" onChange={(v) => setSearch(v)} />
         <TextField
           size="small"
           select

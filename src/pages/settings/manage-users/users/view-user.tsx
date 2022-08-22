@@ -3,7 +3,7 @@ import { userProfileMenu } from "data/constants";
 import useQueryParams from "hooks/useQueryParams";
 import { useNavigate } from "react-router-dom";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
-import Expenditure from "views/settings/manage-users/users/expenditure";
+import Expenditure from "views/settings/manage-users/users/Expenditure";
 import LogHours from "views/settings/manage-users/users/log-hours";
 import Tasks from "views/settings/manage-users/users/Tasks";
 import UserProfile from "views/settings/manage-users/users/UserProfile";

@@ -8,4 +8,8 @@ const getOneDriveItems = ({ queryKey }) => {
   return http.get("/onedrive", { params: { ...queryKey[1] } });
 };
 
-export { getOneDriveItems, saveAuthToken };
+const reAuthorize = () => {
+  return http.post("/onedrive/re-authorize");
+};
+
+export { getOneDriveItems, saveAuthToken, reAuthorize };

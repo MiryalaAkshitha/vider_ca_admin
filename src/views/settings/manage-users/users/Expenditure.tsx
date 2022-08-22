@@ -1,12 +1,5 @@
-import { InfoOutlined, MoreVert, Visibility } from "@mui/icons-material";
-import {
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { MoreVert, Visibility } from "@mui/icons-material";
+import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { approveExpenditure, getExpenditure } from "api/services/expenditure";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
@@ -33,12 +26,7 @@ function Expenditure() {
   return (
     <>
       <SearchContainer value={search} onChange={setSearch} debounced />
-      <Table
-        sx={{ mt: 2 }}
-        data={data?.data || []}
-        loading={isLoading}
-        columns={columns}
-      />
+      <Table sx={{ mt: 2 }} data={data?.data || []} loading={isLoading} columns={columns} />
     </>
   );
 }
@@ -103,11 +91,7 @@ const Actions = ({ data }) => {
   const handleApprove = () => {
     confirm({
       msg: "Are you sure you want to approve this expenditure?",
-      action: () => {
-        mutate({
-          id: data?.id,
-        });
-      },
+      action: () => mutate({ id: data?.id }),
     });
   };
 
@@ -122,14 +106,8 @@ const Actions = ({ data }) => {
         </IconButton>
       </Box>
       <Menu
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}

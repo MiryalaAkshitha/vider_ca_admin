@@ -1,9 +1,4 @@
-import {
-  Checkbox,
-  CircularProgress,
-  TablePagination,
-  Typography,
-} from "@mui/material";
+import { Checkbox, CircularProgress, TablePagination, Typography } from "@mui/material";
 import { Box, SystemStyleObject } from "@mui/system";
 import _ from "lodash";
 import React from "react";
@@ -44,15 +39,7 @@ interface TableProps {
 }
 
 function Table(props: TableProps) {
-  const {
-    columns,
-    data,
-    sx,
-    pagination,
-    loading = false,
-    onRowClick,
-    selection,
-  } = props;
+  const { columns, data, sx, pagination, loading = false, onRowClick, selection } = props;
 
   const { selected, setSelected } = selection || {
     selected: [],
@@ -138,9 +125,7 @@ function Table(props: TableProps) {
                       {col?.render ? (
                         col.render(item)
                       ) : (
-                        <Typography variant="body2">
-                          {_.get(item, col.key)}
-                        </Typography>
+                        <Typography variant="body2">{_.get(item, col.key)}</Typography>
                       )}
                     </td>
                   );

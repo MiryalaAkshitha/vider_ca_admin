@@ -1,9 +1,11 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { getOneDriveItems } from "api/services/onedrive";
+import { getOneDriveItems, reAuthorize } from "api/services/onedrive";
 import Loader from "components/Loader";
+import { snack } from "components/toast";
 import useQueryParams from "hooks/useQueryParams";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { ResType } from "types";
+import { handleError } from "utils/handleError";
 import BreadCrumbs from "./BreadCrumbs";
 import File from "./File";
 import Folder from "./Folder";
@@ -17,7 +19,14 @@ function OneDrive() {
     { retry: false }
   );
 
-  if (isLoading) return <Loader />;
+  const { mutate } = useMutation(reAuthorize, {
+    onSuccess: (res: any) => {
+      window.location.href = res?.data;
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
 
   const err = error?.response?.data;
 
@@ -33,6 +42,8 @@ function OneDrive() {
     return Boolean(item?.file);
   });
 
+  if (isLoading) return <Loader />;
+
   return (
     <>
       {isError && err?.code === "NO_TOKEN" && (
@@ -46,8 +57,13 @@ function OneDrive() {
         </Box>
       )}
       <BreadCrumbs />
+      <Box mt={1} textAlign="right">
+        <Button color="secondary" variant="outlined" onClick={() => mutate()}>
+          Re-Authorize
+        </Button>
+      </Box>
       {folders?.length > 0 && (
-        <Box mt={4}>
+        <Box>
           <Typography variant="subtitle2" sx={{ mb: 2 }} color="primary">
             Folders
           </Typography>
