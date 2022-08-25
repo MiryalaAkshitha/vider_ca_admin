@@ -1,21 +1,22 @@
-import { Autocomplete, Box, Grid, TextField } from "@mui/material";
+import { DesktopDatePicker } from "@mui/lab";
+import { Autocomplete, Box, Grid } from "@mui/material";
 import { updateTask } from "api/services/tasks/tasks";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
 import ValidateAccess from "components/ValidateAccess";
 import { useTaskData } from "context/TaskData";
+import { PriorityEnum, TaskStatus } from "data/constants";
+import { Permissions } from "data/permissons";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
 import { getFinancialYears } from "utils/getFinancialYears";
-import { PriorityEnum, TaskStatus } from "data/constants";
-import { Permissions } from "data/permissons";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
-import { DesktopDatePicker } from "@mui/lab";
 
 function Details() {
   const queryClient = useQueryClient();
@@ -92,11 +93,7 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Client">
-              <CustomTextField
-                value={state?.client?.displayName}
-                onChange={handleChange}
-                disabled
-              />
+              <CustomTextField value={state?.client?.displayName} onChange={handleChange} disabled />
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
@@ -111,11 +108,7 @@ function Details() {
           {state?.recurring && (
             <Grid item xs={6}>
               <DetailSection label="Frequency">
-                <CustomTextField
-                  value={getTitle(state?.frequency)}
-                  onChange={handleChange}
-                  disabled
-                />
+                <CustomTextField value={getTitle(state?.frequency)} onChange={handleChange} disabled />
               </DetailSection>
             </Grid>
           )}
@@ -137,10 +130,11 @@ function Details() {
               <DesktopDatePicker
                 inputFormat="dd-MM-yyyy"
                 value={state.taskStartDate}
-                onChange={(v: any) => setState({ ...state, taskStartDate: v })}
-                renderInput={(params) => (
-                  <StyledTextField fullWidth size="small" {...params} />
-                )}
+                onChange={(v: any) => {
+                  let date = moment(v).format("YYYY-MM-DD");
+                  setState({ ...state, taskStartDate: date });
+                }}
+                renderInput={(params) => <StyledTextField fullWidth size="small" {...params} />}
               />
             </DetailSection>
           </Grid>
@@ -149,10 +143,11 @@ function Details() {
               <DesktopDatePicker
                 inputFormat="dd-MM-yyyy"
                 value={state.dueDate}
-                onChange={(v: any) => setState({ ...state, dueDate: v })}
-                renderInput={(params) => (
-                  <StyledTextField fullWidth size="small" {...params} />
-                )}
+                onChange={(v: any) => {
+                  let date = moment(v).format("YYYY-MM-DD");
+                  setState({ ...state, dueDate: date });
+                }}
+                renderInput={(params) => <StyledTextField fullWidth size="small" {...params} />}
               />
             </DetailSection>
           </Grid>
@@ -202,9 +197,7 @@ function Details() {
           <Grid item xs={6}>
             <DetailSection label="Task Leader">
               <Autocomplete
-                onChange={(_, value) =>
-                  setState({ ...state, taskLeader: value })
-                }
+                onChange={(_, value) => setState({ ...state, taskLeader: value })}
                 value={state?.taskLeader || null}
                 options={users?.data || []}
                 isOptionEqualToValue={(option, value) => {
@@ -235,9 +228,7 @@ function Details() {
           <Grid item xs={6}>
             <DetailSection label="Financial Year">
               <Autocomplete
-                onChange={(_, value) =>
-                  setState({ ...state, financialYear: value })
-                }
+                onChange={(_, value) => setState({ ...state, financialYear: value })}
                 getOptionLabel={(option) => option}
                 value={state?.financialYear || ""}
                 options={getFinancialYears()}
@@ -276,26 +267,19 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Directory">
-              <CustomTextField
-                value={state?.directory || ""}
-                onChange={handleChange}
-                name="directory"
-              />
+              <CustomTextField value={state?.directory || ""} onChange={handleChange} name="directory" />
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Remarks">
-              <CustomTextField
-                value={state?.remarks || ""}
-                onChange={handleChange}
-                name="remarks"
-              />
+              <CustomTextField value={state?.remarks || ""} onChange={handleChange} name="remarks" />
             </DetailSection>
           </Grid>
         </Grid>
       </Box>
       <ValidateAccess name={Permissions.EDIT_TASK}>
         <BottomBar
+          left="72px"
           data={taskData}
           state={state}
           onUpdate={handleUpdate}

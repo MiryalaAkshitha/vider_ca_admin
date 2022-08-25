@@ -100,9 +100,7 @@ function Clients() {
         </Box>
         <Box display="flex" gap={2}>
           {selected.length > 0 && (
-            <ValidateAccess
-              name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}
-            >
+            <ValidateAccess name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}>
               <Button
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 variant="outlined"
@@ -143,12 +141,7 @@ function Clients() {
       </ValidateAccess>
       <AddClient open={open} setOpen={setOpen} />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
-      <ClientFilter
-        filters={filters}
-        setFilters={setFilters}
-        open={openFilter}
-        setOpen={setOpenFilter}
-      />
+      <ClientFilter filters={filters} setFilters={setFilters} open={openFilter} setOpen={setOpenFilter} />
       <CustomizeColumns
         defaultColumns={_.cloneDeep(defaultColumns)}
         columns={columns}

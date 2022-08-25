@@ -76,6 +76,7 @@ function Table(props: TableProps) {
 
   const handleRowsPerPageChange = (e: any) => {
     if (pagination?.setPageCount) {
+      pagination?.setPage(0);
       pagination?.setPageCount(+e.target.value);
       setSelected([]);
     }
