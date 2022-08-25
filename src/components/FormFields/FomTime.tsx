@@ -34,7 +34,11 @@ function FormTime(props: Props) {
               )}
             />
             {error && (
-              <Typography variant="caption" sx={{ pl: "2px" }} color="rgb(211, 47, 47)">
+              <Typography
+                variant="caption"
+                sx={{ pl: "2px", display: "block" }}
+                color="rgb(211, 47, 47)"
+              >
                 {error.message}
               </Typography>
             )}
