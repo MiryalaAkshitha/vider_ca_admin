@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { DialogProps } from "types";
 import { useState } from "react";
+import { handleError } from "utils/handleError";
 
 function TerminationDialog({ open, setOpen }: DialogProps) {
   const params = useParams();
@@ -18,7 +19,7 @@ function TerminationDialog({ open, setOpen }: DialogProps) {
       navigate("/task-board");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 

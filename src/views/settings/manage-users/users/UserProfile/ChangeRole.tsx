@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { getRoles } from "api/services/roles";
-import { updateProfile } from "api/services/users";
+import { updateUserProfile } from "api/services/users";
 import DialogWrapper from "components/DialogWrapper";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
@@ -24,7 +24,7 @@ function ChangeRole({ open, setOpen, role: extRole, userId }: Props) {
     setRole(extRole);
   }, [extRole]);
 
-  const { mutateAsync } = useMutation(updateProfile, {
+  const { mutateAsync } = useMutation(updateUserProfile, {
     onSuccess: () => {
       snack.success("Role updated successfully");
       queryClient.invalidateQueries("user-details");
@@ -37,11 +37,7 @@ function ChangeRole({ open, setOpen, role: extRole, userId }: Props) {
 
   const handleSubmit = async (e: SubmitType) => {
     e.preventDefault();
-    await mutateAsync({
-      id: userId,
-      role: role,
-      type: "user",
-    });
+    await mutateAsync({ id: userId, data: { role: role } });
   };
 
   return (

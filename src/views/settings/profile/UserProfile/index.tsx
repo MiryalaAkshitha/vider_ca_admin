@@ -76,8 +76,7 @@ function UserProfile() {
 
     await mutateAsync({
       ...state,
-      id: originalState?.id,
-      type: "user",
+      type: "self",
     });
   };
 

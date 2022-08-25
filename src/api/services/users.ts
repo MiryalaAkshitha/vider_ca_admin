@@ -72,6 +72,10 @@ const getUsers = () => {
   return http.get("/users");
 };
 
+const getAllUsers = () => {
+  return http.get("/users/all");
+};
+
 const getInvitedusers = (data: any) => {
   return http.get("/users/invited", data);
 };
@@ -104,7 +108,7 @@ const getProfile = () => {
   return http.get("/users/profile");
 };
 
-const getUser = ({ queryKey }) => {
+const getUserProfile = ({ queryKey }) => {
   return http.get(`/users/profile/${queryKey[1]}`);
 };
 
@@ -112,8 +116,20 @@ const updateProfile = (data: any) => {
   return http.patch(`/users/profile`, data);
 };
 
+const updateUserProfile = ({ id, data }: any) => {
+  return http.patch(`/users/profile/${id}`, data);
+};
+
 const changePassword = (data: any) => {
   return http.patch(`/users/change-password`, data);
+};
+
+const deleteUser = (id: number) => {
+  return http.post(`/users/${id}/delete`);
+};
+
+const activateDeactivateUser = ({ id, data }) => {
+  return http.post(`/users/${id}/activate-deactivate`, data);
 };
 
 export {
@@ -139,5 +155,9 @@ export {
   resetPassword,
   changePassword,
   getInvitedusers,
-  getUser,
+  getUserProfile,
+  updateUserProfile,
+  deleteUser,
+  activateDeactivateUser,
+  getAllUsers,
 };
