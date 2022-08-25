@@ -18,7 +18,7 @@ function FormTime(props: Props) {
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <>
+          <div>
             <TimePicker
               label={label}
               value={field.value}
@@ -38,7 +38,7 @@ function FormTime(props: Props) {
                 {error.message}
               </Typography>
             )}
-          </>
+          </div>
         )}
       />
     </>

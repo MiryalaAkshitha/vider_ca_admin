@@ -63,4 +63,9 @@ export const menu: Array<IMenuItem> = [
     path: "/reports",
     icon: icons.reports,
   },
+  {
+    title: "Brodcast",
+    path: "/brodcast",
+    icon: icons.reports,
+  },
 ];

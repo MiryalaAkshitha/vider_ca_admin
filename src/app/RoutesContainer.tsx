@@ -1,13 +1,9 @@
 import loadable from "@loadable/component";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { Permissions } from "data/permissons";
 import PageWithPermission from "components/PageWithPermission";
-
+// import { LogoDev } from "@mui/icons-material";
+import ParticularGroups from "pages/broadcast/group/particularGroup";
 const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
@@ -16,12 +12,8 @@ const TaskDashboard = loadable(() => import("pages/task-dashboard"));
 const Estimates = loadable(() => import("pages/billing/estimates"));
 const Invoices = loadable(() => import("pages/billing/invoices"));
 const AddInvoice = loadable(() => import("pages/billing/invoices/add-invoice"));
-const AddInvoiceReceipt = loadable(
-  () => import("pages/billing/invoices/create-receipt")
-);
-const InvoicePreview = loadable(
-  () => import("pages/billing/invoices/invoice-preview")
-);
+const AddInvoiceReceipt = loadable(() => import("pages/billing/invoices/create-receipt"));
+const InvoicePreview = loadable(() => import("pages/billing/invoices/invoice-preview"));
 const Receipts = loadable(() => import("pages/billing/receipts"));
 const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
@@ -35,45 +27,31 @@ const Layout = loadable(() => import("layout/primarylayout"));
 const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/tasks"));
 const Categories = loadable(() => import("pages/settings/categories"));
-const BillingEntities = loadable(
-  () => import("pages/settings/organization/billing-entities")
-);
-const BillingEntityProfile = loadable(
-  () => import("pages/settings/organization/billing-entity-profile")
-);
+const BillingEntities = loadable(() => import("pages/settings/organization/billing-entities"));
+const BillingEntityProfile = loadable(() => import("pages/settings/organization/billing-entity-profile"));
 const MyProfile = loadable(() => import("pages/settings/profile"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/manage-users/users"));
-const InviteUsers = loadable(
-  () => import("pages/settings/manage-users/invited-users")
-);
-const ViewUser = loadable(
-  () => import("pages/settings/manage-users/users/view-user")
-);
+const InviteUsers = loadable(() => import("pages/settings/manage-users/invited-users"));
+const ViewUser = loadable(() => import("pages/settings/manage-users/users/view-user"));
 const Teams = loadable(() => import("pages/settings/manage-users/teams"));
-const ViewTeam = loadable(
-  () => import("pages/settings/manage-users/teams/view-team")
-);
+const ViewTeam = loadable(() => import("pages/settings/manage-users/teams/view-team"));
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("pages/leads"));
 const DscRegister = loadable(() => import("pages/dsc-register"));
-const ClientDscRegister = loadable(
-  () => import("pages/client-view/dsc-register")
-);
-const ClientDscRegisterView = loadable(
-  () => import("pages/client-view/view-dsc-register")
-);
+const ClientDscRegister = loadable(() => import("pages/client-view/dsc-register"));
+const ClientDscRegisterView = loadable(() => import("pages/client-view/view-dsc-register"));
 const ClientView = loadable(() => import("pages/client-view"));
 const TasksView = loadable(() => import("pages/task-view"));
 const Attachments = loadable(() => import("pages/client-view/attachments"));
 const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
 const Credentials = loadable(() => import("pages/client-view/credentials"));
 const Archives = loadable(() => import("pages/client-view/archives"));
+const Tasks = loadable(() => import("pages/client-view/clientTasks"));
+
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 
-const OrganizationProfile = loadable(
-  () => import("pages/settings/organization/organization-profile")
-);
+const OrganizationProfile = loadable(() => import("pages/settings/organization/organization-profile"));
 
 const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
@@ -84,9 +62,7 @@ const Roles = loadable(() => {
   return import("pages/settings/manage-users/roles-permissions");
 });
 const EditPermissions = loadable(() => {
-  return import(
-    "pages/settings/manage-users/roles-permissions/edit-permissions"
-  );
+  return import("pages/settings/manage-users/roles-permissions/edit-permissions");
 });
 
 // STORAGE MANAGEMENT
@@ -98,18 +74,12 @@ const OnedriveAuth = loadable(() => {
 });
 const Storage = loadable(() => import("pages/storage"));
 const MyStorage = loadable(() => import("views/storage/MyStorage"));
-const AllClientsStorage = loadable(
-  () => import("views/storage/AllClientsStorage")
-);
+const AllClientsStorage = loadable(() => import("views/storage/AllClientsStorage"));
 const OneDriveStorage = loadable(() => import("views/storage/OneDrive"));
 
 // ESTIMATES
-const AddEstimate = loadable(
-  () => import("pages/billing/estimates/add-estimate")
-);
-const EstimatePreview = loadable(
-  () => import("pages/billing/estimates/estimate-preview")
-);
+const AddEstimate = loadable(() => import("pages/billing/estimates/add-estimate"));
+const EstimatePreview = loadable(() => import("pages/billing/estimates/estimate-preview"));
 
 // FORMS
 const Forms = loadable(() => import("pages/forms"));
@@ -121,9 +91,7 @@ const AccessForm = loadable(() => import("pages/forms/AccessForm"));
 
 // IPRO
 const ViewIproForm = loadable(() => import("pages/task-view/view-ipro"));
-const ViewIproFormEntry = loadable(
-  () => import("pages/task-view/view-ipro-entry")
-);
+const ViewIproFormEntry = loadable(() => import("pages/task-view/view-ipro-entry"));
 const IProAuditLog = loadable(() => import("pages/task-view/ipro-audit-log"));
 const IProApprovals = loadable(() => import("pages/task-view/ipro-approvals"));
 
@@ -136,20 +104,25 @@ const AddService = loadable(() => import("pages/services/add-service"));
 
 // APPROVALS
 const Approvals = loadable(() => import("pages/settings/approval-hierarchies"));
-const AddApproval = loadable(
-  () => import("pages/settings/approval-hierarchies/add-approval-hierarchy")
-);
+const AddApproval = loadable(() => import("pages/settings/approval-hierarchies/add-approval-hierarchy"));
 
 // REPORTS
 const Reports = loadable(() => import("pages/reports"));
-const EmployeeLogHoursReport = loadable(
-  () => import("pages/reports/employee-log-hours-report")
-);
+const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
+
+//BRODCAST
+const Broadcast = loadable(() => import("pages/broadcast"));
+const Groups = loadable(() => import("pages/broadcast/group/groups"));
+const TeamDiscussion = loadable(() => import("pages/broadcast/teamDiscussion/teamDiscussion"));
+const Events = loadable(() => import("pages/broadcast/events"));
+const Whatsapp = loadable(() => import("pages/broadcast/whatsapp"));
+const BrodcastMessage = loadable(() => import("pages/broadcast/brodcastMessage"));
 
 function RoutesContainer() {
   return (
     <Router>
       <Routes>
+        <Route path="particulargroup" element={<ParticularGroups />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
@@ -161,10 +134,7 @@ function RoutesContainer() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports">
             <Route index element={<Reports />} />
-            <Route
-              path="employee-log-hours-report"
-              element={<EmployeeLogHoursReport />}
-            />
+            <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
           </Route>
           <Route path="billing" element={<Billing />}>
             <Route path="estimates" element={<Estimates />} />
@@ -172,13 +142,18 @@ function RoutesContainer() {
             <Route path="receipts" element={<Receipts />} />
             <Route path="clients" element={<BillingClients />} />
           </Route>
+          <Route path="brodcast" element={<BroadCast />}>
+            <Route path="groups" element={<Groups />} />
+            <Route path="teamdiscussions" element={<TeamDiscussion />} />
+            <Route path="whatsapp" element={<Whatsapp />} />
+            <Route path="events" element={<Events />} />
+            <Route path="brodcastmessage" element={<BrodcastMessage />} />
+          </Route>
+          {/* <Route path="particulargroup" element={<ParticularGroups />} /> */}
           <Route path="billing/estimates/add" element={<AddEstimate />} />
           <Route path="billing/invoices/add" element={<AddInvoice />} />
           <Route path="billing/receipts/add" element={<AddReceipt />} />
-          <Route
-            path="billing/invoices/:invoiceId/receipt"
-            element={<AddInvoiceReceipt />}
-          />
+          <Route path="billing/invoices/:invoiceId/receipt" element={<AddInvoiceReceipt />} />
           <Route path="storage" element={<Storage />}>
             <Route
               path="my-storage"
@@ -205,7 +180,7 @@ function RoutesContainer() {
               }
             />
           </Route>
-          <Route path="broadcast" element={<BroadCast />} />
+          <Route path="broadcast" element={<Broadcast />} />
           <Route path="forms" element={<Forms />}>
             <Route index element={<FormTemplates />} />
             <Route path="form-validations" element={<FormValidations />} />
@@ -214,12 +189,7 @@ function RoutesContainer() {
             <Route
               index
               element={
-                <PageWithPermission
-                  name={[
-                    Permissions.VIEW_ALL_TASKS,
-                    Permissions.VIEW_ASSIGNED_TASKS,
-                  ]}
-                >
+                <PageWithPermission name={[Permissions.VIEW_ALL_TASKS, Permissions.VIEW_ASSIGNED_TASKS]}>
                   <TaskBoard />
                 </PageWithPermission>
               }
@@ -249,9 +219,7 @@ function RoutesContainer() {
               <Route
                 path="attachments"
                 element={
-                  <PageWithPermission
-                    name={Permissions.VIEW_CLIENT_ATTACHMENTS}
-                  >
+                  <PageWithPermission name={Permissions.VIEW_CLIENT_ATTACHMENTS}>
                     <Attachments />
                   </PageWithPermission>
                 }
@@ -259,9 +227,7 @@ function RoutesContainer() {
               <Route
                 path="recurring-profile"
                 element={
-                  <PageWithPermission
-                    name={Permissions.VIEW_CLIENT_RECURRING_PROFILE}
-                  >
+                  <PageWithPermission name={Permissions.VIEW_CLIENT_RECURRING_PROFILE}>
                     <RecurringProfile />
                   </PageWithPermission>
                 }
@@ -275,6 +241,7 @@ function RoutesContainer() {
                 }
               />
               <Route path="archives" element={<Archives />} />
+              <Route path="client-tasks" element={<Tasks />} />
               <Route path="dsc-register">
                 <Route index element={<ClientDscRegister />} />
                 <Route path=":dscId" element={<ClientDscRegisterView />} />
@@ -351,18 +318,9 @@ function RoutesContainer() {
           <Route path="fill-details" element={<AccessForm withoutAppbar />} />
           <Route path="audit-log" element={<IProAuditLog />} />
         </Route>
-        <Route
-          path="/billing/estimates/:estimateId/preview"
-          element={<EstimatePreview />}
-        />
-        <Route
-          path="/billing/invoices/:invoiceId/preview"
-          element={<InvoicePreview />}
-        />
-        <Route
-          path="/forms/:formId/fields/:fieldId/esign"
-          element={<Esign />}
-        />
+        <Route path="/billing/estimates/:estimateId/preview" element={<EstimatePreview />} />
+        <Route path="/billing/invoices/:invoiceId/preview" element={<InvoicePreview />} />
+        <Route path="/forms/:formId/fields/:fieldId/esign" element={<Esign />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
