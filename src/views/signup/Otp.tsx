@@ -16,7 +16,7 @@ import BackgroundWrapper from "./BackgroundWrapper";
 function Otp() {
   const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
-  const { mobileNumber, token } = useSelector(selectSignup);
+  const { mobileNumber, token,email } = useSelector(selectSignup);
   const [count, setCount] = useState(60);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ function Otp() {
 
   const resendOtp = () => {
     setOtp("");
-    mutate({ mobileNumber });
+    mutate({ mobileNumber, email });
   };
 
   const handleVerifyOtp = () => {
@@ -66,7 +66,7 @@ function Otp() {
         ></Button>
         <Box textAlign="center">
           <Typography sx={{ mb: 2, textAlign: "center" }} variant="subtitle1">
-            Otp Verification
+            OTP Verification
           </Typography>
           <Typography variant="body2">
             Enter the 4 digit OTP sent to your mobile number
@@ -110,7 +110,7 @@ function Otp() {
                 gap={1}
               >
                 <Typography variant="body2" color="secondary">
-                  Resend Otp in
+                  Resend OTP in
                 </Typography>
                 <Typography variant="body2" color="green">
                   {count}

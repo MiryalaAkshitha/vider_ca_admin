@@ -36,7 +36,7 @@ function CustomCommonFields({ control, watch, categories }) {
         </Box>
       )}
       <Box mt={2}>
-        <FormInput required name="name" control={control} label="Name" />
+        <FormInput required name="Name" control={control} label="Service Name/ Task Name" />
       </Box>
     </>
   );
