@@ -66,7 +66,9 @@ const PanDetails = () => {
       });
 
       const data: any = response?.data;
-
+      if (data.data.status === "INVALID") {
+        return snack.error("Invalid PAN")
+      }
       setState({
         category: data?.data?.category,
         firstName: data?.data?.first_name,
@@ -125,6 +127,11 @@ const PanDetails = () => {
           label="Pan Number"
           name="panNumber"
           size="small"
+          onKeyDown={(e: any) => {
+            if (e.keyCode === 13){
+              verifyPan()
+             }
+          }}
           fullWidth
           InputProps={{
             endAdornment: <PanAdornment />,
@@ -217,6 +224,7 @@ const PanDetails = () => {
             </>
           )}
           <TextField
+            required
             onChange={handleChange}
             value={state.buildingName}
             sx={{ mt: 2 }}
@@ -277,6 +285,10 @@ const PanDetails = () => {
             value={state.pincode}
             name="pincode"
             label="Pincode"
+            inputProps={{
+            pattern: "[0-9]{6}",
+            title: "Enter valid pincode",
+          }}
             size="small"
             fullWidth
             required
