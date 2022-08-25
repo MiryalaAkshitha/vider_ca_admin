@@ -18,31 +18,21 @@ function FormTime(props: Props) {
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <>
+          <div>
             <TimePicker
               label={label}
               value={field.value}
               onChange={field.onChange}
               renderInput={(params) => (
-                <TextField
-                  fullWidth
-                  size={size}
-                  {...params}
-                  error={Boolean(error)}
-                  onBlur={field.onBlur}
-                />
+                <TextField fullWidth size={size} {...params} error={Boolean(error)} onBlur={field.onBlur} />
               )}
             />
             {error && (
-              <Typography
-                variant="caption"
-                sx={{ pl: "2px" }}
-                color="rgb(211, 47, 47)"
-              >
+              <Typography variant="caption" sx={{ pl: "2px", display: "block" }} color="rgb(211, 47, 47)">
                 {error.message}
               </Typography>
             )}
-          </>
+          </div>
         )}
       />
     </>
