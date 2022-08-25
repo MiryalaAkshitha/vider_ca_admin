@@ -1,6 +1,7 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { signin } from "api/services/users";
-import { newlogo, signup } from "assets";
+import { signup } from "assets";
+import atomlogo from "../assets/images/atom_logo.png";
 import LoadingButton from "components/LoadingButton";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -49,17 +50,17 @@ const Login = () => {
       <Grid item xs={6} lg={6}>
         <BackgroundImage>
           <LogoContainer>
-            <img src={newlogo} alt="" />
+            <img src={atomlogo} alt="" />
             <Box mt={6}>
               <img src={signup} alt="" />
             </Box>
-            <Typography mt={2} variant="subtitle2" color="white">
+            {/* <Typography mt={2} variant="subtitle2" color="white">
               Vider Practice Management software
-            </Typography>
+            </Typography> */}
             <Typography mt={1} variant="body2" color="rgba(255,255,255,0.7)">
-              Vider is a technology-driven smart discovery and aggregator
-              platform, that offers services addressing the growing needs of
-              Professionals & Clients in enhancing businesses in India.
+              Vider is a technology-driven smart discovery, that offers services
+              addressing the growing needs of Professionals & Clients enhancings
+              businesses in India.
             </Typography>
           </LogoContainer>
         </BackgroundImage>

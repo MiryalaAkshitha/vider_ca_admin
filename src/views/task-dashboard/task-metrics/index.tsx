@@ -14,7 +14,7 @@ export default function TaskMetrics() {
     <>
       <FlexBoxForTaskMetricsFilters>
         <Typography mb={1} variant="subtitle2">
-          Task Metrics
+          Task Analytics
         </Typography>
         <Filters />
       </FlexBoxForTaskMetricsFilters>

@@ -16,6 +16,10 @@ const TaskDashboard = loadable(() => import("pages/task-dashboard"));
 const Estimates = loadable(() => import("pages/billing/estimates"));
 const Invoices = loadable(() => import("pages/billing/invoices"));
 const AddInvoice = loadable(() => import("pages/billing/invoices/add-invoice"));
+const ViewAllTasksByService = loadable(
+  () => import("pages/ViewAllTasksByService")
+);
+const ViewAllOverdueTasks = loadable(() => import("pages/ViewAllOverdueTasks"));
 const AddInvoiceReceipt = loadable(
   () => import("pages/billing/invoices/create-receipt")
 );
@@ -149,6 +153,14 @@ function RoutesContainer() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="task-dashboard" element={<TaskDashboard />} />
+          <Route
+            path="/viewalltasksbyservice"
+            element={<ViewAllTasksByService />}
+          />
+          <Route
+            path="/viewalloverduetasks"
+            element={<ViewAllOverdueTasks />}
+          />
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
