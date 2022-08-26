@@ -39,10 +39,6 @@ const createRole = (data: Data) => {
   return http.post("/roles", data);
 };
 
-const createPermissions = (data: any) => {
-  return http.post("/permissions/bulk", data);
-};
-
 const deleteRole = (id: number) => {
   return http.delete(`/roles/${id}`);
 };
@@ -59,6 +55,5 @@ export {
   getRole,
   getPermissions,
   getAllRoles,
-  createPermissions,
   getMyPermissions,
 };

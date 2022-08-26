@@ -1,9 +1,6 @@
 import { Add, Delete, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, IconButton, Typography } from "@mui/material";
-import {
-  deleteDscRegister,
-  getDscRegisters,
-} from "api/services/clients/dsc-register";
+import { deleteDscRegister, getDscRegisters } from "api/services/clients/dsc-register";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
@@ -144,10 +141,7 @@ const Actions = ({ data }) => {
             </Button>
             <Typography variant="body2">
               {data?.status === "received"
-                ? `(Received on ${moment
-                    .utc(data?.receivedDate)
-                    .local()
-                    .format("MM/DD/YYYY, h:mm a")})`
+                ? `(Received on ${moment(data?.receivedDate).format("DD-MM-YYYY, h:mm a")})`
                 : "(Not Issued)"}
             </Typography>
           </Box>
@@ -167,12 +161,7 @@ const Actions = ({ data }) => {
               Receive
             </Button>
             <Typography variant="body2">
-              (Issued on{" "}
-              {moment
-                .utc(data?.issuedDate)
-                .local()
-                .format("MM/DD/YYYY, h:mm a")}
-              )
+              (Issued on {moment(data?.issuedDate).format("DD-MM-YYYY, h:mm a")})
             </Typography>
           </Box>
         )}
