@@ -63,27 +63,6 @@ let AddLogHourSchema = ({ enterInHours, taskCreatedDate }) => {
       startTime: string().required("Start Time is required").nullable(),
       endTime: string().required("End Time is required").nullable(),
     }),
-    // hours: object()
-    //   .shape({
-    //     label: string().required(),
-    //     value: string().required(),
-    //   })
-    //   .nullable(),
-    // minutes: mixed().when("hours", {
-    //   is: (hours: any) => hours && hours.value === "00",
-    //   then: object()
-    //     .shape({
-    //       label: string().required(),
-    //       value: mixed().notOneOf(["00"], "Minutes should not be 00"),
-    //     })
-    //     .nullable(),
-    //   otherwise: object()
-    //     .shape({
-    //       label: string().required(),
-    //       value: string().required(),
-    //     })
-    //     .nullable(),
-    // }),
   });
 };
 
