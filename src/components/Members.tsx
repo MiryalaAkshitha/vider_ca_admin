@@ -6,7 +6,7 @@ interface MembersProps {
   data: Array<{ title: string; src?: string }>;
 }
 
-function Members({ data, size = "medium" }: MembersProps) {
+function Members({ data = [], size = "medium" }: MembersProps) {
   return (
     <Box
       sx={{

@@ -6,6 +6,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledClientFilterItem } from "../styles";
+import EllipsisText from "react-ellipsis-text";
 
 interface Props {
   item: any;
@@ -46,14 +47,13 @@ const ClientFilterItem = ({ item }: Props) => {
         }}
       >
         <StyledClientFilterItem
-          onClick={() =>
-            setQueryParams({ ...queryParams, client: item?.client?.id })
-          }
+          onClick={() => setQueryParams({ ...queryParams, client: item?.client?.id })}
           variant="body1"
           color="rgba(0,0,0,0.7)"
           active={item?.client?.id === +client! ? 1 : 0}
         >
-          {item?.client?.displayName}
+          {item?.client?.displayName?.slice(0, 18)}{" "}
+          {item?.client?.displayName?.length > 20 && "..."}
         </StyledClientFilterItem>
         <ArrowDropDownIcon
           onClick={(e: any) => setAnchorEl(e.currentTarget)}

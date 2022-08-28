@@ -220,7 +220,14 @@ function RecurringFrequencyDetails(props: any) {
         </Box>
       )}
       {state.dates.length > 0 && (
-        <Box mt={2} ref={boxRef} bgcolor="#F7F7F7" px={1} py={1} sx={{ maxHeight: 300, overflow: "auto" }}>
+        <Box
+          mt={2}
+          ref={boxRef}
+          bgcolor="#F7F7F7"
+          px={1}
+          py={1}
+          sx={{ maxHeight: 300, overflow: "auto" }}
+        >
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
             <Typography variant="body2">Select Dates</Typography>
             <FormControlLabel

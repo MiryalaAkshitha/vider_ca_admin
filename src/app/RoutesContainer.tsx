@@ -28,7 +28,9 @@ const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/tasks"));
 const Categories = loadable(() => import("pages/settings/categories"));
 const BillingEntities = loadable(() => import("pages/settings/organization/billing-entities"));
-const BillingEntityProfile = loadable(() => import("pages/settings/organization/billing-entity-profile"));
+const BillingEntityProfile = loadable(
+  () => import("pages/settings/organization/billing-entity-profile")
+);
 const MyProfile = loadable(() => import("pages/settings/profile"));
 const Labels = loadable(() => import("pages/settings/labels"));
 const Users = loadable(() => import("pages/settings/manage-users/users"));
@@ -51,7 +53,9 @@ const Tasks = loadable(() => import("pages/client-view/clientTasks"));
 
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 
-const OrganizationProfile = loadable(() => import("pages/settings/organization/organization-profile"));
+const OrganizationProfile = loadable(
+  () => import("pages/settings/organization/organization-profile")
+);
 
 const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
@@ -104,11 +108,15 @@ const AddService = loadable(() => import("pages/services/add-service"));
 
 // APPROVALS
 const Approvals = loadable(() => import("pages/settings/approval-hierarchies"));
-const AddApproval = loadable(() => import("pages/settings/approval-hierarchies/add-approval-hierarchy"));
+const AddApproval = loadable(
+  () => import("pages/settings/approval-hierarchies/add-approval-hierarchy")
+);
 
 // REPORTS
 const Reports = loadable(() => import("pages/reports"));
 const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
+const ClientsReport = loadable(() => import("pages/reports/clients-report"));
+const TasksReport = loadable(() => import("pages/reports/tasks-report"));
 
 //BRODCAST
 const Broadcast = loadable(() => import("pages/broadcast"));
@@ -135,6 +143,8 @@ function RoutesContainer() {
           <Route path="reports">
             <Route index element={<Reports />} />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
+            <Route path="clients-report" element={<ClientsReport />} />
+            <Route path="tasks-report" element={<TasksReport />} />
           </Route>
           <Route path="billing" element={<Billing />}>
             <Route path="estimates" element={<Estimates />} />
@@ -189,7 +199,9 @@ function RoutesContainer() {
             <Route
               index
               element={
-                <PageWithPermission name={[Permissions.VIEW_ALL_TASKS, Permissions.VIEW_ASSIGNED_TASKS]}>
+                <PageWithPermission
+                  name={[Permissions.VIEW_ALL_TASKS, Permissions.VIEW_ASSIGNED_TASKS]}
+                >
                   <TaskBoard />
                 </PageWithPermission>
               }
