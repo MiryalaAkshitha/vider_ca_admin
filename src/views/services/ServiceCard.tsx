@@ -54,32 +54,33 @@ function ServiceCard({ data }) {
         flexDirection: "column",
       }}
     >
-      <Typography variant="caption" color="rgba(0,0,0,0.6)">
-        {data?.category?.name}{" "}
-        {data?.subCategory && `-- ${data?.subCategory?.name}`}
-      </Typography>
-      <Box display="flex" gap={1} alignItems="center">
-        <Typography sx={{ flex: 1 }} color="primary" variant="subtitle2">
-          {data?.name}
+      <Box flex={1}>
+        <Typography variant="caption" color="rgba(0,0,0,0.6)">
+          {data?.category?.name} {data?.subCategory && `-- ${data?.subCategory?.name}`}
         </Typography>
-        <IconButton size="small" onClick={handleClick}>
-          <MoreVert />
-        </IconButton>
+        <Box display="flex" gap={1} alignItems="center">
+          <Typography sx={{ flex: 1 }} color="primary" variant="subtitle2">
+            {data?.name}
+          </Typography>
+          <IconButton size="small" onClick={handleClick}>
+            <MoreVert />
+          </IconButton>
+        </Box>
+        <Typography color="gray" variant="body2">
+          <div
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              lineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
+            dangerouslySetInnerHTML={{ __html: data?.description }}
+          ></div>
+        </Typography>
+        <Divider sx={{ my: 1 }} />
       </Box>
-      <Typography color="gray" variant="body2">
-        <div
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            lineClamp: 2,
-            WebkitBoxOrient: "vertical",
-          }}
-          dangerouslySetInnerHTML={{ __html: data?.description }}
-        ></div>
-      </Typography>
-      <Divider sx={{ my: 1 }} />
       <Box textAlign="right">
         <Button
           onClick={() => {
