@@ -20,7 +20,7 @@ const getClient = ({ queryKey }: any) => {
 };
 
 const updateClient = ({ data, id }: any) => {
-  return http.put(`/client/${id}`, data);
+  return http.patch(`/client/${id}/update`, data);
 };
 
 const createContactPerson = (data: any) => {

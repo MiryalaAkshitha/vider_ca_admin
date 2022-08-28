@@ -18,7 +18,9 @@ import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleError } from "utils/handleError";
+
 function ProfileDetails() {
+  const [originalState, setOriginalState] = useState<any>({});
   const [state, setState] = useState<any>({});
   const { data } = useClientData();
   const queryClient = useQueryClient();
@@ -27,7 +29,12 @@ function ProfileDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setState(data?.data);
+    let result = {
+      ...data?.data,
+      clientManager: data?.data?.clientManager?.id || "",
+    };
+    setOriginalState(result);
+    setState(result);
   }, [data]);
 
   const { mutate } = useMutation(bulkDelete, {
@@ -45,9 +52,7 @@ function ProfileDetails() {
     confirm({
       msg: "Are you sure you want to delete the client?",
       action: () => {
-        mutate({
-          ids: [clientId],
-        });
+        mutate({ ids: [clientId] });
       },
     });
   };
@@ -55,7 +60,10 @@ function ProfileDetails() {
   return (
     <Box px={4} pt={2} pb={10}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <ProfileImage src={data?.data?.imageUrl} onChange={(v: string) => setState({ ...state, image: v })} />
+        <ProfileImage
+          src={data?.data?.imageUrl}
+          onChange={(v: string) => setState({ ...state, image: v })}
+        />
         <Button variant="outlined" color="error" onClick={handleDelete}>
           Delete Client
         </Button>
@@ -67,7 +75,7 @@ function ProfileDetails() {
       <AdditionalInformation data={state} setState={setState} apiData={data?.data} />
       <Activity />
       <ValidateAccess name={Permissions.EDIT_CLIENT_PROFILE}>
-        <BottomBar data={data?.data} setState={setState} state={state} />
+        <BottomBar data={originalState} setState={setState} state={state} />
       </ValidateAccess>
     </Box>
   );
