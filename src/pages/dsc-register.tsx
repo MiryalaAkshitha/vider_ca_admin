@@ -1,6 +1,7 @@
 import { Add, Delete, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, IconButton, Typography } from "@mui/material";
 import { deleteDscRegister, getDscRegisters } from "api/services/clients/dsc-register";
+import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
