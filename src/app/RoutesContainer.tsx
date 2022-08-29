@@ -18,6 +18,7 @@ const Receipts = loadable(() => import("pages/billing/receipts"));
 const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
+const DeletedUsers = loadable(() => import("pages/settings/deleted-users"));
 const Login = loadable(() => import("pages/login"));
 const ResetPassword = loadable(() => import("pages/reset-password"));
 const Join = loadable(() => import("pages/join"));
@@ -291,6 +292,7 @@ function RoutesContainer() {
           <Route path="storage-management" element={<StorageManagement />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
+          <Route path="deleted-users" element={<DeletedUsers />} />
           <Route path="teams">
             <Route index element={<Teams />} />
             <Route path=":teamId" element={<ViewTeam />} />

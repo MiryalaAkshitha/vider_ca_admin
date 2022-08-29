@@ -34,9 +34,9 @@ function Filters({ state, setState, onSubmit }: Props) {
 
   const handleAllUsers = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      return setState({ ...state, users: data?.data });
+      return setState({ ...state, members: data?.data });
     }
-    setState({ ...state, users: [] });
+    setState({ ...state, members: [] });
   };
 
   let getSubCategories = () => {
@@ -169,9 +169,9 @@ function Filters({ state, setState, onSubmit }: Props) {
               disablePortal
               multiple
               sx={{ flex: 1 }}
-              value={state.users}
+              value={state.members}
               limitTags={3}
-              onChange={(e, v: any) => setState({ ...state, users: v })}
+              onChange={(e, v: any) => setState({ ...state, members: v })}
               options={data?.data || []}
               getOptionLabel={(option: any) => option?.fullName}
               renderInput={(params) => <TextField {...params} size="small" label="Assignee" />}
@@ -179,7 +179,7 @@ function Filters({ state, setState, onSubmit }: Props) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={data?.data?.length === state.users.length}
+                  checked={data?.data?.length === state.members.length}
                   onChange={handleAllUsers}
                   size="small"
                 />

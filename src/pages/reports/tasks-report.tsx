@@ -14,7 +14,7 @@ export interface IState {
   fromDate: null | string;
   toDate: null | string;
   client: any;
-  users: Array<any>;
+  members: Array<any>;
   status: string;
   priority: string;
   financialYear: string;
@@ -29,7 +29,7 @@ function TasksReport() {
     fromDate: null,
     toDate: null,
     client: null,
-    users: [],
+    members: [],
     status: "",
     priority: "",
     financialYear: "",
@@ -52,7 +52,7 @@ function TasksReport() {
       fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
       toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
       client: state.client?.id,
-      users: state.users?.map((user) => user.id),
+      members: state.members?.map((user) => user.id),
       category: state.category?.map((cat) => cat.id),
       subCategory: state.subCategory?.map((cat) => cat.id),
     });

@@ -76,6 +76,11 @@ a.fc-event {
 .fc-popover {
   z-index: 1 !important;
 }
+#freshworks-container iframe {
+  right: 147px !important;
+  bottom: -5px !important;
+  z-index: 100 !important;
+}
 
 /*** MENTIONS ***/
 .mentions_input {

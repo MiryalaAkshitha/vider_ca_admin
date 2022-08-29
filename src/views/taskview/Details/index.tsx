@@ -1,5 +1,5 @@
 import { DesktopDatePicker } from "@mui/lab";
-import { Autocomplete, Box, Grid } from "@mui/material";
+import { Autocomplete, Box, Grid, Typography } from "@mui/material";
 import { updateTask } from "api/services/tasks/tasks";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
@@ -93,7 +93,11 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Client">
-              <CustomTextField value={state?.client?.displayName} onChange={handleChange} disabled />
+              <CustomTextField
+                value={state?.client?.displayName}
+                onChange={handleChange}
+                disabled
+              />
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
@@ -108,7 +112,11 @@ function Details() {
           {state?.recurring && (
             <Grid item xs={6}>
               <DetailSection label="Frequency">
-                <CustomTextField value={getTitle(state?.frequency)} onChange={handleChange} disabled />
+                <CustomTextField
+                  value={getTitle(state?.frequency)}
+                  onChange={handleChange}
+                  disabled
+                />
               </DetailSection>
             </Grid>
           )}
@@ -267,13 +275,39 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Directory">
-              <CustomTextField value={state?.directory || ""} onChange={handleChange} name="directory" />
+              <CustomTextField
+                value={state?.directory || ""}
+                onChange={handleChange}
+                name="directory"
+              />
             </DetailSection>
           </Grid>
-          <Grid item xs={6}>
-            <DetailSection label="Remarks">
-              <CustomTextField value={state?.remarks || ""} onChange={handleChange} name="remarks" />
-            </DetailSection>
+          <Grid item xs={12}>
+            <Box sx={{ borderBottom: "1px dashed rgba(0,0,0,0.1)" }}>
+              <Typography gutterBottom variant="body1">
+                Remarks
+              </Typography>
+            </Box>
+            <Box>
+              <ol>
+                {state?.activity?.map((item: any, index: number) => (
+                  <li key={index} style={{ marginBottom: 20 }}>
+                    <Typography gutterBottom variant="body1">
+                      {item.remarks} -{" "}
+                      <span style={{ fontSize: 12 }}>{getTitle(item?.remarkType)}</span>
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      variant="body2"
+                      sx={{ fontSize: 12, color: "rgba(0,0,0,0.5)" }}
+                    >
+                      Created By {item.user?.fullName} on{" "}
+                      {moment(item.createdAt).format("DD-MM-YYYY")}
+                    </Typography>
+                  </li>
+                ))}
+              </ol>
+            </Box>
           </Grid>
         </Grid>
       </Box>

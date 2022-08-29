@@ -1,6 +1,5 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getDeletedClients, restoreClient } from "api/services/clients/clients";
 import { getDeletedUsers, restoreUser } from "api/services/users";
 import Loader from "components/Loader";
 import Table from "components/Table";
@@ -10,15 +9,15 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
 
-function DeletedClients() {
+function DeletedUsers() {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const { data, isLoading }: ResType = useQuery(["deleted-clients"], getDeletedClients);
+  const { data, isLoading }: ResType = useQuery(["deleted-users"], getDeletedUsers);
 
-  const { mutate } = useMutation(restoreClient, {
+  const { mutate } = useMutation(restoreUser, {
     onSuccess: () => {
-      snack.success("Client restored successfully");
-      queryClient.invalidateQueries("deleted-clients");
+      snack.success("User restored successfully");
+      queryClient.invalidateQueries("deleted-users");
     },
     onError: (err: any) => {
       snack.error(handleError(err));
@@ -27,7 +26,7 @@ function DeletedClients() {
 
   const handleRestore = (id: number) => {
     confirm({
-      msg: "Are you sure you want to restore this client?",
+      msg: "Are you sure you want to restore this user?",
       action: () => mutate(id),
     });
   };
@@ -37,19 +36,19 @@ function DeletedClients() {
   return (
     <Box p={2}>
       <Typography variant="subtitle1" mb={2}>
-        Deleted Clients
+        Deleted Users
       </Typography>
       <Table
         loading={isLoading}
         data={data?.data || []}
         columns={[
           {
-            key: "clientId",
-            title: "Client Id",
+            key: "profile.employeeId",
+            title: "User Id",
           },
           {
-            key: "displayName",
-            title: "Display Name",
+            key: "fullName",
+            title: "Fullname",
           },
           {
             key: "email",
@@ -81,4 +80,4 @@ function DeletedClients() {
   );
 }
 
-export default DeletedClients;
+export default DeletedUsers;

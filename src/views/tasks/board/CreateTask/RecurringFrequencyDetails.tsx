@@ -247,7 +247,6 @@ function RecurringFrequencyDetails(props: any) {
                   inputFormat="dd-MM-yyyy"
                   value={item.startDate}
                   onChange={(v) => {
-                    console.log(moment(v).format("YYYY-MM-DD"));
                     let dates = [...state.dates];
                     dates[index].startDate = moment(v).format("YYYY-MM-DD");
                     setState({ ...state, dates });

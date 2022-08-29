@@ -1,4 +1,13 @@
-import { Box, Button, CircularProgress, Divider, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { getCategories } from "api/services/categories";
 import { getServices } from "api/services/services";
 import DialogWrapper from "components/DialogWrapper";
@@ -22,23 +31,29 @@ function SelectService({ open, setOpen, setValue, watch }: Props) {
   const [data, setData] = useState<any>([]);
   const [clicked, setClicked] = useState(false);
 
-  const { isLoading }: ResType = useQuery(["services", { search, limit, offset, ...filters }], getServices, {
-    enabled: open,
-    onSuccess: (res: any) => {
-      if (clicked) {
-        setData([...data, ...res.data.result]);
-        setClicked(false);
-      } else {
-        setData(res.data.result);
-      }
-    },
-  });
+  const { isLoading }: ResType = useQuery(
+    ["services", { search, limit, offset, ...filters }],
+    getServices,
+    {
+      enabled: open,
+      onSuccess: (res: any) => {
+        if (clicked) {
+          setData([...data, ...res.data.result]);
+          setClicked(false);
+        } else {
+          setData(res.data.result);
+        }
+      },
+    }
+  );
 
   const { data: categories }: ResType = useQuery("categories", getCategories, {
     enabled: open,
   });
 
-  const subCategories = categories?.data?.find((item: any) => item.id === +filters.category)?.subCategories;
+  const subCategories = categories?.data?.find(
+    (item: any) => item.id === +filters.category
+  )?.subCategories;
 
   const handleCategoryChange = (e: any) => {
     setFilters({ ...filters, category: e.target.value, subCategory: null });

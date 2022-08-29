@@ -132,6 +132,14 @@ const activateDeactivateUser = ({ id, data }) => {
   return http.post(`/users/${id}/activate-deactivate`, data);
 };
 
+const getDeletedUsers = () => {
+  return http.get("/users/deleted");
+};
+
+const restoreUser = (id: number) => {
+  return http.post(`/users/${id}/restore`);
+};
+
 export {
   getSandboxToken,
   getGstDetails,
@@ -160,4 +168,6 @@ export {
   deleteUser,
   activateDeactivateUser,
   getAllUsers,
+  getDeletedUsers,
+  restoreUser,
 };

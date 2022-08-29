@@ -30,17 +30,15 @@ function Services() {
   const { data: categories }: ResType = useQuery("categories", getCategories);
 
   const { data, isLoading }: ResType = useQuery(
-    ["services", { search, category, setSubCategory, limit, offset }],
+    ["services", { search, category, subCategory, limit, offset }],
     getServices
   );
 
-  const subCategories = categories?.data?.find(
-    (item: any) => item.id === category
-  )?.subCategories;
+  const subCategories = categories?.data?.find((item: any) => item.id === category)?.subCategories;
 
   const onChange = (e: any) => {
     setCategory(e.target.value);
-    setSubCategory("");
+    setSubCategory(null);
     setQueryParams({ page: "1" });
   };
 
@@ -49,8 +47,7 @@ function Services() {
     setQueryParams({ page: "1" });
   };
 
-  const noInitialData =
-    data?.data?.totalCount === 0 && !search && !category && !subCategory;
+  const noInitialData = data?.data?.totalCount === 0 && !search && !category && !subCategory;
 
   if (isLoading) return <Loader />;
 
@@ -61,11 +58,7 @@ function Services() {
           {!noInitialData && (
             <>
               <Link to="/services/add" style={{ textDecoration: "none" }}>
-                <Button
-                  variant="outlined"
-                  startIcon={<Add />}
-                  color="secondary"
-                >
+                <Button variant="outlined" startIcon={<Add />} color="secondary">
                   Add Service
                 </Button>
               </Link>
@@ -82,11 +75,7 @@ function Services() {
         </Box>
         <Box mt={4}>
           {!noInitialData && (
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+            <Box display="flex" justifyContent="space-between" alignItems="center">
               <Box display="flex">
                 <Box>
                   <TextField

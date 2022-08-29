@@ -130,12 +130,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
   };
 
   return (
-    <DialogWrapper
-      width="lg"
-      open={open}
-      setOpen={setOpen}
-      title="Import Services"
-    >
+    <DialogWrapper width="lg" open={open} setOpen={setOpen} title="Import Services">
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" gap={1}>
           <TextField
@@ -172,9 +167,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
         <Box display="flex" gap={1}>
           <FormControlLabel
             label="Select All"
-            control={
-              <Checkbox checked={selectAll} onChange={handleSelectAll} />
-            }
+            control={<Checkbox checked={selectAll} onChange={handleSelectAll} />}
           />
           <SearchContainer
             value={search}
@@ -194,8 +187,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
               <StyledServiceItem>
                 <Box>
                   <Typography variant="caption" color="rgba(0,0,0,0.6)">
-                    {item?.category?.name}{" "}
-                    {item?.subCategory && `-- ${item?.subCategory?.name}`}
+                    {item?.category?.name} {item?.subCategory && `-- ${item?.subCategory?.name}`}
                   </Typography>
                   <Typography variant="subtitle2">{item?.name}</Typography>
                   <Typography color="rgba(0,0,0,0.6)" variant="body2">
@@ -255,11 +247,7 @@ function ImportServices({ open, setOpen, successCb }: Props) {
           onClick={handleSubmit}
           size="large"
         >
-          {importLoading ? (
-            <CircularProgress size="small" sx={{ color: "white" }} />
-          ) : (
-            "Import"
-          )}
+          {importLoading ? <CircularProgress size="small" sx={{ color: "white" }} /> : "Import"}
         </Button>
       </Box>
     </DialogWrapper>
