@@ -56,14 +56,6 @@ function DscRegister() {
           onChange={setSearch}
           placeHolder="Search"
         />
-        <Button
-          onClick={() => setOpen(true)}
-          variant="outlined"
-          color="secondary"
-          startIcon={<Add />}
-        >
-          Add Dsc Register
-        </Button>
       </Box>
       <Table
         data={data?.data?.data || []}
@@ -77,7 +69,9 @@ function DscRegister() {
           setPage: setOffset,
         }}
       />
+
       <AddDscRegister open={open} setOpen={setOpen} />
+      <FloatingButton onClick={() => setOpen(true)} />
     </Box>
   );
 }

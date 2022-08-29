@@ -67,7 +67,7 @@ function AddMilestone({ open, setOpen }: DialogProps) {
           value={state.description}
           name="description"
           label="Description"
-          required
+          // required
         />
         <FormControlLabel
           sx={{ mt: 1 }}

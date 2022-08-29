@@ -1,9 +1,5 @@
 import { Box, Button, Divider } from "@mui/material";
-import {
-  createService,
-  getService,
-  updateService,
-} from "api/services/services";
+import { createService, getService, updateService } from "api/services/services";
 import BreadCrumbs from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
@@ -13,11 +9,7 @@ import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  addServiceState,
-  resetData,
-  setData,
-} from "redux/reducers/addServiceSlice";
+import { addServiceState, resetData, setData } from "redux/reducers/addServiceSlice";
 import { ResType } from "types";
 import BasicDetails from "views/services/BasicDetails";
 import Checklists from "views/services/Checklists";
@@ -34,16 +26,12 @@ function AddService() {
   const { queryParams } = useQueryParams();
   const serviceId = queryParams.serviceId;
 
-  const { isLoading }: ResType = useQuery(
-    ["service-details", serviceId],
-    getService,
-    {
-      onSuccess: (res: any) => {
-        dispatch(setData(res?.data));
-      },
-      enabled: !!serviceId,
-    }
-  );
+  const { isLoading }: ResType = useQuery(["service-details", serviceId], getService, {
+    onSuccess: (res: any) => {
+      dispatch(setData(res?.data));
+    },
+    enabled: !!serviceId,
+  });
 
   useEffect(() => {
     if (!serviceId) dispatch(resetData());

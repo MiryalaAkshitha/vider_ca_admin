@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 import { createClient } from "api/services/clients/clients";
-import { getUsers } from "api/services/users";
+import { getUsers, resetPassword } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormInput from "components/FormFields/FormInput";
 import FormSelect from "components/FormFields/FormSelect";
@@ -13,10 +13,7 @@ import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { DialogProps, ResType } from "types";
 import { CLIENT_CATEGORIES } from "data/constants";
-import {
-  createClientDefaultValues,
-  CreateClientSchema,
-} from "validations/createCllient";
+import { createClientDefaultValues, CreateClientSchema } from "validations/createCllient";
 import Details from "./Details";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 
@@ -27,13 +24,9 @@ interface Props extends DialogProps {
 function AddClient({ open, setOpen, successCb }: Props) {
   const navigate = useNavigate();
 
-  const { data: users, isLoading: userLoading }: ResType = useQuery(
-    "users",
-    getUsers,
-    {
-      enabled: open,
-    }
-  );
+  const { data: users, isLoading: userLoading }: ResType = useQuery("users", getUsers, {
+    enabled: open,
+  });
 
   const { mutate, isLoading } = useMutation(createClient, {
     onSuccess: (res) => {
@@ -54,9 +47,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
   });
 
   const subCategoriesExist = (category: any) => {
-    let foundCategory = CLIENT_CATEGORIES.find(
-      (item: any) => item.value === category
-    );
+    let foundCategory = CLIENT_CATEGORIES.find((item: any) => item.value === category);
     return foundCategory?.subCategories?.length;
   };
 
@@ -73,9 +64,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
     });
   };
 
-  let subCategories = CLIENT_CATEGORIES.find(
-    (item) => item.value === watch("category")
-  )?.subCategories;
+  let subCategories = CLIENT_CATEGORIES.find((item) => item.value === watch("category"))?.subCategories;
 
   const onFormSubmit = (data: any) => {
     mutate({
@@ -87,7 +76,14 @@ function AddClient({ open, setOpen, successCb }: Props) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add Client">
+    <DrawerWrapper
+      open={open}
+      setOpen={() => {
+        reset(createClientDefaultValues);
+        setOpen(false);
+      }}
+      title="Add Client"
+    >
       {userLoading ? (
         <Loader />
       ) : (
@@ -127,37 +123,19 @@ function AddClient({ open, setOpen, successCb }: Props) {
             />
           </Box>
           <Box mt={2}>
-            <FormInput
-              control={control}
-              name="displayName"
-              label="Display Name"
-              required
-            />
+            <FormInput control={control} name="displayName" label="Display Name" required />
           </Box>
           <Box mt={2}>
-            <FormInput
-              control={control}
-              name="mobileNumber"
-              label="Mobile number"
-              required
-            />
+            <FormInput control={control} name="mobileNumber" label="Mobile number" required />
           </Box>
           <Box mt={2}>
             <FormInput control={control} name="email" label="Email" required />
           </Box>
           <Box mt={2}>
-            <FormInput
-              control={control}
-              name="authorizedPerson"
-              label="Authorized person name"
-            />
+            <FormInput control={control} name="authorizedPerson" label="Authorized person name" />
           </Box>
           <Box mt={2}>
-            <FormInput
-              control={control}
-              name="designation"
-              label="Designation"
-            />
+            <FormInput control={control} name="designation" label="Designation" />
           </Box>
           <Details control={control} watch={watch} setData={setData} />
           <LoadingButton

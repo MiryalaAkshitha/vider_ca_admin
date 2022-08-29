@@ -7,8 +7,16 @@ import SectionWrapper from "./SectionWrapper";
 
 const BasicDetails = ({ state, setState }) => {
   const [open, setOpen] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
 
   const handleChange = (e: any) => {
+    if (e.target.value.match(phoneRegex)) {
+      setErrorText("");
+    } else {
+      setErrorText("invalid format");
+    }
+
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -41,6 +49,8 @@ const BasicDetails = ({ state, setState }) => {
               fullWidth
               onChange={handleChange}
               name="fullName"
+              helperText={errorText}
+              // error={errorText}
               label="Full Name"
               value={state?.fullName || ""}
             />
