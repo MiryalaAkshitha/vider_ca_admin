@@ -6,12 +6,10 @@ import { useDispatch } from "react-redux";
 import { addSubTask } from "redux/reducers/addServiceSlice";
 import { DialogProps, InputChangeType, SubmitType } from "types";
 
+const initialState = { name: "", description: "" };
 function AddSubtask({ open, setOpen }: DialogProps) {
   const dispatch = useDispatch();
-  const [state, setState] = useState({
-    name: "",
-    description: "",
-  });
+  const [state, setState] = useState({ ...initialState });
 
   const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -20,11 +18,19 @@ function AddSubtask({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     dispatch(addSubTask(state));
+    setState({ ...initialState });
     setOpen(false);
   };
 
   return (
-    <DrawerWrapper open={open} title="Add Subtask" setOpen={setOpen}>
+    <DrawerWrapper
+      open={open}
+      title="Add Subtask"
+      setOpen={() => {
+        setState({ ...initialState });
+        setOpen(false);
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"

@@ -124,11 +124,7 @@ const Actions = ({ data }) => {
         </Button>
       </Box>
       <EditLead open={open} setOpen={setOpen} data={selectedLead} />
-      <ConverLead
-        open={convertOpen}
-        setOpen={setConvertOpen}
-        data={selectedLead}
-      />
+      <ConverLead open={convertOpen} setOpen={setConvertOpen} data={selectedLead} />
       <ViewLead open={infoOpen} setOpen={setInfoOpen} data={selectedLead} />
     </>
   );

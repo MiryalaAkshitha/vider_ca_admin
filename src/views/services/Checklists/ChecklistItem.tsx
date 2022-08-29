@@ -43,9 +43,7 @@ const CheckListItem = ({ data, checklistIndex, index }: Props) => {
 
   return (
     <>
-      <StyledChecklistItem
-        bgcolor={(index + 1) % 2 === 1 ? "#FAFAFA" : "white"}
-      >
+      <StyledChecklistItem bgcolor={(index + 1) % 2 === 1 ? "#FAFAFA" : "white"}>
         <Grid container sx={{ flex: 1 }}>
           <Grid item xs={5}>
             <Typography variant="body1">{data.name}</Typography>

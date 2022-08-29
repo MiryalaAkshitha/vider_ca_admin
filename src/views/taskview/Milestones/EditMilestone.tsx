@@ -77,7 +77,7 @@ function EditMilestone({ open, setOpen, data }: Props) {
           value={state.description}
           name="description"
           label="Description"
-          required
+          // required
         />
         <FormControlLabel
           sx={{ mt: 1 }}

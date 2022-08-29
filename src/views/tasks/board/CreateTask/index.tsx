@@ -12,10 +12,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { handleError } from "utils/handleError";
-import {
-  createTaskDefaultValues,
-  createTaskSchema,
-} from "validations/createTask";
+import { createTaskDefaultValues, createTaskSchema } from "validations/createTask";
 import CommonFields from "./CommonFields";
 import CustomCommonFields from "./CustomCommonFields";
 import NonRecurringFields from "./NonRecurringFields";
@@ -32,12 +29,10 @@ interface Props extends DialogProps {
 function CreateTask({ open, setOpen, successCb }: Props) {
   const queryClient = useQueryClient();
   const [openSelectAppHier, setOpenSelectAppHier] = useState(false);
-  const { users, labels, categories, clients, loading } =
-    useCreateTaskInitialData({ enabled: open });
+  const { users, labels, categories, clients, loading } = useCreateTaskInitialData({ enabled: open });
 
   const subcategoriesExist = (category: any) => {
-    return categories?.data?.find((item: any) => item.id === parseInt(category))
-      ?.subCategories?.length;
+    return categories?.data?.find((item: any) => item.id === parseInt(category))?.subCategories?.length;
   };
 
   const {
@@ -58,7 +53,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
       snack.success("Task Created");
       queryClient.invalidateQueries("tasks");
       setOpen(false);
-      // reset(createTaskDefaultValues);
+      reset(createTaskDefaultValues);
       successCb && successCb();
     },
     onError: (err: any) => {
@@ -69,9 +64,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   const onFormSubmit = (data: any) => {
     let apiData = { ...data };
     apiData.client = data.client?.map((client: any) => parseInt(client.value));
-    apiData.members = data.members?.map((member: any) =>
-      parseInt(member.value)
-    );
+    apiData.members = data.members?.map((member: any) => parseInt(member.value));
     apiData.labels = data.labels?.map((label: any) => parseInt(label.value));
     apiData.category = parseInt(data.category);
     apiData.subCategory = parseInt(data.subCategory);
@@ -86,7 +79,14 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   console.log(errors);
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
+    <DrawerWrapper
+      open={open}
+      setOpen={() => {
+        reset(createTaskDefaultValues);
+        setOpen(false);
+      }}
+      title="Create Task"
+    >
       {loading ? (
         <Loader />
       ) : (
@@ -106,29 +106,13 @@ function CreateTask({ open, setOpen, successCb }: Props) {
             />
           </Box>
           {watch("serviceType") === "custom" && (
-            <CustomCommonFields
-              control={control}
-              watch={watch}
-              categories={categories}
-            />
+            <CustomCommonFields control={control} watch={watch} categories={categories} />
           )}
           {watch("taskType") === "recurring" && (
-            <RecurringFields
-              control={control}
-              watch={watch}
-              setValue={setValue}
-            />
+            <RecurringFields control={control} watch={watch} setValue={setValue} />
           )}
-          {watch("taskType") === "non_recurring" && (
-            <NonRecurringFields control={control} />
-          )}
-          <CommonFields
-            control={control}
-            watch={watch}
-            labels={labels}
-            users={users}
-            setValue={setValue}
-          />
+          {watch("taskType") === "non_recurring" && <NonRecurringFields control={control} />}
+          <CommonFields control={control} watch={watch} labels={labels} users={users} setValue={setValue} />
           <Box mt={2}>
             <Typography color="rgba(0, 0, 0, 0.54)" variant="caption">
               Approval Hierarchy Details
@@ -139,18 +123,12 @@ function CreateTask({ open, setOpen, successCb }: Props) {
                   {watch<any>("approvalHierarchy")?.name} - Levels (
                   {watch<any>("approvalHierarchy")?.approvalLevels?.length})
                 </Typography>
-                <IconButton
-                  onClick={() => setOpenSelectAppHier(true)}
-                  size="small"
-                >
+                <IconButton onClick={() => setOpenSelectAppHier(true)} size="small">
                   <Edit fontSize="small" />
                 </IconButton>
               </StyledSelectedBox>
             ) : (
-              <StyledSelectBox
-                sx={{ mt: "4px" }}
-                onClick={() => setOpenSelectAppHier(true)}
-              >
+              <StyledSelectBox sx={{ mt: "4px" }} onClick={() => setOpenSelectAppHier(true)}>
                 <Typography variant="body1" color="rgba(0,0,0,0.5)">
                   Select Approval Hierarchy
                 </Typography>

@@ -15,12 +15,7 @@ import { getUsers } from "api/services/users";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleApply,
-  handleSelected,
-  resetFilters,
-  selectTaskBoard,
-} from "redux/reducers/taskboardSlice";
+import { handleApply, handleSelected, resetFilters, selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import CategoryFilter from "./CategoryFilter";
 import ClientCategoryFilter from "./ClientCategoryFilter";
@@ -37,17 +32,11 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
   const dispatch = useDispatch();
   const { selected, appliedFilters } = useSelector(selectTaskBoard);
 
-  const { data: labels, isLoading: labelsLoading }: ResType = useQuery(
-    "labels",
-    getLabels,
-    { enabled: open }
-  );
+  const { data: labels, isLoading: labelsLoading }: ResType = useQuery("labels", getLabels, {
+    enabled: open,
+  });
 
-  const { data: users, isLoading: userLoading }: ResType = useQuery(
-    "users",
-    getUsers,
-    { enabled: open }
-  );
+  const { data: users, isLoading: userLoading }: ResType = useQuery("users", getUsers, { enabled: open });
 
   const applyFilters = () => {
     dispatch(handleApply());
@@ -56,7 +45,6 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
 
   const handleReset = () => {
     dispatch(resetFilters());
-    setOpen(false);
   };
 
   const filters = getFilters({ users, labels });
@@ -94,10 +82,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
             display: "flex",
           }}
         >
-          <Box
-            width={200}
-            sx={{ borderRight: "1px solid lightgrey", overflowY: "auto" }}
-          >
+          <Box width={200} sx={{ borderRight: "1px solid lightgrey", overflowY: "auto" }}>
             <List sx={{ p: 0 }}>
               <ListItemButton
                 selected={selected === "category"}
@@ -106,9 +91,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
                   Category{" "}
                   {appliedFilters["category"].length > 0 && (
-                    <span style={{ fontWeight: "bold" }}>
-                      ({appliedFilters["category"].length})
-                    </span>
+                    <span style={{ fontWeight: "bold" }}>({appliedFilters["category"].length})</span>
                   )}
                 </Typography>
               </ListItemButton>
@@ -119,9 +102,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
                   Client Category{" "}
                   {appliedFilters["clientCategory"].length > 0 && (
-                    <span style={{ fontWeight: "bold" }}>
-                      ({appliedFilters["clientCategory"].length})
-                    </span>
+                    <span style={{ fontWeight: "bold" }}>({appliedFilters["clientCategory"].length})</span>
                   )}
                 </Typography>
               </ListItemButton>
@@ -132,9 +113,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
                   Financial Year{" "}
                   {appliedFilters["financialYear"].length > 0 && (
-                    <span style={{ fontWeight: "bold" }}>
-                      ({appliedFilters["financialYear"].length})
-                    </span>
+                    <span style={{ fontWeight: "bold" }}>({appliedFilters["financialYear"].length})</span>
                   )}
                 </Typography>
               </ListItemButton>
@@ -147,9 +126,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                   <Typography variant="body2" color="rgba(0,0,0,0.7)">
                     {filter.title}{" "}
                     {appliedFilters[filter.key].length > 0 && (
-                      <span style={{ fontWeight: "bold" }}>
-                        ({appliedFilters[filter.key].length})
-                      </span>
+                      <span style={{ fontWeight: "bold" }}>({appliedFilters[filter.key].length})</span>
                     )}
                   </Typography>
                 </ListItemButton>
@@ -159,9 +136,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
           <Box sx={{ overflowY: "auto", pt: 1, px: 2, pb: 4, flex: 1 }}>
             {filters.map((filter) => {
               if (selected === filter.key) {
-                return (
-                  <FilterContainer key={filter.key} items={filter.options} />
-                );
+                return <FilterContainer key={filter.key} items={filter.options} />;
               }
               return null;
             })}
@@ -176,9 +151,7 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
         color="transparent"
         sx={{ boxShadow: "none", borderTop: "1px solid lightgrey" }}
       >
-        <Toolbar
-          sx={{ justifyContent: "flex-end", gap: 2, alignItems: "center" }}
-        >
+        <Toolbar sx={{ justifyContent: "flex-end", gap: 2, alignItems: "center" }}>
           <Button onClick={handleReset} variant="outlined" color="secondary">
             Reset
           </Button>
