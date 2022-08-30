@@ -51,7 +51,7 @@ export default function Filters() {
           renderInput={(params) => <TextField {...params} helperText={null} />}
         />
       </LocalizationProvider>
-      <FormControl sx={{ width: "195px" }}>
+      <FormControl sx={{ width: "180px" }}>
         <InputLabel id="demo-simple-select-label">Select Month</InputLabel>
         <Select
           labelId="demo-simple-select-label"

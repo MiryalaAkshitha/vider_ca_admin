@@ -136,6 +136,8 @@ function RoutesContainer() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="task-dashboard" element={<TaskDashboard />} />
+          <Route path="/viewalltasksbyservice" element={<ViewAllTasksByService />} />
+          <Route path="/viewalloverduetasks" element={<ViewAllOverdueTasks />} />
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
