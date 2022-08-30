@@ -49,7 +49,9 @@ function AddLogHour({ open, setOpen, onAdd }: Props) {
     apiData.client = client?.value;
     apiData.task = task?.id;
     if (enterInHours) {
-      apiData.duration = moment.duration(`${data.hours?.value}:${data.minutes?.value}`).asMilliseconds();
+      apiData.duration = moment
+        .duration(`${data.hours?.value}:${data.minutes?.value}`)
+        .asMilliseconds();
     } else {
       let startTime = moment.duration(moment(data.startTime).format("HH:mm")).asMilliseconds();
       let endTime = moment.duration(moment(data.endTime).format("HH:mm")).asMilliseconds();

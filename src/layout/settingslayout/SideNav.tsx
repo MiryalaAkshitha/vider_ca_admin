@@ -1,7 +1,7 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import { logo } from "assets";
+import { atom_logo, logo } from "assets";
 import { settingsMenu } from "data/settingsMenu";
 import { useState } from "react";
 import { DrawerHeader, SettingsDrawer } from "../styles";
@@ -9,34 +9,12 @@ import CollapsibleMenuItem from "./CollapsibleMenuItem";
 import MenuItem from "./SingleMenuItem";
 
 function SideNav() {
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <SettingsDrawer
-      variant="permanent"
-      open={open}
-      onMouseLeave={handleDrawerClose}
-      onMouseOver={handleDrawerOpen}
-    >
+    <SettingsDrawer variant="permanent" open={true}>
       <DrawerHeader>
-        <img src={logo} alt="" />
-        <Typography
-          variant="subtitle1"
-          sx={{ opacity: open ? 1 : 0, transition: "0.4s" }}
-          pt={1}
-          pl={1}
-          color="white"
-        >
-          Vider
-        </Typography>
+        <Box mx="-5px">
+          <img style={{ width: 120 }} src={atom_logo} alt="" />
+        </Box>
       </DrawerHeader>
       <Divider />
       <List>

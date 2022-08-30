@@ -120,12 +120,9 @@ function NestedActions({ anchorEl, setAnchorEl, onClick }) {
         vertical: "bottom",
         horizontal: "right",
       }}
-      MenuListProps={{
-        "aria-labelledby": "basic-button",
-      }}
     >
-      <MenuItem onClick={() => onClick("active")}>Active</MenuItem>
-      <MenuItem onClick={() => onClick("inactive")}>Inactive</MenuItem>
+      <MenuItem onClick={() => onClick("ACTIVE")}>Active</MenuItem>
+      <MenuItem onClick={() => onClick("INACTIVE")}>Inactive</MenuItem>
     </Menu>
   );
 }

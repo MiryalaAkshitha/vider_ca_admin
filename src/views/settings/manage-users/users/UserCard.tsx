@@ -44,16 +44,18 @@ function UserCard({ data }: Props) {
 
   const handleMenu = (e: any) => {
     e.stopPropagation();
-    const status = data.isActive ? "Deactivate" : "Activate";
+    const label = data.status === "ACTIVE" ? "Deactivate" : "Activate";
+    const status = data.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+
     menu({
       target: e.currentTarget,
       options: [
         {
-          label: status,
+          label: label,
           action: () => {
             confirm({
-              msg: `Are you sure you want to ${status} ${data?.fullName}?`,
-              action: () => mutate({ id: data?.id, data: { active: !data?.isActive } }),
+              msg: `Are you sure you want to ${label} ${data?.fullName}?`,
+              action: () => mutate({ id: data?.id, data: { status } }),
             });
           },
         },
@@ -101,7 +103,7 @@ function UserCard({ data }: Props) {
             <MoreVert />
           </IconButton>
         )}
-        {!data?.isActive && (
+        {data.status === "INACTIVE" && (
           <Box
             sx={{
               position: "absolute",
