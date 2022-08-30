@@ -6,7 +6,6 @@ import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { StyledClientFilterItem } from "../styles";
-import EllipsisText from "react-ellipsis-text";
 
 interface Props {
   item: any;

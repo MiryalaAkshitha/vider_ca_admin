@@ -143,30 +143,6 @@ function RecurringFrequencyDetails(props: any) {
   // const maxDate = `${watch("financialYear").split("-")[1]}-03-31`;
   // minDate={moment(minDate).toDate()}
 
-  const handleRepeat = (e: any) => {
-    if (e.target.checked) {
-      let newDates = [...state.dates].slice(1).map((item) => ({
-        ...item,
-        startDate: state.dates[0].startDate,
-        dueDate: state.dates[0].dueDate,
-      }));
-      setState({
-        ...state,
-        dates: [state.dates[0], ...newDates],
-      });
-    } else {
-      let newDates = [...state.dates].slice(1).map((item) => ({
-        ...item,
-        startDate: null,
-        dueDate: null,
-      }));
-      setState({
-        ...state,
-        dates: [state.dates[0], ...newDates],
-      });
-    }
-  };
-
   return (
     <DialogWrapper title="Recurring Frequency Details" open={open} setOpen={setOpen}>
       <TextField
@@ -228,13 +204,8 @@ function RecurringFrequencyDetails(props: any) {
           py={1}
           sx={{ maxHeight: 300, overflow: "auto" }}
         >
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+          <Box display="flex" mb={1}>
             <Typography variant="body2">Select Dates</Typography>
-            <FormControlLabel
-              onChange={handleRepeat}
-              label="Repeat as First Row"
-              control={<Switch size="small" />}
-            />
           </Box>
           {state.dates.map((item: any, index: number) => (
             <Box mb={2}>
