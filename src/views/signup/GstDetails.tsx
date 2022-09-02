@@ -69,7 +69,6 @@ const GstDetails = () => {
     if (!gstNumber) return snack.error("Enter GST Number");
 
     setGstLoading(true);
-
     try {
       let token: any = await getSandboxToken();
 
@@ -79,7 +78,7 @@ const GstDetails = () => {
       });
 
       const result: any = response.data;
-
+console.log(response.data)
       setState({
         legalName: result?.data?.lgnm,
         tradeName: result?.data?.tradeNam,
@@ -87,9 +86,11 @@ const GstDetails = () => {
         registrationDate: result?.data?.rgdt,
         constitutionOfBusiness: result?.data?.ctb,
         gstStatus: result?.data?.sts,
+        buildingNo: result?.data?.pradr?.addr?.bno,
         buildingName: result?.data?.pradr?.addr?.bnm,
         street: result?.data?.pradr?.addr?.st,
-        city: result?.data?.pradr?.addr?.dst,
+        city: result?.data?.pradr?.addr?.cty,
+        district: result?.data?.pradr ?.addr?.dst,
         state: result?.data?.pradr?.addr?.stcd,
         pincode: result?.data?.pradr?.addr?.pncd,
       });
@@ -140,7 +141,7 @@ const GstDetails = () => {
             required
             onChange={handleChange}
             value={state.legalName}
-            label="Legal name"
+            label="Legal Name"
             size="small"
             disabled
             name="legalName"
@@ -162,7 +163,7 @@ const GstDetails = () => {
             onChange={handleChange}
             value={state.placeOfSupply}
             sx={{ mt: 2 }}
-            label="State Jurisdiction / Place of supply"
+            label="State Jurisdiction / Place of Supply"
             name="placeOfSupply"
             size="small"
             disabled
@@ -173,7 +174,7 @@ const GstDetails = () => {
             onChange={handleChange}
             value={state.registrationDate}
             sx={{ mt: 2 }}
-            label="Date of Registration"
+            label="Effective Date of Registration"
             name="registrationDate"
             size="small"
             disabled
@@ -194,28 +195,42 @@ const GstDetails = () => {
             onChange={handleChange}
             value={state.gstStatus}
             sx={{ mt: 2 }}
-            label="GSTN status"
+            label="GSTIN / UIN Status"
             name="gstStatus"
             disabled
             size="small"
             fullWidth
           />
-          <TextField
+<TextField
+            required
+            onChange={handleChange}
+            value={state.buildingNo}
+            sx={{ mt: 2 }}
+            label="House No./Flat No. / Door No."
+            name="buildingNo"
+            size="small"
+            fullWidth
+          />
+           <TextField
             required
             onChange={handleChange}
             value={state.buildingName}
             sx={{ mt: 2 }}
-            label="Building name"
+            label="Name of the Premises"
             name="buildingName"
             size="small"
             fullWidth
           />
+
+
+
+
           <TextField
             required
             onChange={handleChange}
             value={state.street}
             sx={{ mt: 2 }}
-            label="Street"
+            label="Road / Street"
             name="street"
             size="small"
             fullWidth
@@ -224,9 +239,19 @@ const GstDetails = () => {
             required
             onChange={handleChange}
             sx={{ mt: 2 }}
-            label="City"
+            label="City / Town / Village"
             name="city"
             value={state.city}
+            size="small"
+            fullWidth
+          />
+          <TextField
+            required
+            onChange={handleChange}
+            sx={{ mt: 2 }}
+            label="District"
+            name="district"
+            value={state.district}
             size="small"
             fullWidth
           />

@@ -21,7 +21,8 @@ function ProfileDetails() {
   }, [data]);
 
   return (
-    <Box px={4} pt={2} pb={10}>
+    <Box px={4} pt={2} pb={10}> 
+      hi hlo
       <ProfileImage
         src={data?.data?.imageUrl}
         onChange={(v: string) => setState({ ...state, image: v })}
