@@ -2,9 +2,7 @@ import loadable from "@loadable/component";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { Permissions } from "data/permissons";
 import PageWithPermission from "components/PageWithPermission";
-import ParticularGroups from "pages/broadcast/group/particularGroup";
 
-const BroadCast = loadable(() => import("pages/broadcast"));
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
 const BillingClients = loadable(() => import("pages/billing/clients"));
@@ -119,18 +117,15 @@ const ClientsReport = loadable(() => import("pages/reports/clients-report"));
 const TasksReport = loadable(() => import("pages/reports/tasks-report"));
 
 //BRODCAST
-const Broadcast = loadable(() => import("pages/broadcast"));
-const Groups = loadable(() => import("pages/broadcast/group/groups"));
-const TeamDiscussion = loadable(() => import("pages/broadcast/teamDiscussion/teamDiscussion"));
-const Events = loadable(() => import("pages/broadcast/events"));
-const Whatsapp = loadable(() => import("pages/broadcast/whatsapp"));
-const BrodcastMessage = loadable(() => import("pages/broadcast/brodcastMessage"));
+const Communication = loadable(() => import("pages/communication"));
+const TeamDiscussion = loadable(() => import("pages/communication/team-discussion"));
+const UserGroups = loadable(() => import("pages/communication/user-groups"));
+const ClientGroups = loadable(() => import("pages/communication/client-groups"));
 
 function RoutesContainer() {
   return (
     <Router>
       <Routes>
-        <Route path="particulargroup" element={<ParticularGroups />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
@@ -153,14 +148,11 @@ function RoutesContainer() {
             <Route path="receipts" element={<Receipts />} />
             <Route path="clients" element={<BillingClients />} />
           </Route>
-          <Route path="brodcast" element={<BroadCast />}>
-            <Route path="groups" element={<Groups />} />
-            <Route path="teamdiscussions" element={<TeamDiscussion />} />
-            <Route path="whatsapp" element={<Whatsapp />} />
-            <Route path="events" element={<Events />} />
-            <Route path="brodcastmessage" element={<BrodcastMessage />} />
+          <Route path="communication" element={<Communication />}>
+            <Route path="user-groups" element={<UserGroups />} />
+            <Route path="team-discussion" element={<TeamDiscussion />} />
+            <Route path="client-groups" element={<ClientGroups />} />
           </Route>
-          {/* <Route path="particulargroup" element={<ParticularGroups />} /> */}
           <Route path="billing/estimates/add" element={<AddEstimate />} />
           <Route path="billing/invoices/add" element={<AddInvoice />} />
           <Route path="billing/receipts/add" element={<AddReceipt />} />
@@ -191,7 +183,6 @@ function RoutesContainer() {
               }
             />
           </Route>
-          <Route path="broadcast" element={<Broadcast />} />
           <Route path="forms" element={<Forms />}>
             <Route index element={<FormTemplates />} />
             <Route path="form-validations" element={<FormValidations />} />

@@ -7,8 +7,8 @@ import SearchContainer from "components/SearchContainer";
 import { useState } from "react";
 import { useConfirm } from "context/ConfirmDialog";
 import { useMenu } from "context/MenuPopover";
-import GroupAdd from "views/broadcast/groups/addGroup";
-import EditGroup from "views/broadcast/groups/editGroup";
+import GroupAdd from "views/communication/user-groups/addGroup";
+import EditGroup from "views/communication/user-groups/editGroup";
 import { Link } from "react-router-dom";
 
 const Groups = () => {
@@ -19,7 +19,11 @@ const Groups = () => {
   return (
     <Box px={3} py={2}>
       <Box display="flex" gap={1} justifyContent="flex-start" alignItems="center">
-        <SearchContainer value={search} placeHolder="Search by Name / Client Type" onChange={setSearch} />
+        <SearchContainer
+          value={search}
+          placeHolder="Search by Name / Client Type"
+          onChange={setSearch}
+        />
         <Button sx={{ minWidth: 0 }} variant="outlined">
           <ImportExportIcon />
         </Button>
