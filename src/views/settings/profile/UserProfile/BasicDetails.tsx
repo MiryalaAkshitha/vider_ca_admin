@@ -52,6 +52,12 @@ const BasicDetails = ({ state, setState }) => {
               onChange={handleChange}
               name="mobileNumber"
               label="Mobile Number"
+              inputProps={{
+                pattern: "[0-9]{10}",
+            title: "Enter valid Mobile Number",
+              }
+
+              }
               value={state?.mobileNumber || ""}
             />
           </Grid>

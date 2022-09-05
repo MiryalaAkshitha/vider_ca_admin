@@ -58,6 +58,7 @@ function ProfileDetails() {
   };
 
   return (
+   
     <Box px={4} pt={2} pb={10}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <ProfileImage
@@ -80,5 +81,6 @@ function ProfileDetails() {
     </Box>
   );
 }
-
+      
 export default ProfileDetails;
+  

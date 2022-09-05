@@ -72,9 +72,8 @@ function EditMilestone({ open, setOpen, data, index }: Props) {
           multiline
           value={state.description}
           name="description"
-          label="Description"
-          required
-        />
+          label="Description name"
+        />s
         <FormControlLabel
           sx={{ mt: 1 }}
           label="Does this have a reference number"

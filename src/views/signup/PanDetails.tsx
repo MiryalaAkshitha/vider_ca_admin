@@ -69,6 +69,8 @@ const PanDetails = () => {
       if (data.data.status === "INVALID") {
         return snack.error("Invalid PAN")
       }
+      console.log(response.data)
+
       setState({
         category: data?.data?.category,
         firstName: data?.data?.first_name,
@@ -77,7 +79,7 @@ const PanDetails = () => {
         fullName: data?.data?.full_name,
         legalName: data?.data?.full_name,
         tradeName: data?.data?.tradeName,
-        constitutionOfBusiness: data?.data?.constitutionOfBusiness,
+        dateOfFormation: data?.data?.last_updated,
         buildingName: data?.data?.buildingName,
         street: data?.data?.street,
         city: data?.data?.city,
@@ -152,9 +154,19 @@ const PanDetails = () => {
             fullWidth
           />
           {state.category === "Individual" && (
-            <>
-              <TextField
+            <><TextField
                 sx={{ mt: 2 }}
+                required
+                onChange={handleChange}
+                value={state.lastName}
+                label="Last Name / Surname"
+                size="small"
+                disabled
+                name="lastName"
+                fullWidth
+              />
+              <TextField
+                sx={{ mt: 2 }}  
                 required
                 onChange={handleChange}
                 value={state.firstName}
@@ -174,61 +186,40 @@ const PanDetails = () => {
                 name="middleName"
                 fullWidth
               />
-              <TextField
-                sx={{ mt: 2 }}
+              
+            </>
+          )}
+          {state.category !== ("Individual") &&(
+            <>
+               <TextField
                 required
                 onChange={handleChange}
                 value={state.lastName}
-                label="Last Name"
-                size="small"
+                sx={{ mt: 2 }}
+                label="Surname / Last Name"
+                name="surName"
                 disabled
-                name="lastName"
+                size="small"
                 fullWidth
               />
-            </>
-          )}
-          {state.category === "Company" && (
-            <>
               <TextField
                 sx={{ mt: 2 }}
                 required
                 onChange={handleChange}
                 value={state.fullName}
-                label="Organisation name"
+                label="Organisation Name / Trade Name"
                 size="small"
-                disabled
                 name="legalName"
                 fullWidth
               />
-              <TextField
-                required
-                onChange={handleChange}
-                value={state.tradeName}
-                sx={{ mt: 2 }}
-                label="Trade Name"
-                name="tradeName"
-                disabled
-                size="small"
-                fullWidth
-              />
-              <TextField
-                sx={{ mt: 2 }}
-                label="Constitution of Business"
-                value={state.constitutionOfBusiness}
-                size="small"
-                name="constitutionOfBusiness"
-                onChange={handleChange}
-                disabled
-                fullWidth
-              />
-            </>
+             </>
           )}
           <TextField
             required
             onChange={handleChange}
             value={state.buildingName}
             sx={{ mt: 2 }}
-            label="Building name"
+            label="H.No/Flat/Name of the Premises"
             name="buildingName"
             size="small"
             fullWidth
@@ -238,7 +229,7 @@ const PanDetails = () => {
             onChange={handleChange}
             value={state.street}
             sx={{ mt: 2 }}
-            label="Street"
+            label="Road/Street/Area"
             name="street"
             size="small"
             fullWidth
@@ -247,7 +238,7 @@ const PanDetails = () => {
             required
             onChange={handleChange}
             sx={{ mt: 2 }}
-            label="City"
+            label="Town/City/District"
             name="city"
             value={state.city}
             size="small"
@@ -257,7 +248,7 @@ const PanDetails = () => {
             required
             onChange={handleChange}
             sx={{ mt: 2 }}
-            label="State"
+            label="State/Union Territory"
             name="state"
             value={state.state}
             size="small"
@@ -284,9 +275,9 @@ const PanDetails = () => {
             sx={{ mt: 2 }}
             value={state.pincode}
             name="pincode"
-            label="Pincode"
+            label="Pincode/Zip Code"
             inputProps={{
-            pattern: "[0-9]{6}",
+            pattern: "[0]{1-9}[5]{0-9}",
             title: "Enter valid pincode",
           }}
             size="small"

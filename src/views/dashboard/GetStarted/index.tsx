@@ -45,12 +45,12 @@ const GetStarted = ({ data }: any) => {
           <Grid item xs={6}>
             <Box>
               <Typography variant="subtitle1">
-                Get started with Vider practice management platform
+                Get started with ATOM by Vider
               </Typography>
               <Typography mt={1} variant="body1">
                 The following are the steps to follow to add new users, clients,
                 and services which will help you do the bait functionalities in
-                the vider practice management platform
+                the vider practice management platform 
               </Typography>
             </Box>
           </Grid>
@@ -82,7 +82,7 @@ const GetStarted = ({ data }: any) => {
             img={icons.handshake_PosterImage}
             title="Import clients"
             desc="Import clients with their basic details"
-            btnTitle="Imports clients"
+            btnTitle="Import clients"
             btnAction={() => setOpenAddClient(true)}
           />
           <GetStartedCard

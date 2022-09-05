@@ -95,6 +95,7 @@ function Otp() {
               variant="contained"
               disabled={otp.length !== 4}
               color="secondary"
+            
               onClick={handleVerifyOtp}
               fullWidth
               sx={{ mt: 7 }}
