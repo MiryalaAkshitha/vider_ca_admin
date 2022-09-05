@@ -1,7 +1,7 @@
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getRoles } from "api/services/roles";
-import { getUsers } from "api/services/users";
+import { getAllUsers, getUsers } from "api/services/users";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
@@ -16,12 +16,9 @@ function Users() {
   const [search, setSearch] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
-  const { data, isLoading }: ResType = useQuery("users", getUsers);
+  const { data, isLoading }: ResType = useQuery("all-users", getAllUsers);
 
-  const { data: roles, isLoading: rolesLoading }: ResType = useQuery(
-    "roles",
-    getRoles
-  );
+  const { data: roles, isLoading: rolesLoading }: ResType = useQuery("roles", getRoles);
 
   const getData = () => {
     let result = data?.data || [];

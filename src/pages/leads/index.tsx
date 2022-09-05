@@ -1,5 +1,4 @@
-import { Edit, InfoOutlined } from "@mui/icons-material";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { deleteLeads, getLeads } from "api/services/clients/clients";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
@@ -7,14 +6,13 @@ import Table from "components/Table";
 import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import useTitle from "hooks/useTitle";
+import moment from "moment";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
+import Actions from "views/leads/Actions";
 import AddLead from "views/leads/AddLead";
-import ConverLead from "views/leads/ConvertLead";
-import EditLead from "views/leads/EditLead";
-import ViewLead from "views/leads/ViewLead";
 
 function Leads() {
   useTitle("Leads");
@@ -32,7 +30,7 @@ function Leads() {
   );
 
   const { mutate } = useMutation(deleteLeads, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       snack.success("Leads Deleted");
       queryClient.invalidateQueries("leads");
       setSelected([]);
@@ -83,74 +81,29 @@ function Leads() {
   );
 }
 
-const Actions = ({ data }) => {
-  const [open, setOpen] = useState(false);
-  const [convertOpen, setConvertOpen] = useState(false);
-  const [infoOpen, setInfoOpen] = useState(false);
-  const [selectedLead, setSelectedLead] = useState(null);
-
-  return (
-    <>
-      <Box display="flex" gap={1}>
-        <IconButton
-          size="small"
-          onClick={() => {
-            setSelectedLead(data);
-            setInfoOpen(true);
-          }}
-        >
-          <InfoOutlined />
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={() => {
-            setSelectedLead(data);
-            setOpen(true);
-          }}
-        >
-          <Edit />
-        </IconButton>
-        <Button
-          disabled={data?.status === "converted"}
-          onClick={() => {
-            setSelectedLead(data);
-            setConvertOpen(true);
-          }}
-          sx={{ minWidth: 80 }}
-          color="secondary"
-        >
-          {data?.status === "pending" ? "Convert" : "Converted"}
-        </Button>
-      </Box>
-      <EditLead open={open} setOpen={setOpen} data={selectedLead} />
-      <ConverLead
-        open={convertOpen}
-        setOpen={setConvertOpen}
-        data={selectedLead}
-      />
-      <ViewLead open={infoOpen} setOpen={setInfoOpen} data={selectedLead} />
-    </>
-  );
-};
-
 const columns = [
   {
     key: "category",
     title: "Category",
-    render: (rowData) => getTitle(rowData?.category),
+    render: (rowData: any) => getTitle(rowData?.category),
   },
   {
     key: "subCategory",
     title: "Sub Category",
-    render: (rowData) => getTitle(rowData?.subCategory),
+    render: (rowData: any) => getTitle(rowData?.subCategory),
   },
   { key: "name", title: "Name" },
   { key: "mobileNumber", title: "Mobile Number" },
   { key: "email", title: "Email" },
   {
+    title: "Created On",
+    key: "createdAt",
+    render: (item: any) => moment(item?.createdAt).format("DD-MM-YYYY"),
+  },
+  {
     key: "actions",
     title: "Actions",
-    render: (rowData) => <Actions data={rowData} />,
+    render: (rowData: any) => <Actions data={rowData} />,
   },
 ];
 

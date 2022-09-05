@@ -17,8 +17,7 @@ function ContactPersonDetails({ data }: Props) {
       <Typography color="primary" variant="h6" sx={{ mb: 1 }}>
         Client user details
       </Typography>
-
-      <Grid container>
+      <Grid container spacing={2}>
         {data?.map((item: any, index: number) => (
           <Grid item xl={4} lg={6}>
             <ContactPerson key={index} data={item} />

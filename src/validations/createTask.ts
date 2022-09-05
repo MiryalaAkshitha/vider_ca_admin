@@ -1,6 +1,8 @@
-import { RecurringFrequency } from "data/constants";
 import moment from "moment";
-import { array, boolean, date, mixed, object, string } from "yup";
+import { array, date, mixed, object, string } from "yup";
+
+const currentYear = new Date().getFullYear();
+const currentFinancialYear = currentYear + "-" + (currentYear + 1);
 
 let createTaskDefaultValues = {
   serviceType: "standard",
@@ -14,7 +16,7 @@ let createTaskDefaultValues = {
   startDate: null,
   dueDate: null,
   expectedCompletionDate: null,
-  financialYear: "",
+  financialYear: currentFinancialYear,
   labels: [],
   members: [],
   taskLeader: null,
@@ -23,11 +25,7 @@ let createTaskDefaultValues = {
   feeAmount: "",
   description: "",
   frequency: "",
-  customDates: [],
-  recurringStartDate: null,
-  dueDay: null,
-  recurringEndDate: null,
-  neverExpires: true,
+  dates: [],
 };
 
 let createTaskSchema = ({ subcategoriesExist }: any) =>
@@ -95,61 +93,25 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
     taskLeader: object().nullable().notRequired(),
     priority: string().nullable().notRequired(),
     feeType: string().required("Fee Type is required"),
-    feeAmount: string().notRequired().nullable(),
+    feeAmount: string().required("Fee Amount is required").nullable(),
     description: string().nullable().notRequired(),
     frequency: mixed().when("taskType", {
       is: (taskType: any) => taskType === "recurring",
       then: string().required("Frequency is required"),
       otherwise: string().notRequired(),
     }),
-    customDates: mixed().when(["taskType", "frequency"], {
-      is: (taskType: any, frequency: any) => {
-        return (
-          taskType === "recurring" && frequency === RecurringFrequency.CUSTOM
-        );
-      },
-      then: array().required().min(1, "Select atleast one custom date"),
-      otherwise: array().notRequired(),
-    }),
-    recurringStartDate: mixed().when(["taskType", "frequency"], {
-      is: (taskType: any, frequency: any) => {
-        return (
-          taskType === "recurring" && frequency !== RecurringFrequency.CUSTOM
-        );
-      },
-      then: date()
-        .nullable()
-        .typeError("Invalid date")
-        .required("Recurring start date is required")
-        .min(
-          moment().format("YYYY-MM-DD"),
-          "Start date should be greater than today"
-        ),
-      otherwise: date().nullable().notRequired(),
-    }),
-    dueDay: mixed().when(["taskType", "frequency"], {
-      is: (taskType: any, frequency: any) => {
-        return (
-          taskType === "recurring" && frequency !== RecurringFrequency.CUSTOM
-        );
-      },
-      then: object().nullable().required("Due Day input is required"),
-      otherwise: object().nullable().notRequired(),
-    }),
-    recurringEndDate: date().nullable().notRequired(),
-    neverExpires: mixed().when(["taskType", "frequency", "recurringEndDate"], {
-      is: (taskType: any, frequency: any, recurringEndDate: any) => {
-        return (
-          taskType === "recurring" &&
-          frequency !== RecurringFrequency.CUSTOM &&
-          !recurringEndDate
-        );
-      },
-      then: boolean()
-        .isTrue("Never expires is required or select recurring end date")
-        .required(),
-      otherwise: boolean().notRequired(),
-    }),
+    dates: array()
+      .of(
+        object().shape({
+          startDate: string().required(),
+          dueDate: string().required(),
+        })
+      )
+      .when("taskType", {
+        is: (taskType: any) => taskType === "recurring",
+        then: (schema) => schema.required().min(1),
+        otherwise: array().notRequired(),
+      }),
   });
 
 export { createTaskDefaultValues, createTaskSchema };

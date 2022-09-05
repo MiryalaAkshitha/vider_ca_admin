@@ -70,8 +70,7 @@ function OrganizationDetails({ state, setState }) {
         <Grid item xs={12} sm={6}>
           <DesktopDatePicker
             label="Registration Date"
-            mask="____/__/__"
-            inputFormat="yyyy/MM/dd"
+            inputFormat="dd-MM-yyyy"
             value={state.registrationDate || null}
             onChange={(v) => {
               setState((draft: any) => {

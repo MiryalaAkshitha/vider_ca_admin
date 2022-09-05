@@ -3,7 +3,6 @@ import { Avatar, Button, IconButton, LinearProgress } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/system";
-import { logo } from "assets";
 import { useUserData } from "context/UserProfile";
 import AccountMenu from "layout/primarylayout/AccountMenu";
 import { useState } from "react";
@@ -18,15 +17,10 @@ function Appbar() {
   const navigate = useNavigate();
 
   return (
-    <MuiAppBar color="default" position="fixed">
+    <MuiAppBar sx={{ width: "calc(100% - 240px)", ml: "240px" }} color="default" position="fixed">
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box display="flex" alignItems="center" gap={3}>
-          <img src={logo} alt="" />
-          <Button
-            onClick={() => navigate("/")}
-            color="primary"
-            startIcon={<ArrowBack />}
-          >
+          <Button onClick={() => navigate("/")} color="primary" startIcon={<ArrowBack />}>
             Settings
           </Button>
         </Box>

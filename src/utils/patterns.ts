@@ -13,5 +13,4 @@ export let ifscPattern = /^[A-Z]{4}[0-9]{7}$/;
 
 export let upiAddress = /^([a-zA-Z0-9]{2,})@([a-zA-Z0-9]{2,})$/;
 
-export let passwordPattern =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,}).*$/;
+export let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,}).*$/;

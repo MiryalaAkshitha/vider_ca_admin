@@ -115,7 +115,7 @@ function TaskItem({ data }: Props) {
       >
         <Box display="flex" gap={1} justifyContent="space-between">
           <Typography variant="body2" color="gray">
-            {data?.taskNumber} {data?.id}
+            {data?.taskNumber}
           </Typography>
           <Typography variant="caption" color="gray">
             {data?.client?.displayName}
@@ -123,54 +123,27 @@ function TaskItem({ data }: Props) {
         </Box>
         <Box mt={2}>
           <Typography variant="body1" gutterBottom color="primary">
-            {data?.name} -{" "}
-            <span style={{ color: data?.category?.color }}>
-              {data?.category?.name}
-            </span>
+            {data?.name} - <span style={{ color: data?.category?.color }}>{data?.category?.name}</span>
           </Typography>
           <Box display="flex" justifyContent="space-between">
             <div>
               <Typography variant="caption" color="gray">
-                Due Date:{" "}
-                {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
+                Due Date: {data?.dueDate && moment(data?.dueDate).format("DD MMM YYYY")}
               </Typography>
             </div>
-            {data?.recurring && (
-              <img
-                style={{ textAlign: "right" }}
-                src={icons.recurring}
-                alt=""
-              />
-            )}
+            {data?.recurring && <img style={{ textAlign: "right" }} src={icons.recurring} alt="" />}
           </Box>
           <Typography variant="caption" color="gray">
             Sub Tasks: ({data?.subTasks.length})
           </Typography>
         </Box>
       </Box>
-      <Box
-        display="flex"
-        px={1}
-        py={1}
-        mt={1}
-        gap="10px"
-        borderTop="1px solid rgba(0,0,0,0.1)"
-      >
-        {data?.priority !== "none" && (
-          <PriorityText variant="body2" text={data?.priority} />
-        )}
-        <Box
-          onClick={handleEndTimer}
-          display="flex"
-          alignItems="center"
-          gap="5px"
-        >
+      <Box display="flex" px={1} py={1} mt={1} gap="10px" borderTop="1px solid rgba(0,0,0,0.1)">
+        {data?.priority !== "none" && <PriorityText variant="body2" text={data?.priority} />}
+        <Box onClick={handleEndTimer} display="flex" alignItems="center" gap="5px">
           {showTimer ? (
             <>
-              <StopCircleOutlinedIcon
-                titleAccess="End Timer"
-                sx={{ fontSize: 16, cursor: "pointer" }}
-              />
+              <StopCircleOutlinedIcon titleAccess="End Timer" sx={{ fontSize: 16, cursor: "pointer" }} />
               <Timer startTime={startTime} />
             </>
           ) : (
@@ -195,9 +168,7 @@ function TaskItem({ data }: Props) {
         <Box sx={{ p: "6px", borderTop: "1px solid rgba(0,0,0,0.1)" }}>
           {_.some(data?.approvals, { status: "APPROVED" }) ? (
             <>
-              <Typography variant="body2">
-                {getApprovalUpdate(data?.approvals)}
-              </Typography>
+              <Typography variant="body2">{getApprovalUpdate(data?.approvals)}</Typography>
               <Typography variant="caption" color="rgba(0,0,0,0.5)">
                 Last Updated on {getLastApprovedDate(data?.approvals)}
               </Typography>

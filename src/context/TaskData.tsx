@@ -29,7 +29,7 @@ function TaskDataProvider({ children }) {
   if (!taskData || error) {
     return (
       <Box maxWidth={500} margin="auto" mt={5}>
-        <Alert severity="error">{error?.message}</Alert>
+        <Alert severity="error">{error?.response?.data?.message}</Alert>
       </Box>
     );
   }

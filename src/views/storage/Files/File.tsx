@@ -46,22 +46,13 @@ function File(props: Props) {
   return (
     <>
       <StyledFile
-        onDoubleClick={() => {
-          window.open(data?.fileUrl);
-        }}
+        onDoubleClick={() => window.open(data?.fileUrl)}
         draggable={true}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         dragging={dragging ? 1 : 0}
       >
-        <Box
-          width="100%"
-          display="flex"
-          flex={1}
-          minHeight="200px"
-          justifyContent="center"
-          alignItems="center"
-        >
+        <Box width="100%" display="flex" flex={1} justifyContent="center" alignItems="center">
           {renderFile(data)}
         </Box>
         <Box bgcolor="#FBF9F2" p={1} display="flex" gap={1} alignItems="center">
@@ -82,11 +73,7 @@ function File(props: Props) {
           </IconButton>
         </Box>
       </StyledFile>
-      <FolderMenu
-        contextMenu={contextMenu}
-        setContextMenu={setContextMenu}
-        data={data}
-      />
+      <FolderMenu contextMenu={contextMenu} setContextMenu={setContextMenu} data={data} />
     </>
   );
 }

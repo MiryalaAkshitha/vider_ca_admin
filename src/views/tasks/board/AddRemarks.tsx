@@ -2,18 +2,23 @@ import { Close } from "@mui/icons-material";
 import {
   AppBar,
   Drawer,
+  FormControl,
+  FormControlLabel,
   IconButton,
+  Radio,
+  RadioGroup,
   TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { updateTask } from "api/services/tasks/tasks";
+import { addRemark, updateTask } from "api/services/tasks/tasks";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { DialogProps } from "types";
+import { DialogProps, SubmitType } from "types";
+import { handleError } from "utils/handleError";
 
 interface AddRemarksProps extends DialogProps {
   remarksPromise: Function[];
@@ -22,19 +27,21 @@ interface AddRemarksProps extends DialogProps {
 
 function AddRemarks(props: AddRemarksProps) {
   const { open, setOpen, remarksPromise, onHoldTaskId } = props;
-
-  const [remarks, setRemarks] = useState<string>("");
+  const [state, setState] = useState({
+    remarks: "",
+    remarkType: "",
+  });
   const [resolve, reject] = remarksPromise;
 
-  const { mutate, isLoading } = useMutation(updateTask, {
+  const { mutate, isLoading } = useMutation(addRemark, {
     onSuccess: () => {
       setOpen(false);
-      setRemarks("");
+      setState({ remarks: "", remarkType: "" });
       resolve();
     },
     onError: (err: any) => {
       reject();
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -43,9 +50,9 @@ function AddRemarks(props: AddRemarksProps) {
     reject();
   };
 
-  const handleSubmit = () => {
-    if (!remarks) return snack.error("Write something down");
-    mutate({ id: onHoldTaskId!, data: { remarks } });
+  const handleSubmit = (e: SubmitType) => {
+    e.preventDefault();
+    mutate({ id: onHoldTaskId!, data: state });
   };
 
   return (
@@ -59,29 +66,54 @@ function AddRemarks(props: AddRemarksProps) {
         </Toolbar>
       </AppBar>
       <Box p={2}>
-        <TextField
-          sx={{ mt: 2 }}
-          variant="outlined"
-          fullWidth
-          onChange={(e) => setRemarks(e.target.value)}
-          value={remarks}
-          size="small"
-          label="Remarks"
-          InputLabelProps={{ shrink: true }}
-          placeholder="Write something here..."
-          multiline
-          rows={5}
-        />
-        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-          <LoadingButton
-            onClick={handleSubmit}
-            loading={isLoading}
+        <form onSubmit={handleSubmit}>
+          <FormControl>
+            <RadioGroup
+              value={state.remarkType}
+              onChange={(e) => setState({ ...state, remarkType: e.target.value })}
+            >
+              <FormControlLabel
+                value="pending_at_client"
+                control={<Radio required />}
+                label="Pending at client"
+              />
+              <FormControlLabel
+                value="pending_at_assignee"
+                control={<Radio required />}
+                label="Pending at assignee"
+              />
+              <FormControlLabel
+                value="pending_at_department"
+                control={<Radio required />}
+                label="Pending at department"
+              />
+            </RadioGroup>
+          </FormControl>
+          <TextField
+            sx={{ mt: 2 }}
+            variant="outlined"
             fullWidth
-            loadingColor="white"
-            title="Add Remarks"
-            color="secondary"
+            onChange={(e) => setState({ ...state, remarks: e.target.value })}
+            value={state.remarks}
+            size="small"
+            label="Remarks"
+            required
+            InputLabelProps={{ shrink: true }}
+            placeholder="Write something here..."
+            multiline
+            rows={5}
           />
-        </Box>
+          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+            <LoadingButton
+              loading={isLoading}
+              fullWidth
+              type="submit"
+              loadingColor="white"
+              title="Add Remarks"
+              color="secondary"
+            />
+          </Box>
+        </form>
       </Box>
     </Drawer>
   );

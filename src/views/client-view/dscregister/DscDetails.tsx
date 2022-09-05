@@ -1,3 +1,4 @@
+import { DesktopDatePicker } from "@mui/lab";
 import { Grid, TextField, Typography } from "@mui/material";
 import PasswordField from "views/login/PasswordField";
 
@@ -60,15 +61,14 @@ function DscDetails({ state, setState }) {
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="small"
-            type="date"
-            label="DSC Expiry Date"
-            name="expiryDate"
-            value={state?.expiryDate}
-            onChange={handleChange}
+          <DesktopDatePicker
+            label="Expiry Date"
+            inputFormat="dd-MM-yyyy"
+            value={state.expiryDate}
+            onChange={(value) => {
+              setState({ ...state, expiryDate: value });
+            }}
+            renderInput={(params) => <TextField fullWidth size="small" {...params} />}
           />
         </Grid>
         <Grid item xs={4}>

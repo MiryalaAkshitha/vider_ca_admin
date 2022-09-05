@@ -1,15 +1,7 @@
-import {
-  Autocomplete,
-  Checkbox,
-  FormControlLabel,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { DesktopDatePicker } from "@mui/lab";
+import { Autocomplete, Checkbox, FormControlLabel, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import {
-  createDscRegister,
-  getClients,
-} from "api/services/clients/dsc-register";
+import { createDscRegister, getClients } from "api/services/clients/dsc-register";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -26,7 +18,7 @@ interface StateProps {
   holderName: string;
   email: string;
   mobileNumber: string;
-  expiryDate: string;
+  expiryDate: string | null;
   password: string;
   tokenNumber: string;
   panNumber: string;
@@ -39,7 +31,7 @@ let initialState = {
   holderName: "",
   email: "",
   mobileNumber: "",
-  expiryDate: "",
+  expiryDate: null,
   password: "",
   tokenNumber: "",
   panNumber: "",
@@ -53,13 +45,9 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [getDetails, setGetDetails] = useState<boolean>(false);
 
-  const { data, isLoading }: ResType = useQuery(
-    ["dsc-register-clients"],
-    getClients,
-    {
-      enabled: open,
-    }
-  );
+  const { data, isLoading }: ResType = useQuery(["dsc-register-clients"], getClients, {
+    enabled: open,
+  });
 
   const handleChange = (e: any) => {
     let { name, value } = e.target;
@@ -75,9 +63,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   const handleClientUserChange = (e: any) => {
-    let clientUser = state?.client?.contactPersons?.find(
-      (item: any) => item.id === +e.target.value
-    );
+    let clientUser = state?.client?.contactPersons?.find((item: any) => item.id === +e.target.value);
     setState({
       ...state,
       contactPerson: clientUser?.id,
@@ -108,7 +94,14 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add DSC Register">
+    <DrawerWrapper
+      open={open}
+      setOpen={() => {
+        setOpen(false);
+        setState(_.cloneDeep(initialState));
+      }}
+      title="Add DSC Register"
+    >
       {isLoading ? (
         <Loader />
       ) : (
@@ -162,13 +155,11 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               label="Client User"
               size="small"
             >
-              {state?.client?.contactPersons?.map(
-                (item: any, index: number) => (
-                  <MenuItem key={index} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                )
-              )}
+              {state?.client?.contactPersons?.map((item: any, index: number) => (
+                <MenuItem key={index} value={item.id}>
+                  {item.name}
+                </MenuItem>
+              ))}
             </TextField>
           )}
           <TextField
@@ -223,20 +214,17 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
             size="small"
             label="DSC Holder Designation"
           />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="expiryDate"
-            required
-            type="date"
-            onChange={handleChange}
-            value={state.expiryDate}
-            size="small"
+          <DesktopDatePicker
             label="Expiry Date"
-            InputLabelProps={{
-              shrink: true,
+            inputFormat="dd-MM-yyyy"
+            value={state.expiryDate}
+            onChange={(value) => {
+              setState({
+                ...state,
+                expiryDate: value,
+              });
             }}
+            renderInput={(params) => <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />}
           />
           <TextField
             sx={{ mt: 3 }}

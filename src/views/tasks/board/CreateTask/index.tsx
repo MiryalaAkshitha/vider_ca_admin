@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Close } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 import { createTask } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
@@ -12,10 +12,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { handleError } from "utils/handleError";
-import {
-  createTaskDefaultValues,
-  createTaskSchema,
-} from "validations/createTask";
+import { createTaskDefaultValues, createTaskSchema } from "validations/createTask";
 import CommonFields from "./CommonFields";
 import CustomCommonFields from "./CustomCommonFields";
 import NonRecurringFields from "./NonRecurringFields";
@@ -32,17 +29,15 @@ interface Props extends DialogProps {
 function CreateTask({ open, setOpen, successCb }: Props) {
   const queryClient = useQueryClient();
   const [openSelectAppHier, setOpenSelectAppHier] = useState(false);
-  const { users, labels, categories, clients, loading } =
-    useCreateTaskInitialData({ enabled: open });
+  const { users, labels, categories, clients, loading } = useCreateTaskInitialData({ enabled: open });
 
   const subcategoriesExist = (category: any) => {
-    return categories?.data?.find((item: any) => item.id === parseInt(category))
-      ?.subCategories?.length;
+    return categories?.data?.find((item: any) => item.id === parseInt(category))?.subCategories?.length;
   };
 
   const { watch, control, handleSubmit, setValue, reset } = useForm({
     defaultValues: createTaskDefaultValues,
-    mode: "onChange",
+    mode: "all",
     resolver: yupResolver(createTaskSchema({ subcategoriesExist })),
   });
 
@@ -62,26 +57,27 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   const onFormSubmit = (data: any) => {
     let apiData = { ...data };
     apiData.client = data.client?.map((client: any) => parseInt(client.value));
-    apiData.members = data.members?.map((member: any) =>
-      parseInt(member.value)
-    );
+    apiData.members = data.members?.map((member: any) => parseInt(member.value));
     apiData.labels = data.labels?.map((label: any) => parseInt(label.value));
     apiData.category = parseInt(data.category);
     apiData.subCategory = parseInt(data.subCategory);
     apiData.taskLeader = parseInt(data.taskLeader);
     apiData.feeAmount = parseFloat(data?.feeAmount);
     apiData.service = data?.service?.id;
-    apiData.dueDay = parseInt(data.dueDay?.value);
-    apiData.recurringEndDate = data?.neverExpires
-      ? null
-      : data.recurringEndDate;
     apiData.approvalHierarchy = data?.approvalHierarchy?.id ?? null;
     apiData.taskLeader = parseInt(data?.taskLeader?.value) ?? null;
     mutate(apiData);
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
+    <DrawerWrapper
+      open={open}
+      setOpen={() => {
+        reset(createTaskDefaultValues);
+        setOpen(false);
+      }}
+      title="Create Task"
+    >
       {loading ? (
         <Loader />
       ) : (
@@ -101,48 +97,35 @@ function CreateTask({ open, setOpen, successCb }: Props) {
             />
           </Box>
           {watch("serviceType") === "custom" && (
-            <CustomCommonFields
-              control={control}
-              watch={watch}
-              categories={categories}
-            />
+            <CustomCommonFields control={control} watch={watch} categories={categories} />
           )}
           {watch("taskType") === "recurring" && (
-            <RecurringFields control={control} watch={watch} />
+            <RecurringFields control={control} watch={watch} setValue={setValue} />
           )}
-          {watch("taskType") === "non_recurring" && (
-            <NonRecurringFields control={control} />
-          )}
-          <CommonFields
-            control={control}
-            watch={watch}
-            labels={labels}
-            users={users}
-            setValue={setValue}
-          />
-          {watch("approvalHierarchy") && (
-            <StyledSelectedBox>
-              <Box display="flex" gap={1} alignItems="center">
-                <Typography variant="caption">Approval Hierarchy -</Typography>
+          {watch("taskType") === "non_recurring" && <NonRecurringFields control={control} />}
+          <CommonFields control={control} watch={watch} labels={labels} users={users} setValue={setValue} />
+          <Box mt={2}>
+            <Typography color="rgba(0, 0, 0, 0.54)" variant="caption">
+              Approval Hierarchy Details
+            </Typography>
+            {watch("approvalHierarchy") ? (
+              <StyledSelectedBox sx={{ mt: "4px" }}>
                 <Typography variant="subtitle2">
-                  {watch<any>("approvalHierarchy")?.name}
+                  {watch<any>("approvalHierarchy")?.name} - Levels (
+                  {watch<any>("approvalHierarchy")?.approvalLevels?.length})
                 </Typography>
-              </Box>
-              <IconButton
-                onClick={() => setValue("approvalHierarchy", null)}
-                size="small"
-              >
-                <Close fontSize="small" />
-              </IconButton>
-            </StyledSelectedBox>
-          )}
-          {!watch("approvalHierarchy") && (
-            <StyledSelectBox onClick={() => setOpenSelectAppHier(true)}>
-              <Typography variant="body1" color="rgba(0,0,0,0.5)">
-                Select Approval Hierarchy
-              </Typography>
-            </StyledSelectBox>
-          )}
+                <IconButton onClick={() => setOpenSelectAppHier(true)} size="small">
+                  <Edit fontSize="small" />
+                </IconButton>
+              </StyledSelectedBox>
+            ) : (
+              <StyledSelectBox sx={{ mt: "4px" }} onClick={() => setOpenSelectAppHier(true)}>
+                <Typography variant="body1" color="rgba(0,0,0,0.5)">
+                  Select Approval Hierarchy
+                </Typography>
+              </StyledSelectBox>
+            )}
+          </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}

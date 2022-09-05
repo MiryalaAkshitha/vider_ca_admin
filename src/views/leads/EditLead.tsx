@@ -155,7 +155,6 @@ function EditLead({ open, setOpen, data }: Props) {
           variant="outlined"
           fullWidth
           name="description"
-          required
           rows={4}
           multiline
           onChange={handleChange}

@@ -63,13 +63,7 @@ function Tasks() {
       {isLoading ? (
         <Loader />
       ) : data?.data?.length ? (
-        <>
-          {view === "grid" ? (
-            <Board data={data.data} />
-          ) : (
-            <TaskTable data={data.data} />
-          )}
-        </>
+        <>{view === "grid" ? <Board data={data.data} /> : <TaskTable data={data.data} />}</>
       ) : (
         <Box textAlign="center" mt={20}>
           <Typography variant="subtitle1" color="rgba(0,0,0,0.5)">

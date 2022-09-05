@@ -50,7 +50,7 @@ function Events() {
         ) : (
           <NoItems
             img={noEvents}
-            title="Add a Events in your task"
+            title="Add an Event in your task"
             desc="Adding events will enhance the performance and meet deadlines"
             btnTitle="Add event"
             btnAction={() => setOpen(true)}

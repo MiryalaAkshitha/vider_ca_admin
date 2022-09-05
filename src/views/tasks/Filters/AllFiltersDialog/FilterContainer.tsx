@@ -1,10 +1,6 @@
 import { Box, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleCustomDates,
-  handleFilters,
-  selectTaskBoard,
-} from "redux/reducers/taskboardSlice";
+import { handleCustomDates, handleFilters, selectTaskBoard } from "redux/reducers/taskboardSlice";
 import { getTitle } from "utils";
 
 interface FilterProps {
@@ -13,8 +9,7 @@ interface FilterProps {
 
 const FilterContainer = ({ items }: FilterProps) => {
   const dispatch = useDispatch();
-  const { selected, selectedFilters, appliedFilters } =
-    useSelector(selectTaskBoard);
+  const { selected, selectedFilters, appliedFilters } = useSelector(selectTaskBoard);
 
   const onChange = (e: any, label: string) => {
     dispatch(
@@ -44,10 +39,8 @@ const FilterContainer = ({ items }: FilterProps) => {
           <FormControlLabel
             control={
               <Checkbox
-                defaultChecked={Boolean(
-                  appliedFilters[selected].find(
-                    (filter: any) => filter.value === item.value
-                  )
+                checked={Boolean(
+                  selectedFilters[selected].find((filter: any) => filter.value === item.value)
                 )}
                 value={item.value}
                 onChange={(e) => onChange(e, getTitle(item.label))}
@@ -57,11 +50,7 @@ const FilterContainer = ({ items }: FilterProps) => {
           />
         </div>
       ))}
-      {Boolean(
-        selectedFilters[selected].find(
-          (filter: any) => filter.value === "custom"
-        )
-      ) && (
+      {Boolean(selectedFilters[selected].find((filter: any) => filter.value === "custom")) && (
         <Box mt={1}>
           <TextField
             sx={{ width: "80%" }}

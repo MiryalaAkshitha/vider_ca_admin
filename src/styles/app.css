@@ -76,6 +76,11 @@ a.fc-event {
 .fc-popover {
   z-index: 1 !important;
 }
+#freshworks-container iframe {
+  right: 147px !important;
+  bottom: -5px !important;
+  z-index: 100 !important;
+}
 
 /*** MENTIONS ***/
 .mentions_input {
@@ -113,4 +118,15 @@ a.fc-event {
 }
 .Toastify__toast {
   font-family: muli_medium !important;
+}
+.Toastify__toast-container {
+  min-width: 350px;
+  max-width: 700px;
+  width: auto;
+}
+.Toastify__toast-body {
+  font-size: 14px !important;
+}
+.fc-header-toolbar {
+  margin-bottom: 0.5rem !important;
 }

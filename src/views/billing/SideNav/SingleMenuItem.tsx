@@ -16,9 +16,7 @@ const SingleMenuItem = ({ item }: any) => {
           }),
         }}
       >
-        <ListItemText
-          primary={<Typography variant="body2">{item?.title}</Typography>}
-        />
+        <ListItemText primary={<Typography variant="body2">{item?.title}</Typography>} />
       </ListItemButton>
     </Link>
   );

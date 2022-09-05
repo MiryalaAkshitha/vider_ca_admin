@@ -1,11 +1,4 @@
-import {
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Checkbox, FormControlLabel, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
 import Loader from "components/Loader";
@@ -24,9 +17,7 @@ function BasicDetails() {
 
   const { data, isLoading }: ResType = useQuery("categories", getCategories);
 
-  const subCategories = data?.data?.find(
-    (item: any) => item.id === state.category
-  )?.subCategories;
+  const subCategories = data?.data?.find((item: any) => item.id === state.category)?.subCategories;
 
   const onChange = (e: any) => {
     dispatch(
@@ -49,14 +40,7 @@ function BasicDetails() {
           <Typography mb={1} variant="body2" color="primary">
             Select Category
           </Typography>
-          <TextField
-            name="category"
-            value={state.category}
-            onChange={onChange}
-            fullWidth
-            size="small"
-            select
-          >
+          <TextField name="category" value={state.category} onChange={onChange} fullWidth size="small" select>
             {data?.data.map((option: any, index: any) => (
               <MenuItem key={index} value={option.id}>
                 {option.name}
@@ -87,7 +71,7 @@ function BasicDetails() {
         )}
         <Box mt={3}>
           <Typography mb={1} variant="body2" color="primary">
-            Name
+            Service Name
           </Typography>
           <TextField
             value={state.name}
@@ -106,12 +90,7 @@ function BasicDetails() {
             <Grid item xs={6}>
               <FormControlLabel
                 label="Hourly Price"
-                control={
-                  <Checkbox
-                    checked={hourlyPrice}
-                    onChange={() => setHourlyPrice(!hourlyPrice)}
-                  />
-                }
+                control={<Checkbox checked={hourlyPrice} onChange={() => setHourlyPrice(!hourlyPrice)} />}
               />
               {hourlyPrice && (
                 <TextField
@@ -129,12 +108,7 @@ function BasicDetails() {
             <Grid item xs={6}>
               <FormControlLabel
                 label="Total Price"
-                control={
-                  <Checkbox
-                    checked={totalPrice}
-                    onChange={() => setTotalPrice(!totalPrice)}
-                  />
-                }
+                control={<Checkbox checked={totalPrice} onChange={() => setTotalPrice(!totalPrice)} />}
               />
               {totalPrice && (
                 <TextField

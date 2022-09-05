@@ -29,7 +29,7 @@ import ReactQuill from "lib/react-quill";
 function EditEvent({ data, open, setOpen }) {
   const queryClient = useQueryClient();
 
-  const { control, watch, handleSubmit, reset } = useForm({
+  const { control, watch, handleSubmit, reset, setValue } = useForm({
     defaultValues: addCalendarEventDefaultValues,
     mode: "onChange",
     resolver: yupResolver(AddCalendarEventSchema()),
@@ -43,13 +43,13 @@ function EditEvent({ data, open, setOpen }) {
             label: data?.client?.displayName,
             value: data?.client?.id,
           }
-        : "",
+        : null,
       task: data?.task
         ? {
             label: data?.task?.name,
             value: data?.task?.id,
           }
-        : "",
+        : null,
       members:
         data?.members?.map((member: any) => ({
           label: member.fullName,
@@ -60,19 +60,15 @@ function EditEvent({ data, open, setOpen }) {
     });
   }, [data, reset]);
 
-  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
-    ["clients", {}],
-    getClients,
-    {
-      enabled: open,
-    }
-  );
+  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(["clients"], getClients, {
+    enabled: open && watch("type") === "TASK",
+  });
 
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["tasks", {}],
+    ["tasks", { client: watch<any>("client")?.value }],
     getTasks,
     {
-      enabled: open,
+      enabled: open && watch("type") === "TASK" && Boolean(watch("client")),
     }
   );
 
@@ -92,29 +88,17 @@ function EditEvent({ data, open, setOpen }) {
     apiData.client = apiData?.client?.value;
     apiData.task = apiData?.task?.value;
     apiData.members = apiData?.members?.map((user: any) => user.value);
-    apiData.reminder = reminderCheck ? apiData.reminder : "";
+    apiData.reminder = reminderCheck ? apiData.reminder : null;
     apiData.date = moment(apiData.date).format("YYYY-MM-DD");
 
     mutate({
       id: data?.id,
-      data: {
-        ...apiData,
-      },
+      data: { ...apiData },
     });
   };
 
-  let clientTasks = tasks?.data
-    ?.filter(
-      (item: any) => item?.client?.id === parseInt(watch<any>("client")?.value)
-    )
-    ?.map((item: any) => ({
-      label: item.name,
-      value: item.id,
-    }));
-
   let taskMembers =
-    tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)
-      ?.members || [];
+    tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)?.members || [];
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Update an Event">
@@ -126,6 +110,7 @@ function EditEvent({ data, open, setOpen }) {
             <>
               <FormAutoComplete
                 control={control}
+                trigger={() => setValue("task", null)}
                 label="Client"
                 name="client"
                 options={clients?.data?.result?.map((item: any) => ({
@@ -139,7 +124,10 @@ function EditEvent({ data, open, setOpen }) {
                     control={control}
                     label="Task"
                     name="task"
-                    options={clientTasks}
+                    options={tasks?.data?.map((item: any) => ({
+                      label: item.name,
+                      value: item.id,
+                    }))}
                   />
                 </Box>
               )}
@@ -171,11 +159,7 @@ function EditEvent({ data, open, setOpen }) {
           <Box mt={2}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <FormTime
-                  name="startTime"
-                  control={control}
-                  label="Start Time"
-                />
+                <FormTime name="startTime" control={control} label="Start Time" />
               </Grid>
               <Grid item xs={6}>
                 <FormTime name="endTime" control={control} label="End Time" />
@@ -183,11 +167,7 @@ function EditEvent({ data, open, setOpen }) {
             </Grid>
           </Box>
           <Box mt={2}>
-            <FormCheckbox
-              name="reminderCheck"
-              control={control}
-              label="Set Reminder"
-            />
+            <FormCheckbox name="reminderCheck" control={control} label="Set Reminder" />
           </Box>
           {watch("reminderCheck") && (
             <Box mt={2}>

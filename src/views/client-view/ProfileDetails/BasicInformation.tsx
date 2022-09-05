@@ -108,7 +108,7 @@ const BasicInformation = ({ data, setState }) => {
               name="clientManager"
               fullWidth
               variant="outlined"
-              value={data?.clientManager?.id || data?.clientManager || ""}
+              value={data?.clientManager || ""}
               size="small"
               onChange={handleChange}
               select

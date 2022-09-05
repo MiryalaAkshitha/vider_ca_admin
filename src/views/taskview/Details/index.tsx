@@ -1,16 +1,18 @@
-import { Autocomplete, Box, Grid } from "@mui/material";
+import { DesktopDatePicker } from "@mui/lab";
+import { Autocomplete, Box, Grid, Typography } from "@mui/material";
 import { updateTask } from "api/services/tasks/tasks";
 import BottomBar from "components/BottomBar";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
 import ValidateAccess from "components/ValidateAccess";
 import { useTaskData } from "context/TaskData";
+import { PriorityEnum, TaskStatus } from "data/constants";
+import { Permissions } from "data/permissons";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { getTitle } from "utils";
 import { getFinancialYears } from "utils/getFinancialYears";
-import { PriorityEnum, TaskStatus } from "data/constants";
-import { Permissions } from "data/permissons";
 import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
@@ -133,21 +135,27 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Start Date">
-              <CustomTextField
-                value={state?.taskStartDate || ""}
-                onChange={handleChange}
-                type="date"
-                name="taskStartDate"
+              <DesktopDatePicker
+                inputFormat="dd-MM-yyyy"
+                value={state.taskStartDate}
+                onChange={(v: any) => {
+                  let date = moment(v).format("YYYY-MM-DD");
+                  setState({ ...state, taskStartDate: date });
+                }}
+                renderInput={(params) => <StyledTextField fullWidth size="small" {...params} />}
               />
             </DetailSection>
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Due Date">
-              <CustomTextField
-                value={state?.dueDate || ""}
-                onChange={handleChange}
-                type="date"
-                name="dueDate"
+              <DesktopDatePicker
+                inputFormat="dd-MM-yyyy"
+                value={state.dueDate}
+                onChange={(v: any) => {
+                  let date = moment(v).format("YYYY-MM-DD");
+                  setState({ ...state, dueDate: date });
+                }}
+                renderInput={(params) => <StyledTextField fullWidth size="small" {...params} />}
               />
             </DetailSection>
           </Grid>
@@ -197,9 +205,7 @@ function Details() {
           <Grid item xs={6}>
             <DetailSection label="Task Leader">
               <Autocomplete
-                onChange={(_, value) =>
-                  setState({ ...state, taskLeader: value })
-                }
+                onChange={(_, value) => setState({ ...state, taskLeader: value })}
                 value={state?.taskLeader || null}
                 options={users?.data || []}
                 isOptionEqualToValue={(option, value) => {
@@ -230,9 +236,7 @@ function Details() {
           <Grid item xs={6}>
             <DetailSection label="Financial Year">
               <Autocomplete
-                onChange={(_, value) =>
-                  setState({ ...state, financialYear: value })
-                }
+                onChange={(_, value) => setState({ ...state, financialYear: value })}
                 getOptionLabel={(option) => option}
                 value={state?.financialYear || ""}
                 options={getFinancialYears()}
@@ -278,19 +282,38 @@ function Details() {
               />
             </DetailSection>
           </Grid>
-          <Grid item xs={6}>
-            <DetailSection label="Remarks">
-              <CustomTextField
-                value={state?.remarks || ""}
-                onChange={handleChange}
-                name="remarks"
-              />
-            </DetailSection>
+          <Grid item xs={12}>
+            <Box sx={{ borderBottom: "1px dashed rgba(0,0,0,0.1)" }}>
+              <Typography gutterBottom variant="body1">
+                Remarks
+              </Typography>
+            </Box>
+            <Box>
+              <ol>
+                {state?.activity?.map((item: any, index: number) => (
+                  <li key={index} style={{ marginBottom: 20 }}>
+                    <Typography gutterBottom variant="body1">
+                      {item.remarks} -{" "}
+                      <span style={{ fontSize: 12 }}>{getTitle(item?.remarkType)}</span>
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      variant="body2"
+                      sx={{ fontSize: 12, color: "rgba(0,0,0,0.5)" }}
+                    >
+                      Created By {item.user?.fullName} on{" "}
+                      {moment(item.createdAt).format("DD-MM-YYYY")}
+                    </Typography>
+                  </li>
+                ))}
+              </ol>
+            </Box>
           </Grid>
         </Grid>
       </Box>
       <ValidateAccess name={Permissions.EDIT_TASK}>
         <BottomBar
+          left="72px"
           data={taskData}
           state={state}
           onUpdate={handleUpdate}

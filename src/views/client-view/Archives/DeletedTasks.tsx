@@ -66,7 +66,7 @@ function DeletedTasks({ filters }: Props) {
               title: "Deleted Date",
               render: (row) => {
                 return row?.deletedDate
-                  ? moment(row?.deletedDate).format("MM/DD/YYYY, h:mm a")
+                  ? moment(row?.deletedDate).format("DD-MM-YYYY")
                   : "";
               },
             },

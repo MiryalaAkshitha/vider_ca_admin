@@ -53,7 +53,7 @@ const ViewEvent = ({ open, setOpen, data, from = "calendar" }) => {
   return (
     <>
       <Dialog fullWidth open={open} onClose={() => setOpen(false)}>
-        <Box p={2} sx={{ cursor: "pointer" }}>
+        <Box p={2}>
           <Box
             sx={{
               display: "flex",

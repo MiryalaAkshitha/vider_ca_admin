@@ -9,13 +9,11 @@ function TaskDetails({ taskId }: any) {
     enabled: Boolean(taskId),
   });
 
-  const personName = data?.data?.taskLeader
-    ? data.data.taskLeader.fullName
-    : data?.data?.user?.fullName;
+  const personName = data?.data?.taskLeader ? data.data.taskLeader.fullName : data?.data?.user?.fullName;
   const personNumber = data?.data?.taskLeader
     ? data.data.taskLeader.mobileNumber
     : data?.data?.user?.mobileNumber;
-  const orgName = data?.data?.organization?.organizationName;
+  const orgName = data?.data?.organization?.legalName;
 
   return (
     <Box sx={{ background: "rgba(24, 47, 83, 0.06)", p: 2 }}>
@@ -24,7 +22,7 @@ function TaskDetails({ taskId }: any) {
           <Detail title="Task Name" value={data?.data?.name} />
         </Grid>
         <Grid item xs={4}>
-          <Detail title="Task ID" value={data?.data?.taskId} />
+          <Detail title="Task ID" value={data?.data?.taskNumber} />
         </Grid>
         <Grid item xs={4}>
           <Detail title="Task due date" value={data?.data?.dueDate} />
@@ -36,10 +34,7 @@ function TaskDetails({ taskId }: any) {
           <Detail title="Responsible person name" value={personName || "--"} />
         </Grid>
         <Grid item xs={4}>
-          <Detail
-            title="Responsible person mobile"
-            value={personNumber || "--"}
-          />
+          <Detail title="Responsible person mobile" value={personNumber || "--"} />
         </Grid>
       </Grid>
     </Box>

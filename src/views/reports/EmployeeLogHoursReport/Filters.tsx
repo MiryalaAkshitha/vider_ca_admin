@@ -30,10 +30,7 @@ interface Props {
 function Filters({ state, setState, onSubmit }: Props) {
   const { data, isLoading }: ResType = useQuery(["users"], getUsers);
 
-  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
-    ["clients"],
-    getClients
-  );
+  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(["clients"], getClients);
 
   if (isLoading || clientsLoading) return <Loader />;
 
@@ -43,25 +40,19 @@ function Filters({ state, setState, onSubmit }: Props) {
         <Grid item xs={4}>
           <DesktopDatePicker
             label="From Date"
-            mask="____-__-__"
-            inputFormat="yyyy-MM-dd"
+            inputFormat="dd-MM-yyyy"
             value={state.fromDate}
             onChange={(v) => setState({ ...state, fromDate: v })}
-            renderInput={(params) => (
-              <TextField fullWidth size="small" {...params} />
-            )}
+            renderInput={(params) => <TextField fullWidth size="small" {...params} />}
           />
         </Grid>
         <Grid item xs={4}>
           <DesktopDatePicker
             label="To Date"
-            mask="____-__-__"
-            inputFormat="yyyy-MM-dd"
+            inputFormat="dd-MM-yyyy"
             value={state.toDate}
             onChange={(v) => setState({ ...state, toDate: v })}
-            renderInput={(params) => (
-              <TextField fullWidth size="small" {...params} />
-            )}
+            renderInput={(params) => <TextField fullWidth size="small" {...params} />}
           />
         </Grid>
         <Grid item xs={4}>
@@ -105,9 +96,7 @@ function Filters({ state, setState, onSubmit }: Props) {
         <Grid item xs={8}>
           <Box display="flex" gap={1}>
             <FormControl fullWidth size="small" sx={{ flex: 1 }}>
-              <InputLabel id="demo-multiple-checkbox-label">
-                Employees
-              </InputLabel>
+              <InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
               <Select
                 multiple
                 value={state.users}
@@ -159,12 +148,7 @@ function Filters({ state, setState, onSubmit }: Props) {
           </Box>
         </Grid>
       </Grid>
-      <Button
-        onClick={onSubmit}
-        color="secondary"
-        variant="contained"
-        sx={{ mt: 3 }}
-      >
+      <Button onClick={onSubmit} color="secondary" variant="contained" sx={{ mt: 3 }}>
         Generate Report
       </Button>
     </Paper>

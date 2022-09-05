@@ -100,9 +100,7 @@ function Clients() {
         </Box>
         <Box display="flex" gap={2}>
           {selected.length > 0 && (
-            <ValidateAccess
-              name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}
-            >
+            <ValidateAccess name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}>
               <Button
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 variant="outlined"
@@ -193,7 +191,7 @@ const defaultColumns: Array<ColumnType> = [
     render: (rowData) => {
       return (
         <div>
-          {rowData?.active ? (
+          {rowData.status === "ACTIVE" ? (
             <span style={{ color: "green" }}>Active</span>
           ) : (
             <span style={{ color: "red" }}>Inactive</span>

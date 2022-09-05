@@ -28,7 +28,11 @@ function Report({ data, state, isLoading, isError }) {
   });
 
   const handleExport = () => {
-    mutate(state);
+    mutate({
+      ...state,
+      fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
+      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
+    });
   };
 
   if (isLoading) return <Loader />;
@@ -39,15 +43,10 @@ function Report({ data, state, isLoading, isError }) {
 
   return (
     <Paper sx={{ mt: 2, p: 2 }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        mb={2}
-        alignItems="center"
-      >
+      <Box display="flex" justifyContent="space-between" mb={2} alignItems="center">
         <Box>
           <Typography variant="subtitle2" color="primary">
-            Total number of log hours: {data?.totalLogHours}
+            Total number of hours: {data?.totalLogHours}
           </Typography>
         </Box>
         <Box>

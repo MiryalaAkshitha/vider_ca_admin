@@ -38,20 +38,13 @@ function ConverLead({ open, setOpen, data }: Props) {
     email: "",
   });
 
-  const { data: users, isLoading: userLoading }: ResType = useQuery(
-    "users",
-    getUsers,
-    {
-      enabled: open,
-    }
-  );
+  const { data: users, isLoading: userLoading }: ResType = useQuery("users", getUsers, {
+    enabled: open,
+  });
 
   useEffect(() => {
     if (open) {
-      setState({
-        ...data,
-        displayName: data?.name,
-      });
+      setState({ ...data, displayName: data?.name });
     }
   }, [data, open]);
 
@@ -76,11 +69,7 @@ function ConverLead({ open, setOpen, data }: Props) {
 
   const handleChange = (e: any) => {
     if (e.target.name === "category") {
-      setState({
-        ...state,
-        category: e.target.value,
-        subCategory: null,
-      });
+      setState({ ...state, category: e.target.value, subCategory: null });
       return;
     }
     setState({
@@ -95,10 +84,7 @@ function ConverLead({ open, setOpen, data }: Props) {
       await mutateAsync(state);
       await mutateLead({
         id: data?.id,
-        data: {
-          ...state,
-          status: "converted",
-        },
+        data: { ...state, status: "converted" },
       });
     } catch (err) {
       console.log(err);

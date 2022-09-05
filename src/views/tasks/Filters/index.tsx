@@ -49,7 +49,7 @@ function Filters() {
               color="primary"
               sx={{ border: "1px solid lightgrey", borderRadius: "4px" }}
             >
-              Filters
+              Filter
             </Button>
           </div>
           <View value={view} onChange={handleView} />

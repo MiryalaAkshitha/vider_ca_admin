@@ -102,20 +102,8 @@ function Calendar() {
 
   return (
     <Box px={3} py={1} sx={{ fontFamily: "muli_regular", zIndex: "none" }}>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          mb: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <EventIndication color="#E44652" title="Events by Vider" />
-        <EventIndication color="#149ECD" title="Task due dates" />
-        <EventIndication color="#88B151" title="General Events" />
-      </Box>
       <FullCalendar
+        contentHeight={500}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={[...eventsData(), ...defaultEventsData(), ...tasksData()]}
@@ -131,6 +119,19 @@ function Calendar() {
         displayEventEnd={true}
         eventTextColor="black"
       />
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          mt: 2,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <EventIndication color="#E44652" title="Events by Vider" />
+        <EventIndication color="#149ECD" title="Task due dates" />
+        <EventIndication color="#88B151" title="General Events" />
+      </Box>
       <ValidateAccess name={Permissions.CREATE_CALENDAR}>
         <FloatingButton
           onClick={() => {

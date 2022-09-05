@@ -72,6 +72,7 @@ import clientFormCard from "./images/clientFormCard.png";
 import file from "./icons/file.png";
 import atom_logo from "./images/atom_logo.png";
 import onedrive from "./icons/onedrive.png";
+import folderIcon from "./icons/folder.svg";
 
 export {
   quote,
@@ -151,4 +152,5 @@ export const icons = {
   address,
   file,
   onedrive,
+  folderIcon,
 };

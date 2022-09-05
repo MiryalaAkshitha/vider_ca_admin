@@ -10,13 +10,8 @@ function DscActivity({ data }) {
   const [issueOrReceiveOpen, setIssueOrReceiveOpen] = useState(false);
   const [type, setType] = useState<Type>("issue");
 
-  const issuedData = data?.data?.dscActivity?.filter(
-    (item: any) => item.type === "issue"
-  );
-
-  const receivedData = data?.data?.dscActivity?.filter(
-    (item: any) => item.type === "receive"
-  );
+  const issuedData = data?.data?.dscActivity?.filter((item: any) => item.type === "issue");
+  const receivedData = data?.data?.dscActivity?.filter((item: any) => item.type === "receive");
   return (
     <>
       <Box mt={5}>
@@ -24,8 +19,7 @@ function DscActivity({ data }) {
           <Typography variant="subtitle2" color="primary">
             DSC Issued and Received dates
           </Typography>
-          {data?.data?.status === "received" ||
-          data?.data?.status === "not_issued" ? (
+          {data?.data?.status === "received" || data?.data?.status === "not_issued" ? (
             <Box display="flex" gap={1} alignItems="center">
               <Button
                 onClick={(e) => {
@@ -40,9 +34,7 @@ function DscActivity({ data }) {
               </Button>
               <Typography variant="body2">
                 {data?.data?.status === "received"
-                  ? `(Received on ${moment(data?.data?.receivedDate).format(
-                      "YYYY-MM-DD"
-                    )})`
+                  ? `(Received on ${moment(data?.data?.receivedDate).format("DD-MM-YYYY")})`
                   : "(Not Issued)"}
               </Typography>
             </Box>
@@ -61,8 +53,7 @@ function DscActivity({ data }) {
                 Receive
               </Button>
               <Typography variant="body2">
-                (Issued on {moment(data?.data?.issuedDate).format("YYYY-MM-DD")}
-                )
+                (Issued on {moment(data?.data?.issuedDate).format("DD-MM-YYYY")})
               </Typography>
             </Box>
           )}
@@ -81,7 +72,7 @@ function DscActivity({ data }) {
                   title: "Issued Date",
                   key: "date",
                   render: (row) => {
-                    return moment(row?.date).format("MM/DD/YYYY, h:mm a");
+                    return moment(row?.date).format("DD-MM-YYYY, h:mm a");
                   },
                 },
               ]}
@@ -100,7 +91,7 @@ function DscActivity({ data }) {
                   title: "Received Date",
                   key: "date",
                   render: (row) => {
-                    return moment(row?.date).format("MM/DD/YYYY, h:mm a");
+                    return moment(row?.date).format("DD-MM-YYYY, h:mm a");
                   },
                 },
               ]}
@@ -108,7 +99,6 @@ function DscActivity({ data }) {
           </Grid>
         </Grid>
       </Box>
-
       <IssueOrReceive
         open={issueOrReceiveOpen}
         setOpen={setIssueOrReceiveOpen}

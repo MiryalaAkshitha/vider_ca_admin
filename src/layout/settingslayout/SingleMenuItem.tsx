@@ -10,9 +10,7 @@ const SingleMenuItem = ({ item }: any) => {
     <Link to={item.path} style={{ textDecoration: "none", color: "initial" }}>
       <StyledListItemButton
         selected={false}
-        sx={{
-          opacity: item.path === location.pathname ? 1 : 0.4,
-        }}
+        sx={{ opacity: item.path?.split("?")[0] === location.pathname ? 1 : 0.4 }}
       >
         <ListItemText
           color="white"

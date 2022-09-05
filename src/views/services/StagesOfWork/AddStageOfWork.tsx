@@ -70,7 +70,14 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} title="Add stage of work" setOpen={setOpen}>
+    <DrawerWrapper
+      open={open}
+      title="Add stage of work"
+      setOpen={() => {
+        setState(_.cloneDeep(initialState));
+        setOpen(false);
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
@@ -82,16 +89,8 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
             name="type"
             value={state.type}
           >
-            <FormControlLabel
-              value="STAGE_OF_WORK"
-              control={<Radio />}
-              label="Stage of work"
-            />
-            <FormControlLabel
-              value="DELIVERABLES"
-              control={<Radio />}
-              label="Deliverables"
-            />
+            <FormControlLabel value="STAGE_OF_WORK" control={<Radio />} label="Stage of work" />
+            <FormControlLabel value="DELIVERABLES" control={<Radio />} label="Deliverables" />
           </RadioGroup>
         </FormControl>
         <TextField
@@ -154,9 +153,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
                     size="small"
                     value={item.type}
                   >
-                    <MenuItem value="REFERENCE_NUMBER">
-                      Reference Number
-                    </MenuItem>
+                    <MenuItem value="REFERENCE_NUMBER">Reference Number</MenuItem>
                     <MenuItem value="ATTACHMENT">Attachment</MenuItem>
                   </TextField>
                   <TextField
@@ -181,11 +178,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
                 </Box>
               ))}
               <Box mt={1} textAlign="right">
-                <Button
-                  onClick={handleAdd}
-                  startIcon={<Add />}
-                  color="secondary"
-                >
+                <Button onClick={handleAdd} startIcon={<Add />} color="secondary">
                   Add
                 </Button>
               </Box>

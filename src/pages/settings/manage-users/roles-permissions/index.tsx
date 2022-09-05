@@ -84,7 +84,7 @@ function RolesAndPermissions() {
               key: "createdAt",
               render: (item) => (
                 <Typography variant="body1" color="primary">
-                  {moment(item?.createdAt).format("YYYY-MM-DD")}
+                  {moment(item?.createdAt).format("DD-MM-YYYY")}
                 </Typography>
               ),
             },

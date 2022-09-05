@@ -1,9 +1,7 @@
 import { Add, Delete, Visibility } from "@mui/icons-material";
 import { Alert, Box, Button, IconButton, Typography } from "@mui/material";
-import {
-  deleteDscRegister,
-  getDscRegisters,
-} from "api/services/clients/dsc-register";
+import { deleteDscRegister, getDscRegisters } from "api/services/clients/dsc-register";
+import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
@@ -18,6 +16,7 @@ import { handleError } from "utils/handleError";
 import EditDscRegister from "views/client-view/dscregister/EditDscRegister";
 import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
 import AddDscRegister from "views/dsc-register/AddDscRegister";
+import { NoOfDaysLeftToExpiry } from "./client-view/dsc-register";
 
 function DscRegister() {
   useTitle("Dsc Register");
@@ -58,14 +57,6 @@ function DscRegister() {
           onChange={setSearch}
           placeHolder="Search"
         />
-        <Button
-          onClick={() => setOpen(true)}
-          variant="outlined"
-          color="secondary"
-          startIcon={<Add />}
-        >
-          Add Dsc Register
-        </Button>
       </Box>
       <Table
         data={data?.data?.data || []}
@@ -79,7 +70,9 @@ function DscRegister() {
           setPage: setOffset,
         }}
       />
+
       <AddDscRegister open={open} setOpen={setOpen} />
+      <FloatingButton onClick={() => setOpen(true)} />
     </Box>
   );
 }
@@ -143,10 +136,7 @@ const Actions = ({ data }) => {
             </Button>
             <Typography variant="body2">
               {data?.status === "received"
-                ? `(Received on ${moment
-                    .utc(data?.receivedDate)
-                    .local()
-                    .format("MM/DD/YYYY, h:mm a")})`
+                ? `(Received on ${moment(data?.receivedDate).format("DD-MM-YYYY, h:mm a")})`
                 : "(Not Issued)"}
             </Typography>
           </Box>
@@ -166,12 +156,7 @@ const Actions = ({ data }) => {
               Receive
             </Button>
             <Typography variant="body2">
-              (Issued on{" "}
-              {moment
-                .utc(data?.issuedDate)
-                .local()
-                .format("MM/DD/YYYY, h:mm a")}
-              )
+              (Issued on {moment(data?.issuedDate).format("DD-MM-YYYY, h:mm a")})
             </Typography>
           </Box>
         )}
@@ -190,20 +175,23 @@ const Actions = ({ data }) => {
 const columns = [
   { key: "client.displayName", title: "Client" },
   { key: "holderName", title: "DSC Holder Name" },
-  { key: "expiryDate", title: "Expiry Date" },
+  {
+    key: "expiryDate",
+    title: "Expiry Date",
+    render: (row: any) => {
+      return moment(row?.expiryDate).format("DD-MM-YYYY");
+    },
+  },
   {
     key: "",
     title: "No of days left to expiry",
-    render: (row: any) => {
-      const daysLeft = moment(row.expiryDate).diff(moment(), "days");
-      return (daysLeft > 0 ? daysLeft : 0).toString();
-    },
+    render: (row: any) => <NoOfDaysLeftToExpiry row={row} />,
   },
   { key: "password", title: "Password" },
   {
     key: "actions",
     title: "Actions",
-    render: (rowData) => <Actions data={rowData} />,
+    render: (rowData: any) => <Actions data={rowData} />,
   },
 ];
 

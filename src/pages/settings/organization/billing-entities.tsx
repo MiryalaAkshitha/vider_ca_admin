@@ -1,9 +1,6 @@
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { Box, IconButton, Menu, MenuItem } from "@mui/material";
-import {
-  deleteBillingEntity,
-  getBillingEntity,
-} from "api/services/billingEntity";
+import { deleteBillingEntity, getBillingEntity } from "api/services/billingEntity";
 import EmptyPage from "components/EmptyPage";
 import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
@@ -21,13 +18,11 @@ import AddBillingEntity from "views/settings/organization/BillingEntities/AddBil
 
 const BillingEntities = () => {
   useTitle("BillingEntity");
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data, isLoading }: ResType = useQuery(
-    ["billing-entities"],
-    getBillingEntity
-  );
+  const { data, isLoading }: ResType = useQuery(["billing-entities"], getBillingEntity);
 
   const filteredData = useFilteredData(data?.data, ["legalName"], search);
 
@@ -54,6 +49,9 @@ const BillingEntities = () => {
       </Box>
       <Table
         sx={{ mt: 3 }}
+        onRowClick={(row: any) => {
+          navigate(`/settings/billing-entities/${row?.id}`);
+        }}
         loading={isLoading}
         data={filteredData || []}
         columns={columns}

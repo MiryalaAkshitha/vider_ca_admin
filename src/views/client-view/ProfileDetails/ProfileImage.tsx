@@ -49,14 +49,11 @@ function ProfileImage({ src, onChange }: any) {
             top: -10,
             right: -15,
           }}
+          onClick={() => {
+            inputRef.current?.click();
+          }}
         >
-          <Edit
-            fontSize="small"
-            onClick={() => {
-              inputRef.current?.click();
-            }}
-            sx={{ color: "red" }}
-          />
+          <Edit fontSize="small" sx={{ color: "red" }} />
         </IconButton>
       </StyledProfileImageContainer>
       <input

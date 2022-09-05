@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 import FormDate from "components/FormFields/FormDate";
+import FormSelect from "components/FormFields/FormSelect";
+import { getFinancialYears } from "utils/getFinancialYears";
 
 const NonRecurringFields = ({ control }) => {
   return (
@@ -20,6 +22,18 @@ const NonRecurringFields = ({ control }) => {
           name="expectedCompletionDate"
           control={control}
           label="Expected Completion Date"
+        />
+      </Box>
+      <Box mt={2}>
+        <FormSelect
+          control={control}
+          name="financialYear"
+          label="Finanacial Year"
+          required
+          options={getFinancialYears().map((item) => ({
+            label: item,
+            value: item,
+          }))}
         />
       </Box>
     </>

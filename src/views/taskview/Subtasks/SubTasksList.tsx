@@ -59,12 +59,16 @@ function SubTasksList({ data }: Props) {
                     <Typography variant="body2">{item.name}</Typography>
                   </td>
                   <td>
-                    <FormattedDate variant="body2" date={item.dueDate} />
+                    {item.dueDate ? (
+                      <FormattedDate variant="body2" date={item.dueDate} />
+                    ) : (
+                      "N/A"
+                    )}
                   </td>
                   <td>
                     <Members
                       data={
-                        item?.members?.map((item) => ({
+                        item?.members?.map((item: any) => ({
                           src: "",
                           title: item?.fullName,
                         })) || []
@@ -76,7 +80,7 @@ function SubTasksList({ data }: Props) {
                   </td>
                   <td>
                     <Typography variant="body2">
-                      {getTitle(item.status)}
+                      {getTitle(item?.status)}
                     </Typography>
                   </td>
                 </tr>

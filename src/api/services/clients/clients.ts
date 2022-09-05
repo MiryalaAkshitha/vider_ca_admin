@@ -16,11 +16,11 @@ const getClients = ({ queryKey }: any) => {
 };
 
 const getClient = ({ queryKey }: any) => {
-  return http.get(`/client/${queryKey[1]}`);
+  return http.get(`/client/${queryKey[1]}/details`);
 };
 
 const updateClient = ({ data, id }: any) => {
-  return http.put(`/client/${id}`, data);
+  return http.patch(`/client/${id}/update`, data);
 };
 
 const createContactPerson = (data: any) => {
@@ -74,7 +74,7 @@ const getCompletedTasks = ({ queryKey }) => {
 const getDeletedTasks = ({ queryKey }) => {
   return http.get(`/tasks/deleted-tasks`, {
     params: {
-      clientId: queryKey[1].clientId,
+      clientId: queryKey[1]?.clientId,
     },
   });
 };
@@ -85,6 +85,14 @@ const getTerminatedTasks = ({ queryKey }) => {
       clientId: queryKey[1].clientId,
     },
   });
+};
+
+const getDeletedClients = () => {
+  return http.get("/client/deleted");
+};
+
+const restoreClient = (id: number) => {
+  return http.post(`/client/${id}/restore`);
 };
 
 export {
@@ -105,4 +113,6 @@ export {
   getTerminatedTasks,
   getCompletedTasks,
   getDeletedTasks,
+  getDeletedClients,
+  restoreClient,
 };

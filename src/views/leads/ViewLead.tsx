@@ -12,7 +12,7 @@ function ViewLead({ open, setOpen, data }: Props) {
       width="xs"
       open={open}
       setOpen={setOpen}
-      title="Lead information"
+      title="Lead Description"
     >
       <Typography variant="body2">{data?.description}</Typography>
     </DialogWrapper>

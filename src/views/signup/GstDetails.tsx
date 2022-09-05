@@ -1,10 +1,12 @@
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, TextField ,MenuItem } from "@mui/material";
 import { getGstDetails, getSandboxToken, signup } from "api/services/users";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
 import { ChangeEvent, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { ResType } from "types";
+import { getStates } from "api/services/common";
 import { useSelector } from "react-redux";
 import { selectSignup } from "redux/reducers/signUpSlice";
 import { SubmitType } from "types";
@@ -15,6 +17,7 @@ const GstDetails = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [gstLoading, setGstLoading] = useState(false);
   const { fullName, email, password, mobileNumber } = useSelector(selectSignup);
+  const { data: states }: ResType = useQuery("states", getStates);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [event.target.name]: event.target.value });
@@ -119,6 +122,11 @@ const GstDetails = () => {
           name="gstNumber"
           size="small"
           fullWidth
+          onKeyDown={(e: any) => {
+            if (e.keyCode === 13){
+              verifyGst()
+             }
+          }}
           InputProps={{
             endAdornment: <GstAdornment />,
           }}
@@ -231,11 +239,35 @@ const GstDetails = () => {
             value={state.state}
             size="small"
             fullWidth
-          />
+            select
+            SelectProps={{
+              MenuProps: {
+                PaperProps: {
+                  sx: {
+                    maxHeight: "200px",
+                  },
+                },
+              },
+            }}
+          >
+{states?.data?.map((option: any) => (
+              <MenuItem key={option.name} value={option.name}>
+                {option.name}
+              </MenuItem>
+            ))}
+
+          </TextField>
+
+        
           <TextField
+            required
             onChange={handleChange}
             sx={{ mt: 2 }}
             value={state.pincode}
+             inputProps={{
+            pattern: "[0-9]{6}",
+            title: "Enter valid pincode",
+          }}
             name="pincode"
             label="Pincode"
             size="small"

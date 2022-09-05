@@ -21,7 +21,7 @@ function ImportClients({ open, setOpen, successCb }: Props) {
     onSuccess: () => {
       setOpen(false);
       setFile(null);
-      snack.success("Clients Import Successfully");
+      snack.success("Clients imported successfully");
       successCb && successCb();
       queryClient.invalidateQueries("clients");
     },
