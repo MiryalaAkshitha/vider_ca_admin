@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, TextField ,MenuItem } from "@mui/material";
+import { Box, Button, CircularProgress, TextField, MenuItem } from "@mui/material";
 import { getGstDetails, getSandboxToken, signup } from "api/services/users";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
@@ -78,7 +78,6 @@ const GstDetails = () => {
       });
 
       const result: any = response.data;
-console.log(response.data)
       setState({
         legalName: result?.data?.lgnm,
         tradeName: result?.data?.tradeNam,
@@ -90,7 +89,7 @@ console.log(response.data)
         buildingName: result?.data?.pradr?.addr?.bnm,
         street: result?.data?.pradr?.addr?.st,
         city: result?.data?.pradr?.addr?.cty,
-        district: result?.data?.pradr ?.addr?.dst,
+        district: result?.data?.pradr?.addr?.dst,
         state: result?.data?.pradr?.addr?.stcd,
         pincode: result?.data?.pradr?.addr?.pncd,
       });
@@ -124,9 +123,9 @@ console.log(response.data)
           size="small"
           fullWidth
           onKeyDown={(e: any) => {
-            if (e.keyCode === 13){
-              verifyGst()
-             }
+            if (e.keyCode === 13) {
+              verifyGst();
+            }
           }}
           InputProps={{
             endAdornment: <GstAdornment />,
@@ -201,7 +200,7 @@ console.log(response.data)
             size="small"
             fullWidth
           />
-<TextField
+          <TextField
             required
             onChange={handleChange}
             value={state.buildingNo}
@@ -211,7 +210,7 @@ console.log(response.data)
             size="small"
             fullWidth
           />
-           <TextField
+          <TextField
             required
             onChange={handleChange}
             value={state.buildingName}
@@ -221,9 +220,6 @@ console.log(response.data)
             size="small"
             fullWidth
           />
-
-
-
 
           <TextField
             required
@@ -275,24 +271,22 @@ console.log(response.data)
               },
             }}
           >
-{states?.data?.map((option: any) => (
+            {states?.data?.map((option: any) => (
               <MenuItem key={option.name} value={option.name}>
                 {option.name}
               </MenuItem>
             ))}
-
           </TextField>
 
-        
           <TextField
             required
             onChange={handleChange}
             sx={{ mt: 2 }}
             value={state.pincode}
-             inputProps={{
-            pattern: "[0-9]{6}",
-            title: "Enter valid pincode",
-          }}
+            inputProps={{
+              pattern: "[0-9]{6}",
+              title: "Enter valid pincode",
+            }}
             name="pincode"
             label="Pincode"
             size="small"

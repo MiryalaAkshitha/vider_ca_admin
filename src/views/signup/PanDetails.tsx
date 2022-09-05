@@ -189,7 +189,7 @@ const PanDetails = () => {
                 value={state.lastName}
                 sx={{ mt: 2 }}
                 label="Surname / Last Name"
-                name="surName"
+                name="lastName"
                 disabled
                 size="small"
                 fullWidth
