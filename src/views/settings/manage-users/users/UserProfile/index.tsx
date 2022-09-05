@@ -1,4 +1,4 @@
-import { getUser } from "api/services/users";
+import { getUserProfile } from "api/services/users";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
@@ -10,10 +10,7 @@ import StatutoryInformation from "./StatutoryInformation";
 
 function UserProfile() {
   const params = useParams();
-  const { data, isLoading }: ResType = useQuery(
-    ["user-details", params.userId],
-    getUser
-  );
+  const { data, isLoading }: ResType = useQuery(["user-details", params.userId], getUserProfile);
 
   if (isLoading) return <Loader />;
 

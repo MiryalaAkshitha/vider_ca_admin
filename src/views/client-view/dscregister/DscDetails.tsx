@@ -66,14 +66,9 @@ function DscDetails({ state, setState }) {
             inputFormat="dd-MM-yyyy"
             value={state.expiryDate}
             onChange={(value) => {
-              setState({
-                ...state,
-                expiryDate: value,
-              });
+              setState({ ...state, expiryDate: value });
             }}
-            renderInput={(params) => (
-              <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
-            )}
+            renderInput={(params) => <TextField fullWidth size="small" {...params} />}
           />
         </Grid>
         <Grid item xs={4}>

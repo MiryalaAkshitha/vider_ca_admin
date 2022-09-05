@@ -1,9 +1,6 @@
 import { Delete, Visibility } from "@mui/icons-material";
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import {
-  deleteDscRegister,
-  getDscRegisters,
-} from "api/services/clients/dsc-register";
+import { deleteDscRegister, getDscRegisters } from "api/services/clients/dsc-register";
 import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
@@ -150,12 +147,7 @@ const Actions = ({ data }) => {
               Receive
             </Button>
             <Typography variant="body2">
-              (Issued on{" "}
-              {moment
-                .utc(data?.issuedDate)
-                .local()
-                .format("MM/DD/YYYY, h:mm a")}
-              )
+              (Issued on {moment.utc(data?.issuedDate).local().format("MM/DD/YYYY, h:mm a")})
             </Typography>
           </Box>
         )}

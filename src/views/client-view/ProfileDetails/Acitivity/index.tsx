@@ -14,6 +14,7 @@ import { ResType } from "types";
 import moment from "moment";
 import { getTitle } from "utils";
 import { StyledTimelineIcon } from "views/clients/styles";
+import React from "react";
 
 function Activity() {
   const params = useParams();
@@ -50,9 +51,7 @@ function Activity() {
               </StyledTimelineIcon>
             </TimelineOppositeContent>
             <TimelineSeparator>
-              <TimelineDot
-                sx={{ background: "#F9FAFC", border: "3px solid #0D47A11A" }}
-              />
+              <TimelineDot sx={{ background: "#F9FAFC", border: "3px solid #0D47A11A" }} />
               <TimelineConnector sx={{ background: "#0D47A11A" }} />
             </TimelineSeparator>
             <TimelineContent>
@@ -79,4 +78,4 @@ function Activity() {
   );
 }
 
-export default Activity;
+export default React.memo(Activity);

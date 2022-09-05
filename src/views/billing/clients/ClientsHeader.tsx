@@ -10,12 +10,7 @@ function ClientsHeader(props: IProps) {
   const { search, setSearch } = props;
 
   return (
-    <Box
-      mb={2}
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-    >
+    <Box mb={3} display="flex" justifyContent="space-between" alignItems="center">
       <SearchContainer debounced value={search} onChange={setSearch} />
     </Box>
   );

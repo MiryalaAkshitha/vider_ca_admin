@@ -19,11 +19,7 @@ const BasicDetails = ({ state, setState }) => {
     <>
       <SectionWrapper title="Basic Details">
         <Grid container spacing={2}>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
+          <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between" }}>
             <ProfileImage
               src={state?.imageUrl}
               onChange={(v: string) => {
@@ -34,11 +30,7 @@ const BasicDetails = ({ state, setState }) => {
               }}
             />
             <div>
-              <Button
-                onClick={() => setOpen(true)}
-                variant="outlined"
-                color="secondary"
-              >
+              <Button onClick={() => setOpen(true)} variant="outlined" color="secondary">
                 Change Password
               </Button>
             </div>
@@ -86,11 +78,8 @@ const BasicDetails = ({ state, setState }) => {
               onChange={(e) => {
                 setState({ ...state, dob: e });
               }}
-              mask="__/__/____"
               inputFormat="dd-MM-yyyy"
-              renderInput={(params) => (
-                <TextField variant="outlined" fullWidth {...params} />
-              )}
+              renderInput={(params) => <TextField variant="outlined" fullWidth {...params} />}
             />
           </Grid>
           <Grid item xs={4}>

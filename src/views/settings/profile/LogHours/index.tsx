@@ -1,13 +1,6 @@
 import { Add, MoreVert, Visibility } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, IconButton, Paper, Typography } from "@mui/material";
 import {
   addUserLogHour,
   deleteLogHour,
@@ -44,8 +37,10 @@ function LogHours() {
     toDate: null,
   });
 
-  const { data: logHourStats, isLoading: logHourStatsLoading }: ResType =
-    useQuery(["user-log-hour-stats", { type: "SELF" }], getUserLogHourStats);
+  const { data: logHourStats, isLoading: logHourStatsLoading }: ResType = useQuery(
+    ["user-log-hour-stats", { type: "SELF" }],
+    getUserLogHourStats
+  );
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -153,12 +148,7 @@ function LogHours() {
         />
       </Box>
       <Filters
-        setFilters={(v: any) => {
-          setFilters({
-            ...filters,
-            ...v,
-          });
-        }}
+        setFilters={(v: any) => setFilters({ ...filters, ...v })}
         open={open}
         setOpen={setOpen}
       />

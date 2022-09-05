@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
-import { aadharPattern, emailPattern, panCardPattern } from "utils/patterns";
+import { aadharPattern, emailPattern, panCardPattern, phonePattern } from "utils/patterns";
 import BankDetails from "./BankDetails";
 import BasicDetails from "./BasicDetails";
 import Specializations from "./Specializations";
@@ -62,6 +62,10 @@ function UserProfile() {
   });
 
   const handleSubmit = async () => {
+    if (state.mobileNumber && !phonePattern.test(state.mobileNumber)) {
+      return snack.error("Invalid mobile number");
+    }
+
     if (state.workEmail && !emailPattern.test(state.workEmail)) {
       return snack.error("Invalid email");
     }
@@ -76,8 +80,7 @@ function UserProfile() {
 
     await mutateAsync({
       ...state,
-      id: originalState?.id,
-      type: "user",
+      type: "self",
     });
   };
 

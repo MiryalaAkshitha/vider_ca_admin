@@ -1,16 +1,7 @@
 import { DesktopDatePicker } from "@mui/lab";
-import {
-  Autocomplete,
-  Checkbox,
-  FormControlLabel,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Checkbox, FormControlLabel, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import {
-  createDscRegister,
-  getClients,
-} from "api/services/clients/dsc-register";
+import { createDscRegister, getClients } from "api/services/clients/dsc-register";
 import DrawerWrapper from "components/DrawerWrapper";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
@@ -54,13 +45,9 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [getDetails, setGetDetails] = useState<boolean>(false);
 
-  const { data, isLoading }: ResType = useQuery(
-    ["dsc-register-clients"],
-    getClients,
-    {
-      enabled: open,
-    }
-  );
+  const { data, isLoading }: ResType = useQuery(["dsc-register-clients"], getClients, {
+    enabled: open,
+  });
 
   const handleChange = (e: any) => {
     let { name, value } = e.target;
@@ -76,9 +63,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   const handleClientUserChange = (e: any) => {
-    let clientUser = state?.client?.contactPersons?.find(
-      (item: any) => item.id === +e.target.value
-    );
+    let clientUser = state?.client?.contactPersons?.find((item: any) => item.id === +e.target.value);
     setState({
       ...state,
       contactPerson: clientUser?.id,
@@ -109,7 +94,14 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add DSC Register">
+    <DrawerWrapper
+      open={open}
+      setOpen={() => {
+        setOpen(false);
+        setState(_.cloneDeep(initialState));
+      }}
+      title="Add DSC Register"
+    >
       {isLoading ? (
         <Loader />
       ) : (
@@ -163,13 +155,11 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               label="Client User"
               size="small"
             >
-              {state?.client?.contactPersons?.map(
-                (item: any, index: number) => (
-                  <MenuItem key={index} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                )
-              )}
+              {state?.client?.contactPersons?.map((item: any, index: number) => (
+                <MenuItem key={index} value={item.id}>
+                  {item.name}
+                </MenuItem>
+              ))}
             </TextField>
           )}
           <TextField
@@ -234,9 +224,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
                 expiryDate: value,
               });
             }}
-            renderInput={(params) => (
-              <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
-            )}
+            renderInput={(params) => <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />}
           />
           <TextField
             sx={{ mt: 3 }}

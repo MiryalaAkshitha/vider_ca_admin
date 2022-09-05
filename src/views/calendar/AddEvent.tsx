@@ -38,13 +38,9 @@ function AddEvent({ open, setOpen }: Props) {
     resolver: yupResolver(AddCalendarEventSchema()),
   });
 
-  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
-    ["clients"],
-    getClients,
-    {
-      enabled: open && watch("type") === "TASK",
-    }
-  );
+  const { data: clients, isLoading: clientsLoading }: ResType = useQuery(["clients"], getClients, {
+    enabled: open && watch("type") === "TASK",
+  });
 
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
     ["tasks", { client: watch<any>("client")?.value }],
@@ -71,15 +67,14 @@ function AddEvent({ open, setOpen }: Props) {
     apiData.client = apiData?.client?.value;
     apiData.task = apiData?.task?.value;
     apiData.members = data.members.map((user: any) => user.value);
-    apiData.reminder = data.reminderCheck ? data.reminder : "";
+    apiData.reminder = data.reminderCheck ? data.reminder : null;
     mutate({
       ...apiData,
     });
   };
 
   let taskMembers =
-    tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)
-      ?.members || [];
+    tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)?.members || [];
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Create an Event">
@@ -151,11 +146,7 @@ function AddEvent({ open, setOpen }: Props) {
           <Box mt={2}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <FormTime
-                  name="startTime"
-                  control={control}
-                  label="Start Time"
-                />
+                <FormTime name="startTime" control={control} label="Start Time" />
               </Grid>
               <Grid item xs={6}>
                 <FormTime name="endTime" control={control} label="End Time" />
@@ -163,11 +154,7 @@ function AddEvent({ open, setOpen }: Props) {
             </Grid>
           </Box>
           <Box mt={2}>
-            <FormCheckbox
-              name="reminderCheck"
-              control={control}
-              label="Set Reminder"
-            />
+            <FormCheckbox name="reminderCheck" control={control} label="Set Reminder" />
           </Box>
           {watch("reminderCheck") && (
             <Box mt={2}>

@@ -59,4 +59,22 @@ export const settingsMenu: Array<IMenuItem> = [
     title: "Approvals",
     path: "/settings/approvals",
   },
+  {
+    title: "Archives",
+    path: "",
+    children: [
+      {
+        title: "Deleted Clients",
+        path: "/settings/deleted-clients",
+      },
+      {
+        title: "Deleted Users",
+        path: "/settings/deleted-users",
+      },
+      {
+        title: "Deleted Tasks",
+        path: "/settings/deleted-tasks",
+      },
+    ],
+  },
 ];

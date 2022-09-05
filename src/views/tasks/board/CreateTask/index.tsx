@@ -70,7 +70,14 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Create Task">
+    <DrawerWrapper
+      open={open}
+      setOpen={() => {
+        reset(createTaskDefaultValues);
+        setOpen(false);
+      }}
+      title="Create Task"
+    >
       {loading ? (
         <Loader />
       ) : (

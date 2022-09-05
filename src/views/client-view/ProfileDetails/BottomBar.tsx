@@ -5,6 +5,7 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
+import { handleError } from "utils/handleError";
 import { emailPattern, phonePattern } from "utils/patterns";
 import { GreyButton } from "views/tasks/styles";
 
@@ -15,11 +16,7 @@ function BottomBar({ data, state, setState }) {
 
   useEffect(() => {
     let { panNumber, gstNumber, ...remData } = data;
-    let {
-      panNumber: statePanNumber,
-      gstNumber: stateGstNumber,
-      ...remStateData
-    } = state;
+    let { panNumber: statePanNumber, gstNumber: stateGstNumber, ...remStateData } = state;
     setIsStateChanged(JSON.stringify(remData) !== JSON.stringify(remStateData));
   }, [state, data]);
 
@@ -29,7 +26,7 @@ function BottomBar({ data, state, setState }) {
       queryClient.invalidateQueries("client");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message[0]);
+      snack.error(handleError(err));
     },
   });
 
@@ -44,10 +41,7 @@ function BottomBar({ data, state, setState }) {
       return snack.error("Invalid Mobile Number");
     }
 
-    if (
-      data?.alternateMobileNumber &&
-      !phonePattern.test(data?.alternateMobileNumber)
-    ) {
+    if (data?.alternateMobileNumber && !phonePattern.test(data?.alternateMobileNumber)) {
       return snack.error("Invalid alternate mobile Number");
     }
 
@@ -67,12 +61,7 @@ function BottomBar({ data, state, setState }) {
       }}
     >
       <Box p={2} display="flex" justifyContent="flex-end" gap={2}>
-        <Button
-          onClick={onSubmit}
-          size="large"
-          color="secondary"
-          variant="contained"
-        >
+        <Button onClick={onSubmit} size="large" color="secondary" variant="contained">
           Update Changes
         </Button>
         <GreyButton

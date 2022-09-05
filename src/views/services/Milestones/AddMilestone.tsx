@@ -12,14 +12,16 @@ interface StateProps {
   referenceNumber: boolean;
 }
 
+const initialValues = {
+  name: "",
+  description: "",
+  referenceNumber: false,
+};
+
 function AddMilestone({ open, setOpen }: DialogProps) {
   const dispatch = useDispatch();
 
-  const [state, setState] = useState<StateProps>({
-    name: "",
-    description: "",
-    referenceNumber: false,
-  });
+  const [state, setState] = useState<StateProps>({ ...initialValues });
 
   const handleChange = (e: InputChangeType) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -28,11 +30,19 @@ function AddMilestone({ open, setOpen }: DialogProps) {
   const handleSubmit = (e: SubmitType) => {
     e.preventDefault();
     dispatch(addMilestone(state));
+    setState({ ...initialValues });
     setOpen(false);
   };
 
   return (
-    <DrawerWrapper open={open} title="Add Milestone" setOpen={setOpen}>
+    <DrawerWrapper
+      open={open}
+      title="Add Milestone"
+      setOpen={() => {
+        setOpen(false);
+        setState({ ...initialValues });
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"

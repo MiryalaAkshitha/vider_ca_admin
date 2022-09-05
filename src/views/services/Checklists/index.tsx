@@ -18,20 +18,14 @@ function Checklists() {
           Checklists
         </Typography>
         {checklists.length ? (
-          <Button
-            onClick={() => setOpen(true)}
-            color="secondary"
-            startIcon={<Add />}
-          >
+          <Button onClick={() => setOpen(true)} color="secondary" startIcon={<Add />}>
             Add checklist
           </Button>
         ) : null}
       </Box>
       <Box mt={2}>
         {checklists?.length ? (
-          checklists.map((item: any, index: number) => (
-            <CheckList data={item} key={index} index={index} />
-          ))
+          checklists.map((item: any, index: number) => <CheckList data={item} key={index} index={index} />)
         ) : (
           <NoItems
             img={noChecklists}

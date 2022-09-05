@@ -75,6 +75,10 @@ const updateTask = ({ id, data }: { id: number; data: any }) => {
   return http.put(`/tasks/${id}`, data);
 };
 
+const addRemark = ({ id, data }: { id: number; data: any }) => {
+  return http.post(`/tasks/${id}/remarks`, data);
+};
+
 const getTaskComments = ({ queryKey }: QueryType) => {
   return http.get(`/tasks/comments`, { params: { taskId: queryKey[1] } });
 };
@@ -236,4 +240,5 @@ export {
   updateStageOfWork,
   deleteStageOfWork,
   addStageOfWork,
+  addRemark,
 };

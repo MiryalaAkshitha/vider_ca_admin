@@ -141,7 +141,12 @@ function Clients() {
       </ValidateAccess>
       <AddClient open={open} setOpen={setOpen} />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
-      <ClientFilter filters={filters} setFilters={setFilters} open={openFilter} setOpen={setOpenFilter} />
+      <ClientFilter
+        filters={filters}
+        setFilters={setFilters}
+        open={openFilter}
+        setOpen={setOpenFilter}
+      />
       <CustomizeColumns
         defaultColumns={_.cloneDeep(defaultColumns)}
         columns={columns}
@@ -186,7 +191,7 @@ const defaultColumns: Array<ColumnType> = [
     render: (rowData) => {
       return (
         <div>
-          {rowData?.active ? (
+          {rowData.status === "ACTIVE" ? (
             <span style={{ color: "green" }}>Active</span>
           ) : (
             <span style={{ color: "red" }}>Inactive</span>

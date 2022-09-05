@@ -19,10 +19,7 @@ function LogHours() {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-  const { data, isLoading }: ResType = useQuery(
-    ["loghours", params.taskId],
-    getLogHours
-  );
+  const { data, isLoading }: ResType = useQuery(["loghours", params.taskId], getLogHours);
 
   const handleSelect = (id: number) => {
     if (selectedItems.includes(id)) {
@@ -32,12 +29,9 @@ function LogHours() {
     }
   };
 
-  const totalLogHours = data?.data?.logHours?.reduce(
-    (acc: number, curr: any) => {
-      return acc + +curr.duration;
-    },
-    0
-  );
+  const totalLogHours = data?.data?.logHours?.reduce((acc: number, curr: any) => {
+    return acc + +curr.duration;
+  }, 0);
 
   if (isLoading) return <Loader />;
 
@@ -46,27 +40,17 @@ function LogHours() {
       <Timeline data={data} />
       <Box mt={4} display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
-          Log Hours{" "}
-          {data?.data?.logHours?.length > 0 &&
-            `(${moment.utc(totalLogHours).format("HH:mm")})`}
+          Log Hours {data?.data?.logHours?.length > 0 && `(${moment.utc(totalLogHours).format("HH:mm")})`}
         </Typography>
         {data?.data?.logHours?.length ? (
-          <Button
-            startIcon={<Add />}
-            onClick={() => setOpen(true)}
-            color="secondary"
-          >
+          <Button startIcon={<Add />} onClick={() => setOpen(true)} color="secondary">
             Add Log Hour
           </Button>
         ) : null}
       </Box>
       <Box mt={4}>
         {data?.data?.logHours?.length ? (
-          <LogHoursList
-            selectedItems={selectedItems}
-            onSelect={handleSelect}
-            data={data?.data?.logHours}
-          />
+          <LogHoursList selectedItems={selectedItems} onSelect={handleSelect} data={data?.data?.logHours} />
         ) : (
           <NoItems
             img={noSubTasks}
@@ -78,10 +62,7 @@ function LogHours() {
         )}
       </Box>
       <AddLogHour open={open} setOpen={setOpen} />
-      <LogHoursTopbar
-        selectedItems={selectedItems}
-        setSelectedItems={setSelectedItems}
-      />
+      <LogHoursTopbar selectedItems={selectedItems} setSelectedItems={setSelectedItems} />
     </>
   );
 }

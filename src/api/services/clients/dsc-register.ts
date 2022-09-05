@@ -21,7 +21,7 @@ const deleteDscRegister = (id: number) => {
 };
 
 const getDscRegister = ({ queryKey }) => {
-  return http.get("/dsc-register/details", { params: { ...queryKey[1] } });
+  return http.get(`/dsc-register/${queryKey[1]?.id}/details`, { params: { ...queryKey[1] } });
 };
 
 const issueOrReceiveDsc = ({ id, data }: any) => {

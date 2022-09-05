@@ -15,6 +15,7 @@ import { Permissions } from "data/permissons";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import TerminationDialog from "views/taskview/TerminationDialog";
 import GroupChats from "./GroupChats";
+import { handleError } from "utils/handleError";
 
 function TaskHeader({ onChange }: any) {
   const confirm = useConfirm();
@@ -28,18 +29,14 @@ function TaskHeader({ onChange }: any) {
       navigate("/task-board");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
   const handleDelete = () => {
     confirm({
       msg: "Are you sure you want to delete this task?",
-      action: () => {
-        taskDelete({
-          id: taskData?.id,
-        });
-      },
+      action: () => taskDelete({ id: taskData?.id }),
     });
   };
 
@@ -70,10 +67,7 @@ function TaskHeader({ onChange }: any) {
             </Button>
           </ValidateAccess>
           <ValidateAccess name={Permissions.DELETE_TASK}>
-            <Button
-              onClick={handleDelete}
-              startIcon={<DeleteOutlined color="secondary" />}
-            >
+            <Button onClick={handleDelete} startIcon={<DeleteOutlined color="secondary" />}>
               Delete task
             </Button>
           </ValidateAccess>
@@ -92,11 +86,7 @@ function TaskHeader({ onChange }: any) {
         ))}
       </StyledProfileNav>
       <TerminationDialog open={open} setOpen={setOpen} />
-      <GroupChats
-        open={openGroupChats}
-        setOpen={setOpenGroupChats}
-        taskData={taskData}
-      />
+      <GroupChats open={openGroupChats} setOpen={setOpenGroupChats} taskData={taskData} />
     </Box>
   );
 }

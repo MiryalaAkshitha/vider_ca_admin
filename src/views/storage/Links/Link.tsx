@@ -48,24 +48,17 @@ function Link(props: Props) {
   return (
     <>
       <StyledFile
-        onDoubleClick={() => {
-          window.open(data?.fileUrl);
-        }}
+        onDoubleClick={() => window.open(data?.fileUrl)}
         draggable={true}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         dragging={dragging ? 1 : 0}
-        sx={{ background: "rgba(0,0,0,0.04)" }}
+        sx={{ background: "rgba(0,0,0,0.04)", height: "auto" }}
       >
         <Box p={1} display="flex" gap={1} alignItems="center">
           <Box sx={{ flex: 1 }}>
             <Box>
-              <Box
-                display="flex"
-                gap={1}
-                alignItems="center"
-                sx={{ cursor: "pointer" }}
-              >
+              <Box display="flex" gap={1} alignItems="center" sx={{ cursor: "pointer" }}>
                 {!props.local && (
                   <div>
                     <img src={icons.onedrive} alt="OneDrive" width="20px" />
@@ -99,11 +92,7 @@ function Link(props: Props) {
           </IconButton>
         </Box>
       </StyledFile>
-      <FolderMenu
-        contextMenu={contextMenu}
-        setContextMenu={setContextMenu}
-        data={data}
-      />
+      <FolderMenu contextMenu={contextMenu} setContextMenu={setContextMenu} data={data} />
     </>
   );
 }

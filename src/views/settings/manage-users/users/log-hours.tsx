@@ -1,10 +1,7 @@
 import { Visibility } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Box, Button, Grid, IconButton } from "@mui/material";
-import {
-  getUserLogHours,
-  getUserLogHourStats,
-} from "api/services/tasks/loghours";
+import { getUserLogHours, getUserLogHourStats } from "api/services/tasks/loghours";
 import { icons } from "assets";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
@@ -28,11 +25,10 @@ function LogHours() {
     toDate: null,
   });
 
-  const { data: logHourStats, isLoading: logHourStatsLoading }: ResType =
-    useQuery(
-      ["user-log-hour-stats", { type: "USER", userId: +params.userId }],
-      getUserLogHourStats
-    );
+  const { data: logHourStats, isLoading: logHourStatsLoading }: ResType = useQuery(
+    ["user-log-hour-stats", { type: "USER", userId: +params.userId }],
+    getUserLogHourStats
+  );
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -87,20 +83,8 @@ function LogHours() {
         </Grid>
       </Grid>
       <Box display="flex" gap={2}>
-        <SearchContainer
-          debounced
-          onChange={(v) => {
-            setFilters({
-              ...filters,
-              search: v,
-            });
-          }}
-        />
-        <Button
-          onClick={() => setOpen(true)}
-          startIcon={<FilterAltOutlinedIcon />}
-          variant="outlined"
-        >
+        <SearchContainer debounced onChange={(v) => setFilters({ ...filters, search: v })} />
+        <Button onClick={() => setOpen(true)} startIcon={<FilterAltOutlinedIcon />} variant="outlined">
           Filter
         </Button>
       </Box>

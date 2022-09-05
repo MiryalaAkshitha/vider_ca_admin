@@ -9,6 +9,7 @@ import { bulkDelete, bulkUpdate } from "api/services/clients/clients";
 import { useMutation, useQueryClient } from "react-query";
 import ValidateAccess from "components/ValidateAccess";
 import { Permissions } from "data/permissons";
+import { handleError } from "utils/handleError";
 
 interface Props {
   anchorEl: HTMLElement | null;
@@ -31,7 +32,7 @@ function Actions(props: Props) {
       queryClient.invalidateQueries("clients");
     },
     onError: (err: any) => {
-      snack.error(err.response.data.message);
+      snack.error(handleError(err));
     },
   });
 
@@ -119,12 +120,9 @@ function NestedActions({ anchorEl, setAnchorEl, onClick }) {
         vertical: "bottom",
         horizontal: "right",
       }}
-      MenuListProps={{
-        "aria-labelledby": "basic-button",
-      }}
     >
-      <MenuItem onClick={() => onClick("active")}>Active</MenuItem>
-      <MenuItem onClick={() => onClick("inactive")}>Inactive</MenuItem>
+      <MenuItem onClick={() => onClick("ACTIVE")}>Active</MenuItem>
+      <MenuItem onClick={() => onClick("INACTIVE")}>Inactive</MenuItem>
     </Menu>
   );
 }

@@ -65,11 +65,7 @@ function AddChecklist({ open, setOpen }: DialogProps) {
           required
         />
         <Box textAlign="right" mt={2} mb={1}>
-          <Button
-            onClick={addChecklistItem}
-            color="secondary"
-            startIcon={<Add />}
-          >
+          <Button onClick={addChecklistItem} color="secondary" startIcon={<Add />}>
             Add checklist item
           </Button>
         </Box>
@@ -91,6 +87,7 @@ function AddChecklist({ open, setOpen }: DialogProps) {
                 label="Checklist item name"
                 required
               />
+
               <TextField
                 variant="outlined"
                 multiline

@@ -1,12 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-export const FREQUENCY_TEXTS = [
-  "Monthly",
-  "Quarterly",
-  "Half-Yearly",
-  "Yearly",
-  "Custom",
-];
+export const FREQUENCY_TEXTS = ["Monthly", "Quarterly", "Half-Yearly", "Yearly", "Custom"];
 
 export const MONTHS: string[] = [
   "January",
@@ -29,10 +23,7 @@ export const QPERIODS: string[] = [
   "Q1 (January - March)",
 ];
 
-export const HPERIODS: string[] = [
-  "H1 (April - June)",
-  "H2 (July - September)",
-];
+export const HPERIODS: string[] = ["H1 (April - June)", "H2 (July - September)"];
 
 export const YPERIODS: string[] = ["Y1"];
 
@@ -129,6 +120,10 @@ export const clientMenu: Array<{ title: string; path: string }> = [
   {
     title: "Archives",
     path: "/archives",
+  },
+  {
+    title: "Tasks",
+    path: "/client-tasks",
   },
 ];
 

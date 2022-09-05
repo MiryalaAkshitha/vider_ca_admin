@@ -1,10 +1,4 @@
-import {
-  Autocomplete,
-  Grid,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Autocomplete, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getLabels } from "api/services/labels";
 import Loader from "components/Loader";
@@ -44,13 +38,7 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
               options={labels?.data || []}
               getOptionLabel={(option: any) => option?.name}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  label="Labels"
-                />
+                <TextField {...params} variant="outlined" size="small" fullWidth label="Labels" />
               )}
             />
           </Grid>
@@ -75,10 +63,9 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
               <MenuItem value="inactive">Inactive</MenuItem>
             </TextField>
             {!apiData?.active && (
-              <Box mt={1}>
+              <Box>
                 <Typography variant="caption" color="secondary">
-                  Inactive from{" "}
-                  {moment(data?.inactiveAt).format("DD MMM YYYY - hh:mm a")}
+                  Inactive from {moment(data?.inactiveAt).format("DD MMM YYYY - hh:mm a")}
                 </Typography>
               </Box>
             )}
