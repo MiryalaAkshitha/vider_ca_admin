@@ -6,6 +6,7 @@ import {
   getTasksByService,
   getTasksDueThisWeek,
 } from "api/services/organization";
+import ComingSoon from "components/ComingSoon";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import ClientAnalytics from "./client-analytics";
@@ -36,9 +37,10 @@ function Dashboard() {
 
   return (
     <Box p={2}>
-      <TaskAnalytics />
+      <ComingSoon title="Dashboard" />
+      {/* <TaskAnalytics />
       <ClientAnalytics />
-      <LoghourAnalytics />
+      <LoghourAnalytics /> */}
     </Box>
   );
 }
