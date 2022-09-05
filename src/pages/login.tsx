@@ -54,9 +54,9 @@ const Login = () => {
             <Box mt={6}>
               <img src={signup} alt="" />
             </Box>
-            {/* <Typography mt={2} variant="subtitle2" color="white">
-              Vider Practice Management software
-            </Typography> */}
+            <Typography mt={2} variant="subtitle2" color="white">
+              Vider Practice Management Software
+            </Typography>
             <Typography mt={1} variant="body2" color="rgba(255,255,255,0.7)">
               Vider is a technology-driven smart discovery,that offers services addressing the
               growing needs of Professionals (CA/CMA/CS) & Clients in enhancing businesses in India.

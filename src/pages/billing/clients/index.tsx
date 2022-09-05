@@ -9,7 +9,7 @@ import { getTitle } from "utils";
 import ClientsHeader from "views/billing/clients/ClientsHeader";
 
 const Clients = () => {
-  useTitle("Clients");
+  useTitle("Billing");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);

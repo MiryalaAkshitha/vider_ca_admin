@@ -52,7 +52,6 @@ function AddMilestone({ open, setOpen }: DialogProps) {
           value={state.name}
           name="name"
           label="Milestone name"
-          required
         />
         <TextField
           variant="outlined"
@@ -65,7 +64,7 @@ function AddMilestone({ open, setOpen }: DialogProps) {
           value={state.description}
           name="description"
           label="Description"
-          required
+          
         />
         <FormControlLabel
           sx={{ mt: 1 }}
