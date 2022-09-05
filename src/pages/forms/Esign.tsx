@@ -1,10 +1,5 @@
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
-import {
-  cancelUrl,
-  failureUrl,
-  signField,
-  successUrl,
-} from "api/services/forms";
+import { cancelUrl, failureUrl, signField, successUrl } from "api/services/forms";
 import { useEffect } from "react";
 import { useMutation } from "react-query";
 import { useParams } from "react-router-dom";
@@ -15,7 +10,6 @@ const Esign = () => {
   const { mutate, error } = useMutation(signField, {
     onSuccess: (res) => {
       let result = res.data;
-      console.log(result);
       let form = document.createElement("form");
       form.action = process.env.REACT_APP_EMSIGNER_URL || "";
       form.method = "POST";

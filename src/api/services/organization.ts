@@ -12,14 +12,6 @@ const updateGetStarted = (data: any) => {
   return http.patch(`/get-started`, data);
 };
 
-const getOrganizationDashboard = ({ queryKey }) => {
-  return http.get(`/stats/organization/dashboard`, {
-    params: {
-      type: queryKey[1],
-    },
-  });
-};
-
 const getOrganizationLicenses = ({ queryKey }) => {
   return http.get(`/organization-lincenses`, {
     params: {
@@ -64,6 +56,30 @@ const deleteOrganizationLicense = ({ id }: any) => {
   return http.delete(`/organization-lincenses/${id}`);
 };
 
+const getTaskAnalytics = ({ queryKey }) => {
+  return http.get(`/organization/stats/task-analytics`, {
+    params: {
+      type: queryKey[1],
+    },
+  });
+};
+
+const getTasksDueThisWeek = () => {
+  return http.get(`/organization/stats/tasks-due-this-week`);
+};
+
+const getTasksByCategory = () => {
+  return http.get(`/organization/stats/tasks-by-category`);
+};
+
+const getTasksByService = () => {
+  return http.get(`/organization/stats/tasks-by-service`);
+};
+
+const getOverdueTasks = () => {
+  return http.get(`/organization/stats/over-due-tasks`);
+};
+
 export {
   getOrganization,
   updateOrganization,
@@ -75,7 +91,11 @@ export {
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
-  getOrganizationDashboard,
+  getTaskAnalytics,
   getGetStarted,
   updateGetStarted,
+  getTasksDueThisWeek,
+  getTasksByCategory,
+  getTasksByService,
+  getOverdueTasks,
 };

@@ -150,13 +150,19 @@ export const theme: ThemeOptions = createTheme({
         },
         subtitle2: {
           fontFamily: "muli_medium",
-          fontSize: "17px",
+          fontSize: "16px",
         },
         body1: {
           fontFamily: "muli_regular",
+          fontSize: "15px",
         },
         body2: {
           fontFamily: "muli_regular",
+          fontSize: "14px",
+        },
+        caption: {
+          fontFamily: "muli_regular",
+          fontSize: "12px",
         },
       },
     },

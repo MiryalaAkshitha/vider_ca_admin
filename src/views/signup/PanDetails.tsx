@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Box, Button, CircularProgress, MenuItem, TextField } from "@mui/material";
 import { getPanDetails, getSandboxToken, signup } from "api/services/users";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
@@ -67,7 +61,7 @@ const PanDetails = () => {
 
       const data: any = response?.data;
       if (data.data.status === "INVALID") {
-        return snack.error("Invalid PAN")
+        return snack.error("Invalid PAN");
       }
       setState({
         category: data?.data?.category,
@@ -100,9 +94,7 @@ const PanDetails = () => {
     return (
       <>
         {panLoading && <CircularProgress size="1rem" />}
-        {isVerified && !panLoading && (
-          <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
-        )}
+        {isVerified && !panLoading && <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />}
         {!isVerified && !panLoading && (
           <Button color="error" size="small" onClick={verifyPan}>
             Verify
@@ -128,9 +120,9 @@ const PanDetails = () => {
           name="panNumber"
           size="small"
           onKeyDown={(e: any) => {
-            if (e.keyCode === 13){
-              verifyPan()
-             }
+            if (e.keyCode === 13) {
+              verifyPan();
+            }
           }}
           fullWidth
           InputProps={{
@@ -286,9 +278,9 @@ const PanDetails = () => {
             name="pincode"
             label="Pincode"
             inputProps={{
-            pattern: "[0-9]{6}",
-            title: "Enter valid pincode",
-          }}
+              pattern: "[0-9]{6}",
+              title: "Enter valid pincode",
+            }}
             size="small"
             fullWidth
             required

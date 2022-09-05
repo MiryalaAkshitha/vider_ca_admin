@@ -1,3 +1,4 @@
+import { DatePicker } from "@mui/lab";
 import { Box, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { handleCustomDates, handleFilters, selectTaskBoard } from "redux/reducers/taskboardSlice";
@@ -52,27 +53,37 @@ const FilterContainer = ({ items }: FilterProps) => {
       ))}
       {Boolean(selectedFilters[selected].find((filter: any) => filter.value === "custom")) && (
         <Box mt={1}>
-          <TextField
-            sx={{ width: "80%" }}
-            type="date"
-            variant="outlined"
-            size="small"
-            onChange={(e) => onCustomDatesChange(e, "fromDate")}
+          <DatePicker
             label="From Date"
-            defaultValue={appliedFilters.customDates[selected].fromDate}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
+            inputFormat="dd-MM-yyyy"
+            value={selectedFilters.customDates[selected].fromDate}
+            onChange={(v) => {
+              dispatch(
+                handleCustomDates({
+                  dateType: "fromDate",
+                  value: v,
+                })
+              );
+            }}
+            renderInput={(params) => <TextField {...params} fullWidth size="small" />}
           />
-          <TextField
-            sx={{ mt: 2, width: "80%" }}
-            type="date"
-            variant="outlined"
-            size="small"
-            onChange={(e) => onCustomDatesChange(e, "toDate")}
+          <DatePicker
             label="To Date"
-            defaultValue={appliedFilters.customDates[selected].toDate}
-            InputLabelProps={{ shrink: true }}
-            fullWidth
+            inputFormat="dd-MM-yyyy"
+            disabled={!selectedFilters.customDates[selected].fromDate}
+            value={selectedFilters.customDates[selected].toDate}
+            minDate={selectedFilters.customDates[selected].fromDate}
+            onChange={(v) => {
+              dispatch(
+                handleCustomDates({
+                  dateType: "toDate",
+                  value: v,
+                })
+              );
+            }}
+            renderInput={(params) => (
+              <TextField sx={{ mt: 2 }} {...params} fullWidth size="small" />
+            )}
           />
         </Box>
       )}

@@ -29,13 +29,23 @@ interface Props extends DialogProps {
 function CreateTask({ open, setOpen, successCb }: Props) {
   const queryClient = useQueryClient();
   const [openSelectAppHier, setOpenSelectAppHier] = useState(false);
-  const { users, labels, categories, clients, loading } = useCreateTaskInitialData({ enabled: open });
+  const { users, labels, categories, clients, loading } = useCreateTaskInitialData({
+    enabled: open,
+  });
 
   const subcategoriesExist = (category: any) => {
-    return categories?.data?.find((item: any) => item.id === parseInt(category))?.subCategories?.length;
+    return categories?.data?.find((item: any) => item.id === parseInt(category))?.subCategories
+      ?.length;
   };
 
-  const { watch, control, handleSubmit, setValue, reset } = useForm({
+  const {
+    watch,
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: createTaskDefaultValues,
     mode: "all",
     resolver: yupResolver(createTaskSchema({ subcategoriesExist })),
@@ -68,6 +78,8 @@ function CreateTask({ open, setOpen, successCb }: Props) {
     apiData.taskLeader = parseInt(data?.taskLeader?.value) ?? null;
     mutate(apiData);
   };
+
+  console.log(errors);
 
   return (
     <DrawerWrapper
@@ -103,7 +115,13 @@ function CreateTask({ open, setOpen, successCb }: Props) {
             <RecurringFields control={control} watch={watch} setValue={setValue} />
           )}
           {watch("taskType") === "non_recurring" && <NonRecurringFields control={control} />}
-          <CommonFields control={control} watch={watch} labels={labels} users={users} setValue={setValue} />
+          <CommonFields
+            control={control}
+            watch={watch}
+            labels={labels}
+            users={users}
+            setValue={setValue}
+          />
           <Box mt={2}>
             <Typography color="rgba(0, 0, 0, 0.54)" variant="caption">
               Approval Hierarchy Details
