@@ -1,19 +1,22 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, IconButton, Typography } from "@mui/material";
-import { getTasksDueThisWeek } from "api/services/organization";
+import { getDueDscRegisters } from "api/services/organization";
 import Loader from "components/Loader";
 import { format } from "date-fns";
 import _ from "lodash";
 import moment from "moment";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { StyledTaskBox } from "../../styles";
 import DueCard from "./DueCard";
 
-function DueDatesThisWeek() {
-  const { data, isLoading }: ResType = useQuery(["task-due-this-week"], getTasksDueThisWeek);
+function DscExpiryThisWeek() {
+  const navigate = useNavigate();
 
-  let grouped: any = _.groupBy(data?.data, "dueDate");
+  const { data, isLoading }: ResType = useQuery(["due-dsc-registers"], getDueDscRegisters);
+
+  let grouped: any = _.groupBy(data?.data, "expiryDate");
 
   let sorted = Object.keys(grouped).sort((a, b) => {
     return moment(b).diff(moment(a));
@@ -24,7 +27,7 @@ function DueDatesThisWeek() {
   return (
     <StyledTaskBox sx={{ position: "absolute", left: 0, right: 0, height: "100%" }}>
       <header>
-        <Typography variant="h6">Tasks Due This Week</Typography>
+        <Typography variant="h6">DSC Expiry this week</Typography>
       </header>
       <main>
         {sorted?.map((date: any) => {
@@ -47,8 +50,16 @@ function DueDatesThisWeek() {
           );
         })}
       </main>
+      <footer>
+        <Typography variant="body2" color="secondary">
+          View All
+        </Typography>
+        <IconButton color="secondary" size="small" onClick={() => navigate("/dsc-register")}>
+          <ArrowForwardIcon fontSize="small" />
+        </IconButton>
+      </footer>
     </StyledTaskBox>
   );
 }
 
-export default DueDatesThisWeek;
+export default DscExpiryThisWeek;

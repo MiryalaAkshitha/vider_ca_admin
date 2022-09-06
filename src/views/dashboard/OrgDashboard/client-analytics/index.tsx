@@ -1,12 +1,17 @@
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
-import { StyledTaskBox } from "../styles";
+import { Box, Grid, Typography } from "@mui/material";
+import { getClientAnalytics } from "api/services/organization";
+import Loader from "components/Loader";
+import { useQuery } from "react-query";
 import ClientByCategory from "./ClientByCategory";
 import ClientConverstions from "./ClientConversions";
 import DscExpiryThisWeek from "./DscExpiryThisWeek";
 import TotalNumberOfClients from "./TotalNumberOfClients";
 
 function ClientAnalytics() {
+  const { data, isLoading } = useQuery(["client-analytics"], getClientAnalytics);
+
+  if (isLoading) return <Loader />;
+
   return (
     <Box mt={3}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -18,40 +23,10 @@ function ClientAnalytics() {
         <Grid xs={4} item>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <StyledTaskBox>
-                <header>
-                  <Typography variant="h6">Total number of clients</Typography>
-                </header>
-                <main>
-                  <TotalNumberOfClients />
-                </main>
-                <footer>
-                  <Typography variant="body2" color="secondary">
-                    View Clients
-                  </Typography>
-                  <IconButton color="secondary" size="small">
-                    <ArrowForwardIcon fontSize="small" />
-                  </IconButton>
-                </footer>
-              </StyledTaskBox>
+              <TotalNumberOfClients data={data?.data} />
             </Grid>
             <Grid item xs={12}>
-              <StyledTaskBox>
-                <header>
-                  <Typography variant="h6">Client Conversions</Typography>
-                </header>
-                <main>
-                  <ClientConverstions />
-                </main>
-                <footer>
-                  <Typography variant="body2" color="secondary">
-                    View Clients
-                  </Typography>
-                  <IconButton color="secondary" size="small">
-                    <ArrowForwardIcon fontSize="small" />
-                  </IconButton>
-                </footer>
-              </StyledTaskBox>
+              <ClientConverstions data={data?.data} />
             </Grid>
           </Grid>
         </Grid>

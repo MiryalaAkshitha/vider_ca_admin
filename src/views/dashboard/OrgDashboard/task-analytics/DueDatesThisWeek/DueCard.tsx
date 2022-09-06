@@ -1,9 +1,12 @@
 import EastIcon from "@mui/icons-material/East";
-import { Box, Divider, IconButton, Paper, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import Members from "components/Members";
+import { useNavigate } from "react-router-dom";
 import { colors } from "views/tasks/board/utils";
 
-function DueCard({ dealine }: { dealine: any }) {
+function DueCard({ data }: { data: any }) {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -18,23 +21,29 @@ function DueCard({ dealine }: { dealine: any }) {
       <Box>
         <Box mb={2}>
           <Typography variant="caption" color="rgba(0,0,0,0.4)">
-            {dealine.code}
+            {data?.taskNumber}
           </Typography>
-          <Typography variant="body2">{dealine.name}</Typography>
+          <Typography variant="body2">{data?.name}</Typography>
         </Box>
         <Box sx={{ display: "flex", gap: " 15px" }}>
           <Box>
             <Typography variant="caption" color="rgba(0,0,0,0.4)">
               Client Name
             </Typography>
-            <Typography variant="body2">{dealine.client.name}</Typography>
+            <Typography variant="body2">{data?.client?.name}</Typography>
           </Box>
           <Divider orientation="vertical" flexItem />
           <Box>
             <Typography variant="caption" color="rgba(0,0,0,0.4)">
               Members
             </Typography>
-            <Members size="small" data={[1, 2, 3].map((member: any) => ({ src: "", title: "" }))} />
+            <Members
+              size="small"
+              data={data?.members?.map((member: any) => ({
+                src: member?.image,
+                title: member?.fullName,
+              }))}
+            />
           </Box>
         </Box>
       </Box>
@@ -49,11 +58,15 @@ function DueCard({ dealine }: { dealine: any }) {
           }}
         >
           <Typography color="white" variant="body2">
-            {dealine.type}
+            {data?.category?.name}
           </Typography>
         </Box>
         <Box alignSelf="flex-end">
-          <IconButton color="secondary" size="small">
+          <IconButton
+            color="secondary"
+            size="small"
+            onClick={() => navigate(`/task-board/${data?.id}#details`)}
+          >
             <EastIcon fontSize="small" />
           </IconButton>
         </Box>

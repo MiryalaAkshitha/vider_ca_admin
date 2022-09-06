@@ -22,7 +22,6 @@ const Login = loadable(() => import("pages/login"));
 const ResetPassword = loadable(() => import("pages/reset-password"));
 const Join = loadable(() => import("pages/join"));
 const SignUp = loadable(() => import("pages/signup"));
-const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout/primarylayout"));
 const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/tasks"));
@@ -50,7 +49,6 @@ const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
 const Credentials = loadable(() => import("pages/client-view/credentials"));
 const Archives = loadable(() => import("pages/client-view/archives"));
 const Tasks = loadable(() => import("pages/client-view/clientTasks"));
-
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 
 const OrganizationProfile = loadable(
@@ -60,6 +58,12 @@ const OrganizationProfile = loadable(
 const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
 });
+
+// Dashboard
+const Dashboard = loadable(() => import("pages/dashboard"));
+const TasksByService = loadable(() => import("pages/dashboard/tasks-by-service"));
+const OverDueTasks = loadable(() => import("pages/dashboard/over-due-tasks"));
+const EmployeeTasksByStatus = loadable(() => import("pages/dashboard/employee-tasks-by-status"));
 
 //ROLES AND PERMISSIONS
 const Roles = loadable(() => {
@@ -133,9 +137,12 @@ function RoutesContainer() {
         <Route path="particulargroup" element={<ParticularGroups />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          {/* <Route path="/viewalltasksbyservice" element={<ViewAllTasksByService />} />
-          <Route path="/viewalloverduetasks" element={<ViewAllOverdueTasks />} /> */}
+          <Route path="dashboard">
+            <Route index element={<Dashboard />} />
+            <Route path="tasks-by-service" element={<TasksByService />} />
+            <Route path="over-due-tasks" element={<OverDueTasks />} />
+            <Route path="employee-tasks-by-status" element={<EmployeeTasksByStatus />} />
+          </Route>
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />

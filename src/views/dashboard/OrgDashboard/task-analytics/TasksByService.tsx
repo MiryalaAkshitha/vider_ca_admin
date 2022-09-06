@@ -5,21 +5,24 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { getTasksByService } from "api/services/organization";
+import Loader from "components/Loader";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { ResType } from "types";
+import { getDuration } from "utils/getDuration";
 import { StyledTaskBox } from "../styles";
 
-function createData(ServiceName, NumberOfTasks, TotalLogHours) {
-  return { ServiceName, NumberOfTasks, TotalLogHours };
-}
-
-const rows = [
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-];
-
 function TasksByService() {
+  const navigate = useNavigate();
+
+  const { data, isLoading }: ResType = useQuery(
+    ["task-by-service", { offset: 0, limit: 10 }],
+    getTasksByService
+  );
+
+  if (isLoading) return <Loader />;
+
   return (
     <StyledTaskBox>
       <header>
@@ -29,26 +32,23 @@ function TasksByService() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow sx={{ color: "#707070" }}>
-              <TableCell sx={{ color: "#707070" }}>Service Name</TableCell>
-              <TableCell sx={{ color: "#707070" }} align="right">
-                Number of tasks
-              </TableCell>
-              <TableCell sx={{ color: "#707070" }} align="right">
-                Total log Hours
-              </TableCell>
+              <TableCell>Service Name</TableCell>
+              <TableCell>Number of tasks</TableCell>
+              <TableCell>Total log Hours</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.ServiceName}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+            {data?.data?.result?.map((row) => (
+              <TableRow key={row?.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.ServiceName}
+                  <Typography variant="caption"> {row?.name}</Typography>
                 </TableCell>
-                <TableCell align="right">{row.NumberOfTasks}</TableCell>
-                <TableCell align="right">{row.TotalLogHours}</TableCell>
+                <TableCell>
+                  <Typography variant="caption"> {row?.count}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">{getDuration(row?.totalLogHours)}</Typography>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -58,7 +58,7 @@ function TasksByService() {
         <Typography variant="body2" color="secondary">
           View Tasks
         </Typography>
-        <IconButton color="secondary" size="small">
+        <IconButton color="secondary" size="small" onClick={() => navigate(`tasks-by-service`)}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </footer>
