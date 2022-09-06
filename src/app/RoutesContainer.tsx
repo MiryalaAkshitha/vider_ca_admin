@@ -292,8 +292,22 @@ function RoutesContainer() {
           </Route>
           <Route path="profile" element={<MyProfile />} />
           <Route path="users">
-            <Route index element={<Users />} />
-            <Route path=":userId" element={<ViewUser />} />
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.MANAGE_USERS}>
+                  <Users />
+                </PageWithPermission>
+              }
+            />
+            <Route
+              path=":userId"
+              element={
+                <PageWithPermission name={Permissions.MANAGE_USERS}>
+                  <ViewUser />
+                </PageWithPermission>
+              }
+            />
           </Route>
           <Route path="invited-users" element={<InviteUsers />} />
           <Route path="storage-management" element={<StorageManagement />} />

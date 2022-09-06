@@ -1,23 +1,28 @@
-import { Add } from "@mui/icons-material";
+import { Add, Update } from "@mui/icons-material";
 import { Button, Grid, MenuItem, Pagination, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
-import { getServices } from "api/services/services";
+import { getServices, updateAdminServices } from "api/services/services";
 import EmptyPage from "components/EmptyPage";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
+import { snack } from "components/toast";
+import { useConfirm } from "context/ConfirmDialog";
 import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { ResType } from "types";
+import { handleError } from "utils/handleError";
 import ImportServices from "views/dashboard/GetStarted/ImportServices";
 import ServiceCard from "views/services/ServiceCard";
 
 function Services() {
   useTitle("Services");
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const confirm = useConfirm();
   const { queryParams, setQueryParams } = useQueryParams();
   const [search, setSearch] = useState("");
   const [openImport, setOpenImport] = useState(false);
@@ -34,7 +39,22 @@ function Services() {
     getServices
   );
 
-  const subCategories = categories?.data?.find((item: any) => item.id === category)?.subCategories;
+  const { mutate } = useMutation(updateAdminServices, {
+    onSuccess: () => {
+      snack.success("Vider services updated successfully");
+      queryClient.invalidateQueries("services");
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
+  const handleUpdate = () => {
+    confirm({
+      msg: "Are you sure you want to update the services?",
+      action: () => mutate(),
+    });
+  };
 
   const onChange = (e: any) => {
     setCategory(e.target.value);
@@ -47,6 +67,7 @@ function Services() {
     setQueryParams({ page: "1" });
   };
 
+  const subCategories = categories?.data?.find((item: any) => item.id === category)?.subCategories;
   const noInitialData = data?.data?.totalCount === 0 && !search && !category && !subCategory;
 
   if (isLoading) return <Loader />;
@@ -69,6 +90,14 @@ function Services() {
                 color="secondary"
               >
                 Import from Vider
+              </Button>
+              <Button
+                onClick={handleUpdate}
+                variant="outlined"
+                startIcon={<Update />}
+                color="secondary"
+              >
+                Update Vider Services
               </Button>
             </>
           )}
