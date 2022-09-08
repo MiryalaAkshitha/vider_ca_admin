@@ -119,8 +119,23 @@ const TasksReport = loadable(() => import("pages/reports/tasks-report"));
 //BRODCAST
 const Communication = loadable(() => import("pages/communication"));
 const TeamDiscussion = loadable(() => import("pages/communication/team-discussion"));
-const UserGroups = loadable(() => import("pages/communication/user-groups"));
-const ClientGroups = loadable(() => import("pages/communication/client-groups"));
+const UserGroups = loadable(() => import("pages/communication/userTeams"));
+const ClientGroups = loadable(() => import("pages/communication/clientGroups"));
+const UserView = loadable(() => import("pages/communication/userTeams/user-view"));
+const ClientGroupView = loadable(
+  () => import("pages/communication/clientGroups/client-group-view")
+);
+const ClientGroupTeamView = loadable(
+  () => import("pages/communication/clientGroups/client-group-teamView")
+);
+const EmailTemplates = loadable(() => import("pages/communication/templates/email"));
+const EmailTemplatesView = loadable(
+  () => import("pages/communication/templates/email/add-email-template")
+);
+
+const PushNotifications = loadable(
+  () => import("pages/communication/templates/push-notifications")
+);
 
 function RoutesContainer() {
   return (
@@ -149,9 +164,16 @@ function RoutesContainer() {
             <Route path="clients" element={<BillingClients />} />
           </Route>
           <Route path="communication" element={<Communication />}>
-            <Route path="user-groups" element={<UserGroups />} />
+            <Route path="user-teams" element={<UserGroups />} />
+            <Route path="user-teams/:userGroupId" element={<UserView />} />
             <Route path="team-discussion" element={<TeamDiscussion />} />
             <Route path="client-groups" element={<ClientGroups />} />
+            <Route path="client-groups/:userGroupId" element={<ClientGroupView />} />
+            <Route path="client-groups/:userGroupId/:id" element={<ClientGroupTeamView />} />
+            <Route path="email" element={<EmailTemplates />} />
+            <Route path="email/:emailTemplateView" element={<EmailTemplatesView />} />
+
+            <Route path="push-notifications" element={<PushNotifications />} />
           </Route>
           <Route path="billing/estimates/add" element={<AddEstimate />} />
           <Route path="billing/invoices/add" element={<AddInvoice />} />

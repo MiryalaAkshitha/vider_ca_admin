@@ -11,17 +11,31 @@ export const communicationMenu: Array<IMenuItem> = [
     path: "",
     children: [
       {
-        title: "User Groups",
-        path: "/communication/user-groups",
-      },
-      {
         title: "Client Groups",
         path: "/communication/client-groups",
+      },
+      {
+        title: "User Teams",
+        path: "/communication/user-teams",
       },
     ],
   },
   {
-    title: "Team Discussion",
+    title: "Discussions",
     path: "/communication/team-discussion",
+  },
+  {
+    title: "Templates",
+    path: "",
+    children: [
+      {
+        title: "Email",
+        path: "/communication/email",
+      },
+      {
+        title: "Push notifications",
+        path: "/communication/push-notifications",
+      },
+    ],
   },
 ];
