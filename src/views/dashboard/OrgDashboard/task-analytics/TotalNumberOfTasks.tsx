@@ -1,19 +1,19 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import NorthIcon from "@mui/icons-material/North";
 import SouthIcon from "@mui/icons-material/South";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
-import { StyledTaskBox } from "../styles";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
+import { StyledTaskBox, Typography13 } from "../styles";
 
-function TotalNumberOfClients({ data }) {
+function TotalNumberOfTasks({ data }) {
   const navigate = useNavigate();
   const [more] = useState(true);
 
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Total number of clients</Typography>
+        <Typography variant="h6">Total number of tasks</Typography>
       </header>
       <main>
         <Box
@@ -23,7 +23,7 @@ function TotalNumberOfClients({ data }) {
             flexDirection: "column",
           }}
         >
-          <Typography variant="h4">{data?.totalClients}</Typography>
+          <Typography variant="h4">{data?.total}</Typography>
           <Box
             sx={{
               display: "flex",
@@ -54,18 +54,16 @@ function TotalNumberOfClients({ data }) {
               >
                 {more ? "+ " : "- "} 25%
               </Typography>
-              <Typography variant="caption" color="rgba(0,0,0,0.4)">
-                Than Last Week
-              </Typography>
+              <Typography13>Than Last Week</Typography13>
             </Box>
           </Box>
         </Box>
       </main>
       <footer>
         <Typography variant="body2" color="secondary">
-          View Clients
+          View Tasks
         </Typography>
-        <IconButton color="secondary" size="small" onClick={() => navigate("/clients")}>
+        <IconButton color="secondary" size="small" onClick={() => navigate("/task-board")}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </footer>
@@ -73,4 +71,4 @@ function TotalNumberOfClients({ data }) {
   );
 }
 
-export default TotalNumberOfClients;
+export default TotalNumberOfTasks;

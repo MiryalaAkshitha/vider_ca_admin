@@ -28,6 +28,14 @@ const deleteService = ({ id }: any) => {
   return http.delete(`/services/${id}`);
 };
 
+const cloneService = ({ id }: any) => {
+  return http.post(`/services/${id}/clone`);
+};
+
+const updateAdminServices = () => {
+  return http.post(`/services/update-admin-services`);
+};
+
 export {
   getServices,
   getDefaultServices,
@@ -36,4 +44,6 @@ export {
   getService,
   updateService,
   deleteService,
+  cloneService,
+  updateAdminServices,
 };

@@ -1,84 +1,59 @@
-import { Typography } from "@mui/material";
-import HorizontalDoubleBars from "../components/HorizontalDoubleBars";
+import { Box, Typography } from "@mui/material";
+import { getTasksByCategory } from "api/services/organization";
+import Loader from "components/Loader";
+import { useQuery } from "react-query";
+import { ResType } from "types";
 import { StyledTaskBox } from "../styles";
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 function TasksByCategory() {
+  const { data, isLoading }: ResType = useQuery(["task-by-category"], getTasksByCategory);
+
+  if (isLoading) return <Loader />;
+
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="subtitle2" color="primary">
-          Tasks by Category
-        </Typography>
+        <Box display="flex" alignItems="center" gap={4}>
+          <Typography variant="subtitle2" color="primary">
+            Tasks by Category
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <span
+              style={{ width: 10, height: 10, background: "#0D47A1", borderRadius: "50%" }}
+            ></span>
+            <Typography variant="caption">Recurring Tasks</Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <span
+              style={{ width: 10, height: 10, background: "#64B5F6", borderRadius: "50%" }}
+            ></span>
+            <Typography variant="caption">Recurring Tasks</Typography>
+          </Box>
+        </Box>
       </header>
       <main>
-        <HorizontalDoubleBars
-          data={[
-            {
-              name: "CBDT-Income Tax",
-              reacurring: 70,
-              oneTime: 60,
-              color: "#FF3465",
-            },
-            {
-              name: "ICAI UDIN",
-              reacurring: 60,
-              oneTime: 60,
-              color: "#FFCF64",
-            },
-            { name: "MCA LLP", reacurring: 45, oneTime: 60, color: "#00D9A6" },
-            {
-              name: "CBIC - GST",
-              reacurring: 18,
-              oneTime: 60,
-              color: "#149ECD",
-            },
-            {
-              name: "ICSI UDIN",
-              reacurring: 39,
-              oneTime: 60,
-              color: "#88B053",
-            },
-            {
-              name: "To do",
-              reacurring: 70,
-              oneTime: 60,
-              color: "#FF3465",
-            },
-            {
-              name: "MCA - Company",
-              reacurring: 60,
-              oneTime: 60,
-              color: "#FFCF64",
-            },
-            { name: "SBR/SBL", reacurring: 45, oneTime: 60, color: "#00D9A6" },
-            { name: "CBR/CBL", reacurring: 18, oneTime: 60, color: "#149ECD" },
-            { name: "IP", reacurring: 39, oneTime: 60, color: "#88B053" },
-            {
-              name: "eICMAI UDIN",
-              reacurring: 70,
-              oneTime: 60,
-              color: "#FF3465",
-            },
-            {
-              name: "CBIC - Customs",
-              reacurring: 60,
-              oneTime: 60,
-              color: "#FFCF64",
-            },
-            {
-              name: "CBIC-Central Excise",
-              reacurring: 45,
-              oneTime: 60,
-              color: "#00D9A6",
-            },
-            {
-              name: "ML&E - EPFO",
-              reacurring: 18,
-              oneTime: 60,
-              color: "#149ECD",
-            },
-          ]}
-        />
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={
+              data?.data?.map((item) => ({
+                name: item.name,
+                Recurring: item.recurring,
+                "Non-Recurring": item.non_recurring,
+              })) || []
+            }
+            style={{ padding: 0, fontSize: "12px" }}
+          >
+            <Bar dataKey="Recurring" barSize={6} radius={[4, 4, 0, 0]} fill="#0D47A1"></Bar>
+            <Bar dataKey="Non-Recurring" barSize={6} radius={[4, 4, 0, 0]} fill="#64B5F6"></Bar>
+            <XAxis type="category" dataKey="name" />
+            <YAxis type="number" domain={[0, "dataMax + 25"]} />
+            <Tooltip
+              labelStyle={{ color: "#000", fontWeight: "bold", fontSize: 15 }}
+              cursor={{ fill: "transparent" }}
+            />
+          </BarChart>
+        </ResponsiveContainer>
       </main>
     </StyledTaskBox>
   );

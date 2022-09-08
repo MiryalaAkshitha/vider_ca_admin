@@ -57,27 +57,49 @@ const deleteOrganizationLicense = ({ id }: any) => {
 };
 
 const getTaskAnalytics = ({ queryKey }) => {
-  return http.get(`/organization/stats/task-analytics`, {
-    params: {
-      type: queryKey[1],
-    },
+  return http.get(`/stats/task-analytics`, {
+    params: { type: queryKey[1] },
   });
 };
 
 const getTasksDueThisWeek = () => {
-  return http.get(`/organization/stats/tasks-due-this-week`);
+  return http.get(`/stats/tasks-due-this-week`);
 };
 
 const getTasksByCategory = () => {
-  return http.get(`/organization/stats/tasks-by-category`);
+  return http.get(`/stats/tasks-by-category`);
 };
 
-const getTasksByService = () => {
-  return http.get(`/organization/stats/tasks-by-service`);
+const getTasksByService = ({ queryKey }) => {
+  return http.get(`/stats/tasks-by-service`, { params: { ...queryKey[1] } });
 };
 
-const getOverdueTasks = () => {
-  return http.get(`/organization/stats/over-due-tasks`);
+const getOverdueTasks = ({ queryKey }) => {
+  return http.get(`/stats/over-due-tasks`, { params: { ...queryKey[1] } });
+};
+
+const getClientAnalytics = () => {
+  return http.get(`/stats/client-analytics`);
+};
+
+const getDueDscRegisters = () => {
+  return http.get(`/stats/due-dsc-registers`);
+};
+
+const getClientsByCategory = () => {
+  return http.get(`/stats/clients-by-category`);
+};
+
+const getTotalLogHours = () => {
+  return http.get(`/stats/total-log-hours`);
+};
+
+const getWeeklyLogHours = ({ queryKey }) => {
+  return http.get(`/stats/weekly-log-hours`, { params: { ...queryKey[1] } });
+};
+
+const getEmployeeTasksByStatus = ({ queryKey }) => {
+  return http.get(`/stats/employee-tasks-by-status`, { params: { ...queryKey[1] } });
 };
 
 export {
@@ -98,4 +120,10 @@ export {
   getTasksByCategory,
   getTasksByService,
   getOverdueTasks,
+  getClientAnalytics,
+  getDueDscRegisters,
+  getClientsByCategory,
+  getTotalLogHours,
+  getWeeklyLogHours,
+  getEmployeeTasksByStatus,
 };

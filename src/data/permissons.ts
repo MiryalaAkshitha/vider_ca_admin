@@ -1,7 +1,8 @@
 export enum Permissions {
   MANAGE_ORG_PROFILE = "organization_manage_organization_profile",
-  MANAGE_ORG_USERS = "organization_manage_users",
   MANAGE_ORG_ROLES = "organization_manage_roles",
+  MANAGE_USERS = "users_manage_users",
+  VIEW_USERS = "users_view_users",
   MANAGE_ORG_BILLING_ENTITIES = "organization_manage_billing_entities",
   VIEW_STORAGE = "storage_view",
   CREATE_STORAGE = "storage_create",

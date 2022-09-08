@@ -39,7 +39,7 @@ interface TableProps {
 }
 
 function Table(props: TableProps) {
-  const { columns, data, sx, pagination, loading = false, onRowClick, selection } = props;
+  const { columns, data = [], sx, pagination, loading = false, onRowClick, selection } = props;
 
   const { selected, setSelected } = selection || {
     selected: [],

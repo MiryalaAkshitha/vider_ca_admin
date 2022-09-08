@@ -5,21 +5,24 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { getOverdueTasks } from "api/services/organization";
+import Loader from "components/Loader";
+import moment from "moment";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { ResType } from "types";
 import { StyledTaskBox } from "../styles";
 
-function createData(ServiceName, NumberOfTasks, TotalLogHours) {
-  return { ServiceName, NumberOfTasks, TotalLogHours };
-}
-
-const rows = [
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-];
-
 function OverDueTasks() {
+  const navigate = useNavigate();
+
+  const { data, isLoading }: ResType = useQuery(
+    ["over-due-tasks", { offset: 0, limit: 5 }],
+    getOverdueTasks
+  );
+
+  if (isLoading) return <Loader />;
+
   return (
     <StyledTaskBox>
       <header>
@@ -29,26 +32,31 @@ function OverDueTasks() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow sx={{ color: "#707070" }}>
-              <TableCell sx={{ color: "#707070" }}>Service Name</TableCell>
-              <TableCell sx={{ color: "#707070" }} align="right">
-                Number of tasks
-              </TableCell>
-              <TableCell sx={{ color: "#707070" }} align="right">
-                Total log Hours
-              </TableCell>
+              <TableCell>Task Id</TableCell>
+              <TableCell>Task Name</TableCell>
+              <TableCell>Due Date</TableCell>
+              <TableCell>Due By</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.ServiceName}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.ServiceName}
+            {data?.data?.result?.map((row: any) => (
+              <TableRow key={row?.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell>
+                  <Typography variant="caption">{row?.taskNumber}</Typography>
                 </TableCell>
-                <TableCell align="right">{row.NumberOfTasks}</TableCell>
-                <TableCell align="right">{row.TotalLogHours}</TableCell>
+                <TableCell sx={{ width: 250 }} component="th" scope="row">
+                  <Typography variant="caption"> {row?.name}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">
+                    {moment(row?.dueDate).format("DD MMM YYYY")}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">
+                    {moment().diff(row?.dueDate, "days") + " days"}
+                  </Typography>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -58,7 +66,7 @@ function OverDueTasks() {
         <Typography variant="body2" color="secondary">
           View Tasks
         </Typography>
-        <IconButton color="secondary" size="small">
+        <IconButton color="secondary" size="small" onClick={() => navigate("over-due-tasks")}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </footer>

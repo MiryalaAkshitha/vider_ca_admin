@@ -1,14 +1,31 @@
 import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import { Box, Button, IconButton, Typography } from "@mui/material";
+import { getWeeklyLogHours } from "api/services/organization";
+import Loader from "components/Loader";
 import { format } from "date-fns";
+import moment from "moment";
 import { useEffect, useState } from "react";
-import AreaChartForOneLinearGradient from "../components/AreaChart";
+import { useQuery } from "react-query";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { ResType } from "types";
 import { StyledTaskBox } from "../styles";
 
 export default function WeeklyLogHoursDigest() {
   const [startDate, setStartDate] = useState<null | Date | number>();
   const [endDate, setEndDate] = useState<null | Date | number>();
+
+  const { data, isLoading }: ResType = useQuery(
+    [
+      "weekly-loghours",
+      {
+        startDate: moment(startDate).format("YYYY-MM-DD"),
+        endDate: moment(endDate).format("YYYY-MM-DD"),
+      },
+    ],
+    getWeeklyLogHours,
+    { enabled: Boolean(startDate) && Boolean(endDate) }
+  );
 
   useEffect(() => {
     let today = new Date();
@@ -26,6 +43,8 @@ export default function WeeklyLogHoursDigest() {
     let today = new Date(date);
     return today.getTime() + 1000 * 60 * 60 * 24 * number;
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <StyledTaskBox>
@@ -49,7 +68,6 @@ export default function WeeklyLogHoursDigest() {
                   " - " +
                   format(new Date(endDate), "dd MMM, yyyy")}
               </Typography>
-
               <IconButton
                 disabled={
                   format(new Date(endDate), "dd-MM-yyyy") == format(new Date(), "dd-MM-yyyy")
@@ -70,52 +88,39 @@ export default function WeeklyLogHoursDigest() {
         </Box>
       </header>
       <main>
-        <AreaChartForOneLinearGradient
-          data={[
-            {
-              name: "Page A",
-              uv: 4000,
-              pv: 2400,
-              amt: 2400,
-            },
-            {
-              name: "Page B",
-              uv: 3000,
-              pv: 1398,
-              amt: 2210,
-            },
-            {
-              name: "Page C",
-              uv: 2000,
-              pv: 9800,
-              amt: 2290,
-            },
-            {
-              name: "Page D",
-              uv: 2780,
-              pv: 3908,
-              amt: 2000,
-            },
-            {
-              name: "Page E",
-              uv: 1890,
-              pv: 4800,
-              amt: 2181,
-            },
-            {
-              name: "Page F",
-              uv: 2390,
-              pv: 3800,
-              amt: 2500,
-            },
-            {
-              name: "Page G",
-              uv: 3490,
-              pv: 4300,
-              amt: 2100,
-            },
-          ]}
-        />
+        <ResponsiveContainer width="100%" height={300}>
+          <AreaChart
+            data={
+              Object.keys(data?.data || {})?.map((key) => ({
+                name: key,
+                Hours: data?.data[key],
+              })) || []
+            }
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#64B5F6" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#64B5F6" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis dataKey="name" />
+            <YAxis type="number" domain={[0, "dataMax + 10"]} />
+            <Tooltip
+              labelStyle={{ color: "#000", fontWeight: "bold", fontSize: 15 }}
+              cursor={{ fill: "transparent" }}
+            />
+            <Area
+              type="monotone"
+              dataKey="Hours"
+              stroke="#64B5F6"
+              fillOpacity={1}
+              fill="url(#colorUv)"
+              strokeWidth={8}
+              dot={{ stroke: "#182F53", strokeWidth: "5px", r: 5 }}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </main>
     </StyledTaskBox>
   );

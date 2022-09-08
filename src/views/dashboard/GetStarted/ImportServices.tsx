@@ -13,6 +13,7 @@ import {
 import { getCategories } from "api/services/categories";
 import { getDefaultServices, importServices } from "api/services/services";
 import DialogWrapper from "components/DialogWrapper";
+import LoadingButton from "components/LoadingButton";
 import SearchContainer from "components/SearchContainer";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
@@ -239,16 +240,16 @@ function ImportServices({ open, setOpen, successCb }: Props) {
           mb: -2,
         }}
       >
-        <Button
+        <LoadingButton
+          loading={importLoading}
           sx={{ minWidth: 300 }}
           disabled={selectedServices.length === 0 && !selectAll}
           color="secondary"
           variant="contained"
           onClick={handleSubmit}
           size="large"
-        >
-          {importLoading ? <CircularProgress size="small" sx={{ color: "white" }} /> : "Import"}
-        </Button>
+          title="Import"
+        />
       </Box>
     </DialogWrapper>
   );

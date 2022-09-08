@@ -5,21 +5,24 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { getEmployeeTasksByStatus } from "api/services/organization";
+import Loader from "components/Loader";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { ResType } from "types";
+import { getDuration } from "utils/getDuration";
 import { StyledTaskBox } from "../styles";
 
-function createData(ServiceName, NumberOfTasks, TotalLogHours) {
-  return { ServiceName, NumberOfTasks, TotalLogHours };
-}
-
-const rows = [
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-  createData("Form 49B: Application For Allotment Of TAN", "04-10%", "09hr:30min"),
-];
-
 function TaskStatusByEmployees() {
+  const navigate = useNavigate();
+
+  const { data, isLoading }: ResType = useQuery(
+    ["employee-tasks-by-status", { offset: 0, limit: 5 }],
+    getEmployeeTasksByStatus
+  );
+
+  if (isLoading) return <Loader />;
+
   return (
     <StyledTaskBox>
       <header>
@@ -29,26 +32,39 @@ function TaskStatusByEmployees() {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow sx={{ color: "#707070" }}>
-              <TableCell sx={{ color: "#707070" }}>Service Name</TableCell>
-              <TableCell sx={{ color: "#707070" }} align="right">
-                Number of tasks
-              </TableCell>
-              <TableCell sx={{ color: "#707070" }} align="right">
-                Total log Hours
-              </TableCell>
+              <TableCell>Employee Name</TableCell>
+              <TableCell>Log Hours</TableCell>
+              <TableCell>Todo Tasks</TableCell>
+              <TableCell>In Progress Tasks</TableCell>
+              <TableCell>On Hold Tasks</TableCell>
+              <TableCell>Under Review Tasks</TableCell>
+              <TableCell>Done Tasks</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.ServiceName}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.ServiceName}
+            {data?.data?.result?.map((row: any, index: number) => (
+              <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell>
+                  <Typography variant="caption">{row?.fullName}</Typography>
                 </TableCell>
-                <TableCell align="right">{row.NumberOfTasks}</TableCell>
-                <TableCell align="right">{row.TotalLogHours}</TableCell>
+                <TableCell>
+                  <Typography variant="caption">{getDuration(row?.totalLogHours)}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">{row?.todo}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">{row?.inProgress}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">{row?.onHold}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">{row?.underReview}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">{row?.done}</Typography>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -58,7 +74,11 @@ function TaskStatusByEmployees() {
         <Typography variant="body2" color="secondary">
           View All
         </Typography>
-        <IconButton color="secondary" size="small">
+        <IconButton
+          color="secondary"
+          size="small"
+          onClick={() => navigate("employee-tasks-by-status")}
+        >
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </footer>

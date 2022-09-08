@@ -17,6 +17,7 @@ import StageOfWork from "views/services/StagesOfWork";
 import Subtasks from "views/services/SubTasks";
 import Milestones from "views/services/Milestones";
 import { handleError } from "utils/handleError";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 
 function AddService() {
   useTitle("Services");
@@ -26,7 +27,7 @@ function AddService() {
   const { queryParams } = useQueryParams();
   const serviceId = queryParams.serviceId;
 
-  const { isLoading }: ResType = useQuery(["service-details", serviceId], getService, {
+  const { data, isLoading }: ResType = useQuery(["service-details", serviceId], getService, {
     onSuccess: (res: any) => {
       dispatch(setData(res?.data));
     },
@@ -76,26 +77,38 @@ function AddService() {
     <Box p={3} pb={15}>
       <Box display="flex" justifyContent="space-between">
         <BreadCrumbs page="addService" />
-        <Box display="flex" gap={1}>
+        {data?.data?.fromAdmin && (
           <Button
-            onClick={() => {
-              navigate("/services");
-            }}
             sx={{ minWidth: 130 }}
+            onClick={() => navigate(-1)}
             variant="outlined"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            sx={{ minWidth: 130 }}
-            disableElevation
-            variant="contained"
             color="secondary"
           >
-            Save
+            Back
           </Button>
-        </Box>
+        )}
+        {!data?.data?.fromAdmin && (
+          <Box display="flex" gap={1}>
+            <Button
+              onClick={() => {
+                navigate("/services");
+              }}
+              sx={{ minWidth: 130 }}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              sx={{ minWidth: 130 }}
+              disableElevation
+              variant="contained"
+              color="secondary"
+            >
+              Save
+            </Button>
+          </Box>
+        )}
       </Box>
       <BasicDetails />
       <Divider sx={{ my: 5 }} />
