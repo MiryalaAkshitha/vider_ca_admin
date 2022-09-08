@@ -295,7 +295,7 @@ function RoutesContainer() {
             <Route
               index
               element={
-                <PageWithPermission name={Permissions.MANAGE_USERS}>
+                <PageWithPermission name={Permissions.VIEW_USERS}>
                   <Users />
                 </PageWithPermission>
               }
@@ -303,7 +303,7 @@ function RoutesContainer() {
             <Route
               path=":userId"
               element={
-                <PageWithPermission name={Permissions.MANAGE_USERS}>
+                <PageWithPermission name={Permissions.VIEW_USERS}>
                   <ViewUser />
                 </PageWithPermission>
               }

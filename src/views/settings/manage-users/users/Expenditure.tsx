@@ -4,7 +4,9 @@ import { approveExpenditure, getExpenditure } from "api/services/expenditure";
 import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import { snack } from "components/toast";
+import ValidateAccess from "components/ValidateAccess";
 import { useConfirm } from "context/ConfirmDialog";
+import { Permissions } from "data/permissons";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -101,9 +103,11 @@ const Actions = ({ data }) => {
         <IconButton onClick={() => setViewOpen(true)}>
           <Visibility />
         </IconButton>
-        <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-          <MoreVert />
-        </IconButton>
+        <ValidateAccess name={Permissions.MANAGE_USERS}>
+          <IconButton onClick={(e: any) => setAnchorEl(e.currentTarget)}>
+            <MoreVert />
+          </IconButton>
+        </ValidateAccess>
       </Box>
       <Menu
         transformOrigin={{ vertical: "top", horizontal: "right" }}
