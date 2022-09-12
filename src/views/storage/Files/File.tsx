@@ -52,7 +52,16 @@ function File(props: Props) {
         onDragEnd={onDragEnd}
         dragging={dragging ? 1 : 0}
       >
-        <Box width="100%" display="flex" flex={1} justifyContent="center" alignItems="center">
+        <Box
+          sx={{
+            position: "relative",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1,
+          }}
+        >
           {renderFile(data)}
         </Box>
         <Box bgcolor="#FBF9F2" p={1} display="flex" gap={1} alignItems="center">

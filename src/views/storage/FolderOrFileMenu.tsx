@@ -32,6 +32,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
     onSuccess: () => {
       snack.success("Item deleted successfully");
       queryClient.invalidateQueries("storage");
+      queryClient.invalidateQueries("task-attachments");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -57,9 +58,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
         open={contextMenu !== null}
         anchorReference="anchorPosition"
         anchorPosition={
-          contextMenu !== null
-            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
-            : undefined
+          contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
         }
         PaperProps={{
           sx: {
@@ -73,10 +72,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
         {permissions.edit && (
           <MenuItem sx={{ mt: 1 }} onClick={() => setOpen(true)}>
             <ListItemIcon>
-              <DriveFileRenameOutlineRoundedIcon
-                color="primary"
-                fontSize="small"
-              />
+              <DriveFileRenameOutlineRoundedIcon color="primary" fontSize="small" />
             </ListItemIcon>
             <Typography variant="body2">Rename</Typography>
           </MenuItem>
