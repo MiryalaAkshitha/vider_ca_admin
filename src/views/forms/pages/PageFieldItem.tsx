@@ -66,9 +66,7 @@ const PageFieldItem = ({ item, index }: any) => {
     updatePageFields({
       formId: params.formId,
       pageId: data.pages[activePage]?._id,
-      data: {
-        fields,
-      },
+      data: { fields },
     });
   };
 

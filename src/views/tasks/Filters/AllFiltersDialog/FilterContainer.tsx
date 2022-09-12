@@ -10,7 +10,7 @@ interface FilterProps {
 
 const FilterContainer = ({ items }: FilterProps) => {
   const dispatch = useDispatch();
-  const { selected, selectedFilters, appliedFilters } = useSelector(selectTaskBoard);
+  const { selected, selectedFilters } = useSelector(selectTaskBoard);
 
   const onChange = (e: any, label: string) => {
     dispatch(
@@ -20,15 +20,6 @@ const FilterContainer = ({ items }: FilterProps) => {
           label,
           value: e.target.value,
         },
-      })
-    );
-  };
-
-  const onCustomDatesChange = (e: any, dateType: "fromDate" | "toDate") => {
-    dispatch(
-      handleCustomDates({
-        dateType,
-        value: e.target.value,
       })
     );
   };

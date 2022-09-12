@@ -41,11 +41,11 @@ function TasksByService() {
             key: "fullName",
             title: "Employee Name",
           },
-          {
-            key: "totalLogHours",
-            title: "Total Log Hours",
-            render: (row: any) => <> {getDuration(row?.totalLogHours)}</>,
-          },
+          // {
+          //   key: "totalLogHours",
+          //   title: "Total Log Hours",
+          //   render: (row: any) => <> {getDuration(row?.totalLogHours)}</>,
+          // },
           {
             key: "todo",
             title: "Todo",

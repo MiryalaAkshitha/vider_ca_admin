@@ -9,17 +9,32 @@ import { getOverdueTasks } from "api/services/organization";
 import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { StyledTaskBox } from "../styles";
 
 function OverDueTasks() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data, isLoading }: ResType = useQuery(
     ["over-due-tasks", { offset: 0, limit: 5 }],
     getOverdueTasks
   );
+
+  const handleClick = () => {
+    // dispatch(handleSelected("dueOn"));
+    // dispatch(
+    //   handleFilters({
+    //     checked: true,
+    //     value: { label: "Overdue", value: "overdue" },
+    //   })
+    // );
+    // dispatch(handleApply());
+    navigate("/dashboard/over-due-tasks");
+  };
 
   if (isLoading) return <Loader />;
 
@@ -40,7 +55,11 @@ function OverDueTasks() {
           </TableHead>
           <TableBody>
             {data?.data?.result?.map((row: any) => (
-              <TableRow key={row?.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+              <TableRow
+                key={row?.name}
+                sx={{ cursor: "pointer", "&:last-child td, &:last-child th": { border: 0 } }}
+                onClick={() => navigate(`/task-board/${row?.id}#details`)}
+              >
                 <TableCell>
                   <Typography variant="caption">{row?.taskNumber}</Typography>
                 </TableCell>
@@ -66,7 +85,7 @@ function OverDueTasks() {
         <Typography variant="body2" color="secondary">
           View Tasks
         </Typography>
-        <IconButton color="secondary" size="small" onClick={() => navigate("over-due-tasks")}>
+        <IconButton color="secondary" size="small" onClick={handleClick}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </footer>

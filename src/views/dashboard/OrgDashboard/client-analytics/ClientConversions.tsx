@@ -1,56 +1,79 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { PolarAngleAxis, RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
 import { StyledTaskBox } from "../styles";
+import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 function ClientConversions({ data }) {
   const navigate = useNavigate();
 
   const finalResult = [
-    { value: data?.convertedLeadsPercent, fill: "#64B5F6" },
-    { value: data?.notConvertedLeadsPercent, fill: "#0D47A1" },
+    {
+      name: "Clients",
+      number: data?.convertedLeads,
+      value: data?.convertedLeadsPercent,
+      fill: "#64B5F6",
+    },
+    {
+      name: "Leads",
+      number: data?.notConvertedLeads,
+      value: data?.notConvertedLeadsPercent,
+      fill: "#0D47A1",
+    },
   ];
+
+  const handleClick = (v: any) => {
+    // if (v?.name === "Clients") {
+    //   navigate("/clients");
+    // }
+    // if (v?.name === "Leads") {
+    //   navigate("/leads");
+    // }
+  };
 
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Tasks by frequency</Typography>
+        <Typography variant="h6">Client Conversions</Typography>
       </header>
       <main>
         <Box sx={{ width: "100%", display: "flex", gap: "20px" }}>
-          <ResponsiveContainer width={200} height={200}>
-            <RadialBarChart
-              innerRadius="80%"
-              outerRadius="200%"
-              startAngle={360}
-              endAngle={0}
+          <PieChart width={200} height={200}>
+            <Pie
               data={finalResult}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+              style={{ cursor: "pointer" }}
             >
-              {finalResult.map((d: any, index: number) => {
+              {finalResult?.map((entry, index) => (
+                <Cell onClick={() => handleClick(entry)} key={`cell-${index}`} fill={entry.fill} />
+              ))}
+            </Pie>
+            <Tooltip
+              content={({ active, payload }) => {
                 return (
-                  <PolarAngleAxis
-                    type="number"
-                    domain={[0, 100]}
-                    angleAxisId={index}
-                    tick={false}
-                  />
+                  <Box
+                    sx={{
+                      background: "white",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+                    }}
+                  >
+                    <Typography variant="h6">{payload?.[0]?.payload?.payload?.name}</Typography>
+                    <Typography variant="body2">
+                      {payload?.[0]?.payload?.payload?.number}
+                    </Typography>
+                  </Box>
                 );
-              })}
-              {finalResult.map((d: any, index: number) => {
-                return (
-                  <RadialBar
-                    background
-                    dataKey="value"
-                    angleAxisId={1}
-                    data={[finalResult[index]]}
-                    maxBarSize={8}
-                    cornerRadius={5}
-                  />
-                );
-              })}
-            </RadialBarChart>
-          </ResponsiveContainer>
+              }}
+              labelStyle={{ color: "#000", fontWeight: "bold", fontSize: 13 }}
+              cursor={{ fill: "transparent" }}
+            />
+          </PieChart>
           <Box
             sx={{
               display: "flex",

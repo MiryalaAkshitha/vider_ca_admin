@@ -30,7 +30,7 @@ function DueCard({ data }: { data: any }) {
             <Typography variant="caption" color="rgba(0,0,0,0.4)">
               Client Name
             </Typography>
-            <Typography variant="body2">{data?.client?.name}</Typography>
+            <Typography variant="body2">{data?.client?.displayName}</Typography>
           </Box>
           <Divider orientation="vertical" flexItem />
           <Box>

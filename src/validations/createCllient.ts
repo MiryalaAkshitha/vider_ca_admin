@@ -21,6 +21,7 @@ let createClientDefaultValues = {
   constitutionOfBusiness: "",
   gstVerified: false,
   panVerified: false,
+  clientPortalAccess: "no",
 };
 
 let CreateClientSchema = ({ subCategoriesExist }) =>
@@ -34,9 +35,7 @@ let CreateClientSchema = ({ subCategoriesExist }) =>
       then: string().required("Sub Category is required"),
       otherwise: string().notRequired(),
     }),
-    email: string()
-      .email("Invalid email address")
-      .required("Email is required"),
+    email: string().email("Invalid email address").required("Email is required"),
     mobileNumber: string()
       .required("Mobile number is required")
       .matches(/^[0-9]{10}$/, "Mobile number is invalid"),
@@ -51,6 +50,7 @@ let CreateClientSchema = ({ subCategoriesExist }) =>
     firstName: string().notRequired(),
     lastName: string().notRequired(),
     fullName: string().notRequired(),
+    clientPortalAccess: string().required("Client Portal Access is required"),
   });
 
 export { createClientDefaultValues, CreateClientSchema };

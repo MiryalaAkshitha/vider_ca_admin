@@ -6,18 +6,36 @@ import { format } from "date-fns";
 import _ from "lodash";
 import moment from "moment";
 import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { StyledTaskBox } from "../../styles";
 import DueCard from "./DueCard";
 
 function DueDatesThisWeek() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { data, isLoading }: ResType = useQuery(["task-due-this-week"], getTasksDueThisWeek);
 
   let grouped: any = _.groupBy(data?.data, "dueDate");
 
   let sorted = Object.keys(grouped).sort((a, b) => {
-    return moment(b).diff(moment(a));
+    return moment(a).diff(moment(b));
   });
+
+  const handleClick = () => {
+    dispatch(handleSelected("dueOn"));
+    dispatch(
+      handleFilters({
+        checked: true,
+        value: { label: "This Week", value: "this_week" },
+      })
+    );
+    dispatch(handleApply());
+    navigate("/task-board");
+  };
 
   if (isLoading) return <Loader />;
 
@@ -47,6 +65,14 @@ function DueDatesThisWeek() {
           );
         })}
       </main>
+      <footer>
+        <Typography variant="body2" color="secondary">
+          View Tasks
+        </Typography>
+        <IconButton color="secondary" size="small" onClick={handleClick}>
+          <ArrowForwardIcon fontSize="small" />
+        </IconButton>
+      </footer>
     </StyledTaskBox>
   );
 }

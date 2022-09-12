@@ -106,7 +106,7 @@ export const taskBoardSlice = createSlice({
   name: "taskboard",
   initialState,
   reducers: {
-    handleFilters(state, action: PayloadAction<FilterPayload>) {
+    handleFilters(state: any, action: PayloadAction<FilterPayload>) {
       let filterItem = state.selectedFilters[state.selected];
       if (action.payload.checked) {
         state.selectedFilters[state.selected].push(action.payload.value);
@@ -138,7 +138,7 @@ export const taskBoardSlice = createSlice({
         (item: any, index: number) => index !== filterItemIndex
       );
     },
-    handleApply(state) {
+    handleApply(state: InitialState) {
       state.appliedFilters = state.selectedFilters;
     },
     resetFilters(state) {

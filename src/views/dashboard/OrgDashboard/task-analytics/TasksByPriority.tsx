@@ -1,25 +1,54 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { IconButton, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
+import { getTitle } from "utils";
 import { StyledTaskBox } from "../styles";
 
 function TasksByPriority({ data }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const result = [
-    { name: "Low", value: data?.tasksByPriority?.low, color: "#FF3465" },
+    {
+      name: "High",
+      value: data?.tasksByPriority?.high,
+      color: "#FB0505",
+      key: "high",
+    },
     {
       name: "Medium",
       value: data?.tasksByPriority?.medium,
       color: "#f17f23",
+      key: "medium",
     },
     {
-      name: "High",
-      value: data?.tasksByPriority?.high,
+      name: "Low",
+      value: data?.tasksByPriority?.low,
       color: "#019335",
+      key: "low",
+    },
+    {
+      name: "None",
+      value: data?.tasksByPriority?.none,
+      color: "#64B5F6",
+      key: "none",
     },
   ];
+
+  const handleClick = (v: any) => {
+    dispatch(handleSelected("priority"));
+    dispatch(
+      handleFilters({
+        checked: true,
+        value: { label: getTitle(v.key), value: v.key },
+      })
+    );
+    dispatch(handleApply());
+    navigate("/task-board");
+  };
 
   return (
     <StyledTaskBox>
@@ -29,7 +58,13 @@ function TasksByPriority({ data }) {
       <main>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={result} layout="vertical" style={{ padding: 0, fontSize: "12px" }}>
-            <Bar dataKey="value" barSize={8} radius={[0, 4, 4, 0]}>
+            <Bar
+              dataKey="value"
+              barSize={8}
+              radius={[0, 4, 4, 0]}
+              onClick={(v) => handleClick(v)}
+              style={{ cursor: "pointer" }}
+            >
               {result?.map((entry: any, index: number) => (
                 <Cell fill={result[index].color} />
               ))}

@@ -1,5 +1,5 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,17 +7,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getEmployeeTasksByStatus } from "api/services/organization";
 import Loader from "components/Loader";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getDuration } from "utils/getDuration";
+import DateRange from "../DateRange";
 import { StyledTaskBox } from "../styles";
 
 function TaskStatusByEmployees() {
   const navigate = useNavigate();
+  const [dates, setDates] = useState({ fromDate: null, toDate: null });
 
   const { data, isLoading }: ResType = useQuery(
-    ["employee-tasks-by-status", { offset: 0, limit: 5 }],
+    ["employee-tasks-by-status", { offset: 0, limit: 5, ...dates }],
     getEmployeeTasksByStatus
   );
 
@@ -27,18 +30,22 @@ function TaskStatusByEmployees() {
     <StyledTaskBox>
       <header>
         <Typography variant="h6">Task status by employees</Typography>
+        <Box>
+          <DateRange dates={dates} setDates={setDates} />
+        </Box>
       </header>
       <main style={{ padding: 0 }}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow sx={{ color: "#707070" }}>
               <TableCell>Employee Name</TableCell>
-              <TableCell>Log Hours</TableCell>
+              {/* <TableCell>Log Hours</TableCell> */}
               <TableCell>Todo Tasks</TableCell>
               <TableCell>In Progress Tasks</TableCell>
               <TableCell>On Hold Tasks</TableCell>
               <TableCell>Under Review Tasks</TableCell>
               <TableCell>Done Tasks</TableCell>
+              <TableCell>Total Tasks</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -47,9 +54,9 @@ function TaskStatusByEmployees() {
                 <TableCell>
                   <Typography variant="caption">{row?.fullName}</Typography>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Typography variant="caption">{getDuration(row?.totalLogHours)}</Typography>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <Typography variant="caption">{row?.todo}</Typography>
                 </TableCell>
@@ -64,6 +71,11 @@ function TaskStatusByEmployees() {
                 </TableCell>
                 <TableCell>
                   <Typography variant="caption">{row?.done}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption">
+                    {+row?.todo + +row?.inProgress + +row?.onHold + +row?.underReview + +row?.done}
+                  </Typography>
                 </TableCell>
               </TableRow>
             ))}

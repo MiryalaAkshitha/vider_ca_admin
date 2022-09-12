@@ -28,7 +28,7 @@ function ClientByCategory() {
               <span
                 style={{ width: 10, height: 10, background: "#64B5F6", borderRadius: "50%" }}
               ></span>
-              <Typography variant="caption">Inactive Tasks</Typography>
+              <Typography variant="caption">Inactive Clients</Typography>
             </Box>
           </Box>
         </header>

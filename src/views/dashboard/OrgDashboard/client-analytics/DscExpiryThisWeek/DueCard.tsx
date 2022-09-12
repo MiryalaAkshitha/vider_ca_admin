@@ -1,10 +1,14 @@
 import { Grid, Typography } from "@mui/material";
 import { format } from "date-fns";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 function DueCard({ data }: { data: any }) {
+  const navigate = useNavigate();
+
   return (
     <Grid
+      onClick={() => navigate(`/dsc-register/${data.id}`)}
       container
       spacing={1}
       sx={{
@@ -12,6 +16,7 @@ function DueCard({ data }: { data: any }) {
         marginTop: "20px",
         borderRadius: "10px",
         padding: "15px",
+        cursor: "pointer",
       }}
     >
       <Grid item xs={3}>

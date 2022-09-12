@@ -1,21 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 import { createClient } from "api/services/clients/clients";
-import { getUsers, resetPassword } from "api/services/users";
+import { getUsers } from "api/services/users";
 import DrawerWrapper from "components/DrawerWrapper";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import FormInput from "components/FormFields/FormInput";
+import FormRadio from "components/FormFields/FormRadio";
 import FormSelect from "components/FormFields/FormSelect";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
 import { snack } from "components/toast";
+import { CLIENT_CATEGORIES } from "data/constants";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { DialogProps, ResType } from "types";
-import { CLIENT_CATEGORIES } from "data/constants";
 import { createClientDefaultValues, CreateClientSchema } from "validations/createCllient";
 import Details from "./Details";
-import FormAutoComplete from "components/FormFields/FormAutocomplete";
 
 interface Props extends DialogProps {
   successCb?: () => void;
@@ -64,7 +65,9 @@ function AddClient({ open, setOpen, successCb }: Props) {
     });
   };
 
-  let subCategories = CLIENT_CATEGORIES.find((item) => item.value === watch("category"))?.subCategories;
+  let subCategories = CLIENT_CATEGORIES.find(
+    (item) => item.value === watch("category")
+  )?.subCategories;
 
   const onFormSubmit = (data: any) => {
     mutate({
@@ -72,6 +75,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
       clientManager: data?.clientManager?.value,
       gstVerified: data?.gstRegistered === "yes" && data?.gstVerified,
       panVerified: data?.gstRegistered === "no" && data?.panVerified,
+      clientPortalAccess: data?.clientPortalAccess === "yes",
     });
   };
 
@@ -136,6 +140,18 @@ function AddClient({ open, setOpen, successCb }: Props) {
           </Box>
           <Box mt={2}>
             <FormInput control={control} name="designation" label="Designation" />
+          </Box>
+          <Box mt={2}>
+            <FormRadio
+              row
+              control={control}
+              name="clientPortalAccess"
+              label="Client Portal Access"
+              options={[
+                { value: "yes", label: "Enable" },
+                { value: "no", label: "Disable" },
+              ]}
+            />
           </Box>
           <Details control={control} watch={watch} setData={setData} />
           <LoadingButton

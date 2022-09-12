@@ -19,7 +19,7 @@ function DscExpiryThisWeek() {
   let grouped: any = _.groupBy(data?.data, "expiryDate");
 
   let sorted = Object.keys(grouped).sort((a, b) => {
-    return moment(b).diff(moment(a));
+    return moment(a).diff(moment(b));
   });
 
   if (isLoading) return <Loader />;

@@ -1,56 +1,87 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, IconButton, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { PolarAngleAxis, RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart, Tooltip } from "recharts";
+import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
 import { StyledTaskBox } from "../styles";
 
 function TasksByFrequency({ data }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const finalResult = [
-    { value: data?.recurringTasksPercentage, fill: "#64B5F6" },
-    { value: data?.nonRecurringTasksPercentage, fill: "#0D47A1" },
+    {
+      name: "Recurring",
+      value: data?.recurringTasksPercentage || 30,
+      number: data?.recurringTasks || 0,
+      fill: "#64B5F6",
+      key: "recurring",
+    },
+    {
+      name: "Non-Recurring",
+      value: data?.nonRecurringTasksPercentage || 70,
+      number: data?.nonRecurringTasks || 0,
+      fill: "#0D47A1",
+      key: "non_recurring",
+    },
   ];
+
+  const handleClick = (v: any) => {
+    dispatch(handleSelected("taskType"));
+    dispatch(
+      handleFilters({
+        checked: true,
+        value: { label: v?.name, value: v.key },
+      })
+    );
+    dispatch(handleApply());
+    navigate("/task-board");
+  };
 
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Tasks by frequency</Typography>
+        <Typography variant="h6">Tasks by type</Typography>
       </header>
       <main>
         <Box sx={{ width: "100%", display: "flex", gap: "20px" }}>
-          <ResponsiveContainer width={200} height={200}>
-            <RadialBarChart
-              innerRadius="80%"
-              outerRadius="200%"
-              startAngle={360}
-              endAngle={0}
+          <PieChart width={200} height={200}>
+            <Pie
               data={finalResult}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+              style={{ cursor: "pointer" }}
             >
-              {finalResult.map((d: any, index: number) => {
+              {finalResult?.map((entry, index) => (
+                <Cell onClick={() => handleClick(entry)} key={`cell-${index}`} fill={entry.fill} />
+              ))}
+            </Pie>
+            <Tooltip
+              content={({ active, payload }) => {
                 return (
-                  <PolarAngleAxis
-                    type="number"
-                    domain={[0, 100]}
-                    angleAxisId={index}
-                    tick={false}
-                  />
+                  <Box
+                    sx={{
+                      background: "white",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+                    }}
+                  >
+                    <Typography variant="h6">{payload?.[0]?.payload?.payload?.name}</Typography>
+                    <Typography variant="body2">
+                      {payload?.[0]?.payload?.payload?.number} tasks
+                    </Typography>
+                  </Box>
                 );
-              })}
-              {finalResult.map((d: any, index: number) => {
-                return (
-                  <RadialBar
-                    background
-                    dataKey="value"
-                    angleAxisId={1}
-                    data={[finalResult[index]]}
-                    maxBarSize={8}
-                    cornerRadius={5}
-                  />
-                );
-              })}
-            </RadialBarChart>
-          </ResponsiveContainer>
+              }}
+              labelStyle={{ color: "#000", fontWeight: "bold", fontSize: 13 }}
+              cursor={{ fill: "transparent" }}
+            />
+          </PieChart>
           <Box
             sx={{
               display: "flex",
@@ -66,7 +97,7 @@ function TasksByFrequency({ data }) {
                     width: "11px",
                     height: "11px",
                     borderRadius: "50%",
-                    backgroundColor: "#0D47A1",
+                    backgroundColor: "#64B5F6",
                   }}
                 ></Box>
                 <Typography variant="caption">Recurring Tasks</Typography>
@@ -80,7 +111,7 @@ function TasksByFrequency({ data }) {
                     width: "11px",
                     height: "11px",
                     borderRadius: "50%",
-                    backgroundColor: "#64B5F6",
+                    backgroundColor: "#0D47A1",
                   }}
                 ></Box>
                 <Typography variant="caption">One Time Tasks</Typography>

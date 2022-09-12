@@ -1,9 +1,5 @@
 import { Box, Button } from "@mui/material";
-import {
-  getGstDetails,
-  getPanDetails,
-  getSandboxToken,
-} from "api/services/users";
+import { getGstDetails, getPanDetails, getSandboxToken } from "api/services/users";
 import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import Loader from "components/Loader";
@@ -86,7 +82,7 @@ function CompanyDetails({ control, watch, setData }) {
       {watch("gstRegistered") === "yes" && (
         <Box mt={2}>
           <FormInput control={control} name="gstNumber" label="GST Number" />
-          <Box mt={2} textAlign="right">
+          <Box textAlign="right">
             <Button onClick={handleGstClick} sx={{ color: "#F2353C" }}>
               Get Details
             </Button>
@@ -96,7 +92,7 @@ function CompanyDetails({ control, watch, setData }) {
       {watch("gstRegistered") === "no" && (
         <Box mt={2}>
           <FormInput control={control} name="panNumber" label="PAN Number" />
-          <Box mt={2} textAlign="right">
+          <Box textAlign="right">
             <Button onClick={handlePanClick} sx={{ color: "#F2353C" }}>
               Get Details
             </Button>

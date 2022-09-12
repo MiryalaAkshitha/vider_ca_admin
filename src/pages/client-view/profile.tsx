@@ -18,6 +18,7 @@ import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleError } from "utils/handleError";
+import { FormControlLabel, Switch } from "@mui/material";
 
 function ProfileDetails() {
   const [originalState, setOriginalState] = useState<any>({});
@@ -64,9 +65,20 @@ function ProfileDetails() {
           src={data?.data?.imageUrl}
           onChange={(v: string) => setState({ ...state, image: v })}
         />
-        <Button variant="outlined" color="error" onClick={handleDelete}>
-          Delete Client
-        </Button>
+        <Box display="flex" gap={2}>
+          <FormControlLabel
+            label="Client Portal Access"
+            control={
+              <Switch
+                onChange={(e) => setState({ ...state, clientPortalAccess: e.target.checked })}
+                checked={state?.clientPortalAccess || false}
+              />
+            }
+          />
+          <Button variant="outlined" color="error" onClick={handleDelete}>
+            Delete Client
+          </Button>
+        </Box>
       </Box>
       <BasicInformation data={state} setState={setState} />
       <OrganizationInformation data={state} setState={setState} apiData={data?.data} />

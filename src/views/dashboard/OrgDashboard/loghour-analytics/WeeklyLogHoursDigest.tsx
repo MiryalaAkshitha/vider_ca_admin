@@ -44,12 +44,16 @@ export default function WeeklyLogHoursDigest() {
     return today.getTime() + 1000 * 60 * 60 * 24 * number;
   };
 
+  const totalHours = Object.keys(data?.data || {})
+    ?.map((key) => data?.data[key])
+    ?.reduce((a, b) => a + b, 0);
+
   if (isLoading) return <Loader />;
 
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Weekly Log Hours</Typography>
+        <Typography variant="h6">Weekly Log Hours ({totalHours} Hours)</Typography>
         <Box sx={{ display: "flex", gap: "30px", alignItems: "center" }}>
           {startDate && endDate ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>

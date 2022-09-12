@@ -66,8 +66,12 @@ const getTasksDueThisWeek = () => {
   return http.get(`/stats/tasks-due-this-week`);
 };
 
-const getTasksByCategory = () => {
-  return http.get(`/stats/tasks-by-category`);
+const getTasksByCategory = ({ queryKey }) => {
+  return http.get(`/stats/tasks-by-category`, { params: { ...queryKey[1] } });
+};
+
+const getTasksByClientCategory = ({ queryKey }) => {
+  return http.get(`/stats/tasks-by-client-category`, { params: { ...queryKey[1] } });
 };
 
 const getTasksByService = ({ queryKey }) => {
@@ -118,6 +122,7 @@ export {
   updateGetStarted,
   getTasksDueThisWeek,
   getTasksByCategory,
+  getTasksByClientCategory,
   getTasksByService,
   getOverdueTasks,
   getClientAnalytics,
