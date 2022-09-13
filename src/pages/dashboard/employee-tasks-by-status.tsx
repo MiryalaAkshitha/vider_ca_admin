@@ -61,6 +61,13 @@ function TasksByService() {
             key: "done",
             title: "Done",
           },
+          {
+            key: "total",
+            title: "Total",
+            render: (row: any) => {
+              return +row.todo + +row.inProgress + +row.onHold + +row.underReview + +row.done;
+            },
+          },
         ]}
       />
     </Box>

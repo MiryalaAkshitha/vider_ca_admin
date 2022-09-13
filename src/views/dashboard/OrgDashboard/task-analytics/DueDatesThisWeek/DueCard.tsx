@@ -30,7 +30,10 @@ function DueCard({ data }: { data: any }) {
             <Typography variant="caption" color="rgba(0,0,0,0.4)">
               Client Name
             </Typography>
-            <Typography variant="body2">{data?.client?.displayName}</Typography>
+            <Typography variant="body2">
+              {data?.client?.displayName?.slice(0, 18)}{" "}
+              {data?.client?.displayName?.length > 20 && "..."}
+            </Typography>
           </Box>
           <Divider orientation="vertical" flexItem />
           <Box>
@@ -53,7 +56,7 @@ function DueCard({ data }: { data: any }) {
             borderRadius: "20px",
             minWidth: "115px",
             padding: "5px 10px",
-            backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+            backgroundColor: data?.category?.color || "black",
             textAlign: "center",
           }}
         >

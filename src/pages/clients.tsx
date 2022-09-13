@@ -123,7 +123,7 @@ function Clients() {
           </ValidateAccess>
         </Box>
       </Box>
-      <Box sx={{ mt: 2, height: 480, overflow: "scroll" }}>
+      <Box>
         <Table
           sx={{ mt: 3 }}
           loading={isLoading}

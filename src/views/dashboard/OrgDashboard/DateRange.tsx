@@ -40,8 +40,8 @@ function DateRange({ dates: datesProp, setDates: setDatesProp }) {
       >
         {datesProp.fromDate && datesProp.toDate ? (
           <Typography variant="body2">
-            {moment(datesProp.fromDate).format("MM/DD/YYYY")} -{" "}
-            {moment(datesProp.toDate).format("MM/DD/YYYY")}
+            {moment(datesProp.fromDate).format("DD/MM/YYYY")} -{" "}
+            {moment(datesProp.toDate).format("DD/MM/YYYY")}
           </Typography>
         ) : (
           <Typography variant="body2">Select Date Range</Typography>
@@ -69,6 +69,7 @@ function DateRange({ dates: datesProp, setDates: setDatesProp }) {
           label="From Date"
           inputFormat="dd-MM-yyyy"
           value={dates.fromDate}
+          maxDate={dates.toDate}
           onChange={(value) => {
             setDates({
               ...dates,
@@ -81,6 +82,7 @@ function DateRange({ dates: datesProp, setDates: setDatesProp }) {
           label="To Date"
           inputFormat="dd-MM-yyyy"
           value={dates.toDate}
+          minDate={dates.fromDate}
           onChange={(value) => {
             setDates({
               ...dates,

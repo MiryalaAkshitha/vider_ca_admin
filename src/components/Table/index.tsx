@@ -9,7 +9,7 @@ const ROWS_PER_PAGE_OPTIONS = [5, 10, 20, 25, 50];
 export type ColumnType = {
   key: string;
   title: string;
-  render?: (item: any) => React.ReactElement | string | null;
+  render?: (item: any) => React.ReactElement | string | null | number;
   hide?: boolean;
   default?: boolean;
   width?: string;

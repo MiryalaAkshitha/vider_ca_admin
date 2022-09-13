@@ -1,10 +1,10 @@
+import { getTasksByClientCategory } from "api/services/organization";
+import Loader from "components/Loader";
+import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
-import { getTasksByCategory, getTasksByClientCategory } from "api/services/organization";
-import Loader from "components/Loader";
-import { useQuery } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 
@@ -31,7 +31,7 @@ function ClientCategory({ dates }) {
 
   const result =
     data?.data?.map((item: any) => ({
-      name: item.name,
+      name: getTitle(item.name),
       Recurring: item.recurring,
       "Non-Recurring": item.non_recurring,
       id: item?.id,

@@ -45,25 +45,33 @@ function DueDatesThisWeek() {
         <Typography variant="h6">Tasks Due This Week</Typography>
       </header>
       <main>
-        {sorted?.map((date: any) => {
-          return (
-            <Box sx={{ display: "flex", gap: "30px", alignItems: "start" }}>
-              <Box>
-                <Typography variant="h5" color="primary">
-                  {format(new Date(date), "dd")}
-                </Typography>
-                <Typography variant="caption" color="rgba(0,0,0,0.4)">
-                  {format(new Date(date), "MMM")}
-                </Typography>
+        {sorted?.length ? (
+          sorted?.map((date: any) => {
+            return (
+              <Box sx={{ display: "flex", gap: "30px", alignItems: "start" }}>
+                <Box>
+                  <Typography variant="h5" color="primary">
+                    {format(new Date(date), "dd")}
+                  </Typography>
+                  <Typography variant="caption" color="rgba(0,0,0,0.4)">
+                    {format(new Date(date), "MMM")}
+                  </Typography>
+                </Box>
+                <Box flex={1}>
+                  {grouped[date]?.map((item: any) => {
+                    return <DueCard data={item} />;
+                  })}
+                </Box>
               </Box>
-              <Box flex={1}>
-                {grouped[date]?.map((item: any) => {
-                  return <DueCard data={item} />;
-                })}
-              </Box>
-            </Box>
-          );
-        })}
+            );
+          })
+        ) : (
+          <Box p={5}>
+            <Typography variant="subtitle1" color="rgba(0,0,0,0.4)">
+              No tasks due this week
+            </Typography>
+          </Box>
+        )}
       </main>
       <footer>
         <Typography variant="body2" color="secondary">
