@@ -25,6 +25,7 @@ interface UploadProps {
   sx?: SystemStyleObject;
   label?: string;
   widthoutIcon?: boolean;
+  accept?: string[];
 }
 
 function UploadImage({
@@ -33,6 +34,7 @@ function UploadImage({
   sx,
   label = "Drag and drop or Browse",
   widthoutIcon = false,
+  accept,
 }: UploadProps) {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
@@ -40,6 +42,11 @@ function UploadImage({
 
   const handleFile = async (file: any) => {
     if (!file) return;
+
+    if (accept && !accept.includes(file.type)) {
+      return snack.error(`Only ${accept.join(", ")} types are accepted`);
+    }
+
     try {
       setLoading(true);
       setFile(file);
@@ -105,9 +112,7 @@ function UploadImage({
               <CircularProgress />
             ) : (
               <>
-                {!widthoutIcon && (
-                  <CloudUploadOutlinedIcon color="disabled" fontSize="large" />
-                )}
+                {!widthoutIcon && <CloudUploadOutlinedIcon color="disabled" fontSize="large" />}
                 <Typography color="GrayText" sx={{ textAlign: "center" }}>
                   {label}
                 </Typography>

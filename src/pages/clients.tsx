@@ -123,15 +123,17 @@ function Clients() {
           </ValidateAccess>
         </Box>
       </Box>
-      <Table
-        sx={{ mt: 3 }}
-        loading={isLoading}
-        onRowClick={handleRowClick}
-        data={data?.data?.result || []}
-        columns={columns}
-        selection={{ selected, setSelected }}
-        pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
-      />
+      <Box sx={{ mt: 2, height: 480, overflow: "scroll" }}>
+        <Table
+          sx={{ mt: 3 }}
+          loading={isLoading}
+          onRowClick={handleRowClick}
+          data={data?.data?.result || []}
+          columns={columns}
+          selection={{ selected, setSelected }}
+          pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
+        />
+      </Box>
       <ValidateAccess name={Permissions.CREATE_CLIENTS}>
         <FloatingButton
           onClick={() => {

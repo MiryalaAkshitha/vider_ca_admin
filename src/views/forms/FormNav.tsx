@@ -5,12 +5,12 @@ import { useLocation } from "react-router-dom";
 
 const formMenu = [
   {
-    title: "Form templates",
+    title: "Form Templates",
     path: "",
     pathName: "/forms",
   },
   {
-    title: "Form validations",
+    title: "Form Validations",
     path: "form-validations",
     pathName: "/forms/form-validations",
   },
@@ -23,7 +23,7 @@ const FormNav = () => {
     <Box
       sx={{
         width: 200,
-        borderRight: "1px solid #e0e0e0",
+        borderRight: "1px solid #e0e0e0 ",
         minHeight: 550,
       }}
     >
@@ -39,9 +39,7 @@ const FormNav = () => {
                 }),
               }}
             >
-              <ListItemText
-                primary={<Typography variant="body2">{item?.title}</Typography>}
-              />
+              <ListItemText primary={<Typography variant="body2">{item?.title}</Typography>} />
             </ListItemButton>
           </RouterLink>
         ))}

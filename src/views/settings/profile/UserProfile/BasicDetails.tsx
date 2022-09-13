@@ -1,5 +1,5 @@
 import { DesktopDatePicker } from "@mui/lab";
-import { Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import ProfileImage from "views/client-view/ProfileDetails/ProfileImage";
 import ChangePassword from "./ChangePassword";
@@ -14,27 +14,42 @@ const BasicDetails = ({ state, setState }) => {
       [e.target.name]: e.target.value,
     });
   };
-
   return (
     <>
       <SectionWrapper title="Basic Details">
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ display: "flex", justifyContent: "space-between" }}>
-            <ProfileImage
-              src={state?.imageUrl}
-              onChange={(v: string) => {
-                setState({
-                  ...state,
-                  image: v,
-                });
-              }}
-            />
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <ProfileImage
+                src={state?.imageUrl}
+                onChange={(v: string) => {
+                  setState({
+                    ...state,
+                    image: v,
+                  });
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                  ml: 3,
+                }}
+              >
+                <Typography variant="h5">{state?.role}</Typography>
+                <Typography variant="body2">{state?.employeeId}</Typography>
+                <Typography variant="body2">{state?.email}</Typography>
+              </Box>
+            </Box>
             <div>
               <Button onClick={() => setOpen(true)} variant="outlined" color="secondary">
                 Change Password
               </Button>
             </div>
           </Grid>
+
           <Grid item xs={4}>
             <TextField
               variant="outlined"
@@ -54,21 +69,20 @@ const BasicDetails = ({ state, setState }) => {
               label="Mobile Number"
               inputProps={{
                 pattern: "[0-9]{10}",
-            title: "Enter valid Mobile Number",
-              }
-
-              }
+                title: "Enter valid Mobile Number",
+              }}
               value={state?.mobileNumber || ""}
             />
           </Grid>
+
           <Grid item xs={4}>
             <TextField
               variant="outlined"
               fullWidth
               onChange={handleChange}
-              name="workEmail"
-              label="Work Email"
-              value={state?.workEmail || ""}
+              name="personalMail"
+              label="Personal Mail"
+              value={state?.email || ""}
             />
           </Grid>
           <Grid item xs={4}>

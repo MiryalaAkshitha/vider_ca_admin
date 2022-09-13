@@ -1,15 +1,12 @@
-import {
-  AddCircleOutlineRounded,
-  NotificationsOutlined,
-} from "@mui/icons-material";
+import { AddCircleOutlineRounded, NotificationsOutlined } from "@mui/icons-material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { AppBar, Avatar, IconButton, LinearProgress } from "@mui/material";
+import { AppBar, Avatar, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import { useUserData } from "context/UserProfile";
-import { useState } from "react";
+import { UserProfileContext, useUserData } from "context/UserProfile";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectGlobal, selectTitle } from "redux/reducers/globalSlice";
@@ -32,6 +29,7 @@ function Appbar() {
   const [globalAddAnchorEl, setGlobalAddAnchorEl] = useState<RefType>(null);
   const [notifAnchorEl, setNotifAnchorEl] = useState<RefType>(null);
   const [globalActionType, setGlobalActionType] = useState<string>("");
+  const { data: uData } = useContext(UserProfileContext);
 
   return (
     <>
@@ -79,9 +77,39 @@ function Appbar() {
                 </IconButton>
               </Link>
             </Box>
-            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-              <Avatar src={data?.imageUrl} />
-            </IconButton>
+            <Tooltip
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: "rgba(60,64,67,.90)",
+                  },
+                },
+              }}
+              title={
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "160px",
+                    height: "80px",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography variant="body1" color="inherit">
+                    {uData?.fullName}
+                  </Typography>
+                  <Typography color="lightgrey">{uData?.role?.name}</Typography>
+                </Box>
+              }
+              placement="bottom-end"
+              arrow
+            >
+              <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+                <Avatar src={data?.imageUrl} />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
         {loading && (

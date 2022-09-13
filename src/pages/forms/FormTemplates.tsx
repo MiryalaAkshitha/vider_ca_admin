@@ -18,10 +18,7 @@ const MyForms = () => {
   const [search, setSearch] = useState("");
   const [openImport, setOpenImport] = useState(false);
 
-  const { data, isLoading }: ResType = useQuery(
-    ["forms", { type: "TEMPLATE" }],
-    getForms
-  );
+  const { data, isLoading }: ResType = useQuery(["forms", { type: "TEMPLATE" }], getForms);
 
   const filteredData = useFilteredData(data?.data, ["name", "tags"], search);
 
@@ -54,9 +51,7 @@ const MyForms = () => {
           </Grid>
         ))}
       </Grid>
-      {data?.data?.length > 0 && (
-        <FloatingButton position="right" onClick={() => setOpen(true)} />
-      )}
+      {data?.data?.length > 0 && <FloatingButton position="right" onClick={() => setOpen(true)} />}
       {data?.data?.length === 0 && (
         <EmptyPage
           minHeight="70vh"
@@ -69,7 +64,7 @@ const MyForms = () => {
         />
       )}
       <AddForm open={open} setOpen={setOpen} />
-      <ImportForms open={openImport} setOpen={setOpenImport} />
+      <ImportForms open={openImport} setOpen={setOpenImport} d={data} />
     </Box>
   );
 };

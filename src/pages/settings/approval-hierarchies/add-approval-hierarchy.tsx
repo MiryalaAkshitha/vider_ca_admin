@@ -21,10 +21,13 @@ import {
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
 import ApprovalLevels from "views/settings/approval-hierarchies/ApprovalLevels";
+import { getApprvalHeirarchies } from "api/services/approval-heirarchy";
 
 function AddApprovalHierarchy() {
   const queryClient = useQueryClient();
   const { name, type, approvalLevels } = useSelector(selectApprovals);
+  const { data }: ResType = useQuery("approval-heirarchies", getApprvalHeirarchies);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { queryParams } = useQueryParams();
@@ -74,9 +77,10 @@ function AddApprovalHierarchy() {
       approvalLevels,
     };
 
-    apiData.approvalLevels = apiData.approvalLevels.map(
-      (item: any, index: number) => ({ ...item, level: index + 1 })
-    );
+    apiData.approvalLevels = apiData.approvalLevels.map((item: any, index: number) => ({
+      ...item,
+      level: index + 1,
+    }));
 
     if (approvalId) {
       update({

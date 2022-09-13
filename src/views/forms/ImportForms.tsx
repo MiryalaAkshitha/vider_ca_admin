@@ -1,41 +1,29 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  Grid,
-  Typography,
-} from "@mui/material";
-import { getDefaultForms, importForms } from "api/services/forms";
+import { Box, Button, Checkbox, Divider, Grid, Typography } from "@mui/material";
+import { getDefaultForms, getForms, importForms } from "api/services/forms";
 import DialogWrapper from "components/DialogWrapper";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import { snack } from "components/toast";
 import useFilteredData from "hooks/useFilteredData";
+import { filter } from "lodash";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
-import {
-  StyledServiceItem,
-  StyledServicesContainer,
-} from "views/tasks/board/CreateTask/styles";
+import { StyledServiceItem, StyledServicesContainer } from "views/tasks/board/CreateTask/styles";
 
 interface Props extends DialogProps {
   successCb?: () => void;
+  d?: any;
 }
 
-function ImportForms({ open, setOpen, successCb }: Props) {
+function ImportForms({ open, setOpen, successCb, d }: Props) {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [selectedForms, setSelectedForms] = useState<string[]>([]);
 
-  const { data, isLoading }: ResType = useQuery(
-    "default-forms",
-    getDefaultForms,
-    {
-      enabled: open,
-    }
-  );
+  const { data, isLoading }: ResType = useQuery("default-forms", getDefaultForms, {
+    enabled: open,
+  });
 
   const filteredData = useFilteredData(data?.data, ["name"], search);
 
@@ -66,12 +54,7 @@ function ImportForms({ open, setOpen, successCb }: Props) {
   };
 
   return (
-    <DialogWrapper
-      width="lg"
-      open={open}
-      setOpen={setOpen}
-      title="Import forms"
-    >
+    <DialogWrapper width="lg" open={open} setOpen={setOpen} title="Import forms">
       <Box display="flex" justifyContent="flex-end">
         <SearchContainer
           value={search}

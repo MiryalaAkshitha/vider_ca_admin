@@ -14,10 +14,7 @@ function Approvals() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const { data, isLoading }: ResType = useQuery(
-    "approval-heirarchies",
-    getApprvalHeirarchies
-  );
+  const { data, isLoading }: ResType = useQuery("approval-heirarchies", getApprvalHeirarchies);
 
   const filteredData = useFilteredData(data?.data, ["name"], search);
 
