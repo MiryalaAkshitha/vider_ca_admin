@@ -28,21 +28,21 @@ function ServiceCategory({ dates }) {
     navigate("/task-board");
   };
 
+  const result =
+    data?.data?.map((item: any) => ({
+      name: item.name,
+      Recurring: item.recurring,
+      "Non-Recurring": item.non_recurring,
+      id: item?.id,
+    })) || [];
+
+  const yaxisMax = Math.max(...result.map((item: any) => +item.Recurring + +item["Non-Recurring"]));
+
   if (isLoading) return <Loader />;
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <BarChart
-        data={
-          data?.data?.map((item: any) => ({
-            name: item.name,
-            Recurring: item.recurring,
-            "Non-Recurring": item.non_recurring,
-            id: item?.id,
-          })) || []
-        }
-        style={{ padding: 0, fontSize: "12px" }}
-      >
+      <BarChart data={result} style={{ padding: 0, fontSize: "12px" }}>
         <Bar
           style={{ cursor: "pointer" }}
           dataKey="Recurring"
@@ -60,7 +60,7 @@ function ServiceCategory({ dates }) {
           onClick={(v) => handleClick(v)}
         ></Bar>
         <XAxis type="category" dataKey="name" />
-        <YAxis type="number" domain={[0, "dataMax + 25"]} />
+        <YAxis type="number" domain={[0, yaxisMax + 10]} />
         <Tooltip
           labelStyle={{ color: "#000", fontWeight: "bold", fontSize: 15 }}
           cursor={{ fill: "transparent" }}

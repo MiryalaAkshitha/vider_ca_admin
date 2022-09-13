@@ -10,6 +10,15 @@ import { StyledTaskBox } from "../styles";
 function ClientByCategory() {
   const { data, isLoading }: ResType = useQuery(["clients-by-category"], getClientsByCategory);
 
+  const result =
+    data?.data?.map((item: any) => ({
+      category: getTitle(item?.category),
+      Active: item?.activeClients,
+      Inactive: item?.inactiveClients,
+    })) || [];
+
+  const yaxisMax = Math.max(...result.map((item: any) => +item.Active + +item.Inactive));
+
   if (isLoading) return <Loader />;
 
   return (
@@ -33,21 +42,12 @@ function ClientByCategory() {
           </Box>
         </header>
         <main>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={
-                data?.data?.map((item: any) => ({
-                  category: getTitle(item?.category),
-                  Active: item?.activeClients,
-                  Inactive: item?.inactiveClients,
-                })) || []
-              }
-              style={{ padding: 0, fontSize: "12px" }}
-            >
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={result} style={{ padding: 0, fontSize: "12px" }}>
               <Bar dataKey="Active" barSize={6} radius={[4, 4, 0, 0]} fill="#0D47A1"></Bar>
               <Bar dataKey="Inactive" barSize={6} radius={[4, 4, 0, 0]} fill="#64B5F6"></Bar>
               <XAxis type="category" dataKey="category" />
-              <YAxis type="number" domain={[0, "dataMax + 25"]} />
+              <YAxis type="number" domain={[0, yaxisMax + 10]} />
               <Tooltip
                 labelStyle={{ color: "#000", fontWeight: "bold", fontSize: 15 }}
                 cursor={{ fill: "transparent" }}

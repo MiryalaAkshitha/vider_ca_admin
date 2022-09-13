@@ -7,15 +7,16 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
-import { getDuration } from "utils/getDuration";
+import DateRange from "views/dashboard/OrgDashboard/DateRange";
 
 function TasksByService() {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);
+  const [dates, setDates] = useState({ fromDate: null, toDate: null });
 
   const { data, isLoading }: ResType = useQuery(
-    ["employee-tasks-by-status", { limit: pageCount, offset: page * pageCount }],
+    ["employee-tasks-by-status", { limit: pageCount, offset: page * pageCount, ...dates }],
     getEmployeeTasksByStatus
   );
 
@@ -25,13 +26,12 @@ function TasksByService() {
 
   return (
     <Box p={2}>
-      <Button
-        onClick={() => navigate(-1)}
-        sx={{ mb: 2 }}
-        startIcon={<ArrowBack color="secondary" />}
-      >
-        Employee Tasks By Status
-      </Button>
+      <Box mb={2} display="flex" justifyContent="space-between" alignItems="center">
+        <Button onClick={() => navigate(-1)} startIcon={<ArrowBack color="secondary" />}>
+          Employee Tasks By Status
+        </Button>
+        <DateRange dates={dates} setDates={setDates} />
+      </Box>
       <Table
         loading={isLoading}
         data={data?.data?.result}
@@ -41,11 +41,6 @@ function TasksByService() {
             key: "fullName",
             title: "Employee Name",
           },
-          // {
-          //   key: "totalLogHours",
-          //   title: "Total Log Hours",
-          //   render: (row: any) => <> {getDuration(row?.totalLogHours)}</>,
-          // },
           {
             key: "todo",
             title: "Todo",

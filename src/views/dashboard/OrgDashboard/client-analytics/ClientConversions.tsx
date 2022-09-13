@@ -9,16 +9,16 @@ function ClientConversions({ data }) {
 
   const finalResult = [
     {
-      name: "Clients",
+      name: "Converted Leads",
       number: data?.convertedLeads,
       value: data?.convertedLeadsPercent,
-      fill: "#64B5F6",
+      fill: "#0D47A1",
     },
     {
-      name: "Leads",
+      name: "Not converted Leads",
       number: data?.notConvertedLeads,
       value: data?.notConvertedLeadsPercent,
-      fill: "#0D47A1",
+      fill: "#64B5F6",
     },
   ];
 
@@ -92,9 +92,11 @@ function ClientConversions({ data }) {
                     backgroundColor: "#0D47A1",
                   }}
                 ></Box>
-                <Typography variant="caption">Clients</Typography>
+                <Typography variant="caption">Converted Leads</Typography>
               </Box>
-              <Typography variant="h5">{data?.convertedLeadsPercent}%</Typography>
+              <Typography variant="h5">
+                {data?.convertedLeads} ({data?.convertedLeadsPercent}%)
+              </Typography>
             </Box>
             <Box>
               <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
@@ -106,9 +108,11 @@ function ClientConversions({ data }) {
                     backgroundColor: "#64B5F6",
                   }}
                 ></Box>
-                <Typography variant="caption">Leads</Typography>
+                <Typography variant="caption">Not Converted Leads</Typography>
               </Box>
-              <Typography variant="h5">{data?.notConvertedLeadsPercent}%</Typography>
+              <Typography variant="h5">
+                {data?.notConvertedLeads} ({data?.notConvertedLeadsPercent}%)
+              </Typography>
             </Box>
           </Box>
         </Box>

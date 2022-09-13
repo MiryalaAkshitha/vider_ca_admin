@@ -86,9 +86,6 @@ export default function WeeklyLogHoursDigest() {
               </IconButton>
             </Box>
           ) : null}
-          <Button variant="outlined" color="secondary">
-            Apply
-          </Button>
         </Box>
       </header>
       <main>

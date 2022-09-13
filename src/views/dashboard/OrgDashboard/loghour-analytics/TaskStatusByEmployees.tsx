@@ -11,7 +11,6 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
-import { getDuration } from "utils/getDuration";
 import DateRange from "../DateRange";
 import { StyledTaskBox } from "../styles";
 
@@ -20,7 +19,7 @@ function TaskStatusByEmployees() {
   const [dates, setDates] = useState({ fromDate: null, toDate: null });
 
   const { data, isLoading }: ResType = useQuery(
-    ["employee-tasks-by-status", { offset: 0, limit: 5, ...dates }],
+    ["employee-tasks-by-status", { offset: 0, limit: 10, ...dates }],
     getEmployeeTasksByStatus
   );
 
@@ -39,7 +38,6 @@ function TaskStatusByEmployees() {
           <TableHead>
             <TableRow sx={{ color: "#707070" }}>
               <TableCell>Employee Name</TableCell>
-              {/* <TableCell>Log Hours</TableCell> */}
               <TableCell>Todo Tasks</TableCell>
               <TableCell>In Progress Tasks</TableCell>
               <TableCell>On Hold Tasks</TableCell>
@@ -54,9 +52,6 @@ function TaskStatusByEmployees() {
                 <TableCell>
                   <Typography variant="caption">{row?.fullName}</Typography>
                 </TableCell>
-                {/* <TableCell>
-                  <Typography variant="caption">{getDuration(row?.totalLogHours)}</Typography>
-                </TableCell> */}
                 <TableCell>
                   <Typography variant="caption">{row?.todo}</Typography>
                 </TableCell>

@@ -1,7 +1,4 @@
-import {
-  AddCircleOutlineRounded,
-  NotificationsOutlined,
-} from "@mui/icons-material";
+import { AddCircleOutlineRounded, NotificationsOutlined } from "@mui/icons-material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { AppBar, Avatar, IconButton, LinearProgress } from "@mui/material";
 import { useTheme } from "@mui/material/styles";

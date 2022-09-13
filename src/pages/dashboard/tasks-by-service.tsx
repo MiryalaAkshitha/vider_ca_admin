@@ -8,14 +8,16 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
 import { getDuration } from "utils/getDuration";
+import DateRange from "views/dashboard/OrgDashboard/DateRange";
 
 function TasksByService() {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(10);
+  const [dates, setDates] = useState({ fromDate: null, toDate: null });
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-by-service", { limit: pageCount, offset: page * pageCount }],
+    ["task-by-service", { limit: pageCount, offset: page * pageCount, ...dates }],
     getTasksByService
   );
 
@@ -25,13 +27,12 @@ function TasksByService() {
 
   return (
     <Box p={2}>
-      <Button
-        onClick={() => navigate(-1)}
-        sx={{ mb: 2 }}
-        startIcon={<ArrowBack color="secondary" />}
-      >
-        Tasks By Service
-      </Button>
+      <Box mb={2} display="flex" justifyContent="space-between" alignItems="center">
+        <Button onClick={() => navigate(-1)} startIcon={<ArrowBack color="secondary" />}>
+          Tasks By Service
+        </Button>
+        <DateRange dates={dates} setDates={setDates} />
+      </Box>
       <Table
         loading={isLoading}
         data={data?.data?.result}
