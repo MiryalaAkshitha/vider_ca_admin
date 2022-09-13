@@ -1,7 +1,8 @@
 import { MoreVert } from "@mui/icons-material";
-import { Grid, IconButton } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Table from "components/Table";
+import View from "components/View";
 import moment from "moment";
 import { useState } from "react";
 import { ViewType } from "types";
@@ -13,17 +14,27 @@ type Props = {
   data: any;
   xl?: number;
   lg?: number;
-  view?: ViewType;
 };
 
 function Files(props: Props) {
-  const { data, xl, lg, view = "grid" } = props;
+  const { data, xl, lg } = props;
   const [contextMenu, setContextMenu] = useState<Position | null>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [view, setView] = useState<ViewType>("grid");
+
+  const handleView = (view: ViewType) => {
+    setView(view);
+  };
 
   return (
     <>
-      <Box>
+      <Box mt={4} mb={3}>
+        <Box mb={1} display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="subtitle2" sx={{ mb: 2 }} color="primary">
+            Files
+          </Typography>
+          <View value={view} onChange={handleView} />
+        </Box>
         {view === "grid" && (
           <Grid container spacing={2}>
             {data?.map((item: any) => (
@@ -55,10 +66,7 @@ function Files(props: Props) {
                 title: "Last Modified",
                 key: "updatedAt",
                 render: (item: any) => {
-                  return moment
-                    .utc(item?.updatedAt)
-                    .local()
-                    .format("MM/DD/YYYY, h:mm a");
+                  return moment.utc(item?.updatedAt).local().format("MM/DD/YYYY, h:mm a");
                 },
               },
               {
@@ -90,11 +98,7 @@ function Files(props: Props) {
           />
         )}
       </Box>
-      <FolderMenu
-        contextMenu={contextMenu}
-        setContextMenu={setContextMenu}
-        data={selectedFile}
-      />
+      <FolderMenu contextMenu={contextMenu} setContextMenu={setContextMenu} data={selectedFile} />
     </>
   );
 }

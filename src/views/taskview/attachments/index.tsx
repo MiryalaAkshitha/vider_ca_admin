@@ -52,15 +52,7 @@ function Attachments() {
       ));
     }
 
-    if (value === 1 && links.length > 0) {
-      return links?.map((item: any) => (
-        <Grid item xs={3} key={item?.id}>
-          <Link data={item} />
-        </Grid>
-      ));
-    }
-
-    if (value === 2 && localFilePaths.length > 0) {
+    if (value === 1 && localFilePaths.length > 0) {
       return localFilePaths?.map((item: any) => (
         <Grid item xs={3} key={item?.id}>
           <Link data={item} local />
@@ -77,7 +69,6 @@ function Attachments() {
         {data?.data?.length > 0 ? (
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Files" {...a11yProps(0)} />
-            <Tab label="Links" {...a11yProps(1)} />
             <Tab label="Local File Paths" {...a11yProps(2)} />
           </Tabs>
         ) : (

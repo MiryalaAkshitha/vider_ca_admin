@@ -15,7 +15,7 @@ import BreadCrumbs from "views/storage/BreadCrumbs";
 import Folders from "views/storage/Folders";
 import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
 import Search from "views/storage/Search";
-import FilesAndLinks from "../FilesAndLinks";
+import Files from "../Files";
 import ClientDetails from "./ClientDetails";
 import ClientsList from "./ClientsList";
 
@@ -40,19 +40,21 @@ function ClientStorage() {
     type: "client",
   };
 
-  const { data, isLoading }: StorageResponse = useQuery(
-    ["storage", query],
-    getStorage,
-    {
-      onSuccess: (res: any) => {
-        dispatch(setCurrentStorage(res?.data?.result));
-      },
-      enabled: Boolean(queryParams.clientId),
-    }
-  );
+  const { data, isLoading }: StorageResponse = useQuery(["storage", query], getStorage, {
+    onSuccess: (res: any) => {
+      dispatch(setCurrentStorage(res?.data?.result));
+    },
+    enabled: Boolean(queryParams.clientId),
+  });
 
   let folders = getFilesOrFolders({
     type: "folder",
+    data: data?.data?.result,
+    sortBy: queryParams.soryBy || "",
+  });
+
+  let files = getFilesOrFolders({
+    type: "file",
     data: data?.data?.result,
     sortBy: queryParams.soryBy || "",
   });
@@ -69,11 +71,9 @@ function ClientStorage() {
           <Box px={4} py={2}>
             <ClientDetails />
             <Search type="client" />
-            {data?.data.breadCrumbs.length ? (
-              <BreadCrumbs data={data?.data?.breadCrumbs} />
-            ) : null}
+            {data?.data.breadCrumbs.length ? <BreadCrumbs data={data?.data?.breadCrumbs} /> : null}
             {folders?.length ? <Folders xl={3} lg={4} data={folders} /> : null}
-            <FilesAndLinks data={data} />
+            {files?.length ? <Files data={files} /> : null}
             <ValidateAccess name={Permissions.CREATE_CLIENT_STORAGE}>
               <AddAttachment type="client" />
             </ValidateAccess>

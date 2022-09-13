@@ -13,7 +13,7 @@ import { setCurrentStorage, setPermissions } from "redux/reducers/storageSlice";
 import { StorageResponse } from "types";
 import AddAttachment from "views/storage/AddAttachment";
 import BreadCrumbs from "views/storage/BreadCrumbs";
-import FilesAndLinks from "views/storage/FilesAndLinks";
+import Files from "views/storage/Files";
 import Folders from "views/storage/Folders";
 import { getFilesOrFolders } from "views/storage/getFilesOrFolders";
 import Search from "views/storage/Search";
@@ -40,18 +40,20 @@ function Attachments() {
     type: "client",
   };
 
-  const { data, isLoading }: StorageResponse = useQuery(
-    ["storage", query],
-    getStorage,
-    {
-      onSuccess: (res: any) => {
-        dispatch(setCurrentStorage(res?.data?.result));
-      },
-    }
-  );
+  const { data, isLoading }: StorageResponse = useQuery(["storage", query], getStorage, {
+    onSuccess: (res: any) => {
+      dispatch(setCurrentStorage(res?.data?.result));
+    },
+  });
 
   let folders = getFilesOrFolders({
     type: "folder",
+    data: data?.data?.result,
+    sortBy: searchParams.get("sortBy") || "",
+  });
+
+  let files = getFilesOrFolders({
+    type: "file",
     data: data?.data?.result,
     sortBy: searchParams.get("sortBy") || "",
   });
@@ -63,16 +65,14 @@ function Attachments() {
       <Box px={4} py={2}>
         <Box display="flex" justifyContent="space-between">
           <Box>
-            {data?.data.breadCrumbs.length ? (
-              <BreadCrumbs data={data?.data?.breadCrumbs} />
-            ) : null}
+            {data?.data.breadCrumbs.length ? <BreadCrumbs data={data?.data?.breadCrumbs} /> : null}
           </Box>
           <Search type="client" />
         </Box>
         {data?.data?.result?.length ? (
           <>
             {folders?.length ? <Folders data={folders} /> : null}
-            <FilesAndLinks data={data} />
+            {files?.length ? <Files data={files} /> : null}
           </>
         ) : (
           <EmptyPage

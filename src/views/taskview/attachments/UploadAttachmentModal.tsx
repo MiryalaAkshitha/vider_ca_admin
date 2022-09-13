@@ -46,23 +46,14 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
   return (
     <Dialog maxWidth="md" fullWidth open={open} onClose={setOpen}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Upload from PC" {...a11yProps(0)} />
           <Tab label="Client Library" {...a11yProps(1)} />
-          <Tab label="One Drive" {...a11yProps(2)} />
-          <Tab label="Local Storage" {...a11yProps(3)} />
+          <Tab label="Local Storage" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <FileDrop
-          multiple
-          sx={{ minHeight: 300 }}
-          onChange={(files: File[]) => setFiles(files)}
-        />
+        <FileDrop multiple sx={{ minHeight: 300 }} onChange={(files: File[]) => setFiles(files)} />
         <Box sx={{ mt: 3, display: "flex", gap: 2, justifyContent: "center" }}>
           <LoadingButton
             title="Upload Files"
@@ -79,9 +70,6 @@ function UploadAttachmentModal({ open, setOpen }: DialogProps) {
         <ClientLibrary setOpen={setOpen} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AddOneDriveLink setOpen={setOpen} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
         <AddLocalPath setOpen={setOpen} />
       </TabPanel>
     </Dialog>
