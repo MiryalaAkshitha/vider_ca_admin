@@ -73,6 +73,7 @@ import file from "./icons/file.png";
 import atom_logo from "./images/atom_logo.png";
 import onedrive from "./icons/onedrive.png";
 import folderIcon from "./icons/folder.svg";
+import emptyGroup from "./images/GroupEmpty.png";
 
 export {
   quote,
@@ -93,6 +94,7 @@ export {
   createFormLanding,
   clientFormCard,
   atom_logo,
+  emptyGroup,
 };
 
 export const icons = {

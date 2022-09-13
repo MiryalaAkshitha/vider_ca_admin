@@ -79,8 +79,6 @@ function CreateTask({ open, setOpen, successCb }: Props) {
     mutate(apiData);
   };
 
-  console.log(errors);
-
   return (
     <DrawerWrapper
       open={open}

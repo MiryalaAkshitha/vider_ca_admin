@@ -1,5 +1,5 @@
 import { Box, List } from "@mui/material";
-import { communicationMenu } from "data/communicationMenu";
+import { invoicingMenu } from "data/invoicingMenu";
 import CollapsibleMenuItem from "./CollapsibleMenuItem";
 import SingleMenuItem from "./SingleMenuItem";
 
@@ -13,7 +13,7 @@ const SideNav = () => {
       }}
     >
       <List>
-        {communicationMenu.map((item, index) => {
+        {invoicingMenu.map((item, index) => {
           return item?.children ? (
             <CollapsibleMenuItem key={index} item={item} />
           ) : (

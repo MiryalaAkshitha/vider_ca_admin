@@ -3,11 +3,7 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/system";
 import { updateClient } from "api/services/clients/clients";
-import {
-  getGstDetails,
-  getPanDetails,
-  getSandboxToken,
-} from "api/services/users";
+import { getGstDetails, getPanDetails, getSandboxToken } from "api/services/users";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -50,6 +46,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
 
     if (data?.panNumber) {
       let gstSlice = data?.gstNumber?.slice(2, 12);
+
       if (gstSlice !== data?.panNumber) {
         return snack.error("GST Number should correspond to Pan Number");
       }
@@ -65,6 +62,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       });
 
       const result: any = response.data;
+      console.log(result, "vivek");
 
       if (result.data.sts === "Active") {
         mutate({
@@ -195,6 +193,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
                 endAdornment: <GstAdornment />,
               }}
               InputLabelProps={{ shrink: true }}
+              onKeyDown={(e: any) => {
+                if (e.keyCode === 13) {
+                  verifyGst();
+                }
+              }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -210,6 +213,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
                 endAdornment: <PanAdornment />,
               }}
               InputLabelProps={{ shrink: true }}
+              onKeyDown={(e: any) => {
+                if (e.keyCode === 13) {
+                  verifyPan();
+                }
+              }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -232,6 +240,19 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
               name="lastName"
               onChange={handleChange}
               value={data?.lastName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              disabled
+              label="Middle Name"
+              name="middleName"
+              onChange={handleChange}
+              value={data?.middleName || ""}
               fullWidth
               variant="outlined"
               size="small"

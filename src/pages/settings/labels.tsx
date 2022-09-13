@@ -12,6 +12,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import AddLabel from "views/settings/labels/AddLabel";
 import { StyledLabel } from "views/settings/labels/styles";
+import FloatingButton from "components/FloatingButton";
 
 function Labels() {
   const confirm = useConfirm();
@@ -46,16 +47,6 @@ function Labels() {
 
   return (
     <Box p={3}>
-      <Box mb={2} textAlign="right">
-        <Button
-          onClick={() => setOpen(true)}
-          variant="outlined"
-          startIcon={<Add />}
-          color="secondary"
-        >
-          Add Label
-        </Button>
-      </Box>
       <Table
         columns={[
           {
@@ -65,11 +56,7 @@ function Labels() {
               <Typography variant="body1" color="primary">
                 {item?.name}{" "}
                 {item?.defaultOne && (
-                  <Typography
-                    color="rgba(0,0,0,0.8)"
-                    mt="4px"
-                    variant="caption"
-                  >
+                  <Typography color="rgba(0,0,0,0.8)" mt="4px" variant="caption">
                     (default)
                   </Typography>
                 )}
@@ -99,6 +86,11 @@ function Labels() {
         ]}
         loading={isLoading}
         data={data?.data || []}
+      />
+      <FloatingButton
+        onClick={() => {
+          setOpen(true);
+        }}
       />
       <AddLabel open={open} setOpen={setOpen} />
     </Box>

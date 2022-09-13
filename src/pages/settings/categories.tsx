@@ -2,6 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
+import FloatingButton from "components/FloatingButton";
 import Loader from "components/Loader";
 import SearchContainer from "components/SearchContainer";
 import ValidateAccess from "components/ValidateAccess";
@@ -69,14 +70,11 @@ function Cateogries() {
         </Box>
         <ValidateAccess name={Permissions.CREATE_CATEGORIES}>
           <Box>
-            <Button
-              onClick={() => setOpen(true)}
-              variant="outlined"
-              startIcon={<Add />}
-              color="secondary"
-            >
-              Add Category
-            </Button>
+            <FloatingButton
+              onClick={() => {
+                setOpen(true);
+              }}
+            />
           </Box>
         </ValidateAccess>
       </Box>

@@ -1,12 +1,5 @@
 import { Close } from "@mui/icons-material";
-import {
-  AppBar,
-  Box,
-  Drawer,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Drawer, IconButton, Toolbar, Typography } from "@mui/material";
 
 interface IDrawerWrapperProps {
   open: boolean;
@@ -26,7 +19,7 @@ function DrawerWrapper(props: IDrawerWrapperProps) {
       open={open}
       onClose={() => setOpen(false)}
     >
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="subtitle1">{title}</Typography>
           <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>
@@ -34,7 +27,9 @@ function DrawerWrapper(props: IDrawerWrapperProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Box p={2}>{children}</Box>
+      <Box p={2} sx={{ overflow: "scroll" }}>
+        {children}
+      </Box>
     </Drawer>
   );
 }

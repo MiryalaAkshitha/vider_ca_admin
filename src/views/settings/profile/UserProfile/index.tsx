@@ -44,7 +44,11 @@ function UserProfile() {
         bankAccountNumber: res.data.profile?.bankAccountNumber,
         bankName: res.data.profile?.bankName,
         bankIfscCode: res.data.profile?.bankIfscCode,
+        role: res.data.role?.name,
+        employeeId: res.data.profile?.employeeId,
+        organizationName: res.data.organization?.legalName,
       };
+
       setOriginalState({ ...data });
       setState({ ...data });
     },

@@ -14,21 +14,19 @@ import OrganizationLicenses from "views/settings/organization/OrganizationProfil
 import PrimaryContactDetails from "views/settings/organization/OrganizationProfile/PrimaryContactDetails";
 import { snack } from "components/toast";
 import BottomBar from "components/BottomBar";
+import { aadharPattern, emailPattern, panCardPattern, phonePattern } from "utils/patterns";
+import path from "path";
 
 function OrganizationProfile() {
   const queryClient = useQueryClient();
   const [state, setState] = useImmer<any>({});
 
-  const { data, isLoading }: ResType = useQuery(
-    ["organization"],
-    getOrganization,
-    {
-      onSuccess: (res: any) => {
-        setState(res.data);
-      },
-      cacheTime: 0,
-    }
-  );
+  const { data, isLoading }: ResType = useQuery(["organization"], getOrganization, {
+    onSuccess: (res: any) => {
+      setState(res.data);
+    },
+    cacheTime: 0,
+  });
 
   const { mutateAsync } = useMutation(updateOrganization, {
     onSuccess: () => {
@@ -42,6 +40,19 @@ function OrganizationProfile() {
 
   const onSubmit = async () => {
     const { logoUrl, ...data } = state;
+    if (data.mobileNumber && !phonePattern.test(data.mobileNumber)) {
+      return snack.error("Invalid mobile number");
+    }
+    if (data.alternateMobileNumber && !phonePattern.test(data.alternateMobileNumber)) {
+      return snack.error("Invalid mobile number");
+    }
+    if (data.primaryContactMobileNumber && !phonePattern.test(data.primaryContactMobileNumber)) {
+      return snack.error("Invalid mobile number");
+    }
+    if (data.primaryContactEmail && !phonePattern.test(data.primaryContactEmail)) {
+      return snack.error("Invalid email");
+    }
+
     await mutateAsync({ data });
   };
 

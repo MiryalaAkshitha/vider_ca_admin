@@ -54,13 +54,18 @@ const BasicDetails = ({ data }) => {
             title="Date of joining"
             value={
               data?.profile?.dateOfJoining
-                ? moment(data?.profile?.dateOfJoining).format("YYYY-MM-DD")
+                ? moment(data?.profile?.dateOfJoining).format("DD-MM-YYYY")
                 : null
             }
           />
         </Grid>
         <Grid item xs={3}>
-          <Detail title="Date of birth" value={data?.profile?.dob} />
+          <Detail
+            title="Date of birth"
+            value={
+              data?.profile?.dateOfJoining ? moment(data?.profile?.dob).format("DD-MM-YYYY") : null
+            }
+          />
         </Grid>
         <Grid item xs={3}>
           <Detail title="Father's name" value={data?.profile?.fatherName} />

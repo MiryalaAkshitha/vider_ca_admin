@@ -1,22 +1,12 @@
 import { CloseOutlined } from "@mui/icons-material";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import UploadImage from "components/UploadImage";
 import SectionWrapper from "./SectionWrapper";
 import { StyledAttachment } from "./styles";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
-import {
-  getGstDetails,
-  getPanDetails,
-  getSandboxToken,
-} from "api/services/users";
+import { getGstDetails, getPanDetails, getSandboxToken } from "api/services/users";
 import { useMutation, useQueryClient } from "react-query";
 import { updateOrganization } from "api/services/organization";
 import { useParams } from "react-router-dom";
@@ -209,16 +199,8 @@ function GstDetails({ state, setState, apiData }: any) {
           </Typography>
           {state.gstAttachment ? (
             <StyledAttachment>
-              <a
-                href={state.gstAttachmentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Typography
-                  gutterBottom
-                  variant="body2"
-                  color="rgba(0,0,0,0.8)"
-                >
+              <a href={state.gstAttachmentUrl} target="_blank" rel="noopener noreferrer">
+                <Typography gutterBottom variant="body2" color="rgba(0,0,0,0.8)">
                   {state.gstAttachment}
                 </Typography>
               </a>
@@ -235,6 +217,7 @@ function GstDetails({ state, setState, apiData }: any) {
           ) : (
             <UploadImage
               name="gstAttachment"
+              accept={["image/jpg", "image/jpeg", "application/pdf"]}
               widthoutIcon
               sx={{
                 minHeight: "80px",
@@ -266,16 +249,8 @@ function GstDetails({ state, setState, apiData }: any) {
           </Typography>
           {state.panAttachment ? (
             <StyledAttachment>
-              <a
-                href={state.panAttachmentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Typography
-                  gutterBottom
-                  variant="body2"
-                  color="rgba(0,0,0,0.8)"
-                >
+              <a href={state.panAttachmentUrl} target="_blank" rel="noopener noreferrer">
+                <Typography gutterBottom variant="body2" color="rgba(0,0,0,0.8)">
                   {state.panAttachment}
                 </Typography>
               </a>
@@ -292,6 +267,7 @@ function GstDetails({ state, setState, apiData }: any) {
           ) : (
             <UploadImage
               name="panAttachment"
+              accept={["image/jpg", "image/jpeg", "application/pdf"]}
               widthoutIcon
               sx={{
                 minHeight: "80px",
