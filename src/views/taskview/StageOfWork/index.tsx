@@ -24,6 +24,9 @@ function StageOfWork() {
 
   return (
     <>
+      {data.data.length === 0 && (
+        <Typography variant="subtitle1" color="primary">Stage of work</Typography>
+      )}
       {data?.data?.length > 0 && (
         <Box display="flex" justifyContent="flex-end">
           <Button

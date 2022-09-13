@@ -7,7 +7,6 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
-
 interface Props extends DialogProps {
   taskData: any;
 }
@@ -63,11 +62,12 @@ function AddGroupChat({ open, setOpen, taskData }: Props) {
           <TextField
             onChange={(e) => setState({ ...state, name: e.target.value })}
             fullWidth
-            label="Name"
+            label="Task Name"
             value={state.name}
             variant="outlined"
-            size="small"
-          />
+              size="small"
+              disabled
+            />
           <Autocomplete
             size="small"
             sx={{ mt: 2 }}

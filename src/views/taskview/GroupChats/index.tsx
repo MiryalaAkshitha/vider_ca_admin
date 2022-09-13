@@ -26,7 +26,7 @@ function GroupChats({ open, setOpen, taskData }: Props) {
 
   return (
     <DrawerWrapper title="Group Chats" open={open} setOpen={setOpen}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box display="flex" alignItems="center" justifyContent="space-between" >
         <Typography variant="subtitle2">
           {data?.data?.length || "No"} Group Chat(s)
         </Typography>
@@ -35,8 +35,8 @@ function GroupChats({ open, setOpen, taskData }: Props) {
         </Button>
       </Box>
       <Divider sx={{ mx: -2, mt: 2 }} />
-      <Box>
-        {isLoading ? (
+      <Box sx={{overflow:"scroll",height:"600px",overflowX:"hidden"}}>
+      {isLoading ? (
           <Loader />
         ) : (
           data?.data?.map((chat: any, index: number) => (

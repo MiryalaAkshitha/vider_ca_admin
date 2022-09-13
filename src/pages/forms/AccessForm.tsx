@@ -136,7 +136,7 @@ function AccessForm({ withoutAppbar = false }: Props) {
           </Box>
           <Box>
             <Typography variant="body2">
-              Last updated:{" "}
+              Last updated :{" "}
               {moment(data?.updatedAt).format("YYYY-MM-DD HH:mm A")}
             </Typography>
           </Box>

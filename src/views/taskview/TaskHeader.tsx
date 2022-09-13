@@ -8,7 +8,7 @@ import ValidateAccess from "components/ValidateAccess";
 import { useConfirm } from "context/ConfirmDialog";
 import { useTaskData } from "context/TaskData";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation } from "react-query"; 
 import { useNavigate } from "react-router-dom";
 import { taskViewMenu } from "data/constants";
 import { Permissions } from "data/permissons";
@@ -40,7 +40,7 @@ function TaskHeader({ onChange }: any) {
     });
   };
 
-  const taskMenu = () => {
+  const taskMenu = () => {1
     if (taskData?.parentTask) {
       return taskViewMenu.filter((item) => item.id !== "subtasks");
     }

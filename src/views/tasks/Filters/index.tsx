@@ -28,7 +28,10 @@ function Filters() {
 
   return (
     <>
-      <StyledTasksFilterContainer>
+      <StyledTasksFilterContainer sx={{
+        position: "sticky",
+        top: 80
+      }}>
         <ClientFilter />
         <SearchContainer
           minWidth="400px"
@@ -36,7 +39,7 @@ function Filters() {
           debounced
           placeHolder="Search"
           onChange={(v) => dispatch(handleSearch(v))}
-        />
+          />
       </StyledTasksFilterContainer>
       <Box display="flex" gap={3} justifyContent="space-between" mt={2}>
         <AppliedFilters />

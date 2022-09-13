@@ -17,7 +17,7 @@ import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
-
+import  TextFieldWithCopy  from "views/client-view/ProfileDetails/TextFieldWithCopy";
 function Details() {
   const queryClient = useQueryClient();
   const taskData: any = useTaskData();
@@ -275,11 +275,12 @@ function Details() {
           </Grid>
           <Grid item xs={6}>
             <DetailSection label="Directory">
-              <CustomTextField
-                value={state?.directory || ""}
+              <TextFieldWithCopy
+                label="directory"
+              value={state?.directory || ""}
                 onChange={handleChange}
-                name="directory"
-              />
+                name="directory"/>
+
             </DetailSection>
           </Grid>
           <Grid item xs={12}>

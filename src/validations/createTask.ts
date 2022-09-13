@@ -32,12 +32,13 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
   object().shape({
     serviceType: string().required(),
     taskType: string().required(),
-    service: mixed().nullable().when("serviceType", {
+    service: mixed()
+      .nullable().when("serviceType", {
       is: "standard",
       then: object().nullable().required(),
       otherwise: object().nullable().notRequired(),
     }),
-    client: array().min(1, "Select atleast one member"),
+    client: array().min(1, "Select atleast one client"),
     category: mixed()
       .nullable()
       .when("serviceType", {
@@ -72,10 +73,6 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
       then: date()
         .nullable()
         .typeError("Invalid date")
-        .min(
-          moment().format("YYYY-MM-DD"),
-          "Due date should be greater than today"
-        )
         .required("Due date is required"),
       otherwise: (schema) => schema.notRequired(),
     }),
@@ -88,12 +85,12 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
       )
       .notRequired(),
     financialYear: string().required("Financial Year is required"),
-    members: array().notRequired(),
+    members:array().min(1, "Select atleast one member"),
     labels: array().notRequired(),
     taskLeader: object().nullable().notRequired(),
     priority: string().nullable().notRequired(),
     feeType: string().required("Fee Type is required"),
-    feeAmount: string().required("Fee Amount is required").nullable(),
+    feeAmount: string().nullable().notRequired(),
     description: string().nullable().notRequired(),
     frequency: mixed().when("taskType", {
       is: (taskType: any) => taskType === "recurring",

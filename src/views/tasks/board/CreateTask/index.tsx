@@ -82,14 +82,18 @@ function CreateTask({ open, setOpen, successCb }: Props) {
   console.log(errors);
 
   return (
+    <>
     <DrawerWrapper
       open={open}
       setOpen={() => {
         reset(createTaskDefaultValues);
         setOpen(false);
       }}
+    
       title="Create Task"
-    >
+      >
+      <Box sx={{overflow:"scroll",height:"600px",overflowX:"hidden"}}>
+
       {loading ? (
         <Loader />
       ) : (
@@ -160,8 +164,10 @@ function CreateTask({ open, setOpen, successCb }: Props) {
         onChange={(data: any) => setValue("approvalHierarchy", data)}
         open={openSelectAppHier}
         setOpen={setOpenSelectAppHier}
-      />
+          />
+          </Box>
     </DrawerWrapper>
+    </>
   );
 }
 
