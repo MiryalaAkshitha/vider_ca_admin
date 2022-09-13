@@ -39,7 +39,7 @@ function GroupChat({ chat, setGroupChats }) {
 
   return (
     <>
-      <Box sx={{ cursor: "pointer" }}>
+      <Box sx={{ cursor: "pointer"}}>
         <Box display="flex" p={1} justifyContent="space-between" gap={2}>
           <Box>
             <Typography onClick={handleClick} variant="h6">
