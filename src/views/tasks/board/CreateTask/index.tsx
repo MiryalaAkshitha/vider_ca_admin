@@ -92,7 +92,7 @@ function CreateTask({ open, setOpen, successCb }: Props) {
     
       title="Create Task"
       >
-      <Box sx={{overflow:"scroll",height:"600px",overflowX:"hidden"}}>
+      <Box >
 
       {loading ? (
         <Loader />

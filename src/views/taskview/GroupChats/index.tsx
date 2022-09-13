@@ -35,7 +35,7 @@ function GroupChats({ open, setOpen, taskData }: Props) {
         </Button>
       </Box>
       <Divider sx={{ mx: -2, mt: 2 }} />
-      <Box sx={{overflow:"scroll",height:"600px",overflowX:"hidden"}}>
+      <Box>
       {isLoading ? (
           <Loader />
         ) : (

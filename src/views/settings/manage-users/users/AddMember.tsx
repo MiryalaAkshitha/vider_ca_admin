@@ -11,14 +11,21 @@ import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { DialogProps, ResType } from "types";
-import { inviteUserDefaultValues, inviteUserSchema } from "validations/inviteUser";
+import {
+  inviteUserDefaultValues,
+  inviteUserSchema,
+} from "validations/inviteUser";
 
 interface Props extends DialogProps {
   successCb?: () => void;
 }
 
 function AddMember({ open, setOpen, successCb }: Props) {
-  const { data, isLoading: dataLoading }: ResType = useQuery("roles", getRoles, { enabled: open });
+  const { data, isLoading: dataLoading }: ResType = useQuery(
+    "roles",
+    getRoles,
+    { enabled: open }
+  );
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: inviteUserDefaultValues,
@@ -54,7 +61,11 @@ function AddMember({ open, setOpen, successCb }: Props) {
             <FormInput control={control} name="email" label="Email" />
           </Box>
           <Box mb={2}>
-            <FormInput control={control} name="mobileNumber" label="Mobile Number" />
+            <FormInput
+              control={control}
+              name="mobileNumber"
+              label="Mobile Number"
+            />
           </Box>
           <Box>
             <FormSelect

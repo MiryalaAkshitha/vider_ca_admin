@@ -28,10 +28,7 @@ function Filters() {
 
   return (
     <>
-      <StyledTasksFilterContainer sx={{
-        position: "sticky",
-        top: 80
-      }}>
+      <StyledTasksFilterContainer>
         <ClientFilter />
         <SearchContainer
           minWidth="400px"
