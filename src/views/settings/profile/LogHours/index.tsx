@@ -1,12 +1,7 @@
 import { Add, MoreVert, Visibility } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Box, Button, Grid, IconButton, Paper, Typography } from "@mui/material";
-import {
-  addUserLogHour,
-  deleteLogHour,
-  getUserLogHours,
-  getUserLogHourStats,
-} from "api/services/tasks/loghours";
+import { deleteLogHour, getUserLogHours, getUserLogHourStats } from "api/services/tasks/loghours";
 import { icons } from "assets";
 import FormattedDate from "components/FormattedDate";
 import Loader from "components/Loader";
@@ -26,7 +21,6 @@ import Filters from "./Filters";
 import ViewLogHour from "./ViewLogHour";
 
 function LogHours() {
-  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [page, setPage] = useState(0);
@@ -56,24 +50,6 @@ function LogHours() {
     ],
     getUserLogHours
   );
-
-  const { mutateAsync } = useMutation(addUserLogHour, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("user-log-hours");
-      snack.success("Log Hour Added");
-      setOpenAdd(false);
-    },
-    onError: (err: any) => {
-      snack.error(handleError(err));
-    },
-  });
-
-  const onAdd = async (data: any) => {
-    await mutateAsync({
-      ...data,
-      type: "SELF",
-    });
-  };
 
   const getDuration = (duration: number) => {
     return Math.round(duration / 1000 / 60 / 60);
@@ -152,7 +128,7 @@ function LogHours() {
         open={open}
         setOpen={setOpen}
       />
-      <AddLogHour onAdd={onAdd} open={openAdd} setOpen={setOpenAdd} />
+      <AddLogHour open={openAdd} setOpen={setOpenAdd} />
     </Box>
   );
 }

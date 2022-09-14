@@ -121,9 +121,10 @@ function TaskItem({ data }: Props) {
             {data?.client?.displayName}
           </Typography>
         </Box>
-        <Box mt={2}>
+        <Box mt={1}>
           <Typography variant="body1" gutterBottom color="primary">
-            {data?.name} - <span style={{ color: data?.category?.color }}>{data?.category?.name}</span>
+            {data?.name} -{" "}
+            <span style={{ color: data?.category?.color }}>{data?.category?.name}</span>
           </Typography>
           <Box display="flex" justifyContent="space-between">
             <div>
@@ -138,12 +139,15 @@ function TaskItem({ data }: Props) {
           </Typography>
         </Box>
       </Box>
-      <Box display="flex" px={1} py={1} mt={1} gap="10px" borderTop="1px solid rgba(0,0,0,0.1)">
+      <Box display="flex" px={1} py="5px" gap="10px" borderTop="1px solid rgba(0,0,0,0.1)">
         {data?.priority !== "none" && <PriorityText variant="body2" text={data?.priority} />}
         <Box onClick={handleEndTimer} display="flex" alignItems="center" gap="5px">
           {showTimer ? (
             <>
-              <StopCircleOutlinedIcon titleAccess="End Timer" sx={{ fontSize: 16, cursor: "pointer" }} />
+              <StopCircleOutlinedIcon
+                titleAccess="End Timer"
+                sx={{ fontSize: 16, cursor: "pointer" }}
+              />
               <Timer startTime={startTime} />
             </>
           ) : (

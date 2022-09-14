@@ -159,7 +159,14 @@ function RoutesContainer() {
           </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports">
-            <Route index element={<Reports />} />
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.VIEW_REPORTS}>
+                  <Reports />
+                </PageWithPermission>
+              }
+            />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
             <Route path="clients-report" element={<ClientsReport />} />
             <Route path="tasks-report" element={<TasksReport />} />

@@ -58,7 +58,7 @@ function Tasks() {
   }
 
   return (
-    <Box p={2}>
+    <Box px={2} pt={2}>
       <Filters />
       {isLoading ? (
         <Loader />

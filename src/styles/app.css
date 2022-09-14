@@ -78,7 +78,7 @@ a.fc-event {
 }
 #freshworks-container iframe {
   right: 250px !important;
-  bottom: -5px !important;
+  bottom: -8px !important;
   z-index: 500 !important;
 }
 

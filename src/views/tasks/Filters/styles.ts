@@ -7,7 +7,7 @@ export const StyledTasksFilterContainer = styled("div")(({ theme }) => ({
   marginTop: "-16px",
   marginLeft: "-16px",
   marginRight: "-16px",
-  padding: "10px 20px",
+  padding: "8px 20px",
 }));
 
 export const StyledClientFilterItem = styled(Typography)<{ active: number }>(

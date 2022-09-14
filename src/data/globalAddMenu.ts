@@ -15,4 +15,8 @@ export const globalAddMenu = [
     title: "Member",
     action: "createEvent",
   },
+  {
+    title: "Log Hour",
+    action: "logHour",
+  },
 ];

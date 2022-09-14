@@ -9,14 +9,11 @@ import { getOverdueTasks } from "api/services/organization";
 import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { StyledTaskBox } from "../styles";
 
 function OverDueTasks() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data, isLoading }: ResType = useQuery(
@@ -25,14 +22,6 @@ function OverDueTasks() {
   );
 
   const handleClick = () => {
-    // dispatch(handleSelected("dueOn"));
-    // dispatch(
-    //   handleFilters({
-    //     checked: true,
-    //     value: { label: "Overdue", value: "overdue" },
-    //   })
-    // );
-    // dispatch(handleApply());
     navigate("/dashboard/over-due-tasks");
   };
 
@@ -49,6 +38,7 @@ function OverDueTasks() {
             <TableRow sx={{ color: "#707070" }}>
               <TableCell>Task Id</TableCell>
               <TableCell>Task Name</TableCell>
+              <TableCell>Client Name</TableCell>
               <TableCell>Due Date</TableCell>
               <TableCell>Due By</TableCell>
             </TableRow>
@@ -63,8 +53,11 @@ function OverDueTasks() {
                 <TableCell>
                   <Typography variant="caption">{row?.taskNumber}</Typography>
                 </TableCell>
-                <TableCell sx={{ width: 250 }} component="th" scope="row">
+                <TableCell sx={{ width: 200 }}>
                   <Typography variant="caption"> {row?.name}</Typography>
+                </TableCell>
+                <TableCell sx={{ width: 200 }}>
+                  <Typography variant="caption"> {row?.client?.displayName}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="caption">

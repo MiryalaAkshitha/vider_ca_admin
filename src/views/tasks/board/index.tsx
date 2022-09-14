@@ -153,16 +153,15 @@ function Board({ data }: Props) {
             {Object.keys(state).map((key, index) => (
               <Grid item style={{ width: "100%" }} key={index}>
                 <Box
-                  sx={{
-                    display: "flex",
-                    padding: "10px",
-                  }}
+                  sx={{ display: "inline-flex" }}
+                  bgcolor={colors[index]}
+                  px={2}
+                  py="4px"
+                  borderRadius={20}
                 >
-                  <Box bgcolor={colors[index]} px={2} py="4px" borderRadius={20}>
-                    <Typography variant="body2" color="white">
-                      {getTitle(key)} ({state[key].length})
-                    </Typography>
-                  </Box>
+                  <Typography variant="body2" color="white">
+                    {getTitle(key)} ({state[key].length})
+                  </Typography>
                 </Box>
                 <Droppable droppableId={key}>
                   {(provided: any, snapshot: any) => (
@@ -171,7 +170,7 @@ function Board({ data }: Props) {
                         listContainerRef.current = ref;
                         provided.innerRef(ref);
                       }}
-                      height="60vh"
+                      height="64vh"
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
                       {state[key].map((item: any, index: number) => (

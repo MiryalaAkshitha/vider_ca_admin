@@ -13,6 +13,7 @@ import { selectGlobal, selectTitle } from "redux/reducers/globalSlice";
 import AddEvent from "views/calendar/AddEvent";
 import AddClient from "views/clients/AddClient";
 import AddMember from "views/settings/manage-users/users/AddMember";
+import AddLogHour from "views/settings/profile/LogHours/AddLogHour";
 import CreateTask from "views/tasks/board/CreateTask";
 import AccountMenu from "./AccountMenu";
 import GlobalAdd from "./GlobalAdd";
@@ -145,6 +146,12 @@ function Appbar() {
       />
       <AddEvent
         open={globalActionType === "Event"}
+        setOpen={() => {
+          setGlobalActionType("");
+        }}
+      />
+      <AddLogHour
+        open={globalActionType === "Log Hour"}
         setOpen={() => {
           setGlobalActionType("");
         }}

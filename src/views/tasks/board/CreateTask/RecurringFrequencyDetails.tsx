@@ -1,15 +1,6 @@
 import { Delete } from "@mui/icons-material";
 import { DesktopDatePicker } from "@mui/lab";
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
-  Switch,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, IconButton, MenuItem, TextField, Typography } from "@mui/material";
 import DialogWrapper from "components/DialogWrapper";
 import { snack } from "components/toast";
 import { RecurringFrequency } from "data/constants";
@@ -31,7 +22,7 @@ type State = {
 };
 
 function RecurringFrequencyDetails(props: any) {
-  const { open, setOpen, watch, setValue } = props;
+  const { open, setOpen, setValue } = props;
   const [startPeriods, setStartPeriods] = useState<string[]>([]);
   const [state, setState] = useState<State>({
     financialYear: "",
@@ -62,7 +53,7 @@ function RecurringFrequencyDetails(props: any) {
         ...state,
         frequency,
         startPeriod: "",
-        dates: [{ startDate: null, dueDate: null, period: "" }],
+        dates: [{ startDate: null, dueDate: null, period: "Yearly" }],
       });
 
       return;
@@ -138,10 +129,6 @@ function RecurringFrequencyDetails(props: any) {
     setValue("dates", state.dates);
     setOpen(false);
   };
-
-  // const minDate = `${watch("financialYear").split("-")[0]}-04-01`;
-  // const maxDate = `${watch("financialYear").split("-")[1]}-03-31`;
-  // minDate={moment(minDate).toDate()}
 
   return (
     <DialogWrapper title="Recurring Frequency Details" open={open} setOpen={setOpen}>

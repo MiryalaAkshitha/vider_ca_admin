@@ -78,15 +78,11 @@ function AddRemarks(props: AddRemarksProps) {
                 label="Pending at client"
               />
               <FormControlLabel
-                value="pending_at_assignee"
-                control={<Radio required />}
-                label="Pending at assignee"
-              />
-              <FormControlLabel
                 value="pending_at_department"
                 control={<Radio required />}
                 label="Pending at department"
               />
+              <FormControlLabel value="others" control={<Radio required />} label="Others" />
             </RadioGroup>
           </FormControl>
           <TextField
