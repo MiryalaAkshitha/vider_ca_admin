@@ -60,9 +60,9 @@ function AddMember({ open, setOpen, successCb }: Props) {
             <FormSelect
               control={control}
               name="role"
-              label="Role"
+              label="Role *"
               options={data?.data
-                ?.filter((item) => item.defaultRole === false)
+                ?.filter((item: any) => item.defaultRole === false)
                 .map((item: any) => ({
                   label: item.name,
                   value: item.id,
