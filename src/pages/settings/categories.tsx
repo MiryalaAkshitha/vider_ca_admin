@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, Paper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getCategories } from "api/services/categories";
 import FloatingButton from "components/FloatingButton";
@@ -78,13 +78,23 @@ function Cateogries() {
           </Box>
         </ValidateAccess>
       </Box>
-      <Grid container spacing={2} mt={1}>
-        {getData()?.map((item: any, index: any) => (
-          <Grid item xs={4} key={index}>
-            <CategoryCard data={item} />
-          </Grid>
-        ))}
-      </Grid>
+      <Paper
+        sx={{
+          border: "1px solid #BDBDBD",
+          height: "480px",
+          overflowY: "scroll",
+          p: 1,
+          backgroundColor: "inherit",
+        }}
+      >
+        <Grid container spacing={2} mt={1}>
+          {getData()?.map((item: any, index: any) => (
+            <Grid item xs={4} key={index}>
+              <CategoryCard data={item} />
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
       <AddCategory open={open} setOpen={setOpen} />
     </Box>
   );

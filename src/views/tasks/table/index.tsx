@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
 import Table, { ColumnType } from "components/Table";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { getTitle } from "utils";
 
@@ -15,9 +16,7 @@ function TaskTable({ data }: Props) {
     <Table
       sx={{ mt: 3 }}
       loading={false}
-      onRowClick={(v) =>
-        navigate(`/task-board/${v?.id}/?clientId=${v?.client?.clientId}`)
-      }
+      onRowClick={(v) => navigate(`/task-board/${v?.id}/?clientId=${v?.client?.clientId}`)}
       data={data || []}
       columns={columns}
     />
@@ -25,9 +24,15 @@ function TaskTable({ data }: Props) {
 }
 
 const columns: Array<ColumnType> = [
-  { key: "taskNumber", title: "taskId" },
+  { key: "taskNumber", title: "TaskId" },
   { key: "name", title: "Task Name" },
-  { key: "dueDate", title: "Due Date" },
+  {
+    key: "dueDate",
+    title: "Due Date",
+    render: (row) => {
+      return row?.dueDate ? moment(row?.dueDate).format("DD-MM-YYYY") : "";
+    },
+  },
   { key: "client.displayName", title: "Client Name" },
   {
     key: "priority",

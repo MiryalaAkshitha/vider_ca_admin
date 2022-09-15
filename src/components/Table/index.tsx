@@ -84,7 +84,7 @@ function Table(props: TableProps) {
 
   return (
     <StyledTableContainer sx={sx}>
-      <div>
+      <div style={{ height: "400px", overflow: "scroll" }}>
         <StyledTable>
           <thead>
             <tr>
@@ -137,7 +137,7 @@ function Table(props: TableProps) {
         </StyledTable>
       </div>
       {pagination && (
-        <Box px={2} mt={2} justifyContent="flex-end" display="flex">
+        <Box px={2} justifyContent="flex-end" display="flex">
           <TablePagination
             component="div"
             count={pagination.totalCount || 10}

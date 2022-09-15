@@ -11,21 +11,14 @@ import { snack } from "components/toast";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import { DialogProps, ResType } from "types";
-import {
-  inviteUserDefaultValues,
-  inviteUserSchema,
-} from "validations/inviteUser";
+import { inviteUserDefaultValues, inviteUserSchema } from "validations/inviteUser";
 
 interface Props extends DialogProps {
   successCb?: () => void;
 }
 
 function AddMember({ open, setOpen, successCb }: Props) {
-  const { data, isLoading: dataLoading }: ResType = useQuery(
-    "roles",
-    getRoles,
-    { enabled: open }
-  );
+  const { data, isLoading: dataLoading }: ResType = useQuery("roles", getRoles, { enabled: open });
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: inviteUserDefaultValues,
@@ -61,21 +54,19 @@ function AddMember({ open, setOpen, successCb }: Props) {
             <FormInput control={control} name="email" label="Email" />
           </Box>
           <Box mb={2}>
-            <FormInput
-              control={control}
-              name="mobileNumber"
-              label="Mobile Number"
-            />
+            <FormInput control={control} name="mobileNumber" label="Mobile Number" />
           </Box>
           <Box>
             <FormSelect
               control={control}
               name="role"
               label="Role"
-              options={data?.data?.map((item: any) => ({
-                label: item.name,
-                value: item.id,
-              }))}
+              options={data?.data
+                ?.filter((item) => item.defaultRole === false)
+                .map((item: any) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
