@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, TextField, MenuItem } from "@mui/material";
+import { Box, Button, CircularProgress, TextField, MenuItem, Autocomplete } from "@mui/material";
 import { getGstDetails, getSandboxToken, signup } from "api/services/users";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
@@ -251,32 +251,17 @@ const GstDetails = () => {
             size="small"
             fullWidth
           />
-          <TextField
-            required
-            onChange={handleChange}
+          <Autocomplete
             sx={{ mt: 2 }}
-            label="State"
-            name="state"
-            value={state.state}
+            disablePortal
+            onChange={(e, v) => setState({ ...state, state: v })}
+            id="combo-box-demo"
             size="small"
-            fullWidth
-            select
-            SelectProps={{
-              MenuProps: {
-                PaperProps: {
-                  sx: {
-                    maxHeight: "200px",
-                  },
-                },
-              },
-            }}
-          >
-            {states?.data?.map((option: any) => (
-              <MenuItem key={option.name} value={option.name}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={states?.data?.map((item: any) => item.name) || []}
+            renderInput={(params) => (
+              <TextField required {...params} label="State / Union Territory" />
+            )}
+          />
 
           <TextField
             required

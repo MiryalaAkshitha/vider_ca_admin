@@ -42,6 +42,9 @@ function Details() {
   });
 
   const handleUpdate = async () => {
+    if(state.members.length < 1 ){
+      return snack.error("Please select atleast one error")
+    }
     await mutateAsync({
       id: taskData?.id,
       data: state,

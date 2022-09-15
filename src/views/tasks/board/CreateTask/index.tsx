@@ -81,90 +81,88 @@ function CreateTask({ open, setOpen, successCb }: Props) {
 
   return (
     <>
-    <DrawerWrapper
-      open={open}
-      setOpen={() => {
-        reset(createTaskDefaultValues);
-        setOpen(false);
-      }}
-    
-      title="Create Task"
+      <DrawerWrapper
+        open={open}
+        setOpen={() => {
+          reset(createTaskDefaultValues);
+          setOpen(false);
+        }}
+        title="Create Task"
       >
-      <Box >
-
-      {loading ? (
-        <Loader />
-      ) : (
-        <form onSubmit={handleSubmit(onFormSubmit)}>
-          <SelectTypes control={control} watch={watch} setValue={setValue} />
-          <Box mt={2}>
-            <FormAutoComplete
-              control={control}
-              label="Client"
-              multiple
-              required
-              name="client"
-              options={clients?.data?.result?.map((item: any) => ({
-                label: item.displayName,
-                value: item.id,
-              }))}
-            />
-          </Box>
-          {watch("serviceType") === "custom" && (
-            <CustomCommonFields control={control} watch={watch} categories={categories} />
-          )}
-          {watch("taskType") === "recurring" && (
-            <RecurringFields control={control} watch={watch} setValue={setValue} />
-          )}
-          {watch("taskType") === "non_recurring" && <NonRecurringFields control={control} />}
-          <CommonFields
-            control={control}
-            watch={watch}
-            labels={labels}
-            users={users}
-            setValue={setValue}
-          />
-          <Box mt={2}>
-            <Typography color="rgba(0, 0, 0, 0.54)" variant="caption">
-              Approval Hierarchy Details
-            </Typography>
-            {watch("approvalHierarchy") ? (
-              <StyledSelectedBox sx={{ mt: "4px" }}>
-                <Typography variant="subtitle2">
-                  {watch<any>("approvalHierarchy")?.name} - Levels (
-                  {watch<any>("approvalHierarchy")?.approvalLevels?.length})
+        <Box>
+          {loading ? (
+            <Loader />
+          ) : (
+            <form onSubmit={handleSubmit(onFormSubmit)}>
+              <SelectTypes control={control} watch={watch} setValue={setValue} />
+              <Box mt={2}>
+                <FormAutoComplete
+                  control={control}
+                  label="Client"
+                  multiple
+                  required
+                  name="client"
+                  options={clients?.data?.result?.map((item: any) => ({
+                    label: item.displayName,
+                    value: item.id,
+                  }))}
+                />
+              </Box>
+              {watch("serviceType") === "custom" && (
+                <CustomCommonFields control={control} watch={watch} categories={categories} />
+              )}
+              {watch("taskType") === "recurring" && (
+                <RecurringFields control={control} watch={watch} setValue={setValue} />
+              )}
+              {watch("taskType") === "non_recurring" && <NonRecurringFields control={control} />}
+              <CommonFields
+                control={control}
+                watch={watch}
+                labels={labels}
+                users={users}
+                setValue={setValue}
+              />
+              <Box mt={2}>
+                <Typography color="rgba(0, 0, 0, 0.54)" variant="caption">
+                  Approval Hierarchy Details
                 </Typography>
-                <IconButton onClick={() => setOpenSelectAppHier(true)} size="small">
-                  <Edit fontSize="small" />
-                </IconButton>
-              </StyledSelectedBox>
-            ) : (
-              <StyledSelectBox sx={{ mt: "4px" }} onClick={() => setOpenSelectAppHier(true)}>
-                <Typography variant="body1" color="rgba(0,0,0,0.5)">
-                  Select Approval Hierarchy
-                </Typography>
-              </StyledSelectBox>
-            )}
-          </Box>
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={isLoading}
-              fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Create Task"
-              color="secondary"
-            />
-          </Box>
-        </form>
-      )}
-      <SelectApprovalHierarchy
-        onChange={(data: any) => setValue("approvalHierarchy", data)}
-        open={openSelectAppHier}
-        setOpen={setOpenSelectAppHier}
+                {watch("approvalHierarchy") ? (
+                  <StyledSelectedBox sx={{ mt: "4px" }}>
+                    <Typography variant="subtitle2">
+                      {watch<any>("approvalHierarchy")?.name} - Levels (
+                      {watch<any>("approvalHierarchy")?.approvalLevels?.length})
+                    </Typography>
+                    <IconButton onClick={() => setOpenSelectAppHier(true)} size="small">
+                      <Edit fontSize="small" />
+                    </IconButton>
+                  </StyledSelectedBox>
+                ) : (
+                  <StyledSelectBox sx={{ mt: "4px" }} onClick={() => setOpenSelectAppHier(true)}>
+                    <Typography variant="body1" color="rgba(0,0,0,0.5)">
+                      Select Approval Hierarchy
+                    </Typography>
+                  </StyledSelectBox>
+                )}
+              </Box>
+              <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+                <LoadingButton
+                  loading={isLoading}
+                  fullWidth
+                  type="submit"
+                  loadingColor="white"
+                  title="Create Task"
+                  color="secondary"
+                />
+              </Box>
+            </form>
+          )}
+          <SelectApprovalHierarchy
+            onChange={(data: any) => setValue("approvalHierarchy", data)}
+            open={openSelectAppHier}
+            setOpen={setOpenSelectAppHier}
           />
-          </Box>
-    </DrawerWrapper>
+        </Box>
+      </DrawerWrapper>
     </>
   );
 }

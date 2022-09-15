@@ -10,6 +10,8 @@ import { selectSignup } from "redux/reducers/signUpSlice";
 import { ResType, SubmitType } from "types";
 import { getStates } from "api/services/common";
 import { handleError } from "utils/handleError";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const PanDetails = () => {
   const [state, setState] = useState<any>({});
@@ -236,32 +238,17 @@ const PanDetails = () => {
             size="small"
             fullWidth
           />
-          <TextField
-            required
-            onChange={handleChange}
+          <Autocomplete
             sx={{ mt: 2 }}
-            label="State/Union Territory"
-            name="state"
-            value={state.state}
+            disablePortal
+            onChange={(e, v) => setState({ ...state, state: v })}
+            id="combo-box-demo"
             size="small"
-            fullWidth
-            select
-            SelectProps={{
-              MenuProps: {
-                PaperProps: {
-                  sx: {
-                    maxHeight: "200px",
-                  },
-                },
-              },
-            }}
-          >
-            {states?.data?.map((option: any) => (
-              <MenuItem key={option.name} value={option.name}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={states?.data?.map((item: any) => item.name) || []}
+            renderInput={(params) => (
+              <TextField required {...params} label="State / Union Territory" />
+            )}
+          />
           <TextField
             onChange={handleChange}
             sx={{ mt: 2 }}
