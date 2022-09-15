@@ -2,6 +2,7 @@ import { Edit } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 import FormRadio from "components/FormFields/FormRadio";
 import { useState } from "react";
+import { Controller } from "react-hook-form";
 import SelectService from "./SelectService";
 
 function SelectTypes({ control, setValue, watch }) {
@@ -28,47 +29,64 @@ function SelectTypes({ control, setValue, watch }) {
           ]}
         />
       </Box>
-      {watch("service") && (
-        <Box
-          sx={{
-            border: "1px solid rgba(0,0,0,0.4)",
-            borderRadius: 1,
-            px: 1,
-            py: "4px",
-            mt: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 3,
-            alignItems: "center",
+      {watch("serviceType") === "standard" && (
+        <Controller
+          control={control}
+          name="service"
+          render={({ field, fieldState: { error } }) => {
+            if (field.value) {
+              return (
+                <Box
+                  sx={{
+                    border: "1px solid rgba(0,0,0,0.4)",
+                    borderRadius: 1,
+                    px: 1,
+                    py: "4px",
+                    mt: 1,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 3,
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="subtitle2">
+                    {field?.value?.name} - {field?.value?.name}
+                  </Typography>
+                  <IconButton onClick={() => setOpen(true)} size="small">
+                    <Edit fontSize="small" />
+                  </IconButton>
+                </Box>
+              );
+            }
+            return (
+              <>
+                <Box
+                  mt={1}
+                  onClick={() => setOpen(true)}
+                  sx={{
+                    border: "1px dashed rgba(0,0,0,0.3)",
+                    borderRadius: 1,
+                    p: 2,
+                    height: 100,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography variant="body1" color="rgba(0,0,0,0.5)">
+                    Select Service
+                  </Typography>
+                </Box>
+                {error && (
+                  <Typography variant="caption" color="red">
+                    {error.message}
+                  </Typography>
+                )}
+              </>
+            );
           }}
-        >
-          <Typography variant="subtitle2">
-            {watch("service")?.name} - {watch("service")?.category?.name}
-          </Typography>
-          <IconButton onClick={() => setOpen(true)} size="small">
-            <Edit fontSize="small" />
-          </IconButton>
-        </Box>
-      )}
-      {!watch("service") && watch("serviceType") === "standard" && (
-        <Box
-          mt={1}
-          onClick={() => setOpen(true)}
-          sx={{
-            border: "1px dashed rgba(0,0,0,0.3)",
-            borderRadius: 1,
-            p: 2,
-            height: 100,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Typography variant="body1" color="rgba(0,0,0,0.5)">
-            Select Service
-          </Typography>
-        </Box>
+        />
       )}
       <Box mt={2}>
         <FormRadio
@@ -89,12 +107,7 @@ function SelectTypes({ control, setValue, watch }) {
           ]}
         />
       </Box>
-      <SelectService
-        open={open}
-        setOpen={setOpen}
-        setValue={setValue}
-        watch={watch}
-      />
+      <SelectService open={open} setOpen={setOpen} setValue={setValue} watch={watch} />
     </>
   );
 }

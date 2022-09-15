@@ -48,13 +48,13 @@ function AddMember({ open, setOpen, successCb }: Props) {
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box mb={2}>
-            <FormInput control={control} name="fullName" label="Full Name" />
+            <FormInput control={control} name="fullName" label="Full Name *" />
           </Box>
           <Box mb={2}>
-            <FormInput control={control} name="email" label="Email" />
+            <FormInput control={control} name="email" label="Email *" />
           </Box>
           <Box mb={2}>
-            <FormInput control={control} name="mobileNumber" label="Mobile Number" />
+            <FormInput control={control} name="mobileNumber" label="Mobile Number *" />
           </Box>
           <Box>
             <FormSelect

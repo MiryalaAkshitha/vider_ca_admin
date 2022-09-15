@@ -1,15 +1,33 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
 import Table, { ColumnType } from "components/Table";
 import moment from "moment";
+import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 import { getTitle } from "utils";
+import { formattedDatetime } from "utils/formattedDateTime";
 
 type Props = {
   data: any;
 };
 
+const getApprovalUpdate = (approvals: any[]) => {
+  const sorted = _.sortBy(approvals, "level");
+  const lastApprovedIndex = _.findLastIndex(sorted, { status: "APPROVED" });
+  const allApproved = _.every(sorted, { status: "APPROVED" });
+
+  if (allApproved) return `All approvals have been approved`;
+
+  return `Level ${lastApprovedIndex + 1} has been approved`;
+};
+
+const getLastApprovedDate = (approvals: any[]) => {
+  const sorted = _.sortBy(approvals, "level");
+  const lastApprovedIndex = _.findLastIndex(sorted, { status: "APPROVED" });
+
+  return formattedDatetime(sorted[lastApprovedIndex]?.updatedAt);
+};
 function TaskTable({ data }: Props) {
   const navigate = useNavigate();
   return (
@@ -29,6 +47,7 @@ const columns: Array<ColumnType> = [
   {
     key: "dueDate",
     title: "Due Date",
+    width: "200px",
     render: (row) => {
       return row?.dueDate ? moment(row?.dueDate).format("DD-MM-YYYY") : "";
     },
@@ -38,6 +57,28 @@ const columns: Array<ColumnType> = [
     key: "priority",
     title: "Priority",
     render: (v) => <PriorityText text={v?.priority} />,
+  },
+  {
+    key: "Approval Levels",
+    title: "Approval Level",
+    render: (row) => {
+      return row?.approvals?.length > 0 ? (
+        <Box>
+          {_.some(row?.approvals, { status: "APPROVED" }) ? (
+            <>
+              <Typography variant="body2">{getApprovalUpdate(row?.approvals)}</Typography>
+              <Typography variant="caption" color="rgba(0,0,0,0.5)">
+                Last Updated on {getLastApprovedDate(row?.approvals)}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="body2" textAlign="center">
+              Approval Levels ({row?.approvals.length})
+            </Typography>
+          )}
+        </Box>
+      ) : null;
+    },
   },
   {
     key: "status",

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import moment from "moment";
 import { RootState } from "redux/store";
 
 interface FilterPayload {
@@ -46,7 +47,7 @@ type Filter = {
     };
     completedOn: {
       fromDate: string;
-      toDate: number;
+      toDate: string;
     };
   };
 };
@@ -70,20 +71,20 @@ const filterState: Filter = {
   financialYear: [],
   customDates: {
     startDate: {
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().subtract(1,"day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
     dueOn: {
-      fromDate: "",
-      toDate: "",
+      fromDate:moment().subtract(1,"day").format("YYYY-MM-DD") ,
+      toDate:moment().format("YYYY-MM-DD") ,
     },
     createdOn: {
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().subtract(1,"day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
     completedOn: {
-      fromDate: "",
-      toDate: 100,
+      fromDate: moment().subtract(1,"day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
   },
 };
