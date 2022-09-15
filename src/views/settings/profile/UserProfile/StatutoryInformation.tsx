@@ -36,6 +36,7 @@ const StatutoryInformation = ({ state, setState }) => {
               sx={{ minHeight: "60px" }}
               name="aadharCard"
               label="Upload Attachment"
+              accept={["image/jpg", "image/jpeg", "application/pdf"]}
               onChange={(v) =>
                 setState({
                   ...state,
@@ -68,6 +69,7 @@ const StatutoryInformation = ({ state, setState }) => {
             <UploadImage
               widthoutIcon
               sx={{ minHeight: "60px" }}
+              accept={["image/jpg", "image/jpeg", "application/pdf"]}
               name="panCard"
               label="Upload Attachment"
               onChange={(v) => setState({ ...state, panCard: v })}
@@ -99,6 +101,7 @@ const StatutoryInformation = ({ state, setState }) => {
               sx={{ minHeight: "60px" }}
               name="drivingLicense"
               label="Upload Attachment"
+              accept={["image/jpg", "image/jpeg", "application/pdf"]}
               onChange={(v) => setState({ ...state, drivingLicense: v })}
             />
           )}

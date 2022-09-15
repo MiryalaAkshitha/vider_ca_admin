@@ -62,13 +62,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       });
 
       const result: any = response.data;
-      console.log(result, "vivek");
 
       if (result.data.sts === "Active") {
         mutate({
           id: data?.id,
           data: {
-            ...data,
             legalName: result?.data?.lgnm,
             tradeName: result?.data?.tradeNam,
             placeOfSupply: result?.data?.pradr?.addr?.stcd,
@@ -78,6 +76,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
             city: result?.data?.pradr?.addr?.dst,
             state: result?.data?.pradr?.addr?.stcd,
             pincode: result?.data?.pradr?.addr?.pncd,
+            gstNumber: data?.gstNumber,
             gstVerified: true,
           },
         });
@@ -97,12 +96,12 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       return;
     }
 
-    if (data?.gstNumber) {
-      let gstSlice = data?.gstNumber?.slice(2, 12);
-      if (gstSlice !== data?.panNumber) {
-        return snack.error("PAN Number should correspond to GST Number");
-      }
-    }
+    // if (data?.gstNumber) {
+    //   let gstSlice = data?.gstNumber?.slice(2, 12);
+    //   if (gstSlice !== data?.panNumber) {
+    //     return snack.error("PAN Number should correspond to GST Number");
+    //   }
+    // }
 
     try {
       setPanLoading(true);
@@ -114,14 +113,16 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       });
 
       const result: any = response?.data;
+      console.log(result, "pan verified details");
+
       if (result.data.status === "VALID") {
         mutate({
           id: data?.id,
           data: {
-            ...data,
             firstName: result?.data?.first_name,
             lastName: result?.data?.last_name,
             fullName: result?.data?.full_name,
+            panNumber: data?.panNumber,
             panVerified: true,
           },
         });

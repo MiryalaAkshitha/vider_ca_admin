@@ -32,6 +32,8 @@ function Appbar() {
   const [globalActionType, setGlobalActionType] = useState<string>("");
   const { data: uData } = useContext(UserProfileContext);
 
+  console.log(uData);
+
   return (
     <>
       <AppBar
@@ -78,39 +80,24 @@ function Appbar() {
                 </IconButton>
               </Link>
             </Box>
-            <Tooltip
-              componentsProps={{
-                tooltip: {
-                  sx: {
-                    backgroundColor: "rgba(60,64,67,.90)",
-                  },
-                },
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              title={
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "160px",
-                    height: "80px",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="body1" color="inherit">
-                    {uData?.fullName}
-                  </Typography>
-                  <Typography color="lightgrey">{uData?.role?.name}</Typography>
-                </Box>
-              }
-              placement="bottom-end"
-              arrow
             >
-              <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-                <Avatar src={data?.imageUrl} />
-              </IconButton>
-            </Tooltip>
+              <Typography variant="caption" color="#182F53">
+                {uData?.fullName}
+              </Typography>
+              <Typography variant="caption" color="#182F53">
+                {uData?.role?.name}
+              </Typography>
+            </Box>
+            <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
+              <Avatar src={data?.imageUrl} />
+            </IconButton>
           </Box>
         </Toolbar>
         {loading && (

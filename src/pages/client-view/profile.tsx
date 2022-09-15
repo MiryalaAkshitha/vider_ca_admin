@@ -40,7 +40,7 @@ function ProfileDetails() {
 
   const { mutate } = useMutation(bulkDelete, {
     onSuccess: () => {
-      snack.success("Clients Deleted");
+      snack.success(`${data?.data?.displayName} Client Profile has been Deleted`);
       queryClient.invalidateQueries("clients");
       navigate("/clients");
     },
