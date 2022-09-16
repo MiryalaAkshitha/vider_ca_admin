@@ -17,13 +17,15 @@ import DetailSection from "./DetailSection";
 import { CustomSelect, CustomTextField, StyledTextField } from "./Fields";
 import Info from "./Info";
 import useTaskViewData from "./useTaskDetailsData";
-import TextFieldWithCopy from "views/client-view/ProfileDetails/TextFieldWithCopy";
+import AddRemarks from "views/tasks/board/AddRemarks";
 
 function Details() {
   const queryClient = useQueryClient();
   const taskData: any = useTaskData();
   const { users, loading, categories, labels } = useTaskViewData();
   const [state, setState] = useState<any>({});
+  const [open, setOpen] = useState(false);
+  const [remarksPromise, setRemarksPromise] = useState<Function[]>([]);
 
   useEffect(() => {
     if (taskData) {
@@ -42,8 +44,8 @@ function Details() {
   });
 
   const handleUpdate = async () => {
-    if(state.members.length < 1 ){
-      return snack.error("Please select atleast one error")
+    if (state.members.length < 1) {
+      return snack.error("Please select atleast one error");
     }
     await mutateAsync({
       id: taskData?.id,
@@ -65,6 +67,29 @@ function Details() {
       return;
     }
     setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleRemkars = () => {
+    return new Promise((resolve, reject) => {
+      setOpen(true);
+      setRemarksPromise([resolve, reject]);
+    });
+  };
+
+  const handleStatusUpdate = async (e: any) => {
+    if (e.target.value === TaskStatus.ON_HOLD) {
+      try {
+        await handleRemkars();
+        await mutateAsync({
+          id: taskData?.id,
+          data: { ...state, status: e.target.value },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setState({ ...state, status: e.target.value });
+    }
   };
 
   let subCategories = categories?.data.find((item: any) => {
@@ -128,7 +153,7 @@ function Details() {
             <DetailSection label="Status">
               <CustomSelect
                 value={state?.status || ""}
-                onChange={handleChange}
+                onChange={handleStatusUpdate}
                 options={Object.values(TaskStatus).map((item) => ({
                   label: item,
                   value: item,
@@ -281,10 +306,10 @@ function Details() {
             <DetailSection label="Directory">
               <CustomTextField
                 withCopy
-              value={state?.directory || ""}
+                value={state?.directory || ""}
                 onChange={handleChange}
-                name="directory"/>
-
+                name="directory"
+              />
             </DetailSection>
           </Grid>
           <Grid item xs={12}>
@@ -325,6 +350,12 @@ function Details() {
           onCancel={handleCancel}
         />
       </ValidateAccess>
+      <AddRemarks
+        open={open}
+        setOpen={setOpen}
+        onHoldTaskId={taskData?.id}
+        remarksPromise={remarksPromise}
+      />
     </>
   );
 }

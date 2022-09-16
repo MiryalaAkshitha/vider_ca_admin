@@ -52,9 +52,13 @@ function MenuPopoverProvider({ children }: any) {
         open={Boolean(state.target)}
         onClick={handleClose}
         onClose={handleClose}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: state?.position === "bottom-left" ? "left" : "right",
+        }}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "right",
         }}
       >
         {state.options.map((option, index) => (

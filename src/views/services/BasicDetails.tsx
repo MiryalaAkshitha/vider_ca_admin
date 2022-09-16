@@ -26,6 +26,15 @@ function BasicDetails() {
         value: e.target.value,
       })
     );
+
+    if (e.target.name === "category") {
+      dispatch(
+        handleChange({
+          name: "subCategory",
+          value: "",
+        })
+      );
+    }
   };
 
   if (isLoading) return <Loader />;
@@ -40,7 +49,14 @@ function BasicDetails() {
           <Typography mb={1} variant="body2" color="primary">
             Select Category
           </Typography>
-          <TextField name="category" value={state.category} onChange={onChange} fullWidth size="small" select>
+          <TextField
+            name="category"
+            value={state.category}
+            onChange={onChange}
+            fullWidth
+            size="small"
+            select
+          >
             {data?.data.map((option: any, index: any) => (
               <MenuItem key={index} value={option.id}>
                 {option.name}
@@ -90,7 +106,9 @@ function BasicDetails() {
             <Grid item xs={6}>
               <FormControlLabel
                 label="Hourly Price"
-                control={<Checkbox checked={hourlyPrice} onChange={() => setHourlyPrice(!hourlyPrice)} />}
+                control={
+                  <Checkbox checked={hourlyPrice} onChange={() => setHourlyPrice(!hourlyPrice)} />
+                }
               />
               {hourlyPrice && (
                 <TextField
@@ -108,7 +126,9 @@ function BasicDetails() {
             <Grid item xs={6}>
               <FormControlLabel
                 label="Total Price"
-                control={<Checkbox checked={totalPrice} onChange={() => setTotalPrice(!totalPrice)} />}
+                control={
+                  <Checkbox checked={totalPrice} onChange={() => setTotalPrice(!totalPrice)} />
+                }
               />
               {totalPrice && (
                 <TextField
