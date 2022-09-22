@@ -1,8 +1,15 @@
 import { DatePicker } from "@mui/lab";
-import { Box, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
+import { TaskStatus } from "data/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { handleCustomDates, handleFilters, selectTaskBoard } from "redux/reducers/taskboardSlice";
+import {
+  handleCustomDates,
+  handleFilters,
+  handleOnholdRemarkType,
+  selectTaskBoard,
+} from "redux/reducers/taskboardSlice";
 import { getTitle } from "utils";
+import { remarkTypes } from "views/tasks/board/AddRemarks";
 
 interface FilterProps {
   items: Array<{ label: string; value: string }>;
@@ -76,6 +83,43 @@ const FilterContainer = ({ items }: FilterProps) => {
               <TextField sx={{ mt: 2 }} {...params} fullWidth size="small" />
             )}
           />
+        </Box>
+      )}
+      {Boolean(
+        selectedFilters[selected].find((filter: any) => filter.value === TaskStatus.ON_HOLD)
+      ) && (
+        <Box mt={2}>
+          <Typography variant="body2" color="rgba(0,0,0,0.5)" mb={1}>
+            On Hold Remark Type
+          </Typography>
+          {remarkTypes.map((item, index) => (
+            <FormControlLabel
+              key={index}
+              sx={{ width: "100%" }}
+              control={
+                <Checkbox
+                  checked={Boolean(
+                    selectedFilters.onHoldRemarkType.find(
+                      (filter: any) => filter.value === item.value
+                    )
+                  )}
+                  value={item.value}
+                  onChange={(e) => {
+                    dispatch(
+                      handleOnholdRemarkType({
+                        checked: e.target.checked,
+                        value: {
+                          label: item.label,
+                          value: e.target.value,
+                        },
+                      })
+                    );
+                  }}
+                />
+              }
+              label={getTitle(item.label)}
+            />
+          ))}
         </Box>
       )}
     </Box>

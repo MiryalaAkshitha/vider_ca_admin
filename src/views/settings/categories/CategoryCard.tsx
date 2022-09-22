@@ -29,11 +29,7 @@ function CategoryCard({ data }: Props) {
           <Box display="flex" gap="4px">
             <Typography variant="subtitle2" color="primary">
               {data?.name}{" "}
-              {data?.defaultOne && (
-                <Typography color="rgba(0,0,0,0.8)" mt="4px" variant="caption">
-                  (default)
-                </Typography>
-              )}
+              {data?.fromAdmin && <span style={{ color: "red", fontSize: 12 }}>-- From Vider</span>}
             </Typography>
           </Box>
           <Box display="flex" gap={1}>
@@ -51,7 +47,7 @@ function CategoryCard({ data }: Props) {
         </Box>
         {data?.subCategories?.length && open ? (
           <>
-            <Divider sx={{ my: 1 }} />
+            <Divider sx={{ mt: 1 }} />
             <Box flexWrap="wrap" display="flex" p={2} gap={2}>
               {data.subCategories?.map((item: any, index: any) => (
                 <Box
@@ -71,11 +67,7 @@ function CategoryCard({ data }: Props) {
         ) : null}
       </Box>
       {!data?.defaultOne && (
-        <EditCategoryPopover
-          data={data}
-          anchorEl={anchorEl}
-          setAnchorEl={setAnchorEl}
-        />
+        <EditCategoryPopover data={data} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       )}
     </>
   );

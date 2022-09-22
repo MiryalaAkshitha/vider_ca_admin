@@ -14,7 +14,13 @@ export const reportsList = [
     icon: icons.totalTasks,
   },
   {
-    title: "User / Employee Log Hours Report",
+    title: "Log Hours Report",
+    path: "/reports/log-hours-report",
+    desc: `Employee Log Hours Report will allow you to track the time spent by each individual user of your organisation to a particular Client / Task for a given period.`,
+    icon: icons.totalTasks,
+  },
+  {
+    title: "Employee Log Hours Report",
     path: "/reports/employee-log-hours-report",
     desc: `Employee Log Hours Report will allow you to track the time spent by each individual user of your organisation to a particular Client / Task for a given period.`,
     icon: icons.totalTasks,

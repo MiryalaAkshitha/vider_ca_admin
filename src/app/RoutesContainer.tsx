@@ -15,6 +15,7 @@ const Receipts = loadable(() => import("pages/billing/receipts"));
 const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
+const CompletedTasks = loadable(() => import("pages/settings/completed-tasks"));
 const DeletedUsers = loadable(() => import("pages/settings/deleted-users"));
 const Login = loadable(() => import("pages/login"));
 const ResetPassword = loadable(() => import("pages/reset-password"));
@@ -116,6 +117,7 @@ const AddApproval = loadable(
 
 // REPORTS
 const Reports = loadable(() => import("pages/reports"));
+const LogHoursReport = loadable(() => import("pages/reports/log-hours-report"));
 const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
 const ClientsReport = loadable(() => import("pages/reports/clients-report"));
 const TasksReport = loadable(() => import("pages/reports/tasks-report"));
@@ -167,6 +169,7 @@ function RoutesContainer() {
                 </PageWithPermission>
               }
             />
+            <Route path="log-hours-report" element={<LogHoursReport />} />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
             <Route path="clients-report" element={<ClientsReport />} />
             <Route path="tasks-report" element={<TasksReport />} />
@@ -331,6 +334,7 @@ function RoutesContainer() {
           </Route>
           <Route path="invited-users" element={<InviteUsers />} />
           <Route path="storage-management" element={<StorageManagement />} />
+          <Route path="completed-tasks" element={<CompletedTasks />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
           <Route path="deleted-users" element={<DeletedUsers />} />

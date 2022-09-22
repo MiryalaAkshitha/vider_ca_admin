@@ -1,5 +1,5 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { exportEmployeeLogHoursReport } from "api/services/reports";
+import { exportLogHoursReport } from "api/services/reports";
 import Loader from "components/Loader";
 import Table from "components/Table";
 import { snack } from "components/toast";
@@ -9,7 +9,7 @@ import { formattedDate } from "utils/formattedDate";
 import { handleError } from "utils/handleError";
 
 function Report({ data, state, isLoading, isError }) {
-  const { mutate } = useMutation(exportEmployeeLogHoursReport, {
+  const { mutate } = useMutation(exportLogHoursReport, {
     onSuccess: (res: any) => {
       const arr = new Uint8Array(res.data?.data);
       const blob = new Blob([arr], {
@@ -29,9 +29,9 @@ function Report({ data, state, isLoading, isError }) {
 
   const handleExport = () => {
     mutate({
-      user: state?.user?.id,
-      fromDate: moment(state.fromDate).format("YYYY-MM-DD"),
-      toDate: moment(state.toDate).format("YYYY-MM-DD"),
+      ...state,
+      fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
+      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
     });
   };
 
@@ -63,19 +63,33 @@ function Report({ data, state, isLoading, isError }) {
 const columns = [
   {
     title: "Date",
-    key: "date",
+    key: "completedDate",
+    render: (row: any) => {
+      return formattedDate(row?.completedDate);
+    },
   },
   {
-    title: "General Log Hours",
-    key: "generalLogHours",
+    title: "Client",
+    key: "client.displayName",
   },
   {
-    title: "Task Log Hours",
-    key: "taskLogHours",
+    title: "Task Name",
+    key: "task.name",
   },
   {
-    title: "Total Log Hours",
-    key: "totalLogHours",
+    title: "Employee",
+    key: "user.fullName",
+  },
+  {
+    title: "Log Hours",
+    key: "duration",
+    render: (row: any) => {
+      return moment.utc(+row?.duration).format("HH:mm");
+    },
+  },
+  {
+    title: "Log Hour Type",
+    key: "type",
   },
 ];
 

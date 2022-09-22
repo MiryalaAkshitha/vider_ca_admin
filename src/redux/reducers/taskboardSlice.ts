@@ -50,6 +50,7 @@ type Filter = {
       toDate: string;
     };
   };
+  onHoldRemarkType: Array<{ label: string; value: string }>;
 };
 
 const filterState: Filter = {
@@ -71,22 +72,23 @@ const filterState: Filter = {
   financialYear: [],
   customDates: {
     startDate: {
-      fromDate: moment().subtract(1,"day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
       toDate: moment().format("YYYY-MM-DD"),
     },
     dueOn: {
-      fromDate:moment().subtract(1,"day").format("YYYY-MM-DD") ,
-      toDate:moment().format("YYYY-MM-DD") ,
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
     createdOn: {
-      fromDate: moment().subtract(1,"day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
       toDate: moment().format("YYYY-MM-DD"),
     },
     completedOn: {
-      fromDate: moment().subtract(1,"day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
       toDate: moment().format("YYYY-MM-DD"),
     },
   },
+  onHoldRemarkType: [],
 };
 
 interface InitialState {
@@ -120,6 +122,16 @@ export const taskBoardSlice = createSlice({
     handleCustomDates(state, action: PayloadAction<CustomDatePayload>) {
       let selectedCustomDate = state.selectedFilters.customDates[state.selected];
       selectedCustomDate[action.payload.dateType] = action.payload.value;
+    },
+    handleOnholdRemarkType(state, action: PayloadAction<any>) {
+      let filterItem = state.selectedFilters.onHoldRemarkType;
+      if (action.payload.checked) {
+        state.selectedFilters.onHoldRemarkType.push(action.payload.value);
+      } else {
+        state.selectedFilters.onHoldRemarkType = filterItem.filter(
+          (item: any) => item.value !== action.payload.value.value
+        );
+      }
     },
     handleCategories(state, action: PayloadAction<{ value: any[]; key: string }>) {
       state.selectedFilters[action.payload.key] = action.payload.value;
@@ -160,6 +172,7 @@ export const {
   handleCustomDates,
   handleSearch,
   handleRemove,
+  handleOnholdRemarkType,
 } = taskBoardSlice.actions;
 
 export default taskBoardSlice.reducer;

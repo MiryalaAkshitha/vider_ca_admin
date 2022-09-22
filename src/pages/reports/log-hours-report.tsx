@@ -1,5 +1,5 @@
 import { Box, Breadcrumbs, Typography } from "@mui/material";
-import { getEmployeeLogHoursReport } from "api/services/reports";
+import { LogHoursReport as getReport } from "api/services/reports";
 import { LinkRouter } from "components/BreadCrumbs";
 import { snack } from "components/toast";
 import useTitle from "hooks/useTitle";
@@ -7,21 +7,29 @@ import moment from "moment";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { handleError } from "utils/handleError";
-import Filters from "views/reports/EmployeeLogHoursReport/Filters";
-import Report from "views/reports/EmployeeLogHoursReport/Report";
+import Filters from "views/reports/LogHoursReport/Filters";
+import Report from "views/reports/LogHoursReport/Report";
 
 export interface IState {
-  user: any;
   fromDate: null | string;
   toDate: null | string;
+  client: string;
+  users: Array<any>;
+  type: "ALL" | "GENERAL" | "TASK";
 }
 
-function EmployeeLogHoursReport() {
+function LogHoursReport() {
   useTitle("Employee Log Hours Report");
   const [data, setData] = useState(null);
-  const [state, setState] = useState<IState>({ user: null, fromDate: null, toDate: null });
+  const [state, setState] = useState<IState>({
+    fromDate: null,
+    toDate: null,
+    client: "",
+    users: [],
+    type: "ALL",
+  });
 
-  const { mutate, isLoading, isError } = useMutation(getEmployeeLogHoursReport, {
+  const { mutate, isLoading, isError } = useMutation(getReport, {
     onSuccess: (res: any) => {
       setData(res.data);
     },
@@ -31,13 +39,10 @@ function EmployeeLogHoursReport() {
   });
 
   const handleSubmit = () => {
-    if (!state.user) return snack.error("Please select employee");
-    if (!state.fromDate) return snack.error("Please select from date");
-    if (!state.toDate) return snack.error("Please select to date");
     mutate({
-      user: state?.user?.id,
-      fromDate: moment(state.fromDate).format("YYYY-MM-DD"),
-      toDate: moment(state.toDate).format("YYYY-MM-DD"),
+      ...state,
+      fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
+      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
     });
   };
 
@@ -47,7 +52,7 @@ function EmployeeLogHoursReport() {
         <LinkRouter underline="hover" color="inherit" to="/reports">
           Reports
         </LinkRouter>
-        <Typography color="text.primary">Employee Log Hours Report</Typography>
+        <Typography color="text.primary">Log Hours Report</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} />
       <Report isLoading={isLoading} isError={isError} state={state} data={data} />
@@ -55,4 +60,4 @@ function EmployeeLogHoursReport() {
   );
 }
 
-export default EmployeeLogHoursReport;
+export default LogHoursReport;

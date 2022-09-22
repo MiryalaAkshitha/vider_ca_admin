@@ -64,6 +64,10 @@ export const settingsMenu: Array<IMenuItem> = [
     path: "",
     children: [
       {
+        title: "Completed Tasks",
+        path: "/settings/completed-tasks",
+      },
+      {
         title: "Deleted Clients",
         path: "/settings/deleted-clients",
       },
