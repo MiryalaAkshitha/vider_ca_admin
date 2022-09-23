@@ -63,4 +63,9 @@ export const menu: Array<IMenuItem> = [
     path: "/communication/client-groups",
     icon: icons.broadcast,
   },
+  {
+    title: "Billing",
+    path: "/billing/estimates",
+    icon: icons.broadcast,
+  },
 ];
