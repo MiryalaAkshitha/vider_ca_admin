@@ -3,6 +3,7 @@ import { Box, Button } from "@mui/material";
 import { getTasksByService } from "api/services/organization";
 import Loader from "components/Loader";
 import Table from "components/Table";
+import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +16,11 @@ function TasksByService() {
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(10);
   const [dates, setDates] = useState({ fromDate: null, toDate: null });
+  const { queryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-by-service", { limit: pageCount, offset: page * pageCount, ...dates }],
+    ["task-by-service", { limit: pageCount, offset: page * pageCount, dashboardType, ...dates }],
     getTasksByService
   );
 

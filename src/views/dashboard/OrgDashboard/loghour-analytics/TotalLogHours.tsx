@@ -1,17 +1,19 @@
-import { Box, Typography } from "@mui/material";
-import NorthIcon from "@mui/icons-material/North";
-import SouthIcon from "@mui/icons-material/South";
-import { useState } from "react";
-import { StyledTaskBox } from "../styles";
-import { useQuery } from "react-query";
-import { ResType } from "types";
+import { Typography } from "@mui/material";
 import { getTotalLogHours } from "api/services/organization";
 import Loader from "components/Loader";
+import useQueryParams from "hooks/useQueryParams";
+import { useQuery } from "react-query";
+import { ResType } from "types";
+import { StyledTaskBox } from "../styles";
 
 function TotalLogHours() {
-  const [more] = useState(true);
+  const { queryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
 
-  const { data, isLoading }: ResType = useQuery(["total-loghours"], getTotalLogHours);
+  const { data, isLoading }: ResType = useQuery(
+    ["total-loghours", { dashboardType }],
+    getTotalLogHours
+  );
 
   if (isLoading) return <Loader />;
 

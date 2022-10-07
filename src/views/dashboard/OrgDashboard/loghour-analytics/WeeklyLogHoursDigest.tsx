@@ -1,9 +1,10 @@
 import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { getWeeklyLogHours } from "api/services/organization";
 import Loader from "components/Loader";
 import { format } from "date-fns";
+import useQueryParams from "hooks/useQueryParams";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -14,6 +15,8 @@ import { StyledTaskBox } from "../styles";
 export default function WeeklyLogHoursDigest() {
   const [startDate, setStartDate] = useState<null | Date | number>();
   const [endDate, setEndDate] = useState<null | Date | number>();
+  const { queryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -21,6 +24,7 @@ export default function WeeklyLogHoursDigest() {
       {
         startDate: moment(startDate).format("YYYY-MM-DD"),
         endDate: moment(endDate).format("YYYY-MM-DD"),
+        dashboardType,
       },
     ],
     getWeeklyLogHours,

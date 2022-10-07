@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getOverdueTasks } from "api/services/organization";
 import Loader from "components/Loader";
+import useQueryParams from "hooks/useQueryParams";
 import moment from "moment";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -15,14 +16,16 @@ import { StyledTaskBox } from "../styles";
 
 function OverDueTasks() {
   const navigate = useNavigate();
+  const { queryParams, setQueryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["over-due-tasks", { offset: 0, limit: 5 }],
+    ["over-due-tasks", { offset: 0, limit: 5, dashboardType }],
     getOverdueTasks
   );
 
   const handleClick = () => {
-    navigate("/dashboard/over-due-tasks");
+    navigate(`/dashboard/over-due-tasks?type=${dashboardType}`);
   };
 
   if (isLoading) return <Loader />;

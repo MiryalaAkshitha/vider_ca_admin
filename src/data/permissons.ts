@@ -59,4 +59,5 @@ export enum Permissions {
   EDIT_CLIENTS = "clients_edit",
   DELETE_CLIENTS = "clients_delete",
   VIEW_REPORTS = "reports_view_reports",
+  VIEW_ADMIN_DASHBOARD = "dashboard_view_admin_dashboard",
 }

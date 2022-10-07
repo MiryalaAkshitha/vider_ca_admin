@@ -6,9 +6,6 @@ import WeeklyLogHoursDigest from "./WeeklyLogHoursDigest";
 function LoghourAnalytics() {
   return (
     <Box mt={3}>
-      <Typography mb={1} variant="subtitle2" sx={{ mb: 2 }}>
-        Log Hours Analytics
-      </Typography>
       <Grid container spacing={2}>
         <Grid item md={3} sm={6} xs={12}>
           <TotalLogHours />
