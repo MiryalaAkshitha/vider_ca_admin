@@ -148,6 +148,10 @@ const restoreUser = (id: number) => {
   return http.post(`/users/${id}/restore`);
 };
 
+const createUser = (data: any) => {
+  return http.post(`/users/create`, data);
+};
+
 export {
   getSandboxToken,
   getGstDetails,
@@ -180,4 +184,5 @@ export {
   restoreUser,
   cancelInvitation,
   resendInvitation,
+  createUser,
 };

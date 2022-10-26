@@ -1,3 +1,4 @@
+import { matches } from "lodash";
 import { object, string } from "yup";
 
 let inviteUserDefaultValues = {
@@ -15,6 +16,7 @@ let inviteUserSchema = () => {
     mobileNumber: string()
       .matches(/^[0-9]{10}$/, "Mobile number is invalid")
       .required("Mobile number is required"),
+    password: string().required("password required"),
   });
 };
 
