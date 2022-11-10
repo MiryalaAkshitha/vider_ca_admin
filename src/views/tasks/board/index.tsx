@@ -174,7 +174,11 @@ function Board({ data }: Props) {
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
                       {state[key].map((item: any, index: number) => (
-                        <Draggable key={item?.uid} draggableId={item?.uid} index={index}>
+                        <Draggable
+                          key={item?.taskNumber}
+                          draggableId={item?.taskNumber}
+                          index={index}
+                        >
                           {(provided: any, snapshot: any) => (
                             <StyledDraggableItem
                               ref={provided.innerRef}
