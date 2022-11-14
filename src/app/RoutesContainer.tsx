@@ -144,6 +144,7 @@ const PushNotifications = loadable(
 );
 
 const Emails = loadable(() => import("pages/emails"));
+const Emails2 = loadable(() => import("pages/emails2"));
 
 function RoutesContainer() {
   return (
@@ -158,6 +159,7 @@ function RoutesContainer() {
             <Route path="employee-tasks-by-status" element={<EmployeeTasksByStatus />} />
           </Route>
           <Route path="emails" element={<Emails />} />
+          <Route path="emails2" element={<Emails2 />} />
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
