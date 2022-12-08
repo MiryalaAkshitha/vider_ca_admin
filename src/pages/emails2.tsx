@@ -31,7 +31,7 @@ function Emails() {
   const handleSubmit = (e) => {
     e.preventDefault();
     http
-      .post("/common/send-mail2", state)
+      .post("/common/sendAtomEmails", state)
       .then((res) => {
         console.log(res);
         alert("Email sent successfully");

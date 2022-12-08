@@ -12,6 +12,7 @@ import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, move, reorder } from "./utils";
+import { http } from "api/http";
 
 type Props = {
   data: any;
@@ -102,6 +103,8 @@ function Board({ data }: Props) {
         await handleRemarks();
       }
 
+      sendEmail(sourceItem);
+
       await updateTaskStatus({
         id: sourceItem.id,
         status: destinationId,
@@ -142,6 +145,35 @@ function Board({ data }: Props) {
 
     handleUpdateTaskStatus(source, destination);
   };
+
+  const sendEmail = (sourceItem: any) => {
+    const payload = {
+      fromAddress: sourceItem?.client?.email,
+      toAddress: '',
+      subject: sourceItem?.status,
+      name: sourceItem?.name,
+      body: "",
+      templateid: "taskStatusUpdatedForUser",
+      atomID: "1",
+      preferredsource: 'Atom'
+    }
+    let toemails = '';
+    if(sourceItem?.members.length>0) {
+      sourceItem.members.forEach((member) => {
+        toemails += member.email + ','
+      });
+    }
+    payload.toAddress = toemails.slice(0, -1);
+    http
+      .post("/common/sendAtomEmails", payload)
+      .then((res) => {
+        console.log(res);
+        alert("Email sent successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   useTitle("Task Board");
 
