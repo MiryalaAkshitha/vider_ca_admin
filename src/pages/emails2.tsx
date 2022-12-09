@@ -242,7 +242,7 @@ function Emails() {
     //   });
 
     http
-      .post("/common/send-mail2", state)
+      .post("/common/sendAtomEmails", state)
       .then((res) => {
         alert("Email sent successfully");
       })

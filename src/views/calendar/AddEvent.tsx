@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid } from "@mui/material";
+import { http } from "api/http";
 import { getClients } from "api/services/clients/clients";
 import { createEvent } from "api/services/events";
 import { getTasks } from "api/services/tasks/tasks";
@@ -55,7 +56,7 @@ function AddEvent({ open, setOpen }: Props) {
       snack.success("Event Created");
       setOpen(false);
       reset(addCalendarEventDefaultValues);
-      queryClient.invalidateQueries("events");
+      queryClient.invalidateQueries("events");      
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);
@@ -71,10 +72,39 @@ function AddEvent({ open, setOpen }: Props) {
     mutate({
       ...apiData,
     });
+    sendEmail(data);
   };
 
   let taskMembers =
     tasks?.data?.find((item: any) => item?.id === watch<any>("task")?.value)?.members || [];
+
+  const sendEmail = (state) => {
+    console.log(state);
+    const obj = {
+      templateid: state.title,
+      fromAddress: state.fromAddress,
+      toAddress: state.toAddress,
+      schedule: formatDate(state.date),
+      status: "Active"
+    }
+    http
+      .post("/common/sendscheduler", obj)
+      .then((res) => {
+        console.log(res);
+        alert("Event created");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const formatDate = (currDate) => {
+    const today = currDate ? currDate : new Date();
+    const year = today.getFullYear();
+    const mon = today.getMonth()+1;
+    const day = today.getDate() > 9 ? today.getDate() : '0' + today.getDate();
+    return ""+year+"-"+mon+"-"+day;
+  }
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Create an Event">
@@ -90,6 +120,7 @@ function AddEvent({ open, setOpen }: Props) {
             options={[
               { label: "Event", value: "EVENT" },
               { label: "Task", value: "TASK" },
+              { label: "Newsletter", value: "NEWSLETTER" },
             ]}
           />
           {watch("type") === "TASK" && (
@@ -135,15 +166,28 @@ function AddEvent({ open, setOpen }: Props) {
             </>
           )}
           <Box mt={2}>
-            <FormInput name="title" control={control} label="Title" />
+            <FormInput name="title" control={control} label={watch('type') !== 'NEWSLETTER' ? 'Title' : 'TemplateId'} />
           </Box>
           <Box mt={2}>
+          {watch("type") === "NEWSLETTER" && (
+            <FormInput name="fromAddress" control={control} label="fromAddress" />
+          )}
+          </Box>
+          <Box mt={2}>
+          {watch("type") === "NEWSLETTER" && (
+            <FormInput name="toAddress" control={control} label="toAddress" />
+          )}
+          </Box>
+          <Box mt={2}>
+          {watch("type") !== "NEWSLETTER" && (
             <FormInput name="location" control={control} label="Location" />
+          )}
           </Box>
           <Box mt={2}>
             <FormDate name="date" control={control} label="Date" />
           </Box>
           <Box mt={2}>
+          {watch("type") !== "NEWSLETTER" && 
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <FormTime name="startTime" control={control} label="Start Time" />
@@ -152,6 +196,7 @@ function AddEvent({ open, setOpen }: Props) {
                 <FormTime name="endTime" control={control} label="End Time" />
               </Grid>
             </Grid>
+          }
           </Box>
           <Box mt={2}>
             <FormCheckbox name="reminderCheck" control={control} label="Set Reminder" />

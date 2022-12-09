@@ -44,7 +44,7 @@ let AddCalendarEventSchema = () => {
       title: string()
         .required("Event name is required")
         .min(3, "Event name should be atleast 3 characters"),
-      location: string().required("Location is required"),
+      location: string().notRequired(),
       date: date()
         .nullable()
         .typeError("Invalid date")
@@ -56,12 +56,12 @@ let AddCalendarEventSchema = () => {
       startTime: date()
         .nullable()
         .typeError("Invalid start time")
-        .required("Start time is required"),
+        .notRequired(),
       endTime: date()
         .nullable()
         .min(ref("startTime"), "End time should be greater than start time")
         .typeError("Invalid end time")
-        .required("End time is required"),
+        .notRequired(),
       notes: string().notRequired(),
       reminderCheck: boolean().notRequired(),
       reminder: mixed().when("reminderCheck", {

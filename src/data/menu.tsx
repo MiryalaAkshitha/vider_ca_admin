@@ -68,6 +68,11 @@ export const menu: Array<IMenuItem> = [
     path: "/emails2",
     icon: icons.reports,
   },
+  {
+    title: "News Letter",
+    path: "/newsletter",
+    icon: icons.reports,
+  },
   // {
   //   title: "Broadcast",
   //   path: "/communication/client-groups",
