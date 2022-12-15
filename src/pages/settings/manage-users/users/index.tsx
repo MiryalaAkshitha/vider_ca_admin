@@ -14,6 +14,8 @@ import AddMemberToEspo from "./add-to-espo";
 
 function Users() {
   const [open, setOpen] = useState<boolean>(false);
+  const [openMember, setOpenMember] = useState<boolean>(false);
+
   const [search, setSearch] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
@@ -82,11 +84,11 @@ function Users() {
           </Grid>
         ))}
       </Grid>
-      <AddMember open={open} setOpen={setOpen} />
+      <AddMember open={openMember} setOpen={setOpenMember} />
       <AddMemberToEspo open={open} setOpen={setOpen} />
       <FloatingButton
         onClick={() => {
-          setOpen(true);
+          setOpenMember(true);
         }}
       />
     </Box>
