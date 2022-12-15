@@ -7,6 +7,10 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 
 let templateData = {
+  adummy: [
+    "ViderUserName",
+    "ViderOrganizationName"
+  ],
   clientDeleted: [
     "ViderMemberName",
     "ViderClientName",
@@ -164,12 +168,15 @@ let templateData = {
 };
 
 function Emails() {
+  const [preview, setPreview] = useState(false);
+
   const [state, setState] = useState({
     fromAddress: "",
     toAddress: "",
     subject: "",
     body: "",
     templateid: "",
+    id: "",
     atomID: "",
     payload: {},
   });
@@ -179,19 +186,19 @@ function Emails() {
   });
 
   useEffect(() => {
-    let response = "";
-    if (!state.templateid) return;
-    const temp = data.data.list.find((item) => item.name === state.templateid);
-    response = temp?.body;
-    if (temp?.name === state.templateid) {
-      templateData[temp.name]?.forEach((item) => {
-        response = response?.replace(item, state.payload[item]);
-      });
-    }
-    setState({
-      ...state,
-      body: response,
-    });
+    // let response = "";
+    // if (!state.templateid) return;
+    // const temp = data.data.list.find((item) => item.name === state.templateid);
+    // response = temp?.body;
+    // if (temp?.name === state.templateid) {
+    //   templateData[temp.name]?.forEach((item) => {
+    //     response = response?.replace(item, state.payload[item]);
+    //   });
+    // }
+    // setState({
+    //   ...state,
+    //   body: response,
+    // });
   }, [state, data]);
 
   const handleChange = (e) => {
@@ -203,6 +210,8 @@ function Emails() {
   };
 
   const handleTemplateChange = (e) => {
+    setPreview(false);
+
     const temp = data.data.list.find((item) => item.name === e.target.value);
     let values = templateData[temp.name];
     let payload = {};
@@ -211,65 +220,72 @@ function Emails() {
       payload[item] = "";
     });
 
+    let response = temp?.body;
+    if (temp?.name === e.target.value) {
+      templateData[temp.name]?.forEach((item) => {
+        response = response?.replace(item, state.payload[item]);
+      });
+    }
+
     setState({
       ...state,
+      id: temp.id,
       templateid: e.target.value,
+      body: response,
       payload,
-    });
+    }); 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    http
-      .put(`/comman/send-mail2/${state.templateid}`, state.body)
-      .then((res) => {
-        alert("Email sent successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("request failed");
-      });
-
-    // http
-    //   .put(`/comman/updated-mail/${state.templateid}`, state.body)
+    const payloadData = Object.assign({}, state);    
+    
+    // TODO: uncomment if template to be updated directly
+    // http.post("/common/update-template", payloadData)
     //   .then((res) => {
-    //     alert("Email sent successfully");
+    //     console.log(res);
+    //     alert("Template updated successfully");
     //   })
     //   .catch((err) => {
     //     console.log(err);
-    //     alert("request failed");
+    //     alert("Template update failed");
     //   });
 
+    let identitifyers = '{';
+    for (const [key, value] of Object.entries(payloadData['payload'])) {
+      identitifyers += `${key}: '${value}'` + ','
+    }
+    let tempObj = identitifyers.slice(0, -1);
+    tempObj += '}';
+
+    const payloadObj = {
+      name: payloadData.templateid || '',
+      fromAddress: payloadData.fromAddress || '',
+      toAddress: payloadData.toAddress || '',
+      subject: payloadData.subject || '',
+      body: '',
+      templateid: payloadData.templateid || '',
+      atomID: "1",
+      preferredsource: 'Atom',
+      payload: tempObj
+    }
+
     http
-      .post("/common/sendAtomEmails", state)
+      .post("/common/sendAtomEmails", payloadObj)
       .then((res) => {
+        console.log(res);
         alert("Email sent successfully");
       })
       .catch((err) => {
         console.log(err);
       });
 
-    // async function emailPost() {
-    //   try {
-    //     const response = await axios({
-    //       method: "PUT",
-    //       url: `http://vidersupport.com/espo/crm/api/v1/EmailTemplate/${state.templateid}`,
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Api-Key": "cb7397dc8250e64516602f5894f7bf5f",
-    //       },
-    //       data: JSON.stringify(state.body),
-    //     });
-    //     console.log(response);
-    //     alert("succuss");
-    //   } catch (error) {
-    //     console.log(error);
-    //     alert("error");
-    //   }
-    // }
-    // emailPost();
   };
+
+  const handlePreview = () => {
+    setPreview(!preview);
+  }
 
   if (isLoading) {
     return <Loader />;
@@ -336,7 +352,8 @@ function Emails() {
             <p style={{ fontSize: "11px", color: "red" }}>Template Required Data</p>
             <div
               style={{
-                height: "200px",
+                height: "auto",
+                minHeight: "200px",
                 overflow: "scroll",
                 border: "1px solid #000",
                 marginTop: "10px",
@@ -365,23 +382,28 @@ function Emails() {
             <Button type="submit" variant="contained" size="large" sx={{ mt: 2 }}>
               Send
             </Button>
+            <Button onClick={handlePreview} type="button" variant="contained" size="large" sx={{ mt: 2 }}>
+              Preview
+            </Button>
           </form>
         </Grid>
-        <Grid item lg={8}>
-          <Box sx={{ height: "580px", ml: 1, overflow: "scroll", border: "1px solid grey" }}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: state?.templateid
-                  ? state.body
-                  : `<div>
-                  <center>
-                  <h6>Preview template here</h6>
-                  </center>
-                  </div>`,
-              }}
-            ></div>
-          </Box>
-        </Grid>
+        {preview && 
+          <Grid item lg={8}>
+            <Box sx={{ height: "580px", ml: 1, overflow: "scroll", border: "1px solid grey" }}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: state?.templateid
+                    ? state.body
+                    : `<div>
+                    <center>
+                    <h6>Preview template here</h6>
+                    </center>
+                    </div>`,
+                }}
+              ></div>
+            </Box>
+          </Grid>
+        }
       </Grid>
     </Box>
   );
