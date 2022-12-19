@@ -16,7 +16,8 @@ let inviteUserSchema = () => {
     mobileNumber: string()
       .matches(/^[0-9]{10}$/, "Mobile number is invalid")
       .required("Mobile number is required"),
-    password: string().required("password required"),
+    // TODO: pass should be required
+    password: string().notRequired(),
   });
 };
 
