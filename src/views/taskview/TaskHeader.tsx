@@ -1,8 +1,7 @@
 import { ChatOutlined, DeleteOutlined } from "@mui/icons-material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Breadcrumbs, Typography } from "@mui/material";
 import { deleteTask } from "api/services/tasks/tasks";
-import BreadCrumbs from "components/BreadCrumbs";
 import { snack } from "components/toast";
 import ValidateAccess from "components/ValidateAccess";
 import { useConfirm } from "context/ConfirmDialog";
@@ -16,6 +15,7 @@ import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
 import TerminationDialog from "views/taskview/TerminationDialog";
 import GroupChats from "./GroupChats";
 import { handleError } from "utils/handleError";
+import { LinkRouter } from "components/BreadCrumbs";
 
 function TaskHeader({ onChange }: any) {
   const confirm = useConfirm();
@@ -50,7 +50,12 @@ function TaskHeader({ onChange }: any) {
   return (
     <Box position="sticky" top={55} zIndex={2}>
       <Box p={2} bgcolor="white" display="flex" justifyContent="space-between">
-        <BreadCrumbs page="taskView" />
+        <Breadcrumbs>
+          <LinkRouter underline="hover" color="inherit" to="/task-board">
+            Tasks
+          </LinkRouter>
+          <Typography>{taskData?.name}</Typography>
+        </Breadcrumbs>
         <Box display="flex" gap={1}>
           <Button
             onClick={() => setOpenGroupChats(true)}

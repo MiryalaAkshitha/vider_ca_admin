@@ -9,7 +9,7 @@ const ROWS_PER_PAGE_OPTIONS = [5, 10, 20, 25, 50];
 export type ColumnType = {
   key: string;
   title: string;
-  render?: (item: any) => React.ReactElement | string | null;
+  render?: (item: any) => React.ReactElement | string | null | number;
   hide?: boolean;
   default?: boolean;
   width?: string;
@@ -39,7 +39,7 @@ interface TableProps {
 }
 
 function Table(props: TableProps) {
-  const { columns, data, sx, pagination, loading = false, onRowClick, selection } = props;
+  const { columns, data = [], sx, pagination, loading = false, onRowClick, selection } = props;
 
   const { selected, setSelected } = selection || {
     selected: [],
@@ -84,7 +84,7 @@ function Table(props: TableProps) {
 
   return (
     <StyledTableContainer sx={sx}>
-      <div>
+      <div style={{ height: "400px", overflow: "scroll" }}>
         <StyledTable>
           <thead>
             <tr>
@@ -137,7 +137,7 @@ function Table(props: TableProps) {
         </StyledTable>
       </div>
       {pagination && (
-        <Box px={2} mt={2} justifyContent="flex-end" display="flex">
+        <Box px={2} justifyContent="flex-end" display="flex">
           <TablePagination
             component="div"
             count={pagination.totalCount || 10}

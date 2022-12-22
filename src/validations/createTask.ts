@@ -32,12 +32,14 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
   object().shape({
     serviceType: string().required(),
     taskType: string().required(),
-    service: mixed().nullable().when("serviceType", {
-      is: "standard",
-      then: object().nullable().required(),
-      otherwise: object().nullable().notRequired(),
-    }),
-    client: array().min(1, "Select atleast one member"),
+    service: mixed()
+      .nullable()
+      .when("serviceType", {
+        is: "standard",
+        then: object().nullable().required("Please select service"),
+        otherwise: object().nullable().notRequired(),
+      }),
+    client: array().min(1, "Select atleast one client"),
     category: mixed()
       .nullable()
       .when("serviceType", {
@@ -54,46 +56,31 @@ let createTaskSchema = ({ subcategoriesExist }: any) =>
     }),
     name: mixed().when("serviceType", {
       is: (serviceType: any) => serviceType === "custom",
-      then: string()
-        .required("Name is required")
-        .min(3, "Name should be atleast 3 characters"),
+      then: string().required("Name is required").min(3, "Name should be atleast 3 characters"),
       otherwise: string().notRequired(),
     }),
     startDate: mixed().when("taskType", {
       is: (taskType: any) => taskType === "non_recurring",
-      then: date()
-        .nullable()
-        .typeError("Invalid date")
-        .required("Start date is required"),
+      then: date().nullable().typeError("Invalid date").required("Start date is required"),
       otherwise: (schema) => schema.notRequired(),
     }),
     dueDate: mixed().when("taskType", {
       is: (taskType: any) => taskType === "non_recurring",
-      then: date()
-        .nullable()
-        .typeError("Invalid date")
-        .min(
-          moment().format("YYYY-MM-DD"),
-          "Due date should be greater than today"
-        )
-        .required("Due date is required"),
+      then: date().nullable().typeError("Invalid date").required("Due date is required"),
       otherwise: (schema) => schema.notRequired(),
     }),
     expectedCompletionDate: date()
       .nullable()
       .typeError("Invalid Error")
-      .min(
-        moment().format("YYYY-MM-DD"),
-        "Start date should be greater than today"
-      )
+      .min(moment().format("YYYY-MM-DD"), "Start date should be greater than today")
       .notRequired(),
     financialYear: string().required("Financial Year is required"),
-    members: array().notRequired(),
+    members: array().min(1, "Select atleast one member"),
     labels: array().notRequired(),
     taskLeader: object().nullable().notRequired(),
     priority: string().nullable().notRequired(),
     feeType: string().required("Fee Type is required"),
-    feeAmount: string().required("Fee Amount is required").nullable(),
+    feeAmount: string().nullable().notRequired(),
     description: string().nullable().notRequired(),
     frequency: mixed().when("taskType", {
       is: (taskType: any) => taskType === "recurring",

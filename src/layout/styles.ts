@@ -129,7 +129,7 @@ export const StyledBottomAppbar = styled("div")(() => ({
   background: "white",
   boxShadow: "0px -1px 3px rgba(0, 0, 0, 0.1)",
   display: "flex",
-  padding: "10px 0px",
+  padding: "5px 0px",
   paddingLeft: 100,
   gap: 20,
   zIndex: 10,
@@ -137,11 +137,12 @@ export const StyledBottomAppbar = styled("div")(() => ({
 
 export const StyledMainContent = styled("main")(({ theme }) => ({
   flexGrow: 1,
-  paddingBottom: 80,
+  paddingBottom: 50,
   marginLeft: `calc(${theme.spacing(9)} + 1px)`,
 }));
 
 export const StyledSettingsMainContent = styled("main")(({ theme }) => ({
   flexGrow: 1,
   marginLeft: drawerWidth,
+  paddingBottom: 50,
 }));

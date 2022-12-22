@@ -18,6 +18,10 @@ function ContactDetails({ state, setState }) {
             label="Mobile Number"
             name="mobileNumber"
             value={state.mobileNumber}
+            inputProps={{
+              pattern: "[0-9]{10}",
+              title: "Enter valid Mobile Number",
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -30,13 +34,7 @@ function ContactDetails({ state, setState }) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            disabled
-            label="Email"
-            name="email"
-            value={state.email}
-          />
+          <TextField fullWidth disabled label="Email" name="email" value={state.email} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField

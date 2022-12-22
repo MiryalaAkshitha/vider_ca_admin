@@ -45,24 +45,24 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
           <Grid item xs={4}>
             <TextField
               label="Client Status"
-              name="active"
+              name="status"
               onChange={(e) => {
                 setState({
                   ...data,
-                  active: e.target.value === "active" ? true : false,
+                  status: e.target.value,
                 });
               }}
               fullWidth
               select
-              value={data?.active ? "active" : "inactive"}
+              value={data?.status}
               variant="outlined"
               size="small"
               InputLabelProps={{ shrink: true }}
             >
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="inactive">Inactive</MenuItem>
+              <MenuItem value="ACTIVE">Active</MenuItem>
+              <MenuItem value="INACTIVE">Inactive</MenuItem>
             </TextField>
-            {!apiData?.active && (
+            {apiData?.status === "INACTIVE" && (
               <Box>
                 <Typography variant="caption" color="secondary">
                   Inactive from {moment(data?.inactiveAt).format("DD MMM YYYY - hh:mm a")}

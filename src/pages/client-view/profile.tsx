@@ -18,6 +18,7 @@ import { useConfirm } from "context/ConfirmDialog";
 import { snack } from "components/toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleError } from "utils/handleError";
+import { FormControlLabel, Switch } from "@mui/material";
 
 function ProfileDetails() {
   const [originalState, setOriginalState] = useState<any>({});
@@ -39,7 +40,7 @@ function ProfileDetails() {
 
   const { mutate } = useMutation(bulkDelete, {
     onSuccess: () => {
-      snack.success("Clients Deleted");
+      snack.success(`${data?.data?.displayName} Client Profile has been Deleted`);
       queryClient.invalidateQueries("clients");
       navigate("/clients");
     },
@@ -58,16 +59,26 @@ function ProfileDetails() {
   };
 
   return (
-   
     <Box px={4} pt={2} pb={10}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <ProfileImage
           src={data?.data?.imageUrl}
           onChange={(v: string) => setState({ ...state, image: v })}
         />
-        <Button variant="outlined" color="error" onClick={handleDelete}>
-          Delete Client
-        </Button>
+        <Box display="flex" gap={2}>
+          <FormControlLabel
+            label="Client Portal Access"
+            control={
+              <Switch
+                onChange={(e) => setState({ ...state, clientPortalAccess: e.target.checked })}
+                checked={state?.clientPortalAccess || false}
+              />
+            }
+          />
+          <Button variant="outlined" color="error" onClick={handleDelete}>
+            Delete Client
+          </Button>
+        </Box>
       </Box>
       <BasicInformation data={state} setState={setState} />
       <OrganizationInformation data={state} setState={setState} apiData={data?.data} />

@@ -29,9 +29,9 @@ function Report({ data, state, isLoading, isError }) {
 
   const handleExport = () => {
     mutate({
-      ...state,
-      fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
-      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
+      user: state?.user?.id,
+      fromDate: moment(state.fromDate).format("YYYY-MM-DD"),
+      toDate: moment(state.toDate).format("YYYY-MM-DD"),
     });
   };
 
@@ -63,33 +63,19 @@ function Report({ data, state, isLoading, isError }) {
 const columns = [
   {
     title: "Date",
-    key: "completedDate",
-    render: (row: any) => {
-      return formattedDate(row?.completedDate);
-    },
+    key: "date",
   },
   {
-    title: "Client",
-    key: "client.displayName",
+    title: "General Log Hours",
+    key: "generalLogHours",
   },
   {
-    title: "Task Name",
-    key: "task.name",
+    title: "Task Log Hours",
+    key: "taskLogHours",
   },
   {
-    title: "Employee",
-    key: "user.fullName",
-  },
-  {
-    title: "Log Hours",
-    key: "duration",
-    render: (row: any) => {
-      return moment.utc(+row?.duration).format("HH:mm");
-    },
-  },
-  {
-    title: "Log Hour Type",
-    key: "type",
+    title: "Total Log Hours",
+    key: "totalLogHours",
   },
 ];
 

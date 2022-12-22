@@ -26,7 +26,7 @@ function CommonFields({ control, watch, users, labels, setValue }) {
       <Box mt={2}>
         <FormAutoComplete
           control={control}
-          label="Members"
+          label="Members *"
           multiple
           name="members"
           options={users?.data.map((item: any) => ({

@@ -7,11 +7,9 @@ export const StyledDraggableList = styled("div")<{
   height: string;
 }>(({ isdraggingover, height }) => ({
   width: "100%",
-  border:
-    isdraggingover === "true"
-      ? "1px dashed rgba(0,0,0,0.2)"
-      : "1px dashed transparent",
-  padding: "10px",
+  border: isdraggingover === "true" ? "1px dashed rgba(0,0,0,0.2)" : "1px dashed transparent",
+  padding: "10px 0px",
+  paddingRight: "4px",
   height: height || "auto",
   overflowY: "auto",
 }));
@@ -23,12 +21,9 @@ export const StyledDraggableItem = styled("div")<{
   userSelect: "none",
   marginBottom: "15px",
   minHeight: "100px",
-  border: `1px solid ${
-    isdragging === "true" ? theme.palette.primary.main : "rgba(0,0,0,0.1)"
-  }`,
+  border: `1px solid ${isdragging === "true" ? theme.palette.primary.main : "rgba(0,0,0,0.1)"}`,
   borderRadius: "10px",
-  background:
-    isdragging === "true" ? theme.palette.primary.light : "rgba(0,0,0,0.03)",
+  background: isdragging === "true" ? theme.palette.primary.light : "rgba(0,0,0,0.03)",
   cursor: "pointer",
   ...draggablestyle,
 }));

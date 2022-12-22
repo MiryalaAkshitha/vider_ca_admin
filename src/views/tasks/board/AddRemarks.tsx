@@ -20,6 +20,21 @@ import { useMutation } from "react-query";
 import { DialogProps, SubmitType } from "types";
 import { handleError } from "utils/handleError";
 
+export const remarkTypes = [
+  {
+    label: "Pending at client",
+    value: "pending_at_client",
+  },
+  {
+    label: "Pending at department",
+    value: "pending_at_department",
+  },
+  {
+    label: "Others",
+    value: "others",
+  },
+];
+
 interface AddRemarksProps extends DialogProps {
   remarksPromise: Function[];
   onHoldTaskId: number | null;
@@ -72,21 +87,14 @@ function AddRemarks(props: AddRemarksProps) {
               value={state.remarkType}
               onChange={(e) => setState({ ...state, remarkType: e.target.value })}
             >
-              <FormControlLabel
-                value="pending_at_client"
-                control={<Radio required />}
-                label="Pending at client"
-              />
-              <FormControlLabel
-                value="pending_at_assignee"
-                control={<Radio required />}
-                label="Pending at assignee"
-              />
-              <FormControlLabel
-                value="pending_at_department"
-                control={<Radio required />}
-                label="Pending at department"
-              />
+              {remarkTypes.map((type, index) => (
+                <FormControlLabel
+                  key={index}
+                  value={type.value}
+                  control={<Radio required />}
+                  label={type.label}
+                />
+              ))}
             </RadioGroup>
           </FormControl>
           <TextField

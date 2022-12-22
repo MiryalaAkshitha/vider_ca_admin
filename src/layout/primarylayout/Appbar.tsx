@@ -1,21 +1,19 @@
-import {
-  AddCircleOutlineRounded,
-  NotificationsOutlined,
-} from "@mui/icons-material";
+import { AddCircleOutlineRounded, NotificationsOutlined } from "@mui/icons-material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { AppBar, Avatar, IconButton, LinearProgress } from "@mui/material";
+import { AppBar, Avatar, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import { useUserData } from "context/UserProfile";
-import { useState } from "react";
+import { UserProfileContext, useUserData } from "context/UserProfile";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectGlobal, selectTitle } from "redux/reducers/globalSlice";
 import AddEvent from "views/calendar/AddEvent";
 import AddClient from "views/clients/AddClient";
 import AddMember from "views/settings/manage-users/users/AddMember";
+import AddLogHour from "views/settings/profile/LogHours/AddLogHour";
 import CreateTask from "views/tasks/board/CreateTask";
 import AccountMenu from "./AccountMenu";
 import GlobalAdd from "./GlobalAdd";
@@ -32,6 +30,9 @@ function Appbar() {
   const [globalAddAnchorEl, setGlobalAddAnchorEl] = useState<RefType>(null);
   const [notifAnchorEl, setNotifAnchorEl] = useState<RefType>(null);
   const [globalActionType, setGlobalActionType] = useState<string>("");
+  const { data: uData } = useContext(UserProfileContext);
+
+  console.log(uData);
 
   return (
     <>
@@ -79,6 +80,21 @@ function Appbar() {
                 </IconButton>
               </Link>
             </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="caption" color="#182F53">
+                {uData?.fullName}
+              </Typography>
+              <Typography variant="caption" color="#182F53">
+                {uData?.role?.name}
+              </Typography>
+            </Box>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <Avatar src={data?.imageUrl} />
             </IconButton>
@@ -117,6 +133,12 @@ function Appbar() {
       />
       <AddEvent
         open={globalActionType === "Event"}
+        setOpen={() => {
+          setGlobalActionType("");
+        }}
+      />
+      <AddLogHour
+        open={globalActionType === "Log Hour"}
         setOpen={() => {
           setGlobalActionType("");
         }}

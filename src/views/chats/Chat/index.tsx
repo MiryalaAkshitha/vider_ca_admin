@@ -17,7 +17,7 @@ interface Props {
 }
 
 function Chat({ onClose }: Props) {
-  const { name, roomId, members, type } = useSelector(selectChats);
+  const { name, roomId, members, type } = useSelector(selectChats)
   const dispatch = useDispatch();
   const [maximize, setMaximize] = useState(false);
   const [typing, setTyping] = useState(false);

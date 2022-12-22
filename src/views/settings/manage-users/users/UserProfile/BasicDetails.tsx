@@ -1,4 +1,6 @@
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "data/permissons";
 import moment from "moment";
 import { useState } from "react";
 import ChangeRole from "./ChangeRole";
@@ -26,11 +28,13 @@ const BasicDetails = ({ data }) => {
                 </Typography>
               </div>
             </Box>
-            <Box>
-              <Button variant="outlined" color="secondary" onClick={() => setOpen(true)}>
-                Change Role
-              </Button>
-            </Box>
+            <ValidateAccess name={Permissions.MANAGE_USERS}>
+              <Box>
+                <Button variant="outlined" color="secondary" onClick={() => setOpen(true)}>
+                  Change Role
+                </Button>
+              </Box>
+            </ValidateAccess>
           </Box>
         </Grid>
         <Grid item xs={3}>
@@ -49,12 +53,19 @@ const BasicDetails = ({ data }) => {
           <Detail
             title="Date of joining"
             value={
-              data?.profile?.dateOfJoining ? moment(data?.profile?.dateOfJoining).format("YYYY-MM-DD") : null
+              data?.profile?.dateOfJoining
+                ? moment(data?.profile?.dateOfJoining).format("DD-MM-YYYY")
+                : null
             }
           />
         </Grid>
         <Grid item xs={3}>
-          <Detail title="Date of birth" value={data?.profile?.dob} />
+          <Detail
+            title="Date of birth"
+            value={
+              data?.profile?.dateOfJoining ? moment(data?.profile?.dob).format("DD-MM-YYYY") : null
+            }
+          />
         </Grid>
         <Grid item xs={3}>
           <Detail title="Father's name" value={data?.profile?.fatherName} />

@@ -1,5 +1,13 @@
 import { http } from "api/http";
 
+const LogHoursReport = (data: any) => {
+  return http.post("/reports/log-hours", data);
+};
+
+const exportLogHoursReport = (data: any) => {
+  return http.post("/reports/log-hours/export", data);
+};
+
 const getEmployeeLogHoursReport = (data: any) => {
   return http.post("/reports/employee-log-hours", data);
 };
@@ -31,4 +39,6 @@ export {
   exportClientsReport,
   getTasksReport,
   exportTasksReport,
+  LogHoursReport,
+  exportLogHoursReport,
 };

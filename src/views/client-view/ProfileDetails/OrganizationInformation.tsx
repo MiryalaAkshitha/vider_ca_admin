@@ -3,11 +3,7 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/system";
 import { updateClient } from "api/services/clients/clients";
-import {
-  getGstDetails,
-  getPanDetails,
-  getSandboxToken,
-} from "api/services/users";
+import { getGstDetails, getPanDetails, getSandboxToken } from "api/services/users";
 import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -50,6 +46,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
 
     if (data?.panNumber) {
       let gstSlice = data?.gstNumber?.slice(2, 12);
+
       if (gstSlice !== data?.panNumber) {
         return snack.error("GST Number should correspond to Pan Number");
       }
@@ -70,7 +67,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
         mutate({
           id: data?.id,
           data: {
-            ...data,
             legalName: result?.data?.lgnm,
             tradeName: result?.data?.tradeNam,
             placeOfSupply: result?.data?.pradr?.addr?.stcd,
@@ -80,6 +76,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
             city: result?.data?.pradr?.addr?.dst,
             state: result?.data?.pradr?.addr?.stcd,
             pincode: result?.data?.pradr?.addr?.pncd,
+            gstNumber: data?.gstNumber,
             gstVerified: true,
           },
         });
@@ -99,12 +96,12 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       return;
     }
 
-    if (data?.gstNumber) {
-      let gstSlice = data?.gstNumber?.slice(2, 12);
-      if (gstSlice !== data?.panNumber) {
-        return snack.error("PAN Number should correspond to GST Number");
-      }
-    }
+    // if (data?.gstNumber) {
+    //   let gstSlice = data?.gstNumber?.slice(2, 12);
+    //   if (gstSlice !== data?.panNumber) {
+    //     return snack.error("PAN Number should correspond to GST Number");
+    //   }
+    // }
 
     try {
       setPanLoading(true);
@@ -116,14 +113,16 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       });
 
       const result: any = response?.data;
+      console.log(result, "pan verified details");
+
       if (result.data.status === "VALID") {
         mutate({
           id: data?.id,
           data: {
-            ...data,
             firstName: result?.data?.first_name,
             lastName: result?.data?.last_name,
             fullName: result?.data?.full_name,
+            panNumber: data?.panNumber,
             panVerified: true,
           },
         });
@@ -201,6 +200,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
                 endAdornment: <GstAdornment />,
               }}
               InputLabelProps={{ shrink: true }}
+              onKeyDown={(e: any) => {
+                if (e.keyCode === 13) {
+                  verifyGst();
+                }
+              }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -221,6 +225,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
                 endAdornment: <PanAdornment />,
               }}
               InputLabelProps={{ shrink: true }}
+              onKeyDown={(e: any) => {
+                if (e.keyCode === 13) {
+                  verifyPan();
+                }
+              }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -243,6 +252,19 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
               name="lastName"
               onChange={handleChange}
               value={data?.lastName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              disabled
+              label="Middle Name"
+              name="middleName"
+              onChange={handleChange}
+              value={data?.middleName || ""}
               fullWidth
               variant="outlined"
               size="small"

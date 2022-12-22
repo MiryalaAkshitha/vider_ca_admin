@@ -66,7 +66,7 @@ function Clients() {
   const totalCount = data?.data?.count;
 
   return (
-    <Box p={3}>
+    <Box px={3} pt={3}>
       <Box display="flex" gap={2}>
         <Box display="flex" flex={1} gap={2} alignItems="center">
           <SearchContainer
@@ -123,15 +123,17 @@ function Clients() {
           </ValidateAccess>
         </Box>
       </Box>
-      <Table
-        sx={{ mt: 3 }}
-        loading={isLoading}
-        onRowClick={handleRowClick}
-        data={data?.data?.result || []}
-        columns={columns}
-        selection={{ selected, setSelected }}
-        pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
-      />
+      <Box sx={{ mt: 2 }}>
+        <Table
+          sx={{ mt: 3 }}
+          loading={isLoading}
+          onRowClick={handleRowClick}
+          data={data?.data?.result || []}
+          columns={columns}
+          selection={{ selected, setSelected }}
+          pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
+        />
+      </Box>
       <ValidateAccess name={Permissions.CREATE_CLIENTS}>
         <FloatingButton
           onClick={() => {

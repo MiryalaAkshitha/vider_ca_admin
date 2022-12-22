@@ -2,9 +2,7 @@ import loadable from "@loadable/component";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { Permissions } from "data/permissons";
 import PageWithPermission from "components/PageWithPermission";
-// import { LogoDev } from "@mui/icons-material";
-import ParticularGroups from "pages/broadcast/group/particularGroup";
-const BroadCast = loadable(() => import("pages/broadcast"));
+
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
 const BillingClients = loadable(() => import("pages/billing/clients"));
@@ -17,12 +15,12 @@ const Receipts = loadable(() => import("pages/billing/receipts"));
 const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
+const CompletedTasks = loadable(() => import("pages/settings/completed-tasks"));
 const DeletedUsers = loadable(() => import("pages/settings/deleted-users"));
 const Login = loadable(() => import("pages/login"));
 const ResetPassword = loadable(() => import("pages/reset-password"));
 const Join = loadable(() => import("pages/join"));
 const SignUp = loadable(() => import("pages/signup"));
-const Dashboard = loadable(() => import("pages/dashboard"));
 const Layout = loadable(() => import("layout/primarylayout"));
 const SettingsLayout = loadable(() => import("layout/settingslayout"));
 const TaskBoard = loadable(() => import("pages/tasks"));
@@ -50,7 +48,6 @@ const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
 const Credentials = loadable(() => import("pages/client-view/credentials"));
 const Archives = loadable(() => import("pages/client-view/archives"));
 const Tasks = loadable(() => import("pages/client-view/clientTasks"));
-
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 
 const OrganizationProfile = loadable(
@@ -60,6 +57,12 @@ const OrganizationProfile = loadable(
 const RecurringProfile = loadable(() => {
   return import("pages/client-view/recurring-profile");
 });
+
+// Dashboard
+const Dashboard = loadable(() => import("pages/dashboard"));
+const TasksByService = loadable(() => import("pages/dashboard/tasks-by-service"));
+const OverDueTasks = loadable(() => import("pages/dashboard/over-due-tasks"));
+const EmployeeTasksByStatus = loadable(() => import("pages/dashboard/employee-tasks-by-status"));
 
 //ROLES AND PERMISSIONS
 const Roles = loadable(() => {
@@ -114,33 +117,66 @@ const AddApproval = loadable(
 
 // REPORTS
 const Reports = loadable(() => import("pages/reports"));
+const LogHoursReport = loadable(() => import("pages/reports/log-hours-report"));
 const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
 const ClientsReport = loadable(() => import("pages/reports/clients-report"));
 const TasksReport = loadable(() => import("pages/reports/tasks-report"));
 
 //BRODCAST
-const Broadcast = loadable(() => import("pages/broadcast"));
-const Groups = loadable(() => import("pages/broadcast/group/groups"));
-const TeamDiscussion = loadable(() => import("pages/broadcast/teamDiscussion/teamDiscussion"));
-const Events = loadable(() => import("pages/broadcast/events"));
-const Whatsapp = loadable(() => import("pages/broadcast/whatsapp"));
-const BrodcastMessage = loadable(() => import("pages/broadcast/brodcastMessage"));
+const Communication = loadable(() => import("pages/communication"));
+const TeamDiscussion = loadable(() => import("pages/communication/team-discussion"));
+const UserGroups = loadable(() => import("pages/communication/userTeams"));
+const ClientGroups = loadable(() => import("pages/communication/clientGroups"));
+const UserView = loadable(() => import("pages/communication/userTeams/user-view"));
+const ClientGroupView = loadable(
+  () => import("pages/communication/clientGroups/client-group-view")
+);
+const ClientGroupTeamView = loadable(
+  () => import("pages/communication/clientGroups/client-group-teamView")
+);
+const EmailTemplates = loadable(() => import("pages/communication/templates/email"));
+const EmailTemplatesView = loadable(
+  () => import("pages/communication/templates/email/add-email-template")
+);
+
+const PushNotifications = loadable(
+  () => import("pages/communication/templates/push-notifications")
+);
+
+const Emails = loadable(() => import("pages/emails"));
+const Emails2 = loadable(() => import("pages/emails2"));
+const Newsletter = loadable(() => import("pages/newsletteremail"));
 
 function RoutesContainer() {
   return (
     <Router>
       <Routes>
-        <Route path="particulargroup" element={<ParticularGroups />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard">
+            <Route index element={<Dashboard />} />
+            <Route path="tasks-by-service" element={<TasksByService />} />
+            <Route path="over-due-tasks" element={<OverDueTasks />} />
+            <Route path="employee-tasks-by-status" element={<EmployeeTasksByStatus />} />
+          </Route>
+          <Route path="emails" element={<Emails />} />
+          <Route path="emails2" element={<Emails2 />} />
+          <Route path="newsletter" element={<Newsletter />} />
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
           </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports">
-            <Route index element={<Reports />} />
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.VIEW_REPORTS}>
+                  <Reports />
+                </PageWithPermission>
+              }
+            />
+            <Route path="log-hours-report" element={<LogHoursReport />} />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
             <Route path="clients-report" element={<ClientsReport />} />
             <Route path="tasks-report" element={<TasksReport />} />
@@ -151,14 +187,18 @@ function RoutesContainer() {
             <Route path="receipts" element={<Receipts />} />
             <Route path="clients" element={<BillingClients />} />
           </Route>
-          <Route path="brodcast" element={<BroadCast />}>
-            <Route path="groups" element={<Groups />} />
-            <Route path="teamdiscussions" element={<TeamDiscussion />} />
-            <Route path="whatsapp" element={<Whatsapp />} />
-            <Route path="events" element={<Events />} />
-            <Route path="brodcastmessage" element={<BrodcastMessage />} />
+          <Route path="communication" element={<Communication />}>
+            <Route path="user-teams" element={<UserGroups />} />
+            <Route path="user-teams/:userGroupId" element={<UserView />} />
+            <Route path="team-discussion" element={<TeamDiscussion />} />
+            <Route path="client-groups" element={<ClientGroups />} />
+            <Route path="client-groups/:userGroupId" element={<ClientGroupView />} />
+            <Route path="client-groups/:userGroupId/:id" element={<ClientGroupTeamView />} />
+            <Route path="email" element={<EmailTemplates />} />
+            <Route path="email/:emailTemplateView" element={<EmailTemplatesView />} />
+
+            <Route path="push-notifications" element={<PushNotifications />} />
           </Route>
-          {/* <Route path="particulargroup" element={<ParticularGroups />} /> */}
           <Route path="billing/estimates/add" element={<AddEstimate />} />
           <Route path="billing/invoices/add" element={<AddInvoice />} />
           <Route path="billing/receipts/add" element={<AddReceipt />} />
@@ -189,7 +229,6 @@ function RoutesContainer() {
               }
             />
           </Route>
-          <Route path="broadcast" element={<Broadcast />} />
           <Route path="forms" element={<Forms />}>
             <Route index element={<FormTemplates />} />
             <Route path="form-validations" element={<FormValidations />} />
@@ -283,11 +322,26 @@ function RoutesContainer() {
           </Route>
           <Route path="profile" element={<MyProfile />} />
           <Route path="users">
-            <Route index element={<Users />} />
-            <Route path=":userId" element={<ViewUser />} />
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.VIEW_USERS}>
+                  <Users />
+                </PageWithPermission>
+              }
+            />
+            <Route
+              path=":userId"
+              element={
+                <PageWithPermission name={Permissions.VIEW_USERS}>
+                  <ViewUser />
+                </PageWithPermission>
+              }
+            />
           </Route>
           <Route path="invited-users" element={<InviteUsers />} />
           <Route path="storage-management" element={<StorageManagement />} />
+          <Route path="completed-tasks" element={<CompletedTasks />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
           <Route path="deleted-users" element={<DeletedUsers />} />

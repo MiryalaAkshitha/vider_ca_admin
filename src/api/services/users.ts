@@ -76,8 +76,16 @@ const getAllUsers = () => {
   return http.get("/users/all");
 };
 
-const getInvitedusers = (data: any) => {
-  return http.get("/users/invited", data);
+const getInvitedusers = ({ queryKey }) => {
+  return http.get("/users/invited", { params: { ...queryKey[1] } });
+};
+
+const cancelInvitation = (id: number) => {
+  return http.post(`/users/invited/${id}/cancel`);
+};
+
+const resendInvitation = (id: number) => {
+  return http.post(`/users/invited/${id}/resend`);
 };
 
 const getTeams = () => {
@@ -140,6 +148,10 @@ const restoreUser = (id: number) => {
   return http.post(`/users/${id}/restore`);
 };
 
+const createUser = (data: any) => {
+  return http.post(`/users/create`, data);
+};
+
 export {
   getSandboxToken,
   getGstDetails,
@@ -170,4 +182,7 @@ export {
   getAllUsers,
   getDeletedUsers,
   restoreUser,
+  cancelInvitation,
+  resendInvitation,
+  createUser,
 };

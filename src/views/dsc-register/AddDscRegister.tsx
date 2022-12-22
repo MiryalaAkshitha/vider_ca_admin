@@ -63,7 +63,9 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   const handleClientUserChange = (e: any) => {
-    let clientUser = state?.client?.contactPersons?.find((item: any) => item.id === +e.target.value);
+    let clientUser = state?.client?.contactPersons?.find(
+      (item: any) => item.id === +e.target.value
+    );
     setState({
       ...state,
       contactPerson: clientUser?.id,
@@ -105,176 +107,180 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
       {isLoading ? (
         <Loader />
       ) : (
-        <form onSubmit={handleSubmit} ref={formRef}>
-          <Autocomplete
-            size="small"
-            onChange={(_, value) => {
-              setState({
-                ...state,
-                holderName: "",
-                email: "",
-                mobileNumber: "",
-                contactPerson: null,
-                client: value,
-              });
-            }}
-            value={state.client}
-            options={data?.data || []}
-            getOptionLabel={(option: any) => option.displayName}
-            fullWidth
-            renderInput={(params) => <TextField {...params} label="Client" />}
-          />
-          {state.client && (
-            <FormControlLabel
-              sx={{ mt: 1 }}
-              control={
-                <Checkbox
-                  checked={getDetails}
-                  onChange={(e) => {
-                    setGetDetails(e.target.checked);
-                    setState({
-                      ...state,
-                      holderName: "",
-                      email: "",
-                      mobileNumber: "",
-                    });
-                  }}
-                />
-              }
-              label="Get details from client user"
-            />
-          )}
-          {getDetails && state.client && (
-            <TextField
-              sx={{ mt: 2 }}
-              fullWidth
-              select
-              value={state.contactPerson || ""}
-              onChange={handleClientUserChange}
-              variant="outlined"
-              label="Client User"
+        <Box>
+          <form onSubmit={handleSubmit} ref={formRef}>
+            <Autocomplete
               size="small"
-            >
-              {state?.client?.contactPersons?.map((item: any, index: number) => (
-                <MenuItem key={index} value={item.id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-          <TextField
-            variant="outlined"
-            fullWidth
-            sx={{ mt: 2 }}
-            name="holderName"
-            disabled={getDetails}
-            required
-            value={state.holderName}
-            onChange={handleChange}
-            size="small"
-            label="DSC Holder Name"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            disabled={getDetails}
-            required
-            onChange={handleChange}
-            value={state.mobileNumber}
-            name="mobileNumber"
-            size="small"
-            inputProps={{
-              pattern: "[0-9]{10}",
-              title: "Enter 10 digit mobile number",
-            }}
-            label="Mobile Number"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            disabled={getDetails}
-            type="email"
-            onChange={handleChange}
-            value={state.email}
-            name="email"
-            size="small"
-            label="Email"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            required
-            onChange={handleChange}
-            value={state.holderDesignation}
-            name="holderDesignation"
-            size="small"
-            label="DSC Holder Designation"
-          />
-          <DesktopDatePicker
-            label="Expiry Date"
-            inputFormat="dd-MM-yyyy"
-            value={state.expiryDate}
-            onChange={(value) => {
-              setState({
-                ...state,
-                expiryDate: value,
-              });
-            }}
-            renderInput={(params) => <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />}
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="password"
-            required
-            onChange={handleChange}
-            value={state.password}
-            size="small"
-            label="Password"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="tokenNumber"
-            required
-            onChange={handleChange}
-            value={state.tokenNumber}
-            size="small"
-            label="Token Number"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="panNumber"
-            required
-            onChange={handleChange}
-            value={state.panNumber}
-            size="small"
-            label="Pan Number"
-            inputProps={{
-              pattern: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
-              title: "Pan Number is invalid",
-            }}
-          />
-
-          <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-            <LoadingButton
-              loading={createLoading}
+              onChange={(_, value) => {
+                setState({
+                  ...state,
+                  holderName: "",
+                  email: "",
+                  mobileNumber: "",
+                  contactPerson: null,
+                  client: value,
+                });
+              }}
+              value={state.client}
+              options={data?.data || []}
+              getOptionLabel={(option: any) => option.displayName}
               fullWidth
-              type="submit"
-              loadingColor="white"
-              title="Submit"
-              color="secondary"
+              renderInput={(params) => <TextField {...params} size="small" label="Client" />}
             />
-          </Box>
-        </form>
+            {state.client && (
+              <FormControlLabel
+                sx={{ mt: 1 }}
+                control={
+                  <Checkbox
+                    checked={getDetails}
+                    onChange={(e) => {
+                      setGetDetails(e.target.checked);
+                      setState({
+                        ...state,
+                        holderName: "",
+                        email: "",
+                        mobileNumber: "",
+                      });
+                    }}
+                  />
+                }
+                label="Get details from client user"
+              />
+            )}
+            {getDetails && state.client && (
+              <TextField
+                sx={{ mt: 2 }}
+                fullWidth
+                select
+                value={state.contactPerson || ""}
+                onChange={handleClientUserChange}
+                variant="outlined"
+                label="Client User"
+                size="small"
+              >
+                {state?.client?.contactPersons?.map((item: any, index: number) => (
+                  <MenuItem key={index} value={item.id}>
+                    {item.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+            <TextField
+              variant="outlined"
+              fullWidth
+              sx={{ mt: 2 }}
+              name="holderName"
+              disabled={getDetails}
+              required
+              value={state.holderName}
+              onChange={handleChange}
+              size="small"
+              label="DSC Holder Name"
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              disabled={getDetails}
+              required
+              onChange={handleChange}
+              value={state.mobileNumber}
+              name="mobileNumber"
+              size="small"
+              inputProps={{
+                pattern: "[0-9]{10}",
+                title: "Enter 10 digit mobile number",
+              }}
+              label="Mobile Number"
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              required
+              disabled={getDetails}
+              type="email"
+              onChange={handleChange}
+              value={state.email}
+              name="email"
+              size="small"
+              label="Email"
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleChange}
+              value={state.holderDesignation}
+              name="holderDesignation"
+              size="small"
+              label="DSC Holder Designation"
+            />
+            <DesktopDatePicker
+              label="Expiry Date"
+              inputFormat="dd-MM-yyyy"
+              value={state.expiryDate}
+              onChange={(value) => {
+                setState({
+                  ...state,
+                  expiryDate: value,
+                });
+              }}
+              renderInput={(params) => (
+                <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
+              )}
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              name="password"
+              required
+              onChange={handleChange}
+              value={state.password}
+              size="small"
+              label="Password"
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              name="tokenNumber"
+              required
+              onChange={handleChange}
+              value={state.tokenNumber}
+              size="small"
+              label="Token Number"
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              fullWidth
+              name="panNumber"
+              required
+              onChange={handleChange}
+              value={state.panNumber}
+              size="small"
+              label="Pan Number"
+              inputProps={{
+                pattern: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+                title: "Pan Number is invalid",
+              }}
+            />
+
+            <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+              <LoadingButton
+                loading={createLoading}
+                fullWidth
+                type="submit"
+                loadingColor="white"
+                title="Submit"
+                color="secondary"
+              />
+            </Box>
+          </form>
+        </Box>
       )}
     </DrawerWrapper>
   );

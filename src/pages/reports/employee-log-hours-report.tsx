@@ -11,43 +11,33 @@ import Filters from "views/reports/EmployeeLogHoursReport/Filters";
 import Report from "views/reports/EmployeeLogHoursReport/Report";
 
 export interface IState {
+  user: any;
   fromDate: null | string;
   toDate: null | string;
-  client: string;
-  users: Array<any>;
-  type: "ALL" | "GENERAL" | "TASK";
 }
 
 function EmployeeLogHoursReport() {
   useTitle("Employee Log Hours Report");
   const [data, setData] = useState(null);
-  const [state, setState] = useState<IState>({
-    fromDate: null,
-    toDate: null,
-    client: "",
-    users: [],
-    type: "ALL",
+  const [state, setState] = useState<IState>({ user: null, fromDate: null, toDate: null });
+
+  const { mutate, isLoading, isError } = useMutation(getEmployeeLogHoursReport, {
+    onSuccess: (res: any) => {
+      setData(res.data);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
   });
 
-  const { mutate, isLoading, isError } = useMutation(
-    getEmployeeLogHoursReport,
-    {
-      onSuccess: (res: any) => {
-        setData(res.data);
-      },
-      onError: (err: any) => {
-        snack.error(handleError(err));
-      },
-    }
-  );
-
   const handleSubmit = () => {
+    if (!state.user) return snack.error("Please select employee");
+    if (!state.fromDate) return snack.error("Please select from date");
+    if (!state.toDate) return snack.error("Please select to date");
     mutate({
-      ...state,
-      fromDate: state.fromDate
-        ? moment(state.fromDate).format("YYYY-MM-DD")
-        : null,
-      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
+      user: state?.user?.id,
+      fromDate: moment(state.fromDate).format("YYYY-MM-DD"),
+      toDate: moment(state.toDate).format("YYYY-MM-DD"),
     });
   };
 
@@ -60,12 +50,7 @@ function EmployeeLogHoursReport() {
         <Typography color="text.primary">Employee Log Hours Report</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} />
-      <Report
-        isLoading={isLoading}
-        isError={isError}
-        state={state}
-        data={data}
-      />
+      <Report isLoading={isLoading} isError={isError} state={state} data={data} />
     </Box>
   );
 }

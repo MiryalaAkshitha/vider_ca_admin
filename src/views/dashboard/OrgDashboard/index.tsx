@@ -1,21 +1,28 @@
-import { Grid } from "@mui/material";
-import { Box } from "@mui/system";
-import ClientCategories from "./ClientCategories";
-import TaskCategories from "./TaskCategories";
-import Tasks from "./Tasks";
+import { Box, Button } from "@mui/material";
+import ValidateAccess from "components/ValidateAccess";
+import { Permissions } from "data/permissons";
+import useQueryParams from "hooks/useQueryParams";
+import ClientAnalytics from "./client-analytics";
+import LoghourAnalytics from "./loghour-analytics";
+import TaskAnalytics from "./task-analytics";
 
 function Dashboard() {
+  const { queryParams, setQueryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
+  const type = dashboardType === "user" ? "admin" : "user";
+
   return (
     <Box p={2}>
-      <Tasks />
-      <Grid container mt={2} spacing={2}>
-        <Grid item xs={6}>
-          <ClientCategories />
-        </Grid>
-        <Grid item xs={6}>
-          <TaskCategories />
-        </Grid>
-      </Grid>
+      <ValidateAccess name={Permissions.VIEW_ADMIN_DASHBOARD}>
+        <Box mb={2} textAlign="right">
+          <Button variant="outlined" color="secondary" onClick={() => setQueryParams({ type })}>
+            View {dashboardType === "admin" ? "User" : "Admin"} Dashboard
+          </Button>
+        </Box>
+      </ValidateAccess>
+      <TaskAnalytics />
+      <ClientAnalytics />
+      <LoghourAnalytics />
     </Box>
   );
 }

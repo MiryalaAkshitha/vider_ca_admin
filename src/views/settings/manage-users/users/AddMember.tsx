@@ -48,23 +48,25 @@ function AddMember({ open, setOpen, successCb }: Props) {
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box mb={2}>
-            <FormInput control={control} name="fullName" label="Full Name" />
+            <FormInput control={control} name="fullName" label="Full Name *" />
           </Box>
           <Box mb={2}>
-            <FormInput control={control} name="email" label="Email" />
+            <FormInput control={control} name="email" label="Email *" />
           </Box>
           <Box mb={2}>
-            <FormInput control={control} name="mobileNumber" label="Mobile Number" />
+            <FormInput control={control} name="mobileNumber" label="Mobile Number *" />
           </Box>
           <Box>
             <FormSelect
               control={control}
               name="role"
-              label="Role"
-              options={data?.data?.map((item: any) => ({
-                label: item.name,
-                value: item.id,
-              }))}
+              label="Role *"
+              options={data?.data
+                ?.filter((item: any) => item.defaultRole === false)
+                .map((item: any) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>

@@ -11,10 +11,7 @@ export const ClientDataContext = createContext<any>(null);
 function ClientDataProvider({ children }) {
   const params = useParams();
 
-  const { data, isLoading, error }: ResType = useQuery(
-    ["client", params.clientId],
-    getClient
-  );
+  const { data, isLoading, error }: ResType = useQuery(["client", params.clientId], getClient);
 
   if (isLoading) return <Loader minHeight="60vh" />;
 

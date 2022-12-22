@@ -12,14 +12,6 @@ const updateGetStarted = (data: any) => {
   return http.patch(`/get-started`, data);
 };
 
-const getOrganizationDashboard = ({ queryKey }) => {
-  return http.get(`/stats/organization/dashboard`, {
-    params: {
-      type: queryKey[1],
-    },
-  });
-};
-
 const getOrganizationLicenses = ({ queryKey }) => {
   return http.get(`/organization-lincenses`, {
     params: {
@@ -64,6 +56,54 @@ const deleteOrganizationLicense = ({ id }: any) => {
   return http.delete(`/organization-lincenses/${id}`);
 };
 
+const getTaskAnalytics = ({ queryKey }) => {
+  return http.get(`/stats/task-analytics`, { params: { ...queryKey[1] } });
+};
+
+const getTasksDueThisWeek = ({ queryKey }) => {
+  return http.get(`/stats/tasks-due-this-week`, { params: { ...queryKey[1] } });
+};
+
+const getTasksByCategory = ({ queryKey }) => {
+  return http.get(`/stats/tasks-by-category`, { params: { ...queryKey[1] } });
+};
+
+const getTasksByClientCategory = ({ queryKey }) => {
+  return http.get(`/stats/tasks-by-client-category`, { params: { ...queryKey[1] } });
+};
+
+const getTasksByService = ({ queryKey }) => {
+  return http.get(`/stats/tasks-by-service`, { params: { ...queryKey[1] } });
+};
+
+const getOverdueTasks = ({ queryKey }) => {
+  return http.get(`/stats/over-due-tasks`, { params: { ...queryKey[1] } });
+};
+
+const getClientAnalytics = () => {
+  return http.get(`/stats/client-analytics`);
+};
+
+const getDueDscRegisters = () => {
+  return http.get(`/stats/due-dsc-registers`);
+};
+
+const getClientsByCategory = () => {
+  return http.get(`/stats/clients-by-category`);
+};
+
+const getTotalLogHours = ({ queryKey }) => {
+  return http.get(`/stats/total-log-hours`, { params: { ...queryKey[1] } });
+};
+
+const getWeeklyLogHours = ({ queryKey }) => {
+  return http.get(`/stats/weekly-log-hours`, { params: { ...queryKey[1] } });
+};
+
+const getEmployeeTasksByStatus = ({ queryKey }) => {
+  return http.get(`/stats/employee-tasks-by-status`, { params: { ...queryKey[1] } });
+};
+
 export {
   getOrganization,
   updateOrganization,
@@ -75,7 +115,18 @@ export {
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
-  getOrganizationDashboard,
+  getTaskAnalytics,
   getGetStarted,
   updateGetStarted,
+  getTasksDueThisWeek,
+  getTasksByCategory,
+  getTasksByClientCategory,
+  getTasksByService,
+  getOverdueTasks,
+  getClientAnalytics,
+  getDueDscRegisters,
+  getClientsByCategory,
+  getTotalLogHours,
+  getWeeklyLogHours,
+  getEmployeeTasksByStatus,
 };

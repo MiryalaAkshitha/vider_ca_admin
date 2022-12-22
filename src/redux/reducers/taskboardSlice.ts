@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import moment from "moment";
 import { RootState } from "redux/store";
 
 interface FilterPayload {
@@ -46,9 +47,10 @@ type Filter = {
     };
     completedOn: {
       fromDate: string;
-      toDate: number;
+      toDate: string;
     };
   };
+  onHoldRemarkType: Array<{ label: string; value: string }>;
 };
 
 const filterState: Filter = {
@@ -70,22 +72,23 @@ const filterState: Filter = {
   financialYear: [],
   customDates: {
     startDate: {
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
     dueOn: {
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
     createdOn: {
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
     completedOn: {
-      fromDate: "",
-      toDate: 100,
+      fromDate: moment().subtract(1, "day").format("YYYY-MM-DD"),
+      toDate: moment().format("YYYY-MM-DD"),
     },
   },
+  onHoldRemarkType: [],
 };
 
 interface InitialState {
@@ -106,7 +109,7 @@ export const taskBoardSlice = createSlice({
   name: "taskboard",
   initialState,
   reducers: {
-    handleFilters(state, action: PayloadAction<FilterPayload>) {
+    handleFilters(state: any, action: PayloadAction<FilterPayload>) {
       let filterItem = state.selectedFilters[state.selected];
       if (action.payload.checked) {
         state.selectedFilters[state.selected].push(action.payload.value);
@@ -119,6 +122,16 @@ export const taskBoardSlice = createSlice({
     handleCustomDates(state, action: PayloadAction<CustomDatePayload>) {
       let selectedCustomDate = state.selectedFilters.customDates[state.selected];
       selectedCustomDate[action.payload.dateType] = action.payload.value;
+    },
+    handleOnholdRemarkType(state, action: PayloadAction<any>) {
+      let filterItem = state.selectedFilters.onHoldRemarkType;
+      if (action.payload.checked) {
+        state.selectedFilters.onHoldRemarkType.push(action.payload.value);
+      } else {
+        state.selectedFilters.onHoldRemarkType = filterItem.filter(
+          (item: any) => item.value !== action.payload.value.value
+        );
+      }
     },
     handleCategories(state, action: PayloadAction<{ value: any[]; key: string }>) {
       state.selectedFilters[action.payload.key] = action.payload.value;
@@ -138,7 +151,7 @@ export const taskBoardSlice = createSlice({
         (item: any, index: number) => index !== filterItemIndex
       );
     },
-    handleApply(state) {
+    handleApply(state: InitialState) {
       state.appliedFilters = state.selectedFilters;
     },
     resetFilters(state) {
@@ -159,6 +172,7 @@ export const {
   handleCustomDates,
   handleSearch,
   handleRemove,
+  handleOnholdRemarkType,
 } = taskBoardSlice.actions;
 
 export default taskBoardSlice.reducer;

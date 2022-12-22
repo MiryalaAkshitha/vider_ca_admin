@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 export const StyledTableContainer = styled("div")({
   position: "relative",
   boxShadow: "0px 0px 15px rgb(0 0 0 / 10%)",
-  minHeight: 350,
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -18,6 +17,12 @@ export const StyledTable = styled("table")(({ theme }) => ({
   background: "#FFFFFF",
   fontFamily: "muli_regular",
   paddingBottom: "30px",
+  "& thead": {
+    position: "sticky",
+    top: 0,
+    background: "white",
+    zIndex: 2,
+  },
   "& tr": {
     cursor: "pointer",
   },

@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { empty } from "assets";
+import { emptyGroup } from "assets";
 
 interface EmptyPageProps {
   btnTitle?: string;
@@ -34,7 +34,7 @@ function EmptyPage(props: EmptyPageProps) {
       }}
     >
       <Box textAlign="center">
-        {!noImage && <img src={empty} style={{ maxWidth: 300 }} alt="" />}
+        {!noImage && <img src={emptyGroup} style={{ maxWidth: 300 }} alt="" />}
         <Typography mt={2} variant="subtitle2">
           {title}
         </Typography>

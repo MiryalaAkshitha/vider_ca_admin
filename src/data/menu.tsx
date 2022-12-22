@@ -38,11 +38,6 @@ export const menu: Array<IMenuItem> = [
     path: "/leads",
     icon: icons.clients,
   },
-  // {
-  //   title: "Billing",
-  //   path: "/billing/clients",
-  //   icon: icons.invoicing,
-  // },
   {
     title: "Storage",
     path: "/storage/my-storage",
@@ -63,9 +58,29 @@ export const menu: Array<IMenuItem> = [
     path: "/reports",
     icon: icons.reports,
   },
+  {
+    title: "Emails",
+    path: "/emails",
+    icon: icons.reports,
+  },
+  {
+    title: "Emails2",
+    path: "/emails2",
+    icon: icons.reports,
+  },
+  {
+    title: "News Letter",
+    path: "/newsletter",
+    icon: icons.reports,
+  },
   // {
-  //   title: "Brodcast",
-  //   path: "/brodcast",
-  //   icon: icons.reports,
+  //   title: "Broadcast",
+  //   path: "/communication/client-groups",
+  //   icon: icons.broadcast,
+  // },
+  // {
+  //   title: "Billing",
+  //   path: "/billing/estimates",
+  //   icon: icons.broadcast,
   // },
 ];

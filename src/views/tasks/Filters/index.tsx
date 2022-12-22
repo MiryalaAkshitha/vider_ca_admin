@@ -38,7 +38,7 @@ function Filters() {
           onChange={(v) => dispatch(handleSearch(v))}
         />
       </StyledTasksFilterContainer>
-      <Box display="flex" gap={3} justifyContent="space-between" mt={2}>
+      <Box display="flex" gap={3} justifyContent="space-between" mt={1}>
         <AppliedFilters />
         <Box display="flex" gap={3} alignItems="center">
           <div>

@@ -58,9 +58,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   const handleClientUserChange = (e: any) => {
-    let clientUser = data?.data?.contactPersons?.find(
-      (item: any) => item.id === +e.target.value
-    );
+    let clientUser = data?.data?.contactPersons?.find((item: any) => item.id === +e.target.value);
     setState({
       ...state,
       holderName: clientUser?.name || "",
@@ -90,7 +88,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add DSC Register">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add Dsc Registar">
       <form onSubmit={handleSubmit} ref={formRef}>
         <FormControlLabel
           control={
@@ -188,9 +186,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               expiryDate: value,
             });
           }}
-          renderInput={(params) => (
-            <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
-          )}
+          renderInput={(params) => <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />}
         />
         <TextField
           sx={{ mt: 3 }}

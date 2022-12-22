@@ -62,7 +62,7 @@ function BottomBar({ data, state, setState }) {
     >
       <Box p={2} display="flex" justifyContent="flex-end" gap={2}>
         <Button onClick={onSubmit} size="large" color="secondary" variant="contained">
-          Update Changes
+          Update
         </Button>
         <GreyButton
           onClick={() => setState(data)}

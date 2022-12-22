@@ -12,6 +12,7 @@ import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, move, reorder } from "./utils";
+import { http } from "api/http";
 
 type Props = {
   data: any;
@@ -102,6 +103,8 @@ function Board({ data }: Props) {
         await handleRemarks();
       }
 
+      sendEmail(sourceItem);
+
       await updateTaskStatus({
         id: sourceItem.id,
         status: destinationId,
@@ -143,6 +146,35 @@ function Board({ data }: Props) {
     handleUpdateTaskStatus(source, destination);
   };
 
+  const sendEmail = (sourceItem: any) => {
+    const payload = {
+      fromAddress: sourceItem?.client?.email,
+      toAddress: '',
+      subject: sourceItem?.status,
+      name: sourceItem?.name,
+      body: "",
+      templateid: "taskStatusUpdatedForUser",
+      atomID: "1",
+      preferredsource: 'Atom'
+    }
+    let toemails = '';
+    if(sourceItem?.members.length>0) {
+      sourceItem.members.forEach((member) => {
+        toemails += member.email + ','
+      });
+    }
+    payload.toAddress = toemails.slice(0, -1);
+    http
+      .post("/common/sendAtomEmails", payload)
+      .then((res) => {
+        console.log(res);
+        alert("Email sent successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   useTitle("Task Board");
 
   return (
@@ -153,16 +185,15 @@ function Board({ data }: Props) {
             {Object.keys(state).map((key, index) => (
               <Grid item style={{ width: "100%" }} key={index}>
                 <Box
-                  sx={{
-                    display: "flex",
-                    padding: "10px",
-                  }}
+                  sx={{ display: "inline-flex" }}
+                  bgcolor={colors[index]}
+                  px={2}
+                  py="4px"
+                  borderRadius={20}
                 >
-                  <Box bgcolor={colors[index]} px={2} py="4px" borderRadius={20}>
-                    <Typography variant="body2" color="white">
-                      {getTitle(key)} ({state[key].length})
-                    </Typography>
-                  </Box>
+                  <Typography variant="body2" color="white">
+                    {getTitle(key)} ({state[key].length})
+                  </Typography>
                 </Box>
                 <Droppable droppableId={key}>
                   {(provided: any, snapshot: any) => (
@@ -171,11 +202,15 @@ function Board({ data }: Props) {
                         listContainerRef.current = ref;
                         provided.innerRef(ref);
                       }}
-                      height="60vh"
+                      height="64vh"
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
                       {state[key].map((item: any, index: number) => (
-                        <Draggable key={item?.uid} draggableId={item?.uid} index={index}>
+                        <Draggable
+                          key={item?.taskNumber}
+                          draggableId={item?.taskNumber}
+                          index={index}
+                        >
                           {(provided: any, snapshot: any) => (
                             <StyledDraggableItem
                               ref={provided.innerRef}

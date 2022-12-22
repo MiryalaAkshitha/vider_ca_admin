@@ -1,6 +1,7 @@
 import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
+import BottomAppbar from "layout/primarylayout/BottomAppbar";
 import { StyledSettingsMainContent } from "layout/styles";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
@@ -22,6 +23,7 @@ function SettingsLayout() {
       <StyledSettingsMainContent>
         <Toolbar />
         <Outlet />
+        <BottomAppbar />
       </StyledSettingsMainContent>
     </Box>
   );

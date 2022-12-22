@@ -20,6 +20,14 @@ import ViewEvent from "views/calendar/ViewEvent";
 import ViewGlobalEvent from "views/calendar/ViewGlobalEvent";
 import { useNavigate } from "react-router-dom";
 
+function sum(n: number): number {
+  if (n === 0) return n;
+
+  return n + sum(n - 1);
+}
+
+console.log(sum(3));
+
 function Calendar() {
   useTitle("Calendar");
   const navigate = useNavigate();
@@ -33,10 +41,7 @@ function Calendar() {
     ["default-events"],
     getDefaultEvents
   );
-  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(
-    ["tasks"],
-    getTasks
-  );
+  const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(["tasks"], getTasks);
 
   const eventsData = () => {
     return (
@@ -78,17 +83,13 @@ function Calendar() {
     let bgColor = value.event.backgroundColor;
 
     if (bgColor === "#88B151") {
-      let event = events?.data?.find(
-        (item: any) => item.id === +value.event.id
-      );
+      let event = events?.data?.find((item: any) => item.id === +value.event.id);
       setViewOpen(true);
       setData(event);
     }
 
     if (bgColor === "#E44652") {
-      let event = defaultEvents?.data?.find(
-        (item: any) => item.id === +value.event.id
-      );
+      let event = defaultEvents?.data?.find((item: any) => item.id === +value.event.id);
       setOpenGlobal(true);
       setData(event);
     }

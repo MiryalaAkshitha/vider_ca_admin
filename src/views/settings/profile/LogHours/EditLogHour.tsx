@@ -13,10 +13,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps } from "types";
 import { getHoursOptions, getMinutesOptions } from "utils";
-import {
-  editUserLogHourDefaultValues,
-  EditUserLogHourSchema,
-} from "validations/editUserLogHour";
+import { editUserLogHourDefaultValues, EditUserLogHourSchema } from "validations/editUserLogHour";
 
 interface IProps extends DialogProps {
   logHourData: any;
@@ -43,12 +40,8 @@ function EditLogHour({ open, setOpen, logHourData }: IProps) {
   });
 
   useEffect(() => {
-    let hours = moment
-      .utc(moment.duration(logHourData?.duration).asMilliseconds())
-      .format("HH");
-    let minutes = moment
-      .utc(moment.duration(logHourData?.duration).asMilliseconds())
-      .format("mm");
+    let hours = moment.utc(moment.duration(logHourData?.duration).asMilliseconds()).format("HH");
+    let minutes = moment.utc(moment.duration(logHourData?.duration).asMilliseconds()).format("mm");
 
     reset({
       ...logHourData,
@@ -98,12 +91,7 @@ function EditLogHour({ open, setOpen, logHourData }: IProps) {
           />
         </Box>
         <Box mt={2}>
-          <FormInput
-            label="Description"
-            control={control}
-            name="description"
-            multiline
-          />
+          <FormInput label="Description" control={control} name="description" multiline />
         </Box>
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton

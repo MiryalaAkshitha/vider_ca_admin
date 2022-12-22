@@ -41,29 +41,20 @@ function Attachments() {
 
   const files = data?.data?.filter((file: any) => file.type === "file") || [];
   const links = data?.data?.filter((file: any) => file.type === "link") || [];
-  const localFilePaths =
-    data?.data?.filter((file: any) => file.type === "local_path") || [];
+  const localFilePaths = data?.data?.filter((file: any) => file.type === "local_path") || [];
 
   const renderAttachments = () => {
     if (value === 0 && files.length > 0) {
       return files?.map((item: any) => (
-        <Grid item xl={3} lg={3} key={item?.id}>
+        <Grid item xs={3} key={item?.id}>
           <File data={item} />
         </Grid>
       ));
     }
 
-    if (value === 1 && links.length > 0) {
-      return links?.map((item: any) => (
-        <Grid item xl={3} lg={3} key={item?.id}>
-          <Link data={item} />
-        </Grid>
-      ));
-    }
-
-    if (value === 2 && localFilePaths.length > 0) {
+    if (value === 1 && localFilePaths.length > 0) {
       return localFilePaths?.map((item: any) => (
-        <Grid item xl={3} lg={3} key={item?.id}>
+        <Grid item xs={3} key={item?.id}>
           <Link data={item} local />
         </Grid>
       ));
@@ -76,13 +67,8 @@ function Attachments() {
     <>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         {data?.data?.length > 0 ? (
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Files" {...a11yProps(0)} />
-            <Tab label="Links" {...a11yProps(1)} />
             <Tab label="Local File Paths" {...a11yProps(2)} />
           </Tabs>
         ) : (
@@ -91,11 +77,7 @@ function Attachments() {
           </Typography>
         )}
         {data?.data?.length ? (
-          <Button
-            startIcon={<Add />}
-            onClick={() => setOpen(true)}
-            color="secondary"
-          >
+          <Button startIcon={<Add />} onClick={() => setOpen(true)} color="secondary">
             Add
           </Button>
         ) : null}

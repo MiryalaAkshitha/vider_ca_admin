@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  TextField,
-} from "@mui/material";
+import { Box, Button, CircularProgress, MenuItem, TextField } from "@mui/material";
 import { getPanDetails, getSandboxToken, signup } from "api/services/users";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LoadingButton from "components/LoadingButton";
@@ -16,6 +10,8 @@ import { selectSignup } from "redux/reducers/signUpSlice";
 import { ResType, SubmitType } from "types";
 import { getStates } from "api/services/common";
 import { handleError } from "utils/handleError";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const PanDetails = () => {
   const [state, setState] = useState<any>({});
@@ -67,9 +63,9 @@ const PanDetails = () => {
 
       const data: any = response?.data;
       if (data.data.status === "INVALID") {
-        return snack.error("Invalid PAN")
+        return snack.error("Invalid PAN");
       }
-      console.log(response.data)
+      console.log(response.data);
 
       setState({
         category: data?.data?.category,
@@ -102,9 +98,7 @@ const PanDetails = () => {
     return (
       <>
         {panLoading && <CircularProgress size="1rem" />}
-        {isVerified && !panLoading && (
-          <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />
-        )}
+        {isVerified && !panLoading && <CheckCircleIcon fontSize="small" sx={{ color: "green" }} />}
         {!isVerified && !panLoading && (
           <Button color="error" size="small" onClick={verifyPan}>
             Verify
@@ -130,9 +124,9 @@ const PanDetails = () => {
           name="panNumber"
           size="small"
           onKeyDown={(e: any) => {
-            if (e.keyCode === 13){
-              verifyPan()
-             }
+            if (e.keyCode === 13) {
+              verifyPan();
+            }
           }}
           fullWidth
           InputProps={{
@@ -154,7 +148,8 @@ const PanDetails = () => {
             fullWidth
           />
           {state.category === "Individual" && (
-            <><TextField
+            <>
+              <TextField
                 sx={{ mt: 2 }}
                 required
                 onChange={handleChange}
@@ -166,7 +161,7 @@ const PanDetails = () => {
                 fullWidth
               />
               <TextField
-                sx={{ mt: 2 }}  
+                sx={{ mt: 2 }}
                 required
                 onChange={handleChange}
                 value={state.firstName}
@@ -186,18 +181,17 @@ const PanDetails = () => {
                 name="middleName"
                 fullWidth
               />
-              
             </>
           )}
-          {state.category !== ("Individual") &&(
+          {state.category !== "Individual" && (
             <>
-               <TextField
+              <TextField
                 required
                 onChange={handleChange}
                 value={state.lastName}
                 sx={{ mt: 2 }}
                 label="Surname / Last Name"
-                name="surName"
+                name="lastName"
                 disabled
                 size="small"
                 fullWidth
@@ -212,7 +206,7 @@ const PanDetails = () => {
                 name="legalName"
                 fullWidth
               />
-             </>
+            </>
           )}
           <TextField
             required
@@ -244,32 +238,17 @@ const PanDetails = () => {
             size="small"
             fullWidth
           />
-          <TextField
-            required
-            onChange={handleChange}
+          <Autocomplete
             sx={{ mt: 2 }}
-            label="State/Union Territory"
-            name="state"
-            value={state.state}
+            disablePortal
+            onChange={(e, v) => setState({ ...state, state: v })}
+            id="combo-box-demo"
             size="small"
-            fullWidth
-            select
-            SelectProps={{
-              MenuProps: {
-                PaperProps: {
-                  sx: {
-                    maxHeight: "200px",
-                  },
-                },
-              },
-            }}
-          >
-            {states?.data?.map((option: any) => (
-              <MenuItem key={option.name} value={option.name}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            options={states?.data?.map((item: any) => item.name) || []}
+            renderInput={(params) => (
+              <TextField required {...params} label="State / Union Territory" />
+            )}
+          />
           <TextField
             onChange={handleChange}
             sx={{ mt: 2 }}
@@ -277,9 +256,9 @@ const PanDetails = () => {
             name="pincode"
             label="Pincode/Zip Code"
             inputProps={{
-            pattern: "[0]{1-9}[5]{0-9}",
-            title: "Enter valid pincode",
-          }}
+              pattern: "[0-9]{6}",
+              title: "Enter valid pincode",
+            }}
             size="small"
             fullWidth
             required

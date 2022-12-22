@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Autocomplete, Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getClients } from "api/services/clients/clients";
+import { addUserLogHour } from "api/services/tasks/loghours";
 import { getUserTasks } from "api/services/tasks/tasks";
 import DrawerWrapper from "components/DrawerWrapper";
 import FormTime from "components/FormFields/FomTime";
@@ -11,19 +12,20 @@ import FormInput from "components/FormFields/FormInput";
 import FormRadio from "components/FormFields/FormRadio";
 import Loader from "components/Loader";
 import LoadingButton from "components/LoadingButton";
+import { snack } from "components/toast";
 import moment from "moment";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { DialogProps, ResType } from "types";
 import { getHoursOptions, getMinutesOptions } from "utils";
+import { handleError } from "utils/handleError";
 import { addUserLogHourDefaultValues, AddUserLogHourSchema } from "validations/addUserLogHour";
 
-interface Props extends DialogProps {
-  onAdd: (data: any) => Promise<any>;
-}
+interface Props extends DialogProps {}
 
-function AddLogHour({ open, setOpen, onAdd }: Props) {
+function AddLogHour({ open, setOpen }: Props) {
+  const queryClient = useQueryClient();
   const [enterInHours, setEnterInHours] = useState(false);
 
   const { control, trigger, handleSubmit, watch, reset } = useForm({
@@ -44,6 +46,18 @@ function AddLogHour({ open, setOpen, onAdd }: Props) {
     }
   );
 
+  const { mutateAsync } = useMutation(addUserLogHour, {
+    onSuccess: () => {
+      reset(addUserLogHourDefaultValues);
+      queryClient.invalidateQueries("user-log-hours");
+      snack.success("Log Hour Added");
+      setOpen(false);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
   const onSubmit = async (data: any) => {
     const { hours, minutes, client, task, ...apiData } = data;
     apiData.client = client?.value;
@@ -60,8 +74,7 @@ function AddLogHour({ open, setOpen, onAdd }: Props) {
       apiData.duration = endTime - startTime;
     }
 
-    await onAdd({ ...apiData });
-    reset(addUserLogHourDefaultValues);
+    await mutateAsync({ ...apiData });
   };
 
   return (
