@@ -103,7 +103,9 @@ function Board({ data }: Props) {
         await handleRemarks();
       }
 
-      sendEmail(sourceItem);
+      if (destinationId === TaskStatus.DONE) { 
+        sendEmail(sourceItem);
+      }
 
       await updateTaskStatus({
         id: sourceItem.id,

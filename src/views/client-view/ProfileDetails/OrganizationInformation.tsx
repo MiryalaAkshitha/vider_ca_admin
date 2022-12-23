@@ -188,11 +188,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
               fullWidth
               variant="outlined"
               size="small"
-              onKeyDown={(e: any) => {
-            if (e.keyCode === 13){
-              verifyGst()
-             }
-            }}
               value={data?.gstNumber || ""}
               name="gstNumber"
               onChange={handleChange}
@@ -213,11 +208,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
               fullWidth
               variant="outlined"
               size="small"
-   onKeyDown={(e: any) => {
-            if (e.keyCode === 13){
-              verifyPan()
-             }
-            }}
               value={data?.panNumber || ""}
               name="panNumber"
               onChange={handleChange}
