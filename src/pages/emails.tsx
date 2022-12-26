@@ -6,6 +6,9 @@ import { useState } from "react";
 function Emails() {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [sql, setSql] = useState("");
+  const [sqldata, setSqldata] = useState("");
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,29 +23,60 @@ function Emails() {
       });
   };
 
+  const handleSQLSubmit = (e) => {
+    e.preventDefault();
+    http
+      .post("/common/commonsqlapi", { sql })
+      .then((res) => {
+        console.log('SQL response::', res);
+        setSqldata(JSON.stringify(res));
+        alert("SQL sent successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <Box p={3} maxWidth={600}>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          onChange={(e) => setFrom(e.target.value)}
-          required
-          label="From Email"
-          variant="outlined"
-          fullWidth
-        />
-        <TextField
-          onChange={(e) => setTo(e.target.value)}
-          required
-          label="To Email"
-          sx={{ mt: 2 }}
-          variant="outlined"
-          fullWidth
-        />
-        <Button type="submit" variant="contained" size="large" sx={{ mt: 2 }}>
-          Send
-        </Button>
-      </form>
-    </Box>
+    <>
+      <Box p={3} maxWidth={600}>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            onChange={(e) => setFrom(e.target.value)}
+            required
+            label="From Email"
+            variant="outlined"
+            fullWidth
+          />
+          <TextField
+            onChange={(e) => setTo(e.target.value)}
+            required
+            label="To Email"
+            sx={{ mt: 2 }}
+            variant="outlined"
+            fullWidth
+          />
+          <Button type="submit" variant="contained" size="large" sx={{ mt: 2 }}>
+            Send
+          </Button>
+        </form>
+      </Box>
+      <Box p={3} maxWidth={600}>
+        <form onSubmit={handleSQLSubmit}>
+          <TextField
+            onChange={(e) => setSql(e.target.value)}
+            required
+            label="Enter SQL"
+            variant="outlined"
+            fullWidth
+          />
+          <Button type="submit" variant="contained" size="large" sx={{ mt: 2 }}>
+            Send
+          </Button>
+        </form>
+        {sqldata}        
+      </Box>
+    </>
   );
 }
 
