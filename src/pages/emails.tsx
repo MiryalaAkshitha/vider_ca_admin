@@ -34,6 +34,7 @@ function Emails() {
       })
       .catch((err) => {
         console.log(err);
+        setSqldata(JSON.stringify(err));
       });
   };
 
@@ -74,7 +75,9 @@ function Emails() {
             Send
           </Button>
         </form>
-        {sqldata}        
+        <div style={{'height':'200px', 'overflow':'scroll'}}>
+          <pre>{sqldata}</pre>        
+        </div>
       </Box>
     </>
   );

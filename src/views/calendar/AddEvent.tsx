@@ -72,7 +72,9 @@ function AddEvent({ open, setOpen }: Props) {
     mutate({
       ...apiData,
     });
-    sendEmail(data);
+    if(data.type == "NEWSLETTER") {
+      sendEmail(data);
+    }    
   };
 
   let taskMembers =
@@ -86,7 +88,7 @@ function AddEvent({ open, setOpen }: Props) {
       toAddress: state.toAddress,
       schedule: formatDate(state.date),
       status: "Active"
-    }
+    }    
     http
       .post("/common/sendscheduler", obj)
       .then((res) => {
