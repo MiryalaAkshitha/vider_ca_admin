@@ -219,7 +219,6 @@ const PanDetails = () => {
             fullWidth
           />
           <TextField
-            required
             onChange={handleChange}
             value={state.street}
             sx={{ mt: 2 }}

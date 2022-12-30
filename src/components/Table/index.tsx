@@ -84,7 +84,7 @@ function Table(props: TableProps) {
 
   return (
     <StyledTableContainer sx={sx}>
-      <div style={{ height: "400px", overflow: "scroll" }}>
+      <div>
         <StyledTable>
           <thead>
             <tr>
