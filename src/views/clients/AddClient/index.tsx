@@ -80,8 +80,10 @@ function AddClient({ open, setOpen, successCb }: Props) {
   )?.subCategories;
 
   const onFormSubmit = (data: any) => {
-    setCdata(data);
-    setDopen(true);
+    onFormConfirmationSubmit(data);
+    // TODO: uncomment if to send mail confirmation on client create
+    // setCdata(data);
+    // setDopen(true);
   }
 
   const onFormConfirmationSubmit = (data: any) => {
