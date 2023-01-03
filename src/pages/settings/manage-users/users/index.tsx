@@ -52,6 +52,7 @@ function Users() {
         />
         <Box style={{ display: "flex", justifyContent: "space-between", width: "360px" }}>
           <Button
+            style={{ visibility: "hidden" }}
             variant="outlined"
             onClick={() => {
               setOpen(true);
