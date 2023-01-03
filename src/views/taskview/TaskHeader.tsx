@@ -23,6 +23,7 @@ function TaskHeader({ onChange }: any) {
   const taskData: any = useTaskData();
   const [open, setOpen] = useState(false);
   const [openGroupChats, setOpenGroupChats] = useState(false);
+  console.log(taskData, "example header")
 
   const { mutate: taskDelete } = useMutation(deleteTask, {
     onSuccess: (res) => {
@@ -55,7 +56,11 @@ function TaskHeader({ onChange }: any) {
             Tasks
           </LinkRouter>
           <Typography>{taskData?.name}</Typography>
-        </Breadcrumbs>
+
+          <Typography>{taskData?.client?.displayName}</Typography>
+          </Breadcrumbs>
+
+
         <Box display="flex" gap={1}>
           <Button
             onClick={() => setOpenGroupChats(true)}

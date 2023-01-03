@@ -48,7 +48,7 @@ function DeletedUsers() {
           },
           {
             key: "fullName",
-            title: "Fullname",
+            title: "User Name",
           },
           {
             key: "email",
@@ -57,6 +57,10 @@ function DeletedUsers() {
           {
             key: "mobileNumber",
             title: "Mobile Number",
+          },
+          {
+            key: "lastLogin",
+            title: "Last Login",
           },
           {
             key: "Action",
@@ -69,7 +73,7 @@ function DeletedUsers() {
                   color="secondary"
                   onClick={() => handleRestore(item?.id)}
                 >
-                  Restore
+                  Restore User
                 </Button>
               );
             },

@@ -1,3 +1,4 @@
+import { Add } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
@@ -99,6 +100,16 @@ function Clients() {
           </Button>
         </Box>
         <Box display="flex" gap={2}>
+          <ValidateAccess name={Permissions.CREATE_CLIENTS}>
+          <Button
+                onClick={(e) => setOpen(true)}
+                variant="outlined"
+                color="secondary"
+                startIcon={<Add />}
+              >
+                Add Client
+              </Button>
+      </ValidateAccess>
           {selected.length > 0 && (
             <ValidateAccess name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}>
               <Button
@@ -111,6 +122,7 @@ function Clients() {
               </Button>
             </ValidateAccess>
           )}
+          
           <ValidateAccess name={Permissions.CREATE_CLIENTS}>
             <Button
               onClick={() => setOpenImportDialog(true)}
@@ -134,13 +146,7 @@ function Clients() {
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
         />
       </Box>
-      <ValidateAccess name={Permissions.CREATE_CLIENTS}>
-        <FloatingButton
-          onClick={() => {
-            setOpen(true);
-          }}
-        />
-      </ValidateAccess>
+      
       <AddClient open={open} setOpen={setOpen} />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter
