@@ -143,10 +143,6 @@ const PushNotifications = loadable(
   () => import("pages/communication/templates/push-notifications")
 );
 
-const Emails = loadable(() => import("pages/emails"));
-const Emails2 = loadable(() => import("pages/emails2"));
-const Newsletter = loadable(() => import("pages/newsletteremail"));
-
 function RoutesContainer() {
   return (
     <Router>
@@ -159,9 +155,6 @@ function RoutesContainer() {
             <Route path="over-due-tasks" element={<OverDueTasks />} />
             <Route path="employee-tasks-by-status" element={<EmployeeTasksByStatus />} />
           </Route>
-          <Route path="emails" element={<Emails />} />
-          <Route path="emails2" element={<Emails2 />} />
-          <Route path="newsletter" element={<Newsletter />} />
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />

@@ -8,8 +8,7 @@ export const StyledDraggableList = styled("div")<{
 }>(({ isdraggingover, height }) => ({
   width: "100%",
   border: isdraggingover === "true" ? "1px dashed rgba(0,0,0,0.2)" : "1px dashed transparent",
-  padding: "10px 0px",
-  paddingRight: "4px",
+  padding: "10px",
   height: height || "auto",
   overflowY: "auto",
 }));
