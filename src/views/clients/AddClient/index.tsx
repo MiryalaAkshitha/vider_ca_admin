@@ -17,6 +17,13 @@ import { useNavigate } from "react-router-dom";
 import { DialogProps, ResType } from "types";
 import { createClientDefaultValues, CreateClientSchema } from "validations/createCllient";
 import Details from "./Details";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useState } from "react";
 
 interface Props extends DialogProps {
   successCb?: () => void;
@@ -24,6 +31,9 @@ interface Props extends DialogProps {
 
 function AddClient({ open, setOpen, successCb }: Props) {
   const navigate = useNavigate();
+
+  const [dopen, setDopen] = useState<boolean>(false);
+  const [cdata, setCdata] = useState({});
 
   const { data: users, isLoading: userLoading }: ResType = useQuery("users", getUsers, {
     enabled: open,
@@ -70,6 +80,13 @@ function AddClient({ open, setOpen, successCb }: Props) {
   )?.subCategories;
 
   const onFormSubmit = (data: any) => {
+    onFormConfirmationSubmit(data);
+    // TODO: uncomment if to send mail confirmation on client create
+    // setCdata(data);
+    // setDopen(true);
+  }
+
+  const onFormConfirmationSubmit = (data: any) => {
     mutate({
       ...data,
       clientManager: data?.clientManager?.value,
@@ -79,93 +96,129 @@ function AddClient({ open, setOpen, successCb }: Props) {
     });
   };
 
+  const handleClose = () => {
+    setDopen(false);
+    const obj = JSON.parse(JSON.stringify(cdata));
+    obj['isEmail'] = false;
+    onFormConfirmationSubmit(obj); 
+  };
+
+  const handleDialogSubmit = () => {
+    setDopen(false);  
+    const obj = JSON.parse(JSON.stringify(cdata));
+    obj['isEmail'] = true;
+    onFormConfirmationSubmit(obj);  
+  };
+
   return (
-    <DrawerWrapper
-      open={open}
-      setOpen={() => {
-        reset(createClientDefaultValues);
-        setOpen(false);
-      }}
-      title="Add Client"
-    >
-      {userLoading ? (
-        <Loader />
-      ) : (
-        <form onSubmit={handleSubmit(onFormSubmit)}>
-          <FormSelect
-            control={control}
-            required
-            name="category"
-            label="Category"
-            options={CLIENT_CATEGORIES.map((item) => ({
-              label: item.label,
-              value: item.value,
-            }))}
-          />
-          {subCategories && (
+    <>
+      <DrawerWrapper
+        open={open}
+        setOpen={() => {
+          reset(createClientDefaultValues);
+          setOpen(false);
+        }}
+        title="Add Client"
+      >
+        {userLoading ? (
+          <Loader />
+        ) : (
+          <form onSubmit={handleSubmit(onFormSubmit)}>
+            <FormSelect
+              control={control}
+              required
+              name="category"
+              label="Category"
+              options={CLIENT_CATEGORIES.map((item) => ({
+                label: item.label,
+                value: item.value,
+              }))}
+            />
+            {subCategories && (
+              <Box mt={2}>
+                <FormSelect
+                  control={control}
+                  name="subCategory"
+                  label="Sub Category"
+                  options={subCategories.map((item) => ({
+                    label: item.label,
+                    value: item.value,
+                  }))}
+                />
+              </Box>
+            )}
             <Box mt={2}>
-              <FormSelect
+              <FormAutoComplete
                 control={control}
-                name="subCategory"
-                label="Sub Category"
-                options={subCategories.map((item) => ({
-                  label: item.label,
-                  value: item.value,
+                name="clientManager"
+                label="Client Manager"
+                options={users?.data?.map((item: any) => ({
+                  label: item.fullName,
+                  value: item.id,
                 }))}
               />
             </Box>
-          )}
-          <Box mt={2}>
-            <FormAutoComplete
-              control={control}
-              name="clientManager"
-              label="Client Manager"
-              options={users?.data?.map((item: any) => ({
-                label: item.fullName,
-                value: item.id,
-              }))}
+            <Box mt={2}>
+              <FormInput control={control} name="displayName" label="Display Name" required />
+            </Box>
+            <Box mt={2}>
+              <FormInput control={control} name="mobileNumber" label="Mobile number" required />
+            </Box>
+            <Box mt={2}>
+              <FormInput control={control} name="email" label="Email" required />
+            </Box>
+            <Box mt={2}>
+              <FormInput control={control} name="authorizedPerson" label="Authorized person name" />
+            </Box>
+            <Box mt={2}>
+              <FormInput control={control} name="designation" label="Designation" />
+            </Box>
+            <Box mt={2}>
+              <FormRadio
+                row
+                control={control}
+                name="clientPortalAccess"
+                label="Client Portal Access"
+                options={[
+                  { value: "yes", label: "Enable" },
+                  { value: "no", label: "Disable" },
+                ]}
+              />
+            </Box>
+            <Details control={control} watch={watch} setData={setData} />
+            <LoadingButton
+              loading={isLoading}
+              fullWidth
+              sx={{ mt: 3 }}
+              type="submit"
+              loadingColor="white"
+              title="Create Client"
+              color="secondary"
             />
-          </Box>
-          <Box mt={2}>
-            <FormInput control={control} name="displayName" label="Display Name" required />
-          </Box>
-          <Box mt={2}>
-            <FormInput control={control} name="mobileNumber" label="Mobile number" required />
-          </Box>
-          <Box mt={2}>
-            <FormInput control={control} name="email" label="Email" required />
-          </Box>
-          <Box mt={2}>
-            <FormInput control={control} name="authorizedPerson" label="Authorized person name" />
-          </Box>
-          <Box mt={2}>
-            <FormInput control={control} name="designation" label="Designation" />
-          </Box>
-          <Box mt={2}>
-            <FormRadio
-              row
-              control={control}
-              name="clientPortalAccess"
-              label="Client Portal Access"
-              options={[
-                { value: "yes", label: "Enable" },
-                { value: "no", label: "Disable" },
-              ]}
-            />
-          </Box>
-          <Details control={control} watch={watch} setData={setData} />
-          <LoadingButton
-            loading={isLoading}
-            fullWidth
-            sx={{ mt: 3 }}
-            type="submit"
-            loadingColor="white"
-            title="Create Client"
-            color="secondary"
-          />
-        </form>
-      )}
-    </DrawerWrapper>
+          </form>
+        )}
+      </DrawerWrapper>
+      <Dialog
+        open={dopen}
+        onClose={handleClose}
+      >
+        <DialogTitle id="alert-dialog-title">
+          User
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Want to send email ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ignore</Button>
+          <Button onClick={handleDialogSubmit} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+
   );
 }
 
