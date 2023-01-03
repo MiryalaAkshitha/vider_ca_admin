@@ -14,6 +14,11 @@ function ClientAnalytics() {
 
   return (
     <Box mt={3}>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography mb={1} variant="subtitle2">
+          Client Analytics
+        </Typography>
+      </Box>
       <Grid container spacing={2}>
         <Grid xs={4} item>
           <Grid container spacing={2}>

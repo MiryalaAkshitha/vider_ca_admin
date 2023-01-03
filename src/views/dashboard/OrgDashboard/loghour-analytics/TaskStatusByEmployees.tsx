@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getEmployeeTasksByStatus } from "api/services/organization";
 import Loader from "components/Loader";
-import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +17,9 @@ import { StyledTaskBox } from "../styles";
 function TaskStatusByEmployees() {
   const navigate = useNavigate();
   const [dates, setDates] = useState({ fromDate: null, toDate: null });
-  const { queryParams } = useQueryParams();
-  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["employee-tasks-by-status", { offset: 0, limit: 10, dashboardType, ...dates }],
+    ["employee-tasks-by-status", { offset: 0, limit: 10, ...dates }],
     getEmployeeTasksByStatus
   );
 
@@ -80,20 +77,18 @@ function TaskStatusByEmployees() {
           </TableBody>
         </Table>
       </main>
-      {dashboardType === "admin" && (
-        <footer>
-          <Typography variant="body2" color="secondary">
-            View All
-          </Typography>
-          <IconButton
-            color="secondary"
-            size="small"
-            onClick={() => navigate(`employee-tasks-by-status?type=${dashboardType}`)}
-          >
-            <ArrowForwardIcon fontSize="small" />
-          </IconButton>
-        </footer>
-      )}
+      <footer>
+        <Typography variant="body2" color="secondary">
+          View All
+        </Typography>
+        <IconButton
+          color="secondary"
+          size="small"
+          onClick={() => navigate("employee-tasks-by-status")}
+        >
+          <ArrowForwardIcon fontSize="small" />
+        </IconButton>
+      </footer>
     </StyledTaskBox>
   );
 }

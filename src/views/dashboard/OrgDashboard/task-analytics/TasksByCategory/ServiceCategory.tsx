@@ -6,16 +6,13 @@ import { getTasksByCategory } from "api/services/organization";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import { ResType } from "types";
-import useQueryParams from "hooks/useQueryParams";
 
 function ServiceCategory({ dates }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { queryParams } = useQueryParams();
-  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-by-category", { ...dates, dashboardType }],
+    ["task-by-category", { ...dates }],
     getTasksByCategory
   );
 

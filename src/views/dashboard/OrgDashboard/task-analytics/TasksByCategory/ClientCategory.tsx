@@ -1,6 +1,5 @@
 import { getTasksByClientCategory } from "api/services/organization";
 import Loader from "components/Loader";
-import useQueryParams from "hooks/useQueryParams";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +11,9 @@ import { getTitle } from "utils";
 function ClientCategory({ dates }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { queryParams } = useQueryParams();
-  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-by-client-category", { ...dates, dashboardType }],
+    ["task-by-client-category", { ...dates }],
     getTasksByClientCategory
   );
 

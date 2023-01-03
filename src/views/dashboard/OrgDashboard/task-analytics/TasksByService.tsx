@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { getTasksByService } from "api/services/organization";
 import Loader from "components/Loader";
-import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -19,11 +18,9 @@ import { StyledTaskBox } from "../styles";
 function TasksByService() {
   const navigate = useNavigate();
   const [dates, setDates] = useState({ fromDate: null, toDate: null });
-  const { queryParams } = useQueryParams();
-  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-by-service", { offset: 0, limit: 10, dashboardType, ...dates }],
+    ["task-by-service", { offset: 0, limit: 10, ...dates }],
     getTasksByService
   );
 
@@ -67,11 +64,7 @@ function TasksByService() {
         <Typography variant="body2" color="secondary">
           View Tasks
         </Typography>
-        <IconButton
-          color="secondary"
-          size="small"
-          onClick={() => navigate(`/dashboard/tasks-by-service?type=${dashboardType}`)}
-        >
+        <IconButton color="secondary" size="small" onClick={() => navigate(`tasks-by-service`)}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       </footer>

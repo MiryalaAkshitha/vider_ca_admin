@@ -3,7 +3,6 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { getTasksDueThisWeek } from "api/services/organization";
 import Loader from "components/Loader";
 import { format } from "date-fns";
-import useQueryParams from "hooks/useQueryParams";
 import _ from "lodash";
 import moment from "moment";
 import { useQuery } from "react-query";
@@ -17,13 +16,8 @@ import DueCard from "./DueCard";
 function DueDatesThisWeek() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { queryParams } = useQueryParams();
-  const dashboardType = queryParams.type || "user";
 
-  const { data, isLoading }: ResType = useQuery(
-    ["task-due-this-week", { dashboardType }],
-    getTasksDueThisWeek
-  );
+  const { data, isLoading }: ResType = useQuery(["task-due-this-week"], getTasksDueThisWeek);
 
   let grouped: any = _.groupBy(data?.data, "dueDate");
 

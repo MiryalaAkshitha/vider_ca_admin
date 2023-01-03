@@ -58,14 +58,14 @@ export const menu: Array<IMenuItem> = [
     path: "/reports",
     icon: icons.reports,
   },
-  // {
-  //   title: "Broadcast",
-  //   path: "/communication/client-groups",
-  //   icon: icons.broadcast,
-  // },
-  // {
-  //   title: "Billing",
-  //   path: "/billing/estimates",
-  //   icon: icons.broadcast,
-  // },
+  {
+    title: "Broadcast",
+    path: "/communication/client-groups",
+    icon: icons.broadcast,
+  },
+  {
+    title: "Billing",
+    path: "/billing/estimates",
+    icon: icons.broadcast,
+  },
 ];
