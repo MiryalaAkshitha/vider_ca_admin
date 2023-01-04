@@ -167,7 +167,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
         )}
         {showPanVerify && !panLoading && (
           <Button color="error" size="small" onClick={verifyPan}>
-    
             Verify
           </Button>
         )}

@@ -57,8 +57,8 @@ export const menu: Array<IMenuItem> = [
     title: "Reports",
     path: "/reports",
     icon: icons.reports,
-  }
-  // ,{
+  },
+  // {
   //   title: "Broadcast",
   //   path: "/communication/client-groups",
   //   icon: icons.broadcast,

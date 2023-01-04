@@ -146,6 +146,7 @@ function EditDscRegister({ open, setOpen, data }: Props) {
             variant="outlined"
             fullWidth
             name="tokenNumber"
+            required
             onChange={handleChange}
             size="small"
             label="Token Number"

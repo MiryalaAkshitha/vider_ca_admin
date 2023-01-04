@@ -49,7 +49,7 @@ function CompletedTasks() {
           },
           {
             key: "displayName",
-            title: "Client Name",
+            title: "Display Name",
           },
           {
             key: "email",
@@ -70,7 +70,7 @@ function CompletedTasks() {
                   color="secondary"
                   onClick={() => handleRestore(item?.id)}
                 >
-                  Retrieve
+                  Restore
                 </Button>
               );
             },

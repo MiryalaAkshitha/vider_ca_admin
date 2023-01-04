@@ -92,6 +92,5 @@ function ProfileDetails() {
     </Box>
   );
 }
-      
+
 export default ProfileDetails;
-  

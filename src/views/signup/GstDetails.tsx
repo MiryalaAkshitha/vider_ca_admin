@@ -88,8 +88,8 @@ const GstDetails = () => {
         buildingNo: result?.data?.pradr?.addr?.bno,
         buildingName: result?.data?.pradr?.addr?.bnm,
         street: result?.data?.pradr?.addr?.st,
-        loc: result?.data?.pradr?.addr?.loc,
-        district: result?.data?.pradr ?.addr?.dst,
+        city: result?.data?.pradr?.addr?.cty,
+        district: result?.data?.pradr?.addr?.dst,
         state: result?.data?.pradr?.addr?.stcd,
         pincode: result?.data?.pradr?.addr?.pncd,
       });
@@ -210,7 +210,8 @@ const GstDetails = () => {
             size="small"
             fullWidth
           />
-           <TextField
+          <TextField
+            required
             onChange={handleChange}
             value={state.buildingName}
             sx={{ mt: 2 }}
@@ -235,8 +236,8 @@ const GstDetails = () => {
             onChange={handleChange}
             sx={{ mt: 2 }}
             label="City / Town / Village"
-            name="loc"
-            value={state.loc}
+            name="city"
+            value={state.city}
             size="small"
             fullWidth
           />

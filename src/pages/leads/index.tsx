@@ -1,4 +1,3 @@
-import { Add } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { deleteLeads, getLeads } from "api/services/clients/clients";
 import FloatingButton from "components/FloatingButton";
@@ -68,14 +67,6 @@ function Leads() {
             Delete
           </Button>
         )}
-         <Button
-                onClick={(e) => setOpen(true)}
-                variant="outlined"
-                color="secondary"
-                startIcon={<Add />}
-              >
-                Add Lead
-              </Button>
       </Box>
       <Table
         data={data?.data?.data || []}
@@ -84,6 +75,7 @@ function Leads() {
         selection={{ selected, setSelected }}
         pagination={{ totalCount, pageCount, setPageCount, page, setPage }}
       />
+      <FloatingButton onClick={() => setOpen(true)} />
       <AddLead open={open} setOpen={() => setOpen(false)} />
     </Box>
   );

@@ -48,12 +48,8 @@ function DeletedClients() {
             title: "Client Id",
           },
           {
-            key:"category",
-            title:"Client Category",
-          },
-          {
             key: "displayName",
-            title: "Client Name",
+            title: "Display Name",
           },
           {
             key: "email",

@@ -1,17 +1,15 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { getDeletedTasks } from "api/services/clients/clients";
 import Members from "components/Members";
 import PriorityText from "components/PriorityText";
 import Table, { ColumnType } from "components/Table";
-import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 
 function DeletedTasks() {
   const { data, isLoading }: ResType = useQuery(["deleted-tasks"], getDeletedTasks);
-
 
   return (
     <Box p={2}>
@@ -25,15 +23,21 @@ function DeletedTasks() {
 
 const columns: Array<ColumnType> = [
   { key: "taskNumber", title: "Task Id" },
-  { key: "client.displayName", title: "Client Name" },
   { key: "name", title: "Task Name" },
   { key: "dueDate", title: "Due Date" },
-  { key: "deletedDate", title: "Deleted Date",
-  render:(v)=>moment(v.deletedDate).format("YYYY-MM-DD")
- },
-
- 
-  
+  { key: "client.displayName", title: "Client Name" },
+  {
+    key: "priority",
+    title: "Priority",
+    render: (v) => <PriorityText text={v?.priority} />,
+  },
+  {
+    key: "status",
+    title: "Status",
+    render: (v) => {
+      return <Typography variant="body2">{getTitle(v?.status)}</Typography>;
+    },
+  },
   {
     key: "Memberss",
     title: "Members",
@@ -45,21 +49,6 @@ const columns: Array<ColumnType> = [
         }))}
       />
     ),
-  },
-  {
-    key: "Action",
-    title: "Action",
-    render: (item: any) => {
-      return (
-        <Button
-          size="small"
-          variant="contained"
-          color="secondary"
-        >
-          Restore
-        </Button>
-      );
-    },
   },
 ];
 

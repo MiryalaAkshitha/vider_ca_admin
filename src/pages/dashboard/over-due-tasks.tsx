@@ -3,6 +3,7 @@ import { Box, Button } from "@mui/material";
 import { getOverdueTasks } from "api/services/organization";
 import Loader from "components/Loader";
 import Table from "components/Table";
+import useQueryParams from "hooks/useQueryParams";
 import moment from "moment";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -13,9 +14,11 @@ function TasksByService() {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(10);
+  const { queryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["over-due-tasks", { limit: pageCount, offset: page * pageCount }],
+    ["over-due-tasks", { limit: pageCount, offset: page * pageCount, dashboardType }],
     getOverdueTasks
   );
 

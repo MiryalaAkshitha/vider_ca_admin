@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { getTaskAnalytics } from "api/services/organization";
 import Loader from "components/Loader";
+import useQueryParams from "hooks/useQueryParams";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import DueDatesThisWeek from "./DueDatesThisWeek";
@@ -13,17 +14,18 @@ import TasksByStatus from "./TasksByStatus";
 import TotalNumberOfTasks from "./TotalNumberOfTasks";
 
 function TaskAnalytics() {
-  const { data, isLoading }: ResType = useQuery(["task-analytics"], getTaskAnalytics);
+  const { queryParams } = useQueryParams();
+  const dashboardType = queryParams.type || "user";
+
+  const { data, isLoading }: ResType = useQuery(
+    ["task-analytics", { dashboardType }],
+    getTaskAnalytics
+  );
 
   if (isLoading) return <Loader />;
 
   return (
     <>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography mb={1} variant="subtitle2">
-          Task Analytics
-        </Typography>
-      </Box>
       <Grid container spacing={2}>
         <Grid xs={6} item>
           <Grid container spacing={2}>

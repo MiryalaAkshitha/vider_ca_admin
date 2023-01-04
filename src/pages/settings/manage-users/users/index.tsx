@@ -1,4 +1,4 @@
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { getRoles } from "api/services/roles";
 import { getAllUsers, getUsers } from "api/services/users";
@@ -10,12 +10,9 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 import AddMember from "views/settings/manage-users/users/AddMember";
 import UserCard from "views/settings/manage-users/users/UserCard";
-import AddMemberToEspo from "./add-to-espo";
 
 function Users() {
   const [open, setOpen] = useState<boolean>(false);
-  const [openMember, setOpenMember] = useState<boolean>(false);
-
   const [search, setSearch] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
@@ -50,33 +47,21 @@ function Users() {
           placeHolder="Search by Name or tags"
           onChange={(v) => setSearch(v)}
         />
-        <Box style={{ display: "flex", justifyContent: "space-between", width: "360px" }}>
-          <Button
-            style={{ visibility: "hidden" }}
-            variant="outlined"
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            add to espo
-          </Button>
-
-          <TextField
-            size="small"
-            select
-            onChange={(e) => setRole(e.target.value)}
-            label="Filter by role"
-            value={role}
-            sx={{ minWidth: 200 }}
-          >
-            <MenuItem value="">- None -</MenuItem>
-            {roles?.data?.map((item: any, index: number) => (
-              <MenuItem value={item?.name} key={index}>
-                {item?.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Box>
+        <TextField
+          size="small"
+          select
+          onChange={(e) => setRole(e.target.value)}
+          label="Filter by role"
+          value={role}
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="">- None -</MenuItem>
+          {roles?.data?.map((item: any, index: number) => (
+            <MenuItem value={item?.name} key={index}>
+              {item?.name}
+            </MenuItem>
+          ))}
+        </TextField>
       </Box>
       <Grid container spacing={3} sx={{ maxWidth: 1400, mt: 2 }}>
         {getData()?.map((user: any, index: number) => (
@@ -85,11 +70,10 @@ function Users() {
           </Grid>
         ))}
       </Grid>
-      <AddMember open={openMember} setOpen={setOpenMember} />
-      {/* <AddMemberToEspo open={open} setOpen={setOpen} /> */}
+      <AddMember open={open} setOpen={setOpen} />
       <FloatingButton
         onClick={() => {
-          setOpenMember(true);
+          setOpen(true);
         }}
       />
     </Box>

@@ -247,6 +247,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               variant="outlined"
               fullWidth
               name="tokenNumber"
+              required
               onChange={handleChange}
               value={state.tokenNumber}
               size="small"

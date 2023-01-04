@@ -30,7 +30,7 @@ interface IProps {
 
 function AllFiltersDialog({ open, setOpen }: IProps) {
   const dispatch = useDispatch();
-  const { selected, appliedFilters,selectedFilters } = useSelector(selectTaskBoard);
+  const { selected, appliedFilters } = useSelector(selectTaskBoard);
 
   const { data: labels, isLoading: labelsLoading }: ResType = useQuery("labels", getLabels, {
     enabled: open,
@@ -90,8 +90,8 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
               >
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
                   Category{" "}
-                  {selectedFilters["category"].length > 0 && (
-                    <span style={{ fontWeight: "bold" }}>({selectedFilters["category"].length})</span>
+                  {appliedFilters["category"].length > 0 && (
+                    <span style={{ fontWeight: "bold" }}>({appliedFilters["category"].length})</span>
                   )}
                 </Typography>
               </ListItemButton>
@@ -101,8 +101,8 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
               >
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
                   Client Category{" "}
-                  {selectedFilters["clientCategory"].length > 0 && (
-                    <span style={{ fontWeight: "bold" }}>({selectedFilters["clientCategory"].length})</span>
+                  {appliedFilters["clientCategory"].length > 0 && (
+                    <span style={{ fontWeight: "bold" }}>({appliedFilters["clientCategory"].length})</span>
                   )}
                 </Typography>
               </ListItemButton>
@@ -112,8 +112,8 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
               >
                 <Typography variant="body2" color="rgba(0,0,0,0.7)">
                   Financial Year{" "}
-                  {selectedFilters["financialYear"].length > 0 && (
-                    <span style={{ fontWeight: "bold" }}>({selectedFilters["financialYear"].length})</span>
+                  {appliedFilters["financialYear"].length > 0 && (
+                    <span style={{ fontWeight: "bold" }}>({appliedFilters["financialYear"].length})</span>
                   )}
                 </Typography>
               </ListItemButton>
@@ -125,8 +125,8 @@ function AllFiltersDialog({ open, setOpen }: IProps) {
                 >
                   <Typography variant="body2" color="rgba(0,0,0,0.7)">
                     {filter.title}{" "}
-                    {selectedFilters[filter.key].length > 0 && (
-                      <span style={{ fontWeight: "bold" }}>({selectedFilters[filter.key].length})</span>
+                    {appliedFilters[filter.key].length > 0 && (
+                      <span style={{ fontWeight: "bold" }}>({appliedFilters[filter.key].length})</span>
                     )}
                   </Typography>
                 </ListItemButton>

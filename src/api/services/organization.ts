@@ -57,13 +57,11 @@ const deleteOrganizationLicense = ({ id }: any) => {
 };
 
 const getTaskAnalytics = ({ queryKey }) => {
-  return http.get(`/stats/task-analytics`, {
-    params: { type: queryKey[1] },
-  });
+  return http.get(`/stats/task-analytics`, { params: { ...queryKey[1] } });
 };
 
-const getTasksDueThisWeek = () => {
-  return http.get(`/stats/tasks-due-this-week`);
+const getTasksDueThisWeek = ({ queryKey }) => {
+  return http.get(`/stats/tasks-due-this-week`, { params: { ...queryKey[1] } });
 };
 
 const getTasksByCategory = ({ queryKey }) => {
@@ -94,8 +92,8 @@ const getClientsByCategory = () => {
   return http.get(`/stats/clients-by-category`);
 };
 
-const getTotalLogHours = () => {
-  return http.get(`/stats/total-log-hours`);
+const getTotalLogHours = ({ queryKey }) => {
+  return http.get(`/stats/total-log-hours`, { params: { ...queryKey[1] } });
 };
 
 const getWeeklyLogHours = ({ queryKey }) => {

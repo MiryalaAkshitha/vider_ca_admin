@@ -12,7 +12,6 @@ import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, move, reorder } from "./utils";
-import { http } from "api/http";
 
 type Props = {
   data: any;

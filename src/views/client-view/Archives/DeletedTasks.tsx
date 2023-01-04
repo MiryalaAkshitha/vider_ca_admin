@@ -70,7 +70,6 @@ function DeletedTasks({ filters }: Props) {
                   : "";
               },
             },
-            
             {
               key: "paymentStatus",
               title: "Payment status",
