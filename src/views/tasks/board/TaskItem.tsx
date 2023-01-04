@@ -135,7 +135,7 @@ function TaskItem({ data }: Props) {
             {data?.recurring && <img style={{ textAlign: "right" }} src={icons.recurring} alt="" />}
           </Box>
           <Typography variant="caption" color="gray">
-            Sub Tasks: ({data?.subTasks.length})
+            Sub Tasks1: ({data?.subTasks.length})
           </Typography>
         </Box>
       </Box>
