@@ -12,6 +12,7 @@ import { StyledDraggableItem, StyledDraggableList } from "../styles";
 import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, move, reorder } from "./utils";
+import { http } from "api/http";
 
 type Props = {
   data: any;
@@ -174,7 +175,11 @@ function Board({ data }: Props) {
                       isdraggingover={snapshot.isDraggingOver?.toString()}
                     >
                       {state[key].map((item: any, index: number) => (
-                        <Draggable key={item?.uid} draggableId={item?.uid} index={index}>
+                        <Draggable
+                          key={item?.taskNumber}
+                          draggableId={item?.taskNumber}
+                          index={index}
+                        >
                           {(provided: any, snapshot: any) => (
                             <StyledDraggableItem
                               ref={provided.innerRef}
