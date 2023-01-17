@@ -19,6 +19,7 @@ interface StateProps {
   clientManager: string;
   mobileNumber: string;
   email: string;
+  clientPortalAccess:string
 }
 
 interface Props extends DialogProps {
@@ -36,6 +37,7 @@ function ConverLead({ open, setOpen, data }: Props) {
     clientManager: "",
     mobileNumber: "",
     email: "",
+    clientPortalAccess:"no"
   });
 
   const { data: users, isLoading: userLoading }: ResType = useQuery("users", getUsers, {
@@ -79,12 +81,14 @@ function ConverLead({ open, setOpen, data }: Props) {
   };
 
   const handleSubmit = async (e: SubmitType) => {
+    const tempstate = JSON.parse(JSON.stringify(state));
+    tempstate['clientPortalAccess'] = "yes";
     try {
       e.preventDefault();
-      await mutateAsync(state);
+      await mutateAsync(tempstate);
       await mutateLead({
         id: data?.id,
-        data: { ...state, status: "converted" },
+        data: { ...tempstate, status: "converted" },
       });
     } catch (err) {
       console.log(err);
