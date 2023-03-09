@@ -30,7 +30,7 @@ function SideNav() {
     >
       <DrawerHeader>
         <Box mx="-5px">
-          <img style={{ width: 120 }} src={atom_logo} alt="" />
+          <img style={{ width: 55 }} src={atom_logo} alt="" />
         </Box>
       </DrawerHeader>
       <Divider />

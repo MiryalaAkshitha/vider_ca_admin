@@ -19,7 +19,7 @@ const OrgDetails = () => {
   return (
     <Box sx={{ maxWidth: "650px", mx: "auto", py: 4 }}>
       <Box textAlign="center">
-        <img src={atomByViderLogo} height="100px" width="100px" alt="" />
+        <img src={atomByViderLogo} height="60px" alt="" />
         <Typography mt={1} variant="subtitle1">
           Organisation Details
         </Typography>
