@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  handleExistingOtherParticular,
   handleAddTasksToParticular,
   selectEstimate,
 } from "redux/reducers/createEstimateSlice";
@@ -42,6 +43,23 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       return;
     }
     dispatch(handleAddTasksToParticular(selected));
+
+    if(selected && selected.length > 0) {
+      selected.forEach((particular: any, index: any) => {
+        if(particular?.expenditure && particular?.expenditure.length > 0) {
+          particular?.expenditure.forEach((expenditure: any, index: any) => {
+            expenditure['name'] = expenditure.particularName;
+            expenditure['amount'] = expenditure.amount;
+            const id = expenditure.id;
+            const key = expenditure.particularName;
+            const value = expenditure.amount;
+            const taskExpenseType = expenditure.taskExpenseType;
+            dispatch(handleExistingOtherParticular({ id, taskExpenseType, index, key, value }));
+          });          
+        }
+      });
+    }
+    
     setOpen(false);
   }
 

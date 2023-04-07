@@ -26,10 +26,11 @@ function Particulars({ result, interState }: IProps) {
               {PARTICULARS_HEADINGS.map((par, index) => {
                 if (par.name === "Action") return null;
 
-                if (interState && par.name === "IGST") {
+                // if (interState && par.name === "IGST") {
+                if(result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && par.name === "IGST") {
                   return (
                     <TableCell key={index}>
-                      <Typography>CGST + SGST</Typography>
+                      <Typography>CGST / SGST</Typography>
                     </TableCell>
                   );
                 }

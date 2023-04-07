@@ -88,7 +88,7 @@ const GstDetails = () => {
         buildingNo: result?.data?.pradr?.addr?.bno,
         buildingName: result?.data?.pradr?.addr?.bnm,
         street: result?.data?.pradr?.addr?.st,
-        city: result?.data?.pradr?.addr?.cty,
+        city: result?.data?.pradr?.addr?.cty ? result?.data?.pradr?.addr?.city : '',
         district: result?.data?.pradr?.addr?.dst,
         state: result?.data?.pradr?.addr?.stcd,
         pincode: result?.data?.pradr?.addr?.pncd,
@@ -257,6 +257,7 @@ const GstDetails = () => {
             onChange={(e, v) => setState({ ...state, state: v })}
             id="combo-box-demo"
             size="small"
+            value={state.state}
             options={states?.data?.map((item: any) => item.name) || []}
             renderInput={(params) => (
               <TextField required {...params} label="State / Union Territory" />

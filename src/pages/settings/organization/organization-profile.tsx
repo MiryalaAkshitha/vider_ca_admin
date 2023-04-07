@@ -43,15 +43,15 @@ function OrganizationProfile() {
     if (data.mobileNumber && !phonePattern.test(data.mobileNumber)) {
       return snack.error("Invalid mobile number");
     }
-    if (data.alternateMobileNumber && !phonePattern.test(data.alternateMobileNumber)) {
-      return snack.error("Invalid mobile number");
-    }
-    if (data.primaryContactMobileNumber && !phonePattern.test(data.primaryContactMobileNumber)) {
-      return snack.error("Invalid mobile number");
-    }
-    if (data.primaryContactEmail && !phonePattern.test(data.primaryContactEmail)) {
-      return snack.error("Invalid email");
-    }
+    // if (data.alternateMobileNumber && !phonePattern.test(data.alternateMobileNumber)) {
+    //   return snack.error("Invalid mobile number");
+    // }
+    // if (data.primaryContactMobileNumber && !phonePattern.test(data.primaryContactMobileNumber)) {
+    //   return snack.error("Invalid mobile number");
+    // }
+    // if (data.primaryContactEmail && !phonePattern.test(data.primaryContactEmail)) {
+    //   return snack.error("Invalid email");
+    // }
 
     await mutateAsync({ data });
   };

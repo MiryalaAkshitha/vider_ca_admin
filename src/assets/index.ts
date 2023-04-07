@@ -1,5 +1,6 @@
 import quote from "./images/quote.png";
 import logo from "./images/logo.svg";
+import atomByViderLogo from "./images/atomByViderLogo.png";
 import loginBg from "./images/login_bg.png";
 import whiteLogo from "./images/white_logo.svg";
 import dashboard from "./icons/dashboard.svg";
@@ -95,6 +96,7 @@ export {
   clientFormCard,
   atom_logo,
   emptyGroup,
+  atomByViderLogo
 };
 
 export const icons = {

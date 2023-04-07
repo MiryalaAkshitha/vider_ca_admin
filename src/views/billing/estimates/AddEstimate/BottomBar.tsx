@@ -33,6 +33,10 @@ function BottomBar() {
   });
 
   const onSubmit = (args: any) => {
+    const newstate = JSON.parse(JSON.stringify(state));
+    newstate['shippingAddress']['state'] = 'Telangana';
+    newstate['billingAddress']['state'] = 'Telangana';
+
     let apiData: any = { ...state };
     let totalGstAmount = getTotalGst(state.particulars);
     apiData.approvalHierarchyId = state.approvalHierarchy?.id;
@@ -93,16 +97,16 @@ function BottomBar() {
             color="secondary"
             variant="contained"
           >
-            Submit for Approval
+            Submit
           </Button>
-          <Button
+          {/* <Button
             disableElevation
             onClick={() => onSubmit({ submitForApproval: false })}
             color="secondary"
             variant="contained"
           >
             Save as Draft
-          </Button>
+          </Button> */}
         </Box>
       </Box>
     </Paper>

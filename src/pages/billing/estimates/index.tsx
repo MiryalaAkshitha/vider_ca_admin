@@ -60,11 +60,11 @@ let columns = [
   },
   {
     key: "grandTotal",
-    title: "Estimated amount",
+    title: "Invoice amount",
   },
   {
     key: "estimateDate",
-    title: "Estimate Date",
+    title: "Invoice Date",
   },
   {
     key: "estimateDueDate",

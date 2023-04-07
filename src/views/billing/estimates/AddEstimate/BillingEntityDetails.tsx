@@ -70,9 +70,9 @@ function BillingEntityDetails() {
             <Box mt={2}>
               <SectionHeading title="Billing Entity Address" />
               <Box p={2}>
-                <Box mb={1}>
+                {/* <Box mb={1}>
                   <img src={logo} alt="logo" />
-                </Box>
+                </Box> */}
                 <AddressDetail
                   title="Legal Name"
                   value={billingEntityAddress?.legalName}
@@ -110,9 +110,10 @@ function BillingEntityDetails() {
               </IconButton>
             </StyledSelectedBox>
           ) : (
-            <StyledSelectBox sx={{ mt: 0 }} onClick={() => setOpen(true)}>
-              <Typography>+ Select Approval Hierarchy</Typography>
-            </StyledSelectBox>
+            <></>
+            // <StyledSelectBox sx={{ mt: 0 }} onClick={() => setOpen(true)}>
+            //   <Typography>+ Select Approval Hierarchy</Typography>
+            // </StyledSelectBox>
           )}
         </Grid>
       </Grid>

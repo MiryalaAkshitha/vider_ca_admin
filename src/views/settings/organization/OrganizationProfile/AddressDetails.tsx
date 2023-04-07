@@ -14,12 +14,12 @@ function AddressDetails({ state, setState }) {
   };
 
   return (
-    <SectionWrapper title="Address Details">
+    <SectionWrapper title="Principal Place of Business">
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Building Name"
+            label="Name of The Premises/Building"
             name="buildingName"
             value={state?.buildingName}
             onChange={handleChange}
@@ -28,7 +28,7 @@ function AddressDetails({ state, setState }) {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Street"
+            label="Road / Street"
             name="street"
             value={state?.street}
             onChange={handleChange}
@@ -37,9 +37,18 @@ function AddressDetails({ state, setState }) {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="City"
+            label="City / Town / Village"
             name="city"
             value={state?.city}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            label="District"
+            name="district"
+            value={state?.district}
             onChange={handleChange}
           />
         </Grid>
@@ -58,7 +67,7 @@ function AddressDetails({ state, setState }) {
                 {...params}
                 variant="outlined"
                 fullWidth
-                label="State"
+                label="State / Union Territory"
               />
             )}
           />

@@ -88,7 +88,7 @@ const GetStarted = ({ data }: any) => {
           <GetStartedCard
             active={data?.selectServices}
             img={icons.checklist_PosterImage}
-            title="Add Sevices"
+            title="Add Services"
             desc="Select services to be added to the platform"
             btnTitle="Select services"
             btnAction={() => setOpenCreateTask(true)}

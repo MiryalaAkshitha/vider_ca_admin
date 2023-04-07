@@ -38,15 +38,26 @@ function TotalCalculations() {
       </Box>
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Typography variant="caption" flex={1}>
-          GST
+          {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? "CGST" : "IGST"}
         </Typography>
         <Typography variant="body2">
-          {getTotalGst(state.particulars)}/-
+          {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? (getTotalGst(state.particulars) / 2) : getTotalGst(state.particulars)}/-
         </Typography>
       </Box>
+      {state.billingEntityAddress?.state == state?.placeOfSupply.split("-")[1] &&
+        <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+          <Typography variant="caption" flex={1}>
+            SGST
+          </Typography>
+          <Typography variant="body2">
+            {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? getTotalGst(state.particulars) / 2 : getTotalGst(state.particulars)}/-
+          </Typography>
+        </Box>
+      }      
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Typography variant="caption" flex={1}>
-          Pure Agent Charges
+          Additional Charge
+          {/* Pure Agent Charges */}
         </Typography>
         <Typography variant="body2">
           {getTotalCharges(state.otherParticulars)} /-
@@ -97,7 +108,7 @@ function TotalCalculations() {
       <Divider />
       <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
         <Typography variant="body1" flex={1}>
-          Estimate Value
+          Invoice Value
         </Typography>
         <Typography variant="subtitle2">{getGrandTotal(state)} /-</Typography>
       </Box>

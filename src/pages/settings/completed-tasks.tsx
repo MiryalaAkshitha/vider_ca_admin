@@ -1,19 +1,34 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getDeletedClients, restoreClient } from "api/services/clients/clients";
-import { getDeletedUsers, restoreUser } from "api/services/users";
+import { getUserCompletedTasks, restoreClient } from "api/services/clients/clients";
 import Loader from "components/Loader";
 import Table from "components/Table";
 import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
+import moment from "moment";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
+import { getTitle } from "utils";
+import Members from "components/Members";
 
 function CompletedTasks() {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
-  const { data, isLoading }: ResType = useQuery(["completed-tasks"], getDeletedClients);
+  const filters = {
+    financialYear: '',
+    search: ''
+  };
+  
+  const { data, isLoading }: ResType = useQuery(
+    [
+      "user-completed-tasks",
+      {
+        userId: 95,
+      },
+    ],
+    getUserCompletedTasks
+  );
 
   const { mutate } = useMutation(restoreClient, {
     onSuccess: () => {
@@ -25,11 +40,22 @@ function CompletedTasks() {
     },
   });
 
-  const handleRestore = (id: number) => {
-    confirm({
-      msg: "Are you sure you want to restore this client?",
-      action: () => mutate(id),
-    });
+  const getData = () => {
+    let result = data?.data || [];
+    if (filters.financialYear) {
+      result = result?.filter((item: any) => {
+        return item.financialYear === filters.financialYear;
+      });
+    }
+    if (filters.search) {
+      result = result?.filter((item: any) => {
+        return (
+          item?.name?.toLowerCase().includes(filters.search.toLowerCase()) ||
+          item?.taskId?.toLowerCase().includes(filters.search.toLowerCase())
+        );
+      });
+    }
+    return result;
   };
 
   if (isLoading) return <Loader />;
@@ -40,43 +66,50 @@ function CompletedTasks() {
         Completed Tasks
       </Typography>
       <Table
-        loading={isLoading}
-        data={data?.data || []}
-        columns={[
-          {
-            key: "clientId",
-            title: "Client Id",
-          },
-          {
-            key: "displayName",
-            title: "Display Name",
-          },
-          {
-            key: "email",
-            title: "Email",
-          },
-          {
-            key: "mobileNumber",
-            title: "Mobile Number",
-          },
-          {
-            key: "Action",
-            title: "Action",
-            render: (item: any) => {
-              return (
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => handleRestore(item?.id)}
-                >
-                  Restore
-                </Button>
-              );
+          loading={isLoading}
+          data={getData()}
+          columns={[
+            {
+              key: "taskNumber",
+              title: "Task ID",
             },
-          },
-        ]}
-      />
+            {
+              key: "name",
+              title: "Task name",
+            },
+            {
+              key: "completedDate",
+              title: "Completed Date",
+              render: (row) => {
+                return row?.completedDate
+                  ? moment(row?.completedDate).format("DD-MM-YYYY")
+                  : "";
+              },
+            },
+            {
+              key: "clientid",
+              title: "Client Id",
+              render: (row) => getTitle(row?.client?.clientId),
+            },
+            {
+              key: "clientname",
+              title: "Client Name",
+              render: (row) => getTitle(row?.client?.displayName),
+            },
+            {
+              key: "Memberss",
+              title: "Members",
+              render: (v) => (
+                <Members
+                  data={v?.members?.map((item: any) => ({
+                    title: item?.fullName,
+                    src: item?.imageUrl,
+                  }))}
+                />
+              ),
+            },
+          ]}
+        />
     </Box>
   );
 }

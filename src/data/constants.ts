@@ -134,14 +134,14 @@ export const invoicingClientsMenu: Array<{ title: string; path: string }> = [
   },
   {
     title: "Unbilled Tasks",
-    path: "unbilled-tasks",
+    path: "unbilledtasks",
   },
   {
     title: "Billed Tasks",
-    path: "billed-tasks",
+    path: "billedtasks",
   },
   {
-    title: "billing",
+    title: "Billing",
     path: "billing",
   },
   // {
@@ -163,7 +163,19 @@ export const invoicingClientsMenu: Array<{ title: string; path: string }> = [
   {
     title: "Receipts",
     path: "clientreceipts",
-  }
+  },
+  // {
+  //   title: "Comments",
+  //   path: "/comments",
+  // },
+  // {
+  //   title: "Mails",
+  //   path: "/mails",
+  // },
+  // {
+  //   title: "Statements",
+  //   path: "/statements",
+  // },
 ];
 
 export const userProfileMenu: Array<{ title: string; path: string }> = [
@@ -182,6 +194,14 @@ export const userProfileMenu: Array<{ title: string; path: string }> = [
   {
     title: "Log Hours",
     path: "/log-hours",
+  },
+  {
+    title: "HRMS",
+    path: "/hrms",
+  },
+  {
+    title: "Holidays",
+    path: "/holidays",
   },
 ];
 
@@ -373,7 +393,7 @@ export enum REPORT {
   status ="status",
   dueDate ="Due Date",
   daysoverdue ="OverDue By(Days)",
-  totaltasksassigned ="Total Tasks Assigned",
+  totaltasksassigned ="Total Tasks Assigned",
   tasknumber = "Task Number",
   additional = "Additional Charges",
   pureagent = "Pure agent"

@@ -15,8 +15,7 @@ function NotificationItem({ data }) {
         <Box flex={1}>
           <Typography variant="body1">{data?.title}</Typography>
           <Typography variant="caption" color="rgba(0,0,0,0.6)">
-            {/* {data?.body} */}
-            <span style={{'fontSize': '9px'}} dangerouslySetInnerHTML={{ __html: `${data?.body}` }} />
+          <span style={{'fontSize': '9px'}} dangerouslySetInnerHTML={{ __html: `${data?.body}` }} />
           </Typography>
         </Box>
         <Typography variant="caption">

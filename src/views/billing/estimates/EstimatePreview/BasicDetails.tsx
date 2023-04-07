@@ -20,9 +20,9 @@ function BasicDetails({ result }) {
           </Box>
           <SectionHeading title="Billed By" />
           <Box p={1}>
-            <Box mb={1}>
+            {/* <Box mb={1}>
               <img src={logo} alt="" />
-            </Box>
+            </Box> */}
             <Typography variant="body2">Vider Business Solutions</Typography>
             <Typography variant="body2">
               2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,

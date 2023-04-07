@@ -22,6 +22,7 @@ function OtherParticulars({ result, interState }: IProps) {
             <StyledParticularsTable>
               <TableHead>
                 <TableRow>
+                <TableCell>Expense Type</TableCell>
                   <TableCell>
                     <Typography>Particulars</Typography>
                   </TableCell>
@@ -33,6 +34,7 @@ function OtherParticulars({ result, interState }: IProps) {
               <TableBody>
                 {result?.otherParticulars?.map((item: any, index: number) => (
                   <TableRow key={index}>
+                    <TableCell>{item?.taskExpenseType}</TableCell>
                     <TableCell>{item?.name}</TableCell>
                     <TableCell>{item?.amount} /-</TableCell>
                   </TableRow>
@@ -58,15 +60,27 @@ function OtherParticulars({ result, interState }: IProps) {
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
               <Typography variant="caption" flex={1}>
-                GST
+                {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] ? "CGST" : "IGST"}
               </Typography>
               <Typography variant="body2">
-                {result?.totalGstAmount}/-
+                {+result?.totalGstAmount / 2}/-
               </Typography>
             </Box>
+            {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && <>
+              <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+                <Typography variant="caption" flex={1}>
+                  SGST
+                </Typography>
+                <Typography variant="body2">
+                  {+result?.totalGstAmount / 2}/-
+                </Typography>
+              </Box>
+            </>}
+
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
               <Typography variant="caption" flex={1}>
-                Pure Agent Charges
+                Additional Charge
+                {/* Pure Agent Charges */}
               </Typography>
               <Typography variant="body2">{result.totalCharges} /-</Typography>
             </Box>
@@ -87,7 +101,7 @@ function OtherParticulars({ result, interState }: IProps) {
             <Divider />
             <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
               <Typography variant="body1" flex={1}>
-                Estimate Value
+                Invoice Value
               </Typography>
               <Typography variant="subtitle2">
                 {result?.grandTotal} /-

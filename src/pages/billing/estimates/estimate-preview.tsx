@@ -45,7 +45,7 @@ const EstimatePreview = () => {
         <BasicDetails result={result} />
         <AddressDetails result={result} />
         <Particulars result={result} interState={interState} />
-        <Box sx={{ pageBreakAfter: "always" }}></Box>
+        {/* <Box sx={{ pageBreakAfter: "always" }}></Box> */}
         <OtherParticulars result={result} interState={interState} />
         <BankDetails result={result} />
         <Box mt={2}>
@@ -58,14 +58,7 @@ const EstimatePreview = () => {
             ))}
           </Box>
         </Box>
-        <Box textAlign="center" mt={2}>
-          <Typography variant="body2">
-            For any enquiry, reach out via email :
-            <span style={{ color: "#0D47A1" }}>viderbusiness@gmail.com</span>
-            or call on
-            <span style={{ color: "#0D47A1" }}> +91 81211 81212</span>
-          </Typography>
-        </Box>
+        
       </Paper>
     </Box>
   );

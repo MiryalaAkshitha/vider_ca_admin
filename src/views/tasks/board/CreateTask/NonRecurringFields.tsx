@@ -20,6 +20,7 @@ const NonRecurringFields = ({ control }) => {
       <Box mt={2}>
         <FormDate
           name="expectedCompletionDate"
+          required
           control={control}
           label="Expected Completion Date"
         />

@@ -18,7 +18,12 @@ function BasicDetails() {
 
   const { data, isLoading }: ResType = useQuery(
     ["next-receipt-number"],
-    getNextReceiptNumber
+    getNextReceiptNumber,
+    {
+      onSuccess: (res: any) => {
+        dispatch(handleChange({ key: "receiptNumber", value: res.data }));
+      },
+    }
   );
 
   const { data: clients, isLoading: clientsLoading }: ResType = useQuery(
@@ -40,8 +45,9 @@ function BasicDetails() {
         label="Receipt Number"
         variant="outlined"
         size="small"
+        name="receiptNumber"
         disabled
-        value={data?.data}
+        value={state.receiptNumber}
       />
       <TextField
         fullWidth
@@ -81,7 +87,7 @@ function BasicDetails() {
               control={<Radio />}
               label="Invoice"
             />
-            <FormControlLabel value="TASK" control={<Radio />} label="Task" />
+            {/* <FormControlLabel value="TASK" control={<Radio />} label="Task" /> */}
             <FormControlLabel
               value="ADVANCE"
               control={<Radio />}

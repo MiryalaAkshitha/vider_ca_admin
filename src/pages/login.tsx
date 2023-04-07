@@ -11,6 +11,8 @@ import ForgotPassword from "views/login/ForgotPassword";
 import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
 
+import metadata from '../metadata.json';
+
 type DataType = { username: string; password: string };
 
 const Login = () => {
@@ -116,6 +118,9 @@ const Login = () => {
         </Box>
       </Grid>
       <ForgotPassword open={open} setOpen={setOpen} />
+      <div className="sf-footer-version">
+        {`Version ${metadata.buildMajor}.${metadata.buildMinor}.${metadata.buildRevision} ${metadata.buildTag}`}
+      </div>
     </Grid>
   );
 };

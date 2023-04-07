@@ -89,7 +89,7 @@ function AddEvent({ open, setOpen }: Props) {
             label="Event Type"
             options={[
               { label: "Event", value: "EVENT" },
-              { label: "Task", value: "TASK" },
+              { label: "Task", value: "TASK" }
             ]}
           />
           {watch("type") === "TASK" && (

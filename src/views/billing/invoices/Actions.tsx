@@ -17,7 +17,9 @@ import {
 import { snack } from "components/toast";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { handleChange } from "redux/reducers/createReceiptSlice";
 import { handleError } from "utils/handleError";
 import { StyledActionsMenu } from "../styles";
 import { InvoiceStatus } from "../types";
@@ -33,6 +35,7 @@ interface Props {
 const Actions = (props: Props) => {
   const { anchorEl, setAnchorEl, selected, clearSelection } = props;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
 
@@ -86,7 +89,7 @@ const Actions = (props: Props) => {
   };
 
   const handleEdit = () => {
-    navigate(`/billing/invoices/add?estimateId=${selected[0]?.id}`);
+    navigate(`/billing/invoices/${selected[0]?.id}/edit`);
   };
 
   const handleApprovalStatus = () => {
@@ -96,6 +99,24 @@ const Actions = (props: Props) => {
   const handleSubmitForApproval = () => {
     submit({ id: selected[0]?.id });
   };
+
+  const getdisabledStatus = (selected: any) => {
+    const selectedclients: any = [];
+    selected.forEach((item: any) => {
+      if (item.client.id) {
+        selectedclients.push(item.client.id);
+      }
+    });
+    let hasDuplicate = selectedclients.every((val: any, i: any, arr: any) => val === arr[0]);
+    if (hasDuplicate) {
+      return selected.some(obj => {
+        // return obj?.status !== 'PAID' && obj?.status == 'APPROVAL_PENDING'
+        return (obj?.status == 'PAID' || obj?.status == 'CANCELLED')
+      });
+    } else {
+      return true;
+    }
+  }
 
   return (
     <>
@@ -109,7 +130,8 @@ const Actions = (props: Props) => {
           onClick={handleEdit}
           disabled={
             selected.length !== 1 ||
-            selected[0]?.status === InvoiceStatus.CANCELLED
+            selected[0]?.status === InvoiceStatus.CANCELLED ||
+            selected[0]?.status === InvoiceStatus.PAID
           }
         >
           <EditOutlined />
@@ -119,25 +141,27 @@ const Actions = (props: Props) => {
           onClick={handleCancel}
           disabled={
             selected.length !== 1 ||
-            selected[0]?.status === InvoiceStatus.CANCELLED
+            selected[0]?.status === InvoiceStatus.CANCELLED ||
+            selected[0]?.status === InvoiceStatus.PAID
           }
         >
           <CancelOutlined />
           Cancel Invoice
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            navigate(`/billing/invoices/${selected[0]?.id}/receipt`)
-          }
-          disabled={
-            selected.length !== 1 ||
-            selected[0]?.status !== InvoiceStatus.APPROVED
-          }
-        >
-          <Payment />
-          Create Payment Receipt
-        </MenuItem>
-        <MenuItem
+        {selected.length > 0 &&
+          <MenuItem
+            onClick={() => {
+              dispatch(handleChange({ key: 'particulars', value: selected }));
+              navigate(`/billing/invoices/${selected[0]?.id}/receipt`)
+            }
+            }
+            disabled={getdisabledStatus(selected)}
+          >
+            <Payment />
+            Create Payment Receipt
+          </MenuItem>
+        }
+        {/* <MenuItem
           onClick={handleSubmitForApproval}
           disabled={
             selected.length !== 1 ||
@@ -147,8 +171,8 @@ const Actions = (props: Props) => {
         >
           <ArrowUpwardIcon />
           Submit for Approval
-        </MenuItem>
-        <MenuItem
+        </MenuItem> */}
+        {/* <MenuItem
           onClick={handleApprovalStatus}
           disabled={
             selected.length !== 1 ||
@@ -158,8 +182,8 @@ const Actions = (props: Props) => {
         >
           <ApprovalOutlined />
           View Approval Status
-        </MenuItem>
-        <MenuItem
+        </MenuItem> */}
+        {/* <MenuItem
           disabled={
             selected.length !== 1 ||
             selected[0]?.status === InvoiceStatus.CANCELLED
@@ -167,7 +191,7 @@ const Actions = (props: Props) => {
         >
           <MailOutline />
           Send Mail
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           disabled={
             selected.length !== 1 ||

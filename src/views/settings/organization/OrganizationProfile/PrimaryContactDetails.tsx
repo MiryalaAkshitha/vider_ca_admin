@@ -9,13 +9,13 @@ function PrimaryContactDetails({ state, setState }) {
   };
 
   return (
-    <SectionWrapper title="Primary Contact Details">
+    <SectionWrapper title="Authorized Signatory Details">
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handleChange}
             fullWidth
-            label="Full Name"
+            label="Name of Authorized Signatory"
             name="primaryContactFullName"
             value={state.primaryContactFullName}
           />
@@ -23,7 +23,7 @@ function PrimaryContactDetails({ state, setState }) {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Email"
+            label="Authorized Signatory Email ID"
             name="primaryContactEmail"
             onChange={handleChange}
             value={state.primaryContactEmail}
@@ -32,7 +32,7 @@ function PrimaryContactDetails({ state, setState }) {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Mobile Number"
+            label="Authorized Signatory Mobile #"
             name="primaryContactMobileNumber"
             onChange={handleChange}
             value={state.primaryContactMobileNumber}

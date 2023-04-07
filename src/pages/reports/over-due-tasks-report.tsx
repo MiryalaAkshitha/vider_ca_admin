@@ -1,0 +1,69 @@
+import React, { useState, useEffect, useContext } from 'react'
+import { Box, Breadcrumbs, Typography } from "@mui/material";
+import { getCommonReport } from "api/services/reports";
+import { LinkRouter } from "components/BreadCrumbs";
+import { snack } from "components/toast";
+import useTitle from "hooks/useTitle";
+import moment from "moment";
+import { useMutation } from "react-query";
+import { handleError } from "utils/handleError";
+import Filters from "views/reports/CommonReport/Filters";
+import Report from "views/reports/CommonReport/Report";
+import { UserProfileContext } from 'context/UserProfile';
+
+function OverDueTasksReport() {
+  useTitle("Over Due Tasks Report");
+
+  const [data, setData] = useState(null);
+  const [state, setState] = useState({
+    fromDate: null
+  });
+
+  const [payload, setPayload] = useState({});
+  const [filterfields, setFilterfields] = useState([
+    {type: 'date', label: 'Created From Date', name: 'fromDate'}
+  ]);
+
+  const { data: user } = useContext(UserProfileContext);
+  
+  const { mutate, isLoading, isError } = useMutation(getCommonReport, {
+    onSuccess: (res: any) => {
+      setData(res.data);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
+  const handleSubmit = () => {
+    if (!state.fromDate) return snack.error("Please Select From Date");
+    setData(null);
+    const updatedpayload = {
+      query: 'usersoverduetasks',
+      organizationid: ''+user?.organization?.id
+    }
+    setPayload(updatedpayload);
+    
+    const updatedstate = Object.assign({}, state, updatedpayload );
+    mutate({
+      ...updatedstate,         
+      fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null
+    });
+  };
+
+  return (
+    <Box p={2}>
+      <Breadcrumbs>
+        <LinkRouter underline="hover" color="inherit" to="/reports">
+          Reports
+        </LinkRouter>
+        <Typography color="text.primary">Pre-defined</Typography>
+<Typography color="text.primary">Over Due Tasks Report</Typography>
+      </Breadcrumbs>
+      <Filters state={state} setState={setState} onSubmit={handleSubmit} filterfields={filterfields}/>
+      <Report isLoading={isLoading} isError={isError} state={state} data={data} payload={payload} />
+    </Box>
+  )
+}
+
+export default OverDueTasksReport

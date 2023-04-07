@@ -7,9 +7,11 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 import ClientsHeader from "views/billing/clients/ClientsHeader";
+import { useNavigate } from "react-router-dom";
 
 const Clients = () => {
   useTitle("Billing");
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);
@@ -25,6 +27,10 @@ const Clients = () => {
 
   const totalCount = data?.data?.totalCount || 0;
 
+  const handleRowClick = (v: any) => {
+    navigate(`/billing/clients/${v?.id}`);
+  };
+
   return (
     <Box p={3}>
       <ClientsHeader search={search} setSearch={setSearch} />
@@ -34,6 +40,7 @@ const Clients = () => {
         data={data?.data?.result || []}
         columns={columns}
         loading={isLoading}
+        onRowClick={handleRowClick}
       />
     </Box>
   );

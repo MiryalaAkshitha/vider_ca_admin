@@ -9,9 +9,11 @@ import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
 import { getStatusColor } from "views/billing/estimates/getStatusColor";
 import InvoicesHeader from "views/billing/invoices/InvoicesHeader";
+import { useNavigate } from "react-router-dom";
 
 const Estimates = () => {
   useTitle("Invoices");
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);
@@ -21,6 +23,10 @@ const Estimates = () => {
     ["invoices", { offset: page * pageCount, limit: pageCount, search }],
     getInvoices
   );
+
+  const handleRowClick = (v: any) => {
+    window.open(`/billing/invoices/${v?.id}/preview`);
+  };
 
   const totalCount = data?.data?.totalCount || 0;
 
@@ -33,11 +39,13 @@ const Estimates = () => {
         setSearch={setSearch}
       />
       <Table
+        sx={{ height: 'calc(70vh - 10px)' }}
         selection={{ selected, setSelected }}
         pagination={{ totalCount, pageCount, setPageCount, page, setPage }}
         data={data?.data?.result || []}
         columns={columns}
         loading={isLoading}
+        onRowClick={handleRowClick}
       />
     </Box>
   );
@@ -59,15 +67,19 @@ let columns = [
   },
   {
     key: "grandTotal",
-    title: "Estimated amount",
+    title: "Invoice amount",
   },
   {
     key: "invoiceDate",
-    title: "Estimate Date",
+    title: "Invoice Date",
+    render: (row: any) => formattedDate(row.invoiceDueDate),
+
   },
   {
     key: "invoiceDueDate",
     title: "Due Date",
+    render: (row: any) => formattedDate(row.invoiceDueDate),
+
   },
   {
     key: "createdAt",
@@ -90,7 +102,7 @@ let columns = [
         }}
       >
         <Typography variant="body2">
-          {getTitle(row?.status?.toLowerCase())}
+          { row?.status == 'APPROVAL_PENDING' ? getTitle('invoiced') : getTitle(row?.status?.toLowerCase())}          
         </Typography>
       </Box>
     ),

@@ -4,6 +4,7 @@ import { getClients } from "api/services/clients/clients";
 import { getStates } from "api/services/common";
 import { logo } from "assets";
 import Loader from "components/Loader";
+import { placeOfSupplyStates } from "data/placeOfSupply";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -66,9 +67,9 @@ function ClientDetails() {
             label="Place of Supply"
             value={placeOfSupply}
           >
-            {states?.data?.map((state: any, index: number) => (
-              <MenuItem value={state?.name} key={index}>
-                {state?.name}
+            {placeOfSupplyStates.map((state: any, index: number) => (
+              <MenuItem value={state} key={index}>
+                {state}
               </MenuItem>
             ))}
           </TextField>
@@ -84,9 +85,9 @@ function ClientDetails() {
         <Grid item xs={6}>
           <SectionHeading title="Billing Address" />
           <Box p={2}>
-            <Box mb={1}>
+            {/* <Box mb={1}>
               <img src={logo} alt="logo" />
-            </Box>
+            </Box> */}
             <AddressDetail
               title="Legal Name"
               value={billingAddress?.legalName}
@@ -102,9 +103,9 @@ function ClientDetails() {
         <Grid item xs={6}>
           <SectionHeading title="Shipping Address" />
           <Box p={2}>
-            <Box mb={1}>
+            {/* <Box mb={1}>
               <img src={logo} alt="logo" />
-            </Box>
+            </Box> */}
             <AddressDetail
               title="Legal Name"
               value={shippingAddress?.legalName}

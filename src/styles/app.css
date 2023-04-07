@@ -130,3 +130,11 @@ a.fc-event {
 .fc-header-toolbar {
   margin-bottom: 0.5rem !important;
 }
+
+.sf-footer-version {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 14px;
+  color: #fff;
+}

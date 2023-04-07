@@ -61,7 +61,7 @@ function InvoiceDetails() {
     <>
       <Grid container mt={5}>
         <Grid item xs={12}>
-          <SectionHeading title="Estimate Details" />
+          <SectionHeading title="Invoice Details" />
           <Grid container spacing={2} mt={1}>
             <Grid item xs={6}>
               <TextField

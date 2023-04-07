@@ -28,6 +28,7 @@ function PaymentDetails() {
         <MenuItem value="CREDIT_CARD">Credit Card</MenuItem>
         <MenuItem value="BANK_TRANSFER">BankTransfer</MenuItem>
         <MenuItem value="UPI">UPI</MenuItem>
+        {/* {state?.type !== "ADVANCE" && <MenuItem value="NONE">Please select</MenuItem>}         */}
       </TextField>
       <TextField
         fullWidth

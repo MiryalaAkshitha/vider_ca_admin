@@ -2,6 +2,8 @@ import loadable from "@loadable/component";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { Permissions } from "data/permissons";
 import PageWithPermission from "components/PageWithPermission";
+import Billingclientview from "pages/billing/clients/billingclientview";
+import Billingclientoverview from "pages/billing/clients/billingclientoverview";
 
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
@@ -24,6 +26,7 @@ const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
 const CompletedTasks = loadable(() => import("pages/settings/completed-tasks"));
 const UpcomingTasks = loadable(() => import("pages/settings/upcoming-tasks"));
 const DeletedUsers = loadable(() => import("pages/settings/deleted-users"));
+const UpcomingTasks = loadable(() => import("pages/settings/upcoming-tasks"));
 const Login = loadable(() => import("pages/login"));
 const ResetPassword = loadable(() => import("pages/reset-password"));
 const Join = loadable(() => import("pages/join"));
@@ -45,9 +48,13 @@ const Teams = loadable(() => import("pages/settings/manage-users/teams"));
 const ViewTeam = loadable(() => import("pages/settings/manage-users/teams/view-team"));
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("pages/leads"));
-const DscRegister = loadable(() => import("pages/dsc-register"));
+// const DscRegister = loadable(() => import("pages/dsc-register"));
+const DscRegister = loadable(() => import("pages/dscregister"));
+const DscRegisterView = loadable(() => import("pages/dscregister/dsc-register"));
 const ClientDscRegister = loadable(() => import("pages/client-view/dsc-register"));
 const ClientDscRegisterView = loadable(() => import("pages/client-view/view-dsc-register"));
+const GSTRRegisterView = loadable(() => import("pages/dscregister/gstr-register"));
+const CMP08Register = loadable(() => import("pages/dscregister/cmp08-register"));
 const ClientView = loadable(() => import("pages/client-view"));
 const TasksView = loadable(() => import("pages/task-view"));
 const Attachments = loadable(() => import("pages/client-view/attachments"));
@@ -160,6 +167,16 @@ const PushNotifications = loadable(
   () => import("pages/communication/templates/push-notifications")
 );
 
+//SETTINGS PREFERENCES
+const Preferences = loadable(() => import("pages/settings/preferences/preference"));
+const EmailPreferences = loadable(() => import("pages/settings/preferences/email-preferences"));
+const HRMS = loadable(() => import("pages/HRMS"));
+const ShowHrms = loadable(() => import("pages/settings/show-hrms"));
+
+// const Emails = loadable(() => import("pages/emails"));
+// const Emails2 = loadable(() => import("pages/emails2"));
+// const Newsletter = loadable(() => import("pages/newsletteremail"));
+
 function RoutesContainer() {
   return (
     <Router>
@@ -172,14 +189,18 @@ function RoutesContainer() {
             <Route path="over-due-tasks" element={<OverDueTasks />} />
             <Route path="employee-tasks-by-status" element={<EmployeeTasksByStatus />} />
           </Route>
+          {/* <Route path="emails" element={<Emails />} />
+          <Route path="emails2" element={<Emails2 />} /> */}
+          <Route path="hrms" element={<HRMS />} />
+
+          {/* <Route path="newsletter" element={<Newsletter />} /> */}
           <Route path="services">
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
           </Route>
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />}>
-+            {/* <Route path="reports">
-            <Route
+            {/* <Route
               index
               element={
                 <PageWithPermission name={Permissions.VIEW_REPORTS}>
@@ -228,7 +249,7 @@ function RoutesContainer() {
           {/* <Route path="billing/invoices/:invoiceId/receipt" element={<AddInvoiceReceipt />} />  */}
           <Route path="billing/invoices/:invoiceId/receipt" element={<EditInvoiceReceipt />} />
           <Route path="billing/invoices/:invoiceId/edit" element={<EditInvoice />} />
-
+          
           <Route path="storage" element={<Storage />}>
             <Route
               path="my-storage"
@@ -319,16 +340,24 @@ function RoutesContainer() {
               <Route path="archives" element={<Archives />} />
               <Route path="client-tasks" element={<Tasks />} />
               <Route path="dsc-register">
-                <Route index element={<ClientDscRegister />} />
+                <Route path="dsc" element={<DscRegisterView />} />
+                {/* <Route index element={<ClientDscRegister />} /> */}
                 <Route path=":dscId" element={<ClientDscRegisterView />} />
               </Route>
             </Route>
           </Route>
-          <Route path="dsc-register">
-            <Route index element={<DscRegister />} />
+          <Route path="dsc-register" element={<DscRegister />}>
+            {/* <Route index element={<DscRegisterView />} /> */}
+            <Route path="dsc" element={<DscRegisterView />} />
             <Route path=":dscId" element={<ClientDscRegisterView />} />
+            <Route path="gstr1" element={<GSTRRegisterView />} />
+            <Route path="gstr3b" element={<GSTRRegisterView />} />
+            <Route path="gstr9" element={<GSTRRegisterView />} />
+            <Route path="gstr9c" element={<GSTRRegisterView />} />
+            <Route path="cpm08" element={<CMP08Register />} />
           </Route>
         </Route>
+
         <Route path="/settings" element={<SettingsLayout />}>
           <Route path="approvals">
             <Route index element={<Approvals />} />
@@ -368,6 +397,7 @@ function RoutesContainer() {
           <Route path="invited-users" element={<InviteUsers />} />
           <Route path="storage-management" element={<StorageManagement />} />
           <Route path="completed-tasks" element={<CompletedTasks />} />
+          <Route path="email-preferences" element={<EmailPreferences />} />
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
           <Route path="deleted-users" element={<DeletedUsers />} />
@@ -396,7 +426,9 @@ function RoutesContainer() {
               </PageWithPermission>
             }
           />
+          <Route path="Preference" element={<Preferences />} />
         </Route>
+
         <Route path="/forms/builder/:formId" element={<FormBuilder />} />
         <Route path="/forms/access/:formId" element={<AccessForm />} />
         <Route path="/tasks/:taskId/iPro/:formId" element={<ViewIproForm />}>

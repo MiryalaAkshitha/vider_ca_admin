@@ -5,6 +5,7 @@ import {
   initialParticular,
   initialState,
   IState,
+  OtherParticularChangeType,
   ParticularChangeType,
 } from "./types";
 import { getEstimatedDueDate } from "./utils";
@@ -28,7 +29,7 @@ export const createEstimateSlice = createSlice({
     },
     handlePlaceOfSupplyChange(state: IState, action: PayloadAction<any>) {
       state.placeOfSupply = action.payload;
-      state.interState = action.payload === state.billingEntityAddress?.state;
+      state.interState = action.payload.split('-')[1] === state.billingEntityAddress?.state;
     },
     handleBillingEntityChange(
       state: IState,
@@ -70,6 +71,24 @@ export const createEstimateSlice = createSlice({
       state.shippingAddress = address;
       state.billingAddress = address;
     },
+    handleExistingClientChange(state: IState, action: PayloadAction<any>) {
+      let client = action.payload.client;
+      state.client = client?.id;
+      let address = {
+        legalName: client?.legalName,
+        buildingName: client?.buildingName,
+        street: client?.street,
+        city: client?.city,
+        state: client?.state,
+        pincode: client?.pincode,
+        gstTreatment: "",
+        gstIn: client?.gstIn,
+        email: client?.email,
+        mobileNumber: client?.mobileNumber,
+      };
+      state.shippingAddress = address;
+      state.billingAddress = address;
+    },
     handleBankDetailsChange(state: IState, action: PayloadAction<any>) {
       const data = action.payload;
       state.bankDetails = {
@@ -84,6 +103,9 @@ export const createEstimateSlice = createSlice({
     handleAddParticular(state: IState) {
       state.particulars.push({ ...initialParticular });
     },
+    handleExistingParticular(state: IState, action: any) {
+      state.particulars.push(action.payload);
+    },
     handleRemoveParticular(state: IState, action: PayloadAction<number>) {
       state.particulars.splice(action.payload, 1);
     },
@@ -94,18 +116,25 @@ export const createEstimateSlice = createSlice({
       const { index, key, value } = action.payload;
       state.particulars[index][key] = value;
     },
+    handleExistingOtherParticular(state: IState, action: PayloadAction<OtherParticularChangeType>) {
+      const { id, index, key, value, taskExpenseType } = action.payload;
+      state.otherParticulars.push({ id: id, taskExpenseType: taskExpenseType, name: key, amount: value });
+    },
     handleAddOtherParticular(state: IState) {
-      state.otherParticulars.push({ name: "", amount: 0 });
+      state.otherParticulars.push({ id: 0, taskExpenseType: "", name: "", amount: 0 });
     },
     handleRemoveOtherParticular(state: IState, action: PayloadAction<number>) {
       state.otherParticulars.splice(action.payload, 1);
     },
     handleChangeOtherParticular(
       state: IState,
-      action: PayloadAction<ParticularChangeType>
+      action: PayloadAction<OtherParticularChangeType>
     ) {
-      const { index, key, value } = action.payload;
+      const { index, key, value, taskExpenseType } = action.payload;
       state.otherParticulars[index][key] = value;
+    },
+    handleExistingTermsAndConditions(state: IState, action: PayloadAction<string>) {
+      state.termsAndConditions = state.termsAndConditions.concat(action.payload);
     },
     handleAddTermsAndConditions(state: IState, action: PayloadAction<string>) {
       state.termsAndConditions.push(action.payload);
@@ -139,6 +168,8 @@ export const createEstimateSlice = createSlice({
         });
         pureAgent.forEach((expenditure: any) => {
           state.otherParticulars.push({
+            id: expenditure.id,
+            taskExpenseType: expenditure.particularType,
             name: expenditure.particularName,
             amount: +expenditure?.amount || 0,
           });
@@ -157,14 +188,18 @@ export const {
   handleAddParticular,
   handleRemoveParticular,
   handleChangeParticular,
+  handleExistingParticular,
   handleBankDetailsChange,
   handleAddTermsAndConditions,
+  handleExistingTermsAndConditions,
   handleRemoveTermsAndConditions,
   handleUpdateTermsAndConditions,
   handleAddOtherParticular,
+  handleExistingOtherParticular,
   handleRemoveOtherParticular,
   handleChangeOtherParticular,
   handleClientChange,
+  handleExistingClientChange,
   handleAddTasksToParticular,
   handlePlaceOfSupplyChange,
   resetState,

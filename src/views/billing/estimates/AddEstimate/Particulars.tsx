@@ -44,7 +44,7 @@ function Particulars() {
     dispatch(handleRemoveParticular(index));
   }
 
-  const interState = state.billingEntityAddress?.state === state.placeOfSupply;
+  const interState = state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1];
 
   return (
     <Box mt={4}>
@@ -54,10 +54,10 @@ function Particulars() {
           <TableHead>
             <TableRow>
               {PARTICULARS_HEADINGS.map((row, index) => {
-                if (interState && row.name === "IGST") {
+                if (interState && row.name === "IGST 2") {
                   return (
                     <TableCell key={index} style={{ width: row.width }}>
-                      <Typography>CGST + SGST</Typography>
+                      <Typography>CGST / SGST</Typography>
                     </TableCell>
                   );
                 }

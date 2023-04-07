@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { getInvoice } from "api/services/billing/invoices";
+import { getInvoicePreview } from "api/services/billing/invoices";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { resetState, selectReceipt } from "redux/reducers/createReceiptSlice";
+import { ResType } from "types";
 import AdditionalInformation from "views/billing/invoices/CreateReceipt/AdditionalInformation";
 import BasicDetails from "views/billing/invoices/CreateReceipt/BasicDetails";
 import InvoiceParticulars from "views/billing/invoices/CreateReceipt/InvoiceParticulars";
@@ -25,9 +26,9 @@ function AddReceipt() {
     dispatch(resetState());
   }, [dispatch]);
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading }: ResType = useQuery(
     ["invoice-details", params.invoiceId],
-    getInvoice,
+    getInvoicePreview,
     {
       onSuccess: (res: any) => {},
     }
@@ -39,7 +40,7 @@ function AddReceipt() {
     <>
       <StyledNewEstimateContainer sx={{ minHeight: "90vh" }}>
         <Typography textAlign="center" mb={4} variant="h5">
-          Pyament Receipt for Invoice {data?.data?.invoiceNumber}
+          Payment Receipt for Invoice {data?.data?.invoiceNumber}
         </Typography>
         <BasicDetails invoiceData={data?.data} />
         <PaymentDetails invoiceData={data?.data} />

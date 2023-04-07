@@ -28,9 +28,9 @@ type SelectionType = {
   setSelected: (selected: any[]) => void;
 };
 
+// sx?: any; //SystemStyleObject
 interface TableProps {
   columns: Array<ColumnType>;
-  // sx?: SystemStyleObject;
   sx?: any;
   data: any[];
   loading?: boolean;
@@ -44,7 +44,7 @@ function Table(props: TableProps) {
 
   const { selected, setSelected } = selection || {
     selected: [],
-    setSelected: () => {},
+    setSelected: () => { },
   };
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,9 +88,14 @@ function Table(props: TableProps) {
     enhance: sx,
   };
 
+  // const styles = {
+  //   height: '400px',
+  //   overflow: 'scroll',
+  //   ...sx
+  // };
+
   return (
     <StyledTableContainer sx={sx}>
-      {/* <div style={{ height: "400px", overflow: "scroll" }}> */}
       <div style={{ ...styles.base, ...sx }}>
         <StyledTable>
           <thead>

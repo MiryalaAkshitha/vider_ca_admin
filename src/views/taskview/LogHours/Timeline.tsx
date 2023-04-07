@@ -10,7 +10,19 @@ import ViewRemark from "./ViewRemark";
 function Timeline({ data }: any) {
   const taskData: any = useTaskData();
   const [open, setOpen] = useState<boolean>(false);
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState("");
+  const [activities, setActivities] = useState([]);
+  
+
+  const formatContent = (isonhold: boolean, task: any) => {
+    setOpen(true);
+    if(isonhold) {
+      const activities = task?.activity && task?.activity.length > 0 ? task?.activity : [];
+      setActivities(activities);
+    } else {
+      setContent(task?.terminationReason);
+    }    
+  }
 
   return (
     <>
@@ -40,8 +52,7 @@ function Timeline({ data }: any) {
                 {status === TaskStatus.ON_HOLD && data?.data?.timeline[status] && (
                   <Typography
                     onClick={() => {
-                      setOpen(true);
-                      setContent(taskData?.remarks);
+                      formatContent(true, taskData)                      
                     }}
                     sx={{ cursor: "pointer" }}
                     variant="caption"
@@ -54,8 +65,7 @@ function Timeline({ data }: any) {
                   data?.data?.timeline[status] && (
                     <Typography
                       onClick={() => {
-                        setOpen(true);
-                        setContent(taskData?.terminationReason);
+                        formatContent(false, taskData);                        
                       }}
                       sx={{ cursor: "pointer" }}
                       variant="caption"
@@ -69,7 +79,7 @@ function Timeline({ data }: any) {
           )}
         </StyledTimline>
       </Box>
-      <ViewRemark open={open} setOpen={setOpen} content={content} />
+      <ViewRemark open={open} setOpen={setOpen} content={content} activities={activities} />
     </>
   );
 }

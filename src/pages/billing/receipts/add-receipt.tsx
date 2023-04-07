@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetState, selectReceipt } from "redux/reducers/createReceiptSlice";
 import AdvanceDetails from "views/billing/receipts/AddReceipt/AddvanceDetails";
+import ClientInvoiceDetails from "views/billing/receipts/AddReceipt/ClientInvoiceDetails";
 import BasicDetails from "views/billing/receipts/AddReceipt/BasicDetails";
 import BottomBar from "views/billing/receipts/AddReceipt/BottomBar";
 import { StyledNewEstimateContainer } from "views/billing/styles";
@@ -24,6 +25,7 @@ function AddReceipt() {
           Receipt
         </Typography>
         <BasicDetails />
+        {type === "INVOICE" && client && <ClientInvoiceDetails />}
         {type === "ADVANCE" && client && <AdvanceDetails />}
       </StyledNewEstimateContainer>
       <BottomBar />

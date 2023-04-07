@@ -49,15 +49,15 @@ const BillingEntities = () => {
       </Box>
       <Table
         sx={{ mt: 3 }}
-        onRowClick={(row: any) => {
-          navigate(`/settings/billing-entities/${row?.id}`);
-        }}
+        // onRowClick={(row: any) => {
+        //   navigate(`/settings/billing-entities/${row?.id}`);
+        // }}
         loading={isLoading}
         data={filteredData || []}
         columns={columns}
       />
-      <FloatingButton onClick={() => setOpen(true)} />
-      <AddBillingEntity open={open} setOpen={setOpen} />
+      {/* <FloatingButton onClick={() => setOpen(true)} />
+      <AddBillingEntity open={open} setOpen={setOpen} /> */}
     </Box>
   );
 };

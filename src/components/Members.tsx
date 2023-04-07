@@ -16,22 +16,22 @@ function Members({ data = [], size = "medium" }: MembersProps) {
         },
       }}
     >
-      {data.slice(0,3).map((member, i) => (
+       {data.slice(0,3).map((member, i) => (
         <Member size={size} title={member.title} src={member.src} key={i} />
       ))}
-       {data.length>3 && 
-       <Tooltip title={data.slice(2).length+ ` Members `}>
-        <Avatar
-          sx={{
-            width: size === "small" ? "30px" : "40px",
-            height: size === "small" ? "30px" : "40px",
-            border: "2px solid white",
-            boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
-          }}
+      {data.length>3 && 
+        <Tooltip title={data.slice(2).length+ ` Members `}>
+          <Avatar
+            sx={{
+              width: size === "small" ? "30px" : "40px",
+              height: size === "small" ? "30px" : "40px",
+              border: "2px solid white",
+              boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
+            }}
           >
             {"+"+ data.slice(3).length}
           </Avatar>
-        </Tooltip>
+      </Tooltip>
       }
     </Box>
   );

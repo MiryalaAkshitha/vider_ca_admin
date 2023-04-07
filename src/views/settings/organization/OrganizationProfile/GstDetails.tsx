@@ -188,7 +188,7 @@ function GstDetails({ state, setState, apiData }: any) {
             value={gstNumber}
             onChange={(e) => setGstNumber(e.target.value)}
             InputProps={{
-              endAdornment: <GstAdornment />,
+              endAdornment: <>{gstNumber === '' ? <GstAdornment /> : ''}</>,
             }}
             InputLabelProps={{ shrink: true }}
           />
@@ -238,7 +238,7 @@ function GstDetails({ state, setState, apiData }: any) {
             value={panNumber}
             onChange={(e) => setPanNumber(e.target.value)}
             InputProps={{
-              endAdornment: <PanAdornment />,
+              endAdornment: <>{panNumber === '' ? <PanAdornment /> : ''}</>,
             }}
             InputLabelProps={{ shrink: true }}
           />

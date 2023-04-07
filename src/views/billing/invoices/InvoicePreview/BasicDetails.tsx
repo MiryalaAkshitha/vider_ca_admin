@@ -20,28 +20,38 @@ function BasicDetails({ result }) {
           </Box>
           <SectionHeading title="Billed By" />
           <Box p={1}>
-            <Box mb={1}>
+            {/* <Box mb={1}>
               <img src={logo} alt="" />
-            </Box>
-            <Typography variant="body2">Vider Business Solutions</Typography>
+            </Box> */}
             <Typography variant="body2">
-              2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
-              Telangana 500081
+            {result?.billingEntity?.legalName}
             </Typography>
             <Typography variant="body2">
-              9947368386, Viderbusiness@gmail.com
+            {result?.billingEntity?.buildingName},
+            {result?.billingEntity?.street},
+            {result?.billingEntity?.city},
+            {result?.billingEntity?.state},
+            {result?.billingEntity?.pincode},
+              {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
+              Telangana 500081 */}
+            </Typography>
+            <Typography variant="body2">
+            Mobile:{result?.billingEntity?.mobileNumber},
+            Email: {result?.billingEntity?.email},
+            Website: {result?.billingEntity?.website}
+              {/* 9947368386, Viderbusiness@gmail.com */}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box maxWidth={400}>
-            <Box textAlign="center">
+            {/* <Box textAlign="center">
               <img
                 style={{ width: 140, margin: "auto" }}
                 src="https://vider.in/wp-content/uploads/2020/09/image.png"
                 alt=""
               />
-            </Box>
+            </Box> */}
             <Box mt={1}>
               <Typography variant="subtitle1" mb={1} color="#0D46A0">
                 #{result?.invoiceNumber}

@@ -1,11 +1,24 @@
 import { DesktopDatePicker } from "@mui/lab";
-import { Grid, TextField } from "@mui/material";
+import { Autocomplete, Grid, TextField } from "@mui/material";
+import { placeOfSupplyStates } from "data/placeOfSupply";
 import SectionWrapper from "./SectionWrapper";
 
 function OrganizationDetails({ state, setState }) {
   const handleChange = (e: any) => {
+    if(e.target.name == 'placeOfSupply') {
+      e.target.value = e.target.value.split('-')[1];
+    }
     setState((draft: any) => {
       draft[e.target.name] = e.target.value;
+    });
+  };
+
+  const handleSupplyChange = (e: any, v: any) => {
+    if(e.target.name == 'placeOfSupply') {
+      e.target.value = e.target.value.split('-')[1];
+    }
+    setState((draft: any) => {
+      draft['placeOfSupply'] = v.split('-')[1];
     });
   };
 
@@ -50,12 +63,27 @@ function OrganizationDetails({ state, setState }) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          {/* <TextField
             onChange={handleChange}
             fullWidth
             label="Place of supply"
             name="placeOfSupply"
             value={state.placeOfSupply || ""}
+          /> */}
+          <Autocomplete
+            onChange={(_, value) => handleSupplyChange(_, value)}
+            value={placeOfSupplyStates.find((o: any) => o.split('-')[1] === state?.placeOfSupply) || ""}
+            options={placeOfSupplyStates.map((item) => item) || []}
+            getOptionLabel={(option: any) => option}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                name="placeOfSupply"
+                variant="outlined"
+                fullWidth
+                label="Location of Supplier"
+              />
+            )}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

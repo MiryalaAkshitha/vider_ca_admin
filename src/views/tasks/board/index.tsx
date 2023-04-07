@@ -13,6 +13,7 @@ import AddRemarks from "./AddRemarks";
 import TaskItem from "./TaskItem";
 import { colors, move, reorder } from "./utils";
 import { http } from "api/http";
+import moment from "moment";
 
 type Props = {
   data: any;
@@ -59,10 +60,18 @@ function Board({ data }: Props) {
 
   useEffect(() => {
     const getTasks = (status: TaskStatus) => {
-      const result = data
-        ?.filter((item: any) => item.status === status)
-        ?.sort((a: any, b: any) => a.order - b.order);
-      return result;
+      if (status == TaskStatus.DONE) {
+        const withinweekresult = data
+          ?.filter((item: any) => item.status === "completed")
+          ?.filter((item: any) => isWithinAWeek(moment(item.dueDate), item))
+          ?.sort((a: any, b: any) => a.order - b.order);
+        return withinweekresult;
+      } else {
+        const result = data
+          ?.filter((item: any) => item.status === status)
+          ?.sort((a: any, b: any) => a.order - b.order);
+        return result;
+      }
     };
 
     const todo = getTasks(TaskStatus.TODO);
@@ -79,6 +88,12 @@ function Board({ data }: Props) {
       [TaskStatus.DONE]: done,
     });
   }, [data]);
+
+  const isWithinAWeek = (momentDate, item) => {
+    const diff = moment(new Date()).diff(momentDate, 'days');
+    // console.log('date difference is more than 7: ', diff, (diff > 7), item.taskNumber, item.dueDate);
+    return diff > 6 ? false : true;
+  }
 
   const handleRemarks = () => {
     return new Promise((resolve, reject) => {

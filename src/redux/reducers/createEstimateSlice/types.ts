@@ -4,6 +4,14 @@ export interface ParticularChangeType {
   value: any;
 }
 
+export interface OtherParticularChangeType {
+  id: number;
+  index: number;
+  key: string;
+  value: any;
+  taskExpenseType: string;
+}
+
 export interface Address {
   legalName: string;
   buildingName: string;
@@ -28,8 +36,10 @@ export interface Particular {
 }
 
 export interface OtherParticular {
+  id: number;
   name: string;
   amount: number;
+  taskExpenseType: string;
 }
 
 export interface BankDetails {

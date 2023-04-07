@@ -1,7 +1,10 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { getOneDriveItems, reAuthorize } from "api/services/onedrive";
+import { Permissions } from "data/permissons";
+import { getPermissions } from "api/services/roles";
 import Loader from "components/Loader";
 import { snack } from "components/toast";
+import ValidateAccess from "components/ValidateAccess";
 import useQueryParams from "hooks/useQueryParams";
 import { useMutation, useQuery } from "react-query";
 import { ResType } from "types";
@@ -12,6 +15,11 @@ import Folder from "./Folder";
 
 function OneDrive() {
   const { queryParams } = useQueryParams();
+  
+  const { data: permissionsData, isLoading: permissionsLoading }: ResType = useQuery(
+    "permissions",
+    getPermissions
+  );
 
   const { data, isLoading, isError, error }: ResType = useQuery(
     ["onedrive-items", { id: queryParams.folderId || "root" }],
@@ -58,9 +66,11 @@ function OneDrive() {
       )}
       <BreadCrumbs />
       <Box mt={1} textAlign="right">
-        <Button color="secondary" variant="outlined" onClick={() => mutate()}>
-          Re-Authorize
-        </Button>
+        <ValidateAccess name={Permissions.VIEW_ONEDRIVE_STORAGE}>
+          <Button color="secondary" variant="outlined" onClick={() => mutate()}>
+            Re-Authorize
+          </Button>
+        </ValidateAccess>
       </Box>
       {folders?.length > 0 && (
         <Box>

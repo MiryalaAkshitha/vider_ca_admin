@@ -11,9 +11,9 @@ function AddressDetails({ result }) {
         <Grid item xs={6}>
           <SectionHeading title="Billing Address" />
           <Box p={1}>
-            <Box mb={1}>
+            {/* <Box mb={1}>
               <img src={logo} alt="" />
-            </Box>
+            </Box> */}
             <Typography variant="body2">
               {result?.billingAddress?.legalName}
             </Typography>
@@ -29,9 +29,9 @@ function AddressDetails({ result }) {
         <Grid item xs={6}>
           <SectionHeading title="Shipping Address" />
           <Box p={1}>
-            <Box mb={1}>
+            {/* <Box mb={1}>
               <img src={logo} alt="" />
-            </Box>
+            </Box> */}
             <Typography variant="body2">
               {result?.shippingAddress?.legalName}
             </Typography>

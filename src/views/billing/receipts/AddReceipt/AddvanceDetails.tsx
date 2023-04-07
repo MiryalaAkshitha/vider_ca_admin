@@ -24,7 +24,13 @@ function AdvanceDetails() {
 
   const onChange = (event: any) => {
     const { name, value } = event.target;
-    dispatch(handleChange({ key: name, value: value }));
+    if(state?.type == "ADVANCE") {
+      dispatch(handleChange({ key: name, value: value }));
+    } else if(state?.type == "INVOICE" && value >= 0) {
+      dispatch(handleChange({ key: name, value: value }));
+    } else {
+      return
+    }    
   };
 
   if (isLoading) return <Loader />;
@@ -38,6 +44,7 @@ function AdvanceDetails() {
         name="amount"
         value={state.amount}
         onChange={onChange}
+        InputProps={{ inputProps: { min: "0", step: "1" } }}         
         size="small"
         type="number"
       />

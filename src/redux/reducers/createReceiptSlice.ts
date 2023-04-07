@@ -3,6 +3,7 @@ import _ from "lodash";
 import { RootState } from "redux/store";
 
 export interface IState {
+  receiptNumber: string;
   receiptDate: string;
   client: number | null;
   type: "INVOICE" | "TASK" | "ADVANCE";
@@ -14,12 +15,15 @@ export interface IState {
   tds: string;
   tdsAmount: number;
   creditsUsed: number;
+  particulars: Array<any>;
 }
 
 const initialState: IState = {
+  receiptNumber: "",
   receiptDate: "",
   client: null,
   type: "INVOICE",
+  particulars: [],
   amount: 0,
   previousCredits: 0,
   paymentMode: "CASH",
