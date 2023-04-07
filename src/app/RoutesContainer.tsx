@@ -6,16 +6,23 @@ import PageWithPermission from "components/PageWithPermission";
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
 const BillingClients = loadable(() => import("pages/billing/clients"));
+const Billingclientview = loadable(() => import("pages/billing/clients/billingclientview"));
+const Billingclientoverview = loadable(() => import("pages/billing/clients/billingclientoverview"));
+
 const Estimates = loadable(() => import("pages/billing/estimates"));
 const Invoices = loadable(() => import("pages/billing/invoices"));
 const AddInvoice = loadable(() => import("pages/billing/invoices/add-invoice"));
 const AddInvoiceReceipt = loadable(() => import("pages/billing/invoices/create-receipt"));
+const EditInvoiceReceipt = loadable(() => import("pages/billing/invoices/edit-receipt"));
+const EditInvoice = loadable(() => import("pages/billing/invoices/edit-invoice"));
 const InvoicePreview = loadable(() => import("pages/billing/invoices/invoice-preview"));
 const Receipts = loadable(() => import("pages/billing/receipts"));
+const ReceiptPreview = loadable(() => import("pages/billing/receipts/receipt-preview"));
 const AddReceipt = loadable(() => import("pages/billing/receipts/add-receipt"));
 const DeletedClients = loadable(() => import("pages/settings/deleted-clients"));
 const DeletedTasks = loadable(() => import("pages/settings/deleted-tasks"));
 const CompletedTasks = loadable(() => import("pages/settings/completed-tasks"));
+const UpcomingTasks = loadable(() => import("pages/settings/upcoming-tasks"));
 const DeletedUsers = loadable(() => import("pages/settings/deleted-users"));
 const Login = loadable(() => import("pages/login"));
 const ResetPassword = loadable(() => import("pages/reset-password"));
@@ -121,6 +128,16 @@ const LogHoursReport = loadable(() => import("pages/reports/log-hours-report"));
 const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
 const ClientsReport = loadable(() => import("pages/reports/clients-report"));
 const TasksReport = loadable(() => import("pages/reports/tasks-report"));
+const CustomReports = loadable(() => import("pages/reports/custom-reports"));
+const PredefinedReports = loadable(() => import("pages/reports/predefined-reports"));
+const StatusWiseTasks = loadable(() => import("pages/reports/status-wise-tasks"));
+const ServiceCategoryStatusWiseTasks = loadable(() => import("pages/reports/service-category-status-wise-tasks"));
+const ServiceandSubCategoryWiseTasks = loadable(() => import("pages/reports/service-subcategory-wise-tasks"));
+const UserBasedMasterReport = loadable(() => import("pages/reports/user-based-master-report"));
+const OverDueTasksReport = loadable(() => import("pages/reports/over-due-tasks-report"));
+const DetailedOverDueTasksReport = loadable(() => import("pages/reports/detailed-over-due-tasks-report"));
+const EfficiencyReport = loadable(() => import("pages/reports/efficiency-report"));
+const HighestNoOfTaskCompletion = loadable(() => import("pages/reports/highest-task-completion-reports"))
 
 //BRODCAST
 const Communication = loadable(() => import("pages/communication"));
@@ -160,7 +177,8 @@ function RoutesContainer() {
             <Route path="add" element={<AddService />} />
           </Route>
           <Route path="calendar" element={<Calendar />} />
-          <Route path="reports">
+          <Route path="reports" element={<Reports />}>
++            {/* <Route path="reports">
             <Route
               index
               element={
@@ -168,13 +186,25 @@ function RoutesContainer() {
                   <Reports />
                 </PageWithPermission>
               }
-            />
+            /> */}
+            <Route index element={<PredefinedReports />} />
+            <Route path="status-wise-tasks" element={<StatusWiseTasks />} />
+            <Route path="service-category-status-wise-tasks" element={<ServiceCategoryStatusWiseTasks />} />
+            <Route path="service-subcategory-wise-tasks" element={<ServiceandSubCategoryWiseTasks />} />
+            <Route path="user-based-master-report" element={<UserBasedMasterReport />} />
+            <Route path="over-due-tasks-report" element={<OverDueTasksReport />} />
+            <Route path="detailed-over-due-tasks-report" element={<DetailedOverDueTasksReport />} />
+            <Route path="efficiency-report" element={<EfficiencyReport />} />
+            <Route path="highest-task-completion-reports" element={<HighestNoOfTaskCompletion />} />
+            <Route path="custom-reports" element={<CustomReports />} />
             <Route path="log-hours-report" element={<LogHoursReport />} />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
             <Route path="clients-report" element={<ClientsReport />} />
             <Route path="tasks-report" element={<TasksReport />} />
           </Route>
           <Route path="billing" element={<Billing />}>
+            <Route path="clients/:clientId" element={<Billingclientview />} />
+            <Route path="clients/" element={<Billingclientoverview />} />
             <Route path="estimates" element={<Estimates />} />
             <Route path="invoices" element={<Invoices />} />
             <Route path="receipts" element={<Receipts />} />
@@ -195,7 +225,10 @@ function RoutesContainer() {
           <Route path="billing/estimates/add" element={<AddEstimate />} />
           <Route path="billing/invoices/add" element={<AddInvoice />} />
           <Route path="billing/receipts/add" element={<AddReceipt />} />
-          <Route path="billing/invoices/:invoiceId/receipt" element={<AddInvoiceReceipt />} />
+          {/* <Route path="billing/invoices/:invoiceId/receipt" element={<AddInvoiceReceipt />} />  */}
+          <Route path="billing/invoices/:invoiceId/receipt" element={<EditInvoiceReceipt />} />
+          <Route path="billing/invoices/:invoiceId/edit" element={<EditInvoice />} />
+
           <Route path="storage" element={<Storage />}>
             <Route
               path="my-storage"
@@ -338,6 +371,7 @@ function RoutesContainer() {
           <Route path="deleted-tasks" element={<DeletedTasks />} />
           <Route path="deleted-clients" element={<DeletedClients />} />
           <Route path="deleted-users" element={<DeletedUsers />} />
+          <Route path="upcoming-tasks" element={<UpcomingTasks />} />
           <Route path="teams">
             <Route index element={<Teams />} />
             <Route path=":teamId" element={<ViewTeam />} />
@@ -379,6 +413,7 @@ function RoutesContainer() {
         </Route>
         <Route path="/billing/estimates/:estimateId/preview" element={<EstimatePreview />} />
         <Route path="/billing/invoices/:invoiceId/preview" element={<InvoicePreview />} />
+        <Route path="/billing/receipts/:receiptId/preview" element={<ReceiptPreview />} />
         <Route path="/forms/:formId/fields/:fieldId/esign" element={<Esign />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />

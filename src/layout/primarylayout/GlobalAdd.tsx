@@ -1,7 +1,9 @@
 import { Add } from "@mui/icons-material";
 import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import ValidateAccess from "components/ValidateAccess";
 import { globalAddMenu } from "data/globalAddMenu";
+import { Permissions } from "data/permissons";
 
 type ElementType = HTMLElement | null;
 
@@ -40,7 +42,7 @@ function GlobalAdd(props: AccountMenuProps) {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      {globalAddMenu.map((item, index) => (
+      {/* {globalAddMenu.map((item, index) => (
         <div key={index}>
           <MenuItem
             sx={{ py: 1, m: 0 }}
@@ -57,7 +59,47 @@ function GlobalAdd(props: AccountMenuProps) {
             <Divider sx={{ mx: 1, my: 0 }} />
           )}
         </div>
-      ))}
+      ))} */}
+      {globalAddMenu.map((item, index) => {
+        if (item.title == "Task") {
+          return <ValidateAccess name={Permissions.CREATE_TASK}>
+            <div key={index}>
+              <MenuItem
+                sx={{ py: 1, m: 0 }}
+                onClick={() => {
+                  handleClick(item.title);
+                }}
+              >
+                <ListItemIcon>
+                  <Add color="secondary" fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2">{item.title}</Typography>
+              </MenuItem>
+              {globalAddMenu.length - 1 !== index && (
+                <Divider sx={{ mx: 1, my: 0 }} />
+              )}
+            </div>
+          </ValidateAccess>
+        }
+        return (
+          <div key={index}>
+            <MenuItem
+              sx={{ py: 1, m: 0 }}
+              onClick={() => {
+                handleClick(item.title);
+              }}
+            >
+              <ListItemIcon>
+                <Add color="secondary" fontSize="small" />
+              </ListItemIcon>
+              <Typography variant="body2">{item.title}</Typography>
+            </MenuItem>
+            {globalAddMenu.length - 1 !== index && (
+              <Divider sx={{ mx: 1, my: 0 }} />
+            )}
+          </div>
+        )
+      })}
     </Menu>
   );
 }

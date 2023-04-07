@@ -10,10 +10,10 @@ export const invoicingMenu: Array<IMenuItem> = [
     title: "Clients",
     path: "/billing/clients",
   },
-  {
-    title: "Estimates",
-    path: "/billing/estimates",
-  },
+  // {
+  //   title: "Estimates",
+  //   path: "/billing/estimates",
+  // },
   {
     title: "Invoices",
     path: "/billing/invoices",

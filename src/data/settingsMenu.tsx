@@ -79,6 +79,10 @@ export const settingsMenu: Array<IMenuItem> = [
         title: "Deleted Tasks",
         path: "/settings/deleted-tasks",
       },
+      {
+        title: "Upcoming Tasks",
+        path: "/settings/upcoming-tasks",
+      },
     ],
   },
 ];

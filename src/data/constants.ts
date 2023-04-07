@@ -130,36 +130,40 @@ export const clientMenu: Array<{ title: string; path: string }> = [
 export const invoicingClientsMenu: Array<{ title: string; path: string }> = [
   {
     title: "Overview",
-    path: "/overview",
+    path: "overview",
   },
   {
     title: "Unbilled Tasks",
-    path: "/unbilled-tasks",
+    path: "unbilled-tasks",
   },
   {
     title: "Billed Tasks",
-    path: "/billed-tasks",
+    path: "billed-tasks",
   },
   {
-    title: "invoices",
-    path: "/invoices",
+    title: "billing",
+    path: "billing",
   },
+  // {
+  //   title: "Payments received",
+  //   path: "/payments-received",
+  // },
+  // {
+  //   title: "Comments",
+  //   path: "/comments",
+  // },
+  // {
+  //   title: "Mails",
+  //   path: "/mails",
+  // },
+  // {
+  //   title: "Statements",
+  //   path: "/statements",
+  // },
   {
-    title: "Payments received",
-    path: "/payments-received",
-  },
-  {
-    title: "Comments",
-    path: "/comments",
-  },
-  {
-    title: "Mails",
-    path: "/mails",
-  },
-  {
-    title: "Statements",
-    path: "/statements",
-  },
+    title: "Receipts",
+    path: "clientreceipts",
+  }
 ];
 
 export const userProfileMenu: Array<{ title: string; path: string }> = [
@@ -348,6 +352,31 @@ export enum SubTaskStatus {
   TODO = "todo",
   IN_PROGRESS = "in_progress",
   DONE = "done",
+}
+
+export enum REPORT {
+  user_name = "User Name",
+  full_name = "User Name",
+  todo = "Todo",
+  in_progress = "In Progress",
+  on_hold = "On Hold",
+  Hold = "On Hold",
+  under_review = "Under Review",
+  terminated = "Terminated",
+  completed = "completed",
+  done_completed = "Done/Completed",
+  total = "Total",
+  wip = "In Progress",
+  category = "Category",
+  clientname = "Client Name",
+  taskname ="Task Name",
+  status ="status",
+  dueDate ="Due Date",
+  daysoverdue ="OverDue By(Days)",
+  totaltasksassigned ="Total Tasks Assigned",
+  tasknumber = "Task Number",
+  additional = "Additional Charges",
+  pureagent = "Pure agent"
 }
 
 export const STATES = [

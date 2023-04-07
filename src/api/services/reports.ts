@@ -8,6 +8,18 @@ const exportLogHoursReport = (data: any) => {
   return http.post("/reports/log-hours/export", data);
 };
 
+const getCommonBilling = (data: any) => {
+  return http.post("/common/queryapi", data?.queryKey[1]);
+};
+
+const getCommonReport = (data: any) => {
+  return http.post("/common/queryapi", data);
+};
+
+const exportCommonReport = (data: any) => {
+  return http.post("/common/exportqueryapi", data);
+};
+
 const getEmployeeLogHoursReport = (data: any) => {
   return http.post("/reports/employee-log-hours", data);
 };
@@ -35,6 +47,9 @@ const exportTasksReport = (data: any) => {
 export {
   getEmployeeLogHoursReport,
   exportEmployeeLogHoursReport,
+  getCommonReport,
+  getCommonBilling,
+  exportCommonReport,
   getClientsReport,
   exportClientsReport,
   getTasksReport,

@@ -1,6 +1,7 @@
 import { http } from "api/http";
 
 const createClient = (data: any) => {
+  console.log('1');
   return http.post("/client", data);
 };
 
@@ -71,6 +72,14 @@ const getCompletedTasks = ({ queryKey }) => {
   });
 };
 
+const getUserCompletedTasks = ({ queryKey }) => {
+  return http.get(`/tasks/user-completed-tasks`, {
+    params: {
+      userId: queryKey[1].userId,
+    },
+  });
+};
+
 const getDeletedTasks = ({ queryKey }) => {
   return http.get(`/tasks/deleted-tasks`, {
     params: {
@@ -111,6 +120,7 @@ export {
   updateLead,
   deleteLeads,
   getTerminatedTasks,
+  getUserCompletedTasks,
   getCompletedTasks,
   getDeletedTasks,
   getDeletedClients,

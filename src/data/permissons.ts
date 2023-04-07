@@ -4,6 +4,7 @@ export enum Permissions {
   MANAGE_USERS = "users_manage_users",
   VIEW_USERS = "users_view_users",
   MANAGE_ORG_BILLING_ENTITIES = "organization_manage_billing_entities",
+  VIEW_ONEDRIVE_STORAGE = "storage_onedrive_view",
   VIEW_STORAGE = "storage_view",
   CREATE_STORAGE = "storage_create",
   EDIT_STORAGE = "storage_edit",

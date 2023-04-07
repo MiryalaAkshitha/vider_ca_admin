@@ -16,4 +16,12 @@ const getNextReceiptNumber = () => {
   return http.get(`/receipts/generate/next-receipt-number`);
 };
 
-export { createReceipt, getReceipts, getCreditBalance, getNextReceiptNumber };
+const getReceiptPreview = ({ queryKey }) => {
+  return http.get(`/receipts/${queryKey[1]}/preview`);
+};
+
+const downloadReceipt = ({ id }) => {
+  return http.post(`/receipts/${id}/download`);
+};
+
+export { createReceipt, getReceipts, getCreditBalance, getNextReceiptNumber, getReceiptPreview, downloadReceipt };

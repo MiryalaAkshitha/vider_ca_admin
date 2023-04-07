@@ -30,7 +30,8 @@ type SelectionType = {
 
 interface TableProps {
   columns: Array<ColumnType>;
-  sx?: SystemStyleObject;
+  // sx?: SystemStyleObject;
+  sx?: any;
   data: any[];
   loading?: boolean;
   onRowClick?: (v: any) => void;
@@ -82,9 +83,15 @@ function Table(props: TableProps) {
     }
   };
 
+  const styles =  {
+    base: {height: '400px', overflow: 'scroll'},
+    enhance: sx,
+  };
+
   return (
     <StyledTableContainer sx={sx}>
-      <div style={{ height: "400px", overflow: "scroll" }}>
+      {/* <div style={{ height: "400px", overflow: "scroll" }}> */}
+      <div style={{ ...styles.base, ...sx }}>
         <StyledTable>
           <thead>
             <tr>

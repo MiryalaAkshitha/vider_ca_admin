@@ -4,12 +4,24 @@ const createInvoice = ({ data }) => {
   return http.post("/invoices", data);
 };
 
+const updateInvoice = ({ data }) => {
+  return http.put(`/invoices/${data?.id}`, data);
+};
+
 const getInvoices = ({ queryKey }) => {
   return http.get("/invoices", { params: { ...queryKey[1] } });
 };
 
+const getClientInvoices = ({ queryKey }) => {
+  return http.get(`/invoices/${queryKey[1]}`);
+};
+
 const getInvoice = ({ queryKey }) => {
   return http.get(`/invoices/${queryKey[1]}`);
+};
+
+const getInvoicePreview = ({ queryKey }) => {
+  return http.get(`/invoices/${queryKey[1]}/preview`);
 };
 
 const downloadInvoice = ({ id }) => {
@@ -38,8 +50,11 @@ const getNextInvoiceNumber = ({ queryKey }) => {
 
 export {
   createInvoice,
+  updateInvoice,
   getInvoices,
   getInvoice,
+  getInvoicePreview,
+  getClientInvoices,
   downloadInvoice,
   cancelInvoice,
   submitInvoiceForApproval,
