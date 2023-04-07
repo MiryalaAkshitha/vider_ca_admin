@@ -194,15 +194,7 @@ export const userProfileMenu: Array<{ title: string; path: string }> = [
   {
     title: "Log Hours",
     path: "/log-hours",
-  },
-  {
-    title: "HRMS",
-    path: "/hrms",
-  },
-  {
-    title: "Holidays",
-    path: "/holidays",
-  },
+  }
 ];
 
 export const taskViewMenu: Array<{ id: string; label: string }> = [
