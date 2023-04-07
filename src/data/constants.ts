@@ -382,13 +382,25 @@ export enum REPORT {
   category = "Category",
   clientname = "Client Name",
   taskname ="Task Name",
-  status ="status",
+  status ="Status",
   dueDate ="Due Date",
   daysoverdue ="OverDue By(Days)",
-  totaltasksassigned ="Total Tasks Assigned",
-  tasknumber = "Task Number",
-  additional = "Additional Charges",
-  pureagent = "Pure agent"
+  totaltasksassigned ="Total Tasks Assigned",
+  fee = 'Fee',
+  pureagentpaid ="PureAgentPaid",
+  receipts ="Receipts",
+  invoicedate ="Invoice Date",
+  receiptdate ="Receipt Date",
+  invoiceduedate ="Invoice Due Date",
+  invoiceamount ="Invoice Amount",
+  invoicenumber ="Invoice Number",
+  amountrecieved ="Amount Received",
+  balancedueamount ="Balance Due Amount",
+  receiptamount ="Receipt Amount",
+  receiptnumber ="Receipt Number",
+  pureagent ="Pure Agent",
+  additionalchargers ="Additional Charges",
+  tasknumber = "Task ID"
 }
 
 export const STATES = [

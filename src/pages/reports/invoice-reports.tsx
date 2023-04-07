@@ -1,17 +1,17 @@
 import { ArrowForward } from "@mui/icons-material";
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { userReportsList } from "data/userReports";
+import { invoiceReportsList } from "data/invoiceReports";
 import useTitle from "hooks/useTitle";
 import { Link } from "react-router-dom";
 
-function PredefinedReports() {
+function InvoiceReports() {
   useTitle("Reports");
 
   return (
     <Box p={2}>
        <Grid container spacing={2}>
-        {userReportsList.map(({ title, path, desc, icon }, index) => (
+        {invoiceReportsList.map(({ title, path, desc, icon }, index) => (
           <Grid item lg={4} key={index}>
             <Paper>
               <Box sx={{ p: 2 }}>
@@ -43,4 +43,4 @@ function PredefinedReports() {
   );
 }
 
-export default PredefinedReports;
+export default InvoiceReports;

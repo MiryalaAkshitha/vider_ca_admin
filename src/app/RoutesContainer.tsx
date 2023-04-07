@@ -123,6 +123,7 @@ const AddApproval = loadable(
 );
 
 // REPORTS
+const InvoiceReports = loadable(()=> import ("pages/reports/invoice-reports"));
 const Reports = loadable(() => import("pages/reports"));
 const LogHoursReport = loadable(() => import("pages/reports/log-hours-report"));
 const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
@@ -138,6 +139,14 @@ const OverDueTasksReport = loadable(() => import("pages/reports/over-due-tasks-r
 const DetailedOverDueTasksReport = loadable(() => import("pages/reports/detailed-over-due-tasks-report"));
 const EfficiencyReport = loadable(() => import("pages/reports/efficiency-report"));
 const HighestNoOfTaskCompletion = loadable(() => import("pages/reports/highest-task-completion-reports"))
+// Invoice REPORTS
+const TasksCompeletedToBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToBilledTasksReport"));
+const TasksCompeletedToUnBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToUnBilledTasksReport"));
+const ClientWiseTasksCompletedToBilledReport = loadable(()=> import ("pages/reports/invoice/ClientWiseTasksCompletedToBilledReport"));
+const ClientWiseTasksCompletedToUnBilledReport = loadable(()=> import ("pages/reports/invoice/ClientWiseTasksCompletedToUnBilledReport"));
+const InvoiceOverDueReport = loadable(()=> import("pages/reports/invoice/InvoiceOverDueReport"));
+const BalanceDueForInvoicesRaisedReport = loadable (()=>import ("pages/reports/invoice/BalanceDueForInvoicesRaisedReport"));
+const ReceiptManagementReport = loadable (()=>import ("pages/reports/invoice/ReceiptManagementReport"));
 
 //BRODCAST
 const Communication = loadable(() => import("pages/communication"));
@@ -195,6 +204,14 @@ function RoutesContainer() {
             <Route path="detailed-over-due-tasks-report" element={<DetailedOverDueTasksReport />} />
             <Route path="efficiency-report" element={<EfficiencyReport />} />
             <Route path="highest-task-completion-reports" element={<HighestNoOfTaskCompletion />} />
+            <Route path="TasksCompeletedToBilledTasksReport" element={<TasksCompeletedToBilledTasksReport/>}/>
+            <Route path="TasksCompeletedToUnBilledTasksReport" element={<TasksCompeletedToUnBilledTasksReport/>}/>
+            <Route path="ClientWiseTasksCompletedToBilledReport" element ={<ClientWiseTasksCompletedToBilledReport/>}/>
+            <Route path="ClientWiseTasksCompletedToUnBilledReport" element ={<ClientWiseTasksCompletedToUnBilledReport/>}/>
+            <Route path ="InvoiceOverDueReport" element ={<InvoiceOverDueReport/>}/>
+            <Route path ="BalanceDueForInvoicesRaisedReport" element ={<BalanceDueForInvoicesRaisedReport/>}/>
+            <Route path="ReceiptManagementReport" element ={<ReceiptManagementReport/>}/>
+            <Route path="invoice-reports" element ={<InvoiceReports/>}/>
             <Route path="custom-reports" element={<CustomReports />} />
             <Route path="log-hours-report" element={<LogHoursReport />} />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />

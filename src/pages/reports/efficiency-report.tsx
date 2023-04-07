@@ -60,7 +60,7 @@ function EfficiencyReport() {
         <LinkRouter underline="hover" color="inherit" to="/reports">
           Reports
         </LinkRouter>
-        <Typography color="text.primary">Pre-defined</Typography>
+        <Typography color="text.primary">Users</Typography>
           <Typography color="text.primary">Efficiency Report</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} filterfields={filterfields} />

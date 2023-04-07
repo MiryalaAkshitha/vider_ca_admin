@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const reportsMenu = [
   {
-    title: "Pre-defined",
+    title: "Users",
     path: "",
     pathName: "/reports",
   },
@@ -14,6 +14,11 @@ const reportsMenu = [
     path: "custom-reports",
     pathName: "/reports/custom",
   },
+  {
+    title: "Invoice",
+    path: "invoice-reports",
+    pathName: "/reports/invoice"
+  }
 ];
 
 const ReportsNav = () => {

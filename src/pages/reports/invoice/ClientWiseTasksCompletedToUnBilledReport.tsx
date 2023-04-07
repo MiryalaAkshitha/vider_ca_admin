@@ -10,39 +10,38 @@ import { handleError } from "utils/handleError";
 import Filters from "views/reports/CommonReport/Filters";
 import Report from "views/reports/CommonReport/Report";
 import { UserProfileContext } from 'context/UserProfile';
-// import { getUsers } from 'api/services/users';
-import { getCategories } from "api/services/categories";
+import { getUsers } from 'api/services/users';
 import { ResType } from 'types';
+import { getClients } from 'api/services/clients/clients';
 
-function ServiceCategoryStatusWiseTasks() {
-  useTitle("Status Category Status Wise Tasks Report");
+function ClientWiseTasksCompletedToUnBilledReport() {
+  useTitle("ClientWiseTasksCompletedToUnBilledReport");
   const [data, setData] = useState(null);
 
   const [payload, setPayload] = useState({});
   const [filterfields, setFilterfields] = useState([
-
-    {type: 'date', label: 'Created From Date', name: 'fromDate'},
-    {type: 'date', label: 'Created To Date', name: 'toDate', filter: 'fromDate'},
-    {type: 'dropdown', label: 'Category', name: 'category', options: [], optionName:'name'}
+    // {type: 'date', label: 'Created From Date', name: 'fromDate'},
+    // {type: 'date', label: 'Created To Date', name: 'toDate', filter: 'fromDate'},
+    {type: 'dropdown', label: 'Client', name: 'clients', options: [], optionName:'displayName'}
   ]);
 
   const [state, setState] = useState({
     fromDate: null,
     toDate: null,
-    category:null
+    clients:null
   });
 
   const { data: user } = useContext(UserProfileContext);
 
-  const { data: categories, isLoading: userLoading }: ResType = useQuery(
-    ["categories"],
-    getCategories,
+  const { data: clients, isLoading: userLoading }: ResType = useQuery(
+    ["clients"],
+    getClients,
     {
       onSuccess: (res: any) => {
         const filterfieldsstate: any = JSON.parse(JSON.stringify(filterfields));
         filterfieldsstate.forEach((field: any) => {
           if(field.type == 'dropdown') {
-            field.options = res.data;
+            field.options = res.data.result;
           }
         });
         setFilterfields(filterfieldsstate);
@@ -52,7 +51,6 @@ function ServiceCategoryStatusWiseTasks() {
 
   const { mutate, isLoading, isError } = useMutation(getCommonReport, {
     onSuccess: (res: any) => {
-      console.log(state)
       setData(res.data);
     },
     onError: (err: any) => {
@@ -61,12 +59,13 @@ function ServiceCategoryStatusWiseTasks() {
   });
 
   const handleSubmit = () => {
-    if (!state.fromDate) return snack.error("Please Select From Date");
-    if (!state.toDate) return snack.error("Please Select To Date");
-    if(!state.category)return snack.error("please Select Category")
+    // if (!state.fromDate) return snack.error("Please select from date");
+    // if (!state.toDate) return snack.error("Please select to date");
+    if(!state.clients)return snack.error("Please Select a Client")
+    
     const updatedpayload = {
-      query: 'categoryandperiod',
-      organizationid: '' + user?.organization?.id,
+      query: 'ClientWiseTasksCompletedToUnBilledReport',
+      organizationid: '' + user?.organization?.id
     }
     setPayload(updatedpayload);
 
@@ -75,18 +74,18 @@ function ServiceCategoryStatusWiseTasks() {
       ...updatedstate,
       fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
       toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
-      category: state.category
+      clients: state.clients
     });
   };
 
   return (
     <Box p={2}>
       <Breadcrumbs>
-        <LinkRouter underline="hover" color="inherit" to="/reports">
+        <LinkRouter underline="hover" color="inherit" to="/reports/invoice-reports">
           Reports
         </LinkRouter>
-        <Typography color="text.primary">Users</Typography>
-          <Typography color="text.primary">Service Category Status by Tasks</Typography>
+        <Typography color="text.primary">Invoices</Typography>
+          <Typography color="text.primary">Client-Wise Task Completed To Un-Billed Tasks</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} filterfields={filterfields} />
       <Report isLoading={isLoading} isError={isError} state={state} data={data} payload={payload} />
@@ -94,4 +93,4 @@ function ServiceCategoryStatusWiseTasks() {
   )
 }
 
-export default ServiceCategoryStatusWiseTasks
+export default ClientWiseTasksCompletedToUnBilledReport;

@@ -11,27 +11,27 @@ import Filters from "views/reports/CommonReport/Filters";
 import Report from "views/reports/CommonReport/Report";
 import { UserProfileContext } from 'context/UserProfile';
 
-function HighestNoOfTaskCompletion() {
-  useTitle("Status Wise Tasks Report");
+function BalanceDueForInvoicesRaisedReport() {
+  useTitle("BalanceDueForInvoicesRaisedReport");
 
   const [data, setData] = useState(null);
   const [state, setState] = useState({
     fromDate: null,
-    toDate: null
   });
 
   const [payload, setPayload] = useState({});
   const [filterfields, setFilterfields] = useState([
     {type: 'date', label: 'Created From Date', name: 'fromDate'},
-  {type: 'date', label: 'Created To Date', name: 'toDate', filter: 'fromDate'}
-
   ]);
 
   const { data: user } = useContext(UserProfileContext);
   
   const { mutate, isLoading, isError } = useMutation(getCommonReport, {
     onSuccess: (res: any) => {
-      setData(res.data);
+      setData(null);
+      setTimeout((res) => {
+        setData(res.data);
+      }, 300, res);      
     },
     onError: (err: any) => {
       snack.error(handleError(err));
@@ -40,10 +40,9 @@ function HighestNoOfTaskCompletion() {
 
   const handleSubmit = () => {
     if (!state.fromDate) return snack.error("Please Select From Date");
-    if (!state.toDate) return snack.error("Please Select To Date");
     setData(null);
     const updatedpayload = {
-      query: 'quantitativeanalysis',
+      query: 'balancedueforinvoicesraisedreport',
       organizationid: ''+user?.organization?.id
     }
     setPayload(updatedpayload);
@@ -52,18 +51,17 @@ function HighestNoOfTaskCompletion() {
     mutate({
       ...updatedstate,         
       fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
-      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
     });
   };
 
   return (
     <Box p={2}>
       <Breadcrumbs>
-        <LinkRouter underline="hover" color="inherit" to="/reports">
+        <LinkRouter underline="hover" color="inherit" to="/reports/invoice-reports">
           Reports
         </LinkRouter>
-        <Typography color="text.primary">Users</Typography>
-        <Typography color="text.primary">Highest No.of Task Completion</Typography>
+        <Typography color="text.primary">Invoices</Typography>
+        <Typography color="text.primary">BalanceDueForInvoicesRaisedReport</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} filterfields={filterfields}/>
       <Report isLoading={isLoading} isError={isError} state={state} data={data} payload={payload} />
@@ -71,4 +69,4 @@ function HighestNoOfTaskCompletion() {
   )
 }
 
-export default HighestNoOfTaskCompletion
+export default BalanceDueForInvoicesRaisedReport;
