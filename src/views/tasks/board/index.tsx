@@ -62,7 +62,7 @@ function Board({ data }: Props) {
     const getTasks = (status: TaskStatus) => {
       if (status == TaskStatus.DONE) {
         const withinweekresult = data
-          ?.filter((item: any) => item.status === "completed")
+          ?.filter((item: any) => item.status === "done" || item.status === "completed")
           ?.filter((item: any) => isWithinAWeek(moment(item.dueDate), item))
           ?.sort((a: any, b: any) => a.order - b.order);
         return withinweekresult;
