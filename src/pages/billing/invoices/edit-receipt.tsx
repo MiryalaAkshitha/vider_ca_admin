@@ -44,7 +44,8 @@ function EditReceipt() {
         <>
             <StyledNewEstimateContainer sx={{ minHeight: "90vh" }}>
                 <Typography textAlign="center" mb={4} variant="h5">
-                    Payment Receipt for Invoice {data?.data?.invoiceNumber}
+                    Payment Receipt 
+                    {/* {data?.data?.invoiceNumber} */}
                 </Typography>
                 <BasicDetails />
                 {state.type === "INVOICE" && state.client && <ClientInvoiceDetails invoicedate={state.particulars} />}

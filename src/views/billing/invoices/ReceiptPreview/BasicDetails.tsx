@@ -36,9 +36,8 @@ function BasicDetails({ result }) {
               Telangana 500081 */}
             </Typography>
             <Typography variant="body2">
-            Mobile:{result?.billingEntity?.mobileNumber},
-            Email: {result?.billingEntity?.email},
-            Website: {result?.billingEntity?.website}
+            {result?.billingEntity?.mobileNumber},
+            {result?.billingEntity?.email},
               {/* 9947368386, Viderbusiness@gmail.com */}
             </Typography>
           </Box>

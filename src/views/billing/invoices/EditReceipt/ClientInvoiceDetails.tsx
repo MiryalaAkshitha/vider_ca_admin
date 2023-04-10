@@ -94,6 +94,8 @@ function ClientInvoiceDetails({ invoicedate }) {
       getBalanceTotalAmount(invoicesList);
       setInvoicedamount(getInvoicedAmount(invoicesList));
       dispatch(handleChange({ key: 'invoices', value: changedinvoice }));
+    } else {
+      snack.error('Please verify Amount received is greater');
     }
     // dispatch(handleChange({ key: 'creditsUsed', value: value }));
   };
@@ -109,8 +111,8 @@ function ClientInvoiceDetails({ invoicedate }) {
         if (type == 'payfullservicepayment') {
           item.payfullservicepayment = checked;
         }
-        item.pgpayment = item.payfullpgpayment ? (+row?.pgamount - +row?.pgdueamount) : item.pgpayment;
-        item.servicepayment = item.payfullservicepayment ? (row?.servicedueamount * 1) : item.servicepayment;
+        item.pgpayment = item.payfullpgpayment ? (+row?.pgamount - +row?.pgdueamount) : (item.pgpayment || 0);
+        item.servicepayment = item.payfullservicepayment ? (row?.servicedueamount * 1) : (item.servicepayment || 0);
         changedinvoice.push(item);
       }
     });
@@ -158,11 +160,11 @@ function ClientInvoiceDetails({ invoicedate }) {
     },
     {
       key: "pgamount",
-      title: "Additional Charges",
+      title: "Pure Agent",
     },
     {
       key: "pgdueamount",
-      title: "Additional Due Amount",
+      title: "Pure Agent Due Amount",
       render: (row: any) => (
         <>
           {+row?.pgamount - +row?.pgdueamount}
