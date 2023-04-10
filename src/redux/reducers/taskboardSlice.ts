@@ -152,7 +152,17 @@ export const taskBoardSlice = createSlice({
       );
     },
     handleApply(state: InitialState) {
-      state.appliedFilters = state.selectedFilters;
+      // state.appliedFilters = state.selectedFilters;
+      // removes duplicate filter values
+      Object.keys(state.selectedFilters).forEach((filter: any) => {
+        if(state.selectedFilters[filter] && state.selectedFilters[filter].length>0) {
+          state.appliedFilters[filter] = state.selectedFilters[filter].filter(
+            (item: any, index: number, self: any) => self.findIndex((v: any) => v.value === item.value) === index
+          );
+        } else {
+          state.appliedFilters[filter] = state.selectedFilters[filter];
+        }
+      });
     },
     resetFilters(state) {
       state.selectedFilters = filterState;
