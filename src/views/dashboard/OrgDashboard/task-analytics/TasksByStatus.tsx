@@ -60,7 +60,7 @@ function TasksByStatus({ data }) {
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Tasks by status</Typography>
+        <Typography variant="h6">Tasks by Status</Typography>
       </header>
       <main>
         <ResponsiveContainer width="100%" height={200}>

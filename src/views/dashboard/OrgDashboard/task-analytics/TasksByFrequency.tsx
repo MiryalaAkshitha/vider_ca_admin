@@ -42,7 +42,7 @@ function TasksByFrequency({ data }) {
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Tasks by type</Typography>
+        <Typography variant="h6">Tasks by Type</Typography>
       </header>
       <main>
         {data?.nonRecurringTasks || data?.recurringTasks ? (

@@ -65,24 +65,27 @@ function DateRange({ dates: datesProp, setDates: setDatesProp }) {
         anchorEl={anchorEl}
         onClose={() => setAnchorEl(null)}
       >
+        
         <DatePicker
-          label="From Date"
-          inputFormat="dd-MM-yyyy"
-          value={dates.fromDate}
-          maxDate={dates.toDate}
-          onChange={(value) => {
-            setDates({
-              ...dates,
-              fromDate: value,
-            });
-          }}
-          renderInput={(params) => <TextField fullWidth size="small" {...params} />}
-        />
+  label="From Date"
+  inputFormat="dd-MM-yyyy"
+  value={dates.fromDate}
+  maxDate={new Date()} // this line was added to freeze dates after today
+  onChange={(value) => {
+    setDates({
+      ...dates,
+      fromDate: value,
+    });
+  }}
+  renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+/>
+    
         <DatePicker
           label="To Date"
           inputFormat="dd-MM-yyyy"
           value={dates.toDate}
           minDate={dates.fromDate}
+          maxDate={new Date()}
           onChange={(value) => {
             setDates({
               ...dates,

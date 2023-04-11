@@ -21,19 +21,19 @@ function DueCard({ data }: { data: any }) {
     >
       <Grid item xs={3}>
         <Typography variant="caption" color="rgba(0,0,0,0.4)">
-          DSC Holder Name
+          DSC Holder
         </Typography>
         <Typography variant="body2">{data?.holderName}</Typography>
       </Grid>
       <Grid item xs={3}>
         <Typography variant="caption" color="rgba(0,0,0,0.4)">
-          Client Name
+          Client
         </Typography>
         <Typography variant="body2">{data?.client?.displayName}</Typography>
       </Grid>
       <Grid item xs={3}>
         <Typography variant="caption" color="rgba(0,0,0,0.4)">
-          Expiry Date
+          DSC Expiry Date
         </Typography>
         <Typography variant="body2" color="primary">
           {format(new Date(data?.expiryDate), "dd MMM, yyyy")}
@@ -41,7 +41,7 @@ function DueCard({ data }: { data: any }) {
       </Grid>
       <Grid item xs={3}>
         <Typography variant="caption" color="rgba(0,0,0,0.4)">
-          Number of days to expire
+         # Days to DSC Expiry
         </Typography>
         <Typography variant="body2" color="primary">
           {moment(data?.expiryDate).diff(moment(), "days")}

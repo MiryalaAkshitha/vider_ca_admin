@@ -27,7 +27,7 @@ function DscExpiryThisWeek() {
   return (
     <StyledTaskBox sx={{ position: "absolute", left: 0, right: 0, height: "100%" }}>
       <header>
-        <Typography variant="h6">DSC Expiry this week</Typography>
+        <Typography variant="h6">DSC Expiry This Week</Typography>
       </header>
       <main>
         {sorted?.map((date: any) => {

@@ -118,6 +118,7 @@ export const taskBoardSlice = createSlice({
           (item: any) => item.value !== action.payload.value.value
         );
       }
+     
     },
     handleCustomDates(state, action: PayloadAction<CustomDatePayload>) {
       let selectedCustomDate = state.selectedFilters.customDates[state.selected];

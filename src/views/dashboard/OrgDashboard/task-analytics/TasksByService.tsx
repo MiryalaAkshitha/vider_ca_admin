@@ -43,7 +43,7 @@ function TasksByService() {
             <TableRow sx={{ color: "#707070" }}>
               <TableCell>Service Name</TableCell>
               <TableCell>Number of tasks</TableCell>
-              <TableCell>Total log Hours</TableCell>
+              <TableCell>Total Log Hours</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

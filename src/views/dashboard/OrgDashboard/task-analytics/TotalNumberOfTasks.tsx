@@ -9,7 +9,7 @@ function TotalNumberOfTasks({ data }) {
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Total number of tasks</Typography>
+        <Typography variant="h6">Number of Tasks</Typography>
       </header>
       <main>
         <Typography color="primary" variant="h2">
