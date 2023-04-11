@@ -43,7 +43,7 @@ function HighestNoOfTaskCompletion() {
     if (!state.toDate) return snack.error("Please Select To Date");
     setData(null);
     const updatedpayload = {
-      query: 'quantitativeanalysis',
+      query: 'highestnumberoftaskscompletion',
       organizationid: ''+user?.organization?.id
     }
     setPayload(updatedpayload);

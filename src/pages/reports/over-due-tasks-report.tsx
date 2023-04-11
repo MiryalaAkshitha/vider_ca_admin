@@ -39,7 +39,7 @@ function OverDueTasksReport() {
     if (!state.fromDate) return snack.error("Please Select From Date");
     setData(null);
     const updatedpayload = {
-      query: 'usersoverduetasks',
+      query: 'overduetasks',
       organizationid: '' + user?.organization?.id
     }
     setPayload(updatedpayload);

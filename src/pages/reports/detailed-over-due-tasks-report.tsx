@@ -59,7 +59,7 @@ function DetailedOverDueTasksReport() {
     if (!state.fromDate) return snack.error("Please Select Date");
     if(!state.users)return snack.error("Please Select a User")
     const updatedpayload = {
-      query: 'individualusersdetailedoverduetasks',
+      query: 'detailedoverduetasks',
       organizationid: '' + user?.organization?.id
     }
     setPayload(updatedpayload);

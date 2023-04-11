@@ -65,7 +65,7 @@ function ServiceCategoryStatusWiseTasks() {
     if (!state.toDate) return snack.error("Please Select To Date");
     if(!state.category)return snack.error("please Select Category")
     const updatedpayload = {
-      query: 'categoryandperiod',
+      query: 'servicecategorystatusbytasks',
       organizationid: '' + user?.organization?.id,
     }
     setPayload(updatedpayload);

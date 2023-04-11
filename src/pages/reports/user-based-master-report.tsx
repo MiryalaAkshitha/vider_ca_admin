@@ -63,7 +63,7 @@ function ServiceCategoryStatusWiseTasks() {
     if(!state.users)return snack.error("Please Select a User")
     
     const updatedpayload = {
-      query: 'individualuserservicelevel',
+      query: 'userbasedmasterreport',
       organizationid: '' + user?.organization?.id
     }
     setPayload(updatedpayload);
