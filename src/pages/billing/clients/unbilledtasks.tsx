@@ -89,11 +89,10 @@ function UnBilledTasks() {
 }
 
 const Columns: Array<ColumnType> = [
+    {key:"tasknumber", title: "Task ID"},
     { key: "name", title: "Task Name" },
-    {key:"tasknumber", title: "Task Number"},
     { key: "status", title: "Task Status" },
     { key: "fee_amount", title: "Fee" },
-    { key: "total_expenditure", title: "Expenditure" },
     {key : "additional" , title :" Additional Charges"},
     {key : "pureagent", title :"Pure Agent"}
 

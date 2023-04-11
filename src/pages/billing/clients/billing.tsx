@@ -15,6 +15,8 @@ import { snack } from "components/toast";
 import { handleError } from "utils/handleError";
 import { getCommonBilling } from "api/services/reports";
 import { useParams } from "react-router-dom";
+import { getStatusColor } from "views/billing/estimates/getStatusColor";
+
 import moment from "moment";
 function Billing() {
   const params = useParams();
@@ -43,6 +45,8 @@ function Billing() {
     onSuccess: (res: any) => {
       setData(res?.data);
       setSelectedInvoice(res?.data[0]['id']);
+      const statuses = res?.data.map((item) => item?.status);
+      console.log(statuses, 'billing');
     },
     onError: (err: any) => {
       snack.error(handleError(err));
@@ -103,7 +107,7 @@ function Billing() {
               <Typography>
                 <span style={{ color: "#1434A4", fontSize: "bold" }}> {item.grand_total} </span>
                 <br />
-                <span style={{ color: "#008000" }}>{item.status == 'APPROVAL_PENDING' ? 'INVOICED' : item.status}</span>
+                <span style={{color:getStatusColor(item?.status), fontSize: "bold" }}>{item.status == 'APPROVAL_PENDING' ? 'INVOICED' : item.status}</span>
               </Typography>
             </Button>
           ))}
