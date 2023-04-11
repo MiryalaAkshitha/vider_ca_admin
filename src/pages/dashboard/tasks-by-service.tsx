@@ -2,6 +2,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Box, Button } from "@mui/material";
 import { getTasksByService } from "api/services/organization";
 import Loader from "components/Loader";
+import SearchContainer from "components/SearchContainer";
 import Table from "components/Table";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
@@ -17,10 +18,12 @@ function TasksByService() {
   const [pageCount, setPageCount] = useState<number>(10);
   const [dates, setDates] = useState({ fromDate: null, toDate: null });
   const { queryParams } = useQueryParams();
+  const [search, setSearch] = useState("");
+
   const dashboardType = queryParams.type || "user";
 
   const { data, isLoading }: ResType = useQuery(
-    ["task-by-service", { limit: pageCount, offset: page * pageCount, dashboardType, ...dates }],
+    ["task-by-service", { limit: pageCount, offset: page * pageCount, dashboardType,search, ...dates }],
     getTasksByService
   );
 
@@ -34,7 +37,10 @@ function TasksByService() {
         <Button onClick={() => navigate(-1)} startIcon={<ArrowBack color="secondary" />}>
           Tasks By Service
         </Button>
+        <Box sx={{display:"flex" ,gap:"20px"}}>
         <DateRange dates={dates} setDates={setDates} />
+        <SearchContainer value={search} onChange={setSearch} debounced placeHolder="Search by Service Name"/>
+        </Box>
       </Box>
       <Table
         loading={isLoading}
@@ -43,7 +49,7 @@ function TasksByService() {
         columns={[
           {
             key: "name",
-            title: "Name",
+            title: " Service Name",
           },
           {
             key: "count",

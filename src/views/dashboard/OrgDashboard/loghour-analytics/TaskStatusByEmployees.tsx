@@ -31,7 +31,7 @@ function TaskStatusByEmployees() {
   return (
     <StyledTaskBox>
       <header>
-        <Typography variant="h6">Task status by employees</Typography>
+        <Typography variant="h6">Task Status by Employee</Typography>
         <Box>
           <DateRange dates={dates} setDates={setDates} />
         </Box>
@@ -41,12 +41,12 @@ function TaskStatusByEmployees() {
           <TableHead>
             <TableRow sx={{ color: "#707070" }}>
               <TableCell>Employee Name</TableCell>
-              <TableCell>Todo Tasks</TableCell>
-              <TableCell>In Progress Tasks</TableCell>
-              <TableCell>On Hold Tasks</TableCell>
-              <TableCell>Under Review Tasks</TableCell>
-              <TableCell>Done Tasks</TableCell>
-              <TableCell>Total Tasks</TableCell>
+              <TableCell>Todo</TableCell>
+              <TableCell>In Progress</TableCell>
+              <TableCell>On Hold</TableCell>
+              <TableCell>Under Review</TableCell>
+              <TableCell>Done</TableCell>
+              <TableCell>Total</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -46,7 +46,7 @@ function Report({ data, state, isLoading, isError }) {
       <Box display="flex" justifyContent="space-between" mb={2} alignItems="center">
         <Box>
           <Typography variant="subtitle2" color="primary">
-            Total number of Clients: {data?.length}
+            Total Number of Clients: {data?.length}
           </Typography>
         </Box>
         <Box>

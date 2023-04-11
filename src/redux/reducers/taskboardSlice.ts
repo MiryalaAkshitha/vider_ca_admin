@@ -118,6 +118,7 @@ export const taskBoardSlice = createSlice({
           (item: any) => item.value !== action.payload.value.value
         );
       }
+     
     },
     handleCustomDates(state, action: PayloadAction<CustomDatePayload>) {
       let selectedCustomDate = state.selectedFilters.customDates[state.selected];
@@ -151,9 +152,17 @@ export const taskBoardSlice = createSlice({
         (item: any, index: number) => index !== filterItemIndex
       );
     },
-    handleApply(state: InitialState) {
-      state.appliedFilters = state.selectedFilters;
-    },
+   handleApply(state: InitialState){
+ Object.keys(state.selectedFilters).forEach((filter: any) =>{
+  if(state.selectedFilters[filter] && state.selectedFilters[filter].length>0){
+    state.appliedFilters[filter] = state.selectedFilters[filter].filter(
+      (item : any, index:number, self:any)=> self.findIndex((v: any)=>v.value === item.value) === index
+    );
+  } else {
+    state.appliedFilters[filter] = state.selectedFilters[filter]
+  }
+ });
+   },
     resetFilters(state) {
       state.selectedFilters = filterState;
       state.appliedFilters = filterState;
