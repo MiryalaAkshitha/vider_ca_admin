@@ -32,6 +32,8 @@ function BillingEntityDetails() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
+  const [gstNumber, setGstNumber] = useState('NA');
+
   const { data, isLoading }: ResType = useQuery(
     ["billing-entities"],
     getBillingEntity
@@ -41,6 +43,8 @@ function BillingEntityDetails() {
     let billingEntity = data?.data?.find(
       (item: any) => item.id === e.target.value
     );
+
+    setGstNumber(billingEntity?.gstNumber);
 
     dispatch(handleBillingEntityChange({ billingEntity }));
   };
@@ -89,6 +93,12 @@ function BillingEntityDetails() {
                   title="Mobile Number"
                   value={billingEntityAddress?.mobileNumber}
                 />
+                {gstNumber != 'NA' &&
+                  <AddressDetail
+                    title="GST Number"
+                    value={gstNumber}
+                  />
+                }
               </Box>
             </Box>
           </Box>

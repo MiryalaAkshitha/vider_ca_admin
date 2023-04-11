@@ -68,7 +68,7 @@ function Particulars({ result }) {
           <TableHead>
             <TableRow>
               {PARTICULARS_HEADINGS.map((row, index) => {
-                if (interState && row.name === "IGST") {
+                if (interState && row.name === "GST") {
                   return (
                     <TableCell key={index} style={{ width: row.width }}>
                       <Typography>CGST / SGST</Typography>

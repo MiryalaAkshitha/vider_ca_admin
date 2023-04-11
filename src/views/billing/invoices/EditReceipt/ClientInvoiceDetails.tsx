@@ -173,7 +173,7 @@ function ClientInvoiceDetails({ invoicedate }) {
     },
     {
       key: "pgpayment",
-      title: "Additional Payment",
+      title: "Pure agent Payment",
       render: (row: any) => (
         <>
           <TextField

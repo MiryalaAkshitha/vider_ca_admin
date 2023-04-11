@@ -27,7 +27,7 @@ function Particulars({ result, interState }: IProps) {
                 if (par.name === "Action") return null;
 
                 // if (interState && par.name === "IGST") {
-                if(result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && par.name === "IGST") {
+                if(result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && par.name === "GST") {
                   return (
                     <TableCell key={index}>
                       <Typography>CGST / SGST</Typography>

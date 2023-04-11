@@ -31,6 +31,7 @@ function BillingEntityDetails({ result }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
+  const [gstNumber, setGstNumber] = useState('NA');
   const [billingEntityAddress, setBillingEntityAddress] = useState(result?.billingEntityAddress);
   const [approvalHierarchy, setApprovalHierarchy] = useState(result?.approvalHierarchy);
   const [billingEntity, setBillingEntity] = useState(result?.billingEntity);
@@ -53,6 +54,7 @@ function BillingEntityDetails({ result }) {
     if(e.target.name == 'billingEntity') {
       setBillingEntity(billingEntity);
       setBillingEntityAddress(billingEntity);
+      setGstNumber(billingEntity?.gstNumber);
     }   
 
     dispatch(handleBillingEntityChange({ billingEntity }));
@@ -102,6 +104,12 @@ function BillingEntityDetails({ result }) {
                   title="Mobile Number"
                   value={billingEntityAddress?.mobileNumber}
                 />
+                {gstNumber != 'NA' &&
+                  <AddressDetail
+                    title="GST Number"
+                    value={gstNumber}
+                  />
+                }
               </Box>
             </Box>
           </Box>

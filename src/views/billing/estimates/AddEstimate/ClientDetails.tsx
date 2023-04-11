@@ -15,11 +15,14 @@ import {
 import { ResType } from "types";
 import SectionHeading from "../SectionHeading";
 import { AddressDetail, getAddress } from "./BillingEntityDetails";
+import { useState } from "react";
 
 function ClientDetails() {
   const { billingAddress, shippingAddress, client, placeOfSupply } =
     useSelector(selectEstimate);
   const dispatch = useDispatch();
+
+  const [gstNumber, setGstNumber] = useState('NA');
 
   const { data, isLoading }: ResType = useQuery(["clients", {}], getClients);
 
@@ -32,6 +35,7 @@ function ClientDetails() {
     let client = data?.data?.result?.find(
       (item: any) => item.id === e.target.value
     );
+    setGstNumber(client?.gstNumber);
     dispatch(handleClientChange({ client }));
   };
 
@@ -97,6 +101,10 @@ function ClientDetails() {
             <AddressDetail
               title="Mobile Number"
               value={billingAddress?.mobileNumber}
+            />
+            <AddressDetail
+              title="GST Number"
+              value={gstNumber}
             />
           </Box>
         </Grid>

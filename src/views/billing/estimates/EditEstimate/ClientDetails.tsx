@@ -26,6 +26,7 @@ function ClientDetails({ result }) {
   // const [shippingAddress, setShippingAddress] = useState(result?.shippingAddress);
   // const [client, setClient] = useState(result?.client);
   // const [placeOfSupply, setPlaceOfSupply] = useState(result?.placeOfSupply);
+  const [gstNumber, setGstNumber] = useState('NA');
 
   const { data, isLoading }: ResType = useQuery(["clients", {}], getClients);
 
@@ -48,6 +49,7 @@ function ClientDetails({ result }) {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
       );
+      setGstNumber(client?.gstNumber);
       dispatch(handleClientChange({ client }));
     }
     if (e.target.name == 'placeOfSupply') {
@@ -118,6 +120,10 @@ function ClientDetails({ result }) {
             <AddressDetail
               title="Mobile Number"
               value={billingAddress?.mobileNumber}
+            />
+             <AddressDetail
+              title="GST Number"
+              value={gstNumber}
             />
           </Box>
         </Grid>
