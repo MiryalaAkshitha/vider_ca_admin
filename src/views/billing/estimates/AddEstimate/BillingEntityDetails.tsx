@@ -25,6 +25,7 @@ import {
   StyledSelectedBox,
 } from "views/tasks/board/CreateTask/styles";
 import SectionHeading from "../SectionHeading";
+import { placeOfSupplyStates } from "data/placeOfSupply";
 
 function BillingEntityDetails() {
   const { billingEntityAddress, approvalHierarchy, billingEntity } =
@@ -47,7 +48,8 @@ function BillingEntityDetails() {
     );
 
     setGstNumber(billingEntity?.gstNumber);
-    setPlaceofsupplier(billingEntity?.placeOfSupply);
+    const placeOfSupply = placeOfSupplyStates.find((o: any) => o.split('-')[1] === billingEntity?.placeOfSupply) || "";
+    setPlaceofsupplier(placeOfSupply);
 
     dispatch(handleBillingEntityChange({ billingEntity }));
   };

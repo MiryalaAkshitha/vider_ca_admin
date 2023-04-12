@@ -113,7 +113,7 @@ function Billing() {
           ))}
         </StyledTaskBox>
 
-        <iframe src={`/billing/invoices/${selectedInvoice}/preview`}
+        <iframe src={`/billing/invoices/${selectedInvoice}/preview?isIframe=true`}
           id="invoiceiframepreview"
           style={{ width: "60%", height: "500px", marginLeft: "15px", border: 0 }}></iframe>
 

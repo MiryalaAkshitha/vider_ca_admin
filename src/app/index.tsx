@@ -26,6 +26,15 @@ const queryClient = new QueryClient({
 function App() {
   useNotifications();
 
+  const url = window.location.href;
+  const elem = document.querySelector('body') as HTMLElement;
+  if (url.indexOf('?' + 'isIframe=') != -1) {
+    elem.classList.add("nestedIframe");
+  } else {
+    elem.classList.remove('nestedIframe');
+  }
+
+
   useEffect(() => {
     socket = io(process.env.REACT_APP_API_URL || "");
   }, []);

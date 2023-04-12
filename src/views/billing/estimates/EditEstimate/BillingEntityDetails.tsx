@@ -25,6 +25,7 @@ import {
   StyledSelectedBox,
 } from "views/tasks/board/CreateTask/styles";
 import SectionHeading from "../SectionHeading";
+import { placeOfSupplyStates } from "data/placeOfSupply";
 
 function BillingEntityDetails({ result }) {
   // const { billingEntityAddress, approvalHierarchy, billingEntity } = result;
@@ -40,24 +41,25 @@ function BillingEntityDetails({ result }) {
   const { data, isLoading }: ResType = useQuery(
     ["billing-entities"],
     getBillingEntity, {
-      onSuccess: (res: any) => {
-        if(result?.billingEntity && result?.billingEntity.legalName !== '') {
-          dispatch(handleBillingEntityChange( result ));
-        }        
-      },
-    }
+    onSuccess: (res: any) => {
+      if (result?.billingEntity && result?.billingEntity.legalName !== '') {
+        dispatch(handleBillingEntityChange(result));
+      }
+    },
+  }
   );
 
   const handleChange = (e: any) => {
     let billingEntity = data?.data?.find(
       (item: any) => item.id === e.target.value
     );
-    if(e.target.name == 'billingEntity') {
+    if (e.target.name == 'billingEntity') {
       setBillingEntity(billingEntity);
       setBillingEntityAddress(billingEntity);
       setGstNumber(billingEntity?.gstNumber);
-      setPlaceofsupplier(billingEntity?.placeOfSupply);
-    }   
+      const placeOfSupply = placeOfSupplyStates.find((o: any) => o.split('-')[1] === billingEntity?.placeOfSupply) || "";
+      setPlaceofsupplier(placeOfSupply);
+    }
 
     dispatch(handleBillingEntityChange({ billingEntity }));
   };
