@@ -33,6 +33,8 @@ function BillingEntityDetails() {
   const [open, setOpen] = useState(false);
 
   const [gstNumber, setGstNumber] = useState('NA');
+  const [placeofsupplier, setPlaceofsupplier] = useState('NA');
+  
 
   const { data, isLoading }: ResType = useQuery(
     ["billing-entities"],
@@ -45,6 +47,7 @@ function BillingEntityDetails() {
     );
 
     setGstNumber(billingEntity?.gstNumber);
+    setPlaceofsupplier(billingEntity?.placeOfSupply);
 
     dispatch(handleBillingEntityChange({ billingEntity }));
   };
@@ -97,6 +100,12 @@ function BillingEntityDetails() {
                   <AddressDetail
                     title="GST Number"
                     value={gstNumber}
+                  />
+                }
+                {placeofsupplier != 'NA' &&
+                  <AddressDetail
+                    title="Location of Supplier"
+                    value={placeofsupplier}
                   />
                 }
               </Box>

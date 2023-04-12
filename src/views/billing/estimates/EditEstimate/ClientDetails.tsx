@@ -17,6 +17,7 @@ import {
 import { ResType } from "types";
 import SectionHeading from "../SectionHeading";
 import { AddressDetail, getAddress } from "./BillingEntityDetails";
+import { snack } from "components/toast";
 
 function ClientDetails({ result }) {
   const { billingAddress, shippingAddress, client, placeOfSupply } = useSelector(selectEstimate);
@@ -36,26 +37,30 @@ function ClientDetails({ result }) {
     {
       onSuccess: (res: any) => {
         if (result?.client && result?.client?.id !== '') {
-          dispatch(handleExistingClientChange( result )); 
-          dispatch(handlePlaceOfSupplyChange(result?.placeOfSupply));     
+          dispatch(handleExistingClientChange(result));
+          dispatch(handlePlaceOfSupplyChange(result?.placeOfSupply));
         }
       },
     }
   );
 
   const handleChange = (e: any) => {
-    
+
     if (e.target.name == 'client') {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
       );
-      setGstNumber(client?.gstNumber);
-      dispatch(handleClientChange({ client }));
+      if (client?.legalName == '' || !client?.legalName) {
+        snack.error("Please update missing details in client profile.");
+      } else {
+        setGstNumber(client?.gstNumber);
+        dispatch(handleClientChange({ client }));
+        if (e.target.name == 'placeOfSupply') {
+          dispatch(handlePlaceOfSupplyChange(e.target.value));
+        }
+      }
     }
-    if (e.target.name == 'placeOfSupply') {
-      dispatch(handlePlaceOfSupplyChange(e.target.value));
-    }   
-    
+
   };
 
   if (isLoading || statesLoading) return <Loader />;
@@ -121,7 +126,7 @@ function ClientDetails({ result }) {
               title="Mobile Number"
               value={billingAddress?.mobileNumber}
             />
-             <AddressDetail
+            <AddressDetail
               title="GST Number"
               value={gstNumber}
             />

@@ -41,7 +41,8 @@ function UnBilledTasks() {
     const { data: result, isLoading, error }: ResType = useQuery(
         ['clientinvoiceunbilled', {
             query: 'clientinvoiceunbilled',
-            clientId: params.clientId,search
+            clientId: params.clientId,
+            search
         }],
         getCommonBilling, {
         onSuccess: (res: any) => {
@@ -52,49 +53,49 @@ function UnBilledTasks() {
         },
     });
     // if (query.search) {
-        // receipts = receipts.andWhere('client.displayName LIKE :search', {
-        //   search: `%${query.search}%`,
-//         });
-//       }
+    // receipts = receipts.andWhere('client.displayName LIKE :search', {
+    //   search: `%${query.search}%`,
+    //         });
+    //       }
     return (
         // <Box px={3} pt={3}>
         //     <Box display="flex" gap={2}>
         //         <Box display="flex" flex={1} gap={2} alignItems="center">
         <>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                <SearchContainer value={search} onChange={setSearch} debounced/>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+                <SearchContainer value={search} onChange={setSearch} debounced />
 
-                    
-                
-                     <Button
+
+
+                {/* <Button
                         onClick={() => navigate("/billing/invoices/add")}
                         variant="outlined"
                         color="secondary"
                         startIcon={<Add />}
                     > Add New Invoice
-                    </Button> 
-                   
-                </Box>
+                    </Button>  */}
 
-                <Table
-                    sx={{ mt: 3 }}
-                    loading={isLoading}
-                    data={data || []}
-                    columns={Columns}
-                    selection={{ selected, setSelected }}
-                    // pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
-                    />
-</>
+            </Box>
+
+            <Table
+                sx={{ mt: 3 }}
+                loading={isLoading}
+                data={data || []}
+                columns={Columns}
+                // selection={{ selected, setSelected }}
+            // pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
+            />
+        </>
     );
 }
 
 const Columns: Array<ColumnType> = [
-    {key:"tasknumber", title: "Task ID"},
+    { key: "tasknumber", title: "Task ID" },
     { key: "name", title: "Task Name" },
     { key: "status", title: "Task Status" },
     { key: "fee_amount", title: "Fee" },
-    {key : "additional" , title :" Additional Charges"},
-    {key : "pureagent", title :"Pure Agent"}
+    { key: "additional", title: " Additional Charges" },
+    { key: "pureagent", title: "Pure Agent" }
 
 ];
 

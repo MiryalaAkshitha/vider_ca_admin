@@ -81,6 +81,9 @@ a.fc-event {
   bottom: -8px !important;
   z-index: 500 !important;
 }
+#invoiceiframepreview iframe #freshworks-container iframe {
+  display: none;
+}
 
 /*** MENTIONS ***/
 .mentions_input {

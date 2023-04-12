@@ -16,6 +16,7 @@ import { ResType } from "types";
 import SectionHeading from "../SectionHeading";
 import { AddressDetail, getAddress } from "./BillingEntityDetails";
 import { useState } from "react";
+import { snack } from "components/toast";
 
 function ClientDetails() {
   const { billingAddress, shippingAddress, client, placeOfSupply } =
@@ -35,8 +36,12 @@ function ClientDetails() {
     let client = data?.data?.result?.find(
       (item: any) => item.id === e.target.value
     );
-    setGstNumber(client?.gstNumber);
-    dispatch(handleClientChange({ client }));
+    if(client?.legalName == '' || !client?.legalName) {
+      snack.error("Please update missing details in client profile.");
+    } else {
+      setGstNumber(client?.gstNumber);
+      dispatch(handleClientChange({ client }));
+    }
   };
 
   if (isLoading || statesLoading) return <Loader />;

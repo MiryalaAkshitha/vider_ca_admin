@@ -118,6 +118,11 @@ const columns = [
     render: (item: any) => getTitle(item.status),
   },
   {
+    title: "Fee Amount",
+    key: "feeAmount",
+    render: (item: any) => (item.feeAmount * 1),
+  },
+  {
     key: "Memberss",
     title: "Members",
     render: (v: any) => (

@@ -32,6 +32,7 @@ function BillingEntityDetails({ result }) {
   const [open, setOpen] = useState(false);
 
   const [gstNumber, setGstNumber] = useState('NA');
+  const [placeofsupplier, setPlaceofsupplier] = useState('NA');
   const [billingEntityAddress, setBillingEntityAddress] = useState(result?.billingEntityAddress);
   const [approvalHierarchy, setApprovalHierarchy] = useState(result?.approvalHierarchy);
   const [billingEntity, setBillingEntity] = useState(result?.billingEntity);
@@ -55,6 +56,7 @@ function BillingEntityDetails({ result }) {
       setBillingEntity(billingEntity);
       setBillingEntityAddress(billingEntity);
       setGstNumber(billingEntity?.gstNumber);
+      setPlaceofsupplier(billingEntity?.placeOfSupply);
     }   
 
     dispatch(handleBillingEntityChange({ billingEntity }));
@@ -108,6 +110,12 @@ function BillingEntityDetails({ result }) {
                   <AddressDetail
                     title="GST Number"
                     value={gstNumber}
+                  />
+                }
+                {placeofsupplier != 'NA' &&
+                  <AddressDetail
+                    title="Location of Supplier"
+                    value={placeofsupplier}
                   />
                 }
               </Box>

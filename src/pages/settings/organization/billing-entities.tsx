@@ -138,7 +138,7 @@ const Actions = ({ data }) => {
         }}
       >
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        {/* <MenuItem onClick={handleDelete}>Delete</MenuItem> */}
       </Menu>
     </>
   );
