@@ -1,14 +1,14 @@
 import { icons } from "assets";
 export const invoiceReportsList = [
     {
-        title: "TasksCompeletedToBilledTasksReport",
-        path: "/reports/TasksCompeletedToBilledTasksReport",
+        title: "TasksCompletedToBilledTasksReport",
+        path: "/reports/TasksCompletedToBilledTasksReport",
         desc: `Track receivables for completed tasks for which invoices have been raised.`,
         icon: icons.totalTasks,
     },
     {
-        title: "TasksCompeletedToUnBilledTasksReport",
-        path: "/reports/TasksCompeletedToUnBilledTasksReport",
+        title: "TasksCompletedToUnBilledTasksReport",
+        path: "/reports/TasksCompletedToUnBilledTasksReport",
         desc: `Track receivables, including pure agent services and fees, for completed tasks with invoices not yet raised.`,
         icon: icons.totalTasks,
     },

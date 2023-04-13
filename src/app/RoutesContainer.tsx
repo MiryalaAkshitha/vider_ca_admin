@@ -140,8 +140,8 @@ const DetailedOverDueTasksReport = loadable(() => import("pages/reports/detailed
 const EfficiencyReport = loadable(() => import("pages/reports/efficiency-report"));
 const HighestNoOfTaskCompletion = loadable(() => import("pages/reports/highest-task-completion-reports"))
 // Invoice REPORTS
-const TasksCompeletedToBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToBilledTasksReport"));
-const TasksCompeletedToUnBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToUnBilledTasksReport"));
+const TasksCompletedToBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToBilledTasksReport"));
+const TasksCompletedToUnBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToUnBilledTasksReport"));
 const ClientWiseTasksCompletedToBilledReport = loadable(()=> import ("pages/reports/invoice/ClientWiseTasksCompletedToBilledReport"));
 const ClientWiseTasksCompletedToUnBilledReport = loadable(()=> import ("pages/reports/invoice/ClientWiseTasksCompletedToUnBilledReport"));
 const InvoiceOverDueReport = loadable(()=> import("pages/reports/invoice/InvoiceOverDueReport"));
@@ -204,8 +204,8 @@ function RoutesContainer() {
             <Route path="detailed-over-due-tasks-report" element={<DetailedOverDueTasksReport />} />
             <Route path="efficiency-report" element={<EfficiencyReport />} />
             <Route path="highest-task-completion-reports" element={<HighestNoOfTaskCompletion />} />
-            <Route path="TasksCompeletedToBilledTasksReport" element={<TasksCompeletedToBilledTasksReport/>}/>
-            <Route path="TasksCompeletedToUnBilledTasksReport" element={<TasksCompeletedToUnBilledTasksReport/>}/>
+            <Route path="TasksCompletedToBilledTasksReport" element={<TasksCompletedToBilledTasksReport/>}/>
+            <Route path="TasksCompletedToUnBilledTasksReport" element={<TasksCompletedToUnBilledTasksReport/>}/>
             <Route path="ClientWiseTasksCompletedToBilledReport" element ={<ClientWiseTasksCompletedToBilledReport/>}/>
             <Route path="ClientWiseTasksCompletedToUnBilledReport" element ={<ClientWiseTasksCompletedToUnBilledReport/>}/>
             <Route path ="InvoiceOverDueReport" element ={<InvoiceOverDueReport/>}/>

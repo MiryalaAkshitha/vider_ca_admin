@@ -11,7 +11,7 @@ import Filters from "views/reports/CommonReport/Filters";
 import Report from "views/reports/CommonReport/Report";
 import { UserProfileContext } from 'context/UserProfile';
 
-function TasksCompeletedToBilledTasksReport() {
+function TasksCompletedToBilledTasksReport() {
   useTitle("Tasks Completed To Billed Tasks Report");
 
   const [data, setData] = useState(null);
@@ -65,7 +65,7 @@ function TasksCompeletedToBilledTasksReport() {
           Reports
         </LinkRouter>
         <Typography color="text.primary">Invoices</Typography>
-        <Typography color="text.primary">TasksCompeletedToBilledTasksReport</Typography>
+        <Typography color="text.primary">TasksCompletedToBilledTasksReport</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} filterfields={filterfields}/>
       <Report isLoading={isLoading} isError={isError} state={state} data={data} payload={payload} />
@@ -73,4 +73,4 @@ function TasksCompeletedToBilledTasksReport() {
   )
 }
 
-export default TasksCompeletedToBilledTasksReport;
+export default TasksCompletedToBilledTasksReport;
