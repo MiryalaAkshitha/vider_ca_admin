@@ -11,7 +11,7 @@ import Filters from "views/reports/CommonReport/Filters";
 import Report from "views/reports/CommonReport/Report";
 import { UserProfileContext } from 'context/UserProfile';
 
-function TasksCompeletedToUnBilledTasksReport() {
+function TasksCompletedToUnBilledTasksReport() {
   useTitle("Tasks Completed To Un-Billed Tasks Report");
 
   const [data, setData] = useState(null);
@@ -67,7 +67,7 @@ function TasksCompeletedToUnBilledTasksReport() {
           Reports
         </LinkRouter>
         <Typography color="text.primary">Invoices</Typography>
-        <Typography color="text.primary">TasksCompeletedToUnBilledTasksReport</Typography>
+        <Typography color="text.primary">TasksCompletedToUnBilledTasksReport</Typography>
       </Breadcrumbs>
       <Filters state={state} setState={setState} onSubmit={handleSubmit} filterfields={filterfields}/>
       <Report isLoading={isLoading} isError={isError} state={state} data={data} payload={payload} />
@@ -75,4 +75,4 @@ function TasksCompeletedToUnBilledTasksReport() {
   )
 }
 
-export default TasksCompeletedToUnBilledTasksReport;
+export default TasksCompletedToUnBilledTasksReport;

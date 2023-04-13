@@ -72,7 +72,7 @@ let columns = [
   {
     key: "invoiceDate",
     title: "Invoice Date",
-    render: (row: any) => formattedDate(row.invoiceDueDate),
+    render: (row: any) => formattedDate(row.invoiceDate),
 
   },
   {
