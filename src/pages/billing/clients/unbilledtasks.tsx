@@ -52,38 +52,16 @@ function UnBilledTasks() {
             snack.error(handleError(err));
         },
     });
-    // if (query.search) {
-    // receipts = receipts.andWhere('client.displayName LIKE :search', {
-    //   search: `%${query.search}%`,
-    //         });
-    //       }
+   
     return (
-        // <Box px={3} pt={3}>
-        //     <Box display="flex" gap={2}>
-        //         <Box display="flex" flex={1} gap={2} alignItems="center">
         <>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-                <SearchContainer value={search} onChange={setSearch} debounced />
-
-
-
-                {/* <Button
-                        onClick={() => navigate("/billing/invoices/add")}
-                        variant="outlined"
-                        color="secondary"
-                        startIcon={<Add />}
-                    > Add New Invoice
-                    </Button>  */}
-
-            </Box>
-
-            <Table
+        <SearchContainer value={search} onChange={setSearch} debounced />
+        <Table
                 sx={{ mt: 3 }}
                 loading={isLoading}
                 data={data || []}
                 columns={Columns}
-                // selection={{ selected, setSelected }}
-            // pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
+               
             />
         </>
     );

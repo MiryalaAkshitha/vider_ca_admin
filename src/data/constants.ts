@@ -400,7 +400,8 @@ export enum REPORT {
   receiptnumber ="Receipt Number",
   pureagent ="Pure Agent",
   additionalchargers ="Additional Charges",
-  tasknumber = "Task ID"
+  tasknumber = "Task ID",
+  dueamount ="Due Amount"
 }
 
 export const STATES = [
