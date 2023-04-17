@@ -39,12 +39,12 @@ function Billingclientview() {
   });
 
   return (
-    <Box px={4} pt={2} pb={10}>
+    
 
 
       <>
         <Box sx={{ position: "sticky", top: 65, bgcolor: "white", zIndex: 2 }}>
-          <StyledProfileNav sx={{ marginTop: "none" }}>
+          <StyledProfileNav>
             {invoicingClientsMenu.map((item, index) => (
               <StyledProfileNavItem
                 key={index}
@@ -65,11 +65,7 @@ function Billingclientview() {
         </Box>
       </>
 
-      {/* <Activity /> */}
-      {/* <ValidateAccess name={Permissions.EDIT_CLIENT_PROFILE}>
-        <BottomBar data={originalState} setState={setState} state={state} />
-      </ValidateAccess> */}
-    </Box>
+    
   );
 }
 

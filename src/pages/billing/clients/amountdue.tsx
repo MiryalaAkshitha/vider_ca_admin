@@ -29,7 +29,7 @@ function AmountDue() {
     getCommonBilling, {
     onSuccess: (result: any) => {
         setData(result?.data);
-        console.log(result?.data[0]?.amountdue)
+        console.log(result?.data ,'amountdue')
     },
     onError: (err: any) => {
         snack.error(handleError(err));
@@ -54,7 +54,7 @@ function AmountDue() {
       </header>
       <main>
         {" "}
-        <Typography variant="h6">{result?.data[0]?.amountdue}</Typography>
+        <Typography variant="h6">{result?.data[0]?.dueamount}</Typography>
       </main>
     </StyledTaskBox>
   );

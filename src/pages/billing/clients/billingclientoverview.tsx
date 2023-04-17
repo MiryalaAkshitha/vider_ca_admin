@@ -91,7 +91,7 @@ let columns = [
     title: "Billed Tasks"
   },
   {
-    key:"amountdue",
+    key:"dueamount",
     title:"Amount Due"
   }
 
