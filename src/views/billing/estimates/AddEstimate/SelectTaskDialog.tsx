@@ -24,6 +24,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
   const [selected, setSelected] = useState<any[]>([]);
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(5);
+  const [unbilledtasks, setUnbilledtasks] = useState([]);
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -34,7 +35,15 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       },
     ],
     getInvoicingTasks,
-    { enabled: open && Boolean(client) }
+    {
+      onSuccess: (res: any) => {
+        const result = res?.data?.result.filter((obj: any) => {
+          return obj?.recurringStatus !== 'pending'
+        })
+        setUnbilledtasks(result);     
+      },
+      enabled: open && Boolean(client)
+    }
   );
 
   function onSubmit() {
@@ -44,9 +53,9 @@ const SelectTaskDialog = ({ open, setOpen }) => {
     }
     dispatch(handleAddTasksToParticular(selected));
 
-    if(selected && selected.length > 0) {
+    if (selected && selected.length > 0) {
       selected.forEach((particular: any, index: any) => {
-        if(particular?.expenditure && particular?.expenditure.length > 0) {
+        if (particular?.expenditure && particular?.expenditure.length > 0) {
           particular?.expenditure.forEach((expenditure: any, index: any) => {
             expenditure['name'] = expenditure.particularName;
             expenditure['amount'] = expenditure.amount;
@@ -55,11 +64,11 @@ const SelectTaskDialog = ({ open, setOpen }) => {
             const value = expenditure.amount;
             const taskExpenseType = expenditure.taskExpenseType;
             dispatch(handleExistingOtherParticular({ id, taskExpenseType, index, key, value }));
-          });          
+          });
         }
       });
     }
-    
+
     setOpen(false);
   }
 
@@ -81,7 +90,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
         <Table
           sx={{ mt: 3 }}
           columns={columns}
-          data={data?.data?.result?.slice(page, pageCount) || []}
+          data={unbilledtasks?.slice(page, pageCount) || []}
           loading={isLoading}
           selection={{ selected, setSelected }}
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}

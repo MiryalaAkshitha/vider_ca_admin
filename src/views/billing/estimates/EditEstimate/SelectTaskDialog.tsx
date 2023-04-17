@@ -24,6 +24,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
   const [selected, setSelected] = useState<any[]>([]);
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(5);
+  const [unbilledtasks, setUnbilledtasks] = useState([]);
 
   const { data, isLoading }: ResType = useQuery(
     [
@@ -34,7 +35,15 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       },
     ],
     getInvoicingTasks,
-    { enabled: open && Boolean(client) }
+    {
+      onSuccess: (res: any) => {
+        const result = res?.data?.result.filter((obj: any) => {
+          return obj?.recurringStatus !== 'pending'
+        })
+        setUnbilledtasks(result);     
+      },
+      enabled: open && Boolean(client)
+    }
   );
 
   function onSubmit() {
@@ -81,7 +90,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
         <Table
           sx={{ mt: 3 }}
           columns={columns}
-          data={data?.data?.result?.slice(page, pageCount) || []}
+          data={unbilledtasks?.slice(page, pageCount) || []}
           loading={isLoading}
           selection={{ selected, setSelected }}
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
