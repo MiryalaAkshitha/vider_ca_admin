@@ -2,9 +2,33 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { StyledTaskBox } from "../styles";
+import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
+import { getTitle } from "utils";
+import { useDispatch } from "react-redux";
+import { UserProfileContext } from "context/UserProfile";
+import { useContext } from "react";
+import useQueryParams from "hooks/useQueryParams";
 
 function TotalNumberOfTasks({ data }) {
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const { data: uData } = useContext(UserProfileContext);
+
+  // const { queryParams, setQueryParams } = useQueryParams();
+  // const dashboardType = queryParams.type || "user";
+  // const type = dashboardType === "user" ? "admin" : "user";
+
+  // const handleClick = (v: any) => {
+  //   dispatch(handleSelected("assignee"));
+  //   dispatch(
+  //     handleFilters({
+  //       checked: true,
+  //       value: { label: getTitle(uData.fullName), value: uData.fullName },
+  //     })
+  //   );
+  //   dispatch(handleApply());
+  //   navigate("/task-board");
+  // };
 
   return (
     <StyledTaskBox>
@@ -20,6 +44,7 @@ function TotalNumberOfTasks({ data }) {
         <Typography variant="body2" color="secondary">
           View Tasks
         </Typography>
+        {/* <IconButton color="secondary" size="small" onClick={(v) => handleClick(v)}> */}
         <IconButton color="secondary" size="small" onClick={() => navigate("/task-board")}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
