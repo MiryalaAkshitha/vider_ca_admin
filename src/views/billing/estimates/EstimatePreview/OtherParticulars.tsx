@@ -60,7 +60,7 @@ function OtherParticulars({ result, interState }: IProps) {
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
               <Typography variant="caption" flex={1}>
-                {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] ? "CGST" : "IGST"}
+                {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] ? "CGST" : "GST"}
               </Typography>
               <Typography variant="body2">
                 {+result?.totalGstAmount / 2}/-

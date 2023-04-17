@@ -26,7 +26,7 @@ function Particulars({ result, interState }: IProps) {
               {PARTICULARS_HEADINGS.map((par, index) => {
                 if (par.name === "Action") return null;
 
-                // if (interState && par.name === "IGST") {
+                // if (interState && par.name === "GST") {
                 if(result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && par.name === "GST") {
                   return (
                     <TableCell key={index}>

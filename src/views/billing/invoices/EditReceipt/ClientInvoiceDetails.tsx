@@ -63,6 +63,9 @@ function ClientInvoiceDetails({ invoicedate }) {
 
   const onChange = (event: any) => {
     const { name, value } = event.target;
+    if((value * 1) < 0 ) {
+      return
+    }
     if (name == "previousCredits") {
       if (value > state.previousCredits) {
         setErrorPrevCredits(true);
@@ -81,7 +84,10 @@ function ClientInvoiceDetails({ invoicedate }) {
 
   const onRowChange = (event: any, row: any) => {
     const { name, value } = event.target;
-    if (value <= getTotalAmount()) {
+    if((value * 1) < 0 ) {
+      return
+    }
+    if (value <= getTotalAmount() && value > 0) {
       const changedinvoice: any = [];
       const invoicesList = JSON.parse(JSON.stringify(invoices));
       invoicesList.forEach((item: any) => {
@@ -325,7 +331,7 @@ function ClientInvoiceDetails({ invoicedate }) {
                 Payment Summary
               </Typography>
               <Box p={2}>
-                
+
                 <SummaryDetail title="Amount received" value={state.amount} />
                 <SummaryDetail
                   title="Credits used for payment"
@@ -333,7 +339,7 @@ function ClientInvoiceDetails({ invoicedate }) {
                 />
                 <SummaryDetail title="Total Receipt amount" value={getTotalAmount()} />
 
-                
+
               </Box>
             </Box>
           </Box>

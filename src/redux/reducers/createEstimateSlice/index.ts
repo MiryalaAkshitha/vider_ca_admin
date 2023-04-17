@@ -100,6 +100,9 @@ export const createEstimateSlice = createSlice({
         upiAttachment: data.upiAttachmentUrl,
       };
     },
+    handleResetParticular(state: IState) {
+      state.particulars.length = 0;
+    },
     handleAddParticular(state: IState) {
       state.particulars.push({ ...initialParticular });
     },
@@ -189,6 +192,7 @@ export const {
   handleRemoveParticular,
   handleChangeParticular,
   handleExistingParticular,
+  handleResetParticular,
   handleBankDetailsChange,
   handleAddTermsAndConditions,
   handleExistingTermsAndConditions,

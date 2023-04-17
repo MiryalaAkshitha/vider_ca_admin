@@ -12,6 +12,7 @@ import {
   handleClientChange,
   handleExistingClientChange,
   handlePlaceOfSupplyChange,
+  handleResetParticular,
   selectEstimate,
 } from "redux/reducers/createEstimateSlice";
 import { ResType } from "types";
@@ -50,9 +51,12 @@ function ClientDetails({ result }) {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
       );
-      if (client?.legalName == '' || !client?.legalName) {
+      if ((client?.legalName == '' || !client?.legalName)
+        && (client?.state == '' || !client?.state)
+        && (client?.city == '' || !client?.city)) {
         snack.error("Please update missing details in client profile.");
       } else {
+        dispatch(handleResetParticular());
         setGstNumber(client?.gstNumber);
         dispatch(handleClientChange({ client }));
         if (e.target.name == 'placeOfSupply') {

@@ -8,6 +8,7 @@ import { placeOfSupplyStates } from "data/placeOfSupply";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  handleResetParticular,
   handleClientChange,
   handlePlaceOfSupplyChange,
   selectEstimate,
@@ -36,11 +37,14 @@ function ClientDetails() {
     let client = data?.data?.result?.find(
       (item: any) => item.id === e.target.value
     );
-    if(client?.legalName == '' || !client?.legalName) {
+    if((client?.legalName == '' || !client?.legalName) 
+    && (client?.state == '' || !client?.state) 
+    && (client?.city == '' || !client?.city) ) {
       snack.error("Please update missing details in client profile.");
     } else {
       setGstNumber(client?.gstNumber);
       dispatch(handleClientChange({ client }));
+      dispatch(handleResetParticular());
     }
   };
 

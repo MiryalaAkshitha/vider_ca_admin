@@ -56,6 +56,9 @@ function ClientInvoiceDetails() {
 
   const onChange = (event: any) => {
     const { name, value } = event.target;
+    if((value * 1) < 0 ) {
+      return
+    }
     if (name == "previousCredits") {
       if(value >= state.previousCredits) {
         setErrorPrevCredits(true);
@@ -74,6 +77,9 @@ function ClientInvoiceDetails() {
 
   const onRowChange = (event: any, row: any) => {
     const { name, value } = event.target;
+    if((value * 1) < 0 ) {
+      return
+    }
     if (value <= getTotalAmount()) {
       const changedinvoice: any = [];
       const invoicesList = JSON.parse(JSON.stringify(invoices));

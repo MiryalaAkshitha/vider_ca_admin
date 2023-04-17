@@ -34,8 +34,6 @@ function BottomBar() {
 
   const onSubmit = (args: any) => {
     const newstate = JSON.parse(JSON.stringify(state));
-    newstate['shippingAddress']['state'] = 'Telangana';
-    newstate['billingAddress']['state'] = 'Telangana';
 
     let apiData: any = { ...state };
     let totalGstAmount = getTotalGst(state.particulars);
