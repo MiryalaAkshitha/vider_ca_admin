@@ -1,8 +1,9 @@
+import { Close } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { getClients } from "api/services/clients/clients";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
@@ -11,6 +12,7 @@ import ValidateAccess from "components/ValidateAccess";
 import { Permissions } from "data/permissons";
 import useTitle from "hooks/useTitle";
 import _ from "lodash";
+import moment from "moment";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +23,8 @@ import AddClient from "views/clients/AddClient";
 import CustomizeColumns from "views/clients/CustomizeColumns";
 import ClientFilter from "views/clients/Filter";
 import ImportClients from "views/clients/ImportClients";
+import AppliedFilters from "views/tasks/Filters/ApplidedFilters";
+import { StyledAppliedFilterItem } from "views/tasks/Filters/styles";
 
 function Clients() {
   useTitle("Clients");
@@ -32,6 +36,7 @@ function Clients() {
   const [openCustomColumns, setOpenCustomColumns] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [clients, setClients] = useState<any[]>([]);
   const [selected, setSelected] = useState<any[]>([]);
   const [columns, setColumns] = useState(_.cloneDeep(defaultColumns));
   const [filters, setFilters] = useState({
@@ -56,11 +61,39 @@ function Clients() {
         },
       },
     ],
-    getClients
-  );
+    getClients, {
+    onSuccess: (res: any) => {
+      const result = partition(res?.data?.result, (el: any) => el.status === 'INACTIVE')
+      setClients(result);
+    }
+  });
+
+  const partition = (arr: any, condition: any) => {
+    const actives = arr.filter((el: any) => condition(el));
+    const inactives = arr.filter((el: any) => !condition(el));
+    return [...inactives, ...actives];
+  };
 
   const handleRowClick = (v: any) => {
     navigate(`/clients/${v?.id}/profile`);
+  };
+
+  const onRemoveFilter = (filterKey: any, filterItemIndex: any) => {
+    const appliedFilters = JSON.parse(JSON.stringify(filters))[filterKey].filter(
+      (item: any, index: number) => index !== filterItemIndex
+    );
+    setFilters({
+      ...filters,
+      [filterKey]: appliedFilters
+    });
+  }
+
+  const customDatesLabel = (filter: string) => {
+    let fromDate = filters[filter].fromDate;
+    let toDate = filters[filter].toDate;
+
+    return ` (${moment(fromDate).format("YYYY DD")}
+             - ${moment(toDate).format("YYYY DD")})`;
   };
 
   const totalCount = data?.data?.count;
@@ -99,6 +132,38 @@ function Clients() {
           </Button>
         </Box>
         <Box display="flex" gap={2}>
+          {Object.keys(filters).map((filter, filterIndex: number) => {
+            if (filters[filter].length > 0) {
+              return (
+                <Box display="flex" gap={1} alignItems="center" key={filterIndex}>
+                  <Typography variant="caption">{getTitle(filter)}:</Typography>
+                  <Box display="flex" gap="4px" alignItems="center">
+                    {filters[filter].map(
+                      (item: any, filterItemIndex: number) => (
+                        <StyledAppliedFilterItem
+                          onClick={() => {
+                            onRemoveFilter(filter, filterItemIndex);
+                          }}
+                          key={filterItemIndex}
+                        >
+                          <Typography variant="body2">
+                            {filter == 'monthAdded' ? item : item?.label}
+                            {item?.label === "Custom" && customDatesLabel(filter)}
+                            {filter == 'labels' && item?.name}
+                          </Typography>
+                          <Close sx={{ fontSize: "11px" }} />
+                        </StyledAppliedFilterItem>
+                      )
+                    )}
+                  </Box>
+                </Box>
+              );
+            }
+            return null;
+          })}
+        </Box>
+
+        <Box display="flex" gap={2}>
           {selected.length > 0 && (
             <ValidateAccess name={[Permissions.DELETE_CLIENTS, Permissions.EDIT_CLIENTS]}>
               <Button
@@ -128,7 +193,7 @@ function Clients() {
           sx={{ mt: 3 }}
           loading={isLoading}
           onRowClick={handleRowClick}
-          data={data?.data?.result || []}
+          data={clients || []}
           columns={columns}
           selection={{ selected, setSelected }}
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
@@ -149,6 +214,8 @@ function Clients() {
         open={openFilter}
         setOpen={setOpenFilter}
       />
+      <AppliedFilters />
+
       <CustomizeColumns
         defaultColumns={_.cloneDeep(defaultColumns)}
         columns={columns}

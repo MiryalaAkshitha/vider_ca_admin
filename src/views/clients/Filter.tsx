@@ -1,4 +1,4 @@
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { AppBar, Autocomplete, Button, Dialog, IconButton, List, ListItemButton, TextField, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getLabels } from "api/services/labels";
 import DrawerWrapper from "components/DrawerWrapper";
@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { DataResponse, DialogProps } from "types";
 import { CLIENT_CATEGORIES } from "data/constants";
+import { Close } from "@mui/icons-material";
+import Loader from "components/Loader";
 
 interface ClientFilterProps extends DialogProps {
   filters: any;
@@ -15,7 +17,7 @@ interface ClientFilterProps extends DialogProps {
 function ClientFilter(props: ClientFilterProps) {
   const { open, setOpen, filters, setFilters } = props;
 
-  const { data: labels }: UseQueryResult<DataResponse, Error> = useQuery(
+  const { data: labels, isLoading: labelsLoading }: UseQueryResult<DataResponse, Error> = useQuery(
     "labels",
     getLabels
   );
@@ -64,119 +66,165 @@ function ClientFilter(props: ClientFilterProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Filter Clients">
-      <TextField
-        variant="outlined"
-        fullWidth
-        onChange={(e) => {
-          setState({
-            ...state,
-            monthAdded: e.target.value,
-          });
-        }}
-        value={state.monthAdded}
-        name="monthAdded"
-        required
-        InputLabelProps={{ shrink: true }}
-        size="small"
-        label="Month Added"
-        type="month"
-      />
-      <Autocomplete
-        id="tags-standard"
-        multiple
-        onChange={(_, value) => {
-          setState({
-            ...state,
-            category: value,
-          });
-        }}
-        value={state.category || []}
-        options={CLIENT_CATEGORIES || []}
-        sx={{ mt: 3 }}
-        getOptionLabel={(option: any) => option?.label}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            required
-            variant="outlined"
-            size="small"
-            fullWidth
-            label="Client Category"
-          />
-        )}
-      />
-      {getSubCategories().length !== 0 && (
-        <Autocomplete
-          id="tags-standard"
-          multiple
-          onChange={(_, value) => {
-            setState({
-              ...state,
-              subCategory: value,
-            });
-          }}
-          value={state.subCategory || []}
-          options={getSubCategories() || []}
-          sx={{ mt: 3 }}
-          getOptionLabel={(option: any) => option?.label}
-          renderInput={(params) => (
+    <Dialog
+      sx={{ alignItems: "flex-start", maxHeight: 600 }}
+      fullWidth
+      maxWidth="sm"
+      open={open}
+      PaperProps={{
+        elevation: 0,
+        sx: { display: "flex", flexDirection: "column" },
+      }}
+    >
+      <AppBar
+        position="static"
+        color="transparent"
+        sx={{ boxShadow: "none", borderBottom: "1px solid lightgrey" }}
+      >
+        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
+          <Typography variant="subtitle1">Filters</Typography>
+          <IconButton onClick={() => setOpen(false)}>
+            <Close color="primary" />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      {labelsLoading ? (
+        <Loader minHeight="400px" />
+      ) : (
+        <>
+
+          <Box sx={{ overflowY: "auto", mt: 2, pt: 1, px: 2, pb: 4, flex: 1 }}>
+
+
             <TextField
-              {...params}
-              required
               variant="outlined"
-              size="small"
               fullWidth
-              label="Client Sub Category"
+              onChange={(e) => {
+                setState({
+                  ...state,
+                  monthAdded: [e.target.value],
+                });
+              }}
+              value={state.monthAdded}
+              name="monthAdded"
+              required
+              InputLabelProps={{ shrink: true }}
+              size="small"
+              label="Month Added"
+              type="month"
             />
-          )}
-        />
+            <Autocomplete
+              id="tags-standard"
+              multiple
+              onChange={(_, value) => {
+                setState({
+                  ...state,
+                  category: value,
+                });
+              }}
+              value={state.category || []}
+              options={CLIENT_CATEGORIES || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => option?.label}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Client Category"
+                />
+              )}
+            />
+            {getSubCategories().length !== 0 && (
+              <Autocomplete
+                id="tags-standard"
+                multiple
+                onChange={(_, value) => {
+                  setState({
+                    ...state,
+                    subCategory: value,
+                  });
+                }}
+                value={state.subCategory || []}
+                options={getSubCategories() || []}
+                sx={{ mt: 3 }}
+                getOptionLabel={(option: any) => option?.label}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    label="Client Sub Category"
+                  />
+                )}
+              />
+            )}
+            <Autocomplete
+              id="tags-standard"
+              multiple
+              onChange={(_, value) => {
+                setState({
+                  ...state,
+                  labels: value,
+                });
+              }}
+              value={state.labels || []}
+              options={labels?.data || []}
+              sx={{ mt: 3 }}
+              getOptionLabel={(option: any) => option?.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Labels"
+                />
+              )}
+            />
+
+          </Box>
+
+        </>
+
       )}
-      <Autocomplete
-        id="tags-standard"
-        multiple
-        onChange={(_, value) => {
-          setState({
-            ...state,
-            labels: value,
-          });
-        }}
-        value={state.labels || []}
-        options={labels?.data || []}
-        sx={{ mt: 3 }}
-        getOptionLabel={(option: any) => option?.name}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            required
+
+      <AppBar
+        position="static"
+        color="transparent"
+        sx={{ boxShadow: "none", mb: 2, borderTop: "1px solid lightgrey" }}
+      >
+        <Toolbar sx={{ justifyContent: "flex-end", gap: 2, alignItems: "center" }}>
+
+          <Button
+            onClick={handleResetFilters}
+            sx={{ mt: 3 }}
             variant="outlined"
-            size="small"
-            fullWidth
-            label="Labels"
-          />
-        )}
-      />
-      <Box display="flex" gap={2} justifyContent="flex-end">
-        <Button
-          onClick={handleResetFilters}
-          sx={{ mt: 3 }}
-          variant="outlined"
-          color="secondary"
-          type="submit"
-        >
-          Reset
-        </Button>
-        <Button
-          sx={{ mt: 3 }}
-          variant="contained"
-          onClick={handleSubmit}
-          color="secondary"
-          type="submit"
-        >
-          Apply
-        </Button>
-      </Box>
-    </DrawerWrapper>
+            color="secondary"
+            type="submit"
+          >
+            Reset
+          </Button>
+          <Button
+            sx={{ mt: 3 }}
+            variant="contained"
+            onClick={handleSubmit}
+            color="secondary"
+            type="submit"
+          >
+            Apply
+          </Button>
+
+        </Toolbar>
+      </AppBar>
+
+    </Dialog>
   );
 }
 
