@@ -1,5 +1,5 @@
-import { Delete, Visibility } from "@mui/icons-material";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Add, Delete, Visibility } from "@mui/icons-material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { deleteDscRegister, getDscRegisters } from "api/services/clients/dsc-register";
 import { useConfirm } from "context/ConfirmDialog";
 import FloatingButton from "components/FloatingButton";
@@ -15,9 +15,38 @@ import { ResType } from "types";
 import AddDscRegister from "views/client-view/dscregister/AddDscRegister";
 import EditDscRegister from "views/client-view/dscregister/EditDscRegister";
 import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
+import PasswordField from "views/login/PasswordField";
 
+type Props = {
+  data: any;
+  };
+
+  const Password = ({ data }: Props) => {
+      const [show, setShow] = useState(false);
+      return (
+        <Grid item xs={2}>
+          {/*<Typography gutterBottom variant="body2" color="rgba(0,0,0,0.5)">
+    +       Password
+    +  </Typography>*/}
+         {show ? (
+           <Typography gutterBottom variant="body1">
+             {data?.password}
+           </Typography>
+         ) : (
+           <Typography
+             onClick={() => setShow(true)}
+             style={{ cursor: "pointer", color: "#149ECD" }}
+             gutterBottom
+              variant="body1"
+            >
+             Click to see
+           </Typography>
+         )}
+        </Grid>
+      );
+    };
 function DscRegister() {
-  useTitle("Dsc Register");
+  useTitle("Clients");
   const params = useParams();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -40,13 +69,13 @@ function DscRegister() {
 
   return (
     <Box p={3}>
-      <Box mb={2} display="flex" justifyContent="flex-end">
+      <Box mb={2} display="flex" justifyContent="flex-end" gap="10px">
         <SearchContainer
           value={search}
           debounced
           minWidth="400px"
           onChange={setSearch}
-          placeHolder="Search"
+          placeHolder="Search by DSC Holder Name"
         />
       </Box>
       <Table
@@ -61,8 +90,8 @@ function DscRegister() {
           setPage: setOffset,
         }}
       />
-      <FloatingButton onClick={() => setOpen(true)} />
-      <AddDscRegister open={open} setOpen={() => setOpen(false)} />
+ <FloatingButton onClick={() => setOpen(true)} />
+       <AddDscRegister open={open} setOpen={() => setOpen(false)} />
     </Box>
   );
 }
@@ -167,17 +196,21 @@ const columns = [
   { key: "holderName", title: "DSC Holder Name" },
   {
     key: "expiryDate",
-    title: "Expiry Date",
+    title: "DSC Expiry Date",
     render: (row: any) => {
       return moment(row?.expiryDate).format("DD-MM-YYYY");
     },
   },
   {
     key: "",
-    title: "No of days left to expiry",
+    title: "Days left to DSC Expiry",
     render: (row: any) => <NoOfDaysLeftToExpiry row={row} />,
   },
-  { key: "password", title: "Password" },
+  {
+        key: "password",
+        title: "Password",
+       render: (rowData: any) => <Password data={rowData} />,
+      },
   {
     key: "actions",
     title: "Actions",

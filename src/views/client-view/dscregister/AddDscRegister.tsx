@@ -88,7 +88,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add Dsc Registar">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add DSC Record">
       <form onSubmit={handleSubmit} ref={formRef}>
         <FormControlLabel
           control={
@@ -147,7 +147,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
           name="mobileNumber"
           size="small"
           inputProps={{
-            pattern: "[0-9]{10}",
+            pattern: "[1-9]{1}[0-9]{9}",
             title: "Enter 10 digit mobile number",
           }}
           label="Mobile Number"

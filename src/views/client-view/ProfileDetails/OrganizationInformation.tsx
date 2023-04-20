@@ -183,7 +183,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <TextField
-              label="GST Number"
+              label="GSTIN"
               fullWidth
               variant="outlined"
               size="small"
@@ -203,7 +203,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="PAN Number"
+              label="PAN"
               fullWidth
               variant="outlined"
               size="small"

@@ -59,7 +59,7 @@ function CompletedTasks({ filters }: Props) {
             },
             {
               key: "name",
-              title: "Task name",
+              title: "Task Name",
             },
             {
               key: "completedDate",
@@ -72,7 +72,7 @@ function CompletedTasks({ filters }: Props) {
             },
             {
               key: "paymentStatus",
-              title: "Payment status",
+              title: "Billing Status",
               render: (row) => getTitle(row?.paymentStatus),
             },
             {

@@ -106,6 +106,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
             <Box mt={2}>
               <FormSelect
                 control={control}
+                required
                 name="subCategory"
                 label="Sub Category"
                 options={subCategories.map((item) => ({
@@ -130,18 +131,20 @@ function AddClient({ open, setOpen, successCb }: Props) {
             <FormInput control={control} name="displayName" label="Display Name" required />
           </Box>
           <Box mt={2}>
-            <FormInput control={control} name="mobileNumber" label="Mobile number" required />
+            <FormInput control={control} name="mobileNumber" label="Mobile Number" required />
           </Box>
           <Box mt={2}>
             <FormInput control={control} name="email" label="Email" required />
           </Box>
           <Box mt={2}>
-            <FormInput control={control} name="authorizedPerson" label="Authorized person name" />
+            <FormInput control={control} name="authorizedPerson" label="Authorized Person" />
           </Box>
           <Box mt={2}>
             <FormInput control={control} name="designation" label="Designation" />
           </Box>
-          <Box mt={2}>
+
+          {/* remove client portal access as of now  */}
+          {/* <Box mt={2}>
             <FormRadio
               row
               control={control}
@@ -152,8 +155,8 @@ function AddClient({ open, setOpen, successCb }: Props) {
                 { value: "no", label: "Disable" },
               ]}
             />
-          </Box>
-          <Details control={control} watch={watch} setData={setData} />
+          </Box> */}
+          {/* <Details control={control} watch={watch} setData={setData} /> */}
           <LoadingButton
             loading={isLoading}
             fullWidth

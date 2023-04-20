@@ -5,6 +5,7 @@ import Loader from "components/Loader";
 import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
+import TextFieldWithCopy from "./TextFieldWithCopy";
 
 const AdditionalInformation = ({ data, setState, apiData }) => {
   const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
@@ -51,10 +52,11 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
                   ...data,
                   status: e.target.value,
                 });
+console.log(data?.inactiveAt,'time for inactiveat')
               }}
               fullWidth
               select
-              value={data?.status}
+              value={apiData?.status}
               variant="outlined"
               size="small"
               InputLabelProps={{ shrink: true }}
@@ -62,7 +64,7 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
               <MenuItem value="ACTIVE">Active</MenuItem>
               <MenuItem value="INACTIVE">Inactive</MenuItem>
             </TextField>
-            {apiData?.status === "INACTIVE" && (
+         {apiData?.status === "INACTIVE" && (
               <Box>
                 <Typography variant="caption" color="secondary">
                   Inactive from {moment(data?.inactiveAt).format("DD MMM YYYY - hh:mm a")}
@@ -70,16 +72,61 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
               </Box>
             )}
           </Grid>
+         {/* <Grid item xs={4}> 
+          <Autocomplete
+  id="tags-standard"
+  onChange={(_, value) => {
+    setState({ ...data, status: value });
+  }}
+  value={data?.status || []}
+  options={[
+    { id: "ACTIVE", name: "Active" },
+    { id: "INACTIVE", name: "Inactive" },
+  ]}
+  getOptionLabel={(option: any) => option.name}
+  getOptionSelected={(option, value) => option.id === value.id}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      variant="outlined"
+      size="small"
+      fullWidth
+      label="Client Status"
+    />
+  )}
+/>
+</Grid> */}
+
+
+          {/* <Grid item xs={4}>
+          <Autocomplete
+              onChange={(e) => {
+                setState({
+                  ...data,
+                  status: e,
+                });
+
+              }}
+              value={data?.status|| []}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              options={data?.status || []}
+              getOptionLabel={(option: any) => option?.name}
+              renderInput={(params) => (
+                <TextField {...params} variant="outlined" size="small" fullWidth label="Client Status" />
+              )}
+            />
+            
+</Grid> */}
+
           <Grid item xs={4}>
-            <TextField
+            <TextFieldWithCopy
               label="Local Directory Path"
               name="localDirectoryPath"
               onChange={handleChange}
               value={data?.localDirectoryPath || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              InputLabelProps={{ shrink: true }}
+              // variant="outlined"
+              // size="small"
+              // InputLabelProps={{ shrink: true }}
             />
           </Grid>
         </Grid>

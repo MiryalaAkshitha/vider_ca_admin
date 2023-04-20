@@ -59,7 +59,7 @@ function DeletedTasks({ filters }: Props) {
             },
             {
               key: "name",
-              title: "Task name",
+              title: "Task Name",
             },
             {
               key: "deletedDate",
@@ -72,7 +72,7 @@ function DeletedTasks({ filters }: Props) {
             },
             {
               key: "paymentStatus",
-              title: "Payment status",
+              title: "Billing Status",
               render: (row) => getTitle(row?.paymentStatus),
             },
             {

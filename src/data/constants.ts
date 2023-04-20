@@ -125,6 +125,10 @@ export const clientMenu: Array<{ title: string; path: string }> = [
     title: "Tasks",
     path: "/client-tasks",
   },
+  {
+    title : "Activity Log",
+    path :"/client-activitylog",
+  }
 ];
 
 export const invoicingClientsMenu: Array<{ title: string; path: string }> = [
@@ -218,49 +222,49 @@ export const CLIENT_CATEGORIES: Array<{
   value: string;
   subCategories?: Array<{ label: string; value: string }>;
 }> = [
-  { label: "INDIVIDUAL", value: "individual" },
+  { label: "Individual", value: "individual" },
   { label: "HUF", value: "huf" },
   {
-    label: "PARTNERSHIP FIRM",
+    label: "Partnership Firm",
     value: "partnership_firm",
   },
   {
     label: "LLP",
     value: "llp",
     subCategories: [
-      { label: "INDIAN", value: "indian" },
-      { label: "FOREIGN", value: "foreign" },
+      { label: "Indian", value: "indian" },
+      { label: "Foreign", value: "foreign" },
     ],
   },
   {
-    label: "COMPANY",
+    label: "Company",
     value: "company",
     subCategories: [
-      { label: "PRIVATE", value: "private" },
-      { label: "PUBLIC", value: "public" },
-      { label: "GOVERNMENT", value: "government" },
+      { label: "Private", value: "private" },
+      { label: "Public", value: "public" },
+      { label: "Government", value: "government" },
       { label: "OPC", value: "opc" },
-      { label: "SEC-8", value: "sec_8" },
-      { label: "FOREIGN", value: "foreign" },
+      { label: "Section-8", value: "sec_8" },
+      { label: "Foreign", value: "foreign" },
     ],
   },
   {
-    label: "TRUST",
+    label: "Trust",
     value: "trust",
     subCategories: [
-      { label: "TRUST", value: "trust" },
+      { label: "Pubilc Trust", value: "trust" },
       {
-        label: "PRIVATE DISCRETIONARY TRUST",
+        label: "Private Discretionary Trust",
         value: "private_discretionary_trust",
       },
     ],
   },
   {
-    label: "SOCIETY",
+    label: "Society",
     value: "society",
     subCategories: [
-      { label: "SOCIETY", value: "society" },
-      { label: "CO-OPERATIVE SOCIETY", value: "cooperative_society" },
+      { label: "Society", value: "society" },
+      { label: "Co-Operative Society", value: "cooperative_society" },
     ],
   },
   {
@@ -272,19 +276,19 @@ export const CLIENT_CATEGORIES: Array<{
     value: "boi",
   },
   {
-    label: "CORPORATIONS",
+    label: "Corporations",
     value: "corporations",
   },
   {
-    label: "GOVERNMENT",
-    value: "govermanment",
+    label: "Government",
+    value: "government",
     subCategories: [
-      { label: "STATE", value: "state" },
-      { label: "CENTRAL", value: "central" },
+      { label: "State", value: "state" },
+      { label: "Central", value: "central" },
     ],
   },
   {
-    label: "ARTIFICIAL JUDICIAL PERSON",
+    label: "Artificial Judicial Person",
     value: "artificial_judicial_person",
   },
 ];

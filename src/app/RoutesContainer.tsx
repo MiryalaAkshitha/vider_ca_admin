@@ -55,6 +55,7 @@ const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
 const Credentials = loadable(() => import("pages/client-view/credentials"));
 const Archives = loadable(() => import("pages/client-view/archives"));
 const Tasks = loadable(() => import("pages/client-view/clientTasks"));
+const ClientActivityLog = loadable(()=>import ("pages/client-view/client-activitylog"));
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 
 const OrganizationProfile = loadable(
@@ -328,12 +329,13 @@ function RoutesContainer() {
                 path="profile"
                 element={
                   <PageWithPermission name={Permissions.VIEW_CLIENT_PROFILE}>
-                    <ProfileDetails />
+                    <ProfileDetails/>
                   </PageWithPermission>
                 }
               />
               <Route path="archives" element={<Archives />} />
               <Route path="client-tasks" element={<Tasks />} />
+              <Route path  ="client-activitylog"element ={<ClientActivityLog/>}/>
               <Route path="dsc-register">
                 <Route index element={<ClientDscRegister />} />
                 <Route path=":dscId" element={<ClientDscRegisterView />} />

@@ -1,3 +1,4 @@
+import { Add } from "@mui/icons-material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
@@ -8,6 +9,7 @@ import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
 import Table, { ColumnType } from "components/Table";
 import ValidateAccess from "components/ValidateAccess";
+import { CLIENT_CATEGORIES } from "data/constants";
 import { Permissions } from "data/permissons";
 import useTitle from "hooks/useTitle";
 import _ from "lodash";
@@ -79,7 +81,7 @@ function Clients() {
                 search: v,
               });
             }}
-            placeHolder="Search"
+            placeHolder="Search by Display Name | Trade Name"
           />
           <Button
             startIcon={<FilterAltOutlinedIcon />}
@@ -121,6 +123,7 @@ function Clients() {
               Import Clients
             </Button>
           </ValidateAccess>
+          
         </Box>
       </Box>
       <Box sx={{ mt: 2 }}>
@@ -134,13 +137,14 @@ function Clients() {
           pagination={{ totalCount, page, setPage, pageCount, setPageCount }}
         />
       </Box>
-      <ValidateAccess name={Permissions.CREATE_CLIENTS}>
+      <ValidateAccess name ={Permissions.CREATE_CLIENTS}>
         <FloatingButton
-          onClick={() => {
-            setOpen(true);
-          }}
+        onClick ={()=> {
+          setOpen(true);
+        }}
         />
       </ValidateAccess>
+     
       <AddClient open={open} setOpen={setOpen} />
       <ImportClients open={openImportDialog} setOpen={setOpenImportDialog} />
       <ClientFilter
@@ -167,15 +171,25 @@ function Clients() {
 }
 
 const defaultColumns: Array<ColumnType> = [
+  { key: "clientId", title: "Client ID", default: true },
   { key: "displayName", title: "Display Name", default: true },
   { key: "tradeName", title: "Trade Name", hide: true },
-  { key: "clientId", title: "Client Id", hide: true },
   {
     key: "category",
     title: "Category",
-    render: (rowData) => getTitle(rowData?.category),
-    default: true,
-  },
+    render: (rowData) => {
+      return (
+        <>
+          {
+            CLIENT_CATEGORIES.map((item: any) => {
+              return item.value == rowData?.category ? item.label : '';
+            })
+          }
+        </>
+      )
+    },
+    default: true,
+  },
   {
     key: "subCategory",
     title: "Sub Category",
@@ -183,8 +197,8 @@ const defaultColumns: Array<ColumnType> = [
     default: true,
   },
   { key: "mobileNumber", title: "Mobile Number", default: true },
-  { key: "email", title: "Email", default: true },
-  { key: "panNumber", title: "Pan Number", hide: true },
+  { key: "email", title: "Email ID", default: true },
+  { key: "panNumber", title: "PAN", hide: true },
   { key: "authorizedPerson", title: "Authorized Person", hide: true },
   {
     key: "active",

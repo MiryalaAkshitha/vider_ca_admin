@@ -38,7 +38,7 @@ let CreateClientSchema = ({ subCategoriesExist }) =>
     email: string().email("Invalid email address").required("Email is required"),
     mobileNumber: string()
       .required("Mobile number is required")
-      .matches(/^[0-9]{10}$/, "Mobile number is invalid"),
+      .matches(/^[1-9]{1}[0-9]{9}$/, "Mobile number is invalid"),
     authorizedPerson: string().notRequired(),
     designation: string().notRequired(),
     gstRegistered: string().notRequired(),

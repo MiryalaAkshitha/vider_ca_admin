@@ -37,8 +37,8 @@ function Credentials() {
       {!(data?.data?.length > 0) && (
         <EmptyPage
           minHeight="50vh"
-          title="There is no password added"
-          desc="Click on Add password to add a new password"
+          title="There are no Credentials Added"
+          desc="Click on Add Credentials to Add a New One"
           {...(permissions.includes(Permissions.CREATE_CLIENT_PASSWORDS) && {
             btn2Title: "Add Credentials",
             btn2Action: () => setOpen(true),

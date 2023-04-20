@@ -35,7 +35,7 @@ function AddPassword({ open, setOpen }: DialogProps) {
 
   const { mutate, isLoading } = useMutation(addClientPassword, {
     onSuccess: () => {
-      snack.success("Password Created");
+      snack.success("Credentials Created");
       queryClient.invalidateQueries("client-passwords");
       setOpen(false);
     },

@@ -1,4 +1,4 @@
-import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Autocomplete, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { getUsers } from "api/services/users";
 import moment from "moment";
@@ -6,8 +6,9 @@ import { useQuery } from "react-query";
 import { ResType } from "types";
 import { CLIENT_CATEGORIES } from "data/constants";
 import TextFieldWithCopy from "./TextFieldWithCopy";
+import FormAutoComplete from "components/FormFields/FormAutocomplete";
 
-const BasicInformation = ({ data, setState }) => {
+const BasicInformation = ({ data, setState}) => {
   const { data: users }: ResType = useQuery("users", getUsers);
 
   const handleChange = (e: any) => {
@@ -102,24 +103,47 @@ const BasicInformation = ({ data, setState }) => {
               </TextField>
             </Grid>
           )}
-          <Grid item xs={4}>
-            <TextField
-              label="Client Manager"
+           {/* <Grid item xs={4}>
+            <FormAutoComplete
+              control={control}
               name="clientManager"
-              fullWidth
-              variant="outlined"
-              value={data?.clientManager || ""}
-              size="small"
-              onChange={handleChange}
-              select
-              InputLabelProps={{ shrink: true }}
-            >
-              {users?.data?.map((item: any, index: number) => (
-                <MenuItem key={index} value={item?.id}>
-                  {item?.fullName}
-                </MenuItem>
-              ))}
-            </TextField>
+              label="Client Manager"
+              options={users?.data?.map((item: any) => ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            /></Grid> */}
+
+            {/* pass control */}
+          
+{/* <Grid item xs={4}>
+<FormAutoComplete
+              control={control}
+              name="clientManager"
+              label="Client Manager"
+              options={users?.data?.map((item: any) => ({
+                label: item.fullName,
+                value: item.id,
+              }))}
+            />
+             </Grid> */}
+ <Grid item xs={4}>
+<Autocomplete
+            onChange={(_, value) => setState({ ...data, fullName: value, item: value })}
+            value={data?.fullName}
+            options={users?.data?.map((item) => item?.fullName) || []}
+            getOptionLabel={(option: any) => option}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth
+                label="Client Manager"
+              />
+            )}
+          />
+
           </Grid>
           <Grid item xs={4}>
             <TextField
