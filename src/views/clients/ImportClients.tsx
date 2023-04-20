@@ -31,7 +31,12 @@ function ImportClients({ open, setOpen, successCb }: Props) {
   });
 
   const handleFiles = (files: File[]) => {
-    setFile(files[0]);
+    if (files[0].size > 1000000) {
+      snack.error("File size is more than 10mb");
+      return
+    } else {
+      setFile(files[0]);
+    }
   };
 
   const handleSubmit = () => {
