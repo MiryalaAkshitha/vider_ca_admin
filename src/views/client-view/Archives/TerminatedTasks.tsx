@@ -58,7 +58,7 @@ function TerminatedTasks({ filters }: Props) {
             },
             {
               key: "name",
-              title: "Task name",
+              title: "Task Name",
             },
             {
               key: "terminatedDate",

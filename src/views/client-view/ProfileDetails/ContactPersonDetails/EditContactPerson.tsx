@@ -147,7 +147,7 @@ function EditContactPerson({ open, setOpen, data }: EditContactPersonProps) {
           size="small"
           label="Mobile"
           inputProps={{
-            pattern: "[0-9]{10}",
+            pattern: "[1-9]{1}[0-9]{9}",
             title: "Mobile number must be 10 digits",
           }}
         />

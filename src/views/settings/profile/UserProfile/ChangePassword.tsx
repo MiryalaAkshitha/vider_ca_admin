@@ -14,7 +14,7 @@ const ChangePassword = ({ open, setOpen }: DialogProps) => {
 
   const { mutate } = useMutation(changePassword, {
     onSuccess: () => {
-      snack.success("Password has been changed");
+      snack.success("Credentials have been Updated");
       setOpen(false);
     },
     onError: (err: any) => {

@@ -41,7 +41,7 @@ function EditPassword({ open, setOpen, data }: Props) {
 
   const { mutate, isLoading } = useMutation(updateClientPassword, {
     onSuccess: () => {
-      snack.success("Password Updated");
+      snack.success("Credentials have been Updated");
       queryClient.invalidateQueries("client-passwords");
       setOpen(false);
     },

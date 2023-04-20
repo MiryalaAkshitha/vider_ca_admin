@@ -75,7 +75,7 @@ function CompletedTasks() {
             },
             {
               key: "name",
-              title: "Task name",
+              title: "Task Name",
             },
             {
               key: "completedDate",

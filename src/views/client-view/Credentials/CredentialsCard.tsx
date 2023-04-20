@@ -30,7 +30,7 @@ function PasswordCard({ data }: Props) {
 
   const { mutate } = useMutation(deleteClientPassword, {
     onSuccess: () => {
-      snack.success("Password Removed");
+      snack.success("Credentials Deleted");
       setAnchorEl(null);
       queryClient.invalidateQueries("client-passwords");
     },
@@ -43,7 +43,7 @@ function PasswordCard({ data }: Props) {
   const handleDelete = () => {
     setAnchorEl(null);
     confirm({
-      msg: "Are you sure you want to delete this password?",
+      msg: "Are you sure you want to delete this credential?",
       action: () => {
         mutate(data?.id);
       },

@@ -80,12 +80,11 @@ function ProfileDetails() {
           </Button>
         </Box>
       </Box>
-      <BasicInformation data={state} setState={setState} />
+      <BasicInformation data={state} setState={setState}/>
       <OrganizationInformation data={state} setState={setState} apiData={data?.data} />
       <AddressDetails data={state} setState={setState} />
       <ContactPersonDetails data={data?.data?.contactPersons} />
       <AdditionalInformation data={state} setState={setState} apiData={data?.data} />
-      <Activity />
       <ValidateAccess name={Permissions.EDIT_CLIENT_PROFILE}>
         <BottomBar data={originalState} setState={setState} state={state} />
       </ValidateAccess>

@@ -17,7 +17,7 @@ const AddressDetails = ({ data, setState }) => {
   return (
     <Box mt={4}>
       <Typography mt={3} color="primary" variant="h6" sx={{ mb: 2 }}>
-        Address information
+        Communication Address
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={4}>

@@ -29,7 +29,7 @@ function Activity() {
   return (
     <Box width={1000} mt={4}>
       <Typography variant="h6" gutterBottom color="primary">
-        Activity Log
+        {/* Activity Log */}
       </Typography>
       <Timeline>
         {data?.data?.map((item: any, index: number) => (

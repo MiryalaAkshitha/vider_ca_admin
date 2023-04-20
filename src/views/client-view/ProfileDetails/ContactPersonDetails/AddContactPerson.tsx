@@ -128,7 +128,7 @@ function AddContactPerson({ open, setOpen }: DialogProps) {
           onChange={handleChange}
           name="mobile"
           inputProps={{
-            pattern: "[0-9]{10}",
+            pattern: "[1-9]{1}[0-9]{9}",
             title: "Mobile number must be 10 digits",
           }}
           size="small"
