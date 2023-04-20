@@ -65,8 +65,8 @@ function CompletedTasks({ filters }: Props) {
               key: "completedDate",
               title: "Completed Date",
               render: (row) => {
-                return row?.completedDate
-                  ? moment(row?.completedDate).format("DD-MM-YYYY")
+                return row?.updatedAt
+                  ? moment(row?.updatedAt).format("DD-MM-YYYY")
                   : "";
               },
             },

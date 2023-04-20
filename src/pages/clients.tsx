@@ -99,6 +99,18 @@ function Clients() {
 
   const totalCount = data?.data?.count;
 
+  const getfilterkeys = (filters: any) => {
+    const obj = getfilterkeysObj(filters);
+    return Object.keys(obj);
+  }
+
+  const getfilterkeysObj = (filters: any) => {
+    const obj = JSON.parse(JSON.stringify(filters));
+    delete obj?.search;
+    delete obj?.monthAdded;
+    return obj;
+  }
+
   return (
     <Box px={3} pt={3}>
       <Box display="flex" gap={2}>
@@ -133,13 +145,13 @@ function Clients() {
           </Button>
         </Box>
         <Box display="flex" gap={2}>
-          {Object.keys(filters).map((filter, filterIndex: number) => {
-            if (filters[filter].length > 0) {
+          {getfilterkeys(filters).map((filter, filterIndex: number) => {
+            if (getfilterkeysObj(filters)[filter].length > 0) {
               return (
                 <Box display="flex" gap={1} alignItems="center" key={filterIndex}>
                   <Typography variant="caption">{getTitle(filter)}:</Typography>
                   <Box display="flex" gap="4px" alignItems="center">
-                    {filters[filter].map(
+                    {getfilterkeysObj(filters)[filter].map(
                       (item: any, filterItemIndex: number) => (
                         <StyledAppliedFilterItem
                           onClick={() => {
