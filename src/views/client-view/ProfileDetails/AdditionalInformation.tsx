@@ -6,9 +6,27 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import TextFieldWithCopy from "./TextFieldWithCopy";
+import { useState } from "react";
 
 const AdditionalInformation = ({ data, setState, apiData }) => {
-  const { data: labels, isLoading }: ResType = useQuery("labels", getLabels);
+  const [addinfoPath, setAddinfoPath] = useState([]);
+
+  const temparr: any = [];
+  if (data?.localDirectoryPath && data?.localDirectoryPath !== "") {
+    const arr = temparr.push(data?.localDirectoryPath + '' + '|');
+    setAddinfoPath(arr);
+  } else {
+    const arr = temparr.push(' ' + '|');
+    setAddinfoPath(arr);
+  }
+
+  const { data: labels, isLoading }: ResType = useQuery("labels",
+    getLabels, {
+    onSuccess: (res: any) => {
+
+    }
+  }
+  );
 
   const handleChange = (e: any) => {
     setState({
@@ -52,7 +70,6 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
                   ...data,
                   status: e.target.value,
                 });
-console.log(data?.inactiveAt,'time for inactiveat')
               }}
               fullWidth
               select
@@ -64,7 +81,7 @@ console.log(data?.inactiveAt,'time for inactiveat')
               <MenuItem value="ACTIVE">Active</MenuItem>
               <MenuItem value="INACTIVE">Inactive</MenuItem>
             </TextField>
-         {apiData?.status === "INACTIVE" && (
+            {apiData?.status === "INACTIVE" && (
               <Box>
                 <Typography variant="caption" color="secondary">
                   Inactive from {moment(data?.inactiveAt).format("DD MMM YYYY - hh:mm a")}
@@ -72,7 +89,7 @@ console.log(data?.inactiveAt,'time for inactiveat')
               </Box>
             )}
           </Grid>
-         {/* <Grid item xs={4}> 
+          {/* <Grid item xs={4}> 
           <Autocomplete
   id="tags-standard"
   onChange={(_, value) => {
@@ -118,17 +135,20 @@ console.log(data?.inactiveAt,'time for inactiveat')
             
 </Grid> */}
 
-          <Grid item xs={4}>
-            <TextFieldWithCopy
-              label="Local Directory Path"
-              name="localDirectoryPath"
-              onChange={handleChange}
-              value={data?.localDirectoryPath || ""}
-              // variant="outlined"
-              // size="small"
-              // InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
+          {addinfoPath.map((item: any) => {
+            if (item != "") {
+              return (
+                <Grid item xs={4}>
+                  <TextFieldWithCopy
+                    label="Local Directory Path"
+                    name="localDirectoryPath"
+                    onChange={handleChange}
+                    value={item?.localDirectoryPath || ""}
+                  />
+                </Grid>
+              )
+            }
+          })}
         </Grid>
         <Grid container mt={3}>
           <Grid item xs={6}>
