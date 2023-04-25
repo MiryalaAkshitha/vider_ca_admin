@@ -9,16 +9,6 @@ import TextFieldWithCopy from "./TextFieldWithCopy";
 import { useState } from "react";
 
 const AdditionalInformation = ({ data, setState, apiData }) => {
-  const [addinfoPath, setAddinfoPath] = useState([]);
-
-  const temparr: any = [];
-  if (data?.localDirectoryPath && data?.localDirectoryPath !== "") {
-    const arr = temparr.push(data?.localDirectoryPath + '' + '|');
-    setAddinfoPath(arr);
-  } else {
-    const arr = temparr.push(' ' + '|');
-    setAddinfoPath(arr);
-  }
 
   const { data: labels, isLoading }: ResType = useQuery("labels",
     getLabels, {
@@ -89,66 +79,15 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
               </Box>
             )}
           </Grid>
-          {/* <Grid item xs={4}> 
-          <Autocomplete
-  id="tags-standard"
-  onChange={(_, value) => {
-    setState({ ...data, status: value });
-  }}
-  value={data?.status || []}
-  options={[
-    { id: "ACTIVE", name: "Active" },
-    { id: "INACTIVE", name: "Inactive" },
-  ]}
-  getOptionLabel={(option: any) => option.name}
-  getOptionSelected={(option, value) => option.id === value.id}
-  renderInput={(params) => (
-    <TextField
-      {...params}
-      variant="outlined"
-      size="small"
-      fullWidth
-      label="Client Status"
-    />
-  )}
-/>
-</Grid> */}
 
-
-          {/* <Grid item xs={4}>
-          <Autocomplete
-              onChange={(e) => {
-                setState({
-                  ...data,
-                  status: e,
-                });
-
-              }}
-              value={data?.status|| []}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              options={data?.status || []}
-              getOptionLabel={(option: any) => option?.name}
-              renderInput={(params) => (
-                <TextField {...params} variant="outlined" size="small" fullWidth label="Client Status" />
-              )}
+          <Grid item xs={4}>
+            <TextFieldWithCopy
+              label="Local Directory Path"
+              name="localDirectoryPath"
+              onChange={handleChange}
+              value={data?.localDirectoryPath || ""}
             />
-            
-</Grid> */}
-
-          {addinfoPath.map((item: any) => {
-            if (item != "") {
-              return (
-                <Grid item xs={4}>
-                  <TextFieldWithCopy
-                    label="Local Directory Path"
-                    name="localDirectoryPath"
-                    onChange={handleChange}
-                    value={item?.localDirectoryPath || ""}
-                  />
-                </Grid>
-              )
-            }
-          })}
+          </Grid>
         </Grid>
         <Grid container mt={3}>
           <Grid item xs={6}>

@@ -68,8 +68,16 @@ export const createEstimateSlice = createSlice({
         email: client?.email,
         mobileNumber: client?.mobileNumber,
       };
-      state.shippingAddress = address;
-      state.billingAddress = address;
+      const tempBillingAddress = JSON.parse(JSON.stringify(client?.address?.billingaddress));
+      const tempShippingAddress = JSON.parse(JSON.stringify(client?.address?.shippingaddress));
+      tempBillingAddress['mobileNumber'] = client?.mobileNumber;
+      tempBillingAddress['email'] = client?.email;
+      tempBillingAddress['legalName'] = client?.legalName;
+      tempShippingAddress['mobileNumber'] = client?.mobileNumber;
+      tempShippingAddress['email'] = client?.email;
+      tempShippingAddress['legalName'] = client?.legalName;
+      state.shippingAddress = tempBillingAddress;
+      state.billingAddress = tempShippingAddress;
     },
     handleExistingClientChange(state: IState, action: PayloadAction<any>) {
       let client = action.payload.client;
@@ -86,8 +94,17 @@ export const createEstimateSlice = createSlice({
         email: client?.email,
         mobileNumber: client?.mobileNumber,
       };
-      state.shippingAddress = address;
-      state.billingAddress = address;
+      const tempBillingAddress = JSON.parse(JSON.stringify(client?.address?.billingaddress));
+      const tempShippingAddress = JSON.parse(JSON.stringify(client?.address?.shippingaddress));
+      tempBillingAddress['mobileNumber'] = client?.mobileNumber;
+      tempBillingAddress['email'] = client?.email;
+      tempBillingAddress['legalName'] = client?.legalName;
+      tempShippingAddress['mobileNumber'] = client?.mobileNumber;
+      tempShippingAddress['email'] = client?.email;
+      tempShippingAddress['legalName'] = client?.legalName;
+
+      state.shippingAddress = tempBillingAddress;
+      state.billingAddress = tempShippingAddress;
     },
     handleBankDetailsChange(state: IState, action: PayloadAction<any>) {
       const data = action.payload;

@@ -19,6 +19,9 @@ import { snack } from "components/toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { handleError } from "utils/handleError";
 import { FormControlLabel, Switch } from "@mui/material";
+import BillingAddressDetails from "views/client-view/ProfileDetails/BillingAddressDetails";
+import ShippingAddressDetails from "views/client-view/ProfileDetails/ShippingAddressDetails";
+import CopyAddressDetails from "views/client-view/ProfileDetails/CopyAddressDetails";
 
 function ProfileDetails() {
   const [originalState, setOriginalState] = useState<any>({});
@@ -83,6 +86,9 @@ function ProfileDetails() {
       <BasicInformation data={state} setState={setState}/>
       <OrganizationInformation data={state} setState={setState} apiData={data?.data} />
       <AddressDetails data={state} setState={setState} />
+      <CopyAddressDetails data={state} setState={setState} />
+      <BillingAddressDetails data={state} setState={setState} />
+      <ShippingAddressDetails data={state} setState={setState} />
       <ContactPersonDetails data={data?.data?.contactPersons} />
       <AdditionalInformation data={state} setState={setState} apiData={data?.data} />
       <ValidateAccess name={Permissions.EDIT_CLIENT_PROFILE}>
