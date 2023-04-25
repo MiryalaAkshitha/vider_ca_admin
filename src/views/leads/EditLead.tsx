@@ -136,6 +136,10 @@ function EditLead({ open, setOpen, data }: Props) {
           name="mobileNumber"
           value={state.mobileNumber}
           size="small"
+          inputProps={{
+            pattern: "[1-9]{1}[0-9]{9}",
+            title: "Enter 10 digit mobile number",
+          }}
           label="Mobile Number"
         />
         <TextField

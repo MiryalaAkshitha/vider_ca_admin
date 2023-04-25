@@ -1,5 +1,5 @@
 import { Add, Delete, Visibility } from "@mui/icons-material";
-import { Alert, Box, Button, IconButton, Typography } from "@mui/material";
+import { Alert, Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { deleteDscRegister, getDscRegisters } from "api/services/clients/dsc-register";
 import FloatingButton from "components/FloatingButton";
 import SearchContainer from "components/SearchContainer";
@@ -18,8 +18,35 @@ import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
 import AddDscRegister from "views/dsc-register/AddDscRegister";
 import { NoOfDaysLeftToExpiry } from "../client-view/dsc-register";
 
+type Props = {
+  data: any;
+  };
+const Password = ({ data }: Props) => {
+  const [show, setShow] = useState(false);
+  return (
+    <Grid item xs={2}>
+      {/*<Typography gutterBottom variant="body2" color="rgba(0,0,0,0.5)">
+       Password
+  </Typography>*/}
+     {show ? (
+       <Typography gutterBottom variant="body1">
+         {data?.password}
+       </Typography>
+     ) : (
+       <Typography
+         onClick={() => setShow(true)}
+         style={{ cursor: "pointer", color: "#149ECD" }}
+         gutterBottom
+          variant="body1"
+        >
+         Click to see
+       </Typography>
+     )}
+    </Grid>
+  );
+};
 function DscRegister() {
-  useTitle("Dsc Register");
+  useTitle("DSC Register");
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState<number>(10);
   const [offset, setOffset] = useState<number>(0);
@@ -55,7 +82,7 @@ function DscRegister() {
           debounced
           minWidth="400px"
           onChange={setSearch}
-          placeHolder="Search"
+          placeHolder="Search by Client Name | DSC Holder Name"
         />
       </Box>
       <Table
@@ -173,21 +200,25 @@ const Actions = ({ data }) => {
 };
 
 const columns = [
-  { key: "client.displayName", title: "Client" },
+  { key: "client.displayName", title: "Client Name" },
   { key: "holderName", title: "DSC Holder Name" },
   {
     key: "expiryDate",
-    title: "Expiry Date",
+    title: "DSC Expiry Date",
     render: (row: any) => {
       return moment(row?.expiryDate).format("DD-MM-YYYY");
     },
   },
   {
     key: "",
-    title: "No of days left to expiry",
+    title: "Days left to DSC Expiry",
     render: (row: any) => <NoOfDaysLeftToExpiry row={row} />,
   },
-  { key: "password", title: "Password" },
+  {
+    key: "password",
+    title: "Password",
+   render: (rowData: any) => <Password data={rowData} />,
+  },
   {
     key: "actions",
     title: "Actions",

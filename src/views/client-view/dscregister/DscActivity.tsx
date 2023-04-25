@@ -17,7 +17,7 @@ function DscActivity({ data }) {
       <Box mt={5}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="subtitle2" color="primary">
-            DSC Issued and Received dates
+            DSC Issued & Received Dates
           </Typography>
           {data?.data?.status === "received" || data?.data?.status === "not_issued" ? (
             <Box display="flex" gap={1} alignItems="center">
