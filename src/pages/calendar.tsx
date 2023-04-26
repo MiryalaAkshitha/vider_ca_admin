@@ -113,6 +113,7 @@ function Calendar() {
           center: "title",
           left: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
+        firstDay = {1}       
         weekends={true}
         eventClick={clickedevent}
         dayMaxEventRows={3}
