@@ -6,14 +6,42 @@ import moment from "moment";
 import { useState } from "react";
 import { getTitle } from "utils";
 import EditRecurringTask from "./EditRecurringTask";
+import { useMutation, useQueryClient } from "react-query";
+import { snack } from "components/toast";
+import { SubmitType } from "types";
+import { updateTask } from "api/services/tasks/tasks";
 
 interface Props {
   data: any;
 }
 
 const RecurringTaskItem = ({ data }: Props) => {
+  const queryClient = useQueryClient();
   const menu = useMenu();
   const [open, setOpen] = useState(false);
+
+  const { mutate } = useMutation(updateTask, {
+    onSuccess: (res) => {
+      snack.success("Recurring task updated");
+      setOpen(false);
+      queryClient.invalidateQueries("recurring-profiles");
+    },
+    onError: (err: any) => {
+      snack.error(err.response.data.message);
+    },
+  });
+
+  const handleSubmit = (e: SubmitType) => {
+    e.preventDefault();
+
+    const terminateData = JSON.parse(JSON.stringify(data));
+    terminateData.status = 'terminated';
+
+    mutate({
+      id: data.id,
+      data: { ...terminateData },
+    });
+  };
 
   const handleMenu = (e: any) => {
     menu({
@@ -22,6 +50,10 @@ const RecurringTaskItem = ({ data }: Props) => {
         {
           label: "Edit",
           action: () => setOpen(true),
+        },
+        {
+          label: "Terminate",
+          action: () => handleSubmit(e),
         },
       ],
     });
