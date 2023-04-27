@@ -22,7 +22,7 @@ const RecurringTaskItem = ({ data }: Props) => {
 
   const { mutate } = useMutation(updateTask, {
     onSuccess: (res) => {
-      snack.success("Recurring task updated");
+      snack.success("Recurring task has been Terminated");
       setOpen(false);
       queryClient.invalidateQueries("recurring-profiles");
     },
