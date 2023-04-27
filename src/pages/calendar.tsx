@@ -10,7 +10,7 @@ import Loader from "components/Loader";
 import ValidateAccess from "components/ValidateAccess";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { Permissions } from "data/permissons";
@@ -42,6 +42,13 @@ function Calendar() {
     getDefaultEvents
   );
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(["tasks"], getTasks);
+
+  const [currentEvents, setCurrentEvents] = useState([]);
+
+  useEffect(() => {
+    const events: any = [...eventsData(), ...defaultEventsData(), ...tasksData()];
+    setCurrentEvents(events);
+  }, [events, defaultEvents, tasks]);
 
   const eventsData = () => {
     return (
@@ -79,6 +86,12 @@ function Calendar() {
     );
   };
 
+  const eventIndicationClicked = (bgcolor: any) => {
+    const events: any = [...eventsData(), ...defaultEventsData(), ...tasksData()];
+    let filteredevents = events.filter((item: any) => item.backgroundColor === bgcolor);
+    setCurrentEvents(bgcolor == '' ? events : filteredevents);
+  }
+
   const clickedevent = (value: any) => {
     let bgColor = value.event.backgroundColor;
 
@@ -107,7 +120,7 @@ function Calendar() {
         contentHeight={500}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        events={[...eventsData(), ...defaultEventsData(), ...tasksData()]}
+        events={currentEvents}
         headerToolbar={{
           right: "prev,next today",
           center: "title",
@@ -130,9 +143,10 @@ function Calendar() {
           justifyContent: "center",
         }}
       >
-        <EventIndication color="#E44652" title="Events by Vider" />
-        <EventIndication color="#149ECD" title="Task due dates" />
-        <EventIndication color="#88B151" title="General Events" />
+        <EventIndication onClick={() => eventIndicationClicked('#E44652')} color="#E44652" title="Events by Vider" />
+        <EventIndication onClick={() => eventIndicationClicked('#149ECD')} color="#149ECD" title="Task due dates" />
+        <EventIndication onClick={() => eventIndicationClicked('#88B151')} color="#88B151" title="General Events" />
+        <EventIndication onClick={() => eventIndicationClicked('')} color="#2C3E50" title="All" />
       </Box>
       <ValidateAccess name={Permissions.CREATE_CALENDAR}>
         <FloatingButton

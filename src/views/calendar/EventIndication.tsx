@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-function EventIndication({ title, color }) {
+function EventIndication({ title, color, onClick }) {
   return (
     <Box
       sx={{
@@ -8,6 +8,7 @@ function EventIndication({ title, color }) {
         alignItems: "center",
         gap: "10px",
       }}
+      onClick={onClick}
     >
       <span
         style={{
