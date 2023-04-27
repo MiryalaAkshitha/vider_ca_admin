@@ -355,6 +355,11 @@ export enum DateFilters {
   CUSTOM = "custom",
 }
 
+export enum TaskPaymentStatus {
+  BILLED = "BILLED",
+  UNBILLED = "UNBILLED"
+}
+
 export enum TaskStatus {
   TODO = "todo",
   IN_PROGRESS = "in_progress",

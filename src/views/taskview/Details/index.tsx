@@ -6,7 +6,7 @@ import Loader from "components/Loader";
 import { snack } from "components/toast";
 import ValidateAccess from "components/ValidateAccess";
 import { useTaskData } from "context/TaskData";
-import { PriorityEnum, TaskStatus } from "data/constants";
+import { PriorityEnum, TaskPaymentStatus, TaskStatus } from "data/constants";
 import { Permissions } from "data/permissons";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -159,6 +159,19 @@ function Details() {
                   value: item,
                 }))}
                 name="status"
+              />
+            </DetailSection>
+          </Grid>
+          <Grid item xs={6}>
+            <DetailSection label="Payment Status">
+              <CustomSelect
+                value={state?.paymentStatus || ""}
+                onChange={handleStatusUpdate}
+                options={Object.values(TaskPaymentStatus).map((item) => ({
+                  label: item,
+                  value: item,
+                }))}
+                name="paymentstatus"
               />
             </DetailSection>
           </Grid>

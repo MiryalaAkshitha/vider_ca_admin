@@ -55,7 +55,7 @@ function Calendar() {
       events?.data?.map((item: any) => ({
         title: item?.title,
         date: moment(item?.date).format("YYYY-MM-DD"),
-        backgroundColor: "#88B151",
+        backgroundColor: "#0B8043",
         textColor: "white",
         id: item?.id,
       })) || []
@@ -67,7 +67,7 @@ function Calendar() {
       defaultEvents?.data?.map((item: any) => ({
         title: item?.title,
         date: moment(item?.date).format("YYYY-MM-DD"),
-        backgroundColor: "#E44652",
+        backgroundColor: "#3F51B5",
         textColor: "white",
         id: item?.id,
       })) || []
@@ -79,7 +79,7 @@ function Calendar() {
       tasks?.data?.map((item: any) => ({
         title: `${item?.name} - (${item?.client?.displayName})`,
         date: moment(item?.dueDate).format("YYYY-MM-DD"),
-        backgroundColor: "#149ECD",
+        backgroundColor: "#8E24AA",
         textColor: "white",
         id: item?.id,
       })) || []
@@ -95,19 +95,19 @@ function Calendar() {
   const clickedevent = (value: any) => {
     let bgColor = value.event.backgroundColor;
 
-    if (bgColor === "#88B151") {
+    if (bgColor === "#0B8043") {
       let event = events?.data?.find((item: any) => item.id === +value.event.id);
       setViewOpen(true);
       setData(event);
     }
 
-    if (bgColor === "#E44652") {
+    if (bgColor === "#3F51B5") {
       let event = defaultEvents?.data?.find((item: any) => item.id === +value.event.id);
       setOpenGlobal(true);
       setData(event);
     }
 
-    if (bgColor === "#149ECD") {
+    if (bgColor === "#8E24AA") {
       navigate(`/task-board/${value.event.id}#details`);
     }
   };
@@ -143,10 +143,10 @@ function Calendar() {
           justifyContent: "center",
         }}
       >
-        <EventIndication onClick={() => eventIndicationClicked('#E44652')} color="#E44652" title="Events by Vider" />
-        <EventIndication onClick={() => eventIndicationClicked('#149ECD')} color="#149ECD" title="Task due dates" />
-        <EventIndication onClick={() => eventIndicationClicked('#88B151')} color="#88B151" title="General Events" />
         <EventIndication onClick={() => eventIndicationClicked('')} color="#2C3E50" title="All" />
+        <EventIndication onClick={() => eventIndicationClicked('#3F51B5')} color="#3F51B5" title="Statutory Compliance" />
+        <EventIndication onClick={() => eventIndicationClicked('#8E24AA')} color="#8E24AA" title="Task" />
+        <EventIndication onClick={() => eventIndicationClicked('#0B8043')} color="#0B8043" title="Event" />
       </Box>
       <ValidateAccess name={Permissions.CREATE_CALENDAR}>
         <FloatingButton

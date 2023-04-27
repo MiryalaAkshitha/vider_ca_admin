@@ -7,6 +7,7 @@ function EventIndication({ title, color, onClick }) {
         display: "flex",
         alignItems: "center",
         gap: "10px",
+        cursor: 'pointer'
       }}
       onClick={onClick}
     >
@@ -15,7 +16,7 @@ function EventIndication({ title, color, onClick }) {
           background: color,
           width: 10,
           height: 10,
-          borderRadius: "50%",
+          borderRadius: "50%",          
         }}
       ></span>
       <Typography variant="h6">{title}</Typography>
