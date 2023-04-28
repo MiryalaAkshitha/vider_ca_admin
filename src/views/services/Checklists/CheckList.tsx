@@ -20,7 +20,7 @@ type Props = {
 const CheckList = ({ data, index }: Props) => {
   const dispatch = useDispatch();
   const menu = useMenu();
-  const [show, setShow] = useState<boolean>(true);
+  const [show, setShow] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleNameChange = (e: React.FocusEvent<HTMLDivElement>) => {
@@ -69,14 +69,14 @@ const CheckList = ({ data, index }: Props) => {
           </Typography>
           <Box display="flex" gap={1}>
             <IconButton onClick={() => setShow(!show)}>
-              {show ? <KeyboardArrowUp /> : <KeyboardArrowDown /> }              
+              {show ? <KeyboardArrowDown /> : <KeyboardArrowUp /> }              
             </IconButton>
             <IconButton onClick={handleMenu}>
               <MoreVert />
             </IconButton>
           </Box>
         </header>
-        {!show && (
+        {show && (
           <Box>
             {data?.checklistItems?.map((item: any, itemIndex: number) => (
               <CheckListItem
