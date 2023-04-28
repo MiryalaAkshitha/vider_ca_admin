@@ -8,6 +8,8 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Drawer, DrawerHeader } from "../styles";
 import { menu } from "../../data/menu";
+import CollapsibleMenuItem from "./CollapsibleMenuItem";
+import MenuItem from "./SingleMenuItem";
 
 function SideNav() {
   const location = useLocation();
@@ -35,6 +37,16 @@ function SideNav() {
       </DrawerHeader>
       <Divider />
       <List>
+        {menu.map((item, index) => {
+          return item?.children ? (
+            <CollapsibleMenuItem key={index} item={item} />
+          ) : (
+            <MenuItem item={item} key={index} />
+          );
+        })}
+      </List>
+      
+      {/* <List>
         {menu.map((item, index) => (
           <Link
             to={item.path}
@@ -67,7 +79,7 @@ function SideNav() {
             </ListItemButton>
           </Link>
         ))}
-      </List>
+      </List> */}
     </Drawer>
   );
 }

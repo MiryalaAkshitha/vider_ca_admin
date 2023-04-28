@@ -55,7 +55,7 @@ const KybInfo = loadable(() => import("pages/client-view/kyb-info"));
 const Credentials = loadable(() => import("pages/client-view/credentials"));
 const Archives = loadable(() => import("pages/client-view/archives"));
 const Tasks = loadable(() => import("pages/client-view/clientTasks"));
-const ClientActivityLog = loadable(()=>import ("pages/client-view/client-activitylog"));
+const ClientActivityLog = loadable(() => import("pages/client-view/client-activitylog"));
 const ProfileDetails = loadable(() => import("pages/client-view/profile"));
 
 const OrganizationProfile = loadable(
@@ -124,7 +124,7 @@ const AddApproval = loadable(
 );
 
 // REPORTS
-const InvoiceReports = loadable(()=> import ("pages/reports/invoice-reports"));
+const InvoiceReports = loadable(() => import("pages/reports/invoice-reports"));
 const Reports = loadable(() => import("pages/reports"));
 const LogHoursReport = loadable(() => import("pages/reports/log-hours-report"));
 const EmployeeLogHoursReport = loadable(() => import("pages/reports/employee-log-hours-report"));
@@ -141,13 +141,13 @@ const DetailedOverDueTasksReport = loadable(() => import("pages/reports/detailed
 const EfficiencyReport = loadable(() => import("pages/reports/efficiency-report"));
 const HighestNoOfTaskCompletion = loadable(() => import("pages/reports/highest-task-completion-reports"))
 // Invoice REPORTS
-const TasksCompletedToBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToBilledTasksReport"));
-const TasksCompletedToUnBilledTasksReport = loadable(()=> import ("pages/reports/invoice/TasksCompletedToUnBilledTasksReport"));
-const ClientWiseTasksCompletedToBilledReport = loadable(()=> import ("pages/reports/invoice/ClientWiseTasksCompletedToBilledReport"));
-const ClientWiseTasksCompletedToUnBilledReport = loadable(()=> import ("pages/reports/invoice/ClientWiseTasksCompletedToUnBilledReport"));
-const InvoiceOverDueReport = loadable(()=> import("pages/reports/invoice/InvoiceOverDueReport"));
-const BalanceDueForInvoicesRaisedReport = loadable (()=>import ("pages/reports/invoice/BalanceDueForInvoicesRaisedReport"));
-const ReceiptManagementReport = loadable (()=>import ("pages/reports/invoice/ReceiptManagementReport"));
+const TasksCompletedToBilledTasksReport = loadable(() => import("pages/reports/invoice/TasksCompletedToBilledTasksReport"));
+const TasksCompletedToUnBilledTasksReport = loadable(() => import("pages/reports/invoice/TasksCompletedToUnBilledTasksReport"));
+const ClientWiseTasksCompletedToBilledReport = loadable(() => import("pages/reports/invoice/ClientWiseTasksCompletedToBilledReport"));
+const ClientWiseTasksCompletedToUnBilledReport = loadable(() => import("pages/reports/invoice/ClientWiseTasksCompletedToUnBilledReport"));
+const InvoiceOverDueReport = loadable(() => import("pages/reports/invoice/InvoiceOverDueReport"));
+const BalanceDueForInvoicesRaisedReport = loadable(() => import("pages/reports/invoice/BalanceDueForInvoicesRaisedReport"));
+const ReceiptManagementReport = loadable(() => import("pages/reports/invoice/ReceiptManagementReport"));
 
 //BRODCAST
 const Communication = loadable(() => import("pages/communication"));
@@ -186,6 +186,15 @@ function RoutesContainer() {
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
           </Route>
+          <Route
+            path="categories"
+            element={
+              <PageWithPermission name={Permissions.VIEW_CATEGORIES}>
+                <Categories />
+              </PageWithPermission>
+            }
+          />
+
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />}>
             {/* <Route
@@ -205,14 +214,14 @@ function RoutesContainer() {
             <Route path="detailed-over-due-tasks-report" element={<DetailedOverDueTasksReport />} />
             <Route path="efficiency-report" element={<EfficiencyReport />} />
             <Route path="highest-task-completion-reports" element={<HighestNoOfTaskCompletion />} />
-            <Route path="TasksCompletedToBilledTasksReport" element={<TasksCompletedToBilledTasksReport/>}/>
-            <Route path="TasksCompletedToUnBilledTasksReport" element={<TasksCompletedToUnBilledTasksReport/>}/>
-            <Route path="ClientWiseTasksCompletedToBilledReport" element ={<ClientWiseTasksCompletedToBilledReport/>}/>
-            <Route path="ClientWiseTasksCompletedToUnBilledReport" element ={<ClientWiseTasksCompletedToUnBilledReport/>}/>
-            <Route path ="InvoiceOverDueReport" element ={<InvoiceOverDueReport/>}/>
-            <Route path ="BalanceDueForInvoicesRaisedReport" element ={<BalanceDueForInvoicesRaisedReport/>}/>
-            <Route path="ReceiptManagementReport" element ={<ReceiptManagementReport/>}/>
-            <Route path="invoice-reports" element ={<InvoiceReports/>}/>
+            <Route path="TasksCompletedToBilledTasksReport" element={<TasksCompletedToBilledTasksReport />} />
+            <Route path="TasksCompletedToUnBilledTasksReport" element={<TasksCompletedToUnBilledTasksReport />} />
+            <Route path="ClientWiseTasksCompletedToBilledReport" element={<ClientWiseTasksCompletedToBilledReport />} />
+            <Route path="ClientWiseTasksCompletedToUnBilledReport" element={<ClientWiseTasksCompletedToUnBilledReport />} />
+            <Route path="InvoiceOverDueReport" element={<InvoiceOverDueReport />} />
+            <Route path="BalanceDueForInvoicesRaisedReport" element={<BalanceDueForInvoicesRaisedReport />} />
+            <Route path="ReceiptManagementReport" element={<ReceiptManagementReport />} />
+            <Route path="invoice-reports" element={<InvoiceReports />} />
             <Route path="custom-reports" element={<CustomReports />} />
             <Route path="log-hours-report" element={<LogHoursReport />} />
             <Route path="employee-log-hours-report" element={<EmployeeLogHoursReport />} />
@@ -329,13 +338,13 @@ function RoutesContainer() {
                 path="profile"
                 element={
                   <PageWithPermission name={Permissions.VIEW_CLIENT_PROFILE}>
-                    <ProfileDetails/>
+                    <ProfileDetails />
                   </PageWithPermission>
                 }
               />
               <Route path="archives" element={<Archives />} />
               <Route path="client-tasks" element={<Tasks />} />
-              <Route path  ="client-activitylog"element ={<ClientActivityLog/>}/>
+              <Route path="client-activitylog" element={<ClientActivityLog />} />
               <Route path="dsc-register">
                 <Route index element={<ClientDscRegister />} />
                 <Route path=":dscId" element={<ClientDscRegisterView />} />
@@ -346,101 +355,101 @@ function RoutesContainer() {
             <Route index element={<DscRegister />} />
             <Route path=":dscId" element={<ClientDscRegisterView />} />
           </Route>
-      </Route>
+        </Route>
 
-      <Route path="/settings" element={<SettingsLayout />}>
-        <Route path="approvals">
-          <Route index element={<Approvals />} />
-          <Route path="add-approval" element={<AddApproval />} />
-        </Route>
-        <Route
-          path="categories"
-          element={
-            <PageWithPermission name={Permissions.VIEW_CATEGORIES}>
-              <Categories />
-            </PageWithPermission>
-          }
-        />
-        <Route path="billing-entities">
-          <Route index element={<BillingEntities />} />
-          <Route path=":billingEntityId" element={<BillingEntityProfile />} />
-        </Route>
-        <Route path="profile" element={<MyProfile />} />
-        <Route path="users">
-          <Route
-            index
+        <Route path="/settings" element={<SettingsLayout />}>
+          <Route path="approvals">
+            <Route index element={<Approvals />} />
+            <Route path="add-approval" element={<AddApproval />} />
+          </Route>
+          {/* <Route
+            path="categories"
             element={
-              <PageWithPermission name={Permissions.VIEW_USERS}>
-                <Users />
+              <PageWithPermission name={Permissions.VIEW_CATEGORIES}>
+                <Categories />
+              </PageWithPermission>
+            }
+          /> */}
+          <Route path="billing-entities">
+            <Route index element={<BillingEntities />} />
+            <Route path=":billingEntityId" element={<BillingEntityProfile />} />
+          </Route>
+          <Route path="profile" element={<MyProfile />} />
+          <Route path="users">
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.VIEW_USERS}>
+                  <Users />
+                </PageWithPermission>
+              }
+            />
+            <Route
+              path=":userId"
+              element={
+                <PageWithPermission name={Permissions.VIEW_USERS}>
+                  <ViewUser />
+                </PageWithPermission>
+              }
+            />
+          </Route>
+          <Route path="invited-users" element={<InviteUsers />} />
+          <Route path="storage-management" element={<StorageManagement />} />
+          <Route path="completed-tasks" element={<CompletedTasks />} />
+          <Route path="deleted-tasks" element={<DeletedTasks />} />
+          <Route path="deleted-clients" element={<DeletedClients />} />
+          <Route path="deleted-users" element={<DeletedUsers />} />
+          <Route path="upcoming-tasks" element={<UpcomingTasks />} />
+          <Route path="teams">
+            <Route index element={<Teams />} />
+            <Route path=":teamId" element={<ViewTeam />} />
+          </Route>
+          <Route path="labels" element={<Labels />} />
+          <Route path="roles-permissions">
+            <Route
+              index
+              element={
+                <PageWithPermission name={Permissions.MANAGE_ORG_ROLES}>
+                  <Roles />
+                </PageWithPermission>
+              }
+            />
+            <Route path=":roleId" element={<EditPermissions />} />
+          </Route>
+          <Route
+            path="organization-profile"
+            element={
+              <PageWithPermission name={Permissions.MANAGE_ORG_PROFILE}>
+                <OrganizationProfile />
               </PageWithPermission>
             }
           />
-          <Route
-            path=":userId"
-            element={
-              <PageWithPermission name={Permissions.VIEW_USERS}>
-                <ViewUser />
-              </PageWithPermission>
-            }
-          />
         </Route>
-        <Route path="invited-users" element={<InviteUsers />} />
-        <Route path="storage-management" element={<StorageManagement />} />
-        <Route path="completed-tasks" element={<CompletedTasks />} />
-        <Route path="deleted-tasks" element={<DeletedTasks />} />
-        <Route path="deleted-clients" element={<DeletedClients />} />
-        <Route path="deleted-users" element={<DeletedUsers />} />
-        <Route path="upcoming-tasks" element={<UpcomingTasks />} />
-        <Route path="teams">
-          <Route index element={<Teams />} />
-          <Route path=":teamId" element={<ViewTeam />} />
-        </Route>
-        <Route path="labels" element={<Labels />} />
-        <Route path="roles-permissions">
-          <Route
-            index
-            element={
-              <PageWithPermission name={Permissions.MANAGE_ORG_ROLES}>
-                <Roles />
-              </PageWithPermission>
-            }
-          />
-          <Route path=":roleId" element={<EditPermissions />} />
-        </Route>
-        <Route
-          path="organization-profile"
-          element={
-            <PageWithPermission name={Permissions.MANAGE_ORG_PROFILE}>
-              <OrganizationProfile />
-            </PageWithPermission>
-          }
-        />
-      </Route>
 
-      <Route path="/forms/builder/:formId" element={<FormBuilder />} />
-      <Route path="/forms/access/:formId" element={<AccessForm />} />
-      <Route path="/tasks/:taskId/iPro/:formId" element={<ViewIproForm />}>
-        <Route path="view" element={<ViewIproFormEntry />} />
-        <Route path="edit" element={<FormBuilder />} />
-        <Route path="audit-log" element={<IProAuditLog />} />
-        <Route path="approvals" element={<IProApprovals />} />
-      </Route>
-      <Route path="/clients/:clientId/kyb-info/:formId" element={<ViewKyb />}>
-        <Route path="view" element={<ViewIproFormEntry />} />
-        <Route path="edit" element={<FormBuilder />} />
-        <Route path="fill-details" element={<AccessForm withoutAppbar />} />
-        <Route path="audit-log" element={<IProAuditLog />} />
-      </Route>
-      <Route path="/billing/estimates/:estimateId/preview" element={<EstimatePreview />} />
-      <Route path="/billing/invoices/:invoiceId/preview" element={<InvoicePreview />} />
-      <Route path="/billing/receipts/:receiptId/preview" element={<ReceiptPreview />} />
-      <Route path="/forms/:formId/fields/:fieldId/esign" element={<Esign />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/join" element={<Join />} />
-      <Route path="/onedrive-auth" element={<OnedriveAuth />} />
-    </Routes>
+        <Route path="/forms/builder/:formId" element={<FormBuilder />} />
+        <Route path="/forms/access/:formId" element={<AccessForm />} />
+        <Route path="/tasks/:taskId/iPro/:formId" element={<ViewIproForm />}>
+          <Route path="view" element={<ViewIproFormEntry />} />
+          <Route path="edit" element={<FormBuilder />} />
+          <Route path="audit-log" element={<IProAuditLog />} />
+          <Route path="approvals" element={<IProApprovals />} />
+        </Route>
+        <Route path="/clients/:clientId/kyb-info/:formId" element={<ViewKyb />}>
+          <Route path="view" element={<ViewIproFormEntry />} />
+          <Route path="edit" element={<FormBuilder />} />
+          <Route path="fill-details" element={<AccessForm withoutAppbar />} />
+          <Route path="audit-log" element={<IProAuditLog />} />
+        </Route>
+        <Route path="/billing/estimates/:estimateId/preview" element={<EstimatePreview />} />
+        <Route path="/billing/invoices/:invoiceId/preview" element={<InvoicePreview />} />
+        <Route path="/billing/receipts/:receiptId/preview" element={<ReceiptPreview />} />
+        <Route path="/forms/:formId/fields/:fieldId/esign" element={<Esign />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="/onedrive-auth" element={<OnedriveAuth />} />
+      </Routes>
     </Router >
   );
 }
