@@ -46,16 +46,16 @@ export const menu: Array<IMenuItem> = [
   {
     title: "Services",
     path: "",
-    icon: icons.broadcast,
+    icon: icons.taskboard,
     children: [
       {
         title: "Services",
         path: "/services",
-        icon: icons.broadcast,
+        icon: icons.taskboard,
       }, {
         title: "categories",
         path: "/categories",
-        icon: icons.broadcast,
+        icon: icons.team,
       }
     ]
   },
