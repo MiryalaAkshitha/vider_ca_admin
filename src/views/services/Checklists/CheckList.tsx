@@ -1,4 +1,4 @@
-import { Add, KeyboardArrowUp, MoreVert } from "@mui/icons-material";
+import { Add, KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@mui/icons-material";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { snack } from "components/toast";
 import { useMenu } from "context/MenuPopover";
@@ -69,14 +69,14 @@ const CheckList = ({ data, index }: Props) => {
           </Typography>
           <Box display="flex" gap={1}>
             <IconButton onClick={() => setShow(!show)}>
-              <KeyboardArrowUp />
+              {show ? <KeyboardArrowUp /> : <KeyboardArrowDown /> }              
             </IconButton>
             <IconButton onClick={handleMenu}>
               <MoreVert />
             </IconButton>
           </Box>
         </header>
-        {show && (
+        {!show && (
           <Box>
             {data?.checklistItems?.map((item: any, itemIndex: number) => (
               <CheckListItem
