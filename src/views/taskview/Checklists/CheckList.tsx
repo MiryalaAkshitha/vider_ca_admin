@@ -1,4 +1,4 @@
-import { Add, KeyboardArrowUp, MoreVert } from "@mui/icons-material";
+import { Add, KeyboardArrowUp,KeyboardArrowDown, MoreVert } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -24,7 +24,7 @@ const CheckList = ({ data }: Props) => {
   const confirm = useConfirm();
   const queryClient = useQueryClient();
 
-  const [show, setShow] = useState<boolean>(true);
+  const [show, setShow] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedChecklist, setSelectedChecklist] = useState<number | null>(
@@ -94,7 +94,7 @@ const CheckList = ({ data }: Props) => {
           </Typography>
           <Box display="flex" gap={1}>
             <IconButton onClick={() => setShow(!show)}>
-              <KeyboardArrowUp />
+            {show ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
             </IconButton>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <MoreVert />
