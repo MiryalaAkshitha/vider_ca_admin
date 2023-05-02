@@ -79,6 +79,17 @@ function EditRecurringProfile({ open, setOpen, data }: Props) {
               )}
             />
           </Grid>
+          <Grid item xs={12}>
+            <DesktopDatePicker
+              label="Expected Completion Date"
+              inputFormat="dd-MM-yyyy"
+              value={state?.expectedCompletionDate}
+              onChange={(v) => setState({ ...state, expectedCompletionDate: v })}
+              renderInput={(params) => (
+                <TextField fullWidth size="small" {...params} />
+              )}
+            />
+          </Grid>
         </Grid>
         <Box mt={4} display="flex" gap={1} justifyContent="flex-end">
           <Button

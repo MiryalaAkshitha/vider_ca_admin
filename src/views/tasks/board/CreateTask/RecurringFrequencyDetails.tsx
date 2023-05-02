@@ -17,6 +17,7 @@ type State = {
   dates: Array<{
     startDate: string | null;
     dueDate: string | null;
+    expectedCompletionDate: string | null; 
     period: string;
   }>;
 };
@@ -53,7 +54,7 @@ function RecurringFrequencyDetails(props: any) {
         ...state,
         frequency,
         startPeriod: "",
-        dates: [{ startDate: null, dueDate: null, period: "Yearly" }],
+        dates: [{ startDate: null, dueDate: null, expectedCompletionDate: null, period: "Yearly" }],
       });
 
       return;
@@ -65,7 +66,7 @@ function RecurringFrequencyDetails(props: any) {
         ...state,
         frequency,
         startPeriod: "",
-        dates: [{ startDate: null, dueDate: null, period: "" }],
+        dates: [{ startDate: null, dueDate: null, expectedCompletionDate: null, period: "" }],
       });
       return;
     }
@@ -87,6 +88,7 @@ function RecurringFrequencyDetails(props: any) {
         period: v,
         startDate: null,
         dueDate: null,
+        expectedCompletionDate: null
       });
     });
 
@@ -222,6 +224,17 @@ function RecurringFrequencyDetails(props: any) {
                   }}
                   renderInput={(params) => <TextField fullWidth size="small" {...params} />}
                 />
+                <DesktopDatePicker
+                  label="Expected Completion Date"
+                  inputFormat="dd-MM-yyyy"
+                  value={item.expectedCompletionDate}
+                  onChange={(v) => {
+                    let dates = [...state.dates];
+                    dates[index].expectedCompletionDate = moment(v).format("YYYY-MM-DD");
+                    setState({ ...state, dates });
+                  }}
+                  renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+                />
                 {state.frequency === RecurringFrequency.CUSTOM && (
                   <TextField
                     fullWidth
@@ -257,7 +270,7 @@ function RecurringFrequencyDetails(props: any) {
                 onClick={() => {
                   setState({
                     ...state,
-                    dates: [...state.dates, { startDate: null, dueDate: null, period: "" }],
+                    dates: [...state.dates, { startDate: null, dueDate: null, expectedCompletionDate: null, period: "" }],
                   });
                 }}
               >
@@ -267,6 +280,7 @@ function RecurringFrequencyDetails(props: any) {
           )}
         </Box>
       )}
+      
       <Box mt={2} textAlign="center">
         <Button onClick={handleSave} variant="contained" color="secondary" size="large">
           Save
