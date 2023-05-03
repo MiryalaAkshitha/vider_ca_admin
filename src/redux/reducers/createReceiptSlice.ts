@@ -16,6 +16,7 @@ export interface IState {
   tdsAmount: number;
   creditsUsed: number;
   particulars: Array<any>;
+  invoices: Array<any>;
 }
 
 const initialState: IState = {
@@ -32,6 +33,7 @@ const initialState: IState = {
   tds: "",
   tdsAmount: 0,
   creditsUsed: 0,
+  invoices: [],
 };
 
 export const createReceiptSlice = createSlice({
@@ -42,7 +44,11 @@ export const createReceiptSlice = createSlice({
       state: IState,
       action: PayloadAction<{ key: string; value: any }>
     ) {
-      state[action.payload.key] = action.payload.value;
+      if(action.payload.key === 'invoices') {
+        state[action.payload.key].push(action.payload.value);
+      } else {
+        state[action.payload.key] = action.payload.value;
+      }      
     },
     resetState(state: IState) {
       Object.keys(state).forEach((key) => {

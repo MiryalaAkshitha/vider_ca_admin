@@ -92,7 +92,7 @@ function ClientInvoiceDetails() {
       setInvoices(invoicesList);
       getBalanceTotalAmount(invoicesList);
       setInvoicedamount(getInvoicedAmount(invoicesList));
-      dispatch(handleChange({ key: 'invoices', value: changedinvoice }));
+      dispatch(handleChange({ key: 'invoices', value: changedinvoice[0] }));
     } else {
       snack.error('Please verify Amount received is greater');
     }
@@ -119,7 +119,7 @@ function ClientInvoiceDetails() {
     setInvoices(invoicesList);
     setInvoicedamount(getInvoicedAmount(invoicesList));
     getBalanceTotalAmount(invoicesList);
-    dispatch(handleChange({ key: 'invoices', value: changedinvoice }));
+    dispatch(handleChange({ key: 'invoices', value: changedinvoice[0] }));
   }
 
   const getTotalAmount = () => {

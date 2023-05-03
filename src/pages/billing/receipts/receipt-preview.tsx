@@ -46,7 +46,7 @@ const ReceiptPreview = () => {
             <PaymentDetails result={result} />
           </Grid>
           <Grid item xs={6}>
-            {/* <InvoiceDetails result={result} /> */}
+            <InvoiceDetails result={result} />
           </Grid>
         </Grid>
 

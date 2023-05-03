@@ -28,7 +28,7 @@ function BottomBar() {
   const onSubmit = (args: any) => {
 
     let apiData: any = { ...state };
-    if(apiData.receiptDate === "null" ){
+    if (apiData.receiptDate === "null") {
       snack.error("please error receipt date")
 
     }
@@ -39,9 +39,11 @@ function BottomBar() {
     // apiData.creditsUsed = +apiData.creditsUsed + (+totalpayment - +invoicesum);
 
     let idTotalSumcorrect = true;
-    
+
     if (apiData?.invoices && apiData?.invoices.length > 0) {
-      const invoicesum = apiData?.invoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
+      const ids = apiData?.invoices.map(o => o.id)
+      const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
+      const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
       apiData.totalCredits = +apiData.previousCredits - (+totalpayment - +invoicesum);
       if (invoicesum <= totalpayment) {
         idTotalSumcorrect = true;
