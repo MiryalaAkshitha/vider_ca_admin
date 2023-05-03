@@ -1,18 +1,21 @@
 import { Grid, Typography } from "@mui/material";
 
 function TotalAmounts({ data, taskFee }) {
+  console.log(data,"exp data")
   const pureAgentExpenditure = data
-    ?.filter((item: any) => item.type === "PURE_AGENT")
+    ?.filter((item: any) => item.taskExpenseType === "PURE_AGENT")
     ?.reduce((acc: any, curr: any) => {
       return acc + parseInt(curr.amount);
-    }, 0);
+      }, 0);
+    console.log("Pureagent exp",pureAgentExpenditure);
+
 
   const additionalExpenditure = data
-    ?.filter((item: any) => item.type === "ADDITIONAL")
+    ?.filter((item: any) => item.taskExpenseType === "ADDITIONAL")
     ?.reduce((acc: any, curr: any) => {
       return acc + parseInt(curr.amount);
     }, 0);
-
+console.log("additional exp",additionalExpenditure);
   const totalAmount =
     (+taskFee || 0) + pureAgentExpenditure + additionalExpenditure;
 
@@ -23,7 +26,6 @@ function TotalAmounts({ data, taskFee }) {
         background: "#F7F7F7",
         mt: 2,
         borderRadius: 4,
-        maxWidth: 1000,
         p: 2,
       }}
     >

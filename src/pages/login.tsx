@@ -110,9 +110,10 @@ const Login = () => {
               </Button>
             </div>
             <div>
-              <Button sx={{ mt: 1 }} onClick={() => navigate("/signup")}>
+{/*               
+               <Button sx={{ mt: 1 }} onClick={() => navigate("/signup")}>
                 Don't have an account - Create New Account
-              </Button>
+              </Button> */}
             </div>
           </Box>
         </Box>

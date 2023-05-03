@@ -33,18 +33,16 @@ function SelectApprovalHierarchy({ open, setOpen, onChange }: Props) {
 
   function getData() {
     let result = data?.data ? [...data?.data] : [];
-
+  
     if (search) {
       result = result?.filter((item) =>
         item.name?.toLowerCase().includes(search.toLowerCase())
       );
     }
-
-    if (type) {
-      result = result?.filter((item) => item.type === type);
-    }
-
-    return result;
+  
+    result = result?.filter((item) => item.type === "TASK");
+  
+    return result;
   }
 
   const handleClick = (appHier: any) => {
@@ -59,7 +57,7 @@ function SelectApprovalHierarchy({ open, setOpen, onChange }: Props) {
       setOpen={setOpen}
       title="Select Approval Hierarchy"
     >
-      <Box display="flex" justifyContent="space-between">
+      {/* <Box display="flex" justifyContent="space-between">
         <TextField
           label="Filter By Type"
           variant="outlined"
@@ -85,8 +83,8 @@ function SelectApprovalHierarchy({ open, setOpen, onChange }: Props) {
             onChange={setSearch}
           />
         </Box>
-      </Box>
-      <Divider sx={{ mt: 2 }} />
+      </Box> */}
+      {/* <Divider sx={{ mt: 2 }} /> */}
       {isLoading ? (
         <Loader />
       ) : (
