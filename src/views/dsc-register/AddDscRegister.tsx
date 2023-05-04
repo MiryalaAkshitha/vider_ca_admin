@@ -102,7 +102,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
         setOpen(false);
         setState(_.cloneDeep(initialState));
       }}
-      title="Add DSC Register"
+      title="Add DSC Record"
     >
       {isLoading ? (
         <Loader />
@@ -144,7 +144,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
                     }}
                   />
                 }
-                label="Get details from client user"
+                label="Get Details from Client User"
               />
             )}
             {getDetails && state.client && (
@@ -188,7 +188,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               name="mobileNumber"
               size="small"
               inputProps={{
-                pattern: "[0-9]{10}",
+                pattern: "[1-9]{1}[0-9]{9}",
                 title: "Enter 10 digit mobile number",
               }}
               label="Mobile Number"
@@ -204,7 +204,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               value={state.email}
               name="email"
               size="small"
-              label="Email"
+              label="Email ID"
             />
             <TextField
               sx={{ mt: 3 }}
@@ -262,7 +262,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               onChange={handleChange}
               value={state.panNumber}
               size="small"
-              label="Pan Number"
+              label="PAN"
               inputProps={{
                 pattern: "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
                 title: "Pan Number is invalid",

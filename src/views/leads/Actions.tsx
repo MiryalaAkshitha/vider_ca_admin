@@ -4,6 +4,7 @@ import { useState } from "react";
 import ConverLead from "views/leads/ConvertLead";
 import EditLead from "views/leads/EditLead";
 import ViewLead from "views/leads/ViewLead";
+import { Visibility } from "@mui/icons-material";
 
 const Actions = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,7 @@ const Actions = ({ data }) => {
             setInfoOpen(true);
           }}
         >
-          <InfoOutlined />
+           <Visibility />
         </IconButton>
         {data?.status === "PENDING" && (
           <IconButton

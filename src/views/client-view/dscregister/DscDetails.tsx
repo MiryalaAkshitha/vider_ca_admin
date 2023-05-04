@@ -13,7 +13,7 @@ function DscDetails({ state, setState }) {
   return (
     <>
       <Typography mb={3} variant="subtitle2" color="primary">
-        Details
+        DSC Holder Information
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={4}>
@@ -32,7 +32,7 @@ function DscDetails({ state, setState }) {
             fullWidth
             variant="outlined"
             size="small"
-            label="Email"
+            label="Email ID"
             name="email"
             value={state?.email}
             onChange={handleChange}
@@ -62,7 +62,7 @@ function DscDetails({ state, setState }) {
         </Grid>
         <Grid item xs={4}>
           <DesktopDatePicker
-            label="Expiry Date"
+            label="DSC Expiry Date"
             inputFormat="dd-MM-yyyy"
             value={state.expiryDate}
             onChange={(value) => {
@@ -95,7 +95,7 @@ function DscDetails({ state, setState }) {
             fullWidth
             variant="outlined"
             size="small"
-            label="PAN Number"
+            label="PAN"
             name="panNumber"
             value={state?.panNumber}
             onChange={handleChange}

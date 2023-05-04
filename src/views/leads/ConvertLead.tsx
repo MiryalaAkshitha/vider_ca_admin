@@ -19,6 +19,8 @@ interface StateProps {
   clientManager: string;
   mobileNumber: string;
   email: string;
+  authorizedPerson :string;
+  designation : string;
   clientPortalAccess:string
 }
 
@@ -37,6 +39,8 @@ function ConverLead({ open, setOpen, data }: Props) {
     clientManager: "",
     mobileNumber: "",
     email: "",
+    authorizedPerson :"",
+    designation : "",
     clientPortalAccess:"no"
   });
 
@@ -100,7 +104,7 @@ function ConverLead({ open, setOpen, data }: Props) {
   )?.subCategories;
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Convert lead to client">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Convert Lead to Client">
       {userLoading ? (
         <Loader />
       ) : (
@@ -193,6 +197,7 @@ function ConverLead({ open, setOpen, data }: Props) {
               </MenuItem>
             ))}
           </TextField>
+          
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
               loading={isLoading}

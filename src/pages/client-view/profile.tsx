@@ -70,7 +70,7 @@ function ProfileDetails() {
           onChange={(v: string) => setState({ ...state, image: v })}
         />
         <Box display="flex" gap={2}>
-          <FormControlLabel
+          {/* <FormControlLabel
             label="Client Portal Access"
             control={
               <Switch
@@ -78,7 +78,7 @@ function ProfileDetails() {
                 checked={state?.clientPortalAccess || false}
               />
             }
-          />
+          /> */}
           <Button variant="outlined" color="error" onClick={handleDelete}>
             Delete Client
           </Button>

@@ -31,6 +31,7 @@ let initialState = {
 };
 
 function AddLead({ open, setOpen }: DialogProps) {
+  
   const queryClient = useQueryClient();
   const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
 
@@ -71,7 +72,7 @@ function AddLead({ open, setOpen }: DialogProps) {
   )?.subCategories;
 
   return (
-    <DrawerWrapper open={open} setOpen={setOpen} title="Add new lead">
+    <DrawerWrapper open={open} setOpen={setOpen} title="Add New Lead">
       <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
@@ -118,7 +119,7 @@ function AddLead({ open, setOpen }: DialogProps) {
           required
           onChange={handleChange}
           size="small"
-          label="Name"
+          label="Display Name"
         />
         <TextField
           sx={{ mt: 3 }}
@@ -129,12 +130,12 @@ function AddLead({ open, setOpen }: DialogProps) {
           name="mobileNumber"
           size="small"
           inputProps={{
-            pattern: "[0-9]{10}",
+            pattern: "[1-9]{1}[0-9]{9}",
             title: "Enter 10 digit mobile number",
           }}
           label="Mobile Number"
         />
-        <TextField
+        {/* <TextField
           sx={{ mt: 3 }}
           variant="outlined"
           fullWidth
@@ -144,7 +145,24 @@ function AddLead({ open, setOpen }: DialogProps) {
           onChange={handleChange}
           size="small"
           label="Email ID"
-        />
+        /> */}
+<TextField
+  sx={{ mt: 3 }}
+  variant="outlined"
+  fullWidth
+  name="email"
+  required
+  type="email"
+  onChange={handleChange}
+  size="small"
+  inputProps={{
+    pattern: "/^[^\s@]+@[^\s@]+\.[^\s@]+$/",
+    title: "Enter a valid email address",
+  }}
+  label="Email ID"
+/>
+
+
         <TextField
           sx={{ mt: 3 }}
           variant="outlined"

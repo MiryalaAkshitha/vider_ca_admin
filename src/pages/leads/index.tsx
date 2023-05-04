@@ -13,6 +13,7 @@ import { ResType } from "types";
 import { getTitle } from "utils";
 import Actions from "views/leads/Actions";
 import AddLead from "views/leads/AddLead";
+import { CLIENT_CATEGORIES } from "data/constants";
 
 function Leads() {
   useTitle("Leads");
@@ -60,7 +61,7 @@ function Leads() {
           debounced
           minWidth="400px"
           onChange={setSearch}
-          placeHolder="Search"
+          placeHolder="Search by Lead Name"
         />
         {selected.length > 0 && (
           <Button onClick={handleDelete} variant="outlined" color="secondary">
@@ -82,19 +83,29 @@ function Leads() {
 }
 
 const columns = [
+  { key: "name", title: "Lead Name" },
   {
     key: "category",
     title: "Category",
-    render: (rowData: any) => getTitle(rowData?.category),
+    render: (rowData) => {
+      return (
+        <>
+          {
+            CLIENT_CATEGORIES.map((item: any) => {
+              return item.value == rowData?.category ? item.label : '';
+            })
+          }
+        </>
+      )
+    },
   },
   {
     key: "subCategory",
     title: "Sub Category",
     render: (rowData: any) => getTitle(rowData?.subCategory),
   },
-  { key: "name", title: "Name" },
   { key: "mobileNumber", title: "Mobile Number" },
-  { key: "email", title: "Email" },
+  { key: "email", title: "Email ID" },
   {
     title: "Created On",
     key: "createdAt",

@@ -105,7 +105,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               }}
             />
           }
-          label="Get details from client user"
+          label="Get Details from Client User"
         />
         {getDetails && (
           <TextField
