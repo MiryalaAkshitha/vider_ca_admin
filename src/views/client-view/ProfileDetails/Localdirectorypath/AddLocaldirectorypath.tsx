@@ -43,7 +43,10 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
     e.preventDefault(); 
     
     const { ...data } = state;
-    data.localDirectoryPath.push(path);
+    if(data.localDirectoryPath == null || data.localDirectoryPath == "") {
+      data.localDirectoryPath = [];
+    }
+    data.localDirectoryPath.push(path);    
 
     mutate({ data, id: params.clientId });
   };
