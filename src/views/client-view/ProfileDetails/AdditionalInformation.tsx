@@ -80,14 +80,14 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
             )}
           </Grid>
 
-          <Grid item xs={4}>
+          {/* <Grid item xs={4}>
             <TextFieldWithCopy
               label="Local Directory Path"
               name="localDirectoryPath"
               onChange={handleChange}
               value={data?.localDirectoryPath || ""}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container mt={3}>
           <Grid item xs={6}>

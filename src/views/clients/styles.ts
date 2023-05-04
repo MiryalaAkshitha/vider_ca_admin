@@ -142,6 +142,18 @@ export const StyledProfileImageOverlay = styled("div")<{ hover: number }>(
   })
 );
 
+export const StyledLocaldirectorypath = styled("div")(() => ({
+  display: "flex",
+  gap: 20,
+  border: "1px solid lightgrey",
+  padding: "15px 40px 15px 10px",
+  justifyContent: "space-between",
+  borderRadius: 4,
+  alignItems: "center",
+  marginTop: "10px",
+  position: "relative",
+}));
+
 export const StyledContactPerson = styled("div")(() => ({
   display: "flex",
   gap: 20,

@@ -22,6 +22,7 @@ import { FormControlLabel, Switch } from "@mui/material";
 import BillingAddressDetails from "views/client-view/ProfileDetails/BillingAddressDetails";
 import ShippingAddressDetails from "views/client-view/ProfileDetails/ShippingAddressDetails";
 import CopyAddressDetails from "views/client-view/ProfileDetails/CopyAddressDetails";
+import LocaldirectorypathDetails from "views/client-view/ProfileDetails/Localdirectorypath";
 
 function ProfileDetails() {
   const [originalState, setOriginalState] = useState<any>({});
@@ -90,6 +91,7 @@ function ProfileDetails() {
       <BillingAddressDetails data={state} setState={setState} />
       <ShippingAddressDetails data={state} setState={setState} />
       <ContactPersonDetails data={data?.data?.contactPersons} />
+      <LocaldirectorypathDetails state={state} data={state} setState={setState} apiData={data?.data} />
       <AdditionalInformation data={state} setState={setState} apiData={data?.data} />
       <ValidateAccess name={Permissions.EDIT_CLIENT_PROFILE}>
         <BottomBar data={originalState} setState={setState} state={state} />
