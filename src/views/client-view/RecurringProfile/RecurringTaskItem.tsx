@@ -36,6 +36,7 @@ const RecurringTaskItem = ({ data }: Props) => {
 
     const terminateData = JSON.parse(JSON.stringify(data));
     terminateData.status = 'terminated';
+    terminateData.recurringStatus = 'terminated';
 
     mutate({
       id: data.id,
@@ -71,7 +72,7 @@ const RecurringTaskItem = ({ data }: Props) => {
               {data?.name}
             </Typography>
             <Typography variant="caption">
-              {getTitle(data?.recurringStatus)}
+              {getTitle(data?.recurringStatus == '' ? data?.status: data?.recurringStatus)}
             </Typography>
           </Box>
         </Box>
