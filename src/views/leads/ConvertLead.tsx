@@ -197,26 +197,6 @@ function ConverLead({ open, setOpen, data }: Props) {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="authorizedPerson"
-            label="Authorized Person"
-            onChange={handleChange}
-            size="small"
-            value={state.authorizedPerson}
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            fullWidth
-            name="designation"
-            label="Designation"
-            onChange={handleChange}
-            size="small"
-            value={state.designation}
-          />
           
           <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
             <LoadingButton
