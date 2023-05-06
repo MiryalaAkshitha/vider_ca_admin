@@ -24,8 +24,10 @@ function Filters({ state, setState, onSubmit, filterfields }: Props) {
  
    const disablePrevDates = (startDate) => {
      const startSeconds = Date.parse(startDate);
-      return (date) => {
-        return Date.parse(date) <= startSeconds;
+      return (date: any) => {
+        const seconds = Date.parse(date);
+        return seconds < startSeconds;
+        // return Date.parse(date) <= startSeconds;
       }
    }
    

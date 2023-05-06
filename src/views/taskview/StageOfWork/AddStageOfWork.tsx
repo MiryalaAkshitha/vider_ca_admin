@@ -46,7 +46,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
 
   const { mutate } = useMutation(addStageOfWork, {
     onSuccess: () => {
-      snack.success("Stage of work added");
+      snack.success("milestone added");
       queryClient.invalidateQueries("stage-of-work");
       setState(_.cloneDeep(initialState));
       setOpen(false);
@@ -82,7 +82,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
   };
 
   return (
-    <DrawerWrapper open={open} title="Add stage of work" setOpen={setOpen}>
+    <DrawerWrapper open={open} title="Milestone" setOpen={setOpen}>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
@@ -97,7 +97,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
             <FormControlLabel
               value="STAGE_OF_WORK"
               control={<Radio />}
-              label="Stage of work"
+              label="Milestone"
             />
             <FormControlLabel
               value="DELIVERABLES"

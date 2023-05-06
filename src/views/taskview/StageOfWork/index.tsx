@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { getStageOfWork } from "api/services/tasks/tasks";
-import { noChecklists } from "assets";
+import { noMilestones } from "assets";
 import Loader from "components/Loader";
 import NoItems from "components/NoItems";
 import { useState } from "react";
@@ -25,7 +25,7 @@ function StageOfWork() {
   return (
     <>
       {data.data.length === 0 && (
-        <Typography variant="subtitle1" color="primary">Stage of work</Typography>
+        <Typography variant="subtitle1" color="primary">Milestone</Typography>
       )}
       {data?.data?.length > 0 && (
         <Box display="flex" justifyContent="flex-end">
@@ -34,7 +34,7 @@ function StageOfWork() {
             color="secondary"
             startIcon={<Add />}
           >
-            Add stage of work
+            Add Milestone
           </Button>
         </Box>
       )}
@@ -43,7 +43,7 @@ function StageOfWork() {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Typography variant="subtitle1" color="primary">
-                Stage of Work
+              Milestone
               </Typography>
               {data?.data
                 ?.filter((item: any) => item?.type === "STAGE_OF_WORK")
@@ -69,11 +69,11 @@ function StageOfWork() {
         )}
         {data?.data?.length === 0 && (
           <NoItems
-            img={noChecklists}
-            title="Add stage of work to your task"
-            desc="Create a stage of work in your task"
-            btnTitle="Add stage of work"
-            btnAction={() => setOpen(true)}
+          img={noMilestones}
+          title="Add a milestone to your task"
+          desc="Create a Milestone and link the milestone with the Checklist to tract the progress of the task"
+          btnTitle="Create Milestone"
+          btnAction={() => setOpen(true)}
           />
         )}
       </Box>

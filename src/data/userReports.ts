@@ -6,13 +6,14 @@ export const userReportsList = [
         desc: `Track down total tasks as per their status of each employee`,
         icon: icons.totalTasks,
     },
-    {
-        title: "Service Category Status by Tasks",
-        path: "/reports/service-category-status-wise-tasks",
-        desc: `Track total no. of tasks under each category of each employee.
-      `,
-        icon: icons.totalTasks,
-    },
+    // hide this report as of now 
+    // {
+    //     title: "Service Category Status by Tasks",
+    //     path: "/reports/service-category-status-wise-tasks",
+    //     desc: `Track total no. of tasks under each category of each employee.
+    //   `,
+    //     icon: icons.totalTasks,
+    // },
     {
         title: "User-Based Master Report",
         path: "/reports/user-based-master-report",

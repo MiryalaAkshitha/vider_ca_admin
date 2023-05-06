@@ -16,7 +16,7 @@ function Stage({ data, index }: any) {
 
   const { mutate } = useMutation(deleteStageOfWork, {
     onSuccess: () => {
-      snack.success("Stage of work deleted");
+      snack.success("Milestone deleted");
       queryClient.invalidateQueries("stage-of-work");
       setOpen(false);
     },
@@ -24,7 +24,7 @@ function Stage({ data, index }: any) {
 
   const { mutate: update } = useMutation(updateStageOfWork, {
     onSuccess: () => {
-      snack.success("Stage of work updated");
+      snack.success("Milestone updated");
       queryClient.invalidateQueries("stage-of-work");
       setOpen(false);
     },

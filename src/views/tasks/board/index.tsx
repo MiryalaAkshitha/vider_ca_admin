@@ -50,7 +50,7 @@ function Board({ data }: Props) {
 
   const { mutateAsync: updateTaskStatus } = useMutation(updateStatus, {
     onSuccess: () => {
-      snack.success("Status has been updated successfully");
+      // snack.success("Status has been updated successfully");
       queryClient.invalidateQueries("tasks");
     },
     onError: (err: any) => {

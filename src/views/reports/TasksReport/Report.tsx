@@ -12,6 +12,7 @@ import { snack } from "components/toast";
 import moment from "moment";
 import { useMutation } from "react-query";
 import { getTitle } from "utils";
+import { formattedDate } from "utils/formattedDate";
 import { handleError } from "utils/handleError";
 
 function Report({ data, state, isLoading, isError }) {
@@ -69,7 +70,7 @@ function Report({ data, state, isLoading, isError }) {
 const columns: Array<ColumnType> = [
   { key: "taskNumber", title: "Task Id" },
   { key: "name", title: "Task Name", width: "200px" },
-  { key: "dueDate", title: "Due Date" },
+  { key: "dueDate", title: "Due Date", render:(row :any) => formattedDate(row.dueDate) },
   { key: "client.displayName", title: "Client Name", width: "200px" },
   { key: "category.name", title: "Category" },
   { key: "subCategory.name", title: "Sub Category" },

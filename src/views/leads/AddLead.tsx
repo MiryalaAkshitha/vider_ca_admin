@@ -31,7 +31,7 @@ let initialState = {
 };
 
 function AddLead({ open, setOpen }: DialogProps) {
-  
+
   const queryClient = useQueryClient();
   const [state, setState] = useState<StateProps>(_.cloneDeep(initialState));
 
@@ -135,7 +135,7 @@ function AddLead({ open, setOpen }: DialogProps) {
           }}
           label="Mobile Number"
         />
-        {/* <TextField
+        <TextField
           sx={{ mt: 3 }}
           variant="outlined"
           fullWidth
@@ -145,22 +145,22 @@ function AddLead({ open, setOpen }: DialogProps) {
           onChange={handleChange}
           size="small"
           label="Email ID"
-        /> */}
-<TextField
-  sx={{ mt: 3 }}
-  variant="outlined"
-  fullWidth
-  name="email"
-  required
-  type="email"
-  onChange={handleChange}
-  size="small"
-  inputProps={{
-    pattern: "/^[^\s@]+@[^\s@]+\.[^\s@]+$/",
-    title: "Enter a valid email address",
-  }}
-  label="Email ID"
-/>
+        // /> */}
+        // <TextField
+        //   sx={{ mt: 3 }}
+        //   variant="outlined"
+        //   fullWidth
+        //   name="email"
+        //   required
+        //   type="email"
+        //   onChange={handleChange}
+        //   size="small"
+        //   inputProps={{
+        //     pattern: "/^[^\s@]+@[^\s@]+\.[^\s@]+$/",
+        //     title: "Enter a valid email address",
+        //   }}
+        //   label="Email ID"
+        />
 
 
         <TextField

@@ -31,7 +31,7 @@ function AddClient({ open, setOpen, successCb }: Props) {
 
   const { mutate, isLoading } = useMutation(createClient, {
     onSuccess: (res) => {
-      snack.success("Client Created");
+      // snack.success("Client Created");
       setOpen(false);
       if (successCb) {
         successCb();

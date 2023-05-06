@@ -77,7 +77,7 @@ function SelectService({ open, setOpen, setValue, watch }: Props) {
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" gap={1}>
           <TextField
-            label="Select Category"
+            label="Select Service Category"
             value={filters.category}
             sx={{ width: 200 }}
             onChange={handleCategoryChange}

@@ -12,7 +12,7 @@ import Events from "views/taskview/events";
 import Expenditure from "views/taskview/expenditure";
 import IPro from "views/taskview/iPro";
 import LogHours from "views/taskview/LogHours";
-import Milestones from "views/taskview/Milestones";
+// import Milestones from "views/taskview/Milestones";
 import StageOfWork from "views/taskview/StageOfWork";
 import SubTasks from "views/taskview/Subtasks";
 import TaskHeader from "views/taskview/TaskHeader";
@@ -66,9 +66,9 @@ function TaskDetails() {
       <TaskSection id="checklists">
         <Checklists />
       </TaskSection>
-      <TaskSection id="milestones">
+      {/* <TaskSection id="milestones">
         <Milestones />
-      </TaskSection>
+      </TaskSection> */}
       <TaskSection id="stageofwork">
         <StageOfWork />
       </TaskSection>
