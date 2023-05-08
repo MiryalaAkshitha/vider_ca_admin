@@ -25,6 +25,21 @@ function BottomBar() {
     },
   });
 
+  const isNestedArray = (arr: any) => {
+    let isnested = false;
+    for (let i = 0; i < arr.length; i++) {
+      if (Array.isArray(arr[i])) {
+        isnested = true;
+      }
+    }
+    if(isnested) {
+      return arr.flat(1);
+    } else {
+      return arr;
+    }
+  }
+  
+
   const onSubmit = (args: any) => {
 
     let apiData: any = { ...state };
@@ -33,7 +48,7 @@ function BottomBar() {
 
     }
     // apiData.paymentDate = apiData.receiptDate;
-    apiData['invoices'] = apiData?.invoices ? apiData?.invoices : [];
+    apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
     apiData.amount = +apiData.amount;
     const totalpayment = +apiData.amount + +apiData.creditsUsed;
     // apiData.creditsUsed = +apiData.creditsUsed + (+totalpayment - +invoicesum);

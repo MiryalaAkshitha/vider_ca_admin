@@ -12,7 +12,7 @@ function InvoiceDetails({ result }: IProps) {
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    const uniqueids = result?.invoicesEdited.filter(function (item, pos) {
+    const uniqueids = result?.invoicesEdited && result?.invoicesEdited.filter(function (item, pos) {
       return result?.invoicesEdited.indexOf(item) == pos;
     });
     setInvoices(uniqueids);
