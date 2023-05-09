@@ -104,6 +104,10 @@ const restoreClient = (id: number) => {
   return http.post(`/client/${id}/restore`);
 };
 
+const restoreTask = (id: number) => {
+  return http.post(`/tasks/${id}/restore`);
+};
+
 export {
   createClient,
   getClients,
@@ -125,4 +129,5 @@ export {
   getDeletedTasks,
   getDeletedClients,
   restoreClient,
+  restoreTask
 };

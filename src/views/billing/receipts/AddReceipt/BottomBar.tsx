@@ -32,13 +32,13 @@ function BottomBar() {
         isnested = true;
       }
     }
-    if(isnested) {
+    if (isnested) {
       return arr.flat(1);
     } else {
       return arr;
     }
   }
-  
+
 
   const onSubmit = (args: any) => {
 
@@ -56,7 +56,7 @@ function BottomBar() {
     let idTotalSumcorrect = true;
 
     if (apiData?.invoices && apiData?.invoices.length > 0) {
-      const ids = apiData?.invoices.map(o => o.id)
+      const ids = apiData?.invoices.map(o => o.id);
       const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
       const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
       apiData.totalCredits = +apiData.previousCredits - (+totalpayment - +invoicesum);
@@ -79,6 +79,10 @@ function BottomBar() {
       }
     } else {
       if (idTotalSumcorrect) {
+        const ids = apiData?.invoices.map(o => o.id);
+        const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
+        apiData.invoices = filteredinvoices;
+
         mutate({
           data: apiData,
         });
