@@ -118,12 +118,12 @@ function ClientDetails() {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <SectionHeading title="Shipping Address" />
-          <Box p={2}>
+          {/* <SectionHeading title="Shipping Address" />
+          <Box p={2}> */}
             {/* <Box mb={1}>
               <img src={logo} alt="logo" />
             </Box> */}
-            <AddressDetail
+            {/* <AddressDetail
               title="Legal Name"
               value={shippingAddress?.legalName}
             />
@@ -136,7 +136,7 @@ function ClientDetails() {
               title="Mobile Number"
               value={shippingAddress?.mobileNumber}
             />
-          </Box>
+          </Box> */}
         </Grid>
       </Grid>
     </Box>

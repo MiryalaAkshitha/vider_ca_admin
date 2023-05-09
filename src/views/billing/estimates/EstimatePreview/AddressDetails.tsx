@@ -41,7 +41,7 @@ function AddressDetails({ result }) {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <SectionHeading title="Shipping Address" />
+          {/* <SectionHeading title="Shipping Address" />
           <Box p={1}>
             <Typography variant="body2">
               {result?.client?.address?.shippingaddress?.legalName}
@@ -54,7 +54,7 @@ function AddressDetails({ result }) {
             </Typography>
             <Typography variant="body2">
               {result?.client?.address?.shippingaddress?.state}, {result?.client?.address?.shippingaddress?.pincode}
-            </Typography>
+            </Typography> */}
 
 
             {/* <Box mb={1}>
@@ -67,11 +67,11 @@ function AddressDetails({ result }) {
               {getAddress(result?.shippingAddress)}
             </Typography>
             */}
-            <Typography variant="body2">
+            {/* <Typography variant="body2">
               {result?.client?.address?.shippingAddress?.mobileNumber},{" "}
               {result?.client?.address?.shippingAddress?.email}
             </Typography>
-          </Box>
+          </Box> */}
         </Grid>
       </Grid>
     </Box>
