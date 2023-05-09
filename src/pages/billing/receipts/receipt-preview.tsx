@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, styled } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
 import { getReceiptPreview } from "api/services/billing/receipts";
@@ -13,6 +13,15 @@ import BasicDetails from "views/billing/invoices/ReceiptPreview/BasicDetails";
 import InvoiceDetails from "views/billing/invoices/ReceiptPreview/InvoiceDetails";
 import PaymentDetails from "views/billing/invoices/ReceiptPreview/PaymentDetails";
 
+export const StyledWatupButton = styled("div")(() => ({
+  position: "fixed",
+  width: "40px",
+  height: "40px",
+  bottom: "20px",
+  right: "20px",
+  zIndex: 100
+}));
+
 const ReceiptPreview = () => {
   const params = useParams();
   const { queryParams } = useQueryParams();
@@ -23,6 +32,15 @@ const ReceiptPreview = () => {
   );
 
   const result = data?.data;
+
+  const shareOnWhatsApp = () => {
+    const url = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+    const phoneNumber = '91' + data?.data?.billingEntity?.mobileNumber || "9181211 81212";
+    const message = encodeURIComponent("Check out this repecipt: " + url);
+    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=0,height=0,left=-1000,top=-1000`;
+    window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}&attachment=${url}`, "", params);
+  }
 
   if (isLoading) return <Loader />;
 
@@ -51,7 +69,7 @@ const ReceiptPreview = () => {
         </Grid>
 
         {/* <Box sx={{ pageBreakAfter: "always" }}></Box> */}
-        
+
         <Box mt={2}>
           <SectionHeading title="Terms & Conditions" />
           <Box p={1}>
@@ -62,7 +80,12 @@ const ReceiptPreview = () => {
             ))}
           </Box>
         </Box>
-        
+
+        <StyledWatupButton>
+          <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup" 
+          style={{'width': '40px', 'cursor': 'pointer'}} />
+        </StyledWatupButton>
+
       </Paper>
     </Box>
   );
