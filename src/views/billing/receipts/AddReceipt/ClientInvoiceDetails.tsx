@@ -167,7 +167,8 @@ function ClientInvoiceDetails() {
       title: "Pure Agent Due Amount",
       render: (row: any) => (
         <>
-          {+row?.pgamount - +row?.pgdueamount}
+          {/* {+row?.pgamount - +row?.pgdueamount} */}
+          {row?.pgdueamount*1}
         </>
       ),
     },
