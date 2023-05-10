@@ -1,12 +1,16 @@
+import { DownloadOutlined } from "@mui/icons-material";
 import { Grid, Typography, styled } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
-import { getReceiptPreview } from "api/services/billing/receipts";
+import { downloadReceipt, getReceiptPreview } from "api/services/billing/receipts";
 import Loader from "components/Loader";
+import { snack } from "components/toast";
 import useQueryParams from "hooks/useQueryParams";
-import { useQuery } from "react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { ResType } from "types";
+import { handleError } from "utils/handleError";
 import AddressDetails from "views/billing/estimates/EstimatePreview/AddressDetails";
 import SectionHeading from "views/billing/estimates/SectionHeading";
 import BasicDetails from "views/billing/invoices/ReceiptPreview/BasicDetails";
@@ -15,16 +19,18 @@ import PaymentDetails from "views/billing/invoices/ReceiptPreview/PaymentDetails
 
 export const StyledWatupButton = styled("div")(() => ({
   position: "fixed",
-  width: "40px",
+  // width: "40px",
   height: "40px",
   bottom: "20px",
-  right: "20px",
-  zIndex: 100
+  right: "60px",
+  zIndex: 100,
+  cursor: "pointer"
 }));
 
 const ReceiptPreview = () => {
   const params = useParams();
   const { queryParams } = useQueryParams();
+  const [isdownloading, setIsdownloading] = useState(false);
 
   const { data, isLoading }: ResType = useQuery(
     ["receipt-particular", params.receiptId],
@@ -41,6 +47,27 @@ const ReceiptPreview = () => {
 width=0,height=0,left=-1000,top=-1000`;
     window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}&attachment=${url}`, "", params);
   }
+
+  const { mutate } = useMutation(downloadReceipt, {
+    onSuccess: (res: any) => {
+      const arr = new Uint8Array(res.data?.data);
+      const blob = new Blob([arr], { type: "application/pdf" });
+      const pdf = window.URL.createObjectURL(blob);
+      let link = document.createElement("a");
+      link.href = pdf;
+      link.download = "receipt.pdf";
+      link.click();
+      setIsdownloading(false);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
+  const handleDownload = () => {
+    setIsdownloading(true);
+    mutate({ id: params.receiptId });
+  };
 
   if (isLoading) return <Loader />;
 
@@ -82,8 +109,12 @@ width=0,height=0,left=-1000,top=-1000`;
         </Box>
 
         <StyledWatupButton>
-          <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup" 
-          style={{'width': '40px', 'cursor': 'pointer'}} />
+
+          {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />}
+
+          {/* <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup"
+            style={{ 'width': '40px', 'cursor': 'pointer' }} /> */}
+
         </StyledWatupButton>
 
       </Paper>
