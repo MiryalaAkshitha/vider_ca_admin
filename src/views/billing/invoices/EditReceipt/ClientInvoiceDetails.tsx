@@ -192,7 +192,7 @@ function ClientInvoiceDetails({ invoicedate }) {
             label="Enter Amount"
             variant="outlined"
             type="number"
-            disabled={row.payfullpgpayment}
+            disabled={row.payfullpgpayment || (row?.pgdueamount*1) == 0}
           /><br />
           {/* <Checkbox name="payfullpgpayment" checked={row?.paypgpayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
@@ -205,6 +205,7 @@ function ClientInvoiceDetails({ invoicedate }) {
               );
             }}
             checked={row?.paypgpayment}
+            disabled={row.payfullpgpayment || (row?.pgdueamount*1) == 0}
             sx={{ width: "auto", m: 0, p: 0 }}
           />
           Pay in full
@@ -238,7 +239,7 @@ function ClientInvoiceDetails({ invoicedate }) {
             label="Service Payment"
             variant="outlined"
             type="number"
-            disabled={row.payfullservicepayment}
+            disabled={row.payfullservicepayment || (row?.servicedueamount*1) == 0}
           />
           {/* <Checkbox name="payfullservicepayment" checked={row?.payservicepayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
@@ -250,6 +251,7 @@ function ClientInvoiceDetails({ invoicedate }) {
                 'payfullservicepayment'
               );
             }}
+            disabled={row.payfullservicepayment || (row?.servicedueamount*1) == 0}
             checked={row?.payservicepayment}
             sx={{ width: "auto", m: 0, p: 0 }}
           />
