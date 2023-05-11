@@ -9,6 +9,7 @@ import { useParams } from "react-router";
 import { DialogProps, InputChangeType } from "types";
 import TextFieldWithCopy from "../TextFieldWithCopy";
 import { handleError } from "utils/handleError";
+import { Grid, TextField } from "@mui/material";
 
 interface AddLocaldirectorypathProps extends DialogProps {
   open: any;
@@ -22,10 +23,14 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
   const queryClient = useQueryClient();
   const params = useParams();
   const [path, setPath] = useState("");
+  const [title, setTitle] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: InputChangeType) => {
     setPath(e.target.value);
+  };
+  const handleChangeTitle = (e: InputChangeType) => {
+    setTitle(e.target.value);
   };
 
   const { mutate, isLoading } = useMutation(updateClient, {
@@ -40,28 +45,38 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
   });
 
   const handleSubmit = (e: any) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
     const { ...data } = state;
     if(data.localDirectoryPath == null || data.localDirectoryPath == "") {
       data.localDirectoryPath = [];
     }
-    data.localDirectoryPath.push(path);    
-
+    data.localDirectoryPath.push({title:title,path:path});
     mutate({ data, id: params.clientId });
   };
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Add Local Directory Path">
       <form onSubmit={handleSubmit} ref={formRef}>
+        <Grid mt={2}>
+      <TextField
+              label="Title"
+              name="title"
+              value={title || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              onChange={handleChangeTitle}
 
+/>
+</Grid>
+<Grid mt={2}>
         <TextFieldWithCopy
           label="Local Directory Path"
           name="localDirectoryPath"
           onChange={handleChange}
           value={path || ""}
         />
-
+</Grid>
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             loading={isLoading}

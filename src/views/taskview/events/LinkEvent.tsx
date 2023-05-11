@@ -25,7 +25,7 @@ function LinkEvent({ open, setOpen }: DialogProps) {
 
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
-      snack.success("Event Created");
+      // snack.success("Event Created");
       setOpen(false);
       queryClient.invalidateQueries("events");
     },

@@ -21,7 +21,7 @@ function Description() {
   const { mutate } = useMutation(updateTask, {
     onSuccess: () => {
       queryClient.invalidateQueries("tasks");
-      snack.success("Task Details Updated");
+      // snack.success("Task Details Updated");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

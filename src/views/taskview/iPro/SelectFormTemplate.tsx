@@ -34,7 +34,7 @@ function SelectFormTemplate(props: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries(queryKey);
       setOpen(false);
-      snack.success("Form added");
+      // snack.success("Form added");
     },
     onError: (err: any) => {
       snack.error(err.response.data.message);

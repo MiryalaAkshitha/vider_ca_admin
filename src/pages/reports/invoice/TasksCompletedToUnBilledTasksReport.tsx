@@ -41,22 +41,21 @@ function TasksCompletedToUnBilledTasksReport() {
   });
 
   const handleSubmit = () => {
-    // if (!state.fromDate) return snack.error("Please Select From Date");
-    // if (!state.toDate) return snack.error("Please Select To Date");
+    if (!state.fromDate) return snack.error("Please Select From Date");
+    if (!state.toDate) return snack.error("Please Select To Date");
     setData(null);
     const updatedpayload = {
-      query: 'taskscompletedtounbilledtasksreport',
+      query: 'taskscompletedtounbilledtasks',
       organizationid: ''+user?.organization?.id
     }
     setPayload(updatedpayload);
     
-    // const updatedstate = Object.assign({}, state, updatedpayload );
-    const updatedstate = Object.assign({}, updatedpayload );
+    const updatedstate = Object.assign({}, state, updatedpayload );
 
     mutate({
       ...updatedstate,         
-      // fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
-      // toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
+      fromDate: state.fromDate ? moment(state.fromDate).format("YYYY-MM-DD") : null,
+      toDate: state.toDate ? moment(state.toDate).format("YYYY-MM-DD") : null,
     });
   };
 

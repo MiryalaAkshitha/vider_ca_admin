@@ -28,7 +28,7 @@ function TaskComment({ data, users }: Props) {
 
   const { mutate } = useMutation(addComment, {
     onSuccess: () => {
-      snack.success("Comment Added");
+      // snack.success("Comment Added");
       setReply("");
       setShowReply(false);
       setShowComments(true);
