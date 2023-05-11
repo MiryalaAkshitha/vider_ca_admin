@@ -111,8 +111,8 @@ function ClientInvoiceDetails() {
           item.payfullservicepayment = checked;
         }
         
-        item.pgpayment = item.payfullpgpayment ? (+row?.pgamount - +row?.pgdueamount) : (item.pgpayment || 0);
-        item.servicepayment = item.payfullservicepayment ? (row?.servicedueamount * 1) : (item.servicepayment || 0);
+        item.pgpayment = item.payfullpgpayment ? (+row?.pgdueamount) : item.pgpayment;
+        item.servicepayment = item.payfullservicepayment ? (row?.servicedueamount * 1) : item.servicepayment;
         changedinvoice.push(item);
       }
     });
