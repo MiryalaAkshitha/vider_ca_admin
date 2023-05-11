@@ -16,7 +16,7 @@ function StageOfWork() {
     <>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="subtitle1" color="primary">
-          Stage of Work
+        Milestones
         </Typography>
         {stageOfWork.length ? (
           <Button
@@ -24,7 +24,7 @@ function StageOfWork() {
             color="secondary"
             startIcon={<Add />}
           >
-            Add stage of work
+             Add milestone
           </Button>
         ) : null}
       </Box>
@@ -40,9 +40,9 @@ function StageOfWork() {
         ) : (
           <NoItems
             img={noChecklists}
-            title="Add stage of work to your service"
-            desc="Create a stage of work in your service."
-            btnTitle="Add stage of work"
+            title="Add Milestone to your service"
+            desc="Create a milestone in your service."
+            btnTitle="Add Milestone"
             btnAction={() => setOpen(true)}
           />
         )}

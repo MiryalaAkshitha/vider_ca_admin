@@ -75,7 +75,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
   };
 
   return (
-    <DrawerWrapper open={open} title="Edit stage of work" setOpen={setOpen}>
+    <DrawerWrapper open={open} title="Edit Milestone" setOpen={setOpen}>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
@@ -90,7 +90,7 @@ function EditStageOfWork({ open, setOpen, data, index }: Props) {
             <FormControlLabel
               value="Stage of work"
               control={<Radio />}
-              label="Stage of work"
+              label="Milestone"
             />
             <FormControlLabel
               value="Deliverables"

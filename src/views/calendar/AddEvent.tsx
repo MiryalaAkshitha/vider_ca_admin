@@ -52,7 +52,7 @@ function AddEvent({ open, setOpen }: Props) {
 
   const { mutate, isLoading: createLoading } = useMutation(createEvent, {
     onSuccess: () => {
-      snack.success("Event Created");
+      // snack.success("Event Created");
       setOpen(false);
       reset(addCalendarEventDefaultValues);
       queryClient.invalidateQueries("events");
@@ -88,7 +88,7 @@ function AddEvent({ open, setOpen }: Props) {
             row
             label="Event Type"
             options={[
-              { label: "Event", value: "EVENT" },
+              { label: "General", value: "EVENT" },
               { label: "Task", value: "TASK" }
             ]}
           />
@@ -141,15 +141,15 @@ function AddEvent({ open, setOpen }: Props) {
             <FormInput name="location" control={control} label="Location" />
           </Box>
           <Box mt={2}>
-            <FormDate name="date" control={control} label="Date" />
+            <FormDate name="date" control={control} label="Date*" />
           </Box>
           <Box mt={2}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <FormTime name="startTime" control={control} label="Start Time" />
+                <FormTime name="startTime" control={control} label="Start Time*" />
               </Grid>
               <Grid item xs={6}>
-                <FormTime name="endTime" control={control} label="End Time" />
+                <FormTime name="endTime" control={control} label="End Time*" />
               </Grid>
             </Grid>
           </Box>

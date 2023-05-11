@@ -58,7 +58,8 @@ const ShippingAddressDetails = ({ data, setState }) => {
 
   return (
     <>
-      <Box mt={4}>
+    {/* not needed as now  */}
+      {/* <Box mt={4}>
         <Typography mt={3} color="primary" variant="h6" sx={{ mb: 2 }}>
           Shipping Address
         </Typography>
@@ -177,7 +178,7 @@ const ShippingAddressDetails = ({ data, setState }) => {
             />
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </>
   );
 };

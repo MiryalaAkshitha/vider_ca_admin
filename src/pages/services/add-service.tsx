@@ -113,9 +113,9 @@ function AddService() {
       <BasicDetails />
       <Divider sx={{ my: 5 }} />
       <Checklists />
-      <Divider sx={{ my: 5 }} />
-      <Milestones />
-      <Divider sx={{ my: 5 }} />
+      {/* <Divider sx={{ my: 5 }} /> */}
+      {/* <Milestones /> */}
+      <Divider sx={{ my: 5 }} /> 
       <StageOfWork />
       <Divider sx={{ my: 5 }} />
       <Subtasks />

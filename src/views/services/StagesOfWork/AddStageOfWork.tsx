@@ -72,7 +72,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
   return (
     <DrawerWrapper
       open={open}
-      title="Add stage of work"
+      title="Add Milestone"
       setOpen={() => {
         setState(_.cloneDeep(initialState));
         setOpen(false);
@@ -89,7 +89,7 @@ function AddStageOfWork({ open, setOpen }: DialogProps) {
             name="type"
             value={state.type}
           >
-            <FormControlLabel value="STAGE_OF_WORK" control={<Radio />} label="Stage of work" />
+            <FormControlLabel value="STAGE_OF_WORK" control={<Radio />} label="Milestone" />
             <FormControlLabel value="DELIVERABLES" control={<Radio />} label="Deliverables" />
           </RadioGroup>
         </FormControl>

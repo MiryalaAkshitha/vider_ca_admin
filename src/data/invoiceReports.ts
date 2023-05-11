@@ -1,31 +1,31 @@
 import { icons } from "assets";
 export const invoiceReportsList = [
     {
-        title: "TasksCompletedToBilledTasksReport",
+        title: "TasksCompletedToBilledTasks",
         path: "/reports/TasksCompletedToBilledTasksReport",
         desc: `Track receivables for completed tasks for which invoices have been raised.`,
         icon: icons.totalTasks,
     },
     {
-        title: "TasksCompletedToUnBilledTasksReport",
+        title: "TasksCompletedToUnBilledTasks",
         path: "/reports/TasksCompletedToUnBilledTasksReport",
         desc: `Track receivables, including pure agent services and fees, for completed tasks with invoices not yet raised.`,
         icon: icons.totalTasks,
     },
     {
-        title: "ClientWiseTasksCompletedToBilledReport",
+        title: "ClientWiseTasksCompletedToBilled",
         path: "/reports/ClientWiseTasksCompletedToBilledReport",
         desc: `Admins identify amounts receivable and pending invoices for a specific client. `,
         icon: icons.totalTasks,
     },
     {
-        title: "ClientWiseTasksCompletedToUnBilledReport",
+        title: "ClientWiseTasksCompletedToUnBilled",
         path: "/reports/ClientWiseTasksCompletedToUnBilledReport",
         desc: `Admins identify total amount receivable & tasks to be invoiced for a specific client. `,
         icon: icons.totalTasks,
     },
     {
-        title: "InvoiceOverDueReport",
+        title: "InvoiceOverDue",
         path: "/reports/InvoiceOverDueReport",
         desc: `The report lists overdue invoices in order of their due date, with the oldest on top and the newest on bottom.`,
         icon: icons.totalTasks,
@@ -37,7 +37,7 @@ export const invoiceReportsList = [
         icon: icons.totalTasks,
     },
     {
-        title: "ReceiptManagementReport",
+        title: "ReceiptManagement",
         path: "/reports/ReceiptManagementReport",
         desc: `This report lists all receipts within a specified period, regardless of invoice dates, for easy total calculation. `,
         icon: icons.totalTasks,

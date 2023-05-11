@@ -64,6 +64,13 @@ function Localdirectorypath({ index, state, data, setState, apiData }: Props) {
           action: () => setOpen(true),
         },
         {
+          label: "Copy",
+          action: () => {
+            navigator.clipboard.writeText(data?.localDirectoryPath[index]?.path);
+            snack.success(`Copied ${data?.localDirectoryPath[index]?.path} to clipboard`);
+          },
+        },
+        {
           label: "Delete",
           action: handleRemove,
         },
@@ -75,8 +82,11 @@ function Localdirectorypath({ index, state, data, setState, apiData }: Props) {
     <StyledLocaldirectorypath>
 
       <Box>
+        <Typography variant="body2">
+          {data?.localDirectoryPath[index].title}
+        </Typography>
         <Typography style={{ color: "#149ECD" }} variant="body2">
-          {data?.localDirectoryPath[index]}
+          {data?.localDirectoryPath[index]?.path}
         </Typography>
       </Box>
       <Box position="absolute" right={5} top={5}>
