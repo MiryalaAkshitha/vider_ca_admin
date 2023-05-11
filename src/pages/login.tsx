@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography, styled } from "@mui/material";
 import { signin } from "api/services/users";
 import { newlogo, signup } from "assets";
 import { atom_logo } from "assets";
@@ -12,8 +12,19 @@ import PasswordField from "views/login/PasswordField";
 import { BackgroundImage, LogoContainer } from "views/login/styles";
 
 import metadata from '../metadata.json';
+import Google from "app/google";
+
+
 
 type DataType = { username: string; password: string };
+
+export const StyledGoogleButton = styled("div")(() => ({
+  position: "absolute",
+  bottom: "150px",
+  right: "160px",
+  zIndex: 100,
+  cursor: "pointer"
+}));
 
 const Login = () => {
   const navigate = useNavigate();
@@ -110,7 +121,7 @@ const Login = () => {
               </Button>
             </div>
             <div>
-{/*               
+              {/*               
                <Button sx={{ mt: 1 }} onClick={() => navigate("/signup")}>
                 Don't have an account - Create New Account
               </Button> */}
@@ -119,9 +130,16 @@ const Login = () => {
         </Box>
       </Grid>
       <ForgotPassword open={open} setOpen={setOpen} />
+      <div style={{ 'position': 'relative' }}>
+        <StyledGoogleButton >
+          <Google />
+        </StyledGoogleButton>
+      </div>
+
       <div className="sf-footer-version">
         {`Version ${metadata.buildMajor}.${metadata.buildMinor}.${metadata.buildRevision} ${metadata.buildTag}`}
       </div>
+
     </Grid>
   );
 };
