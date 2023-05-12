@@ -25,21 +25,18 @@ const EditInvoice = () => {
   const [result, setResult] = useState();
 
   const params = useParams();
-  const { queryParams } = useQueryParams();
 
   const { data, isLoading }: ResType = useQuery(
     ["invoice-details", params.invoiceId],
     getInvoicePreview, {
     onSuccess: (res: any) => {
-      setResult(res?.data);
+      dispatch(resetState());
+      setTimeout((response: any) => {
+        setResult(response?.data);
+      }, 500, res);
     }
   }
   );
-
-  useEffect(() => {
-    window.location.reload();
-    dispatch(resetState());
-  }, [dispatch]);
 
   return (
     <>
