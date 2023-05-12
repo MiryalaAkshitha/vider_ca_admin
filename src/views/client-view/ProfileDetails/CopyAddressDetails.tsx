@@ -20,6 +20,7 @@ const CopyAddressDetails = ({ data, setState }) => {
       setState({
         ...data,
         ['address']: {
+          'communicationaddress': data?.address?.communicationaddress,
           'billingaddress': billingaddress,
           'shippingaddress': billingaddress
         },
@@ -39,6 +40,7 @@ const CopyAddressDetails = ({ data, setState }) => {
       setState({
         ...data,
         ['address']: {
+          'communicationaddress': data?.address?.communicationaddress,
           'billingaddress': billingaddress,
           'shippingaddress': billingaddress
         },

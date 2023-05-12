@@ -8,6 +8,11 @@ import { snack } from "components/toast";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import TextFieldWithCopy from "./TextFieldWithCopy";
+import AddressDetails from "./AddressDetails";
+import CopyAddressDetails from "./CopyAddressDetails";
+import BillingAddressDetails from "./BillingAddressDetails";
+import ShippingAddressDetails from "./ShippingAddressDetails";
+import CommunicationAddressDetails from "./CommunicationAddressDetails";
 
 const OrganizationInformation = ({ data, apiData, setState }) => {
   const queryClient = useQueryClient();
@@ -15,6 +20,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
   const [panLoading, setPanLoading] = useState(false);
   const [panChanged, setPanChanged] = useState(false);
   const [gstChanged, setGstChanged] = useState(false);
+  const [gstDetails, setGstDetails] = useState({});
 
   useEffect(() => {
     setPanChanged(apiData.panNumber !== data.panNumber);
@@ -64,6 +70,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       const result: any = response.data;
 
       if (result.data.sts === "Active") {
+        setGstDetails(result?.data);
         mutate({
           id: data?.id,
           data: {
@@ -78,6 +85,15 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
             pincode: result?.data?.pradr?.addr?.pncd,
             gstNumber: data?.gstNumber,
             gstVerified: true,
+            issameaddress: false,
+            address: {
+              communicationaddress: {
+                street: result?.data?.pradr?.addr?.st,
+                city: result?.data?.pradr?.addr?.dst,
+                state: result?.data?.pradr?.addr?.stcd,
+                pincode: result?.data?.pradr?.addr?.pncd,
+              }
+            }
           },
         });
       } else {
@@ -113,9 +129,9 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       });
 
       const result: any = response?.data;
-      console.log(result, "pan verified details");
 
       if (result.data.status === "VALID") {
+        setGstDetails(result?.data);
         mutate({
           id: data?.id,
           data: {
@@ -323,6 +339,11 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
           </Grid>
         </Grid>
       </Box>
+      {/* <AddressDetails data={data} setState={setState} /> */}
+      <CommunicationAddressDetails data={data} setState={setState} gstDetails={gstDetails} />
+      <CopyAddressDetails data={data} setState={setState} />
+      <BillingAddressDetails data={data} setState={setState} />
+      {/* <ShippingAddressDetails data={data} setState={setState} /> */}
     </>
   );
 };

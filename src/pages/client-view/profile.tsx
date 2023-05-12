@@ -86,10 +86,7 @@ function ProfileDetails() {
       </Box>
       <BasicInformation data={state} setState={setState}/>
       <OrganizationInformation data={state} setState={setState} apiData={data?.data} />
-      <AddressDetails data={state} setState={setState} />
-      <CopyAddressDetails data={state} setState={setState} />
-      <BillingAddressDetails data={state} setState={setState} />
-      {/* <ShippingAddressDetails data={state} setState={setState} /> */}
+      
       <ContactPersonDetails data={data?.data?.contactPersons} />
       <LocaldirectorypathDetails state={state} data={state} setState={setState} apiData={data?.data} />
       <AdditionalInformation data={state} setState={setState} apiData={data?.data} />
