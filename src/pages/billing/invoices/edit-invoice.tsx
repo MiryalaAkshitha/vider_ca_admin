@@ -37,6 +37,7 @@ const EditInvoice = () => {
   );
 
   useEffect(() => {
+    window.location.reload();
     dispatch(resetState());
   }, [dispatch]);
 

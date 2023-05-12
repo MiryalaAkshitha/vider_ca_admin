@@ -37,6 +37,7 @@ function EditReceipt() {
     );
 
     useEffect(() => {
+        window.location.reload();
         // dispatch(resetState());
     }, [dispatch]);
 

@@ -23,6 +23,7 @@ function AddReceipt() {
   useTitle("New Receipt");
 
   useEffect(() => {
+    window.location.reload();
     dispatch(resetState());
   }, [dispatch]);
 
