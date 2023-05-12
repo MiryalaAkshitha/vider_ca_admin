@@ -18,8 +18,9 @@ const AddEstimate = () => {
   useTitle("New Invoice");
 
   useEffect(() => {
-    window.location.reload();
-    dispatch(resetState());
+    setTimeout(() => {
+      dispatch(resetState());
+    }, 500);    
   }, [dispatch]);
 
   return (
