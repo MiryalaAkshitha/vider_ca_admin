@@ -239,7 +239,7 @@ function ClientInvoiceDetails({ invoicedate }) {
             variant="outlined"
             type="number"
             disabled={row.payfullservicepayment}
-          />
+          /><br/>
           {/* <Checkbox name="payfullservicepayment" checked={row?.payservicepayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
             name="payfullservicepayment"
