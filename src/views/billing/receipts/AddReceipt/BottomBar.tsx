@@ -44,11 +44,13 @@ function BottomBar() {
 
     let apiData: any = { ...state };
     if (apiData.receiptDate === "null") {
-      snack.error("please error receipt date")
-
+      snack.error("please error receipt date");
+    }
+    apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
+    if(apiData?.particulars.length > 0 && apiData?.invoices.length>0) {
+      apiData['invoices'] = apiData['invoices'].filter((item: any) => apiData?.particulars.some(itemToBeRemoved => itemToBeRemoved.id === item.id))
     }
     // apiData.paymentDate = apiData.receiptDate;
-    apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
     apiData.amount = +apiData.amount;
     const totalpayment = +apiData.amount + +apiData.creditsUsed;
     // apiData.creditsUsed = +apiData.creditsUsed + (+totalpayment - +invoicesum);
@@ -56,7 +58,7 @@ function BottomBar() {
     let idTotalSumcorrect = true;
 
     if (apiData?.invoices && apiData?.invoices.length > 0) {
-      const ids = apiData?.invoices.map(o => o.id);
+      const ids = apiData?.invoices.map((o: any) => o.id);
       const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
       const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
       apiData.totalCredits = +apiData.previousCredits - (+totalpayment - +invoicesum);
