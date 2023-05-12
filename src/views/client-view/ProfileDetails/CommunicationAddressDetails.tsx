@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 
-const CommunicationAddressDetails = ({ data, setState, gstDetails }) => {
+const CommunicationAddressDetails = ({ data, setState }) => {
   const { data: states }: ResType = useQuery("states", getStates);
 
   const [isEdited, setIsEdited] = useState(false);
@@ -13,13 +13,13 @@ const CommunicationAddressDetails = ({ data, setState, gstDetails }) => {
   const [address, setAddress] = useState({
     "buildingNumber": data?.address?.communicationaddress?.buildingNumber || "",
     "floornumber": data?.address?.communicationaddress?.floornumber || "",
-    "buildingName": gstDetails?.pradr?.addr?.bnm == '' ? data?.address?.communicationaddress?.buildingName : gstDetails?.pradr?.addr?.bnm,
-    "street": gstDetails?.pradr?.addr?.st == '' ? data?.address?.communicationaddress?.street : gstDetails?.pradr?.addr?.st,
+    "buildingName": data?.address?.communicationaddress?.buildingName || "",
+    "street": data?.address?.communicationaddress?.street || "",
     "locality": data?.address?.communicationaddress?.locality || "",
     "district": data?.address?.communicationaddress?.district || "",
-    "city": gstDetails?.pradr?.addr?.dst == '' ? data?.address?.communicationaddress?.city : gstDetails?.pradr?.addr?.dst,
-    "state": gstDetails?.pradr?.addr?.stcd == '' ? data?.address?.communicationaddress?.state : gstDetails?.pradr?.addr?.stcd,
-    "pincode": gstDetails?.pradr?.addr?.pncd == '' ? data?.address?.communicationaddress?.pincode : gstDetails?.pradr?.addr?.pncd
+    "city": data?.address?.communicationaddress?.city || "",
+    "state": data?.address?.communicationaddress?.state || "",
+    "pincode": data?.address?.communicationaddress?.pincode || ""
   });
 
   useEffect(() => {

@@ -20,8 +20,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
   const [panLoading, setPanLoading] = useState(false);
   const [panChanged, setPanChanged] = useState(false);
   const [gstChanged, setGstChanged] = useState(false);
-  const [gstDetails, setGstDetails] = useState({});
-
+  
   useEffect(() => {
     setPanChanged(apiData.panNumber !== data.panNumber);
     setGstChanged(apiData.gstNumber !== data.gstNumber);
@@ -70,7 +69,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       const result: any = response.data;
 
       if (result.data.sts === "Active") {
-        setGstDetails(result?.data);
         mutate({
           id: data?.id,
           data: {
@@ -88,6 +86,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
             issameaddress: false,
             address: {
               communicationaddress: {
+                buildingName: result?.data?.pradr?.addr?.bnm,
                 street: result?.data?.pradr?.addr?.st,
                 city: result?.data?.pradr?.addr?.dst,
                 state: result?.data?.pradr?.addr?.stcd,
@@ -131,7 +130,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       const result: any = response?.data;
 
       if (result.data.status === "VALID") {
-        setGstDetails(result?.data);
         mutate({
           id: data?.id,
           data: {
@@ -340,7 +338,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
         </Grid>
       </Box>
       {/* <AddressDetails data={data} setState={setState} /> */}
-      <CommunicationAddressDetails data={data} setState={setState} gstDetails={gstDetails} />
+      <CommunicationAddressDetails data={data} setState={setState} />
       <CopyAddressDetails data={data} setState={setState} />
       <BillingAddressDetails data={data} setState={setState} />
       {/* <ShippingAddressDetails data={data} setState={setState} /> */}
