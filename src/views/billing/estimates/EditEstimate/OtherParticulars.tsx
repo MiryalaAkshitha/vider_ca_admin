@@ -16,23 +16,23 @@ import {
 import { StyledParticularsTable } from "views/billing/styles";
 import TotalCalculations from "./TotalCalculations";
 
-function OtherParticulars({result}) {
+function OtherParticulars({ result }) {
   const Types = ['PURE_AGENT', 'ADDITIONAL'];
   const dispatch = useDispatch();
   const state = useSelector(selectEstimate);
 
   useEffect(() => {
-    if(result?.otherParticulars && result?.otherParticulars.length>0) {
+    if (result?.otherParticulars && result?.otherParticulars.length > 0) {
       result?.otherParticulars.forEach((data: any, index: any) => {
         setTimeout((i) => {
-          dispatch(handleExistingOtherParticular({id: data?.id, index: index, key: i?.name, value: i?.amount, taskExpenseType: i?.taskExpenseType }));
-       }, 500, data);        
+          dispatch(handleExistingOtherParticular({ id: data?.id, index: index, key: i?.name, value: i?.amount, taskExpenseType: i?.taskExpenseType }));
+        }, 500, data);
       });
     }
   }, []);
-  
+
   function updateOtherParticular(id: number, index: number, key: string, value: any) {
-    dispatch(handleChangeOtherParticular({id,  index, key, value, taskExpenseType: "" }));
+    dispatch(handleChangeOtherParticular({ id, index, key, value, taskExpenseType: "" }));
   }
 
   function addOtherParticular() {
@@ -49,7 +49,7 @@ function OtherParticulars({result}) {
         <StyledParticularsTable>
           <TableHead>
             <TableRow>
-            <TableCell>Expense Type</TableCell>
+              <TableCell>Expense Type</TableCell>
               <TableCell>
                 {/* <Typography>Services as a Pure Agent</Typography> */}
                 <Typography>Particulars</Typography>
@@ -67,7 +67,8 @@ function OtherParticulars({result}) {
               return (
                 <TableRow key={index}>
                   <TableCell>
-                    <TextField
+                    <Typography>Pure Agent</Typography>
+                    {/* <TextField
                       select
                       size="small"
                       label="Expenditure type"
@@ -86,7 +87,7 @@ function OtherParticulars({result}) {
                           {i}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </TextField> */}
                   </TableCell>
 
                   <TableCell>
@@ -126,7 +127,7 @@ function OtherParticulars({result}) {
         </Button>
       </Grid>
       <Grid item xs={6}>
-        <TotalCalculations result={result}/>
+        <TotalCalculations result={result} />
       </Grid>
     </Grid>
   );

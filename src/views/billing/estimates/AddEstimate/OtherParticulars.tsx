@@ -21,7 +21,7 @@ function OtherParticulars() {
   const state = useSelector(selectEstimate);
 
   function updateOtherParticular(id: number, index: number, key: string, value: any) {
-    dispatch(handleChangeOtherParticular({ id, index, key, value, taskExpenseType: ""}));
+    dispatch(handleChangeOtherParticular({ id, index, key, value, taskExpenseType: "" }));
   }
 
   function addOtherParticular() {
@@ -56,7 +56,8 @@ function OtherParticulars() {
               return (
                 <TableRow key={index}>
                   <TableCell>
-                    <TextField
+                    <Typography>Pure Agent</Typography>
+                    {/* <TextField
                       select
                       size="small"
                       label="Expenditure type"
@@ -75,7 +76,7 @@ function OtherParticulars() {
                           {i}
                         </MenuItem>
                       ))}
-                    </TextField>
+                    </TextField> */}
                   </TableCell>
                   <TableCell>
                     <TextField

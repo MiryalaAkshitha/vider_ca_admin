@@ -22,7 +22,7 @@ function OtherParticulars({ result, interState }: IProps) {
             <StyledParticularsTable>
               <TableHead>
                 <TableRow>
-                <TableCell>Expense Type</TableCell>
+                  <TableCell>Expense Type</TableCell>
                   <TableCell>
                     <Typography>Particulars</Typography>
                   </TableCell>
@@ -34,7 +34,10 @@ function OtherParticulars({ result, interState }: IProps) {
               <TableBody>
                 {result?.otherParticulars?.map((item: any, index: number) => (
                   <TableRow key={index}>
-                    <TableCell>{item?.taskExpenseType}</TableCell>
+                    <TableCell>
+                      <Typography>Pure Agent</Typography>
+                      {/* {item?.taskExpenseType} */}
+                    </TableCell>
                     <TableCell>{item?.name}</TableCell>
                     <TableCell>{item?.amount} /-</TableCell>
                   </TableRow>

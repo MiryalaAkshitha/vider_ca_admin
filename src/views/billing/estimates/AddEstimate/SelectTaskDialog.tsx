@@ -40,7 +40,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
         const result = res?.data?.result.filter((obj: any) => {
           return obj?.recurringStatus !== 'pending'
         })
-        setUnbilledtasks(result);     
+        setUnbilledtasks(result);
       },
       enabled: open && Boolean(client)
     }
@@ -51,19 +51,27 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       snack.error("Please select at least one task");
       return;
     }
+    selected.forEach((item: any) => {
+      if (item?.expenditure && item?.expenditure.length > 0) {
+        const addamount = item?.expenditure.reduce((n: any, { amount, taskExpenseType }) => taskExpenseType == 'ADDITIONAL' ? n + (amount * 1) : 0, 0);
+        item.feeAmount += addamount;
+      }
+    });
     dispatch(handleAddTasksToParticular(selected));
 
     if (selected && selected.length > 0) {
       selected.forEach((particular: any, index: any) => {
         if (particular?.expenditure && particular?.expenditure.length > 0) {
           particular?.expenditure.forEach((expenditure: any, index: any) => {
-            expenditure['name'] = expenditure.particularName;
-            expenditure['amount'] = expenditure.amount;
-            const id = expenditure.id;
-            const key = expenditure.particularName;
-            const value = expenditure.amount;
-            const taskExpenseType = expenditure.taskExpenseType;
-            dispatch(handleExistingOtherParticular({ id, taskExpenseType, index, key, value }));
+            if (expenditure?.taskExpenseType !== 'ADDITIONAL') {
+              expenditure['name'] = expenditure.particularName;
+              expenditure['amount'] = (expenditure.amount * 1);
+              const id = expenditure.id;
+              const key = expenditure.particularName;
+              const value = expenditure.amount;
+              const taskExpenseType = expenditure.taskExpenseType;
+              dispatch(handleExistingOtherParticular({ id, taskExpenseType, index, key, value }));
+            }
           });
         }
       });
@@ -130,6 +138,17 @@ const columns = [
     title: "Fee Amount",
     key: "feeAmount",
     render: (item: any) => (item.feeAmount * 1),
+  },
+  {
+    title: "Additional Amount",
+    key: "expenditure",
+    render: (item: any) => {
+      return (
+        <div>
+          {item.expenditure && item.expenditure.length > 0 && item.expenditure.reduce((n: any, { amount, taskExpenseType }) => taskExpenseType == 'ADDITIONAL' ? n + (amount * 1) : 0, 0)}
+        </div>
+      );
+    }
   },
   {
     key: "Memberss",
