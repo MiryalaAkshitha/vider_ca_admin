@@ -39,12 +39,27 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       onSuccess: (res: any) => {
         const result = res?.data?.result.filter((obj: any) => {
           return obj?.recurringStatus !== 'pending'
-        })
+        });
+        result.forEach((item: any) => {
+          if (item?.expenditure && item?.expenditure.length > 0) {
+            item['additionalexpenditure'] = getTotalExpenduture(item?.expenditure);
+          }
+        });
         setUnbilledtasks(result);
       },
       enabled: open && Boolean(client)
     }
   );
+
+  const getTotalExpenduture = (expenditures: any) => {
+    let sum = 0;
+    expenditures.forEach((element: any) => {
+      if (element.taskExpenseType == 'ADDITIONAL' && element.includeInInvoice) {
+        sum += (element.amount * 1);
+      }
+    });
+    return sum;
+  };
 
   function onSubmit() {
     if (!selected?.length) {
@@ -53,8 +68,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
     }
     selected.forEach((item: any) => {
       if (item?.expenditure && item?.expenditure.length > 0) {
-        const addamount = item?.expenditure.reduce((n: any, { amount, taskExpenseType }) => taskExpenseType == 'ADDITIONAL' ? n + (amount * 1) : 0, 0);
-        item.feeAmount += addamount;
+        item.feeAmount = item.feeAmount + getTotalExpenduture(item?.expenditure);
       }
     });
     dispatch(handleAddTasksToParticular(selected));
@@ -141,14 +155,8 @@ const columns = [
   },
   {
     title: "Additional Amount",
-    key: "expenditure",
-    render: (item: any) => {
-      return (
-        <div>
-          {item.expenditure && item.expenditure.length > 0 && item.expenditure.reduce((n: any, { amount, taskExpenseType }) => taskExpenseType == 'ADDITIONAL' ? n + (amount * 1) : 0, 0)}
-        </div>
-      );
-    }
+    key: "additionalexpenditure",
+    render: (item: any) => (item.additionalexpenditure)
   },
   {
     key: "Memberss",
