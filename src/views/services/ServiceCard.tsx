@@ -80,6 +80,7 @@ function ServiceCard({ data }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+        wordBreak: "break-all"
       }}
     >
       <Box flex={1}>

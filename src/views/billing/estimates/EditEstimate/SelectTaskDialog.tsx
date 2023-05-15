@@ -41,6 +41,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
           return obj?.recurringStatus !== 'pending'
         });
         result.forEach((item: any) => {
+          item['additionalexpenditure'] = 0;
           if (item?.expenditure && item?.expenditure.length > 0) {
             item['additionalexpenditure'] = getTotalExpenduture(item?.expenditure);
           }
