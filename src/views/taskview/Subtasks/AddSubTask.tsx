@@ -39,7 +39,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
 
   const { mutate, isLoading: createLoading } = useMutation(createSubTask, {
     onSuccess: () => {
-      snack.success("Sub Task Created");
+      // snack.success("Sub Task Created");
       setOpen(false);
       queryClient.invalidateQueries("task");
     },
@@ -82,10 +82,11 @@ function AddSubTask({ open, setOpen }: DialogProps) {
           />
           <DesktopDatePicker
             inputFormat="dd-MM-yyyy"
+            label ="Date"
             value={state.dueDate}
             onChange={(v: any) => setState({ ...state, dueDate: v })}
             renderInput={(params) => (
-              <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} />
+              <TextField sx={{ mt: 3 }} fullWidth size="small" {...params} required/>
             )}
           />
           <TextField
@@ -94,7 +95,6 @@ function AddSubTask({ open, setOpen }: DialogProps) {
             size="small"
             sx={{ mt: 3 }}
             select
-            required
             name="priority"
             value={state.priority}
             onChange={(e) => {
@@ -126,7 +126,7 @@ function AddSubTask({ open, setOpen }: DialogProps) {
                 variant="outlined"
                 size="small"
                 fullWidth
-                label="Members"
+                label="Members*"
               />
             )}
           />

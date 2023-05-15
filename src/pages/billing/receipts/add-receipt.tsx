@@ -15,7 +15,9 @@ function AddReceipt() {
   const { type, client } = useSelector(selectReceipt);
 
   useEffect(() => {
-    dispatch(resetState());
+    setTimeout(() => {
+      dispatch(resetState());
+    }, 500);
   }, [dispatch]);
 
   return (

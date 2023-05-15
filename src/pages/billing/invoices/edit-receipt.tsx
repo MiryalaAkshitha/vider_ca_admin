@@ -28,23 +28,22 @@ function EditReceipt() {
         getInvoicePreview,
         {
             onSuccess: (res: any) => {
-                if (res?.data?.client && res?.data?.client?.id) {
-                    dispatch(handleChange({ key: "client", value: res?.data?.client?.id }));
-                }
-                dispatch(handleChange({ key: 'particulars', value: state.particulars }));
+                dispatch(resetState());
+                setTimeout((response: any, cstate: any) => {
+                    if (response?.data?.client && response?.data?.client?.id) {
+                        dispatch(handleChange({ key: "client", value: response?.data?.client?.id }));
+                    }
+                    dispatch(handleChange({ key: 'particulars', value: cstate.particulars }));
+                }, 500, res, state);
             },
         }
     );
-
-    useEffect(() => {
-        // dispatch(resetState());
-    }, [dispatch]);
 
     return (
         <>
             <StyledNewEstimateContainer sx={{ minHeight: "90vh" }}>
                 <Typography textAlign="center" mb={4} variant="h5">
-                    Payment Receipt 
+                    Payment Receipt
                     {/* {data?.data?.invoiceNumber} */}
                 </Typography>
                 <BasicDetails />

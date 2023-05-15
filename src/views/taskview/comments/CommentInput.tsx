@@ -20,7 +20,7 @@ function CommentInput({ users }: Props) {
 
   const { mutate } = useMutation(addComment, {
     onSuccess: () => {
-      snack.success("Comment Added");
+      // snack.success("Comment Added");
       setComment("");
       setFocused(false);
       queryClient.invalidateQueries("task-comments");

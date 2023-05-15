@@ -117,7 +117,7 @@ function ClientInvoiceDetails({ invoicedate }) {
         if (type == 'payfullservicepayment') {
           item.payfullservicepayment = checked;
         }
-        item.pgpayment = item.payfullpgpayment ? (+row?.pgamount - +row?.pgdueamount) : (item.pgpayment || 0);
+        item.pgpayment = item.payfullpgpayment ? (+row?.pgdueamount) : (item.pgpayment || 0);
         item.servicepayment = item.payfullservicepayment ? (row?.servicedueamount * 1) : (item.servicepayment || 0);
         changedinvoice.push(item);
       }
@@ -192,7 +192,7 @@ function ClientInvoiceDetails({ invoicedate }) {
             label="Enter Amount"
             variant="outlined"
             type="number"
-            disabled={row.payfullpgpayment || (row?.pgdueamount*1) == 0}
+            disabled={row.payfullpgpayment}
           /><br />
           {/* <Checkbox name="payfullpgpayment" checked={row?.paypgpayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
@@ -205,7 +205,6 @@ function ClientInvoiceDetails({ invoicedate }) {
               );
             }}
             checked={row?.paypgpayment}
-            disabled={row.payfullpgpayment || (row?.pgdueamount*1) == 0}
             sx={{ width: "auto", m: 0, p: 0 }}
           />
           Pay in full
@@ -239,8 +238,8 @@ function ClientInvoiceDetails({ invoicedate }) {
             label="Service Payment"
             variant="outlined"
             type="number"
-            disabled={row.payfullservicepayment || (row?.servicedueamount*1) == 0}
-          />
+            disabled={row.payfullservicepayment}
+          /><br/>
           {/* <Checkbox name="payfullservicepayment" checked={row?.payservicepayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
             name="payfullservicepayment"
@@ -251,7 +250,6 @@ function ClientInvoiceDetails({ invoicedate }) {
                 'payfullservicepayment'
               );
             }}
-            disabled={row.payfullservicepayment || (row?.servicedueamount*1) == 0}
             checked={row?.payservicepayment}
             sx={{ width: "auto", m: 0, p: 0 }}
           />

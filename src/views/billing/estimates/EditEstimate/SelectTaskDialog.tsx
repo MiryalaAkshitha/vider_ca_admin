@@ -39,12 +39,28 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       onSuccess: (res: any) => {
         const result = res?.data?.result.filter((obj: any) => {
           return obj?.recurringStatus !== 'pending'
-        })
+        });
+        result.forEach((item: any) => {
+          item['additionalexpenditure'] = 0;
+          if (item?.expenditure && item?.expenditure.length > 0) {
+            item['additionalexpenditure'] = getTotalExpenduture(item?.expenditure);
+          }
+        });
         setUnbilledtasks(result);     
       },
       enabled: open && Boolean(client)
     }
   );
+
+  const getTotalExpenduture = (expenditures: any) => {
+    let sum = 0;
+    expenditures.forEach((element: any) => {
+      if (element.taskExpenseType == 'ADDITIONAL' && element.includeInInvoice) {
+        sum += (element.amount * 1);
+      }
+    });
+    return sum;
+  };
 
   function onSubmit() {
     if (!selected?.length) {
@@ -125,6 +141,16 @@ const columns = [
     title: "Status",
     key: "status",
     render: (item: any) => getTitle(item.status),
+  },
+  {
+    title: "Fee Amount",
+    key: "feeAmount",
+    render: (item: any) => (item.feeAmount * 1),
+  },
+  {
+    title: "Additional Amount",
+    key: "additionalexpenditure",
+    render: (item: any) => (item.additionalexpenditure)
   },
   {
     key: "Memberss",

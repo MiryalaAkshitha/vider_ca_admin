@@ -39,31 +39,54 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       onSuccess: (res: any) => {
         const result = res?.data?.result.filter((obj: any) => {
           return obj?.recurringStatus !== 'pending'
-        })
-        setUnbilledtasks(result);     
+        });
+        result.forEach((item: any) => {
+          item['additionalexpenditure'] = 0;
+          if (item?.expenditure && item?.expenditure.length > 0) {
+            item['additionalexpenditure'] = getTotalExpenduture(item?.expenditure);
+          }
+        });
+        setUnbilledtasks(result);
       },
       enabled: open && Boolean(client)
     }
   );
+
+  const getTotalExpenduture = (expenditures: any) => {
+    let sum = 0;
+    expenditures.forEach((element: any) => {
+      if (element.taskExpenseType == 'ADDITIONAL' && element.includeInInvoice) {
+        sum += (element.amount * 1);
+      }
+    });
+    return sum;
+  };
 
   function onSubmit() {
     if (!selected?.length) {
       snack.error("Please select at least one task");
       return;
     }
+    selected.forEach((item: any) => {
+      if (item?.expenditure && item?.expenditure.length > 0) {
+        item.feeAmount = item.feeAmount + getTotalExpenduture(item?.expenditure);
+      }
+    });
     dispatch(handleAddTasksToParticular(selected));
 
     if (selected && selected.length > 0) {
       selected.forEach((particular: any, index: any) => {
         if (particular?.expenditure && particular?.expenditure.length > 0) {
           particular?.expenditure.forEach((expenditure: any, index: any) => {
-            expenditure['name'] = expenditure.particularName;
-            expenditure['amount'] = expenditure.amount;
-            const id = expenditure.id;
-            const key = expenditure.particularName;
-            const value = expenditure.amount;
-            const taskExpenseType = expenditure.taskExpenseType;
-            dispatch(handleExistingOtherParticular({ id, taskExpenseType, index, key, value }));
+            if (expenditure?.taskExpenseType !== 'ADDITIONAL') {
+              expenditure['name'] = expenditure.particularName;
+              expenditure['amount'] = (expenditure.amount * 1);
+              const id = expenditure.id;
+              const key = expenditure.particularName;
+              const value = expenditure.amount;
+              const taskExpenseType = expenditure.taskExpenseType;
+              dispatch(handleExistingOtherParticular({ id, taskExpenseType, index, key, value }));
+            }
           });
         }
       });
@@ -130,6 +153,11 @@ const columns = [
     title: "Fee Amount",
     key: "feeAmount",
     render: (item: any) => (item.feeAmount * 1),
+  },
+  {
+    title: "Additional Amount",
+    key: "additionalexpenditure",
+    render: (item: any) => (item.additionalexpenditure)
   },
   {
     key: "Memberss",

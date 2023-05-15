@@ -23,7 +23,9 @@ function AddReceipt() {
   useTitle("New Receipt");
 
   useEffect(() => {
-    dispatch(resetState());
+    setTimeout(() => {
+      dispatch(resetState());
+    }, 500);    
   }, [dispatch]);
 
   const { data, isLoading }: ResType = useQuery(

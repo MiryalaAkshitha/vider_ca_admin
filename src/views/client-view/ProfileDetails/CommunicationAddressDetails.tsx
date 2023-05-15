@@ -5,30 +5,30 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 
-const ShippingAddressDetails = ({ data, setState }) => {
+const CommunicationAddressDetails = ({ data, setState }) => {
   const { data: states }: ResType = useQuery("states", getStates);
 
   const [isEdited, setIsEdited] = useState(false);
 
   const [address, setAddress] = useState({
-    "buildingNumber": data?.address?.shippingaddress?.buildingNumber || "",
-    "floornumber": data?.address?.shippingaddress?.floornumber || "",
-    "buildingName": data?.address?.shippingaddress?.buildingName || "",
-    "street": data?.address?.shippingaddress?.street || "",
-    "locality": data?.address?.shippingaddress?.locality || "",
-    "district": data?.address?.shippingaddress?.district || "",
-    "city": data?.address?.shippingaddress?.city || "",
-    "state": data?.address?.shippingaddress?.state || "",
-    "pincode": data?.address?.shippingaddress?.pincode || ""
+    "buildingNumber": data?.address?.communicationaddress?.buildingNumber || "",
+    "floornumber": data?.address?.communicationaddress?.floornumber || "",
+    "buildingName": data?.address?.communicationaddress?.buildingName || "",
+    "street": data?.address?.communicationaddress?.street || "",
+    "locality": data?.address?.communicationaddress?.locality || "",
+    "district": data?.address?.communicationaddress?.district || "",
+    "city": data?.address?.communicationaddress?.city || "",
+    "state": data?.address?.communicationaddress?.state || "",
+    "pincode": data?.address?.communicationaddress?.pincode || ""
   });
 
   useEffect(() => {
     setState({
       ...data,
       ['address']: {
-        'communicationaddress' : data?.address?.communicationaddress,
+        'communicationaddress' : address,
         'billingaddress': data?.address?.billingaddress,
-        'shippingaddress': address
+        'shippingaddress': data?.address?.shippingaddress 
       },
     });
   }, [isEdited]);
@@ -36,9 +36,9 @@ const ShippingAddressDetails = ({ data, setState }) => {
   useEffect(() => {
     setAddress(prevAddress => ({
       ...prevAddress,
-      ...data?.address?.shippingaddress
+      ...data?.address?.communicationaddress
     }));
-  }, [data?.address?.shippingaddress]);
+  }, [data?.address?.communicationaddress]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -61,7 +61,7 @@ const ShippingAddressDetails = ({ data, setState }) => {
     <>
       <Box mt={4}>
         <Typography mt={3} color="primary" variant="h6" sx={{ mb: 2 }}>
-          Shipping Address
+        Communication Address
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={4}>
@@ -182,4 +182,4 @@ const ShippingAddressDetails = ({ data, setState }) => {
     </>
   );
 };
-export default ShippingAddressDetails;
+export default CommunicationAddressDetails;

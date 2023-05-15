@@ -25,7 +25,8 @@ const BillingAddressDetails = ({ data, setState }) => {
   useEffect(() => {
     setState({
       ...data,
-      ['address']: { 
+      ['address']: {
+        'communicationaddress' : data?.address?.communicationaddress,
         'billingaddress': address,
         'shippingaddress': data?.address?.shippingaddress 
       },

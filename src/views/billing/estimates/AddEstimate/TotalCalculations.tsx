@@ -56,8 +56,8 @@ function TotalCalculations() {
       }      
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Typography variant="caption" flex={1}>
-          Additional Charge
-          {/* Pure Agent Charges */}
+          {/* Additional Charge */}
+          Pure Agent Charges
         </Typography>
         <Typography variant="body2">
           {getTotalCharges(state.otherParticulars)} /-

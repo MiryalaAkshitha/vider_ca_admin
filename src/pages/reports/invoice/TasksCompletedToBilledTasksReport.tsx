@@ -45,7 +45,7 @@ function TasksCompletedToBilledTasksReport() {
     if (!state.toDate) return snack.error("Please Select To Date");
     setData(null);
     const updatedpayload = {
-      query: 'taskscompletedtobilledtasksreport',
+      query: 'taskscompletedtobilledtasks',
       organizationid: ''+user?.organization?.id
     }
     setPayload(updatedpayload);

@@ -64,7 +64,7 @@ function ClientWiseTasksCompletedToUnBilledReport() {
     if(!state.clients)return snack.error("Please Select a Client")
     
     const updatedpayload = {
-      query: 'ClientWiseTasksCompletedToUnBilledReport',
+      query: 'ClientTasksCompletedToUnBilled',
       organizationid: '' + user?.organization?.id
     }
     setPayload(updatedpayload);
