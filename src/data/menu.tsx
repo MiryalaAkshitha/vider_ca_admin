@@ -84,4 +84,9 @@ export const menu: Array<IMenuItem> = [
     path: "/billing/invoices",
     icon: icons.broadcast,
   },
+  {
+    title: "gmailInbox ",
+    path: "/gmailInbox ",
+    icon: icons.dashboard,
+  },
 ];
