@@ -1,9 +1,15 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import LoadingButton from "components/LoadingButton";
 import { DialogProps, InputChangeType } from "types";
 import TextFieldWithCopy from "../TextFieldWithCopy";
 import DrawerWrapper from "components/DrawerWrapper";
+import { useMutation, useQueryClient } from "react-query";
+import { useParams } from "react-router-dom";
+import { updateClient } from "api/services/clients/clients";
+import { snack } from "components/toast";
+import { handleError } from "utils/handleError";
 
 interface EditLocaldirectorypathProps extends DialogProps {
   open: any;
@@ -14,8 +20,11 @@ interface EditLocaldirectorypathProps extends DialogProps {
 }
 
 function EditLocaldirectorypath({ open, setOpen, index, data, setState }: EditLocaldirectorypathProps) {
+  const queryClient = useQueryClient();
+  const params = useParams();
   const [path, setPath] = useState("");
   const [title, setTitle] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (data?.localDirectoryPath[index]) {
@@ -32,43 +41,72 @@ function EditLocaldirectorypath({ open, setOpen, index, data, setState }: EditLo
     setTitle(e.target.value);
   };
 
-  const onSubmit = () => {
-    const updatedData = [...data.localDirectoryPath];
-    updatedData[index] = { title, path };
+  const { mutate, isLoading } = useMutation(updateClient, {
+    onSuccess: () => {
+      snack.success("Local Directory Path Updated");
+      queryClient.invalidateQueries("client");
+      setOpen(false);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
 
-    setState({
-      ...data,
-      localDirectoryPath: updatedData,
-    });
-    setOpen(false);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    // const updatedData = [...data.localDirectoryPath];
+    // updatedData[index] = { title, path };
+
+    // setState({
+    //   ...data,
+    //   localDirectoryPath: updatedData,
+    // });
+    if (title !== '' && path !== '') {
+      data.localDirectoryPath[index] = { title: title, path: path };
+
+      mutate({ data, id: params.clientId });
+      setOpen(false);
+    } else {
+      return snack.error("Please fill correct title or path");
+    }
   };
 
   return (
     <DrawerWrapper open={open} setOpen={setOpen} title="Update Local Directory Path">
-      <Grid mt={2}>
-        <TextField
-          label="Title"
-          name="title"
-          value={title || ""}
-          fullWidth
-          variant="outlined"
-          size="small"
-          onChange={handleChangeTitle}
-        />
-      </Grid>
-      <Grid mt={2}>
-        <TextFieldWithCopy
-          label="Local Directory Path"
-          name="localDirectoryPath"
-          onChange={handleChange}
-          value={path || ""}
-        />
-      </Grid>
-      <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
-        <Button onClick={onSubmit} size="large" color="secondary" variant="contained">
-          Update Local Directory Path
-        </Button>
-      </Box>
+      <form onSubmit={handleSubmit} ref={formRef}>
+        <Grid mt={2}>
+          <TextField
+            label="Title"
+            name="title"
+            value={title || ""}
+            fullWidth
+            variant="outlined"
+            size="small"
+            onChange={handleChangeTitle}
+            required
+          />
+        </Grid>
+        <Grid mt={2}>
+          <TextFieldWithCopy
+            label="Local Directory Path"
+            name="localDirectoryPath"
+            onChange={handleChange}
+            value={path || ""}
+            required
+          />
+        </Grid>
+        <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
+          <LoadingButton
+            loading={isLoading}
+            fullWidth
+            type="submit"
+            loadingColor="white"
+            title="Update Local Directory Path"
+            color="secondary"
+          />
+        </Box>
+      </form>
+
     </DrawerWrapper>
   );
 }

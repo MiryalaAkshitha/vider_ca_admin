@@ -50,8 +50,12 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
     if (data.localDirectoryPath == null || data.localDirectoryPath == "") {
       data.localDirectoryPath = [];
     }
-    data.localDirectoryPath.push({ title: title, path: path });
-    mutate({ data, id: params.clientId });
+    if (title !== '' && path !== '') {
+      data.localDirectoryPath.push({ title: title, path: path });
+      mutate({ data, id: params.clientId });
+    } else {
+      return snack.error("Please fill correct title or path");
+    }
   };
 
   return (

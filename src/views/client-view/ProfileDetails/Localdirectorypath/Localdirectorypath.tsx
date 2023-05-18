@@ -68,8 +68,8 @@ function Localdirectorypath({ index, state, data, setState, apiData }: Props) {
           action: () => {
             navigator.clipboard.writeText(data?.localDirectoryPath[index]?.path);
             snack.success(`Copied ${data?.localDirectoryPath[index]?.path} to clipboard`);
-          },
-        },
+          },
+        },
         {
           label: "Delete",
           action: handleRemove,
