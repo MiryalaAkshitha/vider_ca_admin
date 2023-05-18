@@ -30,7 +30,7 @@ function Localdirectorypath({ index, state, data, setState, apiData }: Props) {
 
   const { mutate } = useMutation(updateClient, {
     onSuccess: () => {
-      snack.success("Profile Local directory path Deleted");
+      snack.success("Local Directory Path Deleted ");
       queryClient.invalidateQueries("client");
     },
     onError: (err: any) => {

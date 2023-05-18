@@ -35,7 +35,7 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
 
   const { mutate, isLoading } = useMutation(updateClient, {
     onSuccess: () => {
-      snack.success("Profile Local directory path Added");
+      snack.success("Local Directory Path Added");
       queryClient.invalidateQueries("client");
       setOpen(false);
     },
@@ -47,10 +47,10 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const { ...data } = state;
-    if(data.localDirectoryPath == null || data.localDirectoryPath == "") {
+    if (data.localDirectoryPath == null || data.localDirectoryPath == "") {
       data.localDirectoryPath = [];
     }
-    data.localDirectoryPath.push({title:title,path:path});
+    data.localDirectoryPath.push({ title: title, path: path });
     mutate({ data, id: params.clientId });
   };
 
@@ -58,25 +58,26 @@ function AddLocaldirectorypath({ open, setOpen, state, data, setState }: AddLoca
     <DrawerWrapper open={open} setOpen={setOpen} title="Add Local Directory Path">
       <form onSubmit={handleSubmit} ref={formRef}>
         <Grid mt={2}>
-      <TextField
-              label="Title"
-              name="title"
-              value={title || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              onChange={handleChangeTitle}
-
-/>
-</Grid>
-<Grid mt={2}>
-        <TextFieldWithCopy
-          label="Local Directory Path"
-          name="localDirectoryPath"
-          onChange={handleChange}
-          value={path || ""}
-        />
-</Grid>
+          <TextField
+            label="Title"
+            name="title"
+            value={title || ""}
+            fullWidth
+            variant="outlined"
+            size="small"
+            onChange={handleChangeTitle}
+            required
+          />
+        </Grid>
+        <Grid mt={2}>
+          <TextFieldWithCopy
+            label="Local Directory Path"
+            name="localDirectoryPath"
+            onChange={handleChange}
+            value={path || ""}
+            required
+          />
+        </Grid>
         <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
           <LoadingButton
             loading={isLoading}

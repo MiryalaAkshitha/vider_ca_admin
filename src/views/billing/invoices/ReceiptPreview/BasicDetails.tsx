@@ -3,9 +3,12 @@ import { Box } from "@mui/system";
 import { atomByViderLogo, atom_logo, logo } from "assets";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
+import { AddressDetail } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
+import { getAddress } from "views/billing/estimates/EditEstimate/BillingEntityDetails";
 import SectionHeading from "views/billing/estimates/SectionHeading";
 
 function BasicDetails({ result }) {
+
   return (
     <Box>
       <Grid container spacing={3} justifyContent="space-between">
@@ -23,21 +26,45 @@ function BasicDetails({ result }) {
             {/* <Box mb={1}>
               <img src={logo} alt="" />
             </Box> */}
+            <AddressDetail
+              title="Legal Name"
+              value={result?.billingEntity?.legalName}
+            />
+            <AddressDetail
+              title="Address"
+              value={getAddress(result?.billingEntity)}
+            />
             <Typography variant="body2">
-            {result?.billingEntity?.legalName}
-            </Typography>
-            <Typography variant="body2">
-            {result?.billingEntity?.buildingName},
-            {result?.billingEntity?.street},
-            {result?.billingEntity?.city},
-            {result?.billingEntity?.state},
-            {result?.billingEntity?.pincode},
-              {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
+              <AddressDetail
+                title="Email"
+                value={result?.billingEntity?.email}
+              />
+              <AddressDetail
+                title="Mobile Number"
+                value={result?.billingEntity?.mobileNumber}
+              />
+              <Typography variant="body2">
+                {result?.billingEntity?.legalName}
+              </Typography>
+              <AddressDetail
+                title="GST Number"
+                value={result?.billingEntity?.gstNumber}
+              />
+              <AddressDetail
+                title="Place Of Supply"
+                value={result?.placeOfSupply}
+              />
+              <Typography variant="body2">
+                {result?.billingEntity?.buildingName},
+                {result?.billingEntity?.street},
+                {result?.billingEntity?.city},
+                {result?.billingEntity?.state},
+                {result?.billingEntity?.pincode},
+                {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
               Telangana 500081 */}
-            </Typography>
-            <Typography variant="body2">
-            {result?.billingEntity?.mobileNumber},
-            {result?.billingEntity?.email},
+              </Typography>
+              {result?.billingEntity?.mobileNumber},
+              {result?.billingEntity?.email},
               {/* 9947368386, Viderbusiness@gmail.com */}
             </Typography>
           </Box>
@@ -45,11 +72,10 @@ function BasicDetails({ result }) {
 
         {/* <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box maxWidth={400}>
-
           </Box>
           </Grid> */}
 
-        
+
 
         <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box maxWidth={400}>

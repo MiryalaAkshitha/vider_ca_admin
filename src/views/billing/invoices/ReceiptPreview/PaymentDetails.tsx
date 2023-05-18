@@ -27,15 +27,15 @@ function PaymentDetails({ result }: IProps) {
                 title="Credits totalCredits"
                 value={result?.totalCredits + '/-'}
               />
-              
+
               <BankDetail
                 title="Due Amount"
                 value={result?.totalCharges + '/-'}
               />
-              <BankDetail
+              {/* <BankDetail
                 title="TDS Deduction"
                 value={result?.totalCharges + '%'}
-              />
+              /> */}
               <BankDetail
                 title="Payment mode"
                 value={result?.paymentMode}

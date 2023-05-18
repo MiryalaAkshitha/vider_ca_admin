@@ -3,7 +3,10 @@ import { Box } from "@mui/system";
 import { logo } from "assets";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
+import { AddressDetail, getAddress } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
 import SectionHeading from "views/billing/estimates/SectionHeading";
+
+
 
 function BasicDetails({ result }) {
   return (
@@ -23,23 +26,45 @@ function BasicDetails({ result }) {
             {/* <Box mb={1}>
               <img src={logo} alt="" />
             </Box> */}
-            <Typography variant="body2">
-            {result?.billingEntity?.legalName}
-            </Typography>
-            <Typography variant="body2">
-            {result?.billingEntity?.buildingName},
-            {result?.billingEntity?.street},
-            {result?.billingEntity?.city},
-            {result?.billingEntity?.state},
-            {result?.billingEntity?.pincode},
-              {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
-              Telangana 500081 */}
-            </Typography>
-            <Typography variant="body2">
-            {result?.billingEntity?.mobileNumber},
-            {result?.billingEntity?.email}
-              {/* 9947368386, Viderbusiness@gmail.com */}
-            </Typography>
+            <AddressDetail
+              title="Legal Name"
+              value={result?.billingEntity?.legalName}
+            />
+            <AddressDetail
+              title="Address"
+              value={getAddress(result?.billingEntity)}
+            />
+            <AddressDetail
+              title="Email"
+              value={result?.billingEntity?.email}
+            />
+
+            <AddressDetail
+              title="Mobile Number"
+              value={result?.billingEntity?.mobileNumber}
+            />
+
+            {result?.billingEntity?.gstNumber != 'NA' &&
+              <AddressDetail
+                title="GST Number"
+                value={result?.billingEntity?.gstNumber}
+              />
+            }
+
+            <AddressDetail
+              title="Location of Supplier"
+              value={result?.placeOfSupply}
+            />
+            {/* {placeofsupplier != 'NA' &&
+                  <AddressDetail
+                    title="Location of Supplier"
+                    value={placeofsupplier}
+                  />
+                } */}
+
+
+            {/* 9947368386, Viderbusiness@gmail.com */}
+
           </Box>
         </Grid>
         <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>

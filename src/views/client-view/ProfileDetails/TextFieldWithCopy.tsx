@@ -7,12 +7,13 @@ interface TextFieldWithCopyProps {
   label: string;
   name?: string;
   disabled?: boolean;
+  required?: boolean;
   onChange?: (e: any) => void;
   onBlur?: (e: any) => void;
 }
 
 function TextFieldWithCopy(props: TextFieldWithCopyProps) {
-  const { label, value, name, onChange, onBlur, disabled = false } = props;
+  const { label, value, name, onChange, onBlur, disabled = false, required } = props;
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(value).then(
@@ -36,6 +37,7 @@ function TextFieldWithCopy(props: TextFieldWithCopyProps) {
       onBlur={onBlur}
       value={value}
       disabled={disabled}
+      required={required}
       name={name}
       onChange={onChange}
       InputProps={{

@@ -1,17 +1,37 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { logo } from "assets";
-import { getAddress } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
+import { AddressDetail, getAddress } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
 import SectionHeading from "views/billing/estimates/SectionHeading";
 
 function AddressDetails({ result }) {
+
   return (
     <Box mt={2}>
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <SectionHeading title="Billing Address" />
           <Box p={1}>
-            <Typography variant="body2">
+            <AddressDetail
+              title="Legal Name"
+              value={result?.client?.legalName}
+            />
+            <AddressDetail
+              title="Address"
+              value={getAddress(result?.client?.address?.billingaddress)}
+            />
+            <AddressDetail
+              title="Email"
+              value={result?.client?.email}
+            />
+            <AddressDetail
+              title="Mobile Number"
+              value={result?.client?.mobileNumber}
+            />
+            <AddressDetail
+              title="GST Number"
+              value={result?.client?.gstNumber}
+            />
+            {/* <Typography variant="body2"> 
               {result?.client?.address?.billingaddress?.legalName}
             </Typography>
             <Typography variant="body2">
@@ -22,7 +42,7 @@ function AddressDetails({ result }) {
             </Typography>
             <Typography variant="body2">
               {result?.client?.address?.billingaddress?.state}, {result?.client?.address?.billingaddress?.pincode}
-            </Typography>
+            </Typography> */}
 
             {/* <Box mb={1}>
               <img src={logo} alt="" />
@@ -34,10 +54,10 @@ function AddressDetails({ result }) {
               {getAddress(result?.billingAddress)}
             </Typography>
             */}
-            <Typography variant="body2">
-              {result?.client?.address?.billingAddress?.mobileNumber},{" "}
+            {/* <Typography variant="body2">
+              {result?.client?.address?.billingAddress?.mobileNumber}{" "}
               {result?.client?.address?.billingAddress?.email}
-            </Typography>
+            </Typography> */}
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -57,17 +77,17 @@ function AddressDetails({ result }) {
             </Typography> */}
 
 
-            {/* <Box mb={1}>
+          {/* <Box mb={1}>
               <img src={logo} alt="" />
             </Box> */}
-            {/* <Typography variant="body2">
+          {/* <Typography variant="body2">
               {result?.shippingAddress?.legalName}
             </Typography>
             <Typography variant="body2">
               {getAddress(result?.shippingAddress)}
             </Typography>
             */}
-            {/* <Typography variant="body2">
+          {/* <Typography variant="body2">
               {result?.client?.address?.shippingAddress?.mobileNumber},{" "}
               {result?.client?.address?.shippingAddress?.email}
             </Typography>
