@@ -8,17 +8,20 @@ import { DialogProps } from "types";
 
 interface Props extends DialogProps {
   itemName: string;
+  itemFile: string;
   itemId: string;
 }
 
 const RenameFileOrFolderDialog = (props: Props) => {
-  const { open, itemId, itemName, setOpen } = props;
+  const { open, itemId, itemName, itemFile, setOpen } = props;
   const [name, setName] = useState<string>("");
+  const [file, setFile] = useState<string>("");
   const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setName(itemName);
+    setFile(itemFile);
   }, [itemName]);
 
   const { mutate } = useMutation(renameFile, {
@@ -39,6 +42,7 @@ const RenameFileOrFolderDialog = (props: Props) => {
     }
     mutate({
       name,
+      file,
       id: itemId,
     });
   };
@@ -53,6 +57,13 @@ const RenameFileOrFolderDialog = (props: Props) => {
         onChange={(e) => setName(e.target.value)}
         size="small"
         value={name}
+        autoFocus
+      />
+      <TextField
+        inputRef={inputRef}
+        onChange={(e) => setFile(e.target.value)}
+        size="small"
+        value={file}
         autoFocus
       />
       <Box mt={4} display="flex" gap={2} justifyContent="flex-end">

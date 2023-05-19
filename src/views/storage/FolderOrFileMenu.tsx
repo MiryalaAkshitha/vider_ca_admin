@@ -27,6 +27,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
   const { permissions } = useSelector(selectStorage);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
+  
 
   const { mutate } = useMutation(removeFile, {
     onSuccess: () => {
@@ -98,6 +99,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
         open={open}
         setOpen={setOpen}
         itemName={data?.name}
+        itemFile={data?.file}
         itemId={data?.id}
       />
     </>

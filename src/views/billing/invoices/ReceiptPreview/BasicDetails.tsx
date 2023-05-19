@@ -14,10 +14,10 @@ function BasicDetails({ result }) {
         <Grid item xs={6}>
           <Box mb={3}>
             <Typography color="#0D46A0" variant="h5">
-              INVOICE
+              TAX RECEIPT
             </Typography>
             <Typography variant="body2">
-              Invoice To : {result?.client?.displayName}
+              Receipt To : {result?.client?.displayName}
             </Typography>
           </Box>
           <SectionHeading title="Billed By" />
@@ -42,9 +42,9 @@ function BasicDetails({ result }) {
                 title="Mobile Number"
                 value={result?.billingEntity?.mobileNumber}
               />
-              <Typography variant="body2">
+              {/* <Typography variant="body2">
                 {result?.billingEntity?.legalName}
-              </Typography>
+              </Typography> */}
               <AddressDetail
                 title="GST Number"
                 value={result?.billingEntity?.gstNumber}
