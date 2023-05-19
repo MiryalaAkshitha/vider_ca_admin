@@ -1,24 +1,24 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { logo } from "assets";
+import { atomByViderLogo, atom_logo, logo } from "assets";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
-import { AddressDetail, getAddress } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
+import { AddressDetail } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
+import { getAddress } from "views/billing/estimates/EditEstimate/BillingEntityDetails";
 import SectionHeading from "views/billing/estimates/SectionHeading";
 
-
-
 function BasicDetails({ result }) {
+
   return (
     <Box>
       <Grid container spacing={3} justifyContent="space-between">
         <Grid item xs={6}>
           <Box mb={3}>
             <Typography color="#0D46A0" variant="h5">
-              INVOICE
+              TAX RECEIPT
             </Typography>
             <Typography variant="body2">
-              Invoice To : {result?.client?.displayName}
+              Receipt To  : {result?.client?.displayName}
             </Typography>
           </Box>
           <SectionHeading title="Billed By" />
@@ -34,51 +34,62 @@ function BasicDetails({ result }) {
               title="Address"
               value={getAddress(result?.billingEntity)}
             />
-            <AddressDetail
-              title="Email"
-              value={result?.billingEntity?.email}
-            />
-
-            <AddressDetail
-              title="Mobile Number"
-              value={result?.billingEntity?.mobileNumber}
-            />
-
-            {result?.billingEntity?.gstNumber != 'NA' &&
+            <Typography variant="body2">
+              <AddressDetail
+                title="Email"
+                value={result?.billingEntity?.email}
+              />
+              <AddressDetail
+                title="Mobile Number"
+                value={result?.billingEntity?.mobileNumber}
+              />
+              <Typography variant="body2">
+                {result?.billingEntity?.legalName}
+              </Typography>
               <AddressDetail
                 title="GST Number"
                 value={result?.billingEntity?.gstNumber}
               />
-            }
-
-            <AddressDetail
-              title="Location of Supplier"
-              value={result?.placeOfSupply}
-            />
-            {/* {placeofsupplier != 'NA' &&
-                  <AddressDetail
-                    title="Location of Supplier"
-                    value={placeofsupplier}
-                  />
-                } */}
-
-
-            {/* 9947368386, Viderbusiness@gmail.com */}
-
+              <AddressDetail
+                title="Place Of Supply"
+                value={result?.placeOfSupply}
+              />
+              {/* <Typography variant="body2">
+            {result?.billingEntity?.buildingName},
+            {result?.billingEntity?.street},
+            {result?.billingEntity?.city},
+            {result?.billingEntity?.state},
+            {result?.billingEntity?.pincode}, */}
+              {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
+              Telangana 500081 */}
+              {/* </Typography>
+            {result?.billingEntity?.mobileNumber},
+            {result?.billingEntity?.email}, */}
+              {/* 9947368386, Viderbusiness@gmail.com */}
+            </Typography>
           </Box>
         </Grid>
+
+        {/* <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box maxWidth={400}>
+          </Box>
+          </Grid> */}
+
+
+
         <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box maxWidth={400}>
-            {/* <Box textAlign="center">
-              <img
+            <Box textAlign="center">
+              {/* <img
                 style={{ width: 140, margin: "auto" }}
                 src="https://vider.in/wp-content/uploads/2020/09/image.png"
                 alt=""
-              />
-            </Box> */}
+              /> */}
+              {/* <img src={atomByViderLogo} alt="" style={{width: '200px'}} /> */}
+            </Box>
             <Box mt={1}>
               <Typography variant="subtitle1" mb={1} color="#0D46A0">
-                #{result?.invoiceNumber}
+                #{result?.receiptNumber}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
@@ -88,13 +99,13 @@ function BasicDetails({ result }) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Typography variant="body2">Invoice Date</Typography>
+                    <Typography variant="body2">Receipt Date</Typography>
                     <span>:</span>
                   </Box>
                 </Grid>
                 <Grid item xs={8}>
                   <Typography variant="body2">
-                    {formattedDate(result?.invoiceDate)}
+                    {formattedDate(result?.receiptDate)}
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>

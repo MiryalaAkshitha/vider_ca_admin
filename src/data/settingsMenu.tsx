@@ -27,6 +27,10 @@ export const settingsMenu: Array<IMenuItem> = [
     ],
   },
   {
+    title: "categories",
+    path: "/categories"
+  },
+  {
     title: "Manage users",
     path: "",
     children: [

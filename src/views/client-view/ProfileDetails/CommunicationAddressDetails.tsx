@@ -15,7 +15,7 @@ const CommunicationAddressDetails = ({ data, setState }) => {
     "floornumber": data?.address?.communicationaddress?.floornumber || "",
     "buildingName": data?.address?.communicationaddress?.buildingName || "",
     "street": data?.address?.communicationaddress?.street || "",
-    "locality": data?.address?.communicationaddress?.locality || "",
+    "location": data?.address?.communicationaddress?.location || "",
     "district": data?.address?.communicationaddress?.district || "",
     "city": data?.address?.communicationaddress?.city || "",
     "state": data?.address?.communicationaddress?.state || "",
@@ -115,8 +115,8 @@ const CommunicationAddressDetails = ({ data, setState }) => {
           <Grid item xs={4}>
             <TextField
               label="Locality/Sub Locality"
-              name="locality"
-              value={address?.locality || ""}
+              name="location"
+              value={address?.location || ""}
               fullWidth
               variant="outlined"
               size="small"

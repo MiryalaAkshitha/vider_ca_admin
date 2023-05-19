@@ -8,7 +8,7 @@ import { CLIENT_CATEGORIES } from "data/constants";
 import TextFieldWithCopy from "./TextFieldWithCopy";
 import FormAutoComplete from "components/FormFields/FormAutocomplete";
 
-const BasicInformation = ({ data, setState}) => {
+const BasicInformation = ({ data, setState }) => {
   const { data: users }: ResType = useQuery("users", getUsers);
 
   const handleChange = (e: any) => {
@@ -103,7 +103,7 @@ const BasicInformation = ({ data, setState}) => {
               </TextField>
             </Grid>
           )}
-           {/* <Grid item xs={4}>
+          {/* <Grid item xs={4}>
             <FormAutoComplete
               control={control}
               name="clientManager"
@@ -114,9 +114,9 @@ const BasicInformation = ({ data, setState}) => {
               }))}
             /></Grid> */}
 
-            {/* pass control */}
-          
-{/* <Grid item xs={4}>
+          {/* pass control */}
+
+          {/* <Grid item xs={4}>
 <FormAutoComplete
               control={control}
               name="clientManager"
@@ -127,22 +127,22 @@ const BasicInformation = ({ data, setState}) => {
               }))}
             />
              </Grid> */}
- <Grid item xs={4}>
-<Autocomplete
-            onChange={(_, value) => setState({ ...data, fullName: value, item: value })}
-            value={data?.fullName}
-            options={users?.data?.map((item) => item?.fullName) || []}
-            getOptionLabel={(option: any) => option}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                fullWidth
-                label="Client Manager"
-              />
-            )}
-          />
+          <Grid item xs={4}>
+            <Autocomplete
+              onChange={(_, value) => setState({ ...data, fullName: value, item: value })}
+              value={data?.fullName}
+              options={users?.data?.map((item) => item?.fullName) || []}
+              getOptionLabel={(option: any) => option}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  label="Client Manager"
+                />
+              )}
+            />
 
           </Grid>
           <Grid item xs={4}>

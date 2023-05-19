@@ -16,6 +16,7 @@ const BillingAddressDetails = ({ data, setState }) => {
     "buildingName": data?.address?.billingaddress?.buildingName || "",
     "street": data?.address?.billingaddress?.street || "",
     "locality": data?.address?.billingaddress?.locality || "",
+    "location": data?.address?.billingaddress?.location || "",
     "district": data?.address?.billingaddress?.district || "",
     "city": data?.address?.billingaddress?.city || "",
     "state": data?.address?.billingaddress?.state || "",
@@ -115,8 +116,8 @@ const BillingAddressDetails = ({ data, setState }) => {
           <Grid item xs={4}>
             <TextField
               label="Locality/Sub Locality"
-              name="locality"
-              value={address?.locality || ""}
+              name="location"
+              value={address?.location || ""}
               fullWidth
               variant="outlined"
               size="small"

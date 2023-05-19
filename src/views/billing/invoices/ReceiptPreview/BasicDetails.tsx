@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { atomByViderLogo, atom_logo, logo } from "assets";
+import { logo } from "assets";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
 import { AddressDetail } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
@@ -8,17 +8,16 @@ import { getAddress } from "views/billing/estimates/EditEstimate/BillingEntityDe
 import SectionHeading from "views/billing/estimates/SectionHeading";
 
 function BasicDetails({ result }) {
-
   return (
     <Box>
       <Grid container spacing={3} justifyContent="space-between">
         <Grid item xs={6}>
           <Box mb={3}>
             <Typography color="#0D46A0" variant="h5">
-              TAX RECEIPT
+              INVOICE
             </Typography>
             <Typography variant="body2">
-              Receipt To  : {result?.client?.displayName}
+              Invoice To : {result?.client?.displayName}
             </Typography>
           </Box>
           <SectionHeading title="Billed By" />
@@ -54,42 +53,33 @@ function BasicDetails({ result }) {
                 title="Place Of Supply"
                 value={result?.placeOfSupply}
               />
-              <Typography variant="body2">
-                {result?.billingEntity?.buildingName},
-                {result?.billingEntity?.street},
-                {result?.billingEntity?.city},
-                {result?.billingEntity?.state},
-                {result?.billingEntity?.pincode},
-                {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
+              {/* <Typography variant="body2">
+            {result?.billingEntity?.buildingName},
+            {result?.billingEntity?.street},
+            {result?.billingEntity?.city},
+            {result?.billingEntity?.state},
+            {result?.billingEntity?.pincode},
+              {/* 2/91/20, BP Raju Marg, Laxmi Cyber City, Whitefields, Kondapur,
               Telangana 500081 */}
-              </Typography>
-              {result?.billingEntity?.mobileNumber},
-              {result?.billingEntity?.email},
+
+              {/* {result?.billingEntity?.mobileNumber}, {result?.billingEntity?.email}, */}
               {/* 9947368386, Viderbusiness@gmail.com */}
+
             </Typography>
           </Box>
         </Grid>
-
-        {/* <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Box maxWidth={400}>
-          </Box>
-          </Grid> */}
-
-
-
         <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box maxWidth={400}>
-            <Box textAlign="center">
-              {/* <img
+            {/* <Box textAlign="center">
+              <img
                 style={{ width: 140, margin: "auto" }}
                 src="https://vider.in/wp-content/uploads/2020/09/image.png"
                 alt=""
-              /> */}
-              {/* <img src={atomByViderLogo} alt="" style={{width: '200px'}} /> */}
-            </Box>
+              />
+            </Box> */}
             <Box mt={1}>
               <Typography variant="subtitle1" mb={1} color="#0D46A0">
-                #{result?.receiptNumber}
+                #{result?.invoiceNumber}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
@@ -99,13 +89,13 @@ function BasicDetails({ result }) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Typography variant="body2">Receipt Date</Typography>
+                    <Typography variant="body2">Invoice Date</Typography>
                     <span>:</span>
                   </Box>
                 </Grid>
                 <Grid item xs={8}>
                   <Typography variant="body2">
-                    {formattedDate(result?.receiptDate)}
+                    {formattedDate(result?.invoiceDate)}
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
@@ -145,7 +135,7 @@ function BasicDetails({ result }) {
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   );
 }
 
