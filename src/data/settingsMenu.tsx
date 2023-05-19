@@ -23,12 +23,12 @@ export const settingsMenu: Array<IMenuItem> = [
         title: "Billing Entities",
         path: "/settings/billing-entities",
         children: [],
-      },
+      }
     ],
   },
   {
     title: "categories",
-    path: "/categories"
+    path: "/settings/categories"
   },
   {
     title: "Manage users",

@@ -18,11 +18,12 @@ import InvoiceDetails from "views/billing/invoices/ReceiptPreview/InvoiceDetails
 import PaymentDetails from "views/billing/invoices/ReceiptPreview/PaymentDetails";
 
 export const StyledWatupButton = styled("div")(() => ({
-  position: "fixed",
+  position: "absolute",
   // width: "40px",
-  height: "40px",
-  bottom: "20px",
-  right: "60px",
+  height: "50px",
+  bottom: "30px",
+  right: "220px",
+  top: "100px",
   zIndex: 100,
   cursor: "pointer"
 }));
