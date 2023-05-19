@@ -45,20 +45,25 @@ export const menu: Array<IMenuItem> = [
   },
   {
     title: "Services",
-    path: "",
+    path: "/services",
     icon: icons.taskboard,
-    children: [
-      {
-        title: "Services",
-        path: "/services",
-        icon: icons.taskboard,
-      }, {
-        title: "categories",
-        path: "/categories",
-        icon: icons.team,
-      }
-    ]
   },
+  // {
+  //   title: "Services",
+  //   path: "",
+  //   icon: icons.taskboard,
+  //   children: [
+  //     {
+  //       title: "Services",
+  //       path: "/services",
+  //       icon: icons.taskboard,
+  //     }, {
+  //       title: "categories",
+  //       path: "/categories",
+  //       icon: icons.team,
+  //     }
+  //   ]
+  // },
   {
     title: "Forms",
     path: "/forms",
