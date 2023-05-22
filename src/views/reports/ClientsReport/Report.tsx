@@ -87,13 +87,13 @@ const columns = [
   },
   {
     key: "active",
-    title: "Status",
+    title: "status",
     default: true,
     render: (rowData) => {
       return (
         <div>
-          {rowData?.active ? (
-            <span style={{ color: "green" }}>Active</span>
+          {rowData?.status === "ACTIVE" ? ( 
+                <span style={{ color: "green" }}>Active</span>            
           ) : (
             <span style={{ color: "red" }}>Inactive</span>
           )}
