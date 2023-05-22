@@ -27,10 +27,6 @@ export const settingsMenu: Array<IMenuItem> = [
     ],
   },
   {
-    title: "categories",
-    path: "/settings/categories"
-  },
-  {
     title: "Manage users",
     path: "",
     children: [
@@ -53,8 +49,8 @@ export const settingsMenu: Array<IMenuItem> = [
     ],
   },
   {
-    title: "Categories",
-    path: "/settings/categories",
+    title: "categories",
+    path: "/settings/categories"
   },
   {
     title: "Labels",
