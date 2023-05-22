@@ -15,7 +15,6 @@ const BillingAddressDetails = ({ data, setState }) => {
     "floornumber": data?.address?.billingaddress?.floornumber || "",
     "buildingName": data?.address?.billingaddress?.buildingName || "",
     "street": data?.address?.billingaddress?.street || "",
-    "locality": data?.address?.billingaddress?.locality || "",
     "location": data?.address?.billingaddress?.location || "",
     "district": data?.address?.billingaddress?.district || "",
     "city": data?.address?.billingaddress?.city || "",
