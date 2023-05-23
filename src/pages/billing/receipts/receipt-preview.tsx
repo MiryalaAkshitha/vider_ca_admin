@@ -109,7 +109,7 @@ width=0,height=0,left=-1000,top=-1000`;
           </Box>
         </Box>
 
-        <StyledWatupButton>
+        <StyledWatupButton id="downloadIcon" className="hide">
 
           {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />}
 
