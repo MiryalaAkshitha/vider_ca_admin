@@ -20,9 +20,10 @@ interface Props {
   contextMenu: Position | null;
   setContextMenu: (contextMenu: Position | null) => void;
   data: any;
+  setLinks?: any
 }
 
-function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
+function FolderMenu({ contextMenu, data, setContextMenu, setLinks }: Props) {
   const confirm = useConfirm();
   const { permissions } = useSelector(selectStorage);
   const queryClient = useQueryClient();
@@ -101,6 +102,7 @@ function FolderMenu({ contextMenu, data, setContextMenu }: Props) {
         itemName={data?.name}
         itemFile={data?.file}
         itemId={data?.id}
+        setLinks={setLinks}
       />
     </>
   );
