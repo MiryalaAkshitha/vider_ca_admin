@@ -76,7 +76,7 @@ function Link(props: Props) {
                 <Typography variant="body2">{links?.name}</Typography>
                 {!props.local && (
                   <OpenInNewIcon
-                    onClick={() => window.open(links?.file)}
+                    onClick={() => window.open(data?.file)}
                     color="secondary"
                     fontSize="small"
                   />
@@ -84,7 +84,7 @@ function Link(props: Props) {
               </Box>
               {props.local && (
                 <Typography variant="caption" color="rgba(0,0,0,0.6)">
-                  {data.file}
+                  {links.file}
                 </Typography>
               )}
             </Box>

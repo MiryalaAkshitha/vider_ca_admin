@@ -6,7 +6,6 @@ import { snack } from "components/toast";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { DialogProps, InputChangeType } from "types";
-import LoadingButton from "components/LoadingButton";
 import TextFieldWithCopy from "views/client-view/ProfileDetails/TextFieldWithCopy";
 
 interface Props extends DialogProps {

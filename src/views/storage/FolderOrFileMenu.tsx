@@ -1,4 +1,5 @@
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
@@ -28,7 +29,7 @@ function FolderMenu({ contextMenu, data, setContextMenu, setLinks }: Props) {
   const { permissions } = useSelector(selectStorage);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState<boolean>(false);
-  
+
 
   const { mutate } = useMutation(removeFile, {
     onSuccess: () => {
@@ -76,7 +77,7 @@ function FolderMenu({ contextMenu, data, setContextMenu, setLinks }: Props) {
             <ListItemIcon>
               <DriveFileRenameOutlineRoundedIcon color="primary" fontSize="small" />
             </ListItemIcon>
-            <Typography variant="body2">Rename</Typography>
+            <Typography variant="body2">Edit</Typography>
           </MenuItem>
         )}
         {permissions.delete && (
@@ -84,9 +85,18 @@ function FolderMenu({ contextMenu, data, setContextMenu, setLinks }: Props) {
             <ListItemIcon>
               <DeleteOutlineRoundedIcon color="primary" fontSize="small" />
             </ListItemIcon>
-            <Typography variant="body2">Remove</Typography>
+            <Typography variant="body2">Delete</Typography>
           </MenuItem>
         )}
+        <MenuItem sx={{ mt: 1 }} onClick={() => {
+          navigator.clipboard.writeText(data?.file);
+          snack.success(`Copied ${data?.file} to clipboard`);
+        }}>
+          <ListItemIcon>
+            <ContentCopyIcon color="primary" fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="body2">Copy</Typography>
+        </MenuItem>
         {data?.type === "file" && (
           <MenuItem sx={{ mt: 1 }} onClick={downloadItem}>
             <ListItemIcon>
