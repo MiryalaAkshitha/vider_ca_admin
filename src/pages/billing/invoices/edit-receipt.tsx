@@ -28,7 +28,7 @@ function EditReceipt() {
         getInvoicePreview,
         {
             onSuccess: (res: any) => {
-                dispatch(resetState());
+                // dispatch(resetState());
                 setTimeout((response: any, cstate: any) => {
                     if (response?.data?.client && response?.data?.client?.id) {
                         dispatch(handleChange({ key: "client", value: response?.data?.client?.id }));
@@ -43,8 +43,7 @@ function EditReceipt() {
         <>
             <StyledNewEstimateContainer sx={{ minHeight: "90vh" }}>
                 <Typography textAlign="center" mb={4} variant="h5">
-                    Payment Receipt
-                    {/* {data?.data?.invoiceNumber} */}
+                    Payment Receipt for Invoice: {data?.data?.invoiceNumber}
                 </Typography>
                 <BasicDetails />
                 {state.type === "INVOICE" && state.client && <ClientInvoiceDetails invoicedate={state.particulars} />}
