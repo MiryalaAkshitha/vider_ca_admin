@@ -79,7 +79,7 @@ function BasicDetails({ result }) {
             </Box> */}
             <Box mt={1}>
               <Typography variant="subtitle1" mb={1} color="#0D46A0">
-                #{result?.invoiceNumber}
+                {/* #{result?.invoiceNumber} */}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
