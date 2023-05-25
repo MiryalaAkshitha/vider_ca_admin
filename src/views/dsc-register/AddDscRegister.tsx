@@ -218,7 +218,7 @@ function AddDscRegister({ open, setOpen }: DialogProps) {
               label="DSC Holder Designation"
             />
             <DesktopDatePicker
-              label="Expiry Date"
+              label="Expiry Date *"
               inputFormat="dd-MM-yyyy"
               value={state.expiryDate}
               onChange={(value) => {
