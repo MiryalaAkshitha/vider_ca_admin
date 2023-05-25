@@ -43,53 +43,60 @@ function BottomBar() {
   const onSubmit = (args: any) => {
 
     let apiData: any = { ...state };
-    if (apiData.receiptDate === "null") {
-      snack.error("please error receipt date");
-    }
-    apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
-    if(apiData?.particulars.length > 0 && apiData?.invoices.length>0) {
-      apiData['invoices'] = apiData['invoices'].filter((item: any) => apiData?.particulars.some(itemToBeRemoved => itemToBeRemoved.id === item.id))
-    }
-    // apiData.paymentDate = apiData.receiptDate;
-    apiData.amount = +apiData.amount;
-    const totalpayment = +apiData.amount + +apiData.creditsUsed;
-    // apiData.creditsUsed = +apiData.creditsUsed + (+totalpayment - +invoicesum);
+    if (apiData.receiptDate === "null" || apiData.receiptDate === "") {
+      snack.error("please enter receipt date");
+    } else if (apiData.paymentDate === "null" || apiData.paymentDate === "") {
+      snack.error("please enter payment date");
+    } else {
+      apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
+      if (apiData?.particulars.length > 0 && apiData?.invoices.length > 0) {
+        apiData['invoices'] = apiData['invoices'].filter((item: any) => apiData?.particulars.some(itemToBeRemoved => itemToBeRemoved.id === item.id))
+      }
+      // apiData.paymentDate = apiData.receiptDate;
+      apiData.amount = +apiData.amount;
+      const totalpayment = +apiData.amount + +apiData.creditsUsed;
+      // apiData.creditsUsed = +apiData.creditsUsed + (+totalpayment - +invoicesum);
 
-    let idTotalSumcorrect = true;
+      let idTotalSumcorrect = true;
 
-    if (apiData?.invoices && apiData?.invoices.length > 0) {
-      const ids = apiData?.invoices.map((o: any) => o.id);
-      const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
-      const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
-      apiData.totalCredits = +apiData.previousCredits - (+totalpayment - +invoicesum);
-      if (invoicesum <= totalpayment) {
-        idTotalSumcorrect = true;
+      if (apiData?.invoices && apiData?.invoices.length > 0) {
+        const ids = apiData?.invoices.map((o: any) => o.id);
+        const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
+        const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
+        apiData.totalCredits = +apiData.previousCredits - (+totalpayment - +invoicesum);
+        const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
+        apiData.dueAmount = totalpayment - dueinvoicesum;
+        if (invoicesum <= totalpayment) {
+          idTotalSumcorrect = true;
+        } else {
+          idTotalSumcorrect = false;
+        }
       } else {
         idTotalSumcorrect = false;
       }
-    } else {
-      idTotalSumcorrect = false;
-    }
-    if (apiData?.type == "ADVANCE") {
-      if (+apiData?.amount > 0) {
-        apiData.totalCredits = +apiData.previousCredits + apiData.amount;
-        mutate({
-          data: apiData,
-        });
+      if (apiData?.type == "ADVANCE") {
+        if (+apiData?.amount > 0) {
+          apiData.totalCredits = +apiData.previousCredits + apiData.amount;
+          mutate({
+            data: apiData,
+          });
+        } else {
+          snack.error("Enter amount to be greater than 0");
+        }
       } else {
-        snack.error("Enter amount to be greater than 0");
-      }
-    } else {
-      if (idTotalSumcorrect) {
-        const ids = apiData?.invoices.map(o => o.id);
-        const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
-        apiData.invoices = filteredinvoices;
+        if (idTotalSumcorrect) {
+          const ids = apiData?.invoices.map(o => o.id);
+          const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
+          apiData.invoices = filteredinvoices;
+          const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
+          apiData.dueAmount = totalpayment - dueinvoicesum;
 
-        mutate({
-          data: apiData,
-        });
-      } else {
-        snack.error("The sum of pureagent and service payment to be less than or equal to " + totalpayment);
+          mutate({
+            data: apiData,
+          });
+        } else {
+          snack.error("The sum of pureagent and service payment to be less than or equal to " + totalpayment);
+        }
       }
     }
   };
