@@ -109,14 +109,14 @@ width=0,height=0,left=-1000,top=-1000`;
           </Box>
         </Box>
 
-        <StyledWatupButton id="downloadIcon" className="hide">
+        {/* <StyledWatupButton id="downloadIcon" className="hide">
 
           {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />}
 
-          {/* <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup"
-            style={{ 'width': '40px', 'cursor': 'pointer' }} /> */}
+          <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup"
+            style={{ 'width': '40px', 'cursor': 'pointer' }} /> 
 
-        </StyledWatupButton>
+        </StyledWatupButton> */}
 
       </Paper>
     </Box>

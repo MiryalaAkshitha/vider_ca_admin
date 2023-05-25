@@ -83,7 +83,7 @@ const InvoicePreview = () => {
       >
         <StyledWatupButton>
 
-          {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />}
+          {/* {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />} */}
 
           {/* <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup"
   style={{ 'width': '40px', 'cursor': 'pointer' }} /> */}

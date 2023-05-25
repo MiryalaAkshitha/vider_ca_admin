@@ -1,13 +1,54 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, styled } from "@mui/material";
 import { Box } from "@mui/system";
 import { atomByViderLogo, atom_logo, logo } from "assets";
+import { snack } from "components/toast";
+import useQueryParams from "hooks/useQueryParams";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import { ResType } from "types";
+import { handleError } from "utils/handleError";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
 import { AddressDetail } from "views/billing/estimates/AddEstimate/BillingEntityDetails";
 import { getAddress } from "views/billing/estimates/EditEstimate/BillingEntityDetails";
 import SectionHeading from "views/billing/estimates/SectionHeading";
+import { downloadInvoice } from "api/services/billing/invoices";
+import { DownloadOutlined } from "@mui/icons-material";
+
+export const StyledDownloadButton = styled("div")(() => ({
+  width: "80px",
+  height: "50px",
+  zIndex: 100,
+  cursor: "pointer",
+  float: "right",
+  fontSize: "10px"
+}));
 
 function BasicDetails({ result }) {
+  const params = useParams();
+  const [isdownloading, setIsdownloading] = useState(false);
+
+  const { mutate } = useMutation(downloadInvoice, {
+    onSuccess: (res: any) => {
+      const arr = new Uint8Array(res.data?.data);
+      const blob = new Blob([arr], { type: "application/pdf" });
+      const pdf = window.URL.createObjectURL(blob);
+      let link = document.createElement("a");
+      link.href = pdf;
+      link.download = "invoice.pdf";
+      link.click();
+      setIsdownloading(false);
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
+  const handleDownload = () => {
+    setIsdownloading(true);
+    mutate({ id: params.invoiceId });
+  };
 
   return (
     <Box>
@@ -89,7 +130,11 @@ function BasicDetails({ result }) {
             </Box>
             <Box mt={1}>
               <Typography variant="subtitle1" mb={1} color="#0D46A0">
-                #{result?.receiptNumber}
+                <StyledDownloadButton id="downloadIcon" className="hide">
+                  {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />}
+                </StyledDownloadButton>
+
+                {/* #{result?.receiptNumber} */}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
