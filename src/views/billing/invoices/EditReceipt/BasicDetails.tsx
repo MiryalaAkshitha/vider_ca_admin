@@ -12,6 +12,7 @@ import { getNextReceiptNumber } from "api/services/billing/receipts";
 import Loader from "components/Loader";
 import { getClients } from "api/services/clients/clients";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 function BasicDetails() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function BasicDetails() {
           navigate(`/billing/invoices`);
         }
         dispatch(handleChange({ key: "receiptNumber", value: res.data }));
+        dispatch(handleChange({ key: "receiptDate", value: moment().format("YYYY-MM-DD") }));
       },
     }
   );

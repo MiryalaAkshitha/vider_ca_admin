@@ -37,6 +37,8 @@ function ClientInvoiceDetails({ invoicedate }) {
       enabled: Boolean(state.client),
       onSuccess: (res: any) => {
         dispatch(handleChange({ key: "previousCredits", value: res.data }));
+        dispatch(handleChange({ key: "amount", value: 0 }));
+        dispatch(handleChange({ key: "paymentDate", value: moment().format("YYYY-MM-DD") }));
       },
     }
   );
