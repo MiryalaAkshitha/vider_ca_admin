@@ -77,6 +77,7 @@ function BottomBar() {
       if (apiData?.type == "ADVANCE") {
         if (+apiData?.amount > 0) {
           apiData.totalCredits = +apiData.previousCredits + apiData.amount;
+          apiData.dueAmount = apiData?.dueAmount == null || apiData?.dueAmount == '' ? 0 : apiData?.dueAmount;
           mutate({
             data: apiData,
           });
