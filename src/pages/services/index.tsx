@@ -29,6 +29,7 @@ function Services() {
   const { queryParams, setQueryParams } = useQueryParams();
   const [search, setSearch] = useState("");
   const [openImport, setOpenImport] = useState(false);
+  const [servicesIds, setServicesIds] = useState([]);
   const [category, setCategory] = useState<any>(null);
   const [subCategory, setSubCategory] = useState<any>(null);
   const page = +queryParams.page || 1;
@@ -45,7 +46,16 @@ function Services() {
 
   const { data, isLoading }: ResType = useQuery(
     ["services", { search, category, subCategory, limit, offset }],
-    getServices
+    getServices,
+    {
+      onSuccess: (res: any) => {
+        let ids = res?.data?.result.map( (item: any) => item.id);
+        setServicesIds(ids);       
+      },
+      onError: (err: any) => {
+        snack.error(handleError(err));
+      },
+    }
   );
 
   const { mutate } = useMutation(updateAdminServices, {
