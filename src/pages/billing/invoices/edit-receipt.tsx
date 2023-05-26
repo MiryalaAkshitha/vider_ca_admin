@@ -41,7 +41,7 @@ function EditReceipt() {
         <>
             <StyledNewEstimateContainer sx={{ minHeight: "90vh" }}>
                 <Typography textAlign="center" mb={4} variant="h5">
-                    Payment Receipt for Invoice
+                    Payment Receipt
                     {/* {data?.data?.invoiceNumber} */}
                 </Typography>
                 {!isLoading &&
