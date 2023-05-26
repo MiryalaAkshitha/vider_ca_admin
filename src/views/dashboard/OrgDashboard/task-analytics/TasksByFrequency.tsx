@@ -3,7 +3,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
-import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
+import { handleApply, handleFilters, handleSelected, resetFilters } from "redux/reducers/taskboardSlice";
 import { StyledTaskBox } from "../styles";
 
 function TasksByFrequency({ data }) {
@@ -28,6 +28,7 @@ function TasksByFrequency({ data }) {
   ];
 
   const handleClick = (v: any) => {
+    dispatch(resetFilters());
     dispatch(handleSelected("taskType"));
     dispatch(
       handleFilters({

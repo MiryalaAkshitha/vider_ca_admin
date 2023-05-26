@@ -3,7 +3,7 @@ import { IconButton, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
+import { handleApply, handleFilters, handleSelected, resetFilters } from "redux/reducers/taskboardSlice";
 import { getTitle } from "utils";
 import { StyledTaskBox } from "../styles";
 
@@ -39,6 +39,7 @@ function TasksByPriority({ data }) {
   ];
 
   const handleClick = (v: any) => {
+    dispatch(resetFilters());
     dispatch(handleSelected("priority"));
     dispatch(
       handleFilters({
