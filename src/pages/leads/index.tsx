@@ -7,13 +7,15 @@ import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 import Actions from "views/leads/Actions";
 import AddLead from "views/leads/AddLead";
 import { CLIENT_CATEGORIES } from "data/constants";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 function Leads() {
   useTitle("Leads");
@@ -24,6 +26,13 @@ function Leads() {
   const [pageCount, setPageCount] = useState<number>(10);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<any[]>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { isLoading, data }: ResType = useQuery(
     ["leads", { limit: pageCount, offset: page * pageCount, search }],

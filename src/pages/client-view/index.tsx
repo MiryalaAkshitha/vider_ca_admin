@@ -6,11 +6,21 @@ import useTitle from "hooks/useTitle";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { clientMenu } from "data/constants";
 import { StyledProfileNav, StyledProfileNavItem } from "views/clients/styles";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
+import { useEffect } from "react";
 
 function ClientProfile() {
   useTitle("Clients");
   const params = useParams();
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   return (
     <ClientDataProvider>

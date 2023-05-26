@@ -2,13 +2,15 @@ import { Box, Typography } from "@mui/material";
 import { getEstimates } from "api/services/billing/estimates";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 import { formattedDate } from "utils/formattedDate";
 import EstimatesHeader from "views/billing/estimates/EstimatesHeader";
 import { getStatusColor } from "views/billing/estimates/getStatusColor";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 const Estimates = () => {
   useTitle("Estimates");
@@ -17,6 +19,13 @@ const Estimates = () => {
   const [pageCount, setPageCount] = useState<number>(5);
   const [selected, setSelected] = useState<any[]>([]);
   const selectionRef = useRef<any>({});
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { data, isLoading }: ResType = useQuery(
     ["estimates", { offset: page * pageCount, limit: pageCount, search }],

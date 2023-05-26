@@ -14,7 +14,7 @@ import { Permissions } from "data/permissons";
 import useTitle from "hooks/useTitle";
 import _ from "lodash";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
@@ -26,10 +26,13 @@ import ClientFilter from "views/clients/Filter";
 import ImportClients from "views/clients/ImportClients";
 import AppliedFilters from "views/tasks/Filters/ApplidedFilters";
 import { StyledAppliedFilterItem } from "views/tasks/Filters/styles";
+import { resetFilters } from "redux/reducers/taskboardSlice";
+import { useDispatch } from "react-redux";
 
 function Clients() {
   useTitle("Clients");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(10);
@@ -47,6 +50,12 @@ function Clients() {
     labels: [],
     search: "",
   });
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { data, isLoading }: ResType = useQuery(
     [

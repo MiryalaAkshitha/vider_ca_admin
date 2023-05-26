@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { getInvoices } from "api/services/billing/invoices";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
@@ -10,6 +10,8 @@ import { formattedDate } from "utils/formattedDate";
 import { getStatusColor } from "views/billing/estimates/getStatusColor";
 import InvoicesHeader from "views/billing/invoices/InvoicesHeader";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 const Estimates = () => {
   useTitle("Invoices");
@@ -18,6 +20,13 @@ const Estimates = () => {
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);
   const [selected, setSelected] = useState<any[]>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { data, isLoading }: ResType = useQuery(
     ["invoices", { offset: page * pageCount, limit: pageCount, search }],

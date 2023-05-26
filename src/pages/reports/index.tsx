@@ -1,15 +1,20 @@
-import { ArrowForward } from "@mui/icons-material";
-import { Button, Grid, Paper, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { reportsList } from "data/reports";
+import { Grid } from "@mui/material";
 import useTitle from "hooks/useTitle";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import ReportsNav from "views/reports/ReportsNav";
-import CustomReports from "./custom-reports";
-import PredefinedReports from "./predefined-reports";
-import FilterAltOutlined from "@mui/icons-material/FilterAltOutlined";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
+import { useEffect } from "react";
+
 function Reports() {
   useTitle("Reports");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   return (
     <>

@@ -19,18 +19,13 @@ import EventIndication from "views/calendar/EventIndication";
 import ViewEvent from "views/calendar/ViewEvent";
 import ViewGlobalEvent from "views/calendar/ViewGlobalEvent";
 import { useNavigate } from "react-router-dom";
-
-function sum(n: number): number {
-  if (n === 0) return n;
-
-  return n + sum(n - 1);
-}
-
-console.log(sum(3));
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 function Calendar() {
   useTitle("Calendar");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [viewOpen, setViewOpen] = useState(false);
   const [data, setData] = useState({});
   const [open, setOpen] = useState(false);
@@ -44,6 +39,12 @@ function Calendar() {
   const { data: tasks, isLoading: tasksLoading }: ResType = useQuery(["tasks"], getTasks);
 
   const [currentEvents, setCurrentEvents] = useState([]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   useEffect(() => {
     const events: any = [...eventsData(), ...defaultEventsData(), ...tasksData()];

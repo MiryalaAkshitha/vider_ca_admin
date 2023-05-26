@@ -10,9 +10,11 @@ import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
 import ImportServices from "views/dashboard/GetStarted/ImportServices";
@@ -20,6 +22,7 @@ import ServiceCard from "views/services/ServiceCard";
 
 function Services() {
   useTitle("Services");
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const confirm = useConfirm();
@@ -31,6 +34,12 @@ function Services() {
   const page = +queryParams.page || 1;
   const limit = 9;
   const offset = (page - 1) * limit;
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { data: categories }: ResType = useQuery("categories", getCategories);
 
