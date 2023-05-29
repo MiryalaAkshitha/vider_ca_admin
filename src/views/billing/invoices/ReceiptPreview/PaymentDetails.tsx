@@ -16,18 +16,25 @@ function PaymentDetails({ result }: IProps) {
           {result && (
             <>
               <BankDetail
-                title="Amount received"
+                title="Total Amount received"
                 value={(+result?.amount) + (+result?.creditsUsed) + '/-'}
+              />
+              <BankDetail
+                title="Amount"
+                value={(+result?.amount) + '/-'}
               />
               <BankDetail
                 title="Credits Used"
                 value={result?.creditsUsed + '/-'}
               />
               <BankDetail
-                title="Credits totalCredits"
+                title="Previous Credits"
                 value={result?.totalCredits + '/-'}
               />
-
+              <BankDetail
+                title="Total Unused Credits"
+                value={-((result?.creditsUsed * 1 || 0) - (result?.totalCredits * 1 || 0)) + '/-'}
+              />
               <BankDetail
                 title="Due Amount"
                 value={-(result?.dueAmount || 0) + '/-'}

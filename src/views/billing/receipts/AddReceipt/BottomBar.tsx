@@ -74,6 +74,8 @@ function BottomBar() {
       } else {
         idTotalSumcorrect = false;
       }
+
+      
       if (apiData?.type == "ADVANCE") {
         if (+apiData?.amount > 0) {
           apiData.totalCredits = +apiData.previousCredits + apiData.amount;
