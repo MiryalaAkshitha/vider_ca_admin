@@ -33,7 +33,7 @@ function PaymentDetails({ result }: IProps) {
               />
               <BankDetail
                 title="Total Unused Credits"
-                value={-((result?.creditsUsed * 1 || 0) - (result?.totalCredits * 1 || 0)) + '/-'}
+                value={(result?.totalCredits * 1 || 0) + '/-'}
               />
               <BankDetail
                 title="Due Amount"
