@@ -63,9 +63,12 @@ function BottomBar() {
         const ids = apiData?.invoices.map((o: any) => o.id);
         const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
         const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
-        apiData.totalCredits = +apiData.previousCredits - (+totalpayment - +invoicesum);
+
+        const balcrditused = (+apiData.previousCredits - +apiData.creditsUsed ) + (totalpayment - (+invoicesum));
+        apiData.totalCredits = +apiData.previousCredits == 0 ? (+totalpayment - +invoicesum) : balcrditused;        
+        
         const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
-        apiData.dueAmount = totalpayment - dueinvoicesum;
+        apiData.dueAmount = invoicesum - dueinvoicesum;
         if (invoicesum <= totalpayment) {
           idTotalSumcorrect = true;
         } else {
@@ -91,8 +94,9 @@ function BottomBar() {
           const ids = apiData?.invoices.map(o => o.id);
           const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
           apiData.invoices = filteredinvoices;
+          const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
           const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
-          apiData.dueAmount = totalpayment - dueinvoicesum;
+          apiData.dueAmount = invoicesum - dueinvoicesum;
 
           mutate({
             data: apiData,
