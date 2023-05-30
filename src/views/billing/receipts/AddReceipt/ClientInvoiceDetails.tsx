@@ -347,10 +347,10 @@ function ClientInvoiceDetails() {
               title="Previous Credits"
               value={state.previousCredits}
             />
-            <SummaryDetail
+            {/* <SummaryDetail
               title="Total Unused Credits"
               value={+state.previousCredits - +previouscredits + +balanceamount}
-            />
+            /> */}
           </Box>
         </Box>
       </Box>
