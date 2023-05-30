@@ -338,11 +338,11 @@ function ClientInvoiceDetails() {
               title="Invoiced amount for payment"
               value={invoicedamount}
             />
-            <SummaryDetail
+            {/* <SummaryDetail
               title=""
               value={""}
             // value={balanceamount}
-            />
+            /> */}
             <SummaryDetail
               title="Previous Credits"
               value={state.previousCredits}

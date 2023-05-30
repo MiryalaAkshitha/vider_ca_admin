@@ -325,8 +325,8 @@ function ClientInvoiceDetails({ invoicedate }) {
         </Grid>
       </Grid>
 
-      <Grid container mt={1} spacing={0}>
-        <Grid item>
+      <Grid container mt={1} spacing={2}>
+        <Grid item xs={5}>
           <Box sx={{ maxWidth: 800, mt: 2 }}>
             <Box sx={{ background: "#0C42950D", borderRadius: 1, mt: 2 }}>
               <Typography
@@ -352,7 +352,7 @@ function ClientInvoiceDetails({ invoicedate }) {
 
         </Grid>
 
-        <Grid item>
+        <Grid item xs={4}>
 
           <Box sx={{ maxWidth: 800, mt: 2 }}>
             <Box sx={{ background: "#0C42950D", borderRadius: 1, mt: 2 }}>
