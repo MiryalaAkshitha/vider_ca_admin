@@ -32,7 +32,7 @@ function OtherParticulars({ result }) {
   }, []);
 
   function updateOtherParticular(id: number, index: number, key: string, value: any) {
-    dispatch(handleChangeOtherParticular({ id, index, key, value, taskExpenseType: "PURE_AGENT" }));
+    dispatch(handleChangeOtherParticular({ id, index, key, value, taskExpenseType: "" }));
   }
 
   function addOtherParticular() {
