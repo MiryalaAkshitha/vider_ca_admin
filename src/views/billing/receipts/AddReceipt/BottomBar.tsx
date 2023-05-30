@@ -63,7 +63,8 @@ function BottomBar() {
       const ids = apiData?.invoices.map((o: any) => o.id);
       const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
       const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
-      if (totalpayment > invoicesum) {
+      const isadvance = apiData?.type == "ADVANCE" ? false : true;
+      if (isadvance && totalpayment > invoicesum) {
         snack.error("Please create Advance receipt amount Please match amount, credits with pureagent amount and service amount...");
         return;
       } else {
