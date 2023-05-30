@@ -65,7 +65,7 @@ function ClientInvoiceDetails({ invoicedate }) {
 
   const onChange = (event: any) => {
     const { name, value } = event.target;
-    if((value * 1) < 0 ) {
+    if ((value * 1) < 0) {
       return
     }
     if (name == "previousCredits") {
@@ -86,7 +86,7 @@ function ClientInvoiceDetails({ invoicedate }) {
 
   const onRowChange = (event: any, row: any) => {
     const { name, value } = event.target;
-    if((value * 1) < 0 ) {
+    if ((value * 1) < 0) {
       return
     }
     if (value <= getTotalAmount() && value > 0) {
@@ -176,7 +176,7 @@ function ClientInvoiceDetails({ invoicedate }) {
       render: (row: any) => (
         <>
           {/* {+row?.pgamount - +row?.pgdueamount} */}
-          {row?.pgdueamount*1}
+          {row?.pgdueamount * 1}
         </>
       ),
     },
@@ -241,7 +241,7 @@ function ClientInvoiceDetails({ invoicedate }) {
             variant="outlined"
             type="number"
             disabled={row.payfullservicepayment}
-          /><br/>
+          /><br />
           {/* <Checkbox name="payfullservicepayment" checked={row?.payservicepayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
             name="payfullservicepayment"
@@ -277,6 +277,9 @@ function ClientInvoiceDetails({ invoicedate }) {
           size="small"
           type="number"
         />
+        <div style={{ 'color': 'red', 'fontSize': '12px', 'margin': '15px 0 20px 0' }} >
+          *Please create a separate receipt for any advance amount exceeding the due or invoiced amount.
+        </div>
       </Box>
       <Box sx={{ maxWidth: 600, mt: 2 }}>
         <PaymentDetails />

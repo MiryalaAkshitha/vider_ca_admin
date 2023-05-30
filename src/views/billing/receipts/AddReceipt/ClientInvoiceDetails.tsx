@@ -24,7 +24,7 @@ function ClientInvoiceDetails() {
   const [balanceamount, setBalanceAmount] = useState(0);
 
   const [errorPrevCredits, setErrorPrevCredits] = useState(false);
- 
+
 
   const { isLoading }: ResType = useQuery(
     ["credit-balance", { clientId: state.client }],
@@ -56,11 +56,11 @@ function ClientInvoiceDetails() {
 
   const onChange = (event: any) => {
     const { name, value } = event.target;
-    if((value * 1) < 0 ) {
+    if ((value * 1) < 0) {
       return
     }
     if (name == "previousCredits") {
-      if(value >= state.previousCredits) {
+      if (value >= state.previousCredits) {
         setErrorPrevCredits(true);
         snack.error('Enter credits equal to' + state.previousCredits);
       } else {
@@ -77,7 +77,7 @@ function ClientInvoiceDetails() {
 
   const onRowChange = (event: any, row: any) => {
     const { name, value } = event.target;
-    if((value * 1) < 0 ) {
+    if ((value * 1) < 0) {
       return
     }
     if (value <= getTotalAmount()) {
@@ -110,7 +110,7 @@ function ClientInvoiceDetails() {
         if (type == 'payfullservicepayment') {
           item.payfullservicepayment = checked;
         }
-        
+
         item.pgpayment = item.payfullpgpayment ? (+row?.pgdueamount) : item.pgpayment;
         item.servicepayment = item.payfullservicepayment ? (row?.servicedueamount * 1) : item.servicepayment;
         changedinvoice.push(item);
@@ -168,7 +168,7 @@ function ClientInvoiceDetails() {
       render: (row: any) => (
         <>
           {/* {+row?.pgamount - +row?.pgdueamount} */}
-          {row?.pgdueamount*1}
+          {row?.pgdueamount * 1}
         </>
       ),
     },
@@ -234,7 +234,7 @@ function ClientInvoiceDetails() {
             type="number"
             disabled={row.payfullservicepayment}
           />
-          <br/>
+          <br />
           {/* <Checkbox name="payfullservicepayment" checked={row?.payservicepayment} onChange={(e) => onRowChange(e, row)} /> */}
           <Checkbox
             name="payfullservicepayment"
@@ -270,9 +270,12 @@ function ClientInvoiceDetails() {
           size="small"
           type="number"
         />
+        <div style={{ 'color': 'red', 'fontSize': '12px', 'margin': '15px 0 20px 0' }} >
+          *Please create a separate receipt for any advance amount exceeding the due or invoiced amount.
+        </div>
       </Box>
       <Box sx={{ maxWidth: 600, mt: 2 }}>
-      <PaymentDetails />
+        <PaymentDetails />
       </Box>
       <Box sx={{ maxWidth: 600, mt: 2 }}>
         <TextField
@@ -338,7 +341,7 @@ function ClientInvoiceDetails() {
             <SummaryDetail
               title=""
               value={""}
-              // value={balanceamount}
+            // value={balanceamount}
             />
             <SummaryDetail
               title="Previous Credits"
