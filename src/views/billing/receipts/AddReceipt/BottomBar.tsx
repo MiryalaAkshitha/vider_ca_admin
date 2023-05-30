@@ -53,64 +53,64 @@ function BottomBar() {
       apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
       if (apiData?.particulars.length > 0 && apiData?.invoices.length > 0) {
         apiData['invoices'] = apiData['invoices'].filter((item: any) => apiData?.particulars.some(itemToBeRemoved => itemToBeRemoved.id === item.id));
-        const invoicesum = apiData['invoices'].reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
-        if (invoicesum < (+apiData.amount + +apiData.creditsUsed)) {
-          snack.error("Please match amount, credits with pureagent amount and service amount...");
-          return;
-        }
       }
+
       // apiData.paymentDate = apiData.receiptDate;
       apiData.amount = +apiData.amount;
       const totalpayment = +apiData.amount + +apiData.creditsUsed;
       // apiData.creditsUsed = +apiData.creditsUsed + (+totalpayment - +invoicesum);
 
-      let idTotalSumcorrect = true;
-
-      if (apiData?.invoices && apiData?.invoices.length > 0) {
-        const ids = apiData?.invoices.map((o: any) => o.id);
-        const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
-        const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
-
-        const balcrditused = (+apiData.previousCredits - +apiData.creditsUsed ) + (totalpayment - (+invoicesum));
-        apiData.totalCredits = +apiData.previousCredits == 0 ? (+totalpayment - +invoicesum) : balcrditused;        
-        
-        const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
-        apiData.dueAmount = invoicesum - dueinvoicesum;
-        
-        if (invoicesum <= totalpayment) {
-          idTotalSumcorrect = true;
-        } else {
-          idTotalSumcorrect = false;
-        }
+      const ids = apiData?.invoices.map((o: any) => o.id);
+      const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
+      const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
+      if (totalpayment > invoicesum) {
+        snack.error("Please create Advance receipt amount Please match amount, credits with pureagent amount and service amount...");
+        return;
       } else {
-        idTotalSumcorrect = false;
-      }
+        let idTotalSumcorrect = true;
 
-      
-      if (apiData?.type == "ADVANCE") {
-        if (+apiData?.amount > 0) {
-          apiData.totalCredits = +apiData.previousCredits + apiData.amount;
-          apiData.dueAmount = apiData?.dueAmount == null || apiData?.dueAmount == '' ? 0 : apiData?.dueAmount;
-          mutate({
-            data: apiData,
-          });
-        } else {
-          snack.error("Enter amount to be greater than 0");
-        }
-      } else {
-        if (idTotalSumcorrect) {
-          const ids = apiData?.invoices.map(o => o.id);
-          const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
-          apiData.invoices = filteredinvoices;
-          const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
+        if (apiData?.invoices && apiData?.invoices.length > 0) {
+          const balcrditused = (+apiData.previousCredits - +apiData.creditsUsed) + (totalpayment - (+invoicesum));
+          apiData.totalCredits = +apiData.previousCredits == 0 ? (+totalpayment - +invoicesum) : balcrditused;
+
           const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
           apiData.dueAmount = invoicesum - dueinvoicesum;
 
-          mutate({
-            data: apiData,
-          });
+          if (invoicesum <= totalpayment) {
+            idTotalSumcorrect = true;
+          } else {
+            idTotalSumcorrect = false;
+          }
         } else {
-          snack.error("The sum of pureagent and service payment to be less than or equal to " + totalpayment);
+          idTotalSumcorrect = false;
+        }
+
+
+        if (apiData?.type == "ADVANCE") {
+          if (+apiData?.amount > 0) {
+            apiData.totalCredits = +apiData.previousCredits + apiData.amount;
+            apiData.dueAmount = apiData?.dueAmount == null || apiData?.dueAmount == '' ? 0 : apiData?.dueAmount;
+            mutate({
+              data: apiData,
+            });
+          } else {
+            snack.error("Enter amount to be greater than 0");
+          }
+        } else {
+          if (idTotalSumcorrect) {
+            const ids = apiData?.invoices.map(o => o.id);
+            const filteredinvoices = apiData?.invoices.filter(({ id }, index) => !ids.includes(id, index + 1));
+            apiData.invoices = filteredinvoices;
+            const invoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
+            const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
+            apiData.dueAmount = invoicesum - dueinvoicesum;
+
+            mutate({
+              data: apiData,
+            });
+          } else {
+            snack.error("The sum of pureagent and service payment to be less than or equal to " + totalpayment);
+          }
         }
       }
     }

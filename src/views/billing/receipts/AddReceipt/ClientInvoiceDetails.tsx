@@ -336,8 +336,9 @@ function ClientInvoiceDetails() {
               value={invoicedamount}
             />
             <SummaryDetail
-              title="Balance amount added in Credits"
-              value={balanceamount}
+              title=""
+              value={""}
+              // value={balanceamount}
             />
             <SummaryDetail
               title="Previous Credits"
