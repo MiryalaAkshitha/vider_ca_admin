@@ -52,7 +52,12 @@ function BottomBar() {
     } else {
       apiData['invoices'] = apiData?.invoices != null ? isNestedArray(apiData?.invoices) : [];
       if (apiData?.particulars.length > 0 && apiData?.invoices.length > 0) {
-        apiData['invoices'] = apiData['invoices'].filter((item: any) => apiData?.particulars.some(itemToBeRemoved => itemToBeRemoved.id === item.id))
+        apiData['invoices'] = apiData['invoices'].filter((item: any) => apiData?.particulars.some(itemToBeRemoved => itemToBeRemoved.id === item.id));
+        const invoicesum = apiData['invoices'].reduce((total, invoice) => total + (+invoice.pgpayment + +invoice.servicepayment), 0);
+        if (invoicesum > (+apiData.amount + +apiData.creditsUsed)) {
+          snack.error("Please match amount, credits with pureagent amount and service amount...");
+          return;
+        }
       }
       // apiData.paymentDate = apiData.receiptDate;
       apiData.amount = +apiData.amount;
@@ -71,6 +76,7 @@ function BottomBar() {
         
         const dueinvoicesum = filteredinvoices.reduce((total, invoice) => total + (+invoice.pgdueamount + +invoice.servicedueamount), 0);
         apiData.dueAmount = invoicesum - dueinvoicesum;
+        
         if (invoicesum <= totalpayment) {
           idTotalSumcorrect = true;
         } else {

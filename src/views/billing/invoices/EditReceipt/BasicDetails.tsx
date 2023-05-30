@@ -29,6 +29,9 @@ function BasicDetails() {
         }
         dispatch(handleChange({ key: "receiptNumber", value: res.data }));
         dispatch(handleChange({ key: "receiptDate", value: moment().format("YYYY-MM-DD") }));
+        dispatch(handleChange({ key: "paymentDate", value: moment().format("YYYY-MM-DD") }));
+        dispatch(handleChange({ key: "amount", value: 0 }));
+        dispatch(handleChange({ key: "previousCredits", value: 0 }));
       },
     }
   );

@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import { getNextReceiptNumber } from "api/services/billing/receipts";
 import Loader from "components/Loader";
 import { getClients } from "api/services/clients/clients";
+import moment from "moment";
 
 function BasicDetails() {
   const dispatch = useDispatch();
@@ -21,7 +22,11 @@ function BasicDetails() {
     getNextReceiptNumber,
     {
       onSuccess: (res: any) => {
+        dispatch(handleChange({ key: "receiptDate", value: moment().format("YYYY-MM-DD") }));
         dispatch(handleChange({ key: "receiptNumber", value: res.data }));
+        dispatch(handleChange({ key: "paymentDate", value: moment().format("YYYY-MM-DD") }));
+        dispatch(handleChange({ key: "amount", value: 0 }));
+        dispatch(handleChange({ key: "previousCredits", value: 0 }));
       },
     }
   );
