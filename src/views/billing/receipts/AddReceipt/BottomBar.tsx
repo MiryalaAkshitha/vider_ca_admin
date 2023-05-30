@@ -4,18 +4,20 @@ import { createReceipt } from "api/services/billing/receipts";
 import { snack } from "components/toast";
 import moment from "moment";
 import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectReceipt } from "redux/reducers/createReceiptSlice";
+import { resetState, selectReceipt } from "redux/reducers/createReceiptSlice";
 import { handleError } from "utils/handleError";
 
 function BottomBar() {
   const state = useSelector(selectReceipt);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { mutate } = useMutation(createReceipt, {
     onSuccess: () => {
+      dispatch(resetState());
       snack.success("Receipt created successfully");
       queryClient.invalidateQueries("receipts");
       navigate("/billing/receipts");
