@@ -51,7 +51,7 @@ function TotalCalculations({ result }) {
           IGST
           </Typography>
           <Typography variant="body2">
-            {state.billingEntityAddress?.state !== state?.placeOfSupply.split("-")[1] ? getTotalGst(state.particulars) / 2 : getTotalGst(state.particulars)}/-
+            {getTotalGst(state.particulars)}/-
           </Typography>
         </Box>
       }
