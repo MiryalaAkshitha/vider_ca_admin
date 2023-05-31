@@ -46,7 +46,9 @@ function ClientDetails({ result }) {
   );
 
   const handleChange = (e: any) => {
-
+    if (e.target.name == 'placeOfSupply') {
+      dispatch(handlePlaceOfSupplyChange(e.target.value));
+    }
     if (e.target.name == 'client') {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
@@ -64,7 +66,6 @@ function ClientDetails({ result }) {
         }
       }
     }
-
   };
 
   if (isLoading || statesLoading) return <Loader />;
@@ -139,10 +140,10 @@ function ClientDetails({ result }) {
         <Grid item xs={6}>
           {/* <SectionHeading title="Shipping Address" />
           <Box p={2}> */}
-            {/* <Box mb={1}>
+          {/* <Box mb={1}>
               <img src={logo} alt="logo" />
             </Box> */}
-            {/* <AddressDetail
+          {/* <AddressDetail
               title="Legal Name"
               value={shippingAddress?.legalName}
             />
