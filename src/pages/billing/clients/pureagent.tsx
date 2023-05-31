@@ -56,12 +56,12 @@ function PureAgent() {
       <main style={{display:"flex",flexDirection:"column",gap:"70px"}}>
         <Box>
           <Typography variant="h6">
-            Amount Received :   {result?.data[0]?.pureagentamountrecevied}
+            Amount Received :   {result?.data[0]?.pureagentamountreceived}
           </Typography>
         </Box>
         <Box>
           <Typography variant="h6">
-            Amount Due :  {result?.data[0]?.pureagentdue}
+            Amount Due :  {result?.data[0]?.pureagentamountdue}
           </Typography>
         </Box>
       </main>

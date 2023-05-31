@@ -138,10 +138,10 @@ export const createEstimateSlice = createSlice({
     },
     handleExistingOtherParticular(state: IState, action: PayloadAction<OtherParticularChangeType>) {
       const { id, index, key, value, taskExpenseType } = action.payload;
-      state.otherParticulars.push({ id: id, taskExpenseType: taskExpenseType, name: key, amount: value });
+      state.otherParticulars.push({ id: id, taskExpenseType: "PURE_AGENT", name: key, amount: value });
     },
     handleAddOtherParticular(state: IState) {
-      state.otherParticulars.push({ id: 0, taskExpenseType: "", name: "", amount: 0 });
+      state.otherParticulars.push({ id: 0, taskExpenseType: "PURE_AGENT", name: "", amount: 0 });
     },
     handleRemoveOtherParticular(state: IState, action: PayloadAction<number>) {
       state.otherParticulars.splice(action.payload, 1);
@@ -176,20 +176,20 @@ export const createEstimateSlice = createSlice({
           rate: +task?.feeAmount || 0,
           taskId: task.id,
         });
-        let additional = _.filter(task?.expenditure, { type: "ADDITIONAL" });
+        // let additional = _.filter(task?.expenditure, { type: "ADDITIONAL" });
         let pureAgent = _.filter(task?.expenditure, { type: "PURE_AGENT" });
-        additional.forEach((expenditure: any) => {
-          state.particulars.push({
-            ...initialParticular,
-            rate: +expenditure?.amount || 0,
-            name: expenditure.particularName,
-            taskId: task.id,
-          });
-        });
+        // additional.forEach((expenditure: any) => {
+        //   state.particulars.push({
+        //     ...initialParticular,
+        //     rate: +expenditure?.amount || 0,
+        //     name: expenditure.particularName,
+        //     taskId: task.id,
+        //   });
+        // });
         pureAgent.forEach((expenditure: any) => {
           state.otherParticulars.push({
             id: expenditure.id,
-            taskExpenseType: expenditure.particularType,
+            taskExpenseType: "PURE_AGENT" || expenditure.particularType,
             name: expenditure.particularName,
             amount: +expenditure?.amount || 0,
           });
