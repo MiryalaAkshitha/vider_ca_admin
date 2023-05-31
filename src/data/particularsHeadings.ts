@@ -24,7 +24,7 @@ export const PARTICULARS_HEADINGS = [
     width: "auto",
   },
   {
-    name: "GST",
+    name: "IGST",
     width: "200px",
   },
   {

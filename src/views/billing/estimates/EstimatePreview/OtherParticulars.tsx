@@ -61,14 +61,26 @@ function OtherParticulars({ result, interState }: IProps) {
               </Typography>
               <Typography variant="subtitle2">{result?.subTotal} /-</Typography>
             </Box>
-            <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-              <Typography variant="caption" flex={1}>
-                {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] ? "CGST" : "GST"}
-              </Typography>
-              <Typography variant="body2">
-                {+result?.totalGstAmount / 2}/-
-              </Typography>
-            </Box>
+            {result.billingEntityAddress?.state !== result?.placeOfSupply.split("-")[1] && <>
+              <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+                <Typography variant="caption" flex={1}>
+                IGST
+                </Typography>
+                <Typography variant="body2">
+                  {+result?.totalGstAmount}/-
+                </Typography>
+              </Box>
+            </>}
+            {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && <>
+              <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+                <Typography variant="caption" flex={1}>
+                CGST
+                </Typography>
+                <Typography variant="body2">
+                  {+result?.totalGstAmount / 2}/-
+                </Typography>
+              </Box>
+            </>}
             {result.billingEntityAddress?.state === result?.placeOfSupply.split("-")[1] && <>
               <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
                 <Typography variant="caption" flex={1}>

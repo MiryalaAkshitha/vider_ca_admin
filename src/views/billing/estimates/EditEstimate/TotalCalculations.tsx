@@ -45,21 +45,33 @@ function TotalCalculations({ result }) {
           {getSubTotal(state.particulars)} /-
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-        <Typography variant="caption" flex={1}>
-          {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? "CGST" : "GST"}
-        </Typography>
-        <Typography variant="body2">
-          {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? (getTotalGst(state.particulars) / 2) : getTotalGst(state.particulars)}/-
-        </Typography>
-      </Box>
+      {state.billingEntityAddress?.state !== state?.placeOfSupply.split("-")[1] &&
+        <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+          <Typography variant="caption" flex={1}>
+          IGST
+          </Typography>
+          <Typography variant="body2">
+            {state.billingEntityAddress?.state !== state?.placeOfSupply.split("-")[1] ? getTotalGst(state.particulars) / 2 : getTotalGst(state.particulars)}/-
+          </Typography>
+        </Box>
+      }
+      {state.billingEntityAddress?.state == state?.placeOfSupply.split("-")[1] &&
+        <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+          <Typography variant="caption" flex={1}>
+          CGST
+          </Typography>
+          <Typography variant="body2">
+            {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? getTotalGst(state.particulars) / 2 : getTotalGst(state.particulars)}/-
+          </Typography>
+        </Box>
+      }
       {state.billingEntityAddress?.state == state?.placeOfSupply.split("-")[1] &&
         <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
           <Typography variant="caption" flex={1}>
             SGST
           </Typography>
           <Typography variant="body2">
-            {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? getTotalGst(state.particulars) / 2 : getTotalGst(state.particulars)}/-
+            {state.billingEntityAddress?.state === state?.placeOfSupply.split("-")[1] ? getTotalGst(state.particulars) / 2 : getTotalGst(state.particulars)}%
           </Typography>
         </Box>
       }
