@@ -53,10 +53,13 @@ function ClientDetails({ result }) {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
       );
-      if ((client?.legalName == '' || !client?.legalName)
-        && (client?.state == '' || !client?.state)
-        && (client?.city == '' || !client?.city)) {
-        snack.error("Please update missing details in client profile.");
+      if ((client?.address?.billingaddress?.locality == '')
+        && (client?.address?.billingaddress?.street == '')
+        && (client?.address?.billingaddress?.city == '')
+        && (client?.address?.billingaddress?.district == '')
+        && (client?.address?.billingaddress?.state == '')
+        && (client?.address?.billingaddress?.pincode == '')) {
+        snack.error("Please update Billing address in client profile.");
       } else {
         dispatch(handleResetParticular());
         setGstNumber(client?.gstNumber);
