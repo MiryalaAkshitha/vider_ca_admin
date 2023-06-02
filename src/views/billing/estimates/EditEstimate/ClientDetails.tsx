@@ -29,6 +29,7 @@ function ClientDetails({ result }) {
   // const [client, setClient] = useState(result?.client);
   // const [placeOfSupply, setPlaceOfSupply] = useState(result?.placeOfSupply);
   const [gstNumber, setGstNumber] = useState('NA');
+  const [curclient, setCurclient] = useState<any>();
 
   const { data, isLoading }: ResType = useQuery(["clients", {}], getClients);
 
@@ -53,6 +54,7 @@ function ClientDetails({ result }) {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
       );
+      setCurclient(client);
       if ((client?.address?.billingaddress?.locality == '')
         && (client?.address?.billingaddress?.street == '')
         && (client?.address?.billingaddress?.city == '')
@@ -126,7 +128,7 @@ function ClientDetails({ result }) {
             </Box> */}
             <AddressDetail
               title="Legal Name"
-              value={billingAddress?.legalName}
+              value={billingAddress?.legalName == '' ? curclient?.displayName : billingAddress?.legalName}
             />
             <AddressDetail title="Address" value={getAddress(billingAddress)} />
             <AddressDetail title="Email" value={billingAddress?.email} />
