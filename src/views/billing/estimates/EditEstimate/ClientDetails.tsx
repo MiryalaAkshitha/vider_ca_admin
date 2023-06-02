@@ -55,7 +55,7 @@ function ClientDetails({ result }) {
         (item: any) => item.id === e.target.value
       );
       setCurclient(client);
-      if ((client?.address?.billingaddress?.locality == '')
+      if (client?.address && client?.address == null && (client?.address?.billingaddress?.locality == '')
         && (client?.address?.billingaddress?.street == '')
         && (client?.address?.billingaddress?.city == '')
         && (client?.address?.billingaddress?.district == '')
