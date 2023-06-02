@@ -108,7 +108,7 @@ function ClientDetails() {
             </Box> */}
             <AddressDetail
               title="Legal Name"
-              value={billingAddress?.legalName == '' ? curclient?.displayName : billingAddress?.legalName}
+              value={billingAddress?.legalName == ('' || null) ? curclient?.displayName : billingAddress?.legalName}
             />
             <AddressDetail title="Address" value={getAddress(billingAddress)} />
             <AddressDetail title="Email" value={billingAddress?.email} />
