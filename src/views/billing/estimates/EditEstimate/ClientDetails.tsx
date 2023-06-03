@@ -54,7 +54,7 @@ function ClientDetails({ result }) {
       let client = data?.data?.result?.find(
         (item: any) => item.id === e.target.value
       );
-      if (client?.address && client?.address !== null && (client?.address?.billingaddress?.locality == '')
+      if (client?.address && client?.address == null && (client?.address?.billingaddress?.locality == '')
         && (client?.address?.billingaddress?.street == '')
         && (client?.address?.billingaddress?.city == '')
         && (client?.address?.billingaddress?.district == '')
