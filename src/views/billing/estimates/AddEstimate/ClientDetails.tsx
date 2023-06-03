@@ -12,6 +12,7 @@ import {
   handleClientChange,
   handlePlaceOfSupplyChange,
   selectEstimate,
+  resetState,
 } from "redux/reducers/createEstimateSlice";
 import { ResType } from "types";
 import SectionHeading from "../SectionHeading";
@@ -25,7 +26,6 @@ function ClientDetails() {
   const dispatch = useDispatch();
 
   const [gstNumber, setGstNumber] = useState('NA');
-  const [curclient, setCurclient] = useState<any>();
 
   const { data, isLoading }: ResType = useQuery(["clients", {}], getClients);
 
@@ -38,7 +38,6 @@ function ClientDetails() {
     let client = data?.data?.result?.find(
       (item: any) => item.id === e.target.value
     );
-    setCurclient(client);
     if (client?.address && client?.address !== null && (client?.address?.billingaddress?.locality == '')
       && (client?.address?.billingaddress?.street == '')
       && (client?.address?.billingaddress?.city == '')
@@ -46,6 +45,7 @@ function ClientDetails() {
       && (client?.address?.billingaddress?.state == '')
       && (client?.address?.billingaddress?.pincode == '')) {
       snack.error("Please update Billing address in client profile.");
+      dispatch(resetState());
     } else {
       setGstNumber(client?.gstNumber);
       dispatch(handleClientChange({ client }));
@@ -108,7 +108,7 @@ function ClientDetails() {
             </Box> */}
             <AddressDetail
               title="Legal Name"
-              value={billingAddress?.legalName == ('' || null) ? curclient?.displayName : billingAddress?.legalName}
+              value={billingAddress?.legalName == ('' || null) ? billingAddress?.displayName : billingAddress?.legalName}
             />
             <AddressDetail title="Address" value={getAddress(billingAddress)} />
             <AddressDetail title="Email" value={billingAddress?.email} />

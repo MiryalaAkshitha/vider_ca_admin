@@ -13,6 +13,7 @@ export interface OtherParticularChangeType {
 }
 
 export interface Address {
+  displayName: string;
   legalName: string;
   buildingName: string;
   street: string;

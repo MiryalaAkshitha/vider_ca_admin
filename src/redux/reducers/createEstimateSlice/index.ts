@@ -39,6 +39,7 @@ export const createEstimateSlice = createSlice({
       state.billingEntity = billEntity?.id;
       let address = {
         legalName: billEntity?.legalName,
+        displayName: billEntity?.displayName,
         buildingName: billEntity?.buildingName,
         street: billEntity?.street,
         city: billEntity?.city,
@@ -57,6 +58,7 @@ export const createEstimateSlice = createSlice({
       let client = action.payload.client;
       state.client = client?.id;
       let address = {
+        displayName: client?.displayName,
         legalName: client?.legalName,
         buildingName: client?.buildingName,
         street: client?.street,
@@ -72,7 +74,7 @@ export const createEstimateSlice = createSlice({
       const tempShippingAddress = JSON.parse(JSON.stringify(client?.address?.shippingaddress));
       tempBillingAddress['mobileNumber'] = client?.mobileNumber;
       tempBillingAddress['email'] = client?.email;
-      tempBillingAddress['legalName'] = client?.legalName;
+      tempBillingAddress['displayName'] = client?.displayName;
       tempShippingAddress['mobileNumber'] = client?.mobileNumber;
       tempShippingAddress['email'] = client?.email;
       tempShippingAddress['legalName'] = client?.legalName;
@@ -83,6 +85,7 @@ export const createEstimateSlice = createSlice({
       let client = action.payload.client;
       state.client = client?.id;
       let address = {
+        displayName: client?.displayName,
         legalName: client?.legalName,
         buildingName: client?.buildingName,
         street: client?.street,
@@ -98,7 +101,7 @@ export const createEstimateSlice = createSlice({
       const tempShippingAddress = JSON.parse(JSON.stringify(client?.address?.shippingaddress));
       tempBillingAddress['mobileNumber'] = client?.mobileNumber;
       tempBillingAddress['email'] = client?.email;
-      tempBillingAddress['legalName'] = client?.legalName;
+      tempBillingAddress['displayName'] = client?.displayName;
       tempShippingAddress['mobileNumber'] = client?.mobileNumber;
       tempShippingAddress['email'] = client?.email;
       tempShippingAddress['legalName'] = client?.legalName;
