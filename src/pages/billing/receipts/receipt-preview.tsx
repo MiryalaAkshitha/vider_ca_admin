@@ -18,11 +18,12 @@ import InvoiceDetails from "views/billing/invoices/ReceiptPreview/InvoiceDetails
 import PaymentDetails from "views/billing/invoices/ReceiptPreview/PaymentDetails";
 
 export const StyledWatupButton = styled("div")(() => ({
-  position: "fixed",
+  position: "absolute",
   // width: "40px",
-  height: "40px",
-  bottom: "20px",
-  right: "60px",
+  height: "50px",
+  bottom: "30px",
+  right: "220px",
+  top: "100px",
   zIndex: 100,
   cursor: "pointer"
 }));
@@ -108,14 +109,14 @@ width=0,height=0,left=-1000,top=-1000`;
           </Box>
         </Box>
 
-        <StyledWatupButton>
+        {/* <StyledWatupButton id="downloadIcon" className="hide">
 
           {isdownloading ? 'downloading...' : <DownloadOutlined onClick={handleDownload} />}
 
-          {/* <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup"
-            style={{ 'width': '40px', 'cursor': 'pointer' }} /> */}
+          <img onClick={shareOnWhatsApp} src="https://vider.in/images/e-whatsapp.jpg" title="watsup"
+            style={{ 'width': '40px', 'cursor': 'pointer' }} /> 
 
-        </StyledWatupButton>
+        </StyledWatupButton> */}
 
       </Paper>
     </Box>

@@ -32,6 +32,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       {
         client: client,
         search,
+        isinvoiced: true
       },
     ],
     getInvoicingTasks,
@@ -78,7 +79,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       selected.forEach((particular: any, index: any) => {
         if (particular?.expenditure && particular?.expenditure.length > 0) {
           particular?.expenditure.forEach((expenditure: any, index: any) => {
-            if (expenditure?.taskExpenseType !== 'ADDITIONAL') {
+            if (expenditure?.taskExpenseType !== 'ADDITIONAL' && expenditure?.includeInInvoice) {
               expenditure['name'] = expenditure.particularName;
               expenditure['amount'] = (expenditure.amount * 1);
               const id = expenditure.id;

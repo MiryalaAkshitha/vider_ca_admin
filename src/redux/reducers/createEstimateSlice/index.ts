@@ -39,6 +39,7 @@ export const createEstimateSlice = createSlice({
       state.billingEntity = billEntity?.id;
       let address = {
         legalName: billEntity?.legalName,
+        displayName: billEntity?.displayName,
         buildingName: billEntity?.buildingName,
         street: billEntity?.street,
         city: billEntity?.city,
@@ -57,6 +58,7 @@ export const createEstimateSlice = createSlice({
       let client = action.payload.client;
       state.client = client?.id;
       let address = {
+        displayName: client?.displayName,
         legalName: client?.legalName,
         buildingName: client?.buildingName,
         street: client?.street,
@@ -72,7 +74,7 @@ export const createEstimateSlice = createSlice({
       const tempShippingAddress = JSON.parse(JSON.stringify(client?.address?.shippingaddress));
       tempBillingAddress['mobileNumber'] = client?.mobileNumber;
       tempBillingAddress['email'] = client?.email;
-      tempBillingAddress['legalName'] = client?.legalName;
+      tempBillingAddress['displayName'] = client?.displayName;
       tempShippingAddress['mobileNumber'] = client?.mobileNumber;
       tempShippingAddress['email'] = client?.email;
       tempShippingAddress['legalName'] = client?.legalName;
@@ -83,6 +85,7 @@ export const createEstimateSlice = createSlice({
       let client = action.payload.client;
       state.client = client?.id;
       let address = {
+        displayName: client?.displayName,
         legalName: client?.legalName,
         buildingName: client?.buildingName,
         street: client?.street,
@@ -98,7 +101,7 @@ export const createEstimateSlice = createSlice({
       const tempShippingAddress = JSON.parse(JSON.stringify(client?.address?.shippingaddress));
       tempBillingAddress['mobileNumber'] = client?.mobileNumber;
       tempBillingAddress['email'] = client?.email;
-      tempBillingAddress['legalName'] = client?.legalName;
+      tempBillingAddress['displayName'] = client?.displayName;
       tempShippingAddress['mobileNumber'] = client?.mobileNumber;
       tempShippingAddress['email'] = client?.email;
       tempShippingAddress['legalName'] = client?.legalName;
@@ -138,10 +141,10 @@ export const createEstimateSlice = createSlice({
     },
     handleExistingOtherParticular(state: IState, action: PayloadAction<OtherParticularChangeType>) {
       const { id, index, key, value, taskExpenseType } = action.payload;
-      state.otherParticulars.push({ id: id, taskExpenseType: taskExpenseType, name: key, amount: value });
+      state.otherParticulars.push({ id: id, taskExpenseType: "PURE_AGENT", name: key, amount: value });
     },
     handleAddOtherParticular(state: IState) {
-      state.otherParticulars.push({ id: 0, taskExpenseType: "", name: "", amount: 0 });
+      state.otherParticulars.push({ id: 0, taskExpenseType: "PURE_AGENT", name: "", amount: 0 });
     },
     handleRemoveOtherParticular(state: IState, action: PayloadAction<number>) {
       state.otherParticulars.splice(action.payload, 1);
@@ -176,20 +179,20 @@ export const createEstimateSlice = createSlice({
           rate: +task?.feeAmount || 0,
           taskId: task.id,
         });
-        let additional = _.filter(task?.expenditure, { type: "ADDITIONAL" });
+        // let additional = _.filter(task?.expenditure, { type: "ADDITIONAL" });
         let pureAgent = _.filter(task?.expenditure, { type: "PURE_AGENT" });
-        additional.forEach((expenditure: any) => {
-          state.particulars.push({
-            ...initialParticular,
-            rate: +expenditure?.amount || 0,
-            name: expenditure.particularName,
-            taskId: task.id,
-          });
-        });
+        // additional.forEach((expenditure: any) => {
+        //   state.particulars.push({
+        //     ...initialParticular,
+        //     rate: +expenditure?.amount || 0,
+        //     name: expenditure.particularName,
+        //     taskId: task.id,
+        //   });
+        // });
         pureAgent.forEach((expenditure: any) => {
           state.otherParticulars.push({
             id: expenditure.id,
-            taskExpenseType: expenditure.particularType,
+            taskExpenseType: "PURE_AGENT" || expenditure.particularType,
             name: expenditure.particularName,
             amount: +expenditure?.amount || 0,
           });

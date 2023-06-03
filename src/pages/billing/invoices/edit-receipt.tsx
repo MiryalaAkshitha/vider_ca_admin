@@ -21,20 +21,18 @@ function EditReceipt() {
     const state = useSelector(selectReceipt);
 
     const params = useParams();
-    const { queryParams } = useQueryParams();
 
     const { data, isLoading }: ResType = useQuery(
         ["invoice-details", params.invoiceId],
         getInvoicePreview,
         {
             onSuccess: (res: any) => {
-                dispatch(resetState());
                 setTimeout((response: any, cstate: any) => {
                     if (response?.data?.client && response?.data?.client?.id) {
                         dispatch(handleChange({ key: "client", value: response?.data?.client?.id }));
                     }
                     dispatch(handleChange({ key: 'particulars', value: cstate.particulars }));
-                }, 500, res, state);
+                }, 1000, res, state);
             },
         }
     );
@@ -46,9 +44,12 @@ function EditReceipt() {
                     Payment Receipt
                     {/* {data?.data?.invoiceNumber} */}
                 </Typography>
-                <BasicDetails />
-                {state.type === "INVOICE" && state.client && <ClientInvoiceDetails invoicedate={state.particulars} />}
-
+                {!isLoading &&
+                    <>
+                        <BasicDetails />
+                        {state.type === "INVOICE" && state.client && <ClientInvoiceDetails invoicedate={state.particulars} />}
+                    </>
+                }
             </StyledNewEstimateContainer>
             <BottomBar />
         </>

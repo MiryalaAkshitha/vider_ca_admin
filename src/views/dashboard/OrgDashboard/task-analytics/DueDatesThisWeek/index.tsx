@@ -9,7 +9,7 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
+import { handleApply, handleFilters, handleSelected, resetFilters } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { StyledTaskBox } from "../../styles";
 import DueCard from "./DueCard";
@@ -32,6 +32,7 @@ function DueDatesThisWeek() {
   });
 
   const handleClick = () => {
+    dispatch(resetFilters());
     dispatch(handleSelected("dueOn"));
     dispatch(
       handleFilters({

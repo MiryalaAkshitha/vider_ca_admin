@@ -10,9 +10,11 @@ import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import useQueryParams from "hooks/useQueryParams";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { handleError } from "utils/handleError";
 import ImportServices from "views/dashboard/GetStarted/ImportServices";
@@ -20,23 +22,40 @@ import ServiceCard from "views/services/ServiceCard";
 
 function Services() {
   useTitle("Services");
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const confirm = useConfirm();
   const { queryParams, setQueryParams } = useQueryParams();
   const [search, setSearch] = useState("");
   const [openImport, setOpenImport] = useState(false);
+  const [servicesIds, setServicesIds] = useState([]);
   const [category, setCategory] = useState<any>(null);
   const [subCategory, setSubCategory] = useState<any>(null);
   const page = +queryParams.page || 1;
   const limit = 9;
   const offset = (page - 1) * limit;
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
+
   const { data: categories }: ResType = useQuery("categories", getCategories);
 
   const { data, isLoading }: ResType = useQuery(
     ["services", { search, category, subCategory, limit, offset }],
-    getServices
+    getServices,
+    {
+      onSuccess: (res: any) => {
+        let ids = res?.data?.result.map( (item: any) => item.id);
+        setServicesIds(ids);       
+      },
+      onError: (err: any) => {
+        snack.error(handleError(err));
+      },
+    }
   );
 
   const { mutate } = useMutation(updateAdminServices, {

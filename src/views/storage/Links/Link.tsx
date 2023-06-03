@@ -2,7 +2,7 @@ import { MoreVert } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { icons } from "assets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyledFile, StyledSingleLineContainer } from "views/clients/styles";
 import FolderMenu from "../FolderOrFileMenu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -23,6 +23,15 @@ function Link(props: Props) {
   const { data } = props;
   const [dragging, setDragging] = useState(false);
   const [contextMenu, setContextMenu] = useState<Position | null>(null);
+
+  const [links, setLinks] = useState({name: "", file: ""});
+
+  useEffect(() => {
+    setLinks({
+      name: data.name,
+      file: data.file
+    });
+  }, [data]);
 
   const onDragStart = (e: any) => {
     setDragging(true);
@@ -64,7 +73,7 @@ function Link(props: Props) {
                     <img src={icons.onedrive} alt="OneDrive" width="20px" />
                   </div>
                 )}
-                <Typography variant="body2">{data.name}</Typography>
+                <Typography variant="body2">{links?.name}</Typography>
                 {!props.local && (
                   <OpenInNewIcon
                     onClick={() => window.open(data?.file)}
@@ -75,7 +84,7 @@ function Link(props: Props) {
               </Box>
               {props.local && (
                 <Typography variant="caption" color="rgba(0,0,0,0.6)">
-                  {data.file}
+                  {links.file}
                 </Typography>
               )}
             </Box>
@@ -92,7 +101,7 @@ function Link(props: Props) {
           </IconButton>
         </Box>
       </StyledFile>
-      <FolderMenu contextMenu={contextMenu} setContextMenu={setContextMenu} data={data} />
+      <FolderMenu contextMenu={contextMenu} setContextMenu={setContextMenu} data={data} setLinks={setLinks} />
     </>
   );
 }

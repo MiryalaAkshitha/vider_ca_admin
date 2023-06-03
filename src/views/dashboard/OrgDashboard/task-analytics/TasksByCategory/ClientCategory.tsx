@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { handleApply, handleFilters, handleSelected } from "redux/reducers/taskboardSlice";
+import { handleApply, handleFilters, handleSelected, resetFilters } from "redux/reducers/taskboardSlice";
 import { ResType } from "types";
 import { getTitle } from "utils";
 
@@ -21,6 +21,7 @@ function ClientCategory({ dates }) {
   );
 
   const handleClick = (v: any) => {
+    dispatch(resetFilters());
     dispatch(handleSelected("category"));
     dispatch(
       handleFilters({

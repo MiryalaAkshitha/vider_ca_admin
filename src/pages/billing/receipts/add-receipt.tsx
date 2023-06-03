@@ -17,7 +17,7 @@ function AddReceipt() {
   useEffect(() => {
     setTimeout(() => {
       dispatch(resetState());
-    }, 500);
+    }, 10);
   }, [dispatch]);
 
   return (

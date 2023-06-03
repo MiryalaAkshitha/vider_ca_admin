@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { getInvoicePreview } from "api/services/billing/invoices";
 import Loader from "components/Loader";
 import useTitle from "hooks/useTitle";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -22,17 +22,18 @@ function AddReceipt() {
   const dispatch = useDispatch();
   useTitle("New Receipt");
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(resetState());
-    }, 500);    
-  }, [dispatch]);
+  const [receiptdata, setReceiptdata] = useState({});
 
   const { data, isLoading }: ResType = useQuery(
     ["invoice-details", params.invoiceId],
     getInvoicePreview,
     {
-      onSuccess: (res: any) => {},
+      onSuccess: (res: any) => {
+        dispatch(resetState());
+        setTimeout((response: any) => {
+          setReceiptdata(response?.data);
+        }, 500, res);
+      },
     }
   );
 
@@ -42,13 +43,13 @@ function AddReceipt() {
     <>
       <StyledNewEstimateContainer sx={{ minHeight: "90vh" }}>
         <Typography textAlign="center" mb={4} variant="h5">
-          Payment Receipt 
+          Payment Receipt
           {/* {data?.data?.invoiceNumber} */}
         </Typography>
-        <BasicDetails invoiceData={data?.data} />
-        <PaymentDetails invoiceData={data?.data} />
-        <TotalAmount invoiceData={data?.data} />
-        <InvoiceParticulars invoiceData={data?.data} />
+        <BasicDetails invoiceData={receiptdata} />
+        <PaymentDetails invoiceData={receiptdata} />
+        <TotalAmount invoiceData={receiptdata} />
+        <InvoiceParticulars invoiceData={receiptdata} />
         <AdditionalInformation />
         <PaymentSummary />
       </StyledNewEstimateContainer>

@@ -42,7 +42,12 @@ function BillingEntityDetails({ result }) {
     ["billing-entities"],
     getBillingEntity, {
     onSuccess: (res: any) => {
-      if (result?.billingEntity && result?.billingEntity.legalName !== '') {
+      if (result?.billingEntity && result?.billingEntity.legalName !== '') {        
+        setBillingEntity(result?.billingEntity);
+        setBillingEntityAddress(result?.billingEntity);
+        setGstNumber(result?.billingEntity?.gstNumber);
+        const placeOfSupply = placeOfSupplyStates.find((o: any) => o.split('-')[1] === billingEntity?.placeOfSupply) || "";
+        setPlaceofsupplier(billingEntity?.placeOfSupply);
         dispatch(handleBillingEntityChange(result));
       }
     },

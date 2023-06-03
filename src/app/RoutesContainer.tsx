@@ -188,14 +188,14 @@ function RoutesContainer() {
             <Route index element={<Services />} />
             <Route path="add" element={<AddService />} />
           </Route>
-          <Route
+          {/* <Route
             path="categories"
             element={
               <PageWithPermission name={Permissions.VIEW_CATEGORIES}>
                 <Categories />
               </PageWithPermission>
             }
-          />
+          /> */}
 
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<Reports />}>
@@ -367,14 +367,14 @@ function RoutesContainer() {
             <Route index element={<Approvals />} />
             <Route path="add-approval" element={<AddApproval />} />
           </Route>
-          {/* <Route
+          <Route
             path="categories"
             element={
               <PageWithPermission name={Permissions.VIEW_CATEGORIES}>
                 <Categories />
               </PageWithPermission>
             }
-          /> */}
+          />
           <Route path="billing-entities">
             <Route index element={<BillingEntities />} />
             <Route path=":billingEntityId" element={<BillingEntityProfile />} />

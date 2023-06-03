@@ -2,12 +2,14 @@ import { Box } from "@mui/material";
 import { getReceipts } from "api/services/billing/receipts";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { formattedDate } from "utils/formattedDate";
 import ReceiptsHeader from "views/billing/receipts/ReceiptsHeader";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 const Receipts = () => {
   useTitle("Receipts");
@@ -16,6 +18,13 @@ const Receipts = () => {
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(10);
   const [selected, setSelected] = useState<any[]>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { data, isLoading }: ResType = useQuery(
     ["receipts", { offset: page * pageCount, limit: pageCount, search }],

@@ -63,10 +63,10 @@ function AdvanceDetails() {
             title="Previous Unused credits"
             value={state.previousCredits}
           />
-          <SummaryDetail
+          {/* <SummaryDetail
             title="Total Unused Credits"
             value={+state.amount + +state.previousCredits}
-          />
+          /> */}
         </Box>
       </Box>
     </Box>

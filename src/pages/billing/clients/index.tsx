@@ -2,12 +2,14 @@ import { Box } from "@mui/material";
 import { getClients } from "api/services/clients/clients";
 import Table from "components/Table";
 import useTitle from "hooks/useTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { ResType } from "types";
 import { getTitle } from "utils";
 import ClientsHeader from "views/billing/clients/ClientsHeader";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 const Clients = () => {
   useTitle("Billing");
@@ -16,6 +18,13 @@ const Clients = () => {
   const [page, setPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(5);
   const [selected, setSelected] = useState<any[]>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { data, isLoading }: ResType = useQuery(
     [

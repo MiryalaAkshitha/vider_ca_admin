@@ -23,31 +23,35 @@ import { snack } from "components/toast";
 function ActivityLog() {
   const params = useParams();
   const [activitylogs, setActivitylogs] = useState([]);
+
   const { data: result, isLoading, error }: ResType = useQuery(
     ['clientdashboardactivitylog', {
-        query: 'clientdashboardactivitylog',
-        clientId: params.clientId
+      query: 'clientdashboardactivitylog',
+      clientId: params.clientId
     }],
     getCommonBilling, {
     onSuccess: (res: any) => {
+      res?.data.forEach((item: any) => {
+        item.amount = (item.amount*1) + ((item.credits_used*1) || 0)
+      });
       setActivitylogs(res?.data);
-        console.log("activity", res?.data)
+      console.log("activity", res?.data)
     },
     onError: (err: any) => {
-        snack.error(handleError(err));
+      snack.error(handleError(err));
     },
-});
-  
+  });
+
   return (
     <>
-    {activitylogs?.map((item : any) => (
-      // <StyledTaskBox
-      //   sx={{
-      //     width: "700px",
-      //     height: "900px",
-      //   }}
-      // >
-        
+      {activitylogs?.map((item: any) => (
+        // <StyledTaskBox
+        //   sx={{
+        //     width: "700px",
+        //     height: "900px",
+        //   }}
+        // >
+
         <Timeline>
           <TimelineItem>
             <TimelineOppositeContent
@@ -62,7 +66,7 @@ function ActivityLog() {
                   {moment(item.created_at).format('DD-MM-YYYY')}
                 </Typography>
                 <Typography variant="caption" color="rgba(0,0,0,0.4)">
-                {moment(item.created_at).format("hh:mm A")}
+                  {moment(item.created_at).format("hh:mm A")}
                 </Typography>
               </StyledTimelineIcon>
             </TimelineOppositeContent>
@@ -75,7 +79,7 @@ function ActivityLog() {
                 sx={{
                   border: "1px solid #E1E9F8",
                   borderRadius: "10px",
-                  width:"300px",
+                  width: "300px",
                   p: 2,
                   mb: 2,
                 }}
@@ -84,15 +88,15 @@ function ActivityLog() {
                   {item.label}
                 </Typography>
                 <Typography variant="body2" color="rgba(0,0,0,0.6)">
-                Rs.{item.amount}
+                  Rs.{item.amount}
                 </Typography>
               </Box>
             </TimelineContent>
           </TimelineItem>
         </Timeline>
-        
-       
-      // </StyledTaskBox>
+
+
+        // </StyledTaskBox>
       ))}
     </>
   );

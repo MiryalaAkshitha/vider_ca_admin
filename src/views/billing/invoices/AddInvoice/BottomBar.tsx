@@ -3,9 +3,9 @@ import { Box } from "@mui/system";
 import { createInvoice } from "api/services/billing/invoices";
 import { snack } from "components/toast";
 import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectEstimate } from "redux/reducers/createEstimateSlice";
+import { selectEstimate, resetState } from "redux/reducers/createEstimateSlice";
 import { handleError } from "utils/handleError";
 import {
   getAmount,
@@ -20,9 +20,11 @@ function BottomBar() {
   const queryClient = useQueryClient();
   const state = useSelector(selectEstimate);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { mutate } = useMutation(createInvoice, {
     onSuccess: () => {
+      dispatch(resetState());
       snack.success("Invoice created successfully");
       queryClient.invalidateQueries("estimates");
       navigate("/billing/invoices");

@@ -15,7 +15,7 @@ const ShippingAddressDetails = ({ data, setState }) => {
     "floornumber": data?.address?.shippingaddress?.floornumber || "",
     "buildingName": data?.address?.shippingaddress?.buildingName || "",
     "street": data?.address?.shippingaddress?.street || "",
-    "locality": data?.address?.shippingaddress?.locality || "",
+    "location": data?.address?.communicationaddress?.location || "",
     "district": data?.address?.shippingaddress?.district || "",
     "city": data?.address?.shippingaddress?.city || "",
     "state": data?.address?.shippingaddress?.state || "",
@@ -115,8 +115,8 @@ const ShippingAddressDetails = ({ data, setState }) => {
           <Grid item xs={4}>
             <TextField
               label="Locality/Sub Locality"
-              name="locality"
-              value={address?.locality || ""}
+              name="location"
+              value={address?.location || ""}
               fullWidth
               variant="outlined"
               size="small"

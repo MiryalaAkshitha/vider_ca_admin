@@ -3,13 +3,27 @@ import { getNextReceiptNumber } from "api/services/billing/receipts";
 import Loader from "components/Loader";
 import { useQuery } from "react-query";
 import Section from "./Section";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { handleChange, selectReceipt } from "redux/reducers/createReceiptSlice";
+import moment from "moment";
 
 function BasicDetails({ invoiceData }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const state = useSelector(selectReceipt);
+  
   const { data, isLoading } = useQuery(
     ["next-receipt-number"],
     getNextReceiptNumber,
     {
-      onSuccess: (res: any) => {},
+      onSuccess: (res: any) => {
+        dispatch(handleChange({ key: "receiptNumber", value: res.data }));
+        dispatch(handleChange({ key: "receiptDate", value: moment().format("YYYY-MM-DD") }));
+        dispatch(handleChange({ key: "paymentDate", value: moment().format("YYYY-MM-DD") }));
+        dispatch(handleChange({ key: "amount", value: 0 }));
+        dispatch(handleChange({ key: "previousCredits", value: 0 }));
+      },
     }
   );
 

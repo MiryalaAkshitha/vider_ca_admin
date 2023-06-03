@@ -89,7 +89,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
                 buildingNumber: result?.data?.pradr?.addr?.bno,
                 buildingName: result?.data?.pradr?.addr?.bnm,
                 floornumber: result?.data?.pradr?.addr?.flno,
-                locality: result?.data?.pradr?.addr?.loc,
+                location: result?.data?.pradr?.addr?.loc,
                 district: result?.data?.pradr?.addr?.dst,
                 street: result?.data?.pradr?.addr?.st,
                 city: result?.data?.pradr?.addr?.dst,

@@ -6,23 +6,12 @@ const CopyAddressDetails = ({ data, setState }) => {
 
   useEffect(() => {
     if(data?.issameaddress) {
-      const billingaddress = {
-        "buildingNumber": data?.buildingNumber || "",
-        "floornumber": data?.floornumber || "",
-        "buildingName": data?.buildingName || "",
-        "street": data?.street || "",
-        "locality": data?.locality || "",
-        "district": data?.district || "",
-        "city": data?.city || "",
-        "state": data?.state || "",
-        "pincode": data?.pincode || ""
-      };
       setState({
         ...data,
         ['address']: {
           'communicationaddress': data?.address?.communicationaddress,
-          'billingaddress': billingaddress,
-          'shippingaddress': billingaddress
+          'billingaddress': data?.address?.communicationaddress,
+          'shippingaddress': data?.address?.communicationaddress
         },
       });
     } else {
@@ -31,7 +20,7 @@ const CopyAddressDetails = ({ data, setState }) => {
         "floornumber": "",
         "buildingName": "",
         "street": "",
-        "locality": "",
+        "location": "",
         "district": "",
         "city": "",
         "state": "",

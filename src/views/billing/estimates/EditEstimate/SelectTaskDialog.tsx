@@ -32,6 +32,7 @@ const SelectTaskDialog = ({ open, setOpen }) => {
       {
         client: client,
         search,
+        isinvoiced: true
       },
     ],
     getInvoicingTasks,

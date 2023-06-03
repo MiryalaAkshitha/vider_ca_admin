@@ -23,7 +23,7 @@ export const settingsMenu: Array<IMenuItem> = [
         title: "Billing Entities",
         path: "/settings/billing-entities",
         children: [],
-      },
+      }
     ],
   },
   {
@@ -49,8 +49,8 @@ export const settingsMenu: Array<IMenuItem> = [
     ],
   },
   {
-    title: "Categories",
-    path: "/settings/categories",
+    title: "categories",
+    path: "/settings/categories"
   },
   {
     title: "Labels",

@@ -8,7 +8,7 @@ import { snack } from "components/toast";
 import { useConfirm } from "context/ConfirmDialog";
 import useTitle from "hooks/useTitle";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ResType } from "types";
@@ -17,6 +17,8 @@ import EditDscRegister from "views/client-view/dscregister/EditDscRegister";
 import IssueOrReceive from "views/client-view/dscregister/IssueOrReceive";
 import AddDscRegister from "views/dsc-register/AddDscRegister";
 import { NoOfDaysLeftToExpiry } from "../client-view/dsc-register";
+import { useDispatch } from "react-redux";
+import { resetFilters } from "redux/reducers/taskboardSlice";
 
 type Props = {
   data: any;
@@ -51,6 +53,13 @@ function DscRegister() {
   const [limit, setLimit] = useState<number>(10);
   const [offset, setOffset] = useState<number>(0);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, []);
 
   const { isLoading, data, error }: ResType = useQuery(
     [
