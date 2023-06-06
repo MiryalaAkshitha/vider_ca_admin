@@ -30,6 +30,7 @@ const Gmaillogins = () => {
   const [credentialResponse, setCredentialResponse] = useState<any>({});
   const [decodedResponse, setDecodedResponse] = useState<any>({});
   const [emails, setEmails] = useState(true);
+  const [emailProfile, setEmailProfile] = useState<any>({});
 
   // const handleLogin = () => {
   //   const authUrl = getAuthUrl();
@@ -48,8 +49,9 @@ const Gmaillogins = () => {
   // };
 
   const { mutate } = useMutation(verifyGmailUser, {
-    onSuccess: () => {
+    onSuccess: (res: any) => {
       setEmails(false);
+      setEmailProfile(res?.data);
       snack.success("Gmail Login successfull");
     },
     onError: (err: any) => {
@@ -94,7 +96,7 @@ const Gmaillogins = () => {
       {!emails && decodedResponse && decodedResponse?.email && (
         <>
           <div>{decodedResponse?.email}</div>
-          <button type="button" onClick={logout} >Logout</button>
+          {/* <button type="button" onClick={logout} >Logout</button> */}
 
           <button
             onClick={() => {
@@ -105,6 +107,9 @@ const Gmaillogins = () => {
           >
             Logout
           </button>
+
+          Name: {emailProfile?.name}
+          Profile: <img src={'' + emailProfile?.picture} alt="" />
 
           {/* : <GmailInbox credentials={credentialResponse} /> */}
         </>
