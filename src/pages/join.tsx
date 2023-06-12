@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { joinUser } from "api/services/users";
-import { newlogo, signup } from "assets";
+import { atom_logo, newlogo, signup } from "assets";
 import LoadingButton from "components/LoadingButton";
 import useQueryParams from "hooks/useQueryParams";
 import { snack } from "components/toast";
@@ -51,7 +51,7 @@ const Login = () => {
       <Grid item xs={6} lg={6}>
         <BackgroundImage>
           <LogoContainer>
-            <img src={newlogo} alt="" />
+            <img src={atom_logo} alt="" />
             <Box mt={6}>
               <img src={signup} alt="" />
             </Box>
@@ -59,10 +59,7 @@ const Login = () => {
               Vider Practice Management software
             </Typography>
             <Typography mt={1} variant="body2" color="rgba(255,255,255,0.7)">
-              Praesent eu dolor eu orci vehicula euismod. Vivamus sed
-              sollicitudin libero, vel malesuada velit. Nullam et maximus lorem.
-              Suspendisse maximus dolor quis consequat volutpat donec vehicula
-              elit eu erat pulvinar.
+            Vider is a technology-driven smart discovery,that offers services addressing the growing needs of Professionals (CA/CMA/CS) & Clients in enhancing businesses in India.
             </Typography>
           </LogoContainer>
         </BackgroundImage>
