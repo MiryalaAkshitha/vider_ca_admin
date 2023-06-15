@@ -11,6 +11,7 @@ interface Props {
 
 function FormTime(props: Props) {
   const { name, size = "small", control, label = "" } = props;
+  console.log(props)
 
   return (
     <>

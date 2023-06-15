@@ -63,12 +63,13 @@ const AdditionalInformation = ({ data, setState, apiData }) => {
               }}
               fullWidth
               select
-              value={apiData?.status}
+              value={data?.status} //replaced apiData to data
               variant="outlined"
               size="small"
               InputLabelProps={{ shrink: true }}
             >
               <MenuItem value="ACTIVE">Active</MenuItem>
+              
               <MenuItem value="INACTIVE">Inactive</MenuItem>
             </TextField>
             {apiData?.status === "INACTIVE" && (
