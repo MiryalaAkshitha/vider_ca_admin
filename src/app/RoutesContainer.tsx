@@ -43,6 +43,7 @@ const InviteUsers = loadable(() => import("pages/settings/manage-users/invited-u
 const ViewUser = loadable(() => import("pages/settings/manage-users/users/view-user"));
 const Teams = loadable(() => import("pages/settings/manage-users/teams"));
 const ViewTeam = loadable(() => import("pages/settings/manage-users/teams/view-team"));
+const NotificationsPreferences = loadable(() => import("pages/settings/notifications-preferences"));
 const Clients = loadable(() => import("pages/clients"));
 const Leads = loadable(() => import("pages/leads"));
 const DscRegister = loadable(() => import("pages/dscregister/dsc-register"));
@@ -400,6 +401,7 @@ function RoutesContainer() {
           <Route path="deleted-clients" element={<DeletedClients />} />
           <Route path="deleted-users" element={<DeletedUsers />} />
           <Route path="upcoming-tasks" element={<UpcomingTasks />} />
+          <Route path="notifications-preferences" element={<NotificationsPreferences />} />
           <Route path="teams">
             <Route index element={<Teams />} />
             <Route path=":teamId" element={<ViewTeam />} />

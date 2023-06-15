@@ -23,7 +23,7 @@ export const settingsMenu: Array<IMenuItem> = [
         title: "Billing Entities",
         path: "/settings/billing-entities",
         children: [],
-      }
+      },
     ],
   },
   {
@@ -49,8 +49,8 @@ export const settingsMenu: Array<IMenuItem> = [
     ],
   },
   {
-    title: "categories",
-    path: "/settings/categories"
+    title: "Categories",
+    path: "/settings/categories",
   },
   {
     title: "Labels",
@@ -86,4 +86,15 @@ export const settingsMenu: Array<IMenuItem> = [
       },
     ],
   },
+  {
+    title: "Preferences",
+    path: "",
+    children: [
+      {
+        title: "Notifications preferences",
+        path: "/settings/notifications-preferences",
+      },
+    ],
+  },
+
 ];
