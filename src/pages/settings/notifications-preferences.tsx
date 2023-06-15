@@ -8,10 +8,11 @@ import { LinkRouter } from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
-import { keys } from "lodash";
+import { filter, keys } from "lodash";
 import BottomBar from "components/BottomBar";
 import { snack } from "components/toast";
-//import SearchContainer from "components/SearchContainer";
+import NewSearchContainer from "components/SearchContainer";
+import { string } from "yup";
 
 
 
@@ -39,18 +40,19 @@ function NotificationsPreferences() {
     const [pushPermissions, setPushPermissons] = useState<string[]>([]);
     const [emailOriginalState, setEmailOriginalState] = useState<string[]>([]);
     const [emailPermissions, setEmailPermissons] = useState<string[]>([]);
-    // const [filters, setFilters] = useState({
-    //     category: [],
-    //     subCategory: [],
-    //     monthAdded: "",
-    //     labels: [],
-    //     search: "",
-    // });
+    const [filters, setFilters] = useState({ search: "" });
 
 
     const active = queryParams.tab || parentGrouped[0];
 
     const labelGrouped = notificationsConstants?.data?.[forData[active]];
+    const filteredObj = labelGrouped && Object.fromEntries(
+        Object.entries(labelGrouped).filter(([key, value]: [string, unknown]) =>
+            typeof value === 'string' && value.toLocaleLowerCase().includes(filters.search.toLocaleLowerCase())
+        )
+    );
+    console.log(filteredObj);
+
     const { data, isLoading: loading }: ResType = useQuery("preferences", getPreferences, {
         onSuccess: (res: any) => {
             const result = res.data
@@ -122,6 +124,7 @@ function NotificationsPreferences() {
                     {parentGrouped.map((item) => (
                         <ListItemButton
                             onClick={() => setQueryParams({ tab: item })}
+                            onClickCapture={() => setFilters({ search: "" })}
                             selected={active === item}
                             sx={{
                                 ...(active === item && {
@@ -140,7 +143,7 @@ function NotificationsPreferences() {
 
 
                 <Box flex={1}>
-                    {/* <SearchContainer
+                    <NewSearchContainer
                         value={filters.search}
                         debounced
                         minWidth="400px"
@@ -150,11 +153,11 @@ function NotificationsPreferences() {
                                 search: v,
                             });
                         }}
-                        placeHolder="Search by Display Name | Trade Name"
-                    /> */}
+                        placeHolder="Search Notifications"
+                    />
                     <PermissonsAccordionPreferences
                         label={active}
-                        data={labelGrouped}
+                        data={filteredObj === undefined ? labelGrouped : filteredObj}
                         permissions={pushPermissions}
                         handlePermissionChange={handlePermissionChange}
                     />
