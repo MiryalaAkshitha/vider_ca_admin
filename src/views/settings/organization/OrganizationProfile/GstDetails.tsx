@@ -133,7 +133,11 @@ function GstDetails({ state, setState, apiData }: any) {
         snack.error("Invalid PAN Number");
       }
     } catch (e: any) {
-      snack.error(e.response.data.message);
+      if (e.response?.data?.code === 422) {
+        snack.error("Invalid PAN");
+      } else {
+        snack.error(e.response?.data?.message);
+      }
     } finally {
       setPanLoading(false);
     }
@@ -238,7 +242,7 @@ function GstDetails({ state, setState, apiData }: any) {
             value={panNumber}
             onChange={(e) => setPanNumber(e.target.value)}
             InputProps={{
-              endAdornment: <>{panNumber === '' ? <PanAdornment /> : ''}</>,
+              endAdornment: <>{panNumber !== '' ? <PanAdornment /> : ''}</>,
             }}
             InputLabelProps={{ shrink: true }}
           />
