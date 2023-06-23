@@ -117,14 +117,15 @@ function GstDetails({ state, setState, apiData }: any) {
       });
 
       const result: any = response?.data;
-      if (result.data.status === "VALID") {
+      if (result.status === "VALID") {
         update({
           id: apiData?.id,
           data: {
             ...state,
-            firstName: result?.data?.first_name,
-            lastName: result?.data?.last_name,
-            fullName: result?.data?.full_name,
+            firstName: result?.first_name,
+            lastName: result?.last_name,
+            fullName: result?.full_name,
+            middleName: result?.middle_name,
             panNumber: panNumber,
             panVerified: true,
           },
@@ -133,7 +134,11 @@ function GstDetails({ state, setState, apiData }: any) {
         snack.error("Invalid PAN Number");
       }
     } catch (e: any) {
-      snack.error(e.response.data.message);
+      if (e.response?.data?.code === 422) {
+        snack.error("Invalid PAN");
+      } else {
+        snack.error(e.response?.data?.message);
+      }
     } finally {
       setPanLoading(false);
     }
@@ -238,7 +243,7 @@ function GstDetails({ state, setState, apiData }: any) {
             value={panNumber}
             onChange={(e) => setPanNumber(e.target.value)}
             InputProps={{
-              endAdornment: <>{panNumber === '' ? "" : <PanAdornment />}</>,
+              endAdornment: <>{panNumber !== '' ? <PanAdornment /> : ''}</>,
             }}
             InputLabelProps={{ shrink: true }}
           />

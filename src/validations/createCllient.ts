@@ -50,6 +50,7 @@ let CreateClientSchema = ({ subCategoriesExist }) =>
     firstName: string().notRequired(),
     lastName: string().notRequired(),
     fullName: string().notRequired(),
+    middleName: string().notRequired(),
     clientPortalAccess: string().required("Client Portal Access is required"),
   });
 

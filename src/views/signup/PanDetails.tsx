@@ -10,7 +10,7 @@ import { selectSignup } from "redux/reducers/signUpSlice";
 import { ResType, SubmitType } from "types";
 import { getStates } from "api/services/common";
 import { handleError } from "utils/handleError";
-import FormAutoComplete from "components/FormFields/FormAutocomplete";
+// import FormAutoComplete from "components/FormFields/FormAutocomplete";
 import Autocomplete from "@mui/material/Autocomplete";
 
 const PanDetails = () => {
@@ -61,26 +61,28 @@ const PanDetails = () => {
         token: token?.data?.access_token,
       });
 
-      const data: any = response?.data;
-      if (data.data.status === "INVALID") {
+      // console.log(response);
+
+      // const data: any = response?.data;
+      if (response.status === "INVALID") {
         return snack.error("Invalid PAN");
       }
-      console.log(response.data);
+      const formateddata = getFabUtilityClass(response.data)
 
       setState({
-        category: data?.data?.category,
-        firstName: data?.data?.first_name,
-        middleName: data?.data?.middle_name,
-        lastName: data?.data?.last_name,
-        fullName: data?.data?.full_name,
-        legalName: data?.data?.full_name,
-        tradeName: data?.data?.tradeName,
-        dateOfFormation: data?.data?.last_updated,
-        buildingName: data?.data?.buildingName,
-        street: data?.data?.street,
-        city: data?.data?.city,
-        state: data?.data?.state,
-        pincode: data?.data?.pinCode,
+        category: formateddata?.category,
+        firstName: formateddata?.firstName,
+        middleName: formateddata?.middleName,
+        lastName: formateddata?.lastName,
+        fullName: formateddata?.fullName,
+        legalName: formateddata?.fullName,
+        // tradeName: data?.data?.tradeName,
+        // dateOfFormation: data?.data?.last_updated,
+        // buildingName: data?.data?.buildingName,
+        // street: data?.data?.street,
+        // city: data?.data?.city,
+        // state: data?.data?.state,
+        // pincode: data?.data?.pinCode,
       });
       setIsVerified(true);
     } catch (e: any) {
@@ -107,6 +109,35 @@ const PanDetails = () => {
       </>
     );
   };
+
+  const getFabUtilityClass = (input: any) => {
+
+    const pandetails = {
+      firstName: '',
+      lastName: '',
+      category: '',
+      middleName: '',
+      fullName: '',
+      legalName: '',
+    }
+
+    if (input.first_name) {
+      pandetails.firstName = input.first_name
+    }
+    if (input.middle_name) {
+      pandetails.middleName = input.middle_name
+    }
+    if (input.last_name) {
+      pandetails.lastName = input.last_name
+    }
+    if (input.full_name) {
+      pandetails.fullName = input.full_name
+    }
+    if (input.category) {
+      pandetails.category = input.category
+    }
+    return pandetails
+  }
 
   const handlePanChange = (e: any) => {
     setPanNumber(e.target.value);
@@ -149,17 +180,7 @@ const PanDetails = () => {
           />
           {state.category === "Individual" && (
             <>
-              <TextField
-                sx={{ mt: 2 }}
-                required
-                onChange={handleChange}
-                value={state.lastName}
-                label="Last Name / Surname"
-                size="small"
-                disabled
-                name="lastName"
-                fullWidth
-              />
+
               <TextField
                 sx={{ mt: 2 }}
                 required
@@ -179,6 +200,29 @@ const PanDetails = () => {
                 size="small"
                 disabled
                 name="middleName"
+                fullWidth
+              />
+
+              <TextField
+                sx={{ mt: 2 }}
+                required
+                onChange={handleChange}
+                value={state.lastName}
+                label="Last Name / Surname"
+                size="small"
+                disabled
+                name="lastName"
+                fullWidth
+              />
+              <TextField
+                sx={{ mt: 2 }}
+                required
+                onChange={handleChange}
+                value={state.fullName}
+                label="Full Name"
+                size="small"
+                disabled
+                name="FullName"
                 fullWidth
               />
             </>
@@ -203,7 +247,7 @@ const PanDetails = () => {
                 value={state.fullName}
                 label="Organisation Name / Trade Name"
                 size="small"
-                name="legalName"
+                name="organisationName"
                 fullWidth
               />
             </>
