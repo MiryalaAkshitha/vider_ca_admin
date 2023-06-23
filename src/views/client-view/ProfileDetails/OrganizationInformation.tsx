@@ -258,19 +258,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
           <Grid item xs={4}>
             <TextField
               disabled
-              label="Last Name"
-              name="lastName"
-              onChange={handleChange}
-              value={data?.lastName || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              disabled
               label="Middle Name"
               name="middleName"
               onChange={handleChange}
@@ -281,6 +268,20 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
+          <Grid item xs={4}>
+            <TextField
+              disabled
+              label="Last Name"
+              name="lastName"
+              onChange={handleChange}
+              value={data?.lastName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+         
           <Grid item xs={4}>
             <TextField
               label="Full Name"
