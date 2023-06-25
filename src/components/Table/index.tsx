@@ -169,11 +169,17 @@ function Table(props: TableProps) {
                           // defaultChecked
                           checked={_.get(item, col.key)}
                           onChange={(event) => getValues1(item, event)}
+
                         />
                       ) : col?.render ? (
                         col.render(item)
                       ) : (
-                        <Typography variant="body2">{_.get(item, col.key)}</Typography>
+                        <Typography variant="body2"
+                          style={{
+                            color: col.key === 'gstrData' ? getColorBasedOnAction(item[col.key]) : 'inherit',
+
+                          }}
+                        >{_.get(item, col.key)}</Typography>
                       )}
 
                     </td>
@@ -212,5 +218,16 @@ function Table(props: TableProps) {
     </StyledTableContainer>
   );
 }
+
+const getColorBasedOnAction = (action) => {
+  console.log("action", action);
+  if (action === 'Filled') {
+    return 'green';
+  } else if (action === 'Pending') {
+    return 'red';
+  } else {
+    return 'orange';
+  }
+};
 
 export default Table;
