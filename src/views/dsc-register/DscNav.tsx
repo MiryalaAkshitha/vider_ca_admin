@@ -16,19 +16,13 @@ const reportsMenu = [
         path: "/dsc-register/gstr-1",
         pathName: "/dsc-register/gstr-1",
     },
-    // {
-    //     title: "GST",
-    //     path: "/dsc-register/gstr-1",
-    //     pathName: "/dsc-register/gstr-3b",
-    // }
 
 ];
 
 const DscNav = () => {
     const location = useLocation();
-    console.log(settingMenu)
-
-
+    console.log(reportsMenu[0].pathName);
+    console.log(location.pathname);
     return (
         <Box
             sx={{
@@ -40,13 +34,13 @@ const DscNav = () => {
             <List>
                 <RouterLink to={reportsMenu[0].path}>
                     <ListItemButton
-                        selected={reportsMenu[0].pathName === location.pathname}
-                        sx={{
-                            ...(reportsMenu[0].pathName === location.pathname && {
-                                borderRight: "3px solid red",
-                                borderRadius: "2px",
-                            }),
-                        }}
+                    //selected={reportsMenu[0].pathName === location.pathname}
+                    // sx={{
+                    //     ...(reportsMenu[0].pathName === location.pathname && {
+                    //         // borderRight: "7px solid red",
+                    //         // borderRadius: "2px",
+                    //     }),
+                    //}}
                     >
                         <ListItemText primary={<Typography variant="body2">{reportsMenu[0].title}</Typography>} />
                     </ListItemButton>

@@ -49,7 +49,7 @@ const CollapsibleMenuDrop = ({ item }: any) => {
                                 sx={{
                                     paddingLeft: "30px",
                                     opacity: location.pathname?.includes(item.path) ? 1 : 0.3,
-                                    borderRight: location.pathname?.includes(item.path) ? "3px solid red" : null,
+                                    borderRight: location.pathname === (item.path) ? "3px solid red" : null,
 
                                     borderRadius: location.pathname?.includes(item.path) ? "2px" : null,
                                 }}

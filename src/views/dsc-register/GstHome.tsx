@@ -172,13 +172,13 @@ function GstHome() {
     };
     const { mutate, isLoading: loading } = useMutation(createGstrPromiseClient, {
         onSuccess: (res) => {
-            snack.success("Sync is successfull");
+
         },
         onError: (err: any) => {
             snack.error(err.response.data.message);
         },
     });
-    const getGstReturnClients = () => {
+    const getGstReturnClients = async () => {
         const forPromisee = tableData.filter(singleClient => {
             const status = singleClient.gstrData;
             return (status === "click Sync All to get latest data")
@@ -206,6 +206,7 @@ function GstHome() {
 
             period && queryClient.invalidateQueries("clients");
             searchForLoading(false);
+
         }
     })
     const handleAnotherClick = () => {
@@ -254,7 +255,7 @@ function GstHome() {
                 action = false;
             } else {
                 a = singleClient.client;
-                gstrData = "click Sync All to get latest data";
+                gstrData = "Click Sync All to get latest data";
                 dateOfFiling = "---"
                 arn = "---"
                 dateDateFormate = "---";
@@ -289,17 +290,6 @@ function GstHome() {
         })
 
         setTableData(clientDetails);
-        // const forPromisee = tableData.filter(singleClient => {
-
-        //     const status = singleClient.gstrData;
-
-        //     return status === "Pending"
-        // })
-
-        // setForPromise(forPromisee);
-
-
-
     }
 
 
@@ -370,23 +360,6 @@ function GstHome() {
 const defaultColumns: Array<ExtendedColumnType> = [
     { key: "displayName", title: "Client", default: true },
     { key: "gstNumber", title: "GSTIN", default: true },
-    // {
-    //     key: "gstrData",
-    //     title: "Status",
-    //     default: true,
-    //     render: (rowData) => {
-    //       return (
-    //         <div>
-
-    //           {rowData.status === "Filled" ? (
-    //             <span style={{ color: "green" }}>Filled</span>
-    //           ) : (
-    //             <span style={{ color: "red" }}>Pen</span>
-    //           )}
-    //         </div>
-    //       );
-    //     },
-    //   },
     { key: "gstrData", title: "Status", default: true },
     { key: "dateOfFiling", title: "Date of File", default: true },
     { key: "arn", title: "Arn", default: true },
