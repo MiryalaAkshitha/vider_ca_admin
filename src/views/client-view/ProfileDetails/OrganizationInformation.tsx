@@ -20,7 +20,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
   const [panLoading, setPanLoading] = useState(false);
   const [panChanged, setPanChanged] = useState(false);
   const [gstChanged, setGstChanged] = useState(false);
-  
+
   useEffect(() => {
     setPanChanged(apiData.panNumber !== data.panNumber);
     setGstChanged(apiData.gstNumber !== data.gstNumber);

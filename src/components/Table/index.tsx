@@ -1,7 +1,7 @@
-import { Checkbox, CircularProgress, TablePagination, Typography } from "@mui/material";
+import { Checkbox, CircularProgress, Switch, TablePagination, Typography } from "@mui/material";
 import { Box, SystemStyleObject } from "@mui/system";
 import _ from "lodash";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { StyledTable, StyledTableContainer, StyledTableLoader } from "./styles";
 
 const ROWS_PER_PAGE_OPTIONS = [5, 10, 20, 25, 50];
@@ -13,6 +13,10 @@ export type ColumnType = {
   hide?: boolean;
   default?: boolean;
   width?: string;
+};
+
+export type ExtendedColumnType = ColumnType & {
+  render?: (item: any, getValues?: (row: any, event: ChangeEvent<HTMLInputElement>) => void) => React.ReactElement | string | null | number;
 };
 
 type PaginationType = {
@@ -37,10 +41,11 @@ interface TableProps {
   onRowClick?: (v: any) => void;
   pagination?: PaginationType;
   selection?: SelectionType;
+  getValues?: ((row: any, event: ChangeEvent<HTMLInputElement>) => void)
 }
 
 function Table(props: TableProps) {
-  const { columns, data = [], sx, pagination, loading = false, onRowClick, selection } = props;
+  const { columns, data = [], sx, pagination, loading = false, onRowClick, selection, getValues } = props;
 
   const { selected, setSelected } = selection || {
     selected: [],
@@ -83,11 +88,15 @@ function Table(props: TableProps) {
     }
   };
 
-  const styles =  {
-    base: {height: '400px', overflow: 'scroll'},
+  const styles = {
+    base: { height: '400px', overflow: 'scroll' },
     enhance: sx,
   };
 
+  const getValues1 = (event: any, row: any) => {
+    if (!getValues) return;
+    getValues(event, row);
+  }
   // const styles = {
   //   height: '400px',
   //   overflow: 'scroll',
@@ -121,7 +130,7 @@ function Table(props: TableProps) {
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr key={index}>
+              <tr key={index} >
                 {selection && (
                   <td>
                     <Checkbox
@@ -131,15 +140,42 @@ function Table(props: TableProps) {
                     />
                   </td>
                 )}
-                {columns.map((col, colIndex) => {
+                {/* {columns.map((col, colIndex) => {
                   if (col.hide) return null;
+                  console.log("collllllllllllll", col)
                   return (
-                    <td key={colIndex} onClick={() => handleRowClick(item)}>
+                    <td key={colIndex} onClick={() => handleRowClick(item)} {col.key==="action"}>
                       {col?.render ? (
                         col.render(item)
                       ) : (
                         <Typography variant="body2">{_.get(item, col.key)}</Typography>
                       )}
+                    </td>
+                  );
+                })} */}
+
+                {columns.map((col, colIndex) => {
+                  if (col.hide) return null;
+                  return (
+
+                    <td key={colIndex} onClick={() => handleRowClick(item)}>
+
+
+                      {col.key === "action" ? (
+
+
+                        <Switch
+                          color="success"
+                          // defaultChecked
+                          checked={_.get(item, col.key)}
+                          onChange={(event) => getValues1(item, event)}
+                        />
+                      ) : col?.render ? (
+                        col.render(item)
+                      ) : (
+                        <Typography variant="body2">{_.get(item, col.key)}</Typography>
+                      )}
+
                     </td>
                   );
                 })}
