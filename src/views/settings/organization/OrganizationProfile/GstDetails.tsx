@@ -117,14 +117,15 @@ function GstDetails({ state, setState, apiData }: any) {
       });
 
       const result: any = response?.data;
-      if (result.data.status === "VALID") {
+      if (result.status === "VALID") {
         update({
           id: apiData?.id,
           data: {
             ...state,
-            firstName: result?.data?.first_name,
-            lastName: result?.data?.last_name,
-            fullName: result?.data?.full_name,
+            firstName: result?.first_name,
+            lastName: result?.last_name,
+            fullName: result?.full_name,
+            middleName: result?.middle_name,
             panNumber: panNumber,
             panVerified: true,
           },

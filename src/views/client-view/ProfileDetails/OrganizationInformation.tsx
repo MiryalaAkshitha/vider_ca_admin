@@ -20,7 +20,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
   const [panLoading, setPanLoading] = useState(false);
   const [panChanged, setPanChanged] = useState(false);
   const [gstChanged, setGstChanged] = useState(false);
-  
+
   useEffect(() => {
     setPanChanged(apiData.panNumber !== data.panNumber);
     setGstChanged(apiData.gstNumber !== data.gstNumber);
@@ -69,6 +69,7 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
       const result: any = response.data;
 
       if (result.data.sts === "Active") {
+        
         mutate({
           id: data?.id,
           data: {
@@ -133,13 +134,15 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
 
       const result: any = response?.data;
 
-      if (result.data.status === "VALID") {
+      if (result.status === "VALID") {
+
         mutate({
           id: data?.id,
           data: {
-            firstName: result?.data?.first_name,
-            lastName: result?.data?.last_name,
-            fullName: result?.data?.full_name,
+            firstName: result?.first_name,
+            lastName: result?.last_name,
+            fullName: result?.full_name,
+            middleName: result?.middle_name,
             panNumber: data?.panNumber,
             panVerified: true,
           },
@@ -255,19 +258,6 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
           <Grid item xs={4}>
             <TextField
               disabled
-              label="Last Name"
-              name="lastName"
-              onChange={handleChange}
-              value={data?.lastName || ""}
-              fullWidth
-              variant="outlined"
-              size="small"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              disabled
               label="Middle Name"
               name="middleName"
               onChange={handleChange}
@@ -278,6 +268,20 @@ const OrganizationInformation = ({ data, apiData, setState }) => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
+          <Grid item xs={4}>
+            <TextField
+              disabled
+              label="Last Name"
+              name="lastName"
+              onChange={handleChange}
+              value={data?.lastName || ""}
+              fullWidth
+              variant="outlined"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+         
           <Grid item xs={4}>
             <TextField
               label="Full Name"

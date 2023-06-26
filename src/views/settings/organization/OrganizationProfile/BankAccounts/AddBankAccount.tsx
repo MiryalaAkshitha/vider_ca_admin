@@ -48,23 +48,24 @@ const AddBankAccountDetails = ({ open, setOpen }) => {
     <DrawerWrapper open={open} setOpen={setOpen} title="Create bank account">
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <Box>
-          <FormInput control={control} name="bankName" label="Bank Name" />
+          <FormInput control={control} name="bankName" label="Bank Name" required/>
         </Box>
         <Box mt={2}>
-          <FormInput control={control} name="branchName" label="Bank Branch" />
+          <FormInput control={control} name="branchName" label="Bank Branch" required />
         </Box>
         <Box mt={2}>
           <FormInput
             control={control}
             name="accountNumber"
             label="Bank Account Number"
+            required
           />
         </Box>
         <Box mt={2}>
-          <FormInput control={control} name="ifscCode" label="IFSC Code" />
+          <FormInput control={control} name="ifscCode" label="IFSC Code" required />
         </Box>
         <Box mt={2}>
-          <FormInput control={control} name="upiId" label="UPI ID" />
+          <FormInput control={control} name="upiId" label="UPI ID" required/>
         </Box>
         <Box mt={2}>
           <Controller

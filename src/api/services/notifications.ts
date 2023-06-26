@@ -12,4 +12,15 @@ const getNotifications = ({ queryKey }) => {
   });
 };
 
-export { saveToken, getNotifications };
+const getNotificationsCount=()=>{
+  return http.get('/notifications/count')
+}
+
+
+const updateNotifications = ( data) => {
+  return http.patch('/notifications/update', data);
+};
+
+
+
+export { saveToken, getNotifications,getNotificationsCount,updateNotifications };

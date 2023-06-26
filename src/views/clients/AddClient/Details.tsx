@@ -56,6 +56,7 @@ function CompanyDetails({ control, watch, setData }) {
         firstName: data?.data?.first_name,
         lastName: data?.data?.last_name,
         fullName: data?.data?.full_name,
+        middleName:data?.data?.middle_name,
         panVerified: true,
       });
     } catch (e: any) {
