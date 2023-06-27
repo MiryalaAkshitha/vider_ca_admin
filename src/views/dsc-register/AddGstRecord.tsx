@@ -82,14 +82,9 @@ function AddGstRecord({ open, setOpen, clientList, setClientList, title }) {
 
 
 
-
-
-
-
-
     const { mutate, isLoading } = useMutation(createGstrClient, {
         onSuccess: (res) => {
-            snack.success("Gstr added successfully");
+            snack.success(`${title} successfully`);
             queryClient.invalidateQueries("clients");
             setState(_.cloneDeep(initialState))
             setOpen(false);
