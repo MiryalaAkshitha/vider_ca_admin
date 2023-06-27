@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-d
 import { Permissions } from "data/permissons";
 import PageWithPermission from "components/PageWithPermission";
 
+
 const Calendar = loadable(() => import("pages/calendar"));
 const Billing = loadable(() => import("pages/billing"));
 const BillingClients = loadable(() => import("pages/billing/clients"));
@@ -49,6 +50,9 @@ const Leads = loadable(() => import("pages/leads"));
 const DscRegister = loadable(() => import("pages/dscregister/dsc-register"));
 const ClientDscRegister = loadable(() => import("pages/client-view/dsc-register"));
 const ClientDscRegisterView = loadable(() => import("pages/client-view/view-dsc-register"));
+const GstUi = loadable(() => import("pages/dscregister"));
+const GstHome = loadable(() => import("views/dsc-register/GstHome"));
+//const Gstr3b = loadable(() => import("views/dsc-register/Gstr3b"));
 const ClientView = loadable(() => import("pages/client-view"));
 const TasksView = loadable(() => import("pages/task-view"));
 const Attachments = loadable(() => import("pages/client-view/attachments"));
@@ -352,8 +356,15 @@ function RoutesContainer() {
               </Route>
             </Route>
           </Route>
-          <Route path="dsc-register">
+          <Route path="dsc-register" element={<GstUi />}>
             <Route index element={<DscRegister />} />
+            <Route path="gst">
+              <Route path="gstr-1" element={<GstHome />} />
+              <Route path="gstr-3b" element={<GstHome />} />
+              <Route path="gstr-9" element={<GstHome />} />
+              <Route path="gstr-9c" element={<GstHome />} />
+              <Route path="gstr-08" element={<GstHome />} />
+            </Route>
             <Route path=":dscId" element={<ClientDscRegisterView />} />
           </Route>
         </Route>

@@ -98,3 +98,34 @@ export const settingsMenu: Array<IMenuItem> = [
   },
 
 ];
+
+
+
+export const settingMenu: Array<IMenuItem> = [
+  {
+    title: "GST",
+    path: "/gst",
+    children: [
+      {
+        title: "GSTR-1",
+        path: "/dsc-register/gst/gstr-1"
+      },
+      {
+        title: "GSTR-3B",
+        path: "/dsc-register/gst/gstr-3b"
+      },
+      {
+        title: "GSTR-9",
+        path: "/dsc-register/gst/gstr-9"
+      },
+      {
+        title: "GSTR-9c",
+        path: "/dsc-register/gst/gstr-9c"
+      },
+      {
+        title: "GSTR-08",
+        path: "/dsc-register/gst/gstr-08"
+      },
+    ],
+  }
+];

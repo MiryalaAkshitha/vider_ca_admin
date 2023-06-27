@@ -29,7 +29,7 @@ export const menu: Array<IMenuItem> = [
     icon: icons.clients,
   },
   {
-    title: "DSC Register",
+    title: "Register",
     path: "/dsc-register",
     icon: icons.clients,
   },

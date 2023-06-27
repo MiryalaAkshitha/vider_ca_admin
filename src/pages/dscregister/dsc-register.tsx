@@ -22,7 +22,7 @@ import { resetFilters } from "redux/reducers/taskboardSlice";
 
 type Props = {
   data: any;
-  };
+};
 const Password = ({ data }: Props) => {
   const [show, setShow] = useState(false);
   return (
@@ -30,20 +30,20 @@ const Password = ({ data }: Props) => {
       {/*<Typography gutterBottom variant="body2" color="rgba(0,0,0,0.5)">
        Password
   </Typography>*/}
-     {show ? (
-       <Typography gutterBottom variant="body1">
-         {data?.password}
-       </Typography>
-     ) : (
-       <Typography
-         onClick={() => setShow(true)}
-         style={{ cursor: "pointer", color: "#149ECD" }}
-         gutterBottom
+      {show ? (
+        <Typography gutterBottom variant="body1">
+          {data?.password}
+        </Typography>
+      ) : (
+        <Typography
+          onClick={() => setShow(true)}
+          style={{ cursor: "pointer", color: "#149ECD" }}
+          gutterBottom
           variant="body1"
         >
-         Click to see
-       </Typography>
-     )}
+          Click to see
+        </Typography>
+      )}
     </Grid>
   );
 };
@@ -84,7 +84,7 @@ function DscRegister() {
   }
 
   return (
-    <Box p={3}>
+    <Box p={3} >
       <Box mb={2} display="flex" justifyContent="space-between">
         <SearchContainer
           value={search}
@@ -109,7 +109,7 @@ function DscRegister() {
 
       <AddDscRegister open={open} setOpen={setOpen} />
       <FloatingButton onClick={() => setOpen(true)} />
-    </Box>
+    </Box >
   );
 }
 
@@ -226,7 +226,7 @@ const columns = [
   {
     key: "password",
     title: "Password",
-   render: (rowData: any) => <Password data={rowData} />,
+    render: (rowData: any) => <Password data={rowData} />,
   },
   {
     key: "actions",
