@@ -15,6 +15,16 @@ import PeriodSelect from "./PeriodSelect";
 import AddGstRecord from "./AddGstRecord";
 import { snack } from "components/toast";
 
+const returnSatatusConstants = {
+    Filled: "Filled",
+    Pending: "Pending",
+    NotSelected: "Not Selected",
+    ClickSyncAllToGetLatestData: "Click Sync All to get latest data"
+
+
+
+}
+
 function GstHome() {
     useTitle("Gstr");
     const currentPath = window.location.pathname;
@@ -66,7 +76,7 @@ function GstHome() {
             if (period === "") {
                 const clientDetails = result.map(singleDetails => {
                     const a = singleDetails.client
-                    let gstrData = "Pending"
+                    let gstrData = returnSatatusConstants.Pending
                     let dateOfFiling = "---"
                     let arn = "---"
                     return {
@@ -82,13 +92,13 @@ function GstHome() {
                 const date = period.split(" ");
                 const dateFormate = date.join("-");
                 const clientDetails = result.map(singleClient => {
-                    let gstrData = "Pending";
+                    let gstrData = returnSatatusConstants.Pending;
                     let dateOfFiling = "---";
                     let arn = "---"
                     let action = true;
                     const a = singleClient.client;
                     if (excludes.includes(singleClient.client.id)) {
-                        gstrData = "Not Selected";
+                        gstrData = returnSatatusConstants.NotSelected;
                         action = false;
                     } else {
                         let dateDateFormate = "---";
@@ -101,7 +111,7 @@ function GstHome() {
                             return (dateFormate1 === dateFormate && returnType === item?.rtntype)
                         })
                         if (exactArray) {
-                            gstrData = "Filled";
+                            gstrData = returnSatatusConstants.Filled;
                             dateOfFiling = dateDateFormate;
                             arn = arnNumber;
                         }
@@ -181,12 +191,13 @@ function GstHome() {
     const getGstReturnClients = async () => {
         const forPromisee = tableData.filter(singleClient => {
             const status = singleClient.gstrData;
-            return (status === "click Sync All to get latest data")
+            return (status === returnSatatusConstants.ClickSyncAllToGetLatestData)
         });
+
         const newArray: any = []
         for (let i of forPromisee) {
             for (let j of forGstr) {
-                if (j?.client?.gstNumber === i?.gstNumber && j?.client?.id === i?.id && i.gstrData === "click Sync All to get latest data") {
+                if (j?.client?.gstNumber === i?.gstNumber && j?.client?.id === i?.id && i.gstrData === returnSatatusConstants.ClickSyncAllToGetLatestData) {
                     newArray.push(j)
 
                 }
@@ -255,7 +266,7 @@ function GstHome() {
                 action = false;
             } else {
                 a = singleClient.client;
-                gstrData = "Click Sync All to get latest data";
+                gstrData = returnSatatusConstants.ClickSyncAllToGetLatestData;
                 dateOfFiling = "---"
                 arn = "---"
                 dateDateFormate = "---";
@@ -273,7 +284,7 @@ function GstHome() {
                 })
 
                 if (exactArray) {
-                    gstrData = "Filled";
+                    gstrData = returnSatatusConstants.Filled;
                     dateOfFiling = dateDateFormate;
                     arn = arnNumber;
 
@@ -312,7 +323,7 @@ function GstHome() {
                                 search: v,
                             });
                         }}
-                        placeHolder="Search by Display Name | Trade Name"
+                        placeHolder="Search by Display Name | Gst Number"
                     />
                 </Box>
                 <Box>
