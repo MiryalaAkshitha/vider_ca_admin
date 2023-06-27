@@ -47,6 +47,9 @@ function OrganizationLicenses() {
           </Box>
         )}
         <Box mt={2}>
+        <Typography variant="subtitle2" color="primary">
+        Organization Licenses 
+          </Typography>
           {data?.data?.length > 0 ? (
             <Grid container spacing={2}>
               {data.data.map((license: any, index: number) => (

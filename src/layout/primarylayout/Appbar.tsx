@@ -1,12 +1,12 @@
 import { AddCircleOutlineRounded, NotificationsOutlined } from "@mui/icons-material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { AppBar, Avatar, IconButton, LinearProgress, Tooltip } from "@mui/material";
+import { AppBar, Avatar, Badge, IconButton, LinearProgress, Tooltip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { UserProfileContext, useUserData } from "context/UserProfile";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectGlobal, selectTitle } from "redux/reducers/globalSlice";
@@ -18,6 +18,11 @@ import CreateTask from "views/tasks/board/CreateTask";
 import AccountMenu from "./AccountMenu";
 import GlobalAdd from "./GlobalAdd";
 import Notifications from "./Notifications";
+import { ResType } from "types";
+import { getNotificationsCount, updateNotifications } from "api/services/notifications";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { snack } from "components/toast";
+import { handleError } from "utils/handleError";
 
 type RefType = HTMLElement | null;
 
@@ -31,9 +36,44 @@ function Appbar() {
   const [notifAnchorEl, setNotifAnchorEl] = useState<RefType>(null);
   const [globalActionType, setGlobalActionType] = useState<string>("");
   const { data: uData } = useContext(UserProfileContext);
+  const [notifyCount,setNotifyCount]=useState(0);
+  const [notifyData,setNotifyData]=useState<any>([]);
 
   console.log(uData);
 
+  const { data:notificationsData, isLoading,refetch }: ResType = useQuery(
+    "notifications",
+    getNotificationsCount
+  );
+
+  useEffect(() => {
+    if(loading){
+      refetch();
+    }
+  }, [loading, refetch]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setNotifyData(notificationsData?.data[0]);
+      setNotifyCount(notificationsData?.data[1])
+    }
+  }, [notificationsData,isLoading]);
+
+  const { mutateAsync } = useMutation(updateNotifications, {
+    onSuccess: () => {
+      console.log("success");
+    },
+    onError: (err: any) => {
+      snack.error(handleError(err));
+    },
+  });
+
+  const setNotificationsToRead=async()=>{
+     const notificationIds:number[]=notifyData.map(item=>item.id)
+    setNotifyCount(0)
+    await mutateAsync(notificationIds)
+    refetch()
+  }
   return (
     <>
       <AppBar
@@ -66,12 +106,19 @@ function Appbar() {
                 </IconButton>
               </div>
               <div>
-                <IconButton
+              <IconButton
+
+                
+               
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     setNotifAnchorEl(e.currentTarget);
+                    setNotificationsToRead();
+                   
+                  
                   }}
-                >
+                ><Badge badgeContent={notifyCount||0} color="secondary">
                   <NotificationsOutlined color="primary" />
+                  </Badge>
                 </IconButton>
               </div>
               <Link to="/settings/profile?tab=Profile">
