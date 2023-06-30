@@ -175,6 +175,8 @@ const PushNotifications = loadable(
   () => import("pages/communication/templates/push-notifications")
 );
 
+const Gmail = loadable(() => import("pages/gmail"));
+
 function RoutesContainer() {
   return (
     <Router>
@@ -303,7 +305,10 @@ function RoutesContainer() {
             />
             <Route path=":taskId" element={<TasksView />} />
           </Route>
+          
           <Route path="leads" element={<Leads />} />
+          <Route path="gmailInbox" element={<Gmail />} />
+          
           <Route path="clients">
             <Route index element={<Clients />} />
             <Route path=":clientId" element={<ClientView />}>
@@ -462,6 +467,8 @@ function RoutesContainer() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/join" element={<Join />} />
         <Route path="/onedrive-auth" element={<OnedriveAuth />} />
+
+        
       </Routes>
     </Router >
   );
