@@ -20,7 +20,7 @@ let EditLogHourSchema = ({ taskCreatedDate }) => {
       .nullable()
       .typeError("Invalid date")
       .required("Date is required")
-      .min(taskCreatedDate, "Date should be greater than task created date")
+      .min(taskCreatedDate, "Date should be greater than task Start date")
       .max(new Date(), "Date should not be greater than today"),
     hours: object()
       .shape({

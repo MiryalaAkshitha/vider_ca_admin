@@ -14,8 +14,37 @@ let addLogHourDefaultValues = {
   startTime: null,
   endTime: null,
 };
+var currentDate = new Date();
 
 let AddLogHourSchema = ({ enterInHours, taskCreatedDate }) => {
+
+  // Given date string
+var givenDateStr = taskCreatedDate;
+
+// Convert the given date string to a Date object
+var givenDate = new Date(givenDateStr);
+
+// Subtract one day
+givenDate.setDate(givenDate.getDate() - 1);
+
+// Format the resulting date
+var year = givenDate.getFullYear();
+var month = ('0' + (givenDate.getMonth() + 1)).slice(-2);
+var day = ('0' + givenDate.getDate()).slice(-2);
+var hours = ('0' + givenDate.getHours()).slice(-2);
+var minutes = ('0' + givenDate.getMinutes()).slice(-2);
+var seconds = ('0' + givenDate.getSeconds()).slice(-2);
+var milliseconds = ('00' + givenDate.getMilliseconds()).slice(-3);
+
+// Construct the resulting date string in the same format
+var resultingDateStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+
+// Display the resulting date
+//console.log(resultingDateStr);
+
+
+
+
   return object().shape({
     users: array()
       .of(
@@ -29,7 +58,7 @@ let AddLogHourSchema = ({ enterInHours, taskCreatedDate }) => {
       .nullable()
       .typeError("Invalid date")
       .required("Date is required")
-      .min(taskCreatedDate, "Date should be greater than task created date")
+      .min(resultingDateStr, "Date should be greater than task Start date")
       .max(new Date(), "Date should not be greater than today"),
 
     ...(enterInHours && {
