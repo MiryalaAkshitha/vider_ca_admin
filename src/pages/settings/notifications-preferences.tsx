@@ -104,9 +104,6 @@ function NotificationsPreferences() {
 
 
     return <>
-        <Breadcrumbs sx={{ p: 2 }}>
-            <Typography>Notification Preferiences</Typography>
-        </Breadcrumbs>
         <Box p={3} pb={12}>
             <Typography sx={{ mb: 1 }} variant="subtitle1">
                 Permissions
