@@ -130,11 +130,11 @@ const Login = () => {
         </Box>
       </Grid>
       <ForgotPassword open={open} setOpen={setOpen} />
-      <div style={{ 'position': 'relative' }}>
+      {/* <div style={{ 'position': 'relative' }}>
         <StyledGoogleButton >
           <Google />
         </StyledGoogleButton>
-      </div>
+      </div> */}
 
       <div className="sf-footer-version">
         {`Version ${metadata.buildMajor}.${metadata.buildMinor}.${metadata.buildRevision} ${metadata.buildTag}`}

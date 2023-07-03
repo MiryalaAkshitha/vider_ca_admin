@@ -307,7 +307,7 @@ function RoutesContainer() {
           </Route>
           
           <Route path="leads" element={<Leads />} />
-          <Route path="gmailInbox" element={<Gmail />} />
+          {/* <Route path="gmailInbox" element={<Gmail />} /> */}
           
           <Route path="clients">
             <Route index element={<Clients />} />
