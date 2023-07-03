@@ -8,14 +8,9 @@ import { LinkRouter } from "components/BreadCrumbs";
 import Loader from "components/Loader";
 import useQueryParams from "hooks/useQueryParams";
 import { useState } from "react";
-import { filter, keys } from "lodash";
 import BottomBar from "components/BottomBar";
 import { snack } from "components/toast";
 import NewSearchContainer from "components/SearchContainer";
-import { string } from "yup";
-
-
-
 
 function NotificationsPreferences() {
 
@@ -31,9 +26,7 @@ function NotificationsPreferences() {
     const forData = {
         "Push Notifications": "Push_Notification",
         "Mail Notifications": "Mail_Notification"
-
-    }
-
+    };
 
     const { queryParams, setQueryParams } = useQueryParams();
     const [pushOriginalState, setPushOriginalState] = useState<string[]>([]);
@@ -64,10 +57,6 @@ function NotificationsPreferences() {
         },
     });
 
-    // console.log(pushOriginalState);
-    // console.log(pushPermissions);
-
-
     const { mutateAsync } = useMutation(updatePreference, {
         onSuccess: () => {
             snack.success("Preferences Updated");
@@ -84,17 +73,10 @@ function NotificationsPreferences() {
         });
     };
 
-
-
-
     const handlePermissionChange = (preference: string) => {
-        console.log(preference);
         let filtered: string[] = [...pushPermissions];
-        console.log("fillllllll", filtered);
         if (pushPermissions.includes(preference)) {
             filtered = pushPermissions.filter((item: any) => item !== preference);
-            console.log(filtered);
-
         } else {
             filtered.push(preference);
         }
